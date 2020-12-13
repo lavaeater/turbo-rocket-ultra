@@ -1,0 +1,41 @@
+buildscript {
+	repositories {
+		mavenLocal()
+		mavenCentral()
+		google()
+		maven { url 'https://oss.sonatype.org/content/repositories/snapshots/' }
+		jcenter()
+	}
+	dependencies {
+		classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlinVersion"
+		classpath "com.android.tools.build:gradle:$androidPluginVersion"
+	}
+}
+
+allprojects {
+	apply plugin: 'eclipse'
+	apply plugin: 'idea'
+}
+
+configure(subprojects - project(':android')) {
+	apply plugin: 'java-library'
+	apply plugin: 'kotlin'
+	sourceCompatibility = 8.0
+	compileJava {
+		options.incremental = true
+	}
+}
+
+subprojects {
+	version = '0.0.1-SNAPSHOT'
+	ext.appName = 'turbo-rocket-ultra'
+	repositories {
+		mavenLocal()
+		mavenCentral()
+		maven { url 'https://oss.sonatype.org/content/repositories/snapshots/' }
+		maven { url 'https://jitpack.io' }
+		jcenter()
+	}
+}
+
+eclipse.project.name = 'turbo-rocket-ultra' + '-parent'
