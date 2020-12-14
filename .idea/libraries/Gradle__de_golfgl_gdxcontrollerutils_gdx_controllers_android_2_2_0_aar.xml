@@ -1,0 +1,14 @@
+<component name="libraryTable">
+  <library name="Gradle: de.golfgl.gdxcontrollerutils:gdx-controllers-android:2.2.0@aar">
+    <CLASSES>
+      <root url="jar://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/483dc77642972536ac897eac78686754/gdx-controllers-android-2.2.0/jars/classes.jar!/" />
+      <root url="file://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/483dc77642972536ac897eac78686754/gdx-controllers-android-2.2.0/res" />
+    </CLASSES>
+    <JAVADOC>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/de.golfgl.gdxcontrollerutils/gdx-controllers-android/2.2.0/98b1e7dceadbe5d6f1afc9a343519686f765fb14/gdx-controllers-android-2.2.0-javadoc.jar!/" />
+    </JAVADOC>
+    <SOURCES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/de.golfgl.gdxcontrollerutils/gdx-controllers-android/2.2.0/1a9bfd32c965b7156a1fb3fb94a3faf2209a69fe/gdx-controllers-android-2.2.0-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>

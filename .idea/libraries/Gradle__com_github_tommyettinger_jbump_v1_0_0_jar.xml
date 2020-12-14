@@ -1,0 +1,13 @@
+<component name="libraryTable">
+  <library name="Gradle: com.github.tommyettinger:jbump:v1.0.0@jar">
+    <CLASSES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.github.tommyettinger/jbump/v1.0.0/911d47488f039360b0a1d2b90908e2545307656f/jbump-v1.0.0.jar!/" />
+    </CLASSES>
+    <JAVADOC>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.github.tommyettinger/jbump/v1.0.0/44a1f87a3957a85869a33bcd807896591df3a11a/jbump-v1.0.0-javadoc.jar!/" />
+    </JAVADOC>
+    <SOURCES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.github.tommyettinger/jbump/v1.0.0/af0e455290d769622bfc545fc26714352336b695/jbump-v1.0.0-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>

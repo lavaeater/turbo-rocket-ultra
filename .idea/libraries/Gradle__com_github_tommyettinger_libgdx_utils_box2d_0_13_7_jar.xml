@@ -1,0 +1,13 @@
+<component name="libraryTable">
+  <library name="Gradle: com.github.tommyettinger:libgdx-utils-box2d:0.13.7@jar">
+    <CLASSES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.github.tommyettinger/libgdx-utils-box2d/0.13.7/8880b2a4f7e60c5e3919b3c139c9f29a49f93924/libgdx-utils-box2d-0.13.7.jar!/" />
+    </CLASSES>
+    <JAVADOC>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.github.tommyettinger/libgdx-utils-box2d/0.13.7/186794867e257b405727fd98f0a3c12cc9b10c71/libgdx-utils-box2d-0.13.7-javadoc.jar!/" />
+    </JAVADOC>
+    <SOURCES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.github.tommyettinger/libgdx-utils-box2d/0.13.7/5b5f5a37a68fd750d07b04715d5a73f144ab01b1/libgdx-utils-box2d-0.13.7-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>

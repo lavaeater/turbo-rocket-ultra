@@ -1,0 +1,13 @@
+<component name="libraryTable">
+  <library name="Gradle: io.github.libktx:ktx-async:1.9.11-b1@jar">
+    <CLASSES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/io.github.libktx/ktx-async/1.9.11-b1/28b1f8cbe0a046190fec82a40c1e4004b0410635/ktx-async-1.9.11-b1.jar!/" />
+    </CLASSES>
+    <JAVADOC>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/io.github.libktx/ktx-async/1.9.11-b1/f3a30e9e007ff326350f1ef11d3c8e2ea64d1731/ktx-async-1.9.11-b1-javadoc.jar!/" />
+    </JAVADOC>
+    <SOURCES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/io.github.libktx/ktx-async/1.9.11-b1/2dbe74ec0a63028fc1f9a92f6775a4458a9047d9/ktx-async-1.9.11-b1-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>

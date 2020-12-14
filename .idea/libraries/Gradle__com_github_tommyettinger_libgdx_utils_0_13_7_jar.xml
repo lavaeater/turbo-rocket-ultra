@@ -1,0 +1,13 @@
+<component name="libraryTable">
+  <library name="Gradle: com.github.tommyettinger:libgdx-utils:0.13.7@jar">
+    <CLASSES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.github.tommyettinger/libgdx-utils/0.13.7/bf423b2da7c82c092e6a55edf6ff195d080dd689/libgdx-utils-0.13.7.jar!/" />
+    </CLASSES>
+    <JAVADOC>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.github.tommyettinger/libgdx-utils/0.13.7/a7e7f471e6f46be63497b5eeda3fb45751e61354/libgdx-utils-0.13.7-javadoc.jar!/" />
+    </JAVADOC>
+    <SOURCES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.github.tommyettinger/libgdx-utils/0.13.7/6a960804e21371c5687451b7e7c8c7b9ec5fc76e/libgdx-utils-0.13.7-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>

@@ -1,0 +1,13 @@
+<component name="libraryTable">
+  <library name="Gradle: io.github.libktx:ktx-scene2d:1.9.11-b1@jar">
+    <CLASSES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/io.github.libktx/ktx-scene2d/1.9.11-b1/890e4709d9ef5f6703f5d291cabc2c82d2e1e26d/ktx-scene2d-1.9.11-b1.jar!/" />
+    </CLASSES>
+    <JAVADOC>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/io.github.libktx/ktx-scene2d/1.9.11-b1/b590709b588db9e15c388f6c09a30c61e0fb9be1/ktx-scene2d-1.9.11-b1-javadoc.jar!/" />
+    </JAVADOC>
+    <SOURCES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/io.github.libktx/ktx-scene2d/1.9.11-b1/ec6f2a28c344a60e86973884b0e253cd78648634/ktx-scene2d-1.9.11-b1-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>

@@ -1,0 +1,13 @@
+<component name="libraryTable">
+  <library name="Gradle: com.crashinvaders.vfx:gdx-vfx-effects:0.5.0@jar">
+    <CLASSES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.crashinvaders.vfx/gdx-vfx-effects/0.5.0/32cf343b555b3bbbf2d0b27a693bf3a057504422/gdx-vfx-effects-0.5.0.jar!/" />
+    </CLASSES>
+    <JAVADOC>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.crashinvaders.vfx/gdx-vfx-effects/0.5.0/9d6a1d82372b01f8c931960f975d3c9f2215f9e/gdx-vfx-effects-0.5.0-javadoc.jar!/" />
+    </JAVADOC>
+    <SOURCES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.crashinvaders.vfx/gdx-vfx-effects/0.5.0/c9cc5b7243400a422e1bbd1cb834f52ed7fc5f5/gdx-vfx-effects-0.5.0-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>

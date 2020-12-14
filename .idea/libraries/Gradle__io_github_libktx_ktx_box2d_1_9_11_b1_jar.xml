@@ -1,0 +1,13 @@
+<component name="libraryTable">
+  <library name="Gradle: io.github.libktx:ktx-box2d:1.9.11-b1@jar">
+    <CLASSES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/io.github.libktx/ktx-box2d/1.9.11-b1/f59d6af785a08fee6c63d5f5fd791efeddcdfcfb/ktx-box2d-1.9.11-b1.jar!/" />
+    </CLASSES>
+    <JAVADOC>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/io.github.libktx/ktx-box2d/1.9.11-b1/1d005ef32b0c7214e34f5620efe4b30d05643cfb/ktx-box2d-1.9.11-b1-javadoc.jar!/" />
+    </JAVADOC>
+    <SOURCES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/io.github.libktx/ktx-box2d/1.9.11-b1/7e23869daaec6dd5a1ec77aa5efddc8919ccd299/ktx-box2d-1.9.11-b1-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>

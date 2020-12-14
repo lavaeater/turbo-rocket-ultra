@@ -1,0 +1,13 @@
+<component name="libraryTable">
+  <library name="Gradle: io.github.libktx:ktx-freetype:1.9.11-b1@jar">
+    <CLASSES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/io.github.libktx/ktx-freetype/1.9.11-b1/248fdb50a2b7dfd79814760cff516f0640e97c71/ktx-freetype-1.9.11-b1.jar!/" />
+    </CLASSES>
+    <JAVADOC>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/io.github.libktx/ktx-freetype/1.9.11-b1/644e34d28fc92823821654994b7b97a525eecf34/ktx-freetype-1.9.11-b1-javadoc.jar!/" />
+    </JAVADOC>
+    <SOURCES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/io.github.libktx/ktx-freetype/1.9.11-b1/d5f695a42f76bbe3786730db46b336dc84dfdd77/ktx-freetype-1.9.11-b1-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>
