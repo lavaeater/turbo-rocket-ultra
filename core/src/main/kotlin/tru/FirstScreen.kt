@@ -10,6 +10,7 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion
 import com.badlogic.gdx.graphics.Texture
 
 import com.badlogic.gdx.graphics.Pixmap
+import com.badlogic.gdx.graphics.g2d.Sprite
 import com.badlogic.gdx.math.Vector2
 import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer
 import com.badlogic.gdx.utils.viewport.ExtendViewport
@@ -39,6 +40,10 @@ class FirstScreen : Screen {
         TextureRegion(texture, 0, 0, 1, 1)
     }
 
+    private val testSprite: Sprite by lazy {
+        Sprite(shapeTexture)
+    }
+
     private val batch = PolygonSpriteBatch()
     private val shapeDrawer = ShapeDrawer(batch, shapeTexture)
     private val world = createWorld()
@@ -56,8 +61,14 @@ class FirstScreen : Screen {
          */
         if(needsInit) {
             createBodies()
+            setupSprite()
+            needsInit = false
         }
+    }
 
+    private fun setupSprite() {
+        testSprite.setSize(100f,100f)
+        testSprite.setPosition(0f, 0f)
     }
 
     private fun createBodies() {
@@ -66,7 +77,6 @@ class FirstScreen : Screen {
                 density = 40f
             }
         }
-        needsInit = false
     }
 
     private fun updateBox2D(delta:Float) {
@@ -86,6 +96,7 @@ class FirstScreen : Screen {
 
         batch.use {
             box2DDebugRenderer.render(world, camera.combined)
+            testSprite.draw(batch)
         }
     }
 
