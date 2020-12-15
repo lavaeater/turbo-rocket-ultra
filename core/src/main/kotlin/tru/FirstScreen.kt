@@ -1,26 +1,25 @@
 package tru
 
+import com.badlogic.gdx.Gdx
 import com.badlogic.gdx.Screen
-import com.badlogic.gdx.graphics.Color
-import com.badlogic.gdx.graphics.OrthographicCamera
+import com.badlogic.gdx.graphics.*
 import com.badlogic.gdx.graphics.g2d.PolygonSpriteBatch
 import space.earlygrey.shapedrawer.ShapeDrawer
 import com.badlogic.gdx.graphics.g2d.TextureRegion
 
-import com.badlogic.gdx.graphics.Texture
-
-import com.badlogic.gdx.graphics.Pixmap
 import com.badlogic.gdx.graphics.g2d.Sprite
+import com.badlogic.gdx.graphics.g2d.SpriteBatch
 import com.badlogic.gdx.math.Vector2
 import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer
 import com.badlogic.gdx.utils.viewport.ExtendViewport
 import ktx.box2d.body
 import ktx.box2d.createWorld
 import ktx.box2d.polygon
+import ktx.graphics.center
 import ktx.graphics.use
 
-const val GAMEWIDTH = 7f
-const val GAMEHEIGHT = 4f
+const val GAMEWIDTH = 720f
+const val GAMEHEIGHT = 480f
 
 
 /** First screen of the application. Displayed after the application is created.  */
@@ -34,46 +33,33 @@ class FirstScreen : Screen {
     private val shapeTexture :TextureRegion by lazy {
         val pixmap = Pixmap(1, 1, Pixmap.Format.RGBA8888)
         pixmap.setColor(Color.WHITE)
-        pixmap.drawPixel(0, 0)
+        pixmap.drawPixel(1, 1)
         val texture = Texture(pixmap) //remember to dispose of later
         pixmap.dispose()
-        TextureRegion(texture, 0, 0, 1, 1)
+        TextureRegion(texture, 1, 1)
     }
 
-    private val testSprite: Sprite by lazy {
-        Sprite(shapeTexture)
-    }
-
-    private val batch = PolygonSpriteBatch()
+    private val batch = SpriteBatch()
     private val shapeDrawer = ShapeDrawer(batch, shapeTexture)
     private val world = createWorld()
     private val camera = OrthographicCamera()
     private val viewPort = ExtendViewport(GAMEWIDTH, GAMEHEIGHT, camera)
 
-    private val box2DDebugRenderer = Box2DDebugRenderer(true, true, true, true, true, true)
+    private val box2DDebugRenderer = Box2DDebugRenderer()
     private var needsInit = true
 
 
     override fun show() {
-        // Prepare your screen here.
-        /*
-        Add bodies to the world here?
-         */
         if(needsInit) {
             createBodies()
-            setupSprite()
+            camera.setToOrtho(true, viewPort.maxWorldWidth, viewPort.maxWorldHeight)
             needsInit = false
         }
     }
 
-    private fun setupSprite() {
-        testSprite.setSize(100f,100f)
-        testSprite.setPosition(0f, 0f)
-    }
-
     private fun createBodies() {
         val ship = world.body {
-            polygon(Vector2(-1f, -1f), Vector2(0f,1f), Vector2(1f, -1f)) {
+            polygon(Vector2(-10f, -10f), Vector2(0f,10f), Vector2(10f, -10f)) {
                 density = 40f
             }
         }
@@ -89,19 +75,20 @@ class FirstScreen : Screen {
     }
 
     override fun render(delta: Float) {
-        // Draw your screen here. "delta" is the time since last render in seconds.
+
+//        Gdx.gl.glClearColor(0f, 0f, 0f, 1f);
+//        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         updateBox2D(delta)
         camera.update(true)
         batch.projectionMatrix = camera.combined
-
         batch.use {
-            box2DDebugRenderer.render(world, camera.combined)
-            testSprite.draw(batch)
         }
+        box2DDebugRenderer.render(world, camera.combined)
     }
 
     override fun resize(width: Int, height: Int) {
-        // Resize your screen here. The parameters represent the new window size.
+        viewPort.update(width, height)
+        batch.projectionMatrix = camera.combined
     }
 
     override fun pause() {
