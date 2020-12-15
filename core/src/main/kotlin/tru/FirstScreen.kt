@@ -18,13 +18,17 @@ import ktx.box2d.createWorld
 import ktx.box2d.polygon
 import ktx.graphics.use
 
-const val GAMEWIDTH = 72f
-const val GAMEHEIGHT = 48f
+const val GAMEWIDTH = 7f
+const val GAMEHEIGHT = 4f
 
 
 /** First screen of the application. Displayed after the application is created.  */
 class FirstScreen : Screen {
 
+    companion object {
+        private val MAX_STEP_TIME = 1 / 60f
+        private var accumulator = 0f
+    }
 
     private val shapeTexture :TextureRegion by lazy {
         val pixmap = Pixmap(1, 1, Pixmap.Format.RGBA8888)
@@ -57,21 +61,31 @@ class FirstScreen : Screen {
     }
 
     private fun createBodies() {
-        TODO("Not yet implemented")
         val ship = world.body {
             polygon(Vector2(-1f, -1f), Vector2(0f,1f), Vector2(1f, -1f)) {
                 density = 40f
             }
         }
+        needsInit = false
+    }
+
+    private fun updateBox2D(delta:Float) {
+        val frameTime = delta.coerceAtMost(0.25f)
+        accumulator += frameTime
+        if (accumulator >= MAX_STEP_TIME) {
+            world.step(delta, 6, 2)
+            accumulator -= MAX_STEP_TIME
+        }
     }
 
     override fun render(delta: Float) {
         // Draw your screen here. "delta" is the time since last render in seconds.
+        updateBox2D(delta)
         camera.update(true)
         batch.projectionMatrix = camera.combined
 
         batch.use {
-            box2DDebugRenderer.render(world, batch.projectionMatrix)
+            box2DDebugRenderer.render(world, camera.combined)
         }
     }
 
