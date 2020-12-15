@@ -9,11 +9,13 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion
 
 import com.badlogic.gdx.graphics.g2d.Sprite
 import com.badlogic.gdx.graphics.g2d.SpriteBatch
+import com.badlogic.gdx.math.MathUtils.*
 import com.badlogic.gdx.math.Vector2
 import com.badlogic.gdx.physics.box2d.Body
 import com.badlogic.gdx.physics.box2d.BodyDef
 import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer
 import com.badlogic.gdx.utils.viewport.ExtendViewport
+import control.InputManager
 import control.ShipControl
 import ktx.box2d.*
 import ktx.graphics.use
@@ -44,7 +46,7 @@ class FirstScreen : Screen {
     private val control = ShipControl()
     private val batch = SpriteBatch()
     private val shapeDrawer = ShapeDrawer(batch, shapeTexture)
-    private val world = createWorld(vec2(0f, 0f))
+    private val world = createWorld(vec2(0f, 10f))
     private val camera = OrthographicCamera()
     private val viewPort = ExtendViewport(GAMEWIDTH, GAMEHEIGHT, camera)
 
@@ -56,23 +58,38 @@ class FirstScreen : Screen {
 
     override fun show() {
         if(needsInit) {
+            setupInput()
             createBodies()
             camera.setToOrtho(true, viewPort.maxWorldWidth, viewPort.maxWorldHeight)
             needsInit = false
         }
     }
 
+    private fun setupInput() {
+        Gdx.input.inputProcessor = InputManager(control)
+    }
+
     private fun createBodies() {
         ship = world.body {
             type = BodyDef.BodyType.DynamicBody
             polygon(Vector2(-1f, -1f), Vector2(0f,1f), Vector2(1f, -1f)) {
-                density = 10f
+                density = 1f
+            }
+            linearDamping = 1f
+            angularDamping = 5f
+        }
+
+        for (x in 0..99)
+        for (y in 0..99) {
+            world.body {
+                type = BodyDef.BodyType.StaticBody
+                box(2f, 2f, vec2(x * 25f, y * 25f))
             }
         }
 
         box = world.body {
             type = BodyDef.BodyType.StaticBody
-            box(30f, 5f, vec2(0f, 30f))
+            box(300f, 2f, vec2(0f, 30f))
         }
     }
 
@@ -109,10 +126,13 @@ class FirstScreen : Screen {
         ship - easy
          */
         if(control.rotation != 0f) {
-            ship.applyTorque(10f * control.rotation, true)
+            ship.applyTorque(20f * control.rotation, true)
         }
 
-        ship.applyForceToCenter(Vector2.X.rotateRad(control.rotation) * control.thrust * 1000f, true)
+        val forceVector = vec2(cos(ship.angle), sin(ship.angle)).rotate90(1)
+
+        if(control.thrust > 0f)
+            ship.applyForceToCenter(forceVector.scl(100f), true)
     }
 
     override fun resize(width: Int, height: Int) {

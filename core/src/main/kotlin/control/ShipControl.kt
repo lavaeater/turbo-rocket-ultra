@@ -1,11 +1,9 @@
 package control
 
 class ShipControl {
-    val rotation: Float get() {
-        return 1f
-    }
-
-    val thrust: Float get() {
-        return 1f
-    }
+    var turn = 0f
+    var throttle = 0f
+    val rotation: Float get() = turn
+    val thrust: Float get()  = throttle
 }
+
