@@ -87,7 +87,7 @@ class FirstScreen : Screen {
 
     override fun render(delta: Float) {
 
-        Gdx.gl.glClearColor(0f, 0f, 0f, 1f);
+        Gdx.gl.glClearColor(.3f, .5f, .8f, 1f)
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         handleInput(delta)
         updateBox2D(delta)
