@@ -10,23 +10,25 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion
 import com.badlogic.gdx.graphics.g2d.Sprite
 import com.badlogic.gdx.graphics.g2d.SpriteBatch
 import com.badlogic.gdx.math.Vector2
+import com.badlogic.gdx.physics.box2d.Body
+import com.badlogic.gdx.physics.box2d.BodyDef
 import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer
 import com.badlogic.gdx.utils.viewport.ExtendViewport
-import ktx.box2d.body
-import ktx.box2d.createWorld
-import ktx.box2d.polygon
-import ktx.graphics.center
+import control.ShipControl
+import ktx.box2d.*
 import ktx.graphics.use
+import ktx.math.times
+import ktx.math.vec2
 
-const val GAMEWIDTH = 720f
-const val GAMEHEIGHT = 480f
+const val GAMEWIDTH = 100f
+const val GAMEHEIGHT = 75f
 
 
 /** First screen of the application. Displayed after the application is created.  */
 class FirstScreen : Screen {
 
     companion object {
-        private val MAX_STEP_TIME = 1 / 60f
+        private const val MAX_STEP_TIME = 1 / 300f
         private var accumulator = 0f
     }
 
@@ -39,15 +41,18 @@ class FirstScreen : Screen {
         TextureRegion(texture, 1, 1)
     }
 
+    private val control = ShipControl()
     private val batch = SpriteBatch()
     private val shapeDrawer = ShapeDrawer(batch, shapeTexture)
-    private val world = createWorld()
+    private val world = createWorld(vec2(0f, 0f))
     private val camera = OrthographicCamera()
     private val viewPort = ExtendViewport(GAMEWIDTH, GAMEHEIGHT, camera)
 
     private val box2DDebugRenderer = Box2DDebugRenderer()
     private var needsInit = true
+    private lateinit var ship: Body
 
+    private lateinit var box: Body
 
     override fun show() {
         if(needsInit) {
@@ -58,10 +63,16 @@ class FirstScreen : Screen {
     }
 
     private fun createBodies() {
-        val ship = world.body {
-            polygon(Vector2(-10f, -10f), Vector2(0f,10f), Vector2(10f, -10f)) {
-                density = 40f
+        ship = world.body {
+            type = BodyDef.BodyType.DynamicBody
+            polygon(Vector2(-1f, -1f), Vector2(0f,1f), Vector2(1f, -1f)) {
+                density = 10f
             }
+        }
+
+        box = world.body {
+            type = BodyDef.BodyType.StaticBody
+            box(30f, 5f, vec2(0f, 30f))
         }
     }
 
@@ -76,14 +87,32 @@ class FirstScreen : Screen {
 
     override fun render(delta: Float) {
 
-//        Gdx.gl.glClearColor(0f, 0f, 0f, 1f);
-//        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+        Gdx.gl.glClearColor(0f, 0f, 0f, 1f);
+        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+        handleInput(delta)
         updateBox2D(delta)
-        camera.update(true)
+        updateCamera()
         batch.projectionMatrix = camera.combined
         batch.use {
         }
         box2DDebugRenderer.render(world, camera.combined)
+    }
+
+    private fun updateCamera() {
+        camera.position.set(ship.position.x, ship.position.y, 0f)
+        camera.update(true)
+    }
+
+    private fun handleInput(delta: Float) {
+        /*
+        To make things easy, we have only one control and one
+        ship - easy
+         */
+        if(control.rotation != 0f) {
+            ship.applyTorque(10f * control.rotation, true)
+        }
+
+        ship.applyForceToCenter(Vector2.X.rotateRad(control.rotation) * control.thrust * 1000f, true)
     }
 
     override fun resize(width: Int, height: Int) {

@@ -12,7 +12,13 @@ Så, jag tänker inte anteckna någonting om en stor roadmap för hela spelet, u
 
 Så, det jag tänker göra härnäst är... 
 
-# Ett skepp med styrning och kollisioner
+# WIP - skepp med styrning och framdrivning
+
+## Styrning
+
+Styrning är samma sak som att ta input från något vad som helst och göra om det till kommandon eller liknande som t.ex. gasar eller annat på vårat skepp. Vi vill stödja handkontroller såsom Xbox360-kontrollers (fungerar det på linux? Eller, what what? Fan också.), så vi behöver något slags *abstraktion* för kontrollen. 
+
+Vår kontroll ska vara thrust-rotation-baserad. Så spelaren använder någon kontroll för att "gasa" och en annan kontroll för att rotera skeppet med- eller motsols. Så om vi tänker oss någon klass där vi kan ha egenskaper på den...
 
 Det här gör vi på det gamla vanliga sättet. Vi bygger en box2d-värld, vi klistrar på texturer på de objekten, allt blir bra. Men hur fungerar det då...
 
