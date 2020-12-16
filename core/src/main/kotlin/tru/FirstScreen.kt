@@ -12,13 +12,15 @@ import com.badlogic.gdx.physics.box2d.*
 import com.badlogic.gdx.utils.viewport.ExtendViewport
 import control.InputManager
 import control.ShipControl
+import gamestate.Player
 import ktx.box2d.*
 import ktx.graphics.use
 import ktx.math.random
 import ktx.math.vec2
+import physics.hasTag
+import physics.bodyForTag
+import physics.hasTags
 
-const val GAMEWIDTH = 100f
-const val GAMEHEIGHT = 75f
 
 class FirstScreen : Screen {
 
@@ -29,6 +31,9 @@ class FirstScreen : Screen {
         const val TAG_SHIP = "SHIP"
         const val TAG_SHOT = "SHOT"
         const val TAG_BOX = "BOX"
+
+        const val GAMEWIDTH = 100f
+        const val GAMEHEIGHT = 75f
     }
 
     private var lastShot = 0f
@@ -41,6 +46,7 @@ class FirstScreen : Screen {
     private var needsInit = true
     private lateinit var ship: Body
     private val bodiesToDestroy = mutableListOf<Body>()
+    private val player = Player()
 
     override fun show() {
         if (needsInit) {
@@ -71,16 +77,28 @@ class FirstScreen : Screen {
         }
     }
 
-
-
     private fun setupBox2D() {
 
         world.setContactListener(object : ContactListener {
             override fun beginContact(contact: Contact) {
-                if(contact.fixtureA.body.userData == TAG_SHOT || contact.fixtureB.body.userData == TAG_SHOT) {
-                    val shot = if(contact.fixtureA.body.userData == TAG_SHOT) contact.fixtureA else contact.fixtureB
-                    bodiesToDestroy.add(shot.body)
+                //Ship colliding with something
+                if(contact.hasTag(TAG_SHIP)) {
+                    if(contact.hasTag(TAG_SHOT)) {
+                        //A shot does 20 damage
+                        player.health -= 20
+                    }
+                    if(contact.hasTag(TAG_BOX)) {
+                        val vel = ship.linearVelocity.len2()
+                        player.health -= (vel /15).toInt()
+                    }
                 }
+
+                if(contact.hasTag(TAG_SHOT)) {
+                    val shot = contact.bodyForTag(TAG_SHOT)
+                    bodiesToDestroy.add(shot)
+                }
+
+
 
             }
 
