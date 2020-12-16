@@ -8,27 +8,27 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch
 import com.badlogic.gdx.math.MathUtils.cos
 import com.badlogic.gdx.math.MathUtils.sin
 import com.badlogic.gdx.math.Vector2
-import com.badlogic.gdx.physics.box2d.Body
-import com.badlogic.gdx.physics.box2d.BodyDef
-import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer
+import com.badlogic.gdx.physics.box2d.*
 import com.badlogic.gdx.utils.viewport.ExtendViewport
 import control.InputManager
 import control.ShipControl
 import ktx.box2d.*
 import ktx.graphics.use
+import ktx.math.random
 import ktx.math.vec2
 
 const val GAMEWIDTH = 100f
 const val GAMEHEIGHT = 75f
 
-
-/** First screen of the application. Displayed after the application is created.  */
 class FirstScreen : Screen {
 
     companion object {
         private const val MAX_STEP_TIME = 1 / 300f
         private var accumulator = 0f
         private const val ROF = 1f / 10f
+        const val TAG_SHIP = "SHIP"
+        const val TAG_SHOT = "SHOT"
+        const val TAG_BOX = "BOX"
     }
 
     private var lastShot = 0f
@@ -40,13 +40,12 @@ class FirstScreen : Screen {
     private val box2DDebugRenderer = Box2DDebugRenderer()
     private var needsInit = true
     private lateinit var ship: Body
-
-    private lateinit var box: Body
+    private val bodiesToDestroy = mutableListOf<Body>()
 
     override fun show() {
         if (needsInit) {
             setupInput()
-            createBodies()
+            setupBox2D()
             camera.setToOrtho(true, viewPort.maxWorldWidth, viewPort.maxWorldHeight)
             needsInit = false
         }
@@ -64,16 +63,40 @@ class FirstScreen : Screen {
                 val positionVector = vec2(cos(ship.angle), sin(ship.angle)).rotate90(1).scl(2f)
                 val shot = world.body {
                     type = BodyDef.BodyType.DynamicBody
+                    userData = TAG_SHOT
                     circle(position = ship.worldCenter.cpy().add(positionVector), radius = .2f) {}
                 }
-                shot.linearVelocity =positionVector.scl(1000f)
+                shot.linearVelocity = positionVector.scl(1000f)
             }
         }
     }
 
-    private fun createBodies() {
+
+
+    private fun setupBox2D() {
+
+        world.setContactListener(object : ContactListener {
+            override fun beginContact(contact: Contact) {
+                if(contact.fixtureA.body.userData == TAG_SHOT || contact.fixtureB.body.userData == TAG_SHOT) {
+                    val shot = if(contact.fixtureA.body.userData == TAG_SHOT) contact.fixtureA else contact.fixtureB
+                    bodiesToDestroy.add(shot.body)
+                }
+
+            }
+
+            override fun endContact(contact: Contact) {
+            }
+
+            override fun preSolve(contact: Contact, oldManifold: Manifold?) {
+            }
+
+            override fun postSolve(contact: Contact, impulse: ContactImpulse?) {
+            }
+        })
+
         ship = world.body {
             type = BodyDef.BodyType.DynamicBody
+            userData = TAG_SHIP
             polygon(Vector2(-1f, -1f), Vector2(0f, 1f), Vector2(1f, -1f)) {
                 density = 1f
             }
@@ -81,21 +104,26 @@ class FirstScreen : Screen {
             angularDamping = 5f
         }
 
+        val randomFactor = 0f..15f
+
         for (x in 0..99)
             for (y in 0..99) {
                 world.body {
                     type = BodyDef.BodyType.StaticBody
-                    box(2f, 2f, vec2(x * 25f, y * 25f))
+                    userData = TAG_BOX
+                    box(2f, 2f, vec2(x * 25f + randomFactor.random(), y * 25f + randomFactor.random()))
                 }
             }
-
-        box = world.body {
-            type = BodyDef.BodyType.StaticBody
-            box(300f, 2f, vec2(0f, 30f))
-        }
     }
 
     private fun updateBox2D(delta: Float) {
+
+        for (body in bodiesToDestroy)
+            world.destroyBody(body)
+
+        bodiesToDestroy.clear()
+
+
         val frameTime = delta.coerceAtMost(0.25f)
         accumulator += frameTime
         if (accumulator >= MAX_STEP_TIME) {
