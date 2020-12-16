@@ -1,22 +1,24 @@
 package control
 
 class ShipControl {
-    fun startFiring() {
-        _firing = true
+
+    fun fire(yes: Boolean) {
+        firing = yes
     }
 
-    fun stopFiring() {
-        _firing = false
+    fun throttle(amount: Float) {
+        thrust = amount
     }
 
-    private var _firing = false
-    var firing: Boolean
-        get() { return _firing}
-        private set(value) {_firing = value}
+    fun turn(amount: Float) {
+        rotation = amount
+    }
 
-    var turn = 0f
-    var throttle = 0f
-    val rotation: Float get() = turn
-    val thrust: Float get()  = throttle
+    var firing: Boolean = false
+        private set
+    var rotation: Float = 0f
+        private set
+    var thrust: Float = 0f
+        private set
 }
 
