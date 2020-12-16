@@ -14,7 +14,25 @@ What I also decided was that I shouldn't overstretch. All my games are always su
 
 ## Roadmap
 
-The road map is incomplete and exists offline in an art journal. The inspiration for the game is of course the classic games Thrust, Gravity Force and Turbo Raketti - games where you control a ship with thrust and rotation and can shoot some.
+The road map is incomplete and exists offline in an art journal. The inspiration for the game is of course the classic games Thrust, Gravity Force and Turbo Raketti - games where you control a ship with thrust and rotation and can shoot some kind of projectile. In the current implementation, there is gravity and some randomly distributed obstacles - but no map to speak of. My dream game would be a co-op team shooter, or something.
+
+Rather, my dream game is a procedurally generated mega-rpg-world without boredom but with actual live AI people... nah.
+
+This game will also seek inspiration from such great games as Lovers in a Dangerous Spacetime and South Park Tower Defense. So, I want to have co-op, perhaps with two or more players controlling one ship.
+
+Anyways, the roadmap is this:
+
+* Ship with Steering and Propulsion <- DONE!
+* Shooting <- DONE!
+* I am not certain
+
+If I want the multiplayer aspect to work, I should try controller support. But perhaps I want the racing component? Or is it the AI-controlled enemies that I want? Different types of weapons? What should be next?
+
+Next should probably be the feature that requires the least work to make it a "game". So, so far we can fly, we can shoot, but we cannot die, we cannot win. 
+
+So the next feature will be ship collisions.
+
+* Collisions with ship
 
 ## Alla framsteg KAN ju noteras här?
 
