@@ -3,11 +3,9 @@ package tru
 import com.badlogic.gdx.Gdx
 import com.badlogic.gdx.Screen
 import com.badlogic.gdx.graphics.*
-import com.badlogic.gdx.graphics.g2d.PolygonSpriteBatch
 import space.earlygrey.shapedrawer.ShapeDrawer
 import com.badlogic.gdx.graphics.g2d.TextureRegion
 
-import com.badlogic.gdx.graphics.g2d.Sprite
 import com.badlogic.gdx.graphics.g2d.SpriteBatch
 import com.badlogic.gdx.math.MathUtils.*
 import com.badlogic.gdx.math.Vector2
@@ -19,7 +17,6 @@ import control.InputManager
 import control.ShipControl
 import ktx.box2d.*
 import ktx.graphics.use
-import ktx.math.times
 import ktx.math.vec2
 
 const val GAMEWIDTH = 100f
@@ -32,9 +29,11 @@ class FirstScreen : Screen {
     companion object {
         private const val MAX_STEP_TIME = 1 / 300f
         private var accumulator = 0f
+        private val ROF = 1f / 10f
     }
 
-    private val shapeTexture :TextureRegion by lazy {
+    private var lastShot = 0f
+    private val shapeTexture: TextureRegion by lazy {
         val pixmap = Pixmap(1, 1, Pixmap.Format.RGBA8888)
         pixmap.setColor(Color.WHITE)
         pixmap.drawPixel(1, 1)
@@ -57,7 +56,7 @@ class FirstScreen : Screen {
     private lateinit var box: Body
 
     override fun show() {
-        if(needsInit) {
+        if (needsInit) {
             setupInput()
             createBodies()
             camera.setToOrtho(true, viewPort.maxWorldWidth, viewPort.maxWorldHeight)
@@ -69,10 +68,27 @@ class FirstScreen : Screen {
         Gdx.input.inputProcessor = InputManager(control)
     }
 
+    private fun handleShooting(delta: Float) {
+        if (control.firing) {
+            lastShot += delta
+            if (lastShot > ROF) {
+                lastShot = 0f
+                val positionVector = vec2(cos(ship.angle), sin(ship.angle)).rotate90(1).scl(2f)
+                val shot = world.body {
+                    type = BodyDef.BodyType.DynamicBody
+                    circle(position = ship.worldCenter.cpy().add(positionVector), radius = .2f) {}
+                }
+                shot.linearVelocity =positionVector.scl(1000f)
+//                val forceVector = vec2(cos(ship.angle), sin(ship.angle)).rotate90(1)
+//                shot.applyLinearImpulse(forceVector.scl(10f), ship.worldCenter, true)
+            }
+        }
+    }
+
     private fun createBodies() {
         ship = world.body {
             type = BodyDef.BodyType.DynamicBody
-            polygon(Vector2(-1f, -1f), Vector2(0f,1f), Vector2(1f, -1f)) {
+            polygon(Vector2(-1f, -1f), Vector2(0f, 1f), Vector2(1f, -1f)) {
                 density = 1f
             }
             linearDamping = 1f
@@ -80,12 +96,12 @@ class FirstScreen : Screen {
         }
 
         for (x in 0..99)
-        for (y in 0..99) {
-            world.body {
-                type = BodyDef.BodyType.StaticBody
-                box(2f, 2f, vec2(x * 25f, y * 25f))
+            for (y in 0..99) {
+                world.body {
+                    type = BodyDef.BodyType.StaticBody
+                    box(2f, 2f, vec2(x * 25f, y * 25f))
+                }
             }
-        }
 
         box = world.body {
             type = BodyDef.BodyType.StaticBody
@@ -93,7 +109,7 @@ class FirstScreen : Screen {
         }
     }
 
-    private fun updateBox2D(delta:Float) {
+    private fun updateBox2D(delta: Float) {
         val frameTime = delta.coerceAtMost(0.25f)
         accumulator += frameTime
         if (accumulator >= MAX_STEP_TIME) {
@@ -125,13 +141,14 @@ class FirstScreen : Screen {
         To make things easy, we have only one control and one
         ship - easy
          */
-        if(control.rotation != 0f) {
+        handleShooting(delta)
+        if (control.rotation != 0f) {
             ship.applyTorque(20f * control.rotation, true)
         }
 
         val forceVector = vec2(cos(ship.angle), sin(ship.angle)).rotate90(1)
 
-        if(control.thrust > 0f)
+        if (control.thrust > 0f)
             ship.applyForceToCenter(forceVector.scl(100f), true)
     }
 

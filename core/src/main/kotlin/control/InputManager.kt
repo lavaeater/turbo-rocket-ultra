@@ -10,6 +10,7 @@ class InputManager(private val shipControl: ShipControl) : KtxInputAdapter {
             Input.Keys.W -> shipControl.throttle = 1f
             Input.Keys.A -> shipControl.turn = -1f
             Input.Keys.D -> shipControl.turn = 1f
+            Input.Keys.SPACE -> shipControl.startFiring()
         }
         return true
     }
@@ -19,6 +20,7 @@ class InputManager(private val shipControl: ShipControl) : KtxInputAdapter {
             Input.Keys.W -> shipControl.throttle = 0f
             Input.Keys.A -> shipControl.turn = 0f
             Input.Keys.D -> shipControl.turn = 0f
+            Input.Keys.SPACE -> shipControl.stopFiring()
         }
         return true
     }

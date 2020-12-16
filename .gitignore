@@ -78,6 +78,11 @@ build/
 .idea/artifacts/kotlin_test_js_ir_*
 .idea/artifacts/kotlin_stdlib_wasm_*
 .idea/jarRepositories.xml
+
+.idea/aws.xml
+.idea/caches/build_file_checksums.ser
+.idea/misc.xml
+
 kotlin-ultimate/
 node_modules/
 .rpt2_cache/
