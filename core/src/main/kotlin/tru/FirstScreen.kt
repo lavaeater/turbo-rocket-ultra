@@ -2,12 +2,11 @@ package tru
 
 import com.badlogic.gdx.Gdx
 import com.badlogic.gdx.Screen
-import com.badlogic.gdx.graphics.*
-import space.earlygrey.shapedrawer.ShapeDrawer
-import com.badlogic.gdx.graphics.g2d.TextureRegion
-
+import com.badlogic.gdx.graphics.GL20
+import com.badlogic.gdx.graphics.OrthographicCamera
 import com.badlogic.gdx.graphics.g2d.SpriteBatch
-import com.badlogic.gdx.math.MathUtils.*
+import com.badlogic.gdx.math.MathUtils.cos
+import com.badlogic.gdx.math.MathUtils.sin
 import com.badlogic.gdx.math.Vector2
 import com.badlogic.gdx.physics.box2d.Body
 import com.badlogic.gdx.physics.box2d.BodyDef
@@ -29,26 +28,15 @@ class FirstScreen : Screen {
     companion object {
         private const val MAX_STEP_TIME = 1 / 300f
         private var accumulator = 0f
-        private val ROF = 1f / 10f
+        private const val ROF = 1f / 10f
     }
 
     private var lastShot = 0f
-    private val shapeTexture: TextureRegion by lazy {
-        val pixmap = Pixmap(1, 1, Pixmap.Format.RGBA8888)
-        pixmap.setColor(Color.WHITE)
-        pixmap.drawPixel(1, 1)
-        val texture = Texture(pixmap) //remember to dispose of later
-        pixmap.dispose()
-        TextureRegion(texture, 1, 1)
-    }
-
     private val control = ShipControl()
     private val batch = SpriteBatch()
-    private val shapeDrawer = ShapeDrawer(batch, shapeTexture)
     private val world = createWorld(vec2(0f, 10f))
     private val camera = OrthographicCamera()
     private val viewPort = ExtendViewport(GAMEWIDTH, GAMEHEIGHT, camera)
-
     private val box2DDebugRenderer = Box2DDebugRenderer()
     private var needsInit = true
     private lateinit var ship: Body
@@ -79,8 +67,6 @@ class FirstScreen : Screen {
                     circle(position = ship.worldCenter.cpy().add(positionVector), radius = .2f) {}
                 }
                 shot.linearVelocity =positionVector.scl(1000f)
-//                val forceVector = vec2(cos(ship.angle), sin(ship.angle)).rotate90(1)
-//                shot.applyLinearImpulse(forceVector.scl(10f), ship.worldCenter, true)
             }
         }
     }
@@ -121,7 +107,7 @@ class FirstScreen : Screen {
     override fun render(delta: Float) {
 
         Gdx.gl.glClearColor(.3f, .5f, .8f, 1f)
-        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT)
         handleInput(delta)
         updateBox2D(delta)
         updateCamera()
