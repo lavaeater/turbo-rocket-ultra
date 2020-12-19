@@ -22,6 +22,22 @@ I am going to try to make some kind of AI-training in all of this. The AI will h
 
 ## Roadmap
 
+### Up next
+
+One idea is that we could try to implement some kind of AI, something that can steer the ship. But Neural Networks are very difficult to implement.
+
+So, we have made this with triangular space-ships, but triangular spaceships are boring. What I want is many different ways of transportation etc - like walking around, top down, and shooting stuff, and then later, riding together on some kind of transportation where one player mans the guns and the other mans the steering, that kinda thing. So we could really use something other than the triangle and also we should probably add, you know, some graphics. But real simple graphics. 
+
+So the road map would now be "I would like to be able to go around and shoot people in this game".
+
+So the todo for this is... we need ashley, right now, people. There is no doubt in my mind. We also need to print out debug info for the entitites. But the point of using Ashley would be to make the game more "refactorable". So let's record a session of me doing that then, perhaps?
+
+### Stuff that have been done
+
+* Ship with Steering and Propulsion <- DONE!
+* Shooting <- DONE!
+* Collisions with ship <- DONE!
+
 The road map is incomplete and exists offline in an art journal. The inspiration for the game is of course the classic games Thrust, Gravity Force and Turbo Raketti - games where you control a ship with thrust and rotation and can shoot some kind of projectile. In the current implementation, there is gravity and some randomly distributed obstacles - but no map to speak of. My dream game would be a co-op team shooter, or something.
 
 Rather, my dream game is a procedurally generated mega-rpg-world without boredom but with actual live AI people... nah.
@@ -30,8 +46,10 @@ This game will also seek inspiration from such great games as Lovers in a Danger
 
 Anyways, the roadmap is this:
 
-* Ship with Steering and Propulsion <- DONE!
-* Shooting <- DONE!
+
+The issue is that constructing an AI is a cool thing. But making a game is something else - it needs to be you know, done and stuff like that. 
+
+
 * I am not certain
 
 If I want the multiplayer aspect to work, I should try controller support. But perhaps I want the racing component? Or is it the AI-controlled enemies that I want? Different types of weapons? What should be next?
@@ -40,7 +58,6 @@ Next should probably be the feature that requires the least work to make it a "g
 
 So the next feature will be ship collisions.
 
-* Collisions with ship <- DONE!
 
 ## Alla framsteg KAN ju noteras här?
 
