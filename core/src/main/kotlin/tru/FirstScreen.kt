@@ -1,55 +1,54 @@
 package tru
 
+import com.badlogic.ashley.core.Engine
 import com.badlogic.gdx.Gdx
 import com.badlogic.gdx.Screen
 import com.badlogic.gdx.graphics.GL20
 import com.badlogic.gdx.graphics.OrthographicCamera
-import com.badlogic.gdx.graphics.g2d.SpriteBatch
-import com.badlogic.gdx.math.MathUtils.cos
-import com.badlogic.gdx.math.MathUtils.sin
-import com.badlogic.gdx.math.Vector2
-import com.badlogic.gdx.physics.box2d.*
+import com.badlogic.gdx.graphics.g2d.PolygonSpriteBatch
+import com.badlogic.gdx.physics.box2d.Body
+import com.badlogic.gdx.physics.box2d.World
 import com.badlogic.gdx.utils.viewport.ExtendViewport
 import control.InputManager
 import control.ShipControl
+import factories.box
 import gamestate.Player
-import ktx.box2d.*
-import ktx.graphics.use
+import injection.Context
 import ktx.math.random
-import ktx.math.vec2
-import physics.hasTag
-import physics.bodyForTag
-import physics.hasTags
+import ui.IUserInterface
 
 
 class FirstScreen : Screen {
 
     companion object {
-        private const val MAX_STEP_TIME = 1 / 300f
-        private var accumulator = 0f
-        private const val ROF = 1f / 10f
         const val TAG_SHIP = "SHIP"
         const val TAG_SHOT = "SHOT"
         const val TAG_BOX = "BOX"
 
-        const val GAMEWIDTH = 100f
-        const val GAMEHEIGHT = 75f
+        const val SHIP_DENSITY = 1f
+        const val SHIP_LINEAR_DAMPING = 10f
+        const val SHIP_ANGULAR_DAMPING = 10f
+
+        const val GAMEWIDTH = 48f
+        const val GAMEHEIGHT = 48f
     }
 
     private var lastShot = 0f
-    private val control = ShipControl()
-    private val batch = SpriteBatch()
-    private val world = createWorld(vec2(0f, 10f))
-    private val camera = OrthographicCamera()
-    private val viewPort = ExtendViewport(GAMEWIDTH, GAMEHEIGHT, camera)
-    private val box2DDebugRenderer = Box2DDebugRenderer()
     private var needsInit = true
-    private lateinit var ship: Body
-    private val bodiesToDestroy = mutableListOf<Body>()
-    private val player = Player()
+
+    private val camera: OrthographicCamera by lazy { Context.inject() }
+    private val viewPort: ExtendViewport by lazy { Context.inject() }
+    private val control: ShipControl by lazy { Context.inject() }
+    private val world: World by lazy { Context.inject()  }
+    private val engine: Engine by lazy { Context.inject() }
+    private val batch: PolygonSpriteBatch by lazy { Context.inject() }
+    private val player: Player by lazy { Context.inject()}
+    private val ship: Body by lazy { player.body }
+    private val ui: IUserInterface by lazy { Context.inject() }
 
     override fun show() {
         if (needsInit) {
+            Assets.load()
             setupInput()
             setupBox2D()
             camera.setToOrtho(true, viewPort.maxWorldWidth, viewPort.maxWorldHeight)
@@ -61,76 +60,18 @@ class FirstScreen : Screen {
         Gdx.input.inputProcessor = InputManager(control)
     }
 
-    private fun handleShooting(delta: Float) {
-        if (control.firing) {
-            lastShot += delta
-            if (lastShot > ROF) {
-                lastShot = 0f
-                val positionVector = vec2(cos(ship.angle), sin(ship.angle)).rotate90(1).scl(2f)
-                val shot = world.body {
-                    type = BodyDef.BodyType.DynamicBody
-                    userData = TAG_SHOT
-                    circle(position = ship.worldCenter.cpy().add(positionVector), radius = .2f) {}
-                }
-                shot.linearVelocity = positionVector.scl(1000f)
-            }
-        }
-    }
 
+
+    /*
+    Contact handling needs to be moved as well, perhaps straight to the physics
+    system - we need to add removal components and such over there.
+     */
     private fun setupBox2D() {
-
-        world.setContactListener(object : ContactListener {
-            override fun beginContact(contact: Contact) {
-                //Ship colliding with something
-                if(contact.hasTag(TAG_SHIP)) {
-                    if(contact.hasTag(TAG_SHOT)) {
-                        //A shot does 20 damage
-                        player.health -= 20
-                    }
-                    if(contact.hasTag(TAG_BOX)) {
-                        val vel = ship.linearVelocity.len2()
-                        player.health -= (vel /15).toInt()
-                    }
-                }
-
-                if(contact.hasTag(TAG_SHOT)) {
-                    val shot = contact.bodyForTag(TAG_SHOT)
-                    bodiesToDestroy.add(shot)
-                }
-
-
-
-            }
-
-            override fun endContact(contact: Contact) {
-            }
-
-            override fun preSolve(contact: Contact, oldManifold: Manifold?) {
-            }
-
-            override fun postSolve(contact: Contact, impulse: ContactImpulse?) {
-            }
-        })
-
-        ship = world.body {
-            type = BodyDef.BodyType.DynamicBody
-            userData = TAG_SHIP
-            polygon(Vector2(-1f, -1f), Vector2(0f, 1f), Vector2(1f, -1f)) {
-                density = 1f
-            }
-            linearDamping = 1f
-            angularDamping = 5f
-        }
-
         val randomFactor = 0f..15f
 
         for (x in 0..99)
             for (y in 0..99) {
-                world.body {
-                    type = BodyDef.BodyType.StaticBody
-                    userData = TAG_BOX
-                    box(2f, 2f, vec2(x * 25f + randomFactor.random(), y * 25f + randomFactor.random()))
-                }
+                box(x * 25f + randomFactor.random(), y * 25f + randomFactor.random())
             }
     }
 
@@ -151,37 +92,15 @@ class FirstScreen : Screen {
     }
 
     override fun render(delta: Float) {
-
         Gdx.gl.glClearColor(.3f, .5f, .8f, 1f)
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT)
-        handleInput(delta)
-        updateBox2D(delta)
-        updateCamera()
-        batch.projectionMatrix = camera.combined
-        batch.use {
-        }
-        box2DDebugRenderer.render(world, camera.combined)
-    }
+        //Update viewport and camera here and nowhere else...
 
-    private fun updateCamera() {
-        camera.position.set(ship.position.x, ship.position.y, 0f)
         camera.update(true)
-    }
+        batch.projectionMatrix = camera.combined
+        engine.update(delta)
+        ui.update(delta)
 
-    private fun handleInput(delta: Float) {
-        /*
-        To make things easy, we have only one control and one
-        ship - easy
-         */
-        handleShooting(delta)
-        if (control.rotation != 0f) {
-            ship.applyTorque(20f * control.rotation, true)
-        }
-
-        val forceVector = vec2(cos(ship.angle), sin(ship.angle)).rotate90(1)
-
-        if (control.thrust > 0f)
-            ship.applyForceToCenter(forceVector.scl(100f), true)
     }
 
     override fun resize(width: Int, height: Int) {

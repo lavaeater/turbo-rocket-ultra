@@ -1,26 +1,42 @@
 package physics
 
+import com.badlogic.ashley.core.Component
+import com.badlogic.ashley.core.Entity
 import com.badlogic.gdx.physics.box2d.Body
 import com.badlogic.gdx.physics.box2d.Contact
+import com.badlogic.gdx.physics.box2d.Fixture
+import ecs.components.PlayerComponent
+import gamestate.Player
+import ktx.ashley.has
+import ktx.ashley.mapperFor
 
-
-fun Contact.bodyForTag(tag: String) : Body {
-    return if(this.fixtureA.body.userData == tag) this.fixtureA.body else this.fixtureB.body //Always returns body B if tag is not on A, this is buggy
+fun Contact.isEntityContact(): Boolean {
+    return this.fixtureA.body.userData is Entity && this.fixtureB.body.userData is Entity
 }
 
-fun Contact.hasTags(tagA: String, tagB: String) : Boolean {
-    val tags = this.tags()
-    return (tags.first == tagA && tags.second == tagB) || (tags.first == tagB && tags.second == tagA)
+fun Fixture.getEntity() : Entity {
+    return this.body.userData as Entity
 }
 
-fun Contact.tags() : Pair<String, String> {
-    return Pair(this.fixtureA.body.userData as String, this.fixtureB.body.userData as String)
+inline fun <reified T: Component>Contact.hasComponent():Boolean {
+    if(this.isEntityContact()) {
+        val mapper = mapperFor<T>()
+        return this.fixtureA.getEntity().has(mapper) ||
+                this.fixtureB.getEntity().has(mapper)
+    }
+    return false
 }
 
-fun Contact.hasTag(tag: String) : Boolean {
-    return bodies().any { it.userData == tag }
+inline fun <reified T:Component> Contact.getEntityFor(): Entity {
+    val mapper = mapperFor<T>()
+    val entityA = this.fixtureA.getEntity()
+    val entityB = this.fixtureB.getEntity()
+    return if(entityA.has(mapper)) entityA else entityB
 }
 
-fun Contact.bodies(): List<Body> {
-    return listOf(this.fixtureA.body, this.fixtureB.body)
+fun Contact.isPlayerContact(): Boolean {
+    if(this.isEntityContact()) {
+        return this.hasComponent<PlayerComponent>()
+    }
+    return false
 }

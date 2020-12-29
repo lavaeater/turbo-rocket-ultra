@@ -12,6 +12,28 @@ I normally do all my "games" with Ashley for entity management etc, but I decide
 
 What I also decided was that I shouldn't overstretch. All my games are always super-ambitious, and super-not-ever-done. So, this time, I am going to **stay** on a particular feature / function until it is done and not deal with stuff that aren't relevant right now, at all. So, in the beginning, there will be no procedural map generation or sprite / texture loading or anything like that. I started with the ship, the thrust and control and then some shooting, making sure each and everyone of those things are 100% done to the current requirements before moving on to the next thing I want to have.
 
+## Even later,  Tuesday 29th of December
+
+Never quit while behind. No, really, an important thing is this: take a break. I played some Inside with the kids and then I managed to solve the problem when returning. I implemented some display of debug info using the old Scene2d UI from other games. What had happened was that I rationalized away a separate vector for the **direction** of new shots. It worked for a while because we were going around 0,0, but as we move away, the vector used to calculate speed and direction became more and more corrupt and weird.
+
+So, mouse aim now... aims right and works. What's next? Always keep a log.
+
+Anyway, lets plan, work and analyze what we are doing: The next item on the todo-list was the ability to enter vehicles and shoot from them. That would be so friggin' cool it's not even real...
+
+So, how do we do it? Well, we can start by simply making a dumb vehicle that is AI-controlled. It can for sure use Behavior trees or sensors or something, but it needs to drive by itself...
+
+## Tuesday 29th of December
+
+Always quit when not ahead. So, I have managed to implement some kind of mouse aim. There is just two problems:
+1. It aims wrong
+2. It stops working
+
+So, the aim seems to be a few degrees off - why? Well, it could be any number of things: I use body coordinates a bunch, perhaps I should always use transform coordinates? Or what? Like, the box2d world just works as it should and should kinda be mapped to some other kind of coordinate system. Thing is, I only use the debug renderer which is not necessarily the correct thing to do.
+
+There might also be an issue with the aspect ratio of the viewport. If it does not match the screen, we might have a problem. That is most likely what's wrong...
+
+OK, whatever,  but the aiming suddenly breaking down is NOT cool. That is a gamebreaker right now. 
+
 ## Update
 
 This is my devlog.
@@ -23,6 +45,26 @@ I am going to try to make some kind of AI-training in all of this. The AI will h
 ## Roadmap
 
 ### Up next
+
+### TODO:
+* Introduce Ashley <- done
+* More variables to be able to control aspects of game, such as linear drag etc.  <- "done"
+* Better controls, as in mouse aim perhaps? <- done
+* Ability to enter vehicles and drive around / shoot from. 
+
+# Later dude
+* Draw a sprite for the character
+* Textures and sprites?
+
+## Shooting from a platform
+
+
+
+
+## Walking is different from flying 
+
+A flying ship obviously behaves differently from a walking character. <- did some things on this
+
 
 One idea is that we could try to implement some kind of AI, something that can steer the ship. But Neural Networks are very difficult to implement.
 
