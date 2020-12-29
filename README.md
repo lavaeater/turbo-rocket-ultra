@@ -12,6 +12,18 @@ I normally do all my "games" with Ashley for entity management etc, but I decide
 
 What I also decided was that I shouldn't overstretch. All my games are always super-ambitious, and super-not-ever-done. So, this time, I am going to **stay** on a particular feature / function until it is done and not deal with stuff that aren't relevant right now, at all. So, in the beginning, there will be no procedural map generation or sprite / texture loading or anything like that. I started with the ship, the thrust and control and then some shooting, making sure each and everyone of those things are 100% done to the current requirements before moving on to the next thing I want to have.
 
+## Latest, Tuesday 29th of December
+
+### Goal
+
+Make it possible to enter some kind of vehicle and man either the wheel or a gun in the vehicle. The end goal is of course to be able to play several players in the same vehicle and shoot stuff and such. Cool, huh?
+
+So, how do we do it? Well, using box2d, we can probably link bodies to each other or something - or we might have to destroy the player body in favor of a new body that is located on the vehicle in some kind of jointed way.
+
+So, first step is to create some kind of vehicle. Easy
+
+
+
 ## Even later,  Tuesday 29th of December
 
 Never quit while behind. No, really, an important thing is this: take a break. I played some Inside with the kids and then I managed to solve the problem when returning. I implemented some display of debug info using the old Scene2d UI from other games. What had happened was that I rationalized away a separate vector for the **direction** of new shots. It worked for a while because we were going around 0,0, but as we move away, the vector used to calculate speed and direction became more and more corrupt and weird.

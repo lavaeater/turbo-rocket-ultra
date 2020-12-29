@@ -33,7 +33,6 @@ class FirstScreen : Screen {
     private val control: ShipControl by lazy { Context.inject() }
     private val engine: Engine by lazy { Context.inject() }
     private val batch: PolygonSpriteBatch by lazy { Context.inject() }
-    private val ui: IUserInterface by lazy { Context.inject() }
 
     override fun show() {
         if (needsInit) {
@@ -66,8 +65,6 @@ class FirstScreen : Screen {
         camera.update(true)
         batch.projectionMatrix = camera.combined
         engine.update(delta)
-        ui.update(delta)
-
     }
 
     override fun resize(width: Int, height: Int) {

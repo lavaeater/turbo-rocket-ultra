@@ -36,7 +36,7 @@ object Context {
             bindSingleton(ShipControl())
             bindSingleton(PolygonSpriteBatch())
             bindSingleton(OrthographicCamera())
-            bindSingleton<IUserInterface>(UserInterface(inject<PolygonSpriteBatch>() as Batch, false))
+            //bindSingleton<IUserInterface>(UserInterface(inject<PolygonSpriteBatch>() as Batch, false))
             bindSingleton(
                 ExtendViewport(
                     FirstScreen.GAMEWIDTH,
