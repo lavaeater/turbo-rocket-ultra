@@ -8,12 +8,10 @@ import com.badlogic.gdx.graphics.OrthographicCamera
 import com.badlogic.gdx.graphics.g2d.PolygonSpriteBatch
 import com.badlogic.gdx.utils.viewport.ExtendViewport
 import factories.obstacle
-import factories.vehicle
 import injection.Context.inject
 import input.InputAdapter
 import input.ShipControl
 import ktx.math.random
-import ktx.math.vec2
 
 
 class FirstScreen : Screen {
@@ -50,9 +48,6 @@ class FirstScreen : Screen {
     }
 
     private fun generateMap() {
-
-        vehicle(vec2(15f, 15f))
-
         val randomFactor = 0f..15f
 
         for (x in 0..99)
