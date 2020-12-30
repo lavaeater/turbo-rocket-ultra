@@ -1,4 +1,4 @@
-package control
+package input
 
 import com.badlogic.gdx.math.Vector2
 import ktx.math.vec2
@@ -18,7 +18,7 @@ class ShipControl {
     }
 
     fun turn(amount: Float) {
-        rotation = amount
+        wheelAngle = amount
     }
 
     fun aimAt(unitVector: Vector2) {
@@ -35,7 +35,7 @@ class ShipControl {
 
     var firing: Boolean = false
         private set
-    var rotation: Float = 0f
+    var wheelAngle: Float = 0f
         private set
     var thrust: Float = 0f
         private set

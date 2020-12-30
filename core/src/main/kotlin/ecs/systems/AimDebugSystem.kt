@@ -7,15 +7,15 @@ import com.badlogic.gdx.graphics.Pixmap
 import com.badlogic.gdx.graphics.Texture
 import com.badlogic.gdx.graphics.g2d.PolygonSpriteBatch
 import com.badlogic.gdx.graphics.g2d.TextureRegion
-import control.ShipControl
-import injection.Context
+import injection.Context.inject
+import input.ShipControl
 import ktx.math.vec2
 import space.earlygrey.shapedrawer.ShapeDrawer
 
 class AimDebugSystem(
-    private val shipControl: ShipControl = Context.inject(),
-    private val batch: PolygonSpriteBatch = Context.inject(),
-    private val camera: OrthographicCamera = Context.inject()
+    private val shipControl: ShipControl = inject(),
+    private val batch: PolygonSpriteBatch = inject(),
+    private val camera: OrthographicCamera = inject()
 ) : EntitySystem() {
 
     private val region: TextureRegion by lazy {

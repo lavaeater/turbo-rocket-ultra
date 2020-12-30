@@ -1,29 +1,33 @@
-package control
+package input
 
 import com.badlogic.gdx.Gdx
 import com.badlogic.gdx.Input
 import com.badlogic.gdx.graphics.OrthographicCamera
 import com.badlogic.gdx.math.Vector2
 import com.badlogic.gdx.utils.Logger
+import ecs.components.EnterVehicleComponent
+import ecs.components.IsInVehicleComponent
+import ecs.components.LeaveVehicleComponent
 import ecs.components.TransformComponent
 import gamestate.Player
-import injection.Context
+import injection.Context.inject
 import ktx.app.KtxInputAdapter
 import ktx.ashley.get
+import ktx.ashley.hasNot
 import ktx.ashley.mapperFor
 import ktx.math.vec2
 import ktx.math.vec3
 
-class InputManager(
-    private val shipControl: ShipControl = Context.inject(),
-    private val camera : OrthographicCamera = Context.inject()) :
+class InputAdapter(
+    private val shipControl: ShipControl = inject(),
+    private val camera : OrthographicCamera = inject()) :
     KtxInputAdapter {
 
     init {
         Gdx.app.logLevel = Logger.DEBUG
     }
 
-    private val player: Player by lazy { Context.inject()}
+    private val player: Player by lazy { inject()}
     private val transform: TransformComponent by lazy { player.entity[mapperFor()]!!}
 
     override fun keyDown(keycode: Int): Boolean {
@@ -36,11 +40,20 @@ class InputManager(
         return true
     }
 
+    private fun toggleVehicle() {
+        if (player.entity.hasNot(mapperFor<IsInVehicleComponent>())) {
+            player.entity.add(EnterVehicleComponent())
+        } else {
+            player.entity.add(LeaveVehicleComponent())
+        }
+    }
+
     override fun keyUp(keycode: Int): Boolean {
         when(keycode) {
             Input.Keys.W -> shipControl.throttle(0f)
             Input.Keys.A -> shipControl.turn(0f)
             Input.Keys.D -> shipControl.turn(0f)
+            Input.Keys.J -> toggleVehicle()
             Input.Keys.SPACE -> shipControl.stopFiring()
         }
         return true

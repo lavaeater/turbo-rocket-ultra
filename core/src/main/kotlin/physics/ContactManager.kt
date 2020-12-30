@@ -1,17 +1,14 @@
 package physics
 
-import com.badlogic.ashley.core.Engine
 import com.badlogic.gdx.physics.box2d.*
-import ecs.components.BodyComponent
 import ecs.components.DestroyComponent
 import ecs.components.ObstacleComponent
 import ecs.components.ShotComponent
 import gamestate.Player
-import injection.Context
-import ktx.ashley.mapperFor
+import injection.Context.inject
 
 class ContactManager: ContactListener {
-    private val player: Player by lazy { Context.inject() }
+    private val player: Player by lazy { inject() }
     private val ship: Body by lazy { player.body }
 
     override fun beginContact(contact: Contact) {

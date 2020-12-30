@@ -7,12 +7,13 @@ import com.badlogic.gdx.graphics.GL20
 import com.badlogic.gdx.graphics.OrthographicCamera
 import com.badlogic.gdx.graphics.g2d.PolygonSpriteBatch
 import com.badlogic.gdx.utils.viewport.ExtendViewport
-import control.InputManager
-import control.ShipControl
-import factories.box
-import injection.Context
+import factories.obstacle
+import factories.vehicle
+import injection.Context.inject
+import input.InputAdapter
+import input.ShipControl
 import ktx.math.random
-import ui.IUserInterface
+import ktx.math.vec2
 
 
 class FirstScreen : Screen {
@@ -28,11 +29,11 @@ class FirstScreen : Screen {
 
     private var needsInit = true
 
-    private val camera: OrthographicCamera by lazy { Context.inject() }
-    private val viewPort: ExtendViewport by lazy { Context.inject() }
-    private val control: ShipControl by lazy { Context.inject() }
-    private val engine: Engine by lazy { Context.inject() }
-    private val batch: PolygonSpriteBatch by lazy { Context.inject() }
+    private val camera: OrthographicCamera by lazy { inject() }
+    private val viewPort: ExtendViewport by lazy { inject() }
+    private val control: ShipControl by lazy { inject() }
+    private val engine: Engine by lazy { inject() }
+    private val batch: PolygonSpriteBatch by lazy { inject() }
 
     override fun show() {
         if (needsInit) {
@@ -45,15 +46,18 @@ class FirstScreen : Screen {
     }
 
     private fun setupInput() {
-        Gdx.input.inputProcessor = InputManager(control)
+        Gdx.input.inputProcessor = InputAdapter(control)
     }
 
     private fun generateMap() {
+
+        vehicle(vec2(15f, 15f))
+
         val randomFactor = 0f..15f
 
         for (x in 0..99)
             for (y in 0..99) {
-                box(x * 25f + randomFactor.random(), y * 25f + randomFactor.random())
+                obstacle(x * 25f + randomFactor.random(), y * 25f + randomFactor.random())
             }
     }
 

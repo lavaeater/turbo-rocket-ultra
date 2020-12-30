@@ -3,21 +3,16 @@ package injection
 import com.badlogic.ashley.core.Engine
 import com.badlogic.gdx.graphics.Camera
 import com.badlogic.gdx.graphics.OrthographicCamera
-import com.badlogic.gdx.graphics.g2d.Batch
 import com.badlogic.gdx.graphics.g2d.PolygonSpriteBatch
-import com.badlogic.gdx.physics.box2d.ContactListener
 import com.badlogic.gdx.utils.viewport.ExtendViewport
-import control.ShipControl
 import ecs.systems.*
 import factories.player
-import gamestate.Player
+import input.ShipControl
 import ktx.box2d.createWorld
 import ktx.inject.Context
 import ktx.inject.register
 import physics.ContactManager
 import tru.FirstScreen
-import ui.IUserInterface
-import ui.UserInterface
 
 
 object Context {
@@ -61,6 +56,7 @@ object Context {
             addSystem(CameraUpdateSystem())
             addSystem(ControlSystem())
             addSystem(BodyDestroyerSystem(inject())) //world
+            addSystem(EnterVehicleSystem())
             //addSystem(AimDebugSystem())
         }
     }

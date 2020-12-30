@@ -2,11 +2,9 @@ package physics
 
 import com.badlogic.ashley.core.Component
 import com.badlogic.ashley.core.Entity
-import com.badlogic.gdx.physics.box2d.Body
 import com.badlogic.gdx.physics.box2d.Contact
 import com.badlogic.gdx.physics.box2d.Fixture
 import ecs.components.PlayerComponent
-import gamestate.Player
 import ktx.ashley.has
 import ktx.ashley.mapperFor
 
