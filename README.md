@@ -12,6 +12,20 @@ I normally do all my "games" with Ashley for entity management etc, but I decide
 
 What I also decided was that I shouldn't overstretch. All my games are always super-ambitious, and super-not-ever-done. So, this time, I am going to **stay** on a particular feature / function until it is done and not deal with stuff that aren't relevant right now, at all. So, in the beginning, there will be no procedural map generation or sprite / texture loading or anything like that. I started with the ship, the thrust and control and then some shooting, making sure each and everyone of those things are 100% done to the current requirements before moving on to the next thing I want to have.
 
+## Current Goal
+
+Make a driveable car.
+
+
+## Friday, 1st of January 2021
+
+A new year, a new dawn. Nauseous.
+
+So, instead of focusing on the joining of car and player (which I have already succeeded with), I will now experiment with car steering. Seeing as this is nothing but an experiment in general where the focus is mechanics etc, I can do this. The end goal is the same as stated below, and I will now introduce a "current goal"-heading above that will be updated with the notes I make per day. In the future I might break this document up in parts or yadadayada, who cares.
+
+So, current goal is "make a car". This will be a challenge for sure, but we want skidding and chaotic steering, so I will focus on that for a minute. 
+
+
 ## Latest, Tuesday 29th of December
 
 ### Goal
