@@ -10,7 +10,7 @@ import com.badlogic.gdx.utils.viewport.ExtendViewport
 import factories.obstacle
 import injection.Context.inject
 import input.InputAdapter
-import input.ShipControl
+import ecs.components.ControlComponent
 import ktx.math.random
 
 
@@ -29,7 +29,7 @@ class FirstScreen : Screen {
 
     private val camera: OrthographicCamera by lazy { inject() }
     private val viewPort: ExtendViewport by lazy { inject() }
-    private val control: ShipControl by lazy { inject() }
+    private val controlComponent: ControlComponent by lazy { inject() }
     private val engine: Engine by lazy { inject() }
     private val batch: PolygonSpriteBatch by lazy { inject() }
 
@@ -44,7 +44,7 @@ class FirstScreen : Screen {
     }
 
     private fun setupInput() {
-        Gdx.input.inputProcessor = InputAdapter(control)
+        Gdx.input.inputProcessor = InputAdapter(controlComponent)
     }
 
     private fun generateMap() {

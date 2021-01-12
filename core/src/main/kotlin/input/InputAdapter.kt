@@ -5,10 +5,7 @@ import com.badlogic.gdx.Input
 import com.badlogic.gdx.graphics.OrthographicCamera
 import com.badlogic.gdx.math.Vector2
 import com.badlogic.gdx.utils.Logger
-import ecs.components.EnterVehicleComponent
-import ecs.components.IsInVehicleComponent
-import ecs.components.LeaveVehicleComponent
-import ecs.components.TransformComponent
+import ecs.components.*
 import gamestate.Player
 import injection.Context.inject
 import ktx.app.KtxInputAdapter
@@ -19,7 +16,7 @@ import ktx.math.vec2
 import ktx.math.vec3
 
 class InputAdapter(
-    private val shipControl: ShipControl = inject(),
+    private var currentControlComponent: ControlComponent = inject(),
     private val camera : OrthographicCamera = inject()) :
     KtxInputAdapter {
 
@@ -32,10 +29,10 @@ class InputAdapter(
 
     override fun keyDown(keycode: Int): Boolean {
         when(keycode) {
-            Input.Keys.W -> shipControl.throttle(1f)
-            Input.Keys.A -> shipControl.turn(-1f)
-            Input.Keys.D -> shipControl.turn(1f)
-            Input.Keys.SPACE -> shipControl.startFiring()
+            Input.Keys.W -> currentControlComponent.throttle(1f)
+            Input.Keys.A -> currentControlComponent.turn(-1f)
+            Input.Keys.D -> currentControlComponent.turn(1f)
+            Input.Keys.SPACE -> currentControlComponent.startFiring()
         }
         return true
     }
@@ -50,11 +47,11 @@ class InputAdapter(
 
     override fun keyUp(keycode: Int): Boolean {
         when(keycode) {
-            Input.Keys.W -> shipControl.throttle(0f)
-            Input.Keys.A -> shipControl.turn(0f)
-            Input.Keys.D -> shipControl.turn(0f)
+            Input.Keys.W -> currentControlComponent.throttle(0f)
+            Input.Keys.A -> currentControlComponent.turn(0f)
+            Input.Keys.D -> currentControlComponent.turn(0f)
             Input.Keys.J -> toggleVehicle()
-            Input.Keys.SPACE -> shipControl.stopFiring()
+            Input.Keys.SPACE -> currentControlComponent.stopFiring()
         }
         return true
     }
@@ -68,7 +65,7 @@ class InputAdapter(
 
         camera.unproject(pos)
 
-        shipControl.mouseVector(pos.x, pos.y)
+        currentControlComponent.mouseVector(pos.x, pos.y)
 
         return vec2(pos.x, pos.y).sub(transform.position).nor()
     }
@@ -81,24 +78,24 @@ class InputAdapter(
         if(button == Input.Buttons.LEFT) {
 
             //Start firing
-            shipControl.startFiring()
+            currentControlComponent.startFiring()
         }
         return false
     }
 
     override fun touchDragged(screenX: Int, screenY: Int, pointer: Int): Boolean {
-        if(!shipControl.firing) {
-            shipControl.startFiring()
+        if(!currentControlComponent.firing) {
+            currentControlComponent.startFiring()
         }
         //Set angle
-        shipControl.aimAt(getAimVector(screenX, screenY))
+        currentControlComponent.aimAt(getAimVector(screenX, screenY))
 
         return false
     }
 
     override fun touchUp(screenX: Int, screenY: Int, pointer: Int, button: Int): Boolean {
         if(button == Input.Buttons.LEFT) {
-            shipControl.stopFiring()
+            currentControlComponent.stopFiring()
         }
         return false
     }

@@ -2,11 +2,28 @@ package physics
 
 import com.badlogic.ashley.core.Component
 import com.badlogic.ashley.core.Entity
+import com.badlogic.gdx.physics.box2d.Body
 import com.badlogic.gdx.physics.box2d.Contact
 import com.badlogic.gdx.physics.box2d.Fixture
+import ecs.components.BodyComponent
 import ecs.components.PlayerComponent
+import ecs.components.VehicleComponent
 import ktx.ashley.has
 import ktx.ashley.mapperFor
+
+
+object Mappers {
+    val bodyMapper = mapperFor<BodyComponent>()
+    val vehicleMapper = mapperFor<VehicleComponent>()
+}
+
+fun Entity.body() : Body {
+    return Mappers.bodyMapper.get(this).body
+}
+
+fun Entity.vehicle() : VehicleComponent {
+    return Mappers.vehicleMapper.get(this)
+}
 
 fun Contact.isEntityContact(): Boolean {
     return this.fixtureA.body.userData is Entity && this.fixtureB.body.userData is Entity

@@ -13,7 +13,7 @@ import com.badlogic.gdx.utils.viewport.ExtendViewport
 import ecs.components.PlayerComponent
 import ecs.components.TransformComponent
 import injection.Context.inject
-import input.ShipControl
+import ecs.components.ControlComponent
 import ktx.ashley.allOf
 import ktx.ashley.get
 import ktx.ashley.mapperFor
@@ -59,10 +59,10 @@ class UserInterface(
     infoLabel.setText("""
       Player: ${transform.position}
       MouseScreen: $mouseVector
-      MouseWorld: ${shipControl.mousePosition}
-      AimVector: ${shipControl.aimVector}
-      ShotPos: ${transform.position.cpy().add(shipControl.aimVector.cpy().scl(3f))}
-      ShotVelocity: ${shipControl.aimVector.cpy().scl(1000f)}
+      MouseWorld: ${controlComponent.mousePosition}
+      AimVector: ${controlComponent.aimVector}
+      ShotPos: ${transform.position.cpy().add(controlComponent.aimVector.cpy().scl(3f))}
+      ShotVelocity: ${controlComponent.aimVector.cpy().scl(1000f)}
     """.trimIndent())
   }
 
@@ -87,7 +87,7 @@ class UserInterface(
     setupCoronaStats()
   }
 
-  private val shipControl: ShipControl by lazy { inject() }
+  private val controlComponent: ControlComponent by lazy { inject() }
   private val engine: Engine by lazy { inject() }
   private val playerEntity: Entity by lazy { engine.getEntitiesFor(allOf(PlayerComponent::class).get()).first() }
   private val transform: TransformComponent by lazy { playerEntity[mapperFor()]!! }

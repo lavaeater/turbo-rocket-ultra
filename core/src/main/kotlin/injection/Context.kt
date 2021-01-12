@@ -5,9 +5,9 @@ import com.badlogic.gdx.graphics.Camera
 import com.badlogic.gdx.graphics.OrthographicCamera
 import com.badlogic.gdx.graphics.g2d.PolygonSpriteBatch
 import com.badlogic.gdx.utils.viewport.ExtendViewport
+import ecs.components.ControlComponent
 import ecs.systems.*
 import factories.player
-import input.ShipControl
 import ktx.box2d.createWorld
 import ktx.inject.Context
 import ktx.inject.register
@@ -28,7 +28,7 @@ object Context {
 
     private fun buildContext() {
         context.register {
-            bindSingleton(ShipControl())
+            bindSingleton(ControlComponent())
             bindSingleton(PolygonSpriteBatch())
             bindSingleton(OrthographicCamera())
             //bindSingleton<IUserInterface>(UserInterface(inject<PolygonSpriteBatch>() as Batch, false))
@@ -54,7 +54,7 @@ object Context {
                 inject(), //Box2dWorld
                 inject())) //Camera
             addSystem(CameraUpdateSystem())
-            addSystem(ControlSystem())
+            addSystem(PlayerControlSystem())
             addSystem(BodyDestroyerSystem(inject())) //world
             addSystem(EnterVehicleSystem())
             //addSystem(AimDebugSystem())

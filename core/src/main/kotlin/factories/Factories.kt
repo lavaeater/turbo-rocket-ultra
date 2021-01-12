@@ -93,7 +93,7 @@ fun player(): Player {
         add(AimComponent())
         add(BodyComponent(body))
         add(TransformComponent())
-        add(ControlComponent())
+        add(inject<ControlComponent>()) //We will have multiple components later
         add(PlayerComponent())
     }
 

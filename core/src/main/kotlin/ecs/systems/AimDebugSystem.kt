@@ -8,12 +8,12 @@ import com.badlogic.gdx.graphics.Texture
 import com.badlogic.gdx.graphics.g2d.PolygonSpriteBatch
 import com.badlogic.gdx.graphics.g2d.TextureRegion
 import injection.Context.inject
-import input.ShipControl
+import ecs.components.ControlComponent
 import ktx.math.vec2
 import space.earlygrey.shapedrawer.ShapeDrawer
 
 class AimDebugSystem(
-    private val shipControl: ShipControl = inject(),
+    private val controlComponent: ControlComponent = inject(),
     private val batch: PolygonSpriteBatch = inject(),
     private val camera: OrthographicCamera = inject()
 ) : EntitySystem() {
@@ -31,7 +31,7 @@ class AimDebugSystem(
     private val shapeDrawer = ShapeDrawer(batch, region)
 
     override fun update(deltaTime: Float) {
-        if (shipControl.firing) {
+        if (controlComponent.firing) {
             batch.begin()
             val camVec = vec2(camera.position.x, camera.position.y)
             //shapeDrawer.line(shipControl.mouseVector, camVec)
