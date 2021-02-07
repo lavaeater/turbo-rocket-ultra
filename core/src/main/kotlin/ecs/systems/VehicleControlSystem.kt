@@ -10,6 +10,13 @@ import injection.Context.inject
 import ktx.ashley.allOf
 import physics.body
 
+/**
+ * Should probably be split into several systems
+ * One for input,
+ * one for friction and other forces...
+ */
+
+
 class VehicleControlSystem: IteratingSystem(
     allOf(
         VehicleComponent::class,
@@ -25,7 +32,15 @@ class VehicleControlSystem: IteratingSystem(
 
         Anyways, we will follow this article and try to make the car behave "realistically"
 
-        So, this happens after physics updates. So we cancel out the
+        So, this happens after physics updates. So we cancel out the sideways and angular
+        velocitites - but we shouldn't actually do that. That is only because the tutorial
+        eliminates the angular velocity, but we want angular velocity to be a thing...
+
+        Perhaps we should actually have tyres? To make all this slightly simpler?
+
+        Why am I doing a car, again? Is there some highter purpose to all of this? Yes,
+        it is exploration of game mechanics
+
          */
 
         val carBody = entity.body()
@@ -33,6 +48,8 @@ class VehicleControlSystem: IteratingSystem(
         val latVelocity = currentRightNormal.scl(carBody.linearVelocity.dot(currentRightNormal))
 
         carBody.applyLinearImpulse(latVelocity.scl(-1f * carBody.mass), carBody.worldCenter, true)
+        carBody.applyAngularImpulse(0.1f * carBody.inertia * -carBody.angularVelocity, true )
+
 
 
         handleInput()
