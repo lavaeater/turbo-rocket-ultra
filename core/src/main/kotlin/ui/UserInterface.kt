@@ -59,10 +59,10 @@ class UserInterface(
     infoLabel.setText("""
       Player: ${transform.position}
       MouseScreen: $mouseVector
-      MouseWorld: ${controlComponent.mousePosition}
-      AimVector: ${controlComponent.aimVector}
-      ShotPos: ${transform.position.cpy().add(controlComponent.aimVector.cpy().scl(3f))}
-      ShotVelocity: ${controlComponent.aimVector.cpy().scl(1000f)}
+      MouseWorld: ${controlMapper.mousePosition}
+      AimVector: ${controlMapper.aimVector}
+      ShotPos: ${transform.position.cpy().add(controlMapper.aimVector.cpy().scl(3f))}
+      ShotVelocity: ${controlMapper.aimVector.cpy().scl(1000f)}
     """.trimIndent())
   }
 
@@ -87,7 +87,7 @@ class UserInterface(
     setupCoronaStats()
   }
 
-  private val controlComponent: ControlMapper by lazy { inject() }
+  private val controlMapper: ControlMapper by lazy { inject() }
   private val engine: Engine by lazy { inject() }
   private val playerEntity: Entity by lazy { engine.getEntitiesFor(allOf(PlayerComponent::class).get()).first() }
   private val transform: TransformComponent by lazy { playerEntity[mapperFor()]!! }

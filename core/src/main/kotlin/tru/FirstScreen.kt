@@ -16,8 +16,8 @@ import ktx.math.random
 class FirstScreen : Screen {
 
     companion object {
-        const val SHIP_DENSITY = 1f
-        const val CAR_DENSITY = 1f
+        const val SHIP_DENSITY = .1f
+        const val CAR_DENSITY = .1f
         const val SHIP_LINEAR_DAMPING = 10f
         const val SHIP_ANGULAR_DAMPING = 10f
 
