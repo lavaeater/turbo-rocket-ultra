@@ -10,6 +10,11 @@ If we were using an XBOX360 controller, this would be easy. One stick controls t
 How do we implement this for our car - player thing while not having a controller, right now? 
 We have to separate aiming and movement. For this, for now, we will use mouse controlling aim and keyboard controlling movement. Then we can "simply" switch so that the movement controls controll the vehicle instead of the player.
 
+But even more "for now", I would like to focus on the controlling of the vehicle, so I might simply remove the player control system when jumping into the vehicle.
+
+1. When player presses J, remove player control system - this will instead be a component thing later
+2. Make sure vehicle control system is running. Might need some debugging. 
+
 ## En anglais
 
 So, the text below is in swedish, sorry 'bout that. I will switch to english from now on.
@@ -141,5 +146,5 @@ Det här gör vi på det gamla vanliga sättet. Vi bygger en box2d-värld, vi kl
 
 Oj oj oj,  vad roligt. Vi kan göra en box2d-kropp med leder, per tutorials etc. Superkul ju.
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbLTE0OTk0ODMwNDMsNjkzMjIyODc2XX0=
+eyJoaXN0b3J5IjpbNzQxMDA3NTMxLDY5MzIyMjg3Nl19
 -->
