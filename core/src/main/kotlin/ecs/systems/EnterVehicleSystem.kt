@@ -19,6 +19,7 @@ class EnterVehicleSystem : IteratingSystem(allOf(EnterVehicleComponent::class).g
     override fun processEntity(entity: Entity, deltaTime: Float) {
         if(entity.hasNot(isInVehicleMapper)) {
             entity.add(IsInVehicleComponent())
+            engine.removeSystem(engine.getSystem(PlayerControlSystem::class.java))
             val pBody = bodyMapper.get(entity).body
 
             val vBody = vehicle(pBody.position)

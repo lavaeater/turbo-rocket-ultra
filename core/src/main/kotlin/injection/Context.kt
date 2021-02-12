@@ -57,6 +57,7 @@ object Context {
             addSystem(PlayerControlSystem())
             addSystem(BodyDestroyerSystem(inject())) //world
             addSystem(EnterVehicleSystem())
+            addSystem(VehicleControlSystem())
             //addSystem(AimDebugSystem())
         }
     }

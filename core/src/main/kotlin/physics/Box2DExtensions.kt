@@ -2,6 +2,7 @@ package physics
 
 import com.badlogic.ashley.core.Component
 import com.badlogic.ashley.core.Entity
+import com.badlogic.gdx.math.Vector2
 import com.badlogic.gdx.physics.box2d.Body
 import com.badlogic.gdx.physics.box2d.Contact
 import com.badlogic.gdx.physics.box2d.Fixture
@@ -10,11 +11,31 @@ import ecs.components.PlayerComponent
 import ecs.components.VehicleComponent
 import ktx.ashley.has
 import ktx.ashley.mapperFor
+import ktx.math.times
 
 
 object Mappers {
     val bodyMapper = mapperFor<BodyComponent>()
     val vehicleMapper = mapperFor<VehicleComponent>()
+}
+
+
+fun Body.rightNormal() : Vector2 {
+    return this.getWorldVector(Vector2.X)
+}
+
+fun Body.lateralVelocity() : Vector2 {
+    val rightNormal = this.rightNormal()
+    return rightNormal * this.linearVelocity.dot(rightNormal)
+}
+
+fun Body.forwardNormal(): Vector2 {
+    return this.getWorldVector(Vector2.Y)
+}
+
+fun Body.forwardVelocity() : Vector2 {
+    val forwardNormal = this.forwardNormal()
+    return forwardNormal * this.linearVelocity.dot(forwardNormal)
 }
 
 fun Entity.body() : Body {
