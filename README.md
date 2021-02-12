@@ -1,5 +1,8 @@
 # turbo-rocket-ultra
 
+## Collecting thoughts on controls of more than one entity
+So I am working on making the character entity have the ability to enter a vehicle. This could be really cool for a multiplayer game where one player could steer the vehicle and the other players manning guns etc. Inspirations for this concept is of course Lovers in a Dangerous SpaceTime and HellDivers (but in helldivers the mechanic isn't very good, the tanks are a bit use
+
 ## En anglais
 
 So, the text below is in swedish, sorry 'bout that. I will switch to english from now on.
@@ -131,5 +134,5 @@ Det här gör vi på det gamla vanliga sättet. Vi bygger en box2d-värld, vi kl
 
 Oj oj oj,  vad roligt. Vi kan göra en box2d-kropp med leder, per tutorials etc. Superkul ju.
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbLTQ0MTYyNTQzMF19
+eyJoaXN0b3J5IjpbLTEwNzkwNjA3MF19
 -->
