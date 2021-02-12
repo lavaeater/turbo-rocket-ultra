@@ -130,3 +130,6 @@ Vår kontroll ska vara thrust-rotation-baserad. Så spelaren använder någon ko
 Det här gör vi på det gamla vanliga sättet. Vi bygger en box2d-värld, vi klistrar på texturer på de objekten, allt blir bra. Men hur fungerar det då...
 
 Oj oj oj,  vad roligt. Vi kan göra en box2d-kropp med leder, per tutorials etc. Superkul ju.
+<!--stackedit_data:
+eyJoaXN0b3J5IjpbLTQ0MTYyNTQzMF19
+-->
