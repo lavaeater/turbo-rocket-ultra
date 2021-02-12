@@ -6,17 +6,17 @@ import com.badlogic.gdx.math.Vector2
 import com.badlogic.gdx.physics.box2d.Body
 import com.badlogic.gdx.physics.box2d.Contact
 import com.badlogic.gdx.physics.box2d.Fixture
-import ecs.components.BodyComponent
-import ecs.components.PlayerComponent
-import ecs.components.VehicleComponent
+import ecs.components.*
 import ktx.ashley.has
 import ktx.ashley.mapperFor
 import ktx.math.times
 
 
 object Mappers {
+    val playerControlMapper = mapperFor<PlayerControlComponent>()
     val bodyMapper = mapperFor<BodyComponent>()
     val vehicleMapper = mapperFor<VehicleComponent>()
+    val vehicleControlMapper = mapperFor<VehicleControlComponent>()
 }
 
 
@@ -40,6 +40,16 @@ fun Body.forwardVelocity() : Vector2 {
 
 fun Entity.body() : Body {
     return Mappers.bodyMapper.get(this).body
+}
+
+
+
+fun Entity.vehicleControlComponent() : VehicleControlComponent {
+    return Mappers.vehicleControlMapper.get(this)
+}
+
+fun Entity.playerControlComponent() : PlayerControlComponent {
+    return Mappers.playerControlMapper.get(this)
 }
 
 fun Entity.vehicle() : VehicleComponent {

@@ -10,10 +10,10 @@ import com.badlogic.gdx.scenes.scene2d.Stage
 import com.badlogic.gdx.scenes.scene2d.ui.Label
 import com.badlogic.gdx.utils.Align
 import com.badlogic.gdx.utils.viewport.ExtendViewport
+import ecs.components.ControlMapper
 import ecs.components.PlayerComponent
 import ecs.components.TransformComponent
 import injection.Context.inject
-import ecs.components.ControlComponent
 import ktx.ashley.allOf
 import ktx.ashley.get
 import ktx.ashley.mapperFor
@@ -87,7 +87,7 @@ class UserInterface(
     setupCoronaStats()
   }
 
-  private val controlComponent: ControlComponent by lazy { inject() }
+  private val controlComponent: ControlMapper by lazy { inject() }
   private val engine: Engine by lazy { inject() }
   private val playerEntity: Entity by lazy { engine.getEntitiesFor(allOf(PlayerComponent::class).get()).first() }
   private val transform: TransformComponent by lazy { playerEntity[mapperFor()]!! }

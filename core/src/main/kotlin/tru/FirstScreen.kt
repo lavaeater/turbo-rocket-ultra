@@ -7,7 +7,6 @@ import com.badlogic.gdx.graphics.GL20
 import com.badlogic.gdx.graphics.OrthographicCamera
 import com.badlogic.gdx.graphics.g2d.PolygonSpriteBatch
 import com.badlogic.gdx.utils.viewport.ExtendViewport
-import ecs.components.ControlComponent
 import factories.obstacle
 import injection.Context.inject
 import input.InputAdapter
@@ -30,7 +29,6 @@ class FirstScreen : Screen {
 
     private val camera: OrthographicCamera by lazy { inject() }
     private val viewPort: ExtendViewport by lazy { inject() }
-    private val controlComponent: ControlComponent by lazy { inject() }
     private val engine: Engine by lazy { inject() }
     private val batch: PolygonSpriteBatch by lazy { inject() }
 
@@ -45,7 +43,7 @@ class FirstScreen : Screen {
     }
 
     private fun setupInput() {
-        Gdx.input.inputProcessor = InputAdapter(controlComponent)
+        Gdx.input.inputProcessor = InputAdapter()
     }
 
     private fun generateMap() {

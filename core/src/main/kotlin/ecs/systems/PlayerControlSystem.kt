@@ -1,56 +1,50 @@
 package ecs.systems
 
-import com.badlogic.ashley.core.EntitySystem
-import com.badlogic.gdx.Gdx
+import com.badlogic.ashley.core.Entity
+import com.badlogic.ashley.systems.IteratingSystem
 import com.badlogic.gdx.math.MathUtils
-import com.badlogic.gdx.utils.Logger
-import ecs.components.ControlComponent
+import ecs.components.BodyComponent
+import ecs.components.PlayerControlComponent
 import ecs.components.TransformComponent
 import factories.shot
-import gamestate.Player
-import injection.Context.inject
-import ktx.ashley.get
+import ktx.ashley.allOf
 import ktx.ashley.mapperFor
 import ktx.math.vec2
 
 class PlayerControlSystem(
-    private val rof: Float = 0.1f,
-    private val controlComponent: ControlComponent = inject()): EntitySystem() {
+    private val rof: Float = 0.1f): IteratingSystem(allOf(PlayerControlComponent::class, BodyComponent::class).get()) {
     private var lastShot = 0f
-    private val player: Player by lazy { inject()  }
+    private val pccMapper = mapperFor<PlayerControlComponent>()
+    private val bcMapper = mapperFor<BodyComponent>()
+    private val tcMapper = mapperFor<TransformComponent>()
 
-    init {
-        Gdx.app.logLevel = Logger.DEBUG
+    override fun processEntity(entity: Entity, deltaTime: Float) {
+        val pcc = pccMapper.get(entity)
+        val bc = bcMapper.get(entity)
+        val tc = tcMapper.get(entity)
+        handleShooting(pcc, tc, deltaTime)
+        handleInput(pcc, bc)
     }
 
-    override fun update(deltaTime: Float) {
-        handleShooting(deltaTime)
-        handleInput()
-    }
-
-
-    private val transformMapper = mapperFor<TransformComponent>()
-
-    // Move to a system
-    private fun handleShooting(delta: Float) {
-        if (controlComponent.firing) {
+    private fun handleShooting(playerControlComponent: PlayerControlComponent, transformComponent: TransformComponent, delta: Float) {
+        if (playerControlComponent.firing) {
             lastShot += delta
             if (lastShot > rof) {
                 lastShot = 0f
-                shot(player.entity[transformMapper]!!.position.cpy().add(controlComponent.aimVector.cpy().scl(3f)),
-                    controlComponent.aimVector.cpy())
+                shot(transformComponent.position.cpy().add(playerControlComponent.aimVector.cpy().scl(3f)),
+                    playerControlComponent.aimVector.cpy())
             }
         }
     }
 
-    private fun handleInput() {
-        if (controlComponent.angleA != 0f) {
-            player.body.applyTorque(50f * controlComponent.angleA, true)
+    private fun handleInput(playerControlComponent: PlayerControlComponent, bodyComponent: BodyComponent) {
+        if (playerControlComponent.turning != 0f) {
+            bodyComponent.body.applyTorque(50f * playerControlComponent.turning, true)
         }
 
-        val forceVector = vec2(MathUtils.cos(player.body.angle), MathUtils.sin(player.body.angle)).rotate90(1)
+        val forceVector = vec2(MathUtils.cos(bodyComponent.body.angle), MathUtils.sin(bodyComponent.body.angle)).rotate90(1)
 
-        if (controlComponent.thrust > 0f)
-            player.body.applyForceToCenter(forceVector.scl(200f), true)
+        if (playerControlComponent.walking != 0f)
+            bodyComponent.body.applyForceToCenter(forceVector.scl(200f), true)
     }
 }

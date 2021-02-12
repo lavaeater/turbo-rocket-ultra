@@ -37,6 +37,7 @@ fun vehicle(at: Vector2): Body {
     val entity = engine().createEntity().apply {
         add(BodyComponent(body))
         add(TransformComponent(body.position))
+        add(VehicleControlComponent(inject()))
         add(VehicleComponent())
     }
     body.userData = entity
@@ -95,7 +96,7 @@ fun player(): Player {
         add(AimComponent())
         add(BodyComponent(body))
         add(TransformComponent())
-        add(inject<ControlComponent>()) //We will have multiple components later
+        add(PlayerControlComponent(inject())) //We will have multiple components later
         add(PlayerComponent())
     }
 
