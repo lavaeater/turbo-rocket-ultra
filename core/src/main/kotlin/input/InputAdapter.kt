@@ -73,13 +73,7 @@ class InputAdapter(
     }
 
     override fun touchDown(screenX: Int, screenY: Int, pointer: Int, button: Int): Boolean {
-        /*
-        Any button means shooting... no.
-         */
-
         if(button == Input.Buttons.LEFT) {
-
-            //Start firing
             currentControlComponent.startFiring()
         }
         return false
