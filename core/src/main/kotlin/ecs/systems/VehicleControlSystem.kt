@@ -29,7 +29,7 @@ class VehicleControlSystem : IteratingSystem(allOf(
             skidImpulse.scl(maxImpulse / skidImpulse.len())
 
         carBody.applyLinearImpulse(skidImpulse, carBody.worldCenter, true)
-//        carBody.applyAngularImpulse(0.1f * carBody.inertia * -carBody.angularVelocity, true)
+        carBody.applyAngularImpulse(0.1f * carBody.inertia * -carBody.angularVelocity, true)
 
         val forwardNormal = carBody.forwardVelocity()
         val currentForwardSpeed = forwardNormal.len()
@@ -39,10 +39,10 @@ class VehicleControlSystem : IteratingSystem(allOf(
 
     private fun handleInput(vehicleControl: VehicleControlComponent, carBody: Body) {
         if (vehicleControl.turning != 0f) {
-            carBody.applyTorque(25f * vehicleControl.turning, true)
+            carBody.applyTorque(vehicleControl.torque * vehicleControl.turning, true)
         }
 
         if (vehicleControl.acceleration != 0f)
-            carBody.applyForceToCenter(carBody.forwardNormal().scl(50f * vehicleControl.acceleration), true)
+            carBody.applyForceToCenter(carBody.forwardNormal().scl(vehicleControl.maxThrust * vehicleControl.acceleration), true)
     }
 }
