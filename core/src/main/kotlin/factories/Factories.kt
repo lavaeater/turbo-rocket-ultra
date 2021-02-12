@@ -29,7 +29,9 @@ fun vehicle(at: Vector2): Body {
      */
     val body = world().body {
         type = BodyDef.BodyType.DynamicBody
-        box(2f, 4f, at, 0f)
+        box(2f, 4f, at, 0f) {
+            density = FirstScreen.CAR_DENSITY
+        }
     }
 
     val entity = engine().createEntity().apply {

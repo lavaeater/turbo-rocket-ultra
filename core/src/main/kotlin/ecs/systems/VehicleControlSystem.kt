@@ -54,9 +54,14 @@ class VehicleControlSystem: IteratingSystem(
 
         val carBody = entity.body()
         val latVelocity = carBody.lateralVelocity()
+        val skidImpulse = latVelocity.scl(-1f * carBody.mass)
+        val maxImpulse = 3f
+        if(skidImpulse.len() > maxImpulse)
+            skidImpulse.scl(maxImpulse / skidImpulse.len())
 
-        carBody.applyLinearImpulse(latVelocity.scl(-1f * carBody.mass), carBody.worldCenter, true)
-        //carBody.applyAngularImpulse(0.1f * carBody.inertia * -carBody.angularVelocity, true )
+        carBody.applyLinearImpulse(skidImpulse, carBody.worldCenter, true)
+        //in updateFriction, lateral velocity handling section
+        carBody.applyAngularImpulse(0.1f * carBody.inertia * -carBody.angularVelocity, true )
 
         val forwardNormal = carBody.forwardVelocity()
         val currentForwardSpeed = forwardNormal.len()
@@ -67,14 +72,14 @@ class VehicleControlSystem: IteratingSystem(
     }
 
     private fun handleInput(carBody: Body) {
-        if (controlComponent.wheelAngle != 0f) {
-            carBody.applyTorque(500f * controlComponent.wheelAngle, true)
+        if (controlComponent.angleA != 0f) {
+            carBody.applyTorque(500f * controlComponent.angleA, true)
         }
 
         val forceVector = vec2(MathUtils.cos(carBody.angle), MathUtils.sin(carBody.angle)).rotate90(1)
 
-        if (controlComponent.thrust > 0f)
-            carBody.applyForceToCenter( forceVector.scl(100f) * carBody.forwardNormal(), true)
+        if (controlComponent.thrust != 0f)
+            carBody.applyForceToCenter( carBody.forwardNormal().scl(5000f * controlComponent.thrust), true)
             //carBody.applyForceToCenter(forceVector.scl(200f), true)
     }
 }

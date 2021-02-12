@@ -30,8 +30,9 @@ class InputAdapter(
     override fun keyDown(keycode: Int): Boolean {
         when(keycode) {
             Input.Keys.W -> currentControlComponent.throttle(1f)
-            Input.Keys.A -> currentControlComponent.turn(-1f)
-            Input.Keys.D -> currentControlComponent.turn(1f)
+            Input.Keys.S -> currentControlComponent.throttle(-1f)
+            Input.Keys.A -> currentControlComponent.turnA(-1f)
+            Input.Keys.D -> currentControlComponent.turnA(1f)
             Input.Keys.SPACE -> currentControlComponent.startFiring()
         }
         return true
@@ -48,8 +49,9 @@ class InputAdapter(
     override fun keyUp(keycode: Int): Boolean {
         when(keycode) {
             Input.Keys.W -> currentControlComponent.throttle(0f)
-            Input.Keys.A -> currentControlComponent.turn(0f)
-            Input.Keys.D -> currentControlComponent.turn(0f)
+            Input.Keys.A -> currentControlComponent.turnA(0f)
+            Input.Keys.S -> currentControlComponent.throttle(0f)
+            Input.Keys.D -> currentControlComponent.turnA(0f)
             Input.Keys.J -> toggleVehicle()
             Input.Keys.SPACE -> currentControlComponent.stopFiring()
         }

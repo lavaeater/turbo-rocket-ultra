@@ -44,8 +44,8 @@ class PlayerControlSystem(
     }
 
     private fun handleInput() {
-        if (controlComponent.wheelAngle != 0f) {
-            player.body.applyTorque(50f * controlComponent.wheelAngle, true)
+        if (controlComponent.angleA != 0f) {
+            player.body.applyTorque(50f * controlComponent.angleA, true)
         }
 
         val forceVector = vec2(MathUtils.cos(player.body.angle), MathUtils.sin(player.body.angle)).rotate90(1)

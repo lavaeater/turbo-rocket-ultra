@@ -18,8 +18,8 @@ class ControlComponent : Component {
         thrust = amount
     }
 
-    fun turn(amount: Float) {
-        wheelAngle = amount
+    fun turnA(amount: Float) {
+        angleA = amount
     }
 
     fun aimAt(unitVector: Vector2) {
@@ -36,7 +36,7 @@ class ControlComponent : Component {
 
     var firing: Boolean = false
         private set
-    var wheelAngle: Float = 0f
+    var angleA: Float = 0f
         private set
     var thrust: Float = 0f
         private set

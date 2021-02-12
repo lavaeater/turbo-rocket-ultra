@@ -7,10 +7,10 @@ import com.badlogic.gdx.graphics.GL20
 import com.badlogic.gdx.graphics.OrthographicCamera
 import com.badlogic.gdx.graphics.g2d.PolygonSpriteBatch
 import com.badlogic.gdx.utils.viewport.ExtendViewport
+import ecs.components.ControlComponent
 import factories.obstacle
 import injection.Context.inject
 import input.InputAdapter
-import ecs.components.ControlComponent
 import ktx.math.random
 
 
@@ -18,6 +18,7 @@ class FirstScreen : Screen {
 
     companion object {
         const val SHIP_DENSITY = 1f
+        const val CAR_DENSITY = 1f
         const val SHIP_LINEAR_DAMPING = 10f
         const val SHIP_ANGULAR_DAMPING = 10f
 
