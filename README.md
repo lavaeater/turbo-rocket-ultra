@@ -8,6 +8,7 @@ Now, there is nothing stopping me from controlling BOTH the car and the player c
 If we were using an XBOX360 controller, this would be easy. One stick controls the player, the other the car, etc. Basically, instead of controlling player movement with one stick, this would control vehicle movement. 
 
 How do we implement this for our car - player thing while not having a controller, right now? 
+We have to separate aiming and movement. For this, for now, we will use mouse controlling aim and keyboard controlling movement. Then we can "simply" switch so that the movement controls controll the vehicle instead of the player.
 
 ## En anglais
 
@@ -140,5 +141,5 @@ Det här gör vi på det gamla vanliga sättet. Vi bygger en box2d-värld, vi kl
 
 Oj oj oj,  vad roligt. Vi kan göra en box2d-kropp med leder, per tutorials etc. Superkul ju.
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbLTEwNzk4OTk0Myw2OTMyMjI4NzZdfQ==
+eyJoaXN0b3J5IjpbLTE0OTk0ODMwNDMsNjkzMjIyODc2XX0=
 -->
