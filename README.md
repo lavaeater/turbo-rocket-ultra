@@ -5,7 +5,9 @@ So I am working on making the character entity have the ability to enter a vehic
 So, the problem of taking breaks and not taking notes of what you're doing is that when you return to the code, the code doesn't make sense - because it is only half way done. And here we are.
 So... in this first iteration, there is no need for me to be able to control the player entity that is now shooting guns from a tower or something. What I need to figure out is how to control the car.
 Now, there is nothing stopping me from controlling BOTH the car and the player character, in principal. There however seem to be code or concepts missing from the code altogheter. Like, the car can drive, but it only drives because we are affecting the player body with forces, no forces are actually applied to the car body itself. So before I make that happen, I figured I had to come up with an idea of how all of this should work. 
-If we were using an XBOX360 controller, this would be easy. 
+If we were using an XBOX360 controller, this would be easy. One stick controls the player, the other the car, etc. Basically, instead of controlling player movement with one stick, this would control vehicle movement. 
+
+How do we implement this for our car - player thing while not having a controller, right now? 
 
 ## En anglais
 
@@ -138,5 +140,5 @@ Det här gör vi på det gamla vanliga sättet. Vi bygger en box2d-värld, vi kl
 
 Oj oj oj,  vad roligt. Vi kan göra en box2d-kropp med leder, per tutorials etc. Superkul ju.
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbNjkzMjIyODc2XX0=
+eyJoaXN0b3J5IjpbLTEwNzk4OTk0Myw2OTMyMjI4NzZdfQ==
 -->
