@@ -24,7 +24,7 @@ class VehicleControlSystem : IteratingSystem(allOf(
     private fun handleFriction(carBody: Body) {
         val latVelocity = carBody.lateralVelocity()
         val skidImpulse = latVelocity.scl(-1f * carBody.mass)
-        val maxImpulse = 3f
+        val maxImpulse = 1f
         if (skidImpulse.len() > maxImpulse)
             skidImpulse.scl(maxImpulse / skidImpulse.len())
 
