@@ -22,9 +22,10 @@ class EnterVehicleSystem : IteratingSystem(allOf(EnterVehicleComponent::class, P
             entity.add(IsInVehicleComponent())
             entity.playerControlComponent().stationary = true
             val pBody = bodyMapper.get(entity).body
-            val vBody = vehicle(pBody.position)
-            vBody.revoluteJointWith(pBody) {
-                initialize(vBody, pBody, pBody.worldCenter)
+            val vBody = vehicle(pBody.worldCenter)
+            pBody.revoluteJointWith(vBody) {
+                localAnchorA.set(bodyA.localCenter)
+                localAnchorB.set(bodyB.localCenter)
             }
         }
     }

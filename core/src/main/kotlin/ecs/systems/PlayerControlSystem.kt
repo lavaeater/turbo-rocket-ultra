@@ -12,7 +12,9 @@ import ktx.ashley.mapperFor
 import ktx.math.vec2
 
 class PlayerControlSystem(
-    private val rof: Float = 0.1f): IteratingSystem(allOf(PlayerControlComponent::class, BodyComponent::class).get()) {
+    private val rof: Float = 0.1f,
+    private val torque: Float = 5f,
+    private val thrust: Float = 50f): IteratingSystem(allOf(PlayerControlComponent::class, BodyComponent::class).get()) {
     private var lastShot = 0f
     private val pccMapper = mapperFor<PlayerControlComponent>()
     private val bcMapper = mapperFor<BodyComponent>()
@@ -39,12 +41,12 @@ class PlayerControlSystem(
 
     private fun handleInput(playerControlComponent: PlayerControlComponent, bodyComponent: BodyComponent) {
         if (playerControlComponent.turning != 0f) {
-            bodyComponent.body.applyTorque(50f * playerControlComponent.turning, true)
+            bodyComponent.body.applyTorque(torque * playerControlComponent.turning, true)
         }
 
         val forceVector = vec2(MathUtils.cos(bodyComponent.body.angle), MathUtils.sin(bodyComponent.body.angle)).rotate90(1)
 
         if (playerControlComponent.walking != 0f)
-            bodyComponent.body.applyForceToCenter(forceVector.scl(200f), true)
+            bodyComponent.body.applyForceToCenter(forceVector.scl(thrust), true)
     }
 }

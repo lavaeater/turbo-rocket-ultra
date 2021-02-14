@@ -29,7 +29,8 @@ fun vehicle(at: Vector2): Body {
      */
     val body = world().body {
         type = BodyDef.BodyType.DynamicBody
-        box(2f, 4f, at, 0f) {
+        position.set(at)
+        box(2f, 4f) {
             density = FirstScreen.CAR_DENSITY
         }
     }
@@ -87,6 +88,9 @@ fun player(): Player {
         polygon(Vector2(-1f, -1f), Vector2(0f, 1f), Vector2(1f, -1f)) {
             density = FirstScreen.SHIP_DENSITY
         }
+//        polygon(Vector2(-10f, -10f), Vector2(-9f, -8f), Vector2(-11f, -8f)) {
+//            density = FirstScreen.SHIP_DENSITY
+//        }
         linearDamping = FirstScreen.SHIP_LINEAR_DAMPING
         angularDamping = FirstScreen.SHIP_ANGULAR_DAMPING
     }
