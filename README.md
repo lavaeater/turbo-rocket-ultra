@@ -3,7 +3,9 @@
 ## Collecting thoughts on controls of more than one entity
 
 ### Current Control System
-So, I separated control logic into two different systems, VehicleControlSystem and PlayerControlSystem. They both act on entities that have the VehicleControlComponent and PlayerControlComponent, respectively. These map input data from an InputMapper into different values on the components. When the player enters a vehicle, the PlayerControlComponent simply gets a fla
+So, I separated control logic into two different systems, VehicleControlSystem and PlayerControlSystem. They both act on entities that have the VehicleControlComponent and PlayerControlComponent, respectively. These map input data from an InputMapper into different values on the components. When the player enters a vehicle, the PlayerControlComponent simply gets a flag set that indicates that he no longer will be walking around.
+
+Also, an important note: when creating Box2D bodies and fixtures, the fixtures are positioned relative to the body's center, not the world. That took me... more time than it should to figure out.
 
 So I am working on making the character entity have the ability to enter a vehicle. This could be really cool for a multiplayer game where one player could steer the vehicle and the other players manning guns etc. Inspirations for this concept is of course Lovers in a Dangerous SpaceTime and HellDivers (but in helldivers the mechanic isn't very good, the tanks are a bit useless, at least the ones I have access to).
 So, the problem of taking breaks and not taking notes of what you're doing is that when you return to the code, the code doesn't make sense - because it is only half way done. And here we are.
@@ -150,6 +152,6 @@ Det här gör vi på det gamla vanliga sättet. Vi bygger en box2d-värld, vi kl
 
 Oj oj oj,  vad roligt. Vi kan göra en box2d-kropp med leder, per tutorials etc. Superkul ju.
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbLTEzMjcxNDg3MzQsNzQxMDA3NTMxLDY5Mz
+eyJoaXN0b3J5IjpbLTEwNzE0MDk1ODQsNzQxMDA3NTMxLDY5Mz
 IyMjg3Nl19
 -->
