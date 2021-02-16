@@ -25,7 +25,7 @@ class EnterVehicleSystem : IteratingSystem(allOf(EnterVehicleComponent::class, P
             val vBody = vehicle(pBody.worldCenter)
             pBody.revoluteJointWith(vBody) {
                 localAnchorA.set(bodyA.localCenter)
-                localAnchorB.set(bodyB.localCenter)
+                localAnchorB.set(bodyB.localCenter.cpy().set(0f, -1.5f))
             }
         }
     }

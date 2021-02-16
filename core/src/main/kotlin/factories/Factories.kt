@@ -12,7 +12,6 @@ import ktx.box2d.body
 import ktx.box2d.box
 import ktx.box2d.circle
 import ktx.box2d.polygon
-import ktx.math.vec2
 import tru.FirstScreen
 
 fun world(): World {
@@ -70,7 +69,8 @@ fun obstacle(
 ) : Body {
     val body = world().body {
         type = BodyDef.BodyType.StaticBody
-        box(width, height, vec2(x, y))
+        position.set(x, y)
+        box(width, height)
     }
     val entity = engine().createEntity().apply {
         add(BodyComponent(body))
@@ -85,6 +85,7 @@ fun obstacle(
 fun player(): Player {
     val body = world().body {
         type = BodyDef.BodyType.DynamicBody
+        position.setZero()
         polygon(Vector2(-1f, -1f), Vector2(0f, 1f), Vector2(1f, -1f)) {
             density = FirstScreen.SHIP_DENSITY
         }
