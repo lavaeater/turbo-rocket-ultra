@@ -2,6 +2,7 @@ package input
 
 import com.badlogic.gdx.Gdx
 import com.badlogic.gdx.Input
+import com.badlogic.gdx.controllers.Controllers
 import com.badlogic.gdx.graphics.OrthographicCamera
 import com.badlogic.gdx.math.Vector2
 import com.badlogic.gdx.utils.Logger
@@ -19,6 +20,7 @@ class InputAdapter(
     private var currentControlMapper: ControlMapper = inject(),
     private val camera : OrthographicCamera = inject()) :
     KtxInputAdapter {
+    private val controllers = Controllers.getControllers()
 
     init {
         Gdx.app.logLevel = Logger.DEBUG
