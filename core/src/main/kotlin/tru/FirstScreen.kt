@@ -7,18 +7,17 @@ import com.badlogic.gdx.graphics.GL20
 import com.badlogic.gdx.graphics.OrthographicCamera
 import com.badlogic.gdx.graphics.g2d.PolygonSpriteBatch
 import com.badlogic.gdx.utils.viewport.ExtendViewport
-import control.InputManager
-import control.ShipControl
-import factories.box
-import injection.Context
+import factories.obstacle
+import injection.Context.inject
+import input.InputAdapter
 import ktx.math.random
-import ui.IUserInterface
 
 
 class FirstScreen : Screen {
 
     companion object {
-        const val SHIP_DENSITY = 1f
+        const val SHIP_DENSITY = .1f
+        const val CAR_DENSITY = .1f
         const val SHIP_LINEAR_DAMPING = 10f
         const val SHIP_ANGULAR_DAMPING = 10f
 
@@ -28,12 +27,10 @@ class FirstScreen : Screen {
 
     private var needsInit = true
 
-    private val camera: OrthographicCamera by lazy { Context.inject() }
-    private val viewPort: ExtendViewport by lazy { Context.inject() }
-    private val control: ShipControl by lazy { Context.inject() }
-    private val engine: Engine by lazy { Context.inject() }
-    private val batch: PolygonSpriteBatch by lazy { Context.inject() }
-    private val ui: IUserInterface by lazy { Context.inject() }
+    private val camera: OrthographicCamera by lazy { inject() }
+    private val viewPort: ExtendViewport by lazy { inject() }
+    private val engine: Engine by lazy { inject() }
+    private val batch: PolygonSpriteBatch by lazy { inject() }
 
     override fun show() {
         if (needsInit) {
@@ -46,7 +43,7 @@ class FirstScreen : Screen {
     }
 
     private fun setupInput() {
-        Gdx.input.inputProcessor = InputManager(control)
+        Gdx.input.inputProcessor = InputAdapter()
     }
 
     private fun generateMap() {
@@ -54,7 +51,7 @@ class FirstScreen : Screen {
 
         for (x in 0..99)
             for (y in 0..99) {
-                box(x * 25f + randomFactor.random(), y * 25f + randomFactor.random())
+                obstacle(x * 25f + randomFactor.random(), y * 25f + randomFactor.random())
             }
     }
 
@@ -66,8 +63,6 @@ class FirstScreen : Screen {
         camera.update(true)
         batch.projectionMatrix = camera.combined
         engine.update(delta)
-        ui.update(delta)
-
     }
 
     override fun resize(width: Int, height: Int) {

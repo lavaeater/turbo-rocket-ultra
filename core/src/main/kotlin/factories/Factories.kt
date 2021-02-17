@@ -7,76 +7,106 @@ import com.badlogic.gdx.physics.box2d.BodyDef
 import com.badlogic.gdx.physics.box2d.World
 import ecs.components.*
 import gamestate.Player
-import injection.Context
+import injection.Context.inject
 import ktx.box2d.body
 import ktx.box2d.box
 import ktx.box2d.circle
 import ktx.box2d.polygon
-import ktx.math.random
-import ktx.math.vec2
 import tru.FirstScreen
 
-fun shot(from: Vector2, towards: Vector2) {
-    val world = Context.inject<World>()
-    val engine = Context.inject<Engine>()
-    val shot = world.body {
+fun world(): World {
+    return inject()
+}
+
+fun engine(): Engine {
+    return inject()
+}
+
+fun vehicle(at: Vector2): Body {
+    /*
+    Make stuff up and then we change it all later...
+     */
+    val body = world().body {
+        type = BodyDef.BodyType.DynamicBody
+        position.set(at)
+        box(2f, 4f) {
+            density = FirstScreen.CAR_DENSITY
+        }
+    }
+
+    val entity = engine().createEntity().apply {
+        add(BodyComponent(body))
+        add(TransformComponent(body.position))
+        add(VehicleControlComponent(inject()))
+        add(VehicleComponent())
+    }
+    body.userData = entity
+    engine().addEntity(entity)
+    return body
+}
+
+fun shot(from: Vector2, towards: Vector2) :Body {
+    val shot = world().body {
         type = BodyDef.BodyType.DynamicBody
         circle(position = from, radius = .5f) {}
     }
-    val entity = engine.createEntity().apply {
+    val entity = engine().createEntity().apply {
         add(BodyComponent(shot))
         add(TransformComponent(shot.position))
         add(ShotComponent())
     }
     shot.userData = entity
     shot.linearVelocity = towards.scl(1000f)
-    engine.addEntity(entity)
+    engine().addEntity(entity)
+    return shot
 }
 
-fun box(
+fun obstacle(
     x: Float = 0f,
     y: Float = 0f,
     width: Float = 2f,
     height: Float = 2f
-) {
-    val world = Context.inject<World>()
-    val engine = Context.inject<Engine>()
-    val body = world.body {
+) : Body {
+    val body = world().body {
         type = BodyDef.BodyType.StaticBody
-        box(width, height, vec2(x, y))
+        position.set(x, y)
+        box(width, height)
     }
-    val entity = engine.createEntity().apply {
+    val entity = engine().createEntity().apply {
         add(BodyComponent(body))
         add(TransformComponent(body.position))
         add(ObstacleComponent())
     }
     body.userData = entity
-    engine.addEntity(entity)
+    engine().addEntity(entity)
+    return body
 }
 
 fun player(): Player {
-    val world = Context.inject<World>()
-    val engine = Context.inject<Engine>()
-    val body = world.body {
+    val body = world().body {
         type = BodyDef.BodyType.DynamicBody
+        position.setZero()
         polygon(Vector2(-1f, -1f), Vector2(0f, 1f), Vector2(1f, -1f)) {
             density = FirstScreen.SHIP_DENSITY
         }
+//        polygon(Vector2(-10f, -10f), Vector2(-9f, -8f), Vector2(-11f, -8f)) {
+//            density = FirstScreen.SHIP_DENSITY
+//        }
         linearDamping = FirstScreen.SHIP_LINEAR_DAMPING
         angularDamping = FirstScreen.SHIP_ANGULAR_DAMPING
     }
 
-    val entity = engine.createEntity().apply {
+    val entity = engine().createEntity().apply {
         add(CameraFollowComponent())
         add(AimComponent())
         add(BodyComponent(body))
         add(TransformComponent())
-        add(ControlComponent())
+        add(PlayerControlComponent(inject())) //We will have multiple components later
         add(PlayerComponent())
     }
 
     body.userData = entity
 
-    engine.addEntity(entity)
+    engine().addEntity(entity)
     return Player(body, entity)
 }
