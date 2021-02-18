@@ -48,7 +48,10 @@ fun vehicle(at: Vector2): Body {
 fun shot(from: Vector2, towards: Vector2) :Body {
     val shot = world().body {
         type = BodyDef.BodyType.DynamicBody
-        circle(position = from, radius = .5f) {}
+        position.set(from)
+        circle(radius = .2f) {
+            density = FirstScreen.SHOT_DENSITY
+        }
     }
     val entity = engine().createEntity().apply {
         add(BodyComponent(shot))
@@ -56,7 +59,7 @@ fun shot(from: Vector2, towards: Vector2) :Body {
         add(ShotComponent())
     }
     shot.userData = entity
-    shot.linearVelocity = towards.scl(1000f)
+    shot.linearVelocity = towards.scl(10000f)
     engine().addEntity(entity)
     return shot
 }
