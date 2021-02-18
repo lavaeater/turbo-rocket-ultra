@@ -38,7 +38,7 @@ class ContactManager: ContactListener {
     override fun endContact(contact: Contact) {
         if(contact.isPlayerContact()) {
             if(contact.hasComponent<EnemySensorComponent>()) {
-w                val enemy = contact.getEntityFor<EnemySensorComponent>()
+                val enemy = contact.getEntityFor<EnemySensorComponent>()
                 enemy.remove<SeesPlayerComponent>()
             }
         }
