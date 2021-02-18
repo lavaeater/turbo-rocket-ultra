@@ -67,6 +67,10 @@ fun enemy(at: Vector2) {
         circle(1f) {
             density = FirstScreen.ENEMY_DENSITY
         }
+        circle(3f, vec2(1f, 0f)) {
+            density = 0.01f
+            isSensor = true
+        }
     }
 
     val entity = engine().createEntity().apply {
