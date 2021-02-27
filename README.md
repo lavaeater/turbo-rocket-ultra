@@ -178,6 +178,6 @@ Det här gör vi på det gamla vanliga sättet. Vi bygger en box2d-värld, vi kl
 
 Oj oj oj,  vad roligt. Vi kan göra en box2d-kropp med leder, per tutorials etc. Superkul ju.
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbLTEwNzE0MDk1ODQsNzQxMDA3NTMxLDY5Mz
-IyMjg3Nl19
+eyJoaXN0b3J5IjpbMTk0MDI2NDc3LC0xMDcxNDA5NTg0LDc0MT
+AwNzUzMSw2OTMyMjI4NzZdfQ==
 -->
