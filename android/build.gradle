@@ -30,7 +30,7 @@ android {
 		exclude 'META-INF/dependencies.txt'
 	}
 	defaultConfig {
-		applicationId 'tru'
+		applicationId 'tru.AndroidLauncher'
 		minSdkVersion 19
 		targetSdkVersion 26
 		versionCode 1

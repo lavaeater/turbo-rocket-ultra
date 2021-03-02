@@ -12,6 +12,7 @@ import ktx.box2d.body
 import ktx.box2d.box
 import ktx.box2d.circle
 import ktx.box2d.polygon
+import ktx.math.vec2
 import tru.FirstScreen
 
 fun world(): World {
@@ -20,6 +21,65 @@ fun world(): World {
 
 fun engine(): Engine {
     return inject()
+}
+
+/**
+ * Enemies, what are we doing this time?
+ *
+ * Well, the enemy is looking for players.
+ *
+ * So, the enemy has some kind of sensor component
+ *
+ * So the enemy could have a couple of states or something.
+ *
+ * This is quite obviously a decision tree. We should make
+ * a DSL for decision trees, that would be cool. We could probably really
+ * quickly construct a decision tree implementation quite simply.
+ *
+ * Anyways, the enemy is either:
+ * - looking for the player
+ * - chasing the player
+ * - attacking the player
+ *
+ * Looking for the player
+ *
+ * How does an enemy look for the player?
+ *
+ * If the enemy has seen the player before, but no longer can see it, the enemy
+ * should move towards the last known position, and then do something else there.
+ *
+ * This can all be handled with a decision tree.
+ * Avoiding obstacles?
+ *
+ * If the enemy doesn't have knowledge of the players position...
+ *
+ * We need to quickly build a decision tree that can control an enemy thingamajig.
+ *
+ */
+fun enemy(x:Float = 0f, y: Float = 0f) {
+    enemy(vec2(x,y))
+}
+
+fun enemy(at: Vector2) {
+    val body = world().body {
+        type = BodyDef.BodyType.DynamicBody
+        position.set(at)
+        circle(1f) {
+            density = FirstScreen.ENEMY_DENSITY
+        }
+        circle(3f, vec2(1f, 0f)) {
+            density = 0.01f
+            isSensor = true
+        }
+    }
+
+    val entity = engine().createEntity().apply {
+        add(BodyComponent(body))
+        add(TransformComponent(body.position))
+        add(EnemySensorComponent())
+    }
+    body.userData = entity
+    engine().addEntity(entity)
 }
 
 fun vehicle(at: Vector2): Body {

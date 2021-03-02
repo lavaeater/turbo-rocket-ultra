@@ -7,6 +7,7 @@ import com.badlogic.gdx.graphics.GL20
 import com.badlogic.gdx.graphics.OrthographicCamera
 import com.badlogic.gdx.graphics.g2d.PolygonSpriteBatch
 import com.badlogic.gdx.utils.viewport.ExtendViewport
+import factories.enemy
 import factories.obstacle
 import injection.Context.inject
 import input.InputAdapter
@@ -16,7 +17,8 @@ import ktx.math.random
 class FirstScreen : Screen {
 
     companion object {
-        const val SHOT_DENSITY = .1f
+        const val ENEMY_DENSITY = .1f
+        const val SHOT_DENSITY = .01f
         const val SHIP_DENSITY = .1f
         const val CAR_DENSITY = .3f
         const val SHIP_LINEAR_DAMPING = 10f
@@ -54,6 +56,9 @@ class FirstScreen : Screen {
             for (y in 0..99) {
                 obstacle(x * 25f + randomFactor.random(), y * 25f + randomFactor.random())
             }
+        for(x in 0..20)
+            for(y in 0..20)
+                enemy(x * 25f + randomFactor.random(), y * 25f + randomFactor.random())
     }
 
     override fun render(delta: Float) {
