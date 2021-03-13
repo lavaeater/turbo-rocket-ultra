@@ -15,12 +15,16 @@ import ktx.scene2d.Scene2DSkin
 object Assets : Disposable {
 
     lateinit var am: AssetManager
+    val characters :  Map<String, Map<String, LpcCharacterAnim>> by lazy {
+        CharacterSpriteLoader.initCharachterAnims()
+    }
 
     fun load(): AssetManager {
         am = AssetManager()
         fixScene2dSkin()
         return am
     }
+
 
     private fun fixScene2dSkin() {
         Scene2DSkin.defaultSkin = Skin(Gdx.files.internal("ui/uiskin.json"))
