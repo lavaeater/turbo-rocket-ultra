@@ -9,6 +9,9 @@ import com.badlogic.gdx.scenes.scene2d.ui.Skin
 import com.badlogic.gdx.utils.Disposable
 import ktx.scene2d.Scene2DSkin
 
+/**
+ * Actually load assets using the asset manager, maan
+ */
 object Assets : Disposable {
 
     lateinit var am: AssetManager

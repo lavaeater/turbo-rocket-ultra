@@ -6,9 +6,9 @@ import com.badlogic.gdx.graphics.g2d.Animation
 import com.badlogic.gdx.graphics.g2d.TextureRegion
 import ktx.collections.toGdxArray
 
-class SpriteManager {
+object CharacterSpriteLoader {
 
-    fun loadSprites() {
+    fun initCharachterAnims() : Map<String, Map<String, LpcCharacterAnim>> {
         /*
         For now, we will simply load the sheets and assign anims etc using
         some hardcoded stuff.
@@ -17,12 +17,13 @@ class SpriteManager {
 
         So we should have anim and direction as two different things.
          */
+        val anims = mutableMapOf<String, MutableMap<String, LpcCharacterAnim>>()
         val characters = listOf("player", "enemy")
         for (c in characters) {
+            anims[c] = mutableMapOf()
             val texture = Texture(Gdx.files.internal("sprites/$c/$c.png"))
             for (animDef in LpcCharacterAnimDefinition.definitions) {
-                val anim = LpcCharacterAnim(animDef.name,
-
+                anims[c]!![animDef.name] = LpcCharacterAnim(animDef.name,
                     animDef.directions.mapIndexed
                     { row, r -> r to
                     Animation(0.2f, (animDef.frames).map { TextureRegion(
@@ -32,11 +33,9 @@ class SpriteManager {
                             animDef.itemWidth,
                             animDef.itemHeight) }.toGdxArray())
                 }.toMap())
-
-
-
             }
         }
+        return anims
     }
 }
 
