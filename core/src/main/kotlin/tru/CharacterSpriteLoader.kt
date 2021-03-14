@@ -8,7 +8,7 @@ import ktx.collections.toGdxArray
 
 object CharacterSpriteLoader {
 
-    fun initCharachterAnims() : Map<String, Map<String, LpcCharacterAnim>> {
+    fun initCharachterAnims() : Map<String, Map<AnimState, LpcCharacterAnim>> {
         /*
         For now, we will simply load the sheets and assign anims etc using
         some hardcoded stuff.
@@ -17,13 +17,13 @@ object CharacterSpriteLoader {
 
         So we should have anim and direction as two different things.
          */
-        val anims = mutableMapOf<String, MutableMap<String, LpcCharacterAnim>>()
+        val anims = mutableMapOf<String, MutableMap<AnimState, LpcCharacterAnim>>()
         val characters = listOf("player", "enemy")
         for (c in characters) {
             anims[c] = mutableMapOf()
             val texture = Texture(Gdx.files.internal("sprites/$c/$c.png"))
             for (animDef in LpcCharacterAnimDefinition.definitions) {
-                anims[c]!![animDef.name] = LpcCharacterAnim(animDef.name,
+                anims[c]!![animDef.state] = LpcCharacterAnim(animDef.state,
                     animDef.directions.mapIndexed
                     { row, r -> r to
                     Animation(0.2f, (animDef.frames).map { TextureRegion(

@@ -9,3 +9,4 @@ sealed class SpriteDirection {
     object South: SpriteDirection()
     object West: SpriteDirection()
 }
+
