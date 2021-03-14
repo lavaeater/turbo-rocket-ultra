@@ -3,6 +3,7 @@ package physics
 import com.badlogic.ashley.core.Component
 import com.badlogic.ashley.core.ComponentMapper
 import com.badlogic.ashley.core.Entity
+import com.badlogic.gdx.math.MathUtils
 import com.badlogic.gdx.math.Vector2
 import com.badlogic.gdx.physics.box2d.Body
 import com.badlogic.gdx.physics.box2d.Contact
@@ -105,4 +106,8 @@ fun Contact.isPlayerContact(): Boolean {
         return this.hasComponent<PlayerComponent>()
     }
     return false
+}
+
+fun Float.toDegrees() : Float {
+    return this * MathUtils.radiansToDegrees
 }

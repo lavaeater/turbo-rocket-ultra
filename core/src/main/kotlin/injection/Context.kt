@@ -59,6 +59,8 @@ object Context {
             addSystem(EnterVehicleSystem())
             addSystem(ExitVehicleSystem())
             addSystem(VehicleControlSystem())
+            addSystem(CharacterSpriteDirectionSystem())
+            addSystem(RenderSystem())
         }
     }
 }
