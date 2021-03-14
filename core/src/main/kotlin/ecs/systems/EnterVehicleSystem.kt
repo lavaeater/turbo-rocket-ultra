@@ -13,7 +13,11 @@ import ktx.ashley.mapperFor
 import ktx.box2d.revoluteJointWith
 import physics.playerControlComponent
 
-class EnterVehicleSystem : IteratingSystem(allOf(EnterVehicleComponent::class, PlayerControlComponent::class).get()){
+class EnterVehicleSystem : IteratingSystem(
+    allOf(
+        EnterVehicleComponent::class,
+        PlayerControlComponent::class).get()) {
+
     private val bodyMapper = mapperFor<BodyComponent>()
     private val isInVehicleMapper = mapperFor<IsInVehicleComponent>()
 

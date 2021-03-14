@@ -4,6 +4,7 @@ import com.badlogic.ashley.core.Entity
 import com.badlogic.ashley.systems.IteratingSystem
 import com.badlogic.gdx.math.MathUtils
 import ecs.components.BodyComponent
+import ecs.components.CharacterSpriteComponent
 import ecs.components.PlayerControlComponent
 import ecs.components.TransformComponent
 import factories.shot
@@ -14,7 +15,12 @@ import ktx.math.vec2
 class PlayerControlSystem(
     private val rof: Float = 0.1f,
     private val torque: Float = 5f,
-    private val thrust: Float = 50f): IteratingSystem(allOf(PlayerControlComponent::class, BodyComponent::class).get()) {
+    private val thrust: Float = 50f): IteratingSystem(
+    allOf(
+        PlayerControlComponent::class,
+        BodyComponent::class,
+        CharacterSpriteComponent::class).get()) {
+
     private var lastShot = 0f
     private val pccMapper = mapperFor<PlayerControlComponent>()
     private val bcMapper = mapperFor<BodyComponent>()

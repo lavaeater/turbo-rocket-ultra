@@ -9,9 +9,10 @@ import ktx.ashley.allOf
 import ktx.math.times
 import physics.*
 
-class VehicleControlSystem : IteratingSystem(allOf(
-    VehicleControlComponent::class,
-    BodyComponent::class).get()) {
+class VehicleControlSystem : IteratingSystem(
+    allOf(
+        VehicleControlComponent::class,
+        BodyComponent::class).get()) {
 
     override fun processEntity(entity: Entity, deltaTime: Float) {
         val carBody = entity.body()
