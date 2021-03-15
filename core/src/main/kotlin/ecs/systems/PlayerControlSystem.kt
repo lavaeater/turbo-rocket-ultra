@@ -20,7 +20,7 @@ class PlayerControlSystem(
     allOf(
         PlayerControlComponent::class,
         BodyComponent::class,
-        CharacterSpriteComponent::class).get()) {
+        CharacterSpriteComponent::class).get(), 10) {
 
     private var lastShot = 0f
     private val pccMapper = mapperFor<PlayerControlComponent>()

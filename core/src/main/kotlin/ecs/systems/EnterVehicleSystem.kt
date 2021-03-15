@@ -16,7 +16,7 @@ import physics.playerControlComponent
 class EnterVehicleSystem : IteratingSystem(
     allOf(
         EnterVehicleComponent::class,
-        PlayerControlComponent::class).get()) {
+        PlayerControlComponent::class).get(), 10) {
 
     private val bodyMapper = mapperFor<BodyComponent>()
     private val isInVehicleMapper = mapperFor<IsInVehicleComponent>()

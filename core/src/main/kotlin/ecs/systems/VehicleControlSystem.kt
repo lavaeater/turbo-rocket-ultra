@@ -12,7 +12,7 @@ import physics.*
 class VehicleControlSystem : IteratingSystem(
     allOf(
         VehicleControlComponent::class,
-        BodyComponent::class).get()) {
+        BodyComponent::class).get(), 10) {
 
     override fun processEntity(entity: Entity, deltaTime: Float) {
         val carBody = entity.body()

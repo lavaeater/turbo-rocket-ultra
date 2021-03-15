@@ -17,7 +17,7 @@ class BodyDestroyerSystem(private val world: World) : IteratingSystem(
     allOf(
         BodyComponent::class,
         DestroyComponent::class
-    ).get()) {
+    ).get(), 10) {
 
     private val bodyMapper = mapperFor<BodyComponent>()
     override fun processEntity(entity: Entity, deltaTime: Float) {

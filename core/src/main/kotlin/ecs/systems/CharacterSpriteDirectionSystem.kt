@@ -16,7 +16,7 @@ class CharacterSpriteDirectionSystem :
     IteratingSystem(
         allOf(
             CharacterSpriteComponent::class,
-            TransformComponent::class).get()) {
+            TransformComponent::class).get(), 10) {
 
     @ExperimentalStdlibApi
     override fun processEntity(entity: Entity, deltaTime: Float) {

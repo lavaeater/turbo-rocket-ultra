@@ -55,12 +55,12 @@ class FirstScreen : Screen {
     private fun generateMap() {
         val randomFactor = 0f..15f
 
-        for (x in 0..99)
+        for (x in 0..5)
             for (y in 0..99) {
                 obstacle(x * 25f + randomFactor.random(), y * 25f + randomFactor.random())
             }
-        for(x in 0..20)
-            for(y in 0..20)
+        for(x in 0..5)
+            for(y in 0..5)
                 enemy(x * 25f + randomFactor.random(), y * 25f + randomFactor.random())
     }
 

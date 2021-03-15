@@ -13,7 +13,7 @@ class CameraUpdateSystem(
     private val camera: OrthographicCamera = inject()) :
     IteratingSystem(allOf(
         CameraFollowComponent::class,
-        TransformComponent::class).get()) {
+        TransformComponent::class).get(), 10) {
 
     private val transformMapper = mapperFor<TransformComponent>()
     override fun processEntity(entity: Entity, deltaTime: Float) {

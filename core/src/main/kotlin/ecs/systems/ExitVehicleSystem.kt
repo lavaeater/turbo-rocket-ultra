@@ -14,7 +14,7 @@ Needs some info to remove the control component from the actual vehicle entity a
 class ExitVehicleSystem : IteratingSystem(
     allOf(
         LeaveVehicleComponent::class,
-        IsInVehicleComponent::class).get()) {
+        IsInVehicleComponent::class).get(), 10) {
 
     override fun processEntity(entity: Entity, deltaTime: Float) {
         entity.remove<IsInVehicleComponent>()
