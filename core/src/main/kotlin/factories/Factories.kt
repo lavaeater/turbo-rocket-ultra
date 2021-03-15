@@ -152,7 +152,7 @@ fun player(): Player {
     val body = world().body {
         type = BodyDef.BodyType.DynamicBody
         position.setZero()
-        circle(0.5f) {
+        circle(0.25f) {
             density = FirstScreen.PLAYER_DENSITY
         }
 //        polygon(Vector2(-1f, -1f), Vector2(0f, 1f), Vector2(1f, -1f)) {
