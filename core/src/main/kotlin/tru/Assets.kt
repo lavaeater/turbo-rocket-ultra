@@ -15,7 +15,7 @@ import ktx.scene2d.Scene2DSkin
 object Assets : Disposable {
 
     lateinit var am: AssetManager
-    val characters :  Map<String, Map<String, LpcCharacterAnim>> by lazy {
+    val characters :  Map<String, Map<AnimState, LpcCharacterAnim>> by lazy {
         CharacterSpriteLoader.initCharachterAnims()
     }
 

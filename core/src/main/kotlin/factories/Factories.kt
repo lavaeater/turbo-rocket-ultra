@@ -13,6 +13,7 @@ import ktx.box2d.box
 import ktx.box2d.circle
 import ktx.box2d.polygon
 import ktx.math.vec2
+import tru.Assets
 import tru.FirstScreen
 
 fun world(): World {
@@ -165,6 +166,7 @@ fun player(): Player {
         add(BodyComponent(body))
         add(TransformComponent())
         add(PlayerControlComponent(inject())) //We will have multiple components later
+        add(CharacterSpriteComponent(Assets.characters["player"]!!))
         add(PlayerComponent())
     }
 

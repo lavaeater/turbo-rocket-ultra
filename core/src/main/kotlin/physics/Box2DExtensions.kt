@@ -111,3 +111,12 @@ fun Contact.isPlayerContact(): Boolean {
 fun Float.toDegrees() : Float {
     return this * MathUtils.radiansToDegrees
 }
+
+fun Float.to360Degrees() : Float {
+    var rotation = this * MathUtils.radiansToDegrees
+    if(rotation < 0f)
+        rotation += 360f
+    if(rotation > 360f)
+        rotation -= 360f
+    return rotation
+}

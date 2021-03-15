@@ -8,6 +8,7 @@ import ecs.components.TransformComponent
 import ktx.ashley.allOf
 import ktx.ashley.mapperFor
 import physics.getComponent
+import physics.to360Degrees
 import physics.toDegrees
 import tru.SpriteDirection
 
@@ -27,11 +28,12 @@ class CharacterSpriteDirectionSystem :
          * facing.
          *
          * The current anim is managed by something else... the input system, obviously
+         * The current anim is managed by something else... the input system, obviously
          */
         val characterSpriteComponent = entity.getComponent<CharacterSpriteComponent>()
-        val transform = entity.getComponent<TransformComponent>()
+        val rotation = entity.getComponent<TransformComponent>().rotation.to360Degrees()
 
-        when (transform.rotation.toDegrees()) {
+        when (rotation) {
             in 15f..165f -> characterSpriteComponent.currentDirection = SpriteDirection.North
             in 0f..14f -> characterSpriteComponent.currentDirection = SpriteDirection.East
             in 345f..360f -> characterSpriteComponent.currentDirection = SpriteDirection.East

@@ -3,6 +3,7 @@ package injection
 import com.badlogic.ashley.core.Engine
 import com.badlogic.gdx.graphics.Camera
 import com.badlogic.gdx.graphics.OrthographicCamera
+import com.badlogic.gdx.graphics.g2d.Batch
 import com.badlogic.gdx.graphics.g2d.PolygonSpriteBatch
 import com.badlogic.gdx.utils.viewport.ExtendViewport
 import ecs.components.ControlMapper
@@ -60,7 +61,7 @@ object Context {
             addSystem(ExitVehicleSystem())
             addSystem(VehicleControlSystem())
             addSystem(CharacterSpriteDirectionSystem())
-            addSystem(RenderSystem())
+            addSystem(RenderSystem(inject<PolygonSpriteBatch>() as Batch, inject()))
         }
     }
 }

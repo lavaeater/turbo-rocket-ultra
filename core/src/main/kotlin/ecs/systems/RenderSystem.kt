@@ -18,7 +18,7 @@ class RenderSystem(
         TransformComponent::class,
         CharacterSpriteComponent::class).get()) {
 
-    private val metersPerPixel = 1f
+    private val metersPerPixel = .05f
 
     @ExperimentalStdlibApi
     override fun processEntity(entity: Entity, deltaTime: Float) {
@@ -31,6 +31,7 @@ class RenderSystem(
                 currentTextureRegion,
                 (transform.position.x - (currentTextureRegion.regionWidth / 2 * metersPerPixel)),
                 (transform.position.y - (currentTextureRegion.regionHeight / 2 * metersPerPixel)),
+                metersPerPixel
             )
         }
     }
@@ -42,7 +43,7 @@ fun Batch.drawScaled(
     x: Float,
     y: Float,
     scale: Float = 1f,
-    rotation: Float = 0f) {
+    rotation: Float = 180f) {
 
     draw(
         textureRegion,
