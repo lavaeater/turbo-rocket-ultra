@@ -66,12 +66,10 @@ fun enemy(at: Vector2) {
         type = BodyDef.BodyType.DynamicBody
         position.set(at)
         circle(1f) {
-            restitution = 0f
             density = FirstScreen.ENEMY_DENSITY
         }
         circle(3f, vec2(1f, 0f)) {
             density = 0.01f
-            restitution = 0f
             isSensor = true
         }
     }
@@ -93,7 +91,6 @@ fun vehicle(at: Vector2): Body {
         type = BodyDef.BodyType.DynamicBody
         position.set(at)
         box(2f, 4f) {
-            restitution = 0f
             density = FirstScreen.CAR_DENSITY
         }
     }
@@ -114,7 +111,6 @@ fun shot(from: Vector2, towards: Vector2) :Body {
         type = BodyDef.BodyType.DynamicBody
         position.set(from)
         circle(radius = .2f) {
-            restitution = 0f
             density = FirstScreen.SHOT_DENSITY
         }
     }
@@ -156,8 +152,7 @@ fun player(): Player {
     val body = world().body {
         type = BodyDef.BodyType.DynamicBody
         position.setZero()
-        circle {
-            restitution = 0f
+        circle(0.5f) {
             density = FirstScreen.PLAYER_DENSITY
         }
 //        polygon(Vector2(-1f, -1f), Vector2(0f, 1f), Vector2(1f, -1f)) {

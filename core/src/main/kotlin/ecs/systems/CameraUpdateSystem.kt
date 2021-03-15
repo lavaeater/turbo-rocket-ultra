@@ -8,15 +8,16 @@ import ecs.components.TransformComponent
 import injection.Context.inject
 import ktx.ashley.allOf
 import ktx.ashley.mapperFor
+import ktx.math.vec3
+import physics.Mappers
 
 class CameraUpdateSystem(
     private val camera: OrthographicCamera = inject()) :
     IteratingSystem(allOf(
         CameraFollowComponent::class,
-        TransformComponent::class).get(), 10) {
+        TransformComponent::class).get(), 3) {
 
-    private val transformMapper = mapperFor<TransformComponent>()
     override fun processEntity(entity: Entity, deltaTime: Float) {
-        camera.position.set(transformMapper.get(entity).position, 0f)
+        camera.position.lerp(vec3(Mappers.transformMapper.get(entity).position, 0f), 0.8f)
     }
 }

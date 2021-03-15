@@ -21,13 +21,13 @@ class FirstScreen : Screen {
         const val ENEMY_DENSITY = .1f
         const val SHOT_DENSITY = .01f
         const val SHIP_DENSITY = .1f
-        const val PLAYER_DENSITY = .1f
+        const val PLAYER_DENSITY = 0.5f
         const val CAR_DENSITY = .3f
         const val SHIP_LINEAR_DAMPING = 10f
         const val SHIP_ANGULAR_DAMPING = 10f
 
-        const val GAMEWIDTH = 64f
-        const val GAMEHEIGHT = 40f
+        const val GAMEWIDTH = 16f
+        const val GAMEHEIGHT = 10f
     }
 
     private var needsInit = true

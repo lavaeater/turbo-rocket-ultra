@@ -25,7 +25,7 @@ class ContactManager: ContactListener {
             if(contact.hasComponent<EnemySensorComponent>()) {//this is an enemy noticing the player - no system needed
                 val enemy = contact.getEntityFor<EnemySensorComponent>()
                 val player = contact.getEntityFor<PlayerComponent>()
-                enemy.add(SeesPlayerComponent(player.getComponent()))
+                enemy.add(SeesPlayerComponent(Mappers.transformMapper.get(player)))
             }
         }
 
