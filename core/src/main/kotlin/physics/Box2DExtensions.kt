@@ -14,19 +14,19 @@ import ecs.components.*
 import ktx.ashley.has
 import ktx.ashley.mapperFor
 import ktx.math.times
-import kotlin.math.absoluteValue
 import kotlin.reflect.KType
 import kotlin.reflect.typeOf
 
 
 object Mappers {
-//    @kotlin.ExperimentalStdlibApi
-//    inline fun <reified T:Component>getMapper(): ComponentMapper<T> {
-//        val type = typeOf<T>()
-//        if(!mappers.containsKey(type))
-//            mappers[type] = mapperFor<T>()
-//        return mappers[type] as ComponentMapper<T>
-//    }
+    @kotlin.ExperimentalStdlibApi
+    inline fun <reified T:Component>getMapper(): ComponentMapper<T> {
+        val type = typeOf<T>()
+        if(!mappers.containsKey(type))
+            mappers[type] = mapperFor<T>()
+        return mappers[type] as ComponentMapper<T>
+    }
+    val mappers = mutableMapOf<KType, ComponentMapper<*>>()
 
     val transformMapper = mapperFor<TransformComponent>()
     val characterSpriteComponentMapper = mapperFor<CharacterSpriteComponent>()
@@ -79,18 +79,15 @@ fun Fixture.getEntity() : Entity {
     return this.body.userData as Entity
 }
 
-//@ExperimentalStdlibApi
-//inline fun <reified T: Component>Entity.hasComponent() : Boolean {
-//    return Mappers.getMapper<T>().has(this)
-//}
+@ExperimentalStdlibApi
+inline fun <reified T: Component>Entity.hasComponent() : Boolean {
+    return Mappers.getMapper<T>().has(this)
+}
 
-//@ExperimentalStdlibApi
-//inline fun <reified T: Component>Entity.getComponent() : T {
-//    return Mappers.getMapper<T>().get(this)
-//}
-
-
-
+@ExperimentalStdlibApi
+inline fun <reified T: Component>Entity.getComponent() : T {
+    return Mappers.getMapper<T>().get(this)
+}
 
 inline fun <reified T: Component>Contact.hasComponent():Boolean {
     if(this.isEntityContact()) {
