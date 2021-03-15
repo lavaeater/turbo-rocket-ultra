@@ -36,6 +36,8 @@ class UserInterface(
     private val playerEntity: Entity by lazy { engine.getEntitiesFor(allOf(PlayerComponent::class).get()).first() }
     private val transform: TransformComponent by lazy { playerEntity[mapperFor()]!! }
     private val bodyComponent: BodyComponent by lazy { playerEntity[mapperFor()]!! }
+    private val bodyPos get() = bodyComponent.body.position
+    private val bodyRotation get() = bodyComponent.body.angle
     private lateinit var rootTable: KTableWidget
     private lateinit var infoBoard: KTableWidget
     private lateinit var infoLabel: Label
@@ -70,8 +72,9 @@ class UserInterface(
         getMousePosition()
         infoLabel.setText(
             """
-      Player position: ${transform.position}
-      Body position: ${bodyComponent.body.position}
+      Body position: $bodyPos
+      Body rotatipn: $bodyRotation
+      Body Degrees: ${bodyRotation.to360Degrees()}
     """.trimIndent()
         )
     }

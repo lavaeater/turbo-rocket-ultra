@@ -14,6 +14,7 @@ import ecs.components.*
 import ktx.ashley.has
 import ktx.ashley.mapperFor
 import ktx.math.times
+import kotlin.math.absoluteValue
 import kotlin.reflect.KType
 import kotlin.reflect.typeOf
 
@@ -119,7 +120,7 @@ fun Float.toDegrees() : Float {
 }
 
 fun Float.to360Degrees() : Float {
-    var rotation = this * MathUtils.radiansToDegrees
+    var rotation = this.toDegrees() % 360
     if(rotation < 0f)
         rotation += 360f
     if(rotation > 360f)

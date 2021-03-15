@@ -155,9 +155,7 @@ fun player(): Player {
         circle(0.25f) {
             density = FirstScreen.PLAYER_DENSITY
         }
-//        polygon(Vector2(-1f, -1f), Vector2(0f, 1f), Vector2(1f, -1f)) {
-//            density = FirstScreen.SHIP_DENSITY
-//        }
+
         linearDamping = FirstScreen.SHIP_LINEAR_DAMPING
         angularDamping = FirstScreen.SHIP_ANGULAR_DAMPING
     }
