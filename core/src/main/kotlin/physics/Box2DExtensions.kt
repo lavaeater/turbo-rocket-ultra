@@ -3,6 +3,8 @@ package physics
 import com.badlogic.ashley.core.Component
 import com.badlogic.ashley.core.ComponentMapper
 import com.badlogic.ashley.core.Entity
+import com.badlogic.gdx.graphics.g2d.Batch
+import com.badlogic.gdx.graphics.g2d.TextureRegion
 import com.badlogic.gdx.math.MathUtils
 import com.badlogic.gdx.math.Vector2
 import com.badlogic.gdx.physics.box2d.Body
@@ -119,4 +121,24 @@ fun Float.to360Degrees() : Float {
     if(rotation > 360f)
         rotation -= 360f
     return rotation
+}
+
+fun Batch.drawScaled(
+    textureRegion: TextureRegion,
+    x: Float,
+    y: Float,
+    scale: Float = 1f,
+    rotation: Float = 180f) {
+
+    draw(
+        textureRegion,
+        x,
+        y,
+        0f,
+        0f,
+        textureRegion.regionWidth.toFloat(),
+        textureRegion.regionHeight.toFloat(),
+        scale,
+        scale,
+        rotation)
 }

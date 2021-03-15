@@ -10,6 +10,7 @@ import com.badlogic.gdx.scenes.scene2d.Stage
 import com.badlogic.gdx.scenes.scene2d.ui.Label
 import com.badlogic.gdx.utils.Align
 import com.badlogic.gdx.utils.viewport.ExtendViewport
+import ecs.components.BodyComponent
 import ecs.components.ControlMapper
 import ecs.components.PlayerComponent
 import ecs.components.TransformComponent
@@ -34,6 +35,7 @@ class UserInterface(
     private val engine: Engine by lazy { inject() }
     private val playerEntity: Entity by lazy { engine.getEntitiesFor(allOf(PlayerComponent::class).get()).first() }
     private val transform: TransformComponent by lazy { playerEntity[mapperFor()]!! }
+    private val bodyComponent: BodyComponent by lazy { playerEntity[mapperFor()]!! }
     private lateinit var rootTable: KTableWidget
     private lateinit var infoBoard: KTableWidget
     private lateinit var infoLabel: Label
@@ -69,9 +71,7 @@ class UserInterface(
         infoLabel.setText(
             """
       Player position: ${transform.position}
-      Player angle (rad): ${transform.rotation}
-      Player angle (deg): ${transform.rotation.toDegrees()}
-      Player angle (deg360): ${transform.rotation.to360Degrees()}
+      Body position: ${bodyComponent.body.position}
     """.trimIndent()
         )
     }

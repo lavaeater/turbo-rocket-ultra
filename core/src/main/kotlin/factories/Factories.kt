@@ -150,10 +150,10 @@ fun player(): Player {
     val body = world().body {
         type = BodyDef.BodyType.DynamicBody
         position.setZero()
-        polygon(Vector2(-1f, -1f), Vector2(0f, 1f), Vector2(1f, -1f)) {
-            density = FirstScreen.SHIP_DENSITY
+        circle {
+            density = FirstScreen.PLAYER_DENSITY
         }
-//        polygon(Vector2(-10f, -10f), Vector2(-9f, -8f), Vector2(-11f, -8f)) {
+//        polygon(Vector2(-1f, -1f), Vector2(0f, 1f), Vector2(1f, -1f)) {
 //            density = FirstScreen.SHIP_DENSITY
 //        }
         linearDamping = FirstScreen.SHIP_LINEAR_DAMPING

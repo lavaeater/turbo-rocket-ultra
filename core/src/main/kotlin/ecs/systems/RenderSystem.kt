@@ -4,11 +4,11 @@ import com.badlogic.ashley.core.Entity
 import com.badlogic.ashley.systems.IteratingSystem
 import com.badlogic.gdx.graphics.OrthographicCamera
 import com.badlogic.gdx.graphics.g2d.Batch
-import com.badlogic.gdx.graphics.g2d.TextureRegion
 import ecs.components.CharacterSpriteComponent
 import ecs.components.TransformComponent
 import ktx.ashley.allOf
 import ktx.graphics.use
+import physics.drawScaled
 import physics.getComponent
 
 class RenderSystem(
@@ -29,8 +29,8 @@ class RenderSystem(
         spriteBatch.use {
             spriteBatch.drawScaled(
                 currentTextureRegion,
-                (transform.position.x - (currentTextureRegion.regionWidth / 2 * metersPerPixel)),
-                (transform.position.y - (currentTextureRegion.regionHeight / 2 * metersPerPixel)),
+                (transform.position.x + (currentTextureRegion.regionWidth / 2 * metersPerPixel)),
+                (transform.position.y + (currentTextureRegion.regionHeight * metersPerPixel / 5)),
                 metersPerPixel
             )
         }
@@ -38,22 +38,3 @@ class RenderSystem(
 }
 
 
-fun Batch.drawScaled(
-    textureRegion: TextureRegion,
-    x: Float,
-    y: Float,
-    scale: Float = 1f,
-    rotation: Float = 180f) {
-
-    draw(
-        textureRegion,
-        x,
-        y,
-        0f,
-        0f,
-        textureRegion.regionWidth.toFloat(),
-        textureRegion.regionHeight.toFloat(),
-        scale,
-        scale,
-        rotation)
-}
