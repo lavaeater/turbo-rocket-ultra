@@ -12,6 +12,7 @@ import factories.obstacle
 import injection.Context.inject
 import input.InputAdapter
 import ktx.math.random
+import ui.IUserInterface
 
 
 class FirstScreen : Screen {
@@ -34,6 +35,7 @@ class FirstScreen : Screen {
     private val viewPort: ExtendViewport by lazy { inject() }
     private val engine: Engine by lazy { inject() }
     private val batch: PolygonSpriteBatch by lazy { inject() }
+    private val ui: IUserInterface by lazy { inject() }
 
     override fun show() {
         if (needsInit) {
@@ -69,6 +71,7 @@ class FirstScreen : Screen {
         camera.update(true)
         batch.projectionMatrix = camera.combined
         engine.update(delta)
+        ui.update(delta)
     }
 
     override fun resize(width: Int, height: Int) {

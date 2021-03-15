@@ -11,5 +11,5 @@ import tru.SpriteDirection
 class CharacterSpriteComponent(private val anims: Map<AnimState, LpcCharacterAnim>) : Component {
     var currentAnimState : AnimState = anims.values.first().state
     var currentDirection: SpriteDirection = SpriteDirection.South
-    val currentAnim : Animation<TextureRegion> = anims[currentAnimState]!!.animations[currentDirection]!!
+    val currentAnim : Animation<TextureRegion> get() = anims[currentAnimState]!!.animations[currentDirection]!!
 }

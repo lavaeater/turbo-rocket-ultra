@@ -33,12 +33,16 @@ class CharacterSpriteDirectionSystem :
         val characterSpriteComponent = entity.getComponent<CharacterSpriteComponent>()
         val rotation = entity.getComponent<TransformComponent>().rotation.to360Degrees()
 
+        /**
+         * 0 degrees seems to be straight down.
+         */
+
         when (rotation) {
-            in 15f..165f -> characterSpriteComponent.currentDirection = SpriteDirection.North
-            in 0f..14f -> characterSpriteComponent.currentDirection = SpriteDirection.East
-            in 345f..360f -> characterSpriteComponent.currentDirection = SpriteDirection.East
-            in 164f..135f -> characterSpriteComponent.currentDirection = SpriteDirection.West
-            else -> characterSpriteComponent.currentDirection = SpriteDirection.South
+            in 121f..240f -> characterSpriteComponent.currentDirection = SpriteDirection.North
+            in 241f..300f -> characterSpriteComponent.currentDirection = SpriteDirection.West
+            in 61f..120f -> characterSpriteComponent.currentDirection = SpriteDirection.East
+            in 0f..60f -> characterSpriteComponent.currentDirection = SpriteDirection.South
+            in 360f..301f -> characterSpriteComponent.currentDirection = SpriteDirection.South
         }
     }
 }
