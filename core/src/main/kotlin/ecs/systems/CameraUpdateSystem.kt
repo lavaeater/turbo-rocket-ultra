@@ -18,6 +18,6 @@ class CameraUpdateSystem(
         TransformComponent::class).get(), 3) {
 
     override fun processEntity(entity: Entity, deltaTime: Float) {
-        camera.position.lerp(vec3(Mappers.transformMapper.get(entity).position, 0f), 0.8f)
+        camera.position.lerp(vec3(Mappers.transformMapper.get(entity).position, 0f), 0.5f)
     }
 }

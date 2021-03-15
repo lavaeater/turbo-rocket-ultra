@@ -53,9 +53,9 @@ object Context {
             addSystem(PhysicsSystem(
                 inject())) //box2dWorld
             addSystem(PhysicsUpdateSystem())
-//            addSystem(PhysicsDebugRendererSystem(
-//                inject(), //Box2dWorld
-//                inject())) //Camera
+            addSystem(PhysicsDebugRendererSystem(
+                inject(), //Box2dWorld
+                inject())) //Camera
             addSystem(CameraUpdateSystem())
             addSystem(PlayerControlSystem())
             addSystem(BodyDestroyerSystem(inject())) //world

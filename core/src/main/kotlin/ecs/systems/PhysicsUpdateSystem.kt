@@ -2,6 +2,7 @@ package ecs.systems
 
 import com.badlogic.ashley.core.Entity
 import com.badlogic.ashley.systems.IteratingSystem
+import com.badlogic.gdx.math.MathUtils.lerp
 import ecs.components.BodyComponent
 import ecs.components.TransformComponent
 import ktx.ashley.allOf
@@ -21,7 +22,7 @@ class PhysicsUpdateSystem() : IteratingSystem(
         val bodyPosition = bodyComponent.body.position
         val bodyRotation = bodyComponent.body.angle
         val transformComponent = transMapper.get(entity)!!
-        transformComponent.position.set(bodyPosition)
-        transformComponent.rotation = bodyRotation
+        transformComponent.position.lerp(bodyPosition, 0.5f)
+        transformComponent.rotation = lerp(transformComponent.rotation, bodyRotation, 0.5f)
     }
 }
