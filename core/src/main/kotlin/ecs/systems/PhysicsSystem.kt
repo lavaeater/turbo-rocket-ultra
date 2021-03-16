@@ -22,7 +22,7 @@ class PhysicsSystem(private val world: World, private val timeStep : Float = 1/6
 
     override fun update(deltaTime: Float) {
         super.update(deltaTime)
-        val ourTime = deltaTime.coerceAtMost(timeStep)
+        val ourTime = deltaTime.coerceAtMost(timeStep * 2)
         accumulator += ourTime
         while(accumulator > timeStep) {
             world.step(timeStep, velIters, posIters)
