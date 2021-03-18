@@ -63,6 +63,7 @@ object Context {
             addSystem(ExitVehicleSystem())
             addSystem(VehicleControlSystem())
             addSystem(CharacterSpriteDirectionSystem())
+            addSystem(PlayerShootingSystem())
             addSystem(RenderSystem(inject<PolygonSpriteBatch>() as Batch, inject()))
         }
     }

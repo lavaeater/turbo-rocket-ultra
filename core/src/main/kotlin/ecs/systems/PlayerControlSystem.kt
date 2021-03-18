@@ -14,7 +14,6 @@ import ktx.math.vec2
 import tru.AnimState
 
 class PlayerControlSystem(
-    private val rof: Float = 0.1f,
     private val torque: Float = 5f,
     private val thrust: Float = 50f): IteratingSystem(
     allOf(
@@ -22,30 +21,15 @@ class PlayerControlSystem(
         BodyComponent::class,
         CharacterSpriteComponent::class).get(), 10) {
 
-    private var lastShot = 0f
     private val pccMapper = mapperFor<PlayerControlComponent>()
     private val bcMapper = mapperFor<BodyComponent>()
-    private val tcMapper = mapperFor<TransformComponent>()
     private val anMapper = mapperFor<CharacterSpriteComponent>()
 
     override fun processEntity(entity: Entity, deltaTime: Float) {
         val pcc = pccMapper.get(entity)
         val bc = bcMapper.get(entity)
-        val tc = tcMapper.get(entity)
         val csc = anMapper.get(entity)
-        handleShooting(pcc, tc, deltaTime)
         handleInput(pcc, bc, csc)
-    }
-
-    private fun handleShooting(playerControlComponent: PlayerControlComponent, transformComponent: TransformComponent, delta: Float) {
-        if (playerControlComponent.firing) {
-            lastShot += delta
-            if (lastShot > rof) {
-                lastShot = 0f
-                shot(transformComponent.position.cpy().add(playerControlComponent.aimVector.cpy().scl(3f)),
-                    playerControlComponent.aimVector.cpy())
-            }
-        }
     }
 
     private fun handleInput(
