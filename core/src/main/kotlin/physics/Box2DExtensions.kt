@@ -3,6 +3,9 @@ package physics
 import com.badlogic.ashley.core.Component
 import com.badlogic.ashley.core.ComponentMapper
 import com.badlogic.ashley.core.Entity
+import com.badlogic.gdx.graphics.g2d.Batch
+import com.badlogic.gdx.graphics.g2d.TextureRegion
+import com.badlogic.gdx.math.MathUtils
 import com.badlogic.gdx.math.Vector2
 import com.badlogic.gdx.physics.box2d.Body
 import com.badlogic.gdx.physics.box2d.Contact
@@ -23,8 +26,10 @@ object Mappers {
             mappers[type] = mapperFor<T>()
         return mappers[type] as ComponentMapper<T>
     }
-
     val mappers = mutableMapOf<KType, ComponentMapper<*>>()
+
+    val transformMapper = mapperFor<TransformComponent>()
+    val characterSpriteComponentMapper = mapperFor<CharacterSpriteComponent>()
     val playerControlMapper = mapperFor<PlayerControlComponent>()
     val bodyMapper = mapperFor<BodyComponent>()
     val vehicleMapper = mapperFor<VehicleComponent>()
@@ -105,4 +110,37 @@ fun Contact.isPlayerContact(): Boolean {
         return this.hasComponent<PlayerComponent>()
     }
     return false
+}
+
+fun Float.toDegrees() : Float {
+    return this * MathUtils.radiansToDegrees
+}
+
+fun Float.to360Degrees() : Float {
+    var rotation = this.toDegrees() % 360
+    if(rotation < 0f)
+        rotation += 360f
+    if(rotation > 360f)
+        rotation -= 360f
+    return rotation
+}
+
+fun Batch.drawScaled(
+    textureRegion: TextureRegion,
+    x: Float,
+    y: Float,
+    scale: Float = 1f,
+    rotation: Float = 180f) {
+
+    draw(
+        textureRegion,
+        x,
+        y,
+        0f,
+        0f,
+        textureRegion.regionWidth.toFloat(),
+        textureRegion.regionHeight.toFloat(),
+        scale,
+        scale,
+        rotation)
 }

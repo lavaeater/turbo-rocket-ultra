@@ -13,6 +13,7 @@ import ktx.box2d.box
 import ktx.box2d.circle
 import ktx.box2d.polygon
 import ktx.math.vec2
+import tru.Assets
 import tru.FirstScreen
 
 fun world(): World {
@@ -60,14 +61,42 @@ fun enemy(x:Float = 0f, y: Float = 0f) {
     enemy(vec2(x,y))
 }
 
+fun player(): Player {
+    val body = world().body {
+        type = BodyDef.BodyType.DynamicBody
+        position.setZero()
+        circle(0.25f) {
+            density = FirstScreen.PLAYER_DENSITY
+        }
+
+        linearDamping = FirstScreen.SHIP_LINEAR_DAMPING
+        angularDamping = FirstScreen.SHIP_ANGULAR_DAMPING
+    }
+
+    val entity = engine().createEntity().apply {
+        add(CameraFollowComponent())
+        add(AimComponent())
+        add(BodyComponent(body))
+        add(TransformComponent())
+        add(PlayerControlComponent(inject())) //We will have multiple components later
+        add(CharacterSpriteComponent(Assets.characters["player"]!!))
+        add(PlayerComponent())
+    }
+
+    body.userData = entity
+
+    engine().addEntity(entity)
+    return Player(body, entity)
+}
+
 fun enemy(at: Vector2) {
     val body = world().body {
         type = BodyDef.BodyType.DynamicBody
         position.set(at)
-        circle(1f) {
+        circle(0.25f) {
             density = FirstScreen.ENEMY_DENSITY
         }
-        circle(3f, vec2(1f, 0f)) {
+        circle(3f, vec2(0f, -1f)) {
             density = 0.01f
             isSensor = true
         }
@@ -77,6 +106,7 @@ fun enemy(at: Vector2) {
         add(BodyComponent(body))
         add(TransformComponent(body.position))
         add(EnemySensorComponent())
+        add(CharacterSpriteComponent(Assets.characters["enemy"]!!))
     }
     body.userData = entity
     engine().addEntity(entity)
@@ -133,7 +163,9 @@ fun obstacle(
     val body = world().body {
         type = BodyDef.BodyType.StaticBody
         position.set(x, y)
-        box(width, height)
+        box(width, height) {
+            restitution = 0f
+        }
     }
     val entity = engine().createEntity().apply {
         add(BodyComponent(body))
@@ -145,31 +177,3 @@ fun obstacle(
     return body
 }
 
-fun player(): Player {
-    val body = world().body {
-        type = BodyDef.BodyType.DynamicBody
-        position.setZero()
-        polygon(Vector2(-1f, -1f), Vector2(0f, 1f), Vector2(1f, -1f)) {
-            density = FirstScreen.SHIP_DENSITY
-        }
-//        polygon(Vector2(-10f, -10f), Vector2(-9f, -8f), Vector2(-11f, -8f)) {
-//            density = FirstScreen.SHIP_DENSITY
-//        }
-        linearDamping = FirstScreen.SHIP_LINEAR_DAMPING
-        angularDamping = FirstScreen.SHIP_ANGULAR_DAMPING
-    }
-
-    val entity = engine().createEntity().apply {
-        add(CameraFollowComponent())
-        add(AimComponent())
-        add(BodyComponent(body))
-        add(TransformComponent())
-        add(PlayerControlComponent(inject())) //We will have multiple components later
-        add(PlayerComponent())
-    }
-
-    body.userData = entity
-
-    engine().addEntity(entity)
-    return Player(body, entity)
-}

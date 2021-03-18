@@ -12,6 +12,7 @@ import factories.obstacle
 import injection.Context.inject
 import input.InputAdapter
 import ktx.math.random
+import ui.IUserInterface
 
 
 class FirstScreen : Screen {
@@ -20,12 +21,13 @@ class FirstScreen : Screen {
         const val ENEMY_DENSITY = .1f
         const val SHOT_DENSITY = .01f
         const val SHIP_DENSITY = .1f
+        const val PLAYER_DENSITY = 1f
         const val CAR_DENSITY = .3f
-        const val SHIP_LINEAR_DAMPING = 10f
-        const val SHIP_ANGULAR_DAMPING = 10f
+        const val SHIP_LINEAR_DAMPING = 20f
+        const val SHIP_ANGULAR_DAMPING = 20f
 
-        const val GAMEWIDTH = 72f
-        const val GAMEHEIGHT = 48f
+        const val GAMEWIDTH = 16f
+        const val GAMEHEIGHT = 10f
     }
 
     private var needsInit = true
@@ -34,6 +36,7 @@ class FirstScreen : Screen {
     private val viewPort: ExtendViewport by lazy { inject() }
     private val engine: Engine by lazy { inject() }
     private val batch: PolygonSpriteBatch by lazy { inject() }
+    private val ui: IUserInterface by lazy { inject() }
 
     override fun show() {
         if (needsInit) {
@@ -52,12 +55,12 @@ class FirstScreen : Screen {
     private fun generateMap() {
         val randomFactor = 0f..15f
 
-        for (x in 0..99)
-            for (y in 0..99) {
+        for (x in 0..9)
+            for (y in 0..9) {
                 obstacle(x * 25f + randomFactor.random(), y * 25f + randomFactor.random())
             }
-        for(x in 0..20)
-            for(y in 0..20)
+        for(x in 0..14)
+            for(y in 0..14)
                 enemy(x * 25f + randomFactor.random(), y * 25f + randomFactor.random())
     }
 
@@ -69,6 +72,7 @@ class FirstScreen : Screen {
         camera.update(true)
         batch.projectionMatrix = camera.combined
         engine.update(delta)
+        ui.update(delta)
     }
 
     override fun resize(width: Int, height: Int) {
