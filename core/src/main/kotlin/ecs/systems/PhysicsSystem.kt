@@ -1,9 +1,7 @@
 package ecs.systems
 
 import com.badlogic.ashley.core.Entity
-import com.badlogic.ashley.core.EntitySystem
 import com.badlogic.ashley.systems.IteratingSystem
-import com.badlogic.gdx.math.MathUtils
 import com.badlogic.gdx.physics.box2d.World
 import ecs.components.BodyComponent
 import ecs.components.TransformComponent
@@ -21,7 +19,7 @@ class PhysicsSystem(private val world: World, private val timeStep : Float = 1/6
     var accumulator = 0f
 
     override fun update(deltaTime: Float) {
-        super.update(deltaTime)
+//        super.update(deltaTime)
         val ourTime = deltaTime.coerceAtMost(timeStep * 2)
         accumulator += ourTime
         while(accumulator > timeStep) {
@@ -39,7 +37,7 @@ class PhysicsSystem(private val world: World, private val timeStep : Float = 1/6
     }
 
     override fun processEntity(entity: Entity?, deltaTime: Float) {
-        //supposed to be empty
+        //supposed to be empty - is never called because we don't call super.update in update override
     }
 
 }
