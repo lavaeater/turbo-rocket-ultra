@@ -106,6 +106,7 @@ fun enemy(at: Vector2) {
         add(BodyComponent(body))
         add(TransformComponent(body.position))
         add(EnemySensorComponent())
+        add(EnemyComponent())
         add(CharacterSpriteComponent(Assets.characters["enemy"]!!))
     }
     body.userData = entity

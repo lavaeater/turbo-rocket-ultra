@@ -75,6 +75,15 @@ fun Contact.isEntityContact(): Boolean {
     return this.fixtureA.body.userData is Entity && this.fixtureB.body.userData is Entity
 }
 
+@ExperimentalStdlibApi
+fun Body.isEnemy() : Boolean {
+    return (userData as Entity).hasComponent<EnemyComponent>()
+}
+
+fun Fixture.isEntity() : Boolean {
+    return this.body.userData is Entity
+}
+
 fun Fixture.getEntity() : Entity {
     return this.body.userData as Entity
 }
