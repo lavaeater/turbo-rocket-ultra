@@ -52,7 +52,6 @@ object Context {
         return Engine().apply {
             addSystem(PhysicsSystem(
                 inject())) //box2dWorld
-//            addSystem(PhysicsUpdateSystem())
             addSystem(PhysicsDebugRendererSystem(
                 inject(), //Box2dWorld
                 inject())) //Camera

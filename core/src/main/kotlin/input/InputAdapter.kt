@@ -66,13 +66,13 @@ class InputAdapter(
     }
 
     private fun getAimVector(screenX: Int, screenY: Int): Vector2 {
-        val pos = vec3(screenX.toFloat(), screenY.toFloat(), 0f)
+        val mousePosition = vec3(screenX.toFloat(), screenY.toFloat(), 0f)
 
-        camera.unproject(pos)
+        camera.unproject(mousePosition)
 
-        currentControlMapper.mousePosition.set(pos.x, pos.y)
+        currentControlMapper.mousePosition.set(mousePosition.x, mousePosition.y)
 
-        return vec2(pos.x, pos.y).sub(transform.position).nor()
+        return vec2(mousePosition.x, mousePosition.y).sub(transform.position).nor()
     }
 
     override fun touchDown(screenX: Int, screenY: Int, pointer: Int, button: Int): Boolean {
@@ -87,9 +87,19 @@ class InputAdapter(
             currentControlMapper.firing = true
         }
         //Set angle
-        currentControlMapper.aimVector.set(getAimVector(screenX, screenY))
+        setAimVector(currentControlMapper.aimVector, screenX, screenY)
 
         return false
+    }
+
+    private val currentMousePosition = vec3()
+    private fun setAimVector(aimVector: Vector2, screenX: Int, screenY: Int) {
+        currentMousePosition.set(screenX.toFloat(), screenY.toFloat(), 0f)
+
+        camera.unproject(currentMousePosition)
+
+        currentControlMapper.mousePosition.set(currentMousePosition.x, currentMousePosition.y)
+        aimVector.set(currentMousePosition.x, currentMousePosition.y).sub(transform.position).nor()
     }
 
     override fun touchUp(screenX: Int, screenY: Int, pointer: Int, button: Int): Boolean {
