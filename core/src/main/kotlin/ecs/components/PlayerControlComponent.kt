@@ -47,7 +47,7 @@ class PlayerControlComponent(
 
         controlMapper.mousePosition.set(mousePosition3D.x, mousePosition3D.y)
 
-        aimVector.set(mousePosition3D.x - position.x, mousePosition3D.y - position.y).scl(10f)
+        aimVector.set(controlMapper.mousePosition).sub(position).scl(20f).add(controlMapper.mousePosition)
     }
 
 

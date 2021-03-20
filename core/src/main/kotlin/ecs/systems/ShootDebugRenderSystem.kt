@@ -17,7 +17,7 @@ import com.badlogic.gdx.graphics.Texture
 import javax.swing.plaf.ColorUIResource
 
 
-class ShootDebugRenderSystem(private val debug: Boolean = true) : IteratingSystem(
+class ShootDebugRenderSystem(private val debug: Boolean = false) : IteratingSystem(
     allOf(
         TransformComponent::class,
         PlayerControlComponent::class
@@ -45,14 +45,17 @@ class ShootDebugRenderSystem(private val debug: Boolean = true) : IteratingSyste
 
         //
         val transform = transformMapper[entity]
-        batch.begin()
         if (controlComponent.drawShot) {
+            batch.begin()
             shapeDrawer.line(transform.position, controlComponent.latestHitPoint, Color.GREEN, 0.1f)
+            batch.end()
         }
-        if(debug)
+        if(debug) {
+            batch.begin()
             shapeDrawer.line(transform.position, controlComponent.aimVector, Color.BLUE, 0.05f)
             shapeDrawer.line(transform.position, controlComponent.mousePosition, Color.RED, 0.05f)
-        batch.end()
+            batch.end()
+        }
     }
 
 }
