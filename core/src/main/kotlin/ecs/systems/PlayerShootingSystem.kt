@@ -18,6 +18,13 @@ import physics.getEntity
 import physics.isEnemy
 import physics.isEntity
 
+
+/**
+ * We need a cool-down system, which determines the rate of fire.
+ *
+ * This means you can always shoot if the weapon is cool.
+ */
+
 class PlayerShootingSystem:IteratingSystem(allOf(PlayerControlComponent::class, TransformComponent::class).get()) {
     private val controlMapper = mapperFor<PlayerControlComponent>()
     private val transformMapper = mapperFor<TransformComponent>()
