@@ -8,14 +8,9 @@ import com.badlogic.gdx.graphics.g2d.PolygonSpriteBatch
 import com.badlogic.gdx.graphics.g2d.TextureRegion
 import ecs.components.PlayerControlComponent
 import ecs.components.TransformComponent
-import injection.Context
 import injection.Context.inject
 import ktx.ashley.allOf
 import ktx.ashley.mapperFor
-import ktx.box2d.RayCast
-import ktx.box2d.rayCast
-import physics.isEnemy
-import physics.isEntity
 import space.earlygrey.shapedrawer.ShapeDrawer
 import com.badlogic.gdx.graphics.Pixmap
 import com.badlogic.gdx.graphics.Texture
@@ -44,7 +39,7 @@ class ShootDebugRenderSystem() : IteratingSystem(
 
     override fun processEntity(entity: Entity, deltaTime: Float) {
         val controlComponent = controlMapper[entity]
-        if(controlComponent.firing && controlComponent.lastShot <= 0f) {
+        if(controlComponent.firing) {
             val transform = transformMapper[entity]
             batch.begin()
                 shapeDrawer.line(transform.position, controlComponent.latestHitPoint, 0.1f)

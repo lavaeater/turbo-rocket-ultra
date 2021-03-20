@@ -40,6 +40,7 @@ class FirstScreen : Screen {
 
     override fun show() {
         if (needsInit) {
+            Gdx.gl.glClearColor(.3f, .5f, .8f, 1f)
             Assets.load()
             setupInput()
             generateMap()
@@ -49,23 +50,22 @@ class FirstScreen : Screen {
     }
 
     private fun setupInput() {
-        Gdx.input.inputProcessor = InputAdapter()
+      Gdx.input.inputProcessor = InputAdapter()
     }
 
     private fun generateMap() {
         val randomFactor = 0f..15f
 
-        for (x in 0..9)
-            for (y in 0..9) {
+        for (x in 0..3)
+            for (y in 0..3) {
                 obstacle(x * 25f + randomFactor.random(), y * 25f + randomFactor.random())
             }
-        for(x in 0..14)
-            for(y in 0..14)
+        for(x in 0..3)
+            for(y in 0..3)
                 enemy(x * 25f + randomFactor.random(), y * 25f + randomFactor.random())
     }
 
     override fun render(delta: Float) {
-        Gdx.gl.glClearColor(.3f, .5f, .8f, 1f)
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT)
         //Update viewport and camera here and nowhere else...
 
