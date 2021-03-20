@@ -66,14 +66,13 @@ class InputAdapter(
         if(!currentControlMapper.firing) {
             currentControlMapper.firing = true
         }
-        //Set angle
-        setAimVector(currentControlMapper.aimVector, screenX, screenY)
 
         return true
     }
 
     private val currentMousePosition = vec3()
-    private fun setAimVector(aimVector: Vector2, screenX: Int, screenY: Int) {
+    fun setAimVector(aimVector: Vector2, screenX: Int, screenY: Int) {
+
         currentMousePosition.set(screenX.toFloat(), screenY.toFloat(), 0f)
 
         camera.unproject(currentMousePosition)

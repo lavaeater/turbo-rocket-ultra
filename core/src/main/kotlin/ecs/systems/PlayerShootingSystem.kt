@@ -7,6 +7,7 @@ import com.badlogic.gdx.physics.box2d.World
 import ecs.components.EnemyComponent
 import ecs.components.PlayerControlComponent
 import ecs.components.TransformComponent
+import factories.enemy
 import injection.Context.inject
 import ktx.ashley.allOf
 import ktx.ashley.mapperFor
@@ -43,9 +44,7 @@ class PlayerShootingSystem : IteratingSystem(
 
         if (controlComponent.firing) {
             controlComponent.shoot()
-            val end = controlComponent.aimVector.cpy().nor().scl(50f)
-
-            controlComponent.latestHitPoint.set(end)
+            controlComponent.latestHitPoint.set(controlComponent.aimVector.x, controlComponent.aimVector.y)
 
             //create raycast to find some targets
             val transform = transformMapper[entity]
@@ -59,7 +58,7 @@ class PlayerShootingSystem : IteratingSystem(
             val pointOfHit = vec2(0f, 0f)
             val hitNormal = vec2(0f, 0f)
 
-            world.rayCast(start, end) { fixture, point, normal, fraction ->
+            world.rayCast(start, controlComponent.latestHitPoint) { fixture, point, normal, fraction ->
 
                 if (fraction < lowestFraction && !fixture.isSensor) {
                     lowestFraction = fraction

@@ -93,6 +93,9 @@ fun enemy(at: Vector2) {
     val body = world().body {
         type = BodyDef.BodyType.DynamicBody
         position.set(at)
+        circle (0.1f, vec2(0f, -0.5f)) {
+            isSensor = true
+        }
         circle(0.25f) {
             density = FirstScreen.ENEMY_DENSITY
         }

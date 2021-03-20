@@ -2,6 +2,7 @@ package ecs.systems
 
 import com.badlogic.ashley.core.Entity
 import com.badlogic.ashley.systems.IteratingSystem
+import com.badlogic.gdx.Gdx
 import com.badlogic.gdx.math.MathUtils
 import ecs.components.BodyComponent
 import ecs.components.CharacterSpriteComponent
@@ -14,8 +15,8 @@ import ktx.math.vec2
 import tru.AnimState
 
 class PlayerControlSystem(
-    private val torque: Float = 5f,
-    private val thrust: Float = 50f): IteratingSystem(
+    private val torque: Float = 1f,
+    private val thrust: Float = 25f): IteratingSystem(
     allOf(
         PlayerControlComponent::class,
         BodyComponent::class,
@@ -24,18 +25,21 @@ class PlayerControlSystem(
     private val pccMapper = mapperFor<PlayerControlComponent>()
     private val bcMapper = mapperFor<BodyComponent>()
     private val anMapper = mapperFor<CharacterSpriteComponent>()
+    private val tMapper = mapperFor<TransformComponent>()
 
     override fun processEntity(entity: Entity, deltaTime: Float) {
         val pcc = pccMapper.get(entity)
         val bc = bcMapper.get(entity)
         val csc = anMapper.get(entity)
-        handleInput(pcc, bc, csc)
+        val tc = tMapper.get(entity)
+        handleInput(pcc, bc, csc, tc)
     }
 
     private fun handleInput(
         playerControlComponent: PlayerControlComponent,
         bodyComponent: BodyComponent,
-        characterSpriteComponent: CharacterSpriteComponent) {
+        characterSpriteComponent: CharacterSpriteComponent,
+        transformComponent: TransformComponent) {
         if (playerControlComponent.turning != 0f) {
             bodyComponent.body.applyTorque(torque * playerControlComponent.turning, true)
         }
@@ -48,5 +52,8 @@ class PlayerControlSystem(
         } else {
             characterSpriteComponent.currentAnimState = AnimState.Idle
         }
+
+        //Throw in polling of mouse coordinates here?
+        playerControlComponent.setAimVector(Gdx.input.x, Gdx.input.y, transformComponent.position)
     }
 }

@@ -35,14 +35,12 @@ class UserInterface(
     private val playerEntity: Entity by lazy { engine.getEntitiesFor(allOf(PlayerComponent::class).get()).first() }
     private val transform: TransformComponent by lazy { playerEntity[mapperFor()]!! }
     private val bodyComponent: BodyComponent by lazy { playerEntity[mapperFor()]!! }
-    private val playerControlComponent: PlayerControlComponent by lazy {playerEntity[mapperFor()]!!}
+    private val playerControlComponent: PlayerControlComponent by lazy { playerEntity[mapperFor()]!! }
     private val bodyPos get() = bodyComponent.body.position
     private val bodyRotation get() = bodyComponent.body.angle
 
     private val firing get() = playerControlComponent.firing
     private val coolDown get() = playerControlComponent.cooldownRemaining
-
-
 
 
     private lateinit var rootTable: KTableWidget
@@ -75,20 +73,14 @@ class UserInterface(
         stage.draw()
     }
 
-    var deltaFPS = 0
-
     private fun updateInfo(delta: Float) {
-        val dfps = (1 / delta).toInt()
-
-        if(dfps != deltaFPS) {
-            deltaFPS = dfps
-            //getMousePosition()
-            infoLabel.setText(
-                """
-      FPS: $deltaFPS
+        infoLabel.setText(
+            """
+      AimVector: ${playerControlComponent.aimVector}
+      Position: ${transform.position}
+      MouseWorld: ${playerControlComponent.mousePosition}      
     """.trimIndent()
-            )
-        }
+        )
     }
 
     /*

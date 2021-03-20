@@ -14,9 +14,10 @@ import ktx.ashley.mapperFor
 import space.earlygrey.shapedrawer.ShapeDrawer
 import com.badlogic.gdx.graphics.Pixmap
 import com.badlogic.gdx.graphics.Texture
+import javax.swing.plaf.ColorUIResource
 
 
-class ShootDebugRenderSystem() : IteratingSystem(
+class ShootDebugRenderSystem(private val debug: Boolean = true) : IteratingSystem(
     allOf(
         TransformComponent::class,
         PlayerControlComponent::class
@@ -36,15 +37,22 @@ class ShootDebugRenderSystem() : IteratingSystem(
         TextureRegion(texture, 0, 0, 1, 1)
     }
     private val shapeDrawer: ShapeDrawer by lazy { ShapeDrawer(batch, textureRegion) }
+    private var drawShot = true
 
     override fun processEntity(entity: Entity, deltaTime: Float) {
         val controlComponent = controlMapper[entity]
-        if(controlComponent.firing) {
-            val transform = transformMapper[entity]
-            batch.begin()
-                shapeDrawer.line(transform.position, controlComponent.latestHitPoint, 0.1f)
-            batch.end()
+
+
+        //
+        val transform = transformMapper[entity]
+        batch.begin()
+        if (controlComponent.drawShot) {
+            shapeDrawer.line(transform.position, controlComponent.latestHitPoint, Color.GREEN, 0.1f)
         }
+        if(debug)
+            shapeDrawer.line(transform.position, controlComponent.aimVector, Color.BLUE, 0.05f)
+            shapeDrawer.line(transform.position, controlComponent.mousePosition, Color.RED, 0.05f)
+        batch.end()
     }
 
 }
