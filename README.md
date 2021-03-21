@@ -62,8 +62,17 @@ There are so many mechanics-things I would like to implemement - but perhaps the
 * not shoot through walls
 * deal damage
 * remove enemies when dead
+* not count sensors as hits 
 
-And one could then perhaps say that this is feature complete since all of these things are actually implemented - except I need to change the aim vector thingie so it works with a controller - basically transform the aimVector into unit vector, i.e. *normalizing* it. That's perhaps only five minutes of coding. From watching my video on this, you probably realize it wasn't five minutes of coding, it was more than ten minutes of a grown man failing high school maths. Or are vectors more high level than that? I can only hope.
+And one could then perhaps say that this is feature complete since all of these things are actually implemented - except I need to change the aim vector thingie so it works with a controller - basically transform the aimVector into unit vector, i.e. *normalizing* it. That's perhaps only five minutes of coding. From watching my video on this, you probably realize it wasn't five minutes of coding, it was more than ten minutes of a grown man failing high school maths. Or are vectors more high level than that? I can only hope. 
+
+Why normalize the aim vector? Because input from controllers give you values from -1.0 to 1.0 in x and y, which can then be used to set the value for that aimvector easily. Totally worth it, got some nice video from it.
+
+### Graphics
+Not done at all. What I want:
+* Muzzle flash
+* Blood splatter
+* Dea
 
 
 ## Stuff that are already "done"
@@ -200,7 +209,7 @@ Next should probably be the feature that requires the least work to make it a "g
 
 So the next feature will be ship collisions.
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbLTUwNTM4MTY4MCwtNDAwODkyMDkwLDEwNj
-E0ODI1MzYsMjExNzk3NTk2MSwxOTQwMjY0NzcsLTEwNzE0MDk1
-ODQsNzQxMDA3NTMxLDY5MzIyMjg3Nl19
+eyJoaXN0b3J5IjpbLTE1NTQ5NzY0NDksLTQwMDg5MjA5MCwxMD
+YxNDgyNTM2LDIxMTc5NzU5NjEsMTk0MDI2NDc3LC0xMDcxNDA5
+NTg0LDc0MTAwNzUzMSw2OTMyMjI4NzZdfQ==
 -->
