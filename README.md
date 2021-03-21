@@ -76,7 +76,7 @@ Not done at all. What I want:
 
 ### Audio
 Nothing has been done with audio at all. 
-* Sound for shots
+* Sound for shots <- Done now, complete with shell casings dropping on the ground
 * Sound for hits on enemies
 * Sound for hits on obstacles
 
@@ -216,7 +216,7 @@ Next should probably be the feature that requires the least work to make it a "g
 
 So the next feature will be ship collisions.
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbLTc2NzcxMjc3MSwtNDAwODkyMDkwLDEwNj
-E0ODI1MzYsMjExNzk3NTk2MSwxOTQwMjY0NzcsLTEwNzE0MDk1
-ODQsNzQxMDA3NTMxLDY5MzIyMjg3Nl19
+eyJoaXN0b3J5IjpbLTE0NzI0ODEyOTksLTc2NzcxMjc3MSwtND
+AwODkyMDkwLDEwNjE0ODI1MzYsMjExNzk3NTk2MSwxOTQwMjY0
+NzcsLTEwNzE0MDk1ODQsNzQxMDA3NTMxLDY5MzIyMjg3Nl19
 -->
