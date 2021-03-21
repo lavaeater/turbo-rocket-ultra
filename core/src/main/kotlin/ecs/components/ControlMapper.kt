@@ -11,5 +11,9 @@ class ControlMapper {
     var firing: Boolean = false
     var turning: Float = 0f
     var thrust: Float = 0f
+
+    val walkVector: Vector2 = vec2(0f, 0f)
+        get() = field.set(turning, -thrust)
+
 }
 

@@ -48,10 +48,12 @@ class PlayerShootingSystem(private val audioPlayer: AudioPlayer) : IteratingSyst
             //create raycast to find some targets
             val transform = transformMapper[entity]
             controlComponent.shoot()
-            audioPlayer.playSounds(mapOf("gunshot" to 0f, "shellcasing" to (0.1f..0.5f).random()))
+            if((1..5).random() == 1)
+                audioPlayer.playSounds(mapOf("gunshot" to 0f, "shellcasing" to (0.1f..1f).random()))
+            else
+                audioPlayer.playSound("gunshot")
 
             controlComponent.latestHitPoint.set(controlComponent.aimVector).sub(transform.position).scl(20f).add(transform.position)
-
 
             val start = transform.position
 

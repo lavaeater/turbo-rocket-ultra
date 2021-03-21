@@ -9,7 +9,7 @@ import ktx.math.vec3
 
 class PlayerControlComponent(
     private val controlMapper: ControlMapper,
-    val rof: Float = 10f) : Component {
+    private val rof: Float = 2f) : Component {
 
     fun coolDown(deltaTime: Float) {
         cooldownRemaining-=deltaTime
@@ -47,15 +47,17 @@ class PlayerControlComponent(
 
         controlMapper.mousePosition.set(mousePosition3D.x, mousePosition3D.y)
 
-        aimVector.set(controlMapper.mousePosition).sub(position).nor()
+        controlMapper.aimVector.set(controlMapper.mousePosition).sub(position).nor()
     }
 
-
+    val triggerPulled get() = controlMapper.firing
     val firing get() = controlMapper.firing && cooldownRemaining <= 0f
     val aimVector get() = controlMapper.aimVector
     val mousePosition get() = controlMapper.mousePosition
     var latestHitPoint = vec2(0f,0f)
+    val walkVector get() = controlMapper.walkVector
     val turning : Float get() { return if(stationary) 0f else controlMapper.turning }
     val walking : Float get()  { return if(stationary) 0f else controlMapper.thrust }
+    val moving get() = walkVector.len2() != 0f
     var stationary = false
 }

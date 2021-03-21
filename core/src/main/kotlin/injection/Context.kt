@@ -54,14 +54,14 @@ object Context {
     private fun getEngine(): Engine {
         return Engine().apply {
             addSystem(PhysicsSystem(inject()))
-            addSystem(PhysicsDebugRendererSystem(inject(), inject()))
+//            addSystem(PhysicsDebugRendererSystem(inject(), inject()))
             addSystem(CameraUpdateSystem())
             addSystem(PlayerControlSystem())
             addSystem(BodyDestroyerSystem(inject())) //world
             addSystem(EnterVehicleSystem())
             addSystem(ExitVehicleSystem())
             addSystem(VehicleControlSystem())
-            addSystem(CharacterAimDirectionSystem())
+            addSystem(CharacterWalkAndShootDirectionSystem())
             addSystem(ShootDebugRenderSystem())
             addSystem(PlayerShootingSystem(inject()))
             addSystem(EnemyDeathSystem())

@@ -20,7 +20,6 @@ class InputAdapter(
 
     private val controllers by lazy { Controllers.getControllers() }
     private val player: Player by lazy { inject()}
-    private val transform: TransformComponent by lazy { player.entity[mapperFor()]!!}
 
     override fun keyDown(keycode: Int): Boolean {
         when(keycode) {
@@ -68,17 +67,6 @@ class InputAdapter(
         }
 
         return true
-    }
-
-    private val currentMousePosition = vec3()
-    fun setAimVector(aimVector: Vector2, screenX: Int, screenY: Int) {
-
-        currentMousePosition.set(screenX.toFloat(), screenY.toFloat(), 0f)
-
-        camera.unproject(currentMousePosition)
-
-        currentControlMapper.mousePosition.set(currentMousePosition.x, currentMousePosition.y)
-        aimVector.set(currentMousePosition.x, currentMousePosition.y).sub(transform.position).nor()
     }
 
     override fun touchUp(screenX: Int, screenY: Int, pointer: Int, button: Int): Boolean {

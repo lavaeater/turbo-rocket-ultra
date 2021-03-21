@@ -40,18 +40,9 @@ class PlayerControlSystem(
         bodyComponent: BodyComponent,
         characterSpriteComponent: CharacterSpriteComponent,
         transformComponent: TransformComponent) {
-        if (playerControlComponent.turning != 0f) {
-            bodyComponent.body.applyTorque(torque * playerControlComponent.turning, true)
-        }
 
-        val forceVector = vec2(MathUtils.cos(bodyComponent.body.angle), MathUtils.sin(bodyComponent.body.angle)).rotate90(1)
-
-        if (playerControlComponent.walking != 0f) {
-            bodyComponent.body.applyForceToCenter(forceVector.scl(thrust), true)
-            characterSpriteComponent.currentAnimState = AnimState.Walk
-        } else {
-            characterSpriteComponent.currentAnimState = AnimState.Idle
-        }
+        bodyComponent.body.setLinearVelocity(playerControlComponent.walkVector.x * 10f, playerControlComponent.walkVector.y * 10f)
+        characterSpriteComponent.currentAnimState = if(playerControlComponent.moving) AnimState.Walk else AnimState.Idle
 
         //Throw in polling of mouse coordinates here?
         playerControlComponent.setAimVector(Gdx.input.x, Gdx.input.y, transformComponent.position)
