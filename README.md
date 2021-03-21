@@ -74,6 +74,8 @@ Not done at all. What I want:
 * Blood splatter
 * Death anim (really part of some other feature, might skip this
 
+I'm probably not going to do any of these, actually. I'll move on to the next stage of gameplay in the game, now that we can shoot some!
+
 ### Audio
 Nothing has been done with audio at all. 
 * Sound for shots <- Done now, complete with shell casings dropping on the ground
@@ -216,7 +218,8 @@ Next should probably be the feature that requires the least work to make it a "g
 
 So the next feature will be ship collisions.
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbLTE0NzI0ODEyOTksLTc2NzcxMjc3MSwtND
-AwODkyMDkwLDEwNjE0ODI1MzYsMjExNzk3NTk2MSwxOTQwMjY0
-NzcsLTEwNzE0MDk1ODQsNzQxMDA3NTMxLDY5MzIyMjg3Nl19
+eyJoaXN0b3J5IjpbMTM5Mjk0NTcyNCwtMTQ3MjQ4MTI5OSwtNz
+Y3NzEyNzcxLC00MDA4OTIwOTAsMTA2MTQ4MjUzNiwyMTE3OTc1
+OTYxLDE5NDAyNjQ3NywtMTA3MTQwOTU4NCw3NDEwMDc1MzEsNj
+kzMjIyODc2XX0=
 -->
