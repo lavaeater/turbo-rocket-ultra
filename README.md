@@ -8,11 +8,18 @@ The name of this repository is an homage to the first game I made with libgdx / 
 
 My ambition is to make coding sessions over on my youtube channel for the development of this game, to sort of learn-by-doing and also provide content for you people out there that are also trying out libgdx and Kotlin and want to make a game and don't know how.
 
+## What is this game, anyways?
+
+Thi
+
 ## Current Work
 
 This roadmap is subject to change, all the time
 
-### Up next
+### Shooting System
+
+So, 
+
 
 ## Stuff that are already "done"
 * Character and Enemy Sprites <- done
@@ -148,6 +155,6 @@ Next should probably be the feature that requires the least work to make it a "g
 
 So the next feature will be ship collisions.
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbLTU5NTgyMzUxNCwxOTQwMjY0NzcsLTEwNz
+eyJoaXN0b3J5IjpbMTQzNjIxNDA0NiwxOTQwMjY0NzcsLTEwNz
 E0MDk1ODQsNzQxMDA3NTMxLDY5MzIyMjg3Nl19
 -->
