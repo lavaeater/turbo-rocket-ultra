@@ -5,15 +5,14 @@ import com.badlogic.ashley.core.Entity
 import com.badlogic.gdx.Gdx
 import com.badlogic.gdx.graphics.OrthographicCamera
 import com.badlogic.gdx.graphics.g2d.Batch
+import com.badlogic.gdx.graphics.g2d.PolygonSpriteBatch
 import com.badlogic.gdx.math.Vector2
 import com.badlogic.gdx.scenes.scene2d.Stage
 import com.badlogic.gdx.scenes.scene2d.ui.Label
 import com.badlogic.gdx.utils.Align
 import com.badlogic.gdx.utils.viewport.ExtendViewport
-import ecs.components.BodyComponent
-import ecs.components.ControlMapper
-import ecs.components.PlayerComponent
-import ecs.components.TransformComponent
+import ecs.components.*
+import factories.player
 import injection.Context.inject
 import ktx.ashley.allOf
 import ktx.ashley.get
@@ -36,8 +35,14 @@ class UserInterface(
     private val playerEntity: Entity by lazy { engine.getEntitiesFor(allOf(PlayerComponent::class).get()).first() }
     private val transform: TransformComponent by lazy { playerEntity[mapperFor()]!! }
     private val bodyComponent: BodyComponent by lazy { playerEntity[mapperFor()]!! }
+    private val playerControlComponent: PlayerControlComponent by lazy { playerEntity[mapperFor()]!! }
     private val bodyPos get() = bodyComponent.body.position
     private val bodyRotation get() = bodyComponent.body.angle
+
+    private val firing get() = playerControlComponent.firing
+    private val coolDown get() = playerControlComponent.cooldownRemaining
+
+
     private lateinit var rootTable: KTableWidget
     private lateinit var infoBoard: KTableWidget
     private lateinit var infoLabel: Label
@@ -52,7 +57,7 @@ class UserInterface(
 
     companion object {
         private const val aspectRatio = 16 / 9
-        const val uiWidth = 800f
+        const val uiWidth = 400f
         const val uiHeight = uiWidth * aspectRatio
     }
 
@@ -63,18 +68,18 @@ class UserInterface(
     override fun update(delta: Float) {
         batch.projectionMatrix = stage.camera.combined
 
-        updateInfo()
+        updateInfo(delta)
         stage.act(delta)
         stage.draw()
     }
 
-    private fun updateInfo() {
-        getMousePosition()
+    private fun updateInfo(delta: Float) {
         infoLabel.setText(
             """
-      Body position: $bodyPos
-      Body rotatipn: $bodyRotation
-      Body Degrees: ${bodyRotation.to360Degrees()}
+      AimVector: ${playerControlComponent.aimVector}
+      Position: ${transform.position}
+      MouseWorld: ${playerControlComponent.mousePosition}      
+      AimVectorLength: ${playerControlComponent.aimVector.len2()}
     """.trimIndent()
         )
     }
@@ -112,13 +117,8 @@ class UserInterface(
             label(
                 """
 Controls and stuff:
-WASD                    -> Control camera
-Left and Right          -> Switch NPC to follow
-c                       -> Stop following NPC
-z                       -> Center camera //stop complaining
-u, j                    -> zoom in and out
-k, l                    -> rotate camera
-r                       -> Reset Sim
+WASD -> Move
+Mouse -> Aim & Shoot
       """
             )
             infoLabel = label("InfoLabel")

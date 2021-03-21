@@ -35,7 +35,6 @@ class RenderSystem(
 
     override fun processEntity(entity: Entity, deltaTime: Float) {
         //1. Just render the texture without animation
-        spriteBatch.projectionMatrix = camera.combined
         val transform = tMapper.get(entity)
         val currentTextureRegion = sMapper.get(entity).currentAnim.keyFrames.first()
         spriteBatch.drawScaled(
