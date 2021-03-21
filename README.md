@@ -1,5 +1,9 @@
 # turbo-rocket-ultra
 
+## What's up with the name, anyways?
+
+The name of this repository is an homage to the first game I made with libgdx / kotlin and that game was an homage to the classic Amiga game Turbo Raketti (https://en.wikipedia.org/wiki/Turboraketti) that me and some friends played back i
+
 ## Collecting thoughts on controls of more than one entity
 
 ### Current Control System
@@ -178,6 +182,6 @@ Det här gör vi på det gamla vanliga sättet. Vi bygger en box2d-värld, vi kl
 
 Oj oj oj,  vad roligt. Vi kan göra en box2d-kropp med leder, per tutorials etc. Superkul ju.
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbMTk0MDI2NDc3LC0xMDcxNDA5NTg0LDc0MT
-AwNzUzMSw2OTMyMjI4NzZdfQ==
+eyJoaXN0b3J5IjpbMjA2MDA5OTQzMiwxOTQwMjY0NzcsLTEwNz
+E0MDk1ODQsNzQxMDA3NTMxLDY5MzIyMjg3Nl19
 -->
