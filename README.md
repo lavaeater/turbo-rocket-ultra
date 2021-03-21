@@ -28,6 +28,8 @@ To make the graphics and environment easy I am currently working with the concep
 
 ## Doing now: Enemies
 
+Enemies are SO important for a game, right? 
+
 ## Done: Shooting System v0.1
 So, I have added some sprites to the game and am now working on a shooting system. I will publish a video on how I implemented that and with some trouble shooting related to framerates, vector maths, raycasting in box2d, etc, very soon. So, the first thing was actually shooting, then adding some kind of rate of fire (for different types of weapons). Then doing damage (done) and destroying enemies when they are dead - also done.
 
@@ -220,8 +222,8 @@ Next should probably be the feature that requires the least work to make it a "g
 
 So the next feature will be ship collisions.
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbLTE2MTA3MjY2NDksLTE0NzI0ODEyOTksLT
-c2NzcxMjc3MSwtNDAwODkyMDkwLDEwNjE0ODI1MzYsMjExNzk3
-NTk2MSwxOTQwMjY0NzcsLTEwNzE0MDk1ODQsNzQxMDA3NTMxLD
-Y5MzIyMjg3Nl19
+eyJoaXN0b3J5IjpbMTQ4Nzc4NDQ0NiwtMTQ3MjQ4MTI5OSwtNz
+Y3NzEyNzcxLC00MDA4OTIwOTAsMTA2MTQ4MjUzNiwyMTE3OTc1
+OTYxLDE5NDAyNjQ3NywtMTA3MTQwOTU4NCw3NDEwMDc1MzEsNj
+kzMjIyODc2XX0=
 -->
