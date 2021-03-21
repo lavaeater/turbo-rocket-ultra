@@ -15,7 +15,7 @@ Inspirations off the bat for this game are:
 * Helldivers
 * South Park Tower Defense
 
-To make the graphics and environment easy I am currently working with the concept of "zombie tower defense", which is obviously lame and very boring, but hey... 
+To make the graphics and environment easy I am currently working with the concept of "zombie tower defense", which is obviously lame and very boring, but hey... it's easy to find art for.
 So, twin-stick shooting (or mouse aim)
 
 ## Current Work
@@ -161,6 +161,6 @@ Next should probably be the feature that requires the least work to make it a "g
 
 So the next feature will be ship collisions.
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbMTY3MjI5MzgyMywxOTQwMjY0NzcsLTEwNz
-E0MDk1ODQsNzQxMDA3NTMxLDY5MzIyMjg3Nl19
+eyJoaXN0b3J5IjpbMjMyNDY4MjMwLDE5NDAyNjQ3NywtMTA3MT
+QwOTU4NCw3NDEwMDc1MzEsNjkzMjIyODc2XX0=
 -->
