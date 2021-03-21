@@ -4,6 +4,10 @@
 
 The name of this repository is an homage to the first game I made with libgdx / kotlin and that game was an homage to the classic Amiga game Turbo Raketti (https://en.wikipedia.org/wiki/Turboraketti) that me and some friends played back in the 90s on our Amigas. It's a simple enough Thrust-clone with racing modes and fantastic dog fights. Endless replayability. It represents the holy grail, a fun game that should be *doable*, you know, for a person with no knowledge of how to code or do games. However, the game that I am currently working on in this repository is absolutely not a Turbo Raketti clone. It's just a name.
 
+## Video Development Log
+
+My ambition is to make coding sessions over on my youtube channel for the development of this game, to sort of learn-by-doing and also provide content for you people out there that are also trying out libgdx and Kotlin and want to make a game and don't know how.
+
 ## Roadmap
 
 ### Up next
@@ -149,6 +153,6 @@ Next should probably be the feature that requires the least work to make it a "g
 
 So the next feature will be ship collisions.
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbMTk2OTIzNzM5NiwxOTQwMjY0NzcsLTEwNz
-E0MDk1ODQsNzQxMDA3NTMxLDY5MzIyMjg3Nl19
+eyJoaXN0b3J5IjpbNDM5MDA5MjUzLDE5NDAyNjQ3NywtMTA3MT
+QwOTU4NCw3NDEwMDc1MzEsNjkzMjIyODc2XX0=
 -->
