@@ -10,7 +10,13 @@ My ambition is to make coding sessions over on my youtube channel for the develo
 
 ## What is this game, anyways?
 
-Thi
+Inspirations off the bat for this game are:
+* Lovers in a Dangerous Spacetime
+* Helldivers
+* South Park Tower Defense
+
+To make the graphics and environment easy I am currently working with the concept of "zombie tower defense", which is obviously lame and very boring, but hey... 
+So, twin-stick shooting (or mouse aim)
 
 ## Current Work
 
@@ -155,6 +161,6 @@ Next should probably be the feature that requires the least work to make it a "g
 
 So the next feature will be ship collisions.
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbMTQzNjIxNDA0NiwxOTQwMjY0NzcsLTEwNz
+eyJoaXN0b3J5IjpbMTY3MjI5MzgyMywxOTQwMjY0NzcsLTEwNz
 E0MDk1ODQsNzQxMDA3NTMxLDY5MzIyMjg3Nl19
 -->
