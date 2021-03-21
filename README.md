@@ -21,15 +21,6 @@ This roadmap is subject to change, all the time
 * Better controls, as in mouse aim perhaps? <- done
 * Ability to enter vehicles and drive around / shoot from. <- was done, is not relevant *now*
 
-# Later dude
-* Draw a sprite for the character
-* Textures and sprites?
-
-## Shooting from a platform
-
-
-
-
 ## Collecting thoughts on controls of more than one entity
 
 ### Current Control System
@@ -156,6 +147,6 @@ Next should probably be the feature that requires the least work to make it a "g
 
 So the next feature will be ship collisions.
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbODUyNDAwODU5LDE5NDAyNjQ3NywtMTA3MT
+eyJoaXN0b3J5IjpbOTEyMzcyNjYwLDE5NDAyNjQ3NywtMTA3MT
 QwOTU4NCw3NDEwMDc1MzEsNjkzMjIyODc2XX0=
 -->
