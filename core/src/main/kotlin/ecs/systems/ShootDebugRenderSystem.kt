@@ -3,6 +3,8 @@ package ecs.systems
 import com.badlogic.ashley.core.Entity
 import com.badlogic.ashley.systems.IteratingSystem
 import com.badlogic.gdx.graphics.Color
+import com.badlogic.gdx.graphics.Pixmap
+import com.badlogic.gdx.graphics.Texture
 import com.badlogic.gdx.graphics.g2d.Batch
 import com.badlogic.gdx.graphics.g2d.PolygonSpriteBatch
 import com.badlogic.gdx.graphics.g2d.TextureRegion
@@ -12,9 +14,6 @@ import injection.Context.inject
 import ktx.ashley.allOf
 import ktx.ashley.mapperFor
 import space.earlygrey.shapedrawer.ShapeDrawer
-import com.badlogic.gdx.graphics.Pixmap
-import com.badlogic.gdx.graphics.Texture
-import javax.swing.plaf.ColorUIResource
 
 
 class ShootDebugRenderSystem(private val debug: Boolean = false) : IteratingSystem(
@@ -41,8 +40,6 @@ class ShootDebugRenderSystem(private val debug: Boolean = false) : IteratingSyst
 
     override fun processEntity(entity: Entity, deltaTime: Float) {
         val controlComponent = controlMapper[entity]
-
-
         //
         val transform = transformMapper[entity]
         if (controlComponent.drawShot) {
