@@ -49,7 +49,13 @@ Well, this is simple enough: the graphical presentation of the feature. For the 
 ### Audio
 As the graphics, just the audio presentation for this feature.
 
-### P
+### Polish
+This isn't necessary, always. This is a hobby for me, but if you are doing a game for commercial purposes, your features need polish. This is the stage where you let someone test it and give feedback and then you iterate back on the mechanics of the feature over and over again until it is just nailed.
+
+## So where am I with the shooting system
+
+### Mechanics
+
 
 
 
@@ -188,6 +194,6 @@ Next should probably be the feature that requires the least work to make it a "g
 
 So the next feature will be ship collisions.
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbMjExMjE4MzQ0NiwxOTQwMjY0NzcsLTEwNz
+eyJoaXN0b3J5IjpbMjExNzk3NTk2MSwxOTQwMjY0NzcsLTEwNz
 E0MDk1ODQsNzQxMDA3NTMxLDY5MzIyMjg3Nl19
 -->
