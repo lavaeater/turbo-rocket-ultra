@@ -55,7 +55,7 @@ This isn't necessary, always. This is a hobby for me, but if you are doing a gam
 ## So where am I with the shooting system regarding this?
 
 ### Mechanics
-
+There are so many mechanics-things I would like to implemement - but perhaps they are part of other features? 
 
 
 
@@ -194,7 +194,7 @@ Next should probably be the feature that requires the least work to make it a "g
 
 So the next feature will be ship collisions.
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbMTYwNjMyMzcwMSwyMTE3OTc1OTYxLDE5ND
+eyJoaXN0b3J5IjpbMjA3NTgyNjkyNywyMTE3OTc1OTYxLDE5ND
 AyNjQ3NywtMTA3MTQwOTU4NCw3NDEwMDc1MzEsNjkzMjIyODc2
 XX0=
 -->
