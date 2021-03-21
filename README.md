@@ -39,7 +39,7 @@ What do I mean with these?
 
 ### Mechanics
 The mechanics are obviously how the feature works. In this case, the shooting system, I needed to figure out lots of things regarding it that aren't part of presentation, but just how I would want the shooting to actually work. So, what happens when the player pulls the trigger? How do I handle rate of fire? How do I handle the actual shot flying away?
-When I started the game I actually used box2d bodies flying around - which I don't think is very eff
+When I started the game I actually used box2d bodies flying around - which I don't think is very efficient and not what I was looking for. The problem is that you have to manage their speed and stuff in a somewhat complicated way (to sort of simulate muzzle velocties of handguns etc). Now, for my game, bullets and projectiles can be considered basically instantaneous, it's going to be close combat. So I went with Box2D raycasting instead (
 
 
 
@@ -177,6 +177,6 @@ Next should probably be the feature that requires the least work to make it a "g
 
 So the next feature will be ship collisions.
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbMjc2ODk0MTI5LDE5NDAyNjQ3NywtMTA3MT
-QwOTU4NCw3NDEwMDc1MzEsNjkzMjIyODc2XX0=
+eyJoaXN0b3J5IjpbLTkxMTc0MDYxOCwxOTQwMjY0NzcsLTEwNz
+E0MDk1ODQsNzQxMDA3NTMxLDY5MzIyMjg3Nl19
 -->
