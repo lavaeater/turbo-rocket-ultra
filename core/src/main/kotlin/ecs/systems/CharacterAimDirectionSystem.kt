@@ -39,7 +39,5 @@ class CharacterAimDirectionSystem :
             in 30f..149f -> characterSpriteComponent.currentDirection = SpriteDirection.South
             else -> characterSpriteComponent.currentDirection = SpriteDirection.South
         }
-
-
     }
 }
