@@ -15,10 +15,10 @@ This roadmap is subject to change, all the time
 ### Up next
 
 ### Done stuff
-* Introduce Ashley E <- done
+* Introduce Ashley ECS <- done
 * More variables to be able to control aspects of game, such as linear drag etc.  <- "done"
 * Better controls, as in mouse aim perhaps? <- done
-* Ability to enter vehicles and drive around / shoot from. 
+* Ability to enter vehicles and drive around / shoot from. <- was done, is not relevant *now*
 
 # Later dude
 * Draw a sprite for the character
@@ -155,6 +155,6 @@ Next should probably be the feature that requires the least work to make it a "g
 
 So the next feature will be ship collisions.
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbLTE1MzQ4NjY0NjQsMTk0MDI2NDc3LC0xMD
-cxNDA5NTg0LDc0MTAwNzUzMSw2OTMyMjI4NzZdfQ==
+eyJoaXN0b3J5IjpbMjAwNzE4MzI0NiwxOTQwMjY0NzcsLTEwNz
+E0MDk1ODQsNzQxMDA3NTMxLDY5MzIyMjg3Nl19
 -->
