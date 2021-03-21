@@ -1,5 +1,6 @@
 package tru
 
+import audio.AudioPlayer
 import com.badlogic.ashley.core.Engine
 import com.badlogic.gdx.Gdx
 import com.badlogic.gdx.Screen
@@ -37,6 +38,7 @@ class FirstScreen : Screen {
     private val engine: Engine by lazy { inject() }
     private val batch: PolygonSpriteBatch by lazy { inject() }
     private val ui: IUserInterface by lazy { inject() }
+    private val audioPlayer: AudioPlayer by lazy { inject() }
 
     override fun show() {
         if (needsInit) {
@@ -73,6 +75,7 @@ class FirstScreen : Screen {
         batch.projectionMatrix = camera.combined
         engine.update(delta)
         ui.update(delta)
+        audioPlayer.update(delta)
     }
 
     override fun resize(width: Int, height: Int) {

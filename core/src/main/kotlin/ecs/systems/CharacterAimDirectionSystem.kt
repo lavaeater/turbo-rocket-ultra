@@ -16,9 +16,6 @@ class CharacterAimDirectionSystem :
             PlayerControlComponent::class
         ).get(), 10) {
 
-
-
-
     override fun processEntity(entity: Entity, deltaTime: Float) {
         /**
          * The difficult thing here is how we know if a character is walking or not... and what the character

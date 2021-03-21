@@ -1,6 +1,8 @@
 package injection
 
+import audio.AudioPlayer
 import com.badlogic.ashley.core.Engine
+import com.badlogic.gdx.Audio
 import com.badlogic.gdx.graphics.Camera
 import com.badlogic.gdx.graphics.OrthographicCamera
 import com.badlogic.gdx.graphics.g2d.Batch
@@ -43,6 +45,7 @@ object Context {
             bindSingleton(createWorld().apply {
                 setContactListener(ContactManager())
             })
+            bindSingleton(AudioPlayer())
             bindSingleton(getEngine())
             bindSingleton(player())
         }
@@ -60,7 +63,7 @@ object Context {
             addSystem(VehicleControlSystem())
             addSystem(CharacterAimDirectionSystem())
             addSystem(ShootDebugRenderSystem())
-            addSystem(PlayerShootingSystem())
+            addSystem(PlayerShootingSystem(inject()))
             addSystem(EnemyDeathSystem())
             addSystem(RenderSystem(inject<PolygonSpriteBatch>() as Batch, inject()))
         }
