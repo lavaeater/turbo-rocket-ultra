@@ -62,10 +62,25 @@ There are so many mechanics-things I would like to implemement - but perhaps the
 * not shoot through walls
 * deal damage
 * remove enemies when dead
-And one could then perhaps say that this is feature complete since all of these things are actually implemented - except I need to change the aim vector thingie so it works with a controller - basically transform the aimVector into unit vector, i.e. *normalizing* it. That's perhaps only five minutes of coding.
+* not count sensors as hits 
 
+And one could then perhaps say that this is feature complete since all of these things are actually implemented - except I need to change the aim vector thingie so it works with a controller - basically transform the aimVector into unit vector, i.e. *normalizing* it. That's perhaps only five minutes of coding. From watching my video on this, you probably realize it wasn't five minutes of coding, it was more than ten minutes of a grown man failing high school maths. Or are vectors more high level than that? I can only hope. 
 
+Why normalize the aim vector? Because input from controllers give you values from -1.0 to 1.0 in x and y, which can then be used to set the value for that aimvector easily. Totally worth it, got some nice video from it.
 
+### Graphics
+Not done at all. What I want:
+* Muzzle flash
+* Blood splatter
+* Death anim (really part of some other feature, might skip this
+
+### Audio
+Nothing has been done with audio at all. 
+* Sound for shots
+* Sound for hits on enemies
+* Sound for hits on obstacles
+
+So, I will start work on these last things now.
 
 ## Stuff that are already "done"
 * Character and Enemy Sprites <- done
@@ -201,7 +216,7 @@ Next should probably be the feature that requires the least work to make it a "g
 
 So the next feature will be ship collisions.
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbMTA2MTQ4MjUzNiwyMTE3OTc1OTYxLDE5ND
-AyNjQ3NywtMTA3MTQwOTU4NCw3NDEwMDc1MzEsNjkzMjIyODc2
-XX0=
+eyJoaXN0b3J5IjpbLTc2NzcxMjc3MSwtNDAwODkyMDkwLDEwNj
+E0ODI1MzYsMjExNzk3NTk2MSwxOTQwMjY0NzcsLTEwNzE0MDk1
+ODQsNzQxMDA3NTMxLDY5MzIyMjg3Nl19
 -->
