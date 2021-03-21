@@ -2,7 +2,7 @@
 
 ## What's up with the name, anyways?
 
-The name of this repository is an homage to the first game I made with libgdx / kotlin and that game was an homage to the classic Amiga game Turbo Raketti (https://en.wikipedia.org/wiki/Turboraketti) that me and some friends played back i
+The name of this repository is an homage to the first game I made with libgdx / kotlin and that game was an homage to the classic Amiga game Turbo Raketti (https://en.wikipedia.org/wiki/Turboraketti) that me and some friends played back in the 90s on our Amigas. It's a simple enough Thrust-clone with racing modes and fantastic dog fights. Endless replayability. It represents the holy grail, a fun game that should be *doable*, you know, for a person with no knowledge of how to code or do games. However, the game that I am currently working on in this repository is absolutely not a Turbo Raketti clone. It's just a name.
 
 ## Collecting thoughts on controls of more than one entity
 
@@ -182,6 +182,6 @@ Det här gör vi på det gamla vanliga sättet. Vi bygger en box2d-värld, vi kl
 
 Oj oj oj,  vad roligt. Vi kan göra en box2d-kropp med leder, per tutorials etc. Superkul ju.
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbMjA2MDA5OTQzMiwxOTQwMjY0NzcsLTEwNz
+eyJoaXN0b3J5IjpbMTEyNzg1OTI4NiwxOTQwMjY0NzcsLTEwNz
 E0MDk1ODQsNzQxMDA3NTMxLDY5MzIyMjg3Nl19
 -->
