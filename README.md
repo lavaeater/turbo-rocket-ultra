@@ -27,7 +27,7 @@ To make the graphics and environment easy I am currently working with the concep
 * Different weapons to shoot with
 
 ## Doing: Shooting System
-
+So, I have added some sprites to the game and am now working on a shooting system. I will publish a video on how I implemented that and with some trouble shooting related to framerates, vector maths, raycasting in box2d, etc, very soon. So, the first thing was actually shooting, then adding some kind of rate of fire (for different types of weapons). Then doing damage (done) and destroying enemies when they are dead - also done.
 
 
 
@@ -165,6 +165,6 @@ Next should probably be the feature that requires the least work to make it a "g
 
 So the next feature will be ship collisions.
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbMTI2NjU2MTczNSwxOTQwMjY0NzcsLTEwNz
-E0MDk1ODQsNzQxMDA3NTMxLDY5MzIyMjg3Nl19
+eyJoaXN0b3J5IjpbODA2MzkzNDU3LDE5NDAyNjQ3NywtMTA3MT
+QwOTU4NCw3NDEwMDc1MzEsNjkzMjIyODc2XX0=
 -->
