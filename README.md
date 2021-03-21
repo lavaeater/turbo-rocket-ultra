@@ -55,7 +55,13 @@ This isn't necessary, always. This is a hobby for me, but if you are doing a gam
 ## So where am I with the shooting system regarding this?
 
 ### Mechanics
-There are so many mechanics-things I would like to implemement - but perhaps they are part of other features? 
+There are so many mechanics-things I would like to implemement - but perhaps they are part of other features? Like shotgun mechanics (basically doing a spreading using several calls to raycasting etc), ammo constraints, reloads, etc. But they might be part of a "gun feature" in the future. For now I wanted to be able to:
+* aim
+* shoot
+* hit enemies
+* not shoot through walls
+* deal damage
+* remove en
 
 
 
@@ -194,7 +200,7 @@ Next should probably be the feature that requires the least work to make it a "g
 
 So the next feature will be ship collisions.
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbMjA3NTgyNjkyNywyMTE3OTc1OTYxLDE5ND
+eyJoaXN0b3J5IjpbMTI5NDk0MTk2MiwyMTE3OTc1OTYxLDE5ND
 AyNjQ3NywtMTA3MTQwOTU4NCw3NDEwMDc1MzEsNjkzMjIyODc2
 XX0=
 -->
