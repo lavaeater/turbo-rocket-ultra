@@ -64,9 +64,6 @@ There are so many mechanics-things I would like to implemement - but perhaps the
 * remove enemies when dead
 And one could then perhaps say that this is feature complete since all of these things are actually implemented - except I need to change the aim vector thingie so it works with a controller - basically transform the aimVector into unit vector, i.e. *normalizing* it. That's perhaps only five minutes of coding.
 
-
-
-
 ## Stuff that are already "done"
 * Character and Enemy Sprites <- done
 * Introduce Ashley ECS <- done
@@ -201,7 +198,7 @@ Next should probably be the feature that requires the least work to make it a "g
 
 So the next feature will be ship collisions.
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbMTA2MTQ4MjUzNiwyMTE3OTc1OTYxLDE5ND
-AyNjQ3NywtMTA3MTQwOTU4NCw3NDEwMDc1MzEsNjkzMjIyODc2
-XX0=
+eyJoaXN0b3J5IjpbLTE4MDIyNjE5MCwxMDYxNDgyNTM2LDIxMT
+c5NzU5NjEsMTk0MDI2NDc3LC0xMDcxNDA5NTg0LDc0MTAwNzUz
+MSw2OTMyMjI4NzZdfQ==
 -->
