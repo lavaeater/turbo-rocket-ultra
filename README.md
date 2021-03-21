@@ -82,7 +82,6 @@ Nothing has been done with audio at all.
 
 So, I will start work on these last things now.
 
-
 ## Stuff that are already "done"
 * Character and Enemy Sprites <- done
 * Introduce Ashley ECS <- done
@@ -217,7 +216,7 @@ Next should probably be the feature that requires the least work to make it a "g
 
 So the next feature will be ship collisions.
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbMTgzMDI5MDc2NywtNDAwODkyMDkwLDEwNj
+eyJoaXN0b3J5IjpbLTc2NzcxMjc3MSwtNDAwODkyMDkwLDEwNj
 E0ODI1MzYsMjExNzk3NTk2MSwxOTQwMjY0NzcsLTEwNzE0MDk1
 ODQsNzQxMDA3NTMxLDY5MzIyMjg3Nl19
 -->
