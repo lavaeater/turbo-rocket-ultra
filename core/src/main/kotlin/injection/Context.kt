@@ -58,7 +58,7 @@ object Context {
             addSystem(EnterVehicleSystem())
             addSystem(ExitVehicleSystem())
             addSystem(VehicleControlSystem())
-            addSystem(CharacterSpriteDirectionSystem())
+            addSystem(CharacterAimDirectionSystem())
             addSystem(ShootDebugRenderSystem())
             addSystem(PlayerShootingSystem())
             addSystem(EnemyDeathSystem())

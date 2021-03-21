@@ -76,10 +76,8 @@ class UserInterface(
     private fun updateInfo(delta: Float) {
         infoLabel.setText(
             """
-      AimVector: ${playerControlComponent.aimVector}
-      Position: ${transform.position}
-      MouseWorld: ${playerControlComponent.mousePosition}      
-      AimVectorLength: ${playerControlComponent.aimVector.len2()}
+      AimVector: ${playerControlComponent.aimVector.angleDeg()}
+
     """.trimIndent()
         )
     }
