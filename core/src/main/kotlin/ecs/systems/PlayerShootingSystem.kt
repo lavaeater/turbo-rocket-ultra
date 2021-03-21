@@ -43,11 +43,11 @@ class PlayerShootingSystem : IteratingSystem(
         controlComponent.coolDown(deltaTime)
 
         if (controlComponent.firing) {
-            controlComponent.shoot()
-            controlComponent.latestHitPoint.set(controlComponent.aimVector.x, controlComponent.aimVector.y)
-
             //create raycast to find some targets
             val transform = transformMapper[entity]
+            controlComponent.shoot()
+            controlComponent.latestHitPoint.set(controlComponent.aimVector).sub(transform.position).scl(20f).add(transform.position)
+
 
             val start = transform.position
 

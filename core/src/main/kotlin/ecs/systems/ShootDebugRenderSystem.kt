@@ -16,7 +16,7 @@ import ktx.ashley.mapperFor
 import space.earlygrey.shapedrawer.ShapeDrawer
 
 
-class ShootDebugRenderSystem(private val debug: Boolean = false) : IteratingSystem(
+class ShootDebugRenderSystem(private val debug: Boolean = true) : IteratingSystem(
     allOf(
         TransformComponent::class,
         PlayerControlComponent::class
@@ -49,7 +49,7 @@ class ShootDebugRenderSystem(private val debug: Boolean = false) : IteratingSyst
         }
         if(debug) {
             batch.begin()
-            shapeDrawer.line(transform.position, controlComponent.aimVector, Color.BLUE, 0.05f)
+            shapeDrawer.line(transform.position, controlComponent.aimVector.add(transform.position), Color.BLUE, 0.2f)
             shapeDrawer.line(transform.position, controlComponent.mousePosition, Color.RED, 0.05f)
             batch.end()
         }

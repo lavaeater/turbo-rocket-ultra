@@ -79,6 +79,7 @@ class UserInterface(
       AimVector: ${playerControlComponent.aimVector}
       Position: ${transform.position}
       MouseWorld: ${playerControlComponent.mousePosition}      
+      AimVectorLength: ${playerControlComponent.aimVector.len2()}
     """.trimIndent()
         )
     }
