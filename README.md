@@ -37,7 +37,9 @@ So for every feature in a game I think (I am not a pro, don't listen to me) you 
 
 What do I mean with these?
 
-###
+### Mechanics
+The mechanics are obviously how the feature works. In this case, the shooting system, I needed to figure out lots of things regarding it that aren't part of presentation, but just how I would want the shooting to actually work. So, what happens when the player pulls the trigger? How do I handle rate of fire? How do I handle the actual shot flying away?
+When I started the game I actually used box2d bodies flying around - which I don't think is very eff
 
 
 
@@ -175,6 +177,6 @@ Next should probably be the feature that requires the least work to make it a "g
 
 So the next feature will be ship collisions.
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbMzE3NzIwMTY1LDE5NDAyNjQ3NywtMTA3MT
+eyJoaXN0b3J5IjpbMjc2ODk0MTI5LDE5NDAyNjQ3NywtMTA3MT
 QwOTU4NCw3NDEwMDc1MzEsNjkzMjIyODc2XX0=
 -->
