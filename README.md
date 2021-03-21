@@ -26,7 +26,7 @@ To make the graphics and environment easy I am currently working with the concep
 * Enemies
 * Different weapons to shoot with
 
-## Doing: Shooting System
+## Done: Shooting System v0.1
 So, I have added some sprites to the game and am now working on a shooting system. I will publish a video on how I implemented that and with some trouble shooting related to framerates, vector maths, raycasting in box2d, etc, very soon. So, the first thing was actually shooting, then adding some kind of rate of fire (for different types of weapons). Then doing damage (done) and destroying enemies when they are dead - also done.
 
 So for every feature in a game I think (I am not a pro, don't listen to me) you could make a small default TODO-list for it that needs to be done for every feature to consider it done:
@@ -218,8 +218,8 @@ Next should probably be the feature that requires the least work to make it a "g
 
 So the next feature will be ship collisions.
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbMTM5Mjk0NTcyNCwtMTQ3MjQ4MTI5OSwtNz
-Y3NzEyNzcxLC00MDA4OTIwOTAsMTA2MTQ4MjUzNiwyMTE3OTc1
-OTYxLDE5NDAyNjQ3NywtMTA3MTQwOTU4NCw3NDEwMDc1MzEsNj
-kzMjIyODc2XX0=
+eyJoaXN0b3J5IjpbLTE3MDY5Mzc2OTAsLTE0NzI0ODEyOTksLT
+c2NzcxMjc3MSwtNDAwODkyMDkwLDEwNjE0ODI1MzYsMjExNzk3
+NTk2MSwxOTQwMjY0NzcsLTEwNzE0MDk1ODQsNzQxMDA3NTMxLD
+Y5MzIyMjg3Nl19
 -->
