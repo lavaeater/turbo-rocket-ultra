@@ -21,6 +21,9 @@ This roadmap is subject to change, all the time
 * Better controls, as in mouse aim perhaps? <- done
 * Ability to enter vehicles and drive around / shoot from. <- was done, is not relevant *now*
 
+
+## All notes below are old notes - they might be way off
+
 ## Collecting thoughts on controls of more than one entity
 
 ### Current Control System
@@ -77,8 +80,6 @@ Make it possible to enter some kind of vehicle and man either the wheel or a gun
 So, how do we do it? Well, using box2d, we can probably link bodies to each other or something - or we might have to destroy the player body in favor of a new body that is located on the vehicle in some kind of jointed way.
 
 So, first step is to create some kind of vehicle. Easy
-
-
 
 ## Even later,  Tuesday 29th of December
 
@@ -147,6 +148,6 @@ Next should probably be the feature that requires the least work to make it a "g
 
 So the next feature will be ship collisions.
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbOTEyMzcyNjYwLDE5NDAyNjQ3NywtMTA3MT
-QwOTU4NCw3NDEwMDc1MzEsNjkzMjIyODc2XX0=
+eyJoaXN0b3J5IjpbMTM2ODQwNzMwMCwxOTQwMjY0NzcsLTEwNz
+E0MDk1ODQsNzQxMDA3NTMxLDY5MzIyMjg3Nl19
 -->
