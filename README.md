@@ -29,6 +29,16 @@ To make the graphics and environment easy I am currently working with the concep
 ## Doing: Shooting System
 So, I have added some sprites to the game and am now working on a shooting system. I will publish a video on how I implemented that and with some trouble shooting related to framerates, vector maths, raycasting in box2d, etc, very soon. So, the first thing was actually shooting, then adding some kind of rate of fire (for different types of weapons). Then doing damage (done) and destroying enemies when they are dead - also done.
 
+So for every feature in a game I think (I am not a pro, don't listen to me) you could make a small default TODO-list for it that needs to be done for every feature to consider it done:
+1. Mechanics
+2. Graphics
+3. Audio
+4. Polish
+
+What do I mean with these?
+
+###
+
 
 
 ## Stuff that are already "done"
@@ -165,6 +175,6 @@ Next should probably be the feature that requires the least work to make it a "g
 
 So the next feature will be ship collisions.
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbODA2MzkzNDU3LDE5NDAyNjQ3NywtMTA3MT
+eyJoaXN0b3J5IjpbMzE3NzIwMTY1LDE5NDAyNjQ3NywtMTA3MT
 QwOTU4NCw3NDEwMDc1MzEsNjkzMjIyODc2XX0=
 -->
