@@ -4,6 +4,25 @@
 
 The name of this repository is an homage to the first game I made with libgdx / kotlin and that game was an homage to the classic Amiga game Turbo Raketti (https://en.wikipedia.org/wiki/Turboraketti) that me and some friends played back in the 90s on our Amigas. It's a simple enough Thrust-clone with racing modes and fantastic dog fights. Endless replayability. It represents the holy grail, a fun game that should be *doable*, you know, for a person with no knowledge of how to code or do games. However, the game that I am currently working on in this repository is absolutely not a Turbo Raketti clone. It's just a name.
 
+## Roadmap
+
+### Up next
+
+### TODO:
+* Introduce Ashley <- done
+* More variables to be able to control aspects of game, such as linear drag etc.  <- "done"
+* Better controls, as in mouse aim perhaps? <- done
+* Ability to enter vehicles and drive around / shoot from. 
+
+# Later dude
+* Draw a sprite for the character
+* Textures and sprites?
+
+## Shooting from a platform
+
+
+
+
 ## Collecting thoughts on controls of more than one entity
 
 ### Current Control System
@@ -91,27 +110,6 @@ This is my devlog.
 
 I am going to try to make some kind of AI-training in all of this. The AI will have inputs, rewards etc. I will try to make some deepq stuff or something.
 
-
-
-## Roadmap
-
-### Up next
-
-### TODO:
-* Introduce Ashley <- done
-* More variables to be able to control aspects of game, such as linear drag etc.  <- "done"
-* Better controls, as in mouse aim perhaps? <- done
-* Ability to enter vehicles and drive around / shoot from. 
-
-# Later dude
-* Draw a sprite for the character
-* Textures and sprites?
-
-## Shooting from a platform
-
-
-
-
 ## Walking is different from flying 
 
 A flying ship obviously behaves differently from a walking character. <- did some things on this
@@ -151,6 +149,6 @@ Next should probably be the feature that requires the least work to make it a "g
 
 So the next feature will be ship collisions.
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbLTIxNDIyODgzMjgsMTk0MDI2NDc3LC0xMD
-cxNDA5NTg0LDc0MTAwNzUzMSw2OTMyMjI4NzZdfQ==
+eyJoaXN0b3J5IjpbMTk2OTIzNzM5NiwxOTQwMjY0NzcsLTEwNz
+E0MDk1ODQsNzQxMDA3NTMxLDY5MzIyMjg3Nl19
 -->
