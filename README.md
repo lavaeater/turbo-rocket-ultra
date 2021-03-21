@@ -62,7 +62,8 @@ There are so many mechanics-things I would like to implemement - but perhaps the
 * not shoot through walls
 * deal damage
 * remove enemies when dead
-And one could then perhaps say that this is feature complete since all of these things are actually implemented - except I need to change the aim vector thingie so it works with a controller - basically transform the aimVector into unit vector, i.e. *normalizing* it. That's perhaps only five minutes of coding. From watching my video on this, you probably realize it wasn't five minutes of coding, it was more than ten minutes of a grown man failing high school maths.
+
+And one could then perhaps say that this is feature complete since all of these things are actually implemented - except I need to change the aim vector thingie so it works with a controller - basically transform the aimVector into unit vector, i.e. *normalizing* it. That's perhaps only five minutes of coding. From watching my video on this, you probably realize it wasn't five minutes of coding, it was more than ten minutes of a grown man failing high school maths. Or are vectors more high level than that? I can only hope.
 
 
 ## Stuff that are already "done"
@@ -199,7 +200,7 @@ Next should probably be the feature that requires the least work to make it a "g
 
 So the next feature will be ship collisions.
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbLTQwMDg5MjA5MCwxMDYxNDgyNTM2LDIxMT
-c5NzU5NjEsMTk0MDI2NDc3LC0xMDcxNDA5NTg0LDc0MTAwNzUz
-MSw2OTMyMjI4NzZdfQ==
+eyJoaXN0b3J5IjpbLTUwNTM4MTY4MCwtNDAwODkyMDkwLDEwNj
+E0ODI1MzYsMjExNzk3NTk2MSwxOTQwMjY0NzcsLTEwNzE0MDk1
+ODQsNzQxMDA3NTMxLDY5MzIyMjg3Nl19
 -->
