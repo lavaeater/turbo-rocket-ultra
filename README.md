@@ -40,7 +40,9 @@ What do I mean with these?
 ### Mechanics
 The mechanics are obviously how the feature works. In this case, the shooting system, I needed to figure out lots of things regarding it that aren't part of presentation, but just how I would want the shooting to actually work. So, what happens when the player pulls the trigger? How do I handle rate of fire? How do I handle the actual shot flying away?
 When I started the game I actually used box2d bodies flying around - which I don't think is very efficient and not what I was looking for. The problem is that you have to manage their speed and stuff in a somewhat complicated way (to sort of simulate muzzle velocties of handguns etc). Now, for my game, bullets and projectiles can be considered basically instantaneous, it's going to be close combat. So I went with Box2D raycasting instead (http://www.iforce2d.net/b2dtut/raycasting and https://github.com/libktx/ktx/tree/master/box2d).
-That isnt't that complicated once you get the hang of how to handle it - but then I had to think about rate of fire. In the real world, what happens is, if you have an automatic or semi-automatic gun, the force from gasses in the barrel or just recoil forces from the explosion forces the mechanism of the gun to cycle, pulling a new cartridge from a magazine, loading it and then firing again. But if the gun is ready to shoot, you pull the trigger and the shot goes away instantly. The way I was doing it was backwards, there was a delay, corresponding to the delay that would come **after** a shot, before a shot was actually fired. So I had to rework the rate of fire to work as a cooldown mechanism, as many magic or special abilities work in many games, but in this case then just for a gun (but this can then of course be used for any type of game mechanic later). Then I had to draw debug lines and solve some fantastic aiming issues that were occuring because I am not fluent in vector maths. 
+That isnt't that complicated once you get the hang of how to handle it - but then I had to think about rate of fire. In the real world, what happens is, if you have an automatic or semi-automatic gun, the force from gasses in the barrel or just recoil forces from the explosion forces the mechanism of the gun to cycle, pulling a new cartridge from a magazine, loading it and then firing again. But if the gun is ready to shoot, you pull the trigger and the shot goes away instantly. The way I was doing it was backwards, there was a delay, corresponding to the delay that would come **after** a shot, before a shot was actually fired. So I had to rework the rate of fire to work as a cooldown mechanism, as many magic or special abilities work in many games, but in this case then just for a gun (but this can then of course be used for any type of game mechanic later). Then I had to draw debug lines and solve some fantastic aiming issues that were occuring because I am not fluent in vector maths. Heres a link to how to do a line **through** two points, not just between them, correctly: https://www.debugcn.com/en/article/63417562.html
+So, all of these things are part of the **mechanics** of the shooting system - before I have those down, there isn't much of a point doing anything else related to the feature. If shooting misses the target, if damage isn't being taken, etc, there is nothi
+
 
 
 
@@ -178,6 +180,6 @@ Next should probably be the feature that requires the least work to make it a "g
 
 So the next feature will be ship collisions.
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbNzg4MTQzNzg1LDE5NDAyNjQ3NywtMTA3MT
-QwOTU4NCw3NDEwMDc1MzEsNjkzMjIyODc2XX0=
+eyJoaXN0b3J5IjpbMjAzNjk0NTAyMSwxOTQwMjY0NzcsLTEwNz
+E0MDk1ODQsNzQxMDA3NTMxLDY5MzIyMjg3Nl19
 -->
