@@ -26,11 +26,9 @@ To make the graphics and environment easy I am currently working with the concep
 * Enemies
 * Different weapons to shoot with
 
-## Currently being worked on
+## Doing: Shooting System
 
-### Shooting System
 
-So, 
 
 
 ## Stuff that are already "done"
@@ -167,6 +165,6 @@ Next should probably be the feature that requires the least work to make it a "g
 
 So the next feature will be ship collisions.
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbMTQzMDY4ODkyNywxOTQwMjY0NzcsLTEwNz
+eyJoaXN0b3J5IjpbMTI2NjU2MTczNSwxOTQwMjY0NzcsLTEwNz
 E0MDk1ODQsNzQxMDA3NTMxLDY5MzIyMjg3Nl19
 -->
