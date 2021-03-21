@@ -62,7 +62,7 @@ There are so many mechanics-things I would like to implemement - but perhaps the
 * not shoot through walls
 * deal damage
 * remove enemies when dead
-And one could then perhaps say that this is feature complete since all of these things are actually implemented - except I need to change the aim vector thingie so it works with a controller - basically transform the aimVector into unit vector, i.e. *normalizing* it. That's perhaps onl
+And one could then perhaps say that this is feature complete since all of these things are actually implemented - except I need to change the aim vector thingie so it works with a controller - basically transform the aimVector into unit vector, i.e. *normalizing* it. That's perhaps only five minutes of coding.
 
 
 
@@ -201,7 +201,7 @@ Next should probably be the feature that requires the least work to make it a "g
 
 So the next feature will be ship collisions.
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbOTI4MjQxMjUxLDIxMTc5NzU5NjEsMTk0MD
-I2NDc3LC0xMDcxNDA5NTg0LDc0MTAwNzUzMSw2OTMyMjI4NzZd
-fQ==
+eyJoaXN0b3J5IjpbMTA2MTQ4MjUzNiwyMTE3OTc1OTYxLDE5ND
+AyNjQ3NywtMTA3MTQwOTU4NCw3NDEwMDc1MzEsNjkzMjIyODc2
+XX0=
 -->
