@@ -15,6 +15,7 @@ This roadmap is subject to change, all the time
 ### Up next
 
 ### Done stuff
+* Character and Enemy Sprites <- done
 * Introduce Ashley ECS <- done
 * More variables to be able to control aspects of game, such as linear drag etc.  <- "done"
 * Better controls, as in mouse aim perhaps? <- done
@@ -155,6 +156,6 @@ Next should probably be the feature that requires the least work to make it a "g
 
 So the next feature will be ship collisions.
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbMjAwNzE4MzI0NiwxOTQwMjY0NzcsLTEwNz
-E0MDk1ODQsNzQxMDA3NTMxLDY5MzIyMjg3Nl19
+eyJoaXN0b3J5IjpbODUyNDAwODU5LDE5NDAyNjQ3NywtMTA3MT
+QwOTU4NCw3NDEwMDc1MzEsNjkzMjIyODc2XX0=
 -->
