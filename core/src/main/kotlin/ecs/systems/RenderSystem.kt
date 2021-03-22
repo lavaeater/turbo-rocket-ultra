@@ -21,7 +21,7 @@ class RenderSystem(
     ).get(), 0
 ) {
 
-    private val pixelsPerMeter = 64f
+    private val pixelsPerMeter = 16f
     private val scale = 1 / pixelsPerMeter
     private var animationStateTime = 0f
 

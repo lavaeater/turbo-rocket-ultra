@@ -15,7 +15,7 @@ import ktx.math.vec2
 import tru.AnimState
 
 class PlayerControlSystem(
-    private val speed: Float = 5f,
+    private val speed: Float = 25f,
     private val thrust: Float = 25f): IteratingSystem(
     allOf(
         PlayerControlComponent::class,

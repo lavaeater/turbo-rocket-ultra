@@ -1,6 +1,8 @@
 package factories
 
 import com.badlogic.ashley.core.Engine
+import com.badlogic.gdx.math.MathUtils
+import com.badlogic.gdx.math.MathUtils.degreesToRadians
 import com.badlogic.gdx.math.Vector2
 import com.badlogic.gdx.physics.box2d.Body
 import com.badlogic.gdx.physics.box2d.BodyDef
@@ -68,7 +70,7 @@ fun player(): Player {
     val body = world().body {
         type = BodyDef.BodyType.DynamicBody
         position.setZero()
-        circle(0.25f) {
+        circle(1f) {
             density = FirstScreen.PLAYER_DENSITY
         }
 
@@ -97,17 +99,20 @@ fun player(): Player {
 }
 
 fun enemy(at: Vector2) {
+    val radius = 5f
+    val vs = mutableListOf<Vector2>()
+    vs.add(vec2(0f,0f))
+    for(i in 0 until 7) {
+        val angle = (i / 6.0f * 180 * degreesToRadians)
+        vs.add(vec2(radius * MathUtils.cos(angle), radius * MathUtils.sin(angle) ))
+    }
     val body = world().body {
         type = BodyDef.BodyType.DynamicBody
         position.set(at)
-        circle (0.1f, vec2(0f, -0.5f)) {
-            isSensor = true
-        }
-        circle(0.25f) {
+        circle(1f) {
             density = FirstScreen.ENEMY_DENSITY
         }
-        circle(3f, vec2(0f, -1f)) {
-            density = 0.01f
+        polygon(*vs.toTypedArray()) {
             isSensor = true
         }
     }
@@ -122,6 +127,8 @@ fun enemy(at: Vector2) {
     body.userData = entity
     engine().addEntity(entity)
 }
+
+
 
 fun vehicle(at: Vector2): Body {
     /*
