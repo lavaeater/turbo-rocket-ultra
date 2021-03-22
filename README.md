@@ -32,6 +32,9 @@ Enemies are SO important for a game, right?
 
 So, what are we going to do here, for our enemies?
 
+### 1. Mechanics of the Enemies
+
+To start off, I think my enemies should be simple zombies. Perhaps you could evade the zombies by sneaking about on some maps. Some zombies might be a bit smarter, some might have better hearing and so on, so they might have different behaviors like that. But the basic zombie wants to eat brains and to do that it has to get close. So, there should be a bunch of them. They should amble about rather aimlessly 
 
 ## Done: Shooting System v0.1
 So, I have added some sprites to the game and am now working on a shooting system. I will publish a video on how I implemented that and with some trouble shooting related to framerates, vector maths, raycasting in box2d, etc, very soon. So, the first thing was actually shooting, then adding some kind of rate of fire (for different types of weapons). Then doing damage (done) and destroying enemies when they are dead - also done.
@@ -225,8 +228,8 @@ Next should probably be the feature that requires the least work to make it a "g
 
 So the next feature will be ship collisions.
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbLTIxNzcwMzQ0MCwxNDg3Nzg0NDQ2LC0xND
-cyNDgxMjk5LC03Njc3MTI3NzEsLTQwMDg5MjA5MCwxMDYxNDgy
-NTM2LDIxMTc5NzU5NjEsMTk0MDI2NDc3LC0xMDcxNDA5NTg0LD
-c0MTAwNzUzMSw2OTMyMjI4NzZdfQ==
+eyJoaXN0b3J5IjpbLTIwNTMyNDQwNjksMTQ4Nzc4NDQ0NiwtMT
+Q3MjQ4MTI5OSwtNzY3NzEyNzcxLC00MDA4OTIwOTAsMTA2MTQ4
+MjUzNiwyMTE3OTc1OTYxLDE5NDAyNjQ3NywtMTA3MTQwOTU4NC
+w3NDEwMDc1MzEsNjkzMjIyODc2XX0=
 -->
