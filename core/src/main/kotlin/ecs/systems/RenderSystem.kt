@@ -9,6 +9,8 @@ import ktx.ashley.allOf
 import ktx.ashley.mapperFor
 import ktx.graphics.use
 import physics.drawScaled
+import tru.Assets
+import tru.StaticSpriteDefinition
 
 class RenderSystem(
     private val batch: Batch
@@ -36,13 +38,25 @@ class RenderSystem(
     override fun processEntity(entity: Entity, deltaTime: Float) {
         //1. Just render the texture without animation
         val transform = tMapper.get(entity)
-        val currentTextureRegion = sMapper.get(entity).currentAnim.getKeyFrame(animationStateTime)
+        val spriteComponent = sMapper.get(entity)
+        val currentTextureRegion = spriteComponent.currentAnim.getKeyFrame(animationStateTime)
         batch.drawScaled(
             currentTextureRegion,
             (transform.position.x + (currentTextureRegion.regionWidth / 2 * scale)),
             (transform.position.y + (currentTextureRegion.regionHeight * scale / 5)),
             scale
         )
+        for (obj in spriteComponent.objectsToDraw)
+            batch.drawScaled(
+                obj.currentTextureRegion,
+                (transform.position.x + (obj.currentTextureRegion.regionWidth / 2 * scale)),
+                (transform.position.y + (obj.currentTextureRegion.regionHeight * scale / 5)),
+                scale
+            )
+
+        for ((name, sprites) in Assets.objectSprites) {
+            batch.draw(sprites.values.first(), transform.position.x, transform.position.y)
+        }
     }
 }
 

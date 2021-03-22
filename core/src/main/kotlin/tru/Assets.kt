@@ -14,8 +14,10 @@ object Assets : Disposable {
 
     lateinit var am: AssetManager
     val characters :  Map<String, Map<AnimState, LpcCharacterAnim>> by lazy {
-        CharacterSpriteLoader.initCharachterAnims()
+        SpriteLoader.initCharachterAnims()
     }
+
+    val objectSprites by lazy { SpriteLoader.initObjectSprites() }
 
     val soundEffects : Map<String, Sound> by lazy {
         mapOf(
