@@ -46,17 +46,17 @@ class RenderSystem(
             (transform.position.y + (currentTextureRegion.regionHeight * scale / 5)),
             scale
         )
-        for (obj in spriteComponent.objectsToDraw)
-            batch.drawScaled(
-                obj.currentTextureRegion,
-                (transform.position.x + (obj.currentTextureRegion.regionWidth / 2 * scale)),
-                (transform.position.y + (obj.currentTextureRegion.regionHeight * scale / 5)),
-                scale
-            )
-
-        for ((name, sprites) in Assets.objectSprites) {
-            batch.draw(sprites.values.first(), transform.position.x, transform.position.y)
-        }
+//        for (obj in spriteComponent.objectsToDraw)
+//            batch.drawScaled(
+//                obj.currentTextureRegion,
+//                (transform.position.x + (obj.currentTextureRegion.regionWidth / 2 * scale)),
+//                (transform.position.y + (obj.currentTextureRegion.regionHeight * scale / 5)),
+//                scale
+//            )
+//
+//        for ((name, sprites) in Assets.objectSprites) {
+//            batch.draw(sprites.values.first(), transform.position.x, transform.position.y)
+//        }
     }
 }
 
