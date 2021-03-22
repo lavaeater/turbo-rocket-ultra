@@ -64,7 +64,7 @@ class PlayerShootingSystem(private val audioPlayer: AudioPlayer) : IteratingSyst
                 .set(transform.position)
                 .add(controlComponent.aimVector)
                 .sub(transform.position)
-                .scl(20f)
+                .scl(50f)
                 .add(transform.position)
                 .add(controlComponent.aimVector)
 
