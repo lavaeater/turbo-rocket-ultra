@@ -8,11 +8,14 @@ import com.badlogic.gdx.physics.box2d.World
 import ecs.components.*
 import gamestate.Player
 import injection.Context.inject
+import ktx.ashley.get
 import ktx.box2d.body
 import ktx.box2d.box
 import ktx.box2d.circle
 import ktx.box2d.polygon
 import ktx.math.vec2
+import physics.Mappers
+import tru.AnimState
 import tru.Assets
 import tru.FirstScreen
 
@@ -75,11 +78,15 @@ fun player(): Player {
 
     val entity = engine().createEntity().apply {
         add(CameraFollowComponent())
-        add(AimComponent())
         add(BodyComponent(body))
         add(TransformComponent())
         add(PlayerControlComponent(inject())) //We will have multiple components later
-        add(CharacterSpriteComponent(Assets.characters["player"]!!))
+        add(CharacterSpriteComponent(Assets.characters["player"]!!, mutableListOf(
+            ConditionalObjectSprite(
+                Assets.objectSprites["gun"]!!,
+                { this[Mappers.characterSpriteComponentMapper]!!.currentAnimState == AnimState.Aiming },
+                { this[Mappers.characterSpriteComponentMapper]!!.currentDirection }))
+        ))
         add(PlayerComponent())
     }
 

@@ -53,7 +53,20 @@ class PlayerShootingSystem(private val audioPlayer: AudioPlayer) : IteratingSyst
             else
                 audioPlayer.playSound("gunshot")
 
-            controlComponent.latestHitPoint.set(controlComponent.aimVector).sub(transform.position).scl(20f).add(transform.position)
+            /*
+            This point should be:
+            The players position PLUS the aimVector (if aiming left, it is negative, and so on. This is the
+
+            https://www.debugcn.com/en/article/63417562.html
+             */
+
+            controlComponent.latestHitPoint
+                .set(transform.position)
+                .add(controlComponent.aimVector)
+                .sub(transform.position)
+                .scl(20f)
+                .add(transform.position)
+                .add(controlComponent.aimVector)
 
             val start = transform.position
 

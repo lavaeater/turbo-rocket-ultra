@@ -23,3 +23,17 @@ class LpcCharacterAnimDefinition(
         )
     }
 }
+
+class StaticSpriteDefinition(
+    val sprite: String,
+    val row: Int,
+    val directions: List<SpriteDirection> = SpriteDirection.spriteDirections,
+    val itemWidth: Int = 64,
+    val itemHeight: Int = 64
+) {
+    companion object {
+        val definitions = listOf(
+            StaticSpriteDefinition("gun", 0)
+        )
+    }
+}

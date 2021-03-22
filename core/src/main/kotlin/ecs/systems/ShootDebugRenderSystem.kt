@@ -13,6 +13,7 @@ import ecs.components.TransformComponent
 import injection.Context.inject
 import ktx.ashley.allOf
 import ktx.ashley.mapperFor
+import ktx.math.vec2
 import space.earlygrey.shapedrawer.ShapeDrawer
 
 
@@ -36,21 +37,23 @@ class ShootDebugRenderSystem(private val debug: Boolean = true) : IteratingSyste
         TextureRegion(texture, 0, 0, 1, 1)
     }
     private val shapeDrawer: ShapeDrawer by lazy { ShapeDrawer(batch, textureRegion) }
-    private var drawShot = true
+    private val aimVector = vec2(0f, 0f)
 
     override fun processEntity(entity: Entity, deltaTime: Float) {
         val controlComponent = controlMapper[entity]
-        //
         val transform = transformMapper[entity]
+
+        aimVector.set(controlComponent.aimVector)
+
         if (controlComponent.drawShot) {
             batch.begin()
-            shapeDrawer.line(transform.position, controlComponent.latestHitPoint, Color.GREEN, 0.1f)
+                shapeDrawer.line(transform.position, controlComponent.latestHitPoint, Color.GREEN, 0.1f)
             batch.end()
         }
         if(debug) {
             batch.begin()
-            shapeDrawer.line(transform.position, controlComponent.aimVector.add(transform.position), Color.BLUE, 0.2f)
-            shapeDrawer.line(transform.position, controlComponent.mousePosition, Color.RED, 0.05f)
+                shapeDrawer.line(transform.position, aimVector.add(transform.position), Color.BLUE, 0.2f)
+                shapeDrawer.line(transform.position, controlComponent.mousePosition, Color.RED, 0.05f)
             batch.end()
         }
     }

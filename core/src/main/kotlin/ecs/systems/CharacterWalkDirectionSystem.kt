@@ -8,7 +8,7 @@ import ktx.ashley.allOf
 import physics.Mappers
 import tru.SpriteDirection
 
-class CharacterAimDirectionSystem :
+class CharacterWalkDirectionSystem :
     IteratingSystem(
         allOf(
             CharacterSpriteComponent::class,
@@ -27,7 +27,7 @@ class CharacterAimDirectionSystem :
          * The current anim is managed by something else... the input system, obviously
          */
         val characterSpriteComponent = Mappers.characterSpriteComponentMapper.get(entity)
-        when (Mappers.playerControlMapper.get(entity).aimVector.angleDeg()) {
+        when (Mappers.playerControlMapper.get(entity).walkVector.angleDeg()) {
             in 150f..209f -> characterSpriteComponent.currentDirection = SpriteDirection.East
             in 210f..329f -> characterSpriteComponent.currentDirection = SpriteDirection.North
             in 330f..360f -> characterSpriteComponent.currentDirection = SpriteDirection.West

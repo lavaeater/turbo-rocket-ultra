@@ -76,7 +76,7 @@ class UserInterface(
     private fun updateInfo(delta: Float) {
         infoLabel.setText(
             """
-      AimVector: ${playerControlComponent.aimVector.angleDeg()}
+      AimVector: ${playerControlComponent.aimVector}
 
     """.trimIndent()
         )

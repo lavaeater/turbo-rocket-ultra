@@ -15,7 +15,7 @@ import ktx.math.vec2
 import tru.AnimState
 
 class PlayerControlSystem(
-    private val torque: Float = 1f,
+    private val speed: Float = 5f,
     private val thrust: Float = 25f): IteratingSystem(
     allOf(
         PlayerControlComponent::class,
@@ -41,8 +41,9 @@ class PlayerControlSystem(
         characterSpriteComponent: CharacterSpriteComponent,
         transformComponent: TransformComponent) {
 
-        bodyComponent.body.setLinearVelocity(playerControlComponent.walkVector.x * 10f, playerControlComponent.walkVector.y * 10f)
-        characterSpriteComponent.currentAnimState = if(playerControlComponent.moving) AnimState.Walk else AnimState.Idle
+        bodyComponent.body.setLinearVelocity(playerControlComponent.walkVector.x * speed, playerControlComponent.walkVector.y * speed)
+
+        characterSpriteComponent.currentAnimState = playerControlComponent.playerAnimState
 
         //Throw in polling of mouse coordinates here?
         playerControlComponent.setAimVector(Gdx.input.x, Gdx.input.y, transformComponent.position)
