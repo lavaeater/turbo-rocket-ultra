@@ -2,7 +2,6 @@ package ecs.systems
 
 import com.badlogic.ashley.core.Entity
 import com.badlogic.ashley.systems.IteratingSystem
-import com.badlogic.gdx.graphics.OrthographicCamera
 import com.badlogic.gdx.graphics.g2d.Batch
 import ecs.components.CharacterSpriteComponent
 import ecs.components.TransformComponent
@@ -12,8 +11,7 @@ import ktx.graphics.use
 import physics.drawScaled
 
 class RenderSystem(
-    private val spriteBatch: Batch,
-    private val camera: OrthographicCamera
+    private val batch: Batch
 ) : IteratingSystem(
     allOf(
         TransformComponent::class,
@@ -22,13 +20,15 @@ class RenderSystem(
 ) {
 
     private val pixelsPerMeter = 64f
-    private val metersPerPixel = 1 / pixelsPerMeter
+    private val scale = 1 / pixelsPerMeter
+    private var animationStateTime = 0f
 
     private val tMapper = mapperFor<TransformComponent>()
     private val sMapper = mapperFor<CharacterSpriteComponent>()
 
     override fun update(deltaTime: Float) {
-        spriteBatch.use {
+        animationStateTime+=deltaTime
+        batch.use {
             super.update(deltaTime)
         }
     }
@@ -36,12 +36,12 @@ class RenderSystem(
     override fun processEntity(entity: Entity, deltaTime: Float) {
         //1. Just render the texture without animation
         val transform = tMapper.get(entity)
-        val currentTextureRegion = sMapper.get(entity).currentAnim.keyFrames.first()
-        spriteBatch.drawScaled(
+        val currentTextureRegion = sMapper.get(entity).currentAnim.getKeyFrame(animationStateTime)
+        batch.drawScaled(
             currentTextureRegion,
-            (transform.position.x + (currentTextureRegion.regionWidth / 2 * metersPerPixel)),
-            (transform.position.y + (currentTextureRegion.regionHeight * metersPerPixel / 5)),
-            metersPerPixel
+            (transform.position.x + (currentTextureRegion.regionWidth / 2 * scale)),
+            (transform.position.y + (currentTextureRegion.regionHeight * scale / 5)),
+            scale
         )
     }
 }

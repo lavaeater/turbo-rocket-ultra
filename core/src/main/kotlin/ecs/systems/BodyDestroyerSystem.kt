@@ -9,10 +9,6 @@ import ktx.ashley.allOf
 import ktx.ashley.mapperFor
 import ktx.ashley.remove
 
-/***
- * The destroycomponent will be added to entities when they are to be destroyed
- * at some later time
- */
 class BodyDestroyerSystem(private val world: World) : IteratingSystem(
     allOf(
         BodyComponent::class,

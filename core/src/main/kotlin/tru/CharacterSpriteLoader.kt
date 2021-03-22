@@ -26,12 +26,12 @@ object CharacterSpriteLoader {
                 anims[c]!![animDef.state] = LpcCharacterAnim(animDef.state,
                     animDef.directions.mapIndexed
                     { row, r -> r to
-                    Animation(0.2f, (animDef.frames).map { TextureRegion(
+                    Animation(0.1f, (animDef.frames).map { TextureRegion(
                             texture,
                         (it)  * animDef.itemWidth,
                         (animDef.row + row)  * animDef.itemHeight,
                             animDef.itemWidth,
-                            animDef.itemHeight) }.toGdxArray())
+                            animDef.itemHeight) }.toGdxArray(), Animation.PlayMode.LOOP)
                 }.toMap())
             }
         }

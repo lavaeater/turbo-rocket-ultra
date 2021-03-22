@@ -75,7 +75,6 @@ fun player(): Player {
 
     val entity = engine().createEntity().apply {
         add(CameraFollowComponent())
-        add(AimComponent())
         add(BodyComponent(body))
         add(TransformComponent())
         add(PlayerControlComponent(inject())) //We will have multiple components later
