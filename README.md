@@ -36,7 +36,7 @@ So, what are we going to do here, for our enemies?
 
 To start off, I think my enemies should be simple zombies. Perhaps you could evade the zombies by sneaking about on some maps. Some zombies might be a bit smarter, some might have better hearing and so on, so they might have different behaviors like that. But the basic zombie wants to eat brains and to do that it has to get close. So, there should be a bunch of them. They should amble about rather aimlessly - unless they notice the player. When they notice the player, they should start trying to get to the player.
 A cool thing would be that if they notice other zombies being excited by something, they start following that zombie - thus making it likely that they notice the player and try to attack.
-When in range for an attack, they will attack.
+When in range for an attack, they will attack. 
 
 ## Done: Shooting System v0.1
 So, I have added some sprites to the game and am now working on a shooting system. I will publish a video on how I implemented that and with some trouble shooting related to framerates, vector maths, raycasting in box2d, etc, very soon. So, the first thing was actually shooting, then adding some kind of rate of fire (for different types of weapons). Then doing damage (done) and destroying enemies when they are dead - also done.
@@ -230,8 +230,8 @@ Next should probably be the feature that requires the least work to make it a "g
 
 So the next feature will be ship collisions.
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbNDQzODQ5MzY0LDE0ODc3ODQ0NDYsLTE0Nz
-I0ODEyOTksLTc2NzcxMjc3MSwtNDAwODkyMDkwLDEwNjE0ODI1
-MzYsMjExNzk3NTk2MSwxOTQwMjY0NzcsLTEwNzE0MDk1ODQsNz
-QxMDA3NTMxLDY5MzIyMjg3Nl19
+eyJoaXN0b3J5IjpbMTU0NDk5MTcyMCw0NDM4NDkzNjQsMTQ4Nz
+c4NDQ0NiwtMTQ3MjQ4MTI5OSwtNzY3NzEyNzcxLC00MDA4OTIw
+OTAsMTA2MTQ4MjUzNiwyMTE3OTc1OTYxLDE5NDAyNjQ3NywtMT
+A3MTQwOTU4NCw3NDEwMDc1MzEsNjkzMjIyODc2XX0=
 -->
