@@ -18,12 +18,12 @@ Inspirations off the bat for this game are:
 To make the graphics and environment easy I am currently working with the concept of "zombie tower defense", which is obviously lame and very boring, but hey... it's easy to find art for.
 
 ### MVP
+* Player damage / Enemy attacks
 * Multiplayer
 * Controller support
 * Twin Stick shooting
 * Vehicles
 * Towers
-* Player damage / Enemy attacks
 * Enemies <- Done
 * Blood Splatter <- Done
 * Different weapons to shoot with
@@ -252,7 +252,7 @@ Next should probably be the feature that requires the least work to make it a "g
 
 So the next feature will be ship collisions.
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbMjA1MDI4NjkyMCwtMTY0MTE0MDI4NywxMz
+eyJoaXN0b3J5IjpbMTY1NDYyODMzMCwtMTY0MTE0MDI4NywxMz
 E1MzE3NzM2LC0zNjg4NTM1MTIsMjEzNTgxOTAwNCwtMjExODg5
 MDEwOSwxNzA0OTQ2MTk4LDQ0Mzg0OTM2NCwxNDg3Nzg0NDQ2LC
 0xNDcyNDgxMjk5LC03Njc3MTI3NzEsLTQwMDg5MjA5MCwxMDYx
