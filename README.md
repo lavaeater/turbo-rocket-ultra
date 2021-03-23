@@ -23,9 +23,11 @@ To make the graphics and environment easy I am currently working with the concep
 * Twin Stick shooting
 * Vehicles
 * Towers
-* Enemies
+* Player damage / Enemy attacks
+* Enemies <- Done
 * Blood Splatter <- Done
 * Different weapons to shoot with
+* MiniMap <- Done
 
 ## Done: Blood Splatter v0.1
 I got a crazy idea on how to do blood splatter. It's so cool I can't even focus on creating enemy attacks...
@@ -250,10 +252,10 @@ Next should probably be the feature that requires the least work to make it a "g
 
 So the next feature will be ship collisions.
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbLTE2NDExNDAyODcsMTMxNTMxNzczNiwtMz
-Y4ODUzNTEyLDIxMzU4MTkwMDQsLTIxMTg4OTAxMDksMTcwNDk0
-NjE5OCw0NDM4NDkzNjQsMTQ4Nzc4NDQ0NiwtMTQ3MjQ4MTI5OS
-wtNzY3NzEyNzcxLC00MDA4OTIwOTAsMTA2MTQ4MjUzNiwyMTE3
-OTc1OTYxLDE5NDAyNjQ3NywtMTA3MTQwOTU4NCw3NDEwMDc1Mz
-EsNjkzMjIyODc2XX0=
+eyJoaXN0b3J5IjpbMjA1MDI4NjkyMCwtMTY0MTE0MDI4NywxMz
+E1MzE3NzM2LC0zNjg4NTM1MTIsMjEzNTgxOTAwNCwtMjExODg5
+MDEwOSwxNzA0OTQ2MTk4LDQ0Mzg0OTM2NCwxNDg3Nzg0NDQ2LC
+0xNDcyNDgxMjk5LC03Njc3MTI3NzEsLTQwMDg5MjA5MCwxMDYx
+NDgyNTM2LDIxMTc5NzU5NjEsMTk0MDI2NDc3LC0xMDcxNDA5NT
+g0LDc0MTAwNzUzMSw2OTMyMjI4NzZdfQ==
 -->
