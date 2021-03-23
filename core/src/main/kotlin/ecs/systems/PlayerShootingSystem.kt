@@ -8,7 +8,6 @@ import com.badlogic.gdx.physics.box2d.World
 import ecs.components.EnemyComponent
 import ecs.components.PlayerControlComponent
 import ecs.components.TransformComponent
-import factories.enemy
 import injection.Context.inject
 import ktx.ashley.allOf
 import ktx.ashley.mapperFor

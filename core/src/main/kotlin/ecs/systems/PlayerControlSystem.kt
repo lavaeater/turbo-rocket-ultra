@@ -3,16 +3,12 @@ package ecs.systems
 import com.badlogic.ashley.core.Entity
 import com.badlogic.ashley.systems.IteratingSystem
 import com.badlogic.gdx.Gdx
-import com.badlogic.gdx.math.MathUtils
 import ecs.components.BodyComponent
 import ecs.components.CharacterSpriteComponent
 import ecs.components.PlayerControlComponent
 import ecs.components.TransformComponent
-import factories.shot
 import ktx.ashley.allOf
 import ktx.ashley.mapperFor
-import ktx.math.vec2
-import tru.AnimState
 
 class PlayerControlSystem(
     private val speed: Float = 25f,

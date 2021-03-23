@@ -80,6 +80,13 @@ fun Body.isEnemy() : Boolean {
     return (userData as Entity).hasComponent<EnemyComponent>()
 }
 
+@ExperimentalStdlibApi
+fun Body.isPlayer() : Boolean {
+    return (userData as Entity).hasComponent<PlayerComponent>()
+}
+
+
+
 fun Fixture.isEntity() : Boolean {
     return this.body.userData is Entity
 }

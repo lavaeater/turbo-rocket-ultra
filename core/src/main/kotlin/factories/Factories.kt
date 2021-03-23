@@ -98,7 +98,7 @@ fun player(): Player {
     return Player(body, entity)
 }
 
-fun enemy(at: Vector2) {
+fun semicircle() : List<Vector2> {
     val radius = 5f
     val vs = mutableListOf<Vector2>()
     vs.add(vec2(0f,0f))
@@ -106,13 +106,19 @@ fun enemy(at: Vector2) {
         val angle = (i / 6.0f * 180 * degreesToRadians)
         vs.add(vec2(radius * MathUtils.cos(angle), radius * MathUtils.sin(angle) ))
     }
+    return vs
+}
+
+fun enemy(at: Vector2) {
+
     val body = world().body {
         type = BodyDef.BodyType.DynamicBody
         position.set(at)
         circle(1f) {
             density = FirstScreen.ENEMY_DENSITY
         }
-        polygon(*vs.toTypedArray()) {
+        circle (10f) {
+            density = .1f
             isSensor = true
         }
     }
