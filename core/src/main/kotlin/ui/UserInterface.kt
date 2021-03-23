@@ -40,6 +40,7 @@ class UserInterface(
     private val bodyRotation get() = bodyComponent.body.angle
 
     private val particleCount get() = engine.getEntitiesFor(allOf(ParticleComponent::class).get()).count()
+    private val splatterCount get() = engine.getEntitiesFor(allOf(SplatterComponent::class).get()).count()
 
     private val firing get() = playerControlComponent.firing
     private val coolDown get() = playerControlComponent.cooldownRemaining
@@ -81,6 +82,7 @@ class UserInterface(
             """
       AimVector: ${playerControlComponent.aimVector}
       Particles: $particleCount
+      Splatter: $splatterCount
 
     """.trimIndent()
         )

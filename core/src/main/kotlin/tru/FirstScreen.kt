@@ -27,8 +27,8 @@ class FirstScreen : Screen {
         const val SHIP_LINEAR_DAMPING = 20f
         const val SHIP_ANGULAR_DAMPING = 20f
 
-        const val GAMEWIDTH = 64f
-        const val GAMEHEIGHT = 48f
+        const val GAMEWIDTH = 128f
+        const val GAMEHEIGHT = 96f
     }
 
     private var needsInit = true

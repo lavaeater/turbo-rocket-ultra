@@ -55,7 +55,7 @@ object Context {
     private fun getEngine(): Engine {
         return Engine().apply {
             addSystem(PhysicsSystem(inject()))
-            addSystem(PhysicsDebugRendererSystem(inject(), inject()))
+       //     addSystem(PhysicsDebugRendererSystem(inject(), inject()))
             addSystem(CameraUpdateSystem())
             addSystem(PlayerControlSystem())
             addSystem(BodyDestroyerSystem(inject())) //world

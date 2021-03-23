@@ -37,7 +37,7 @@ class PhysicsSystem(private val world: World, private val timeStep : Float = 1/6
                     val pC = pMapper.get(entity)
                     val bloodEntity = engine.createEntity().apply {
                         add(TransformComponent(transformComponent.position.cpy(), transformComponent.rotation))
-                        add(SplatterComponent(20f, pC.color, pC.life / 5f))
+                        add(SplatterComponent(.3f, pC.color, pC.life / 2f))
                         add(RenderableComponent(0))
                     }
                     engine.addEntity(bloodEntity)

@@ -39,14 +39,14 @@ val colorRange = 0f..1f
 fun splatterParticles(
     fromBody: Body,
     towards: Vector2,
-    count: Int = 20,
+    count: Int = 30,
     life: Float = .5f,
     force: ClosedFloatingPointRange<Float> = 1f..10f,
     color: Color = Color.RED
 ) {
-    val radius = fromBody.fixtureList.first { !it.isSensor }.shape.radius
-    towards.setLength(radius)
-    splatterParticles(fromBody.worldCenter.cpy().add(towards), towards, count, life, force, color)
+//    val radius = fromBody.fixtureList.first { !it.isSensor }.shape.radius
+//    towards.setLength(radius)
+    splatterParticles(fromBody.worldCenter.cpy(), towards, count, life, force, color)
 }
 
 fun splatterParticles(
@@ -82,6 +82,10 @@ fun splatterParticles(
                 circle(0.05f) {
                     density = 0.1f
                     restitution = 1f
+                    filter {
+                        categoryBits = 0x0002
+                        maskBits = 0x0002
+                    }
                 }
 //            }
             linearDamping = (25f..125f).random()
