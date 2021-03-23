@@ -38,7 +38,7 @@ To start off, I think my enemies should be simple zombies. Perhaps you could eva
 A cool thing would be that if they notice other zombies being excited by something, they start following that zombie - thus making it likely that they notice the player and try to attack.
 When in range for an attack, they will attack. 
 When ambling about, they simply walk in some direction for some time, after which they will pick a different direction to walk in. 
-How will they find the player? I just figured it out, actually. They have *passive* and *active* sensors. The passive sensors are just a circle around them that notices if the player enters it. The active sensors on the other hand, they simply activate when stopping to check for a direction to walk in. It is th
+How will they find the player? I just figured it out, actually. They have *passive* and *active* sensors. The passive sensors are just a circle around them that notices if the player enters it. The active sensors on the other hand, they simply activate when stopping to check for a direction to walk in. It is the direction they will walk in described as a triangle, basically, or polygon if you will.
 
 ## Done: Shooting System v0.1
 So, I have added some sprites to the game and am now working on a shooting system. I will publish a video on how I implemented that and with some trouble shooting related to framerates, vector maths, raycasting in box2d, etc, very soon. So, the first thing was actually shooting, then adding some kind of rate of fire (for different types of weapons). Then doing damage (done) and destroying enemies when they are dead - also done.
@@ -232,9 +232,9 @@ Next should probably be the feature that requires the least work to make it a "g
 
 So the next feature will be ship collisions.
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbLTc2OTA2ODc4OCwxNzA0OTQ2MTk4LDQ0Mz
-g0OTM2NCwxNDg3Nzg0NDQ2LC0xNDcyNDgxMjk5LC03Njc3MTI3
-NzEsLTQwMDg5MjA5MCwxMDYxNDgyNTM2LDIxMTc5NzU5NjEsMT
-k0MDI2NDc3LC0xMDcxNDA5NTg0LDc0MTAwNzUzMSw2OTMyMjI4
-NzZdfQ==
+eyJoaXN0b3J5IjpbLTIxMTg4OTAxMDksMTcwNDk0NjE5OCw0ND
+M4NDkzNjQsMTQ4Nzc4NDQ0NiwtMTQ3MjQ4MTI5OSwtNzY3NzEy
+NzcxLC00MDA4OTIwOTAsMTA2MTQ4MjUzNiwyMTE3OTc1OTYxLD
+E5NDAyNjQ3NywtMTA3MTQwOTU4NCw3NDEwMDc1MzEsNjkzMjIy
+ODc2XX0=
 -->
