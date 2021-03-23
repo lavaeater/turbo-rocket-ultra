@@ -33,6 +33,30 @@ class ContactManager: ContactListener {
             }
         }
 
+        if(contact.bothHaveComponent<EnemySensorComponent>()) {
+            /*
+            This is an enemy noticing an enemy - if that enemy is chasing the player, then both should do that!
+             */
+            val enemyA = contact.fixtureA.getEntity().getComponent<EnemyComponent>()
+            val enemyB = contact.fixtureB.getEntity().getComponent<EnemyComponent>()
+            if(enemyA.state == EnemyState.ChasePlayer && enemyB.state != EnemyState.ChasePlayer) {
+                enemyB.newState(EnemyState.ChasePlayer)
+                enemyB.chaseTransform = enemyA.chaseTransform
+            } else if(enemyB.state == EnemyState.ChasePlayer && enemyA.state != EnemyState.ChasePlayer) {
+                enemyA.newState(EnemyState.ChasePlayer)
+                enemyA.chaseTransform = enemyB.chaseTransform
+            } else if(enemyB.state != EnemyState.FollowAFriend) {
+                enemyB.newState(EnemyState.FollowAFriend)
+                enemyB.chaseTransform = contact.fixtureA.getEntity().getComponent()
+            }
+
+            /*
+            And if no one is chasing the player, we'll just make them follow each other
+            Somehow
+             */
+
+        }
+
         if (contact.hasComponent<ShotComponent>()) {
             val entity = contact.getEntityFor<ShotComponent>()
             entity.add(DestroyComponent())

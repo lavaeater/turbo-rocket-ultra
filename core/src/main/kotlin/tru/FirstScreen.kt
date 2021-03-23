@@ -62,9 +62,9 @@ class FirstScreen : Screen {
             for (y in 0..25) {
                 obstacle(x * 25f + randomFactor.random(), y * 25f + randomFactor.random())
             }
-        for (x in -25..25)
-            for (y in -25..25)
-                enemy(x * 5 * randomFactor.random(), y * 5 * randomFactor.random())
+        for (x in -50..50)
+            for (y in -50..50)
+                enemy(x * 3f * randomFactor.random(), y * 3f * randomFactor.random())
     }
 
     override fun render(delta: Float) {

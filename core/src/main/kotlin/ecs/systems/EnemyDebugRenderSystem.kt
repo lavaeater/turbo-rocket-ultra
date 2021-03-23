@@ -18,7 +18,7 @@ import ktx.ashley.mapperFor
 import ktx.graphics.use
 import space.earlygrey.shapedrawer.ShapeDrawer
 
-class EnemyDebugRenderSystem : IteratingSystem(
+class EnemyDebugRenderSystem(private val renderStates: Boolean = false, private val renderScans: Boolean = true) : IteratingSystem(
     allOf(
         EnemyComponent::class,
         TransformComponent::class).get()) {
@@ -46,14 +46,16 @@ class EnemyDebugRenderSystem : IteratingSystem(
     override fun processEntity(entity: Entity, deltaTime: Float) {
         if(entity.has(enemyMapper)) {
             val enemyComponent = entity[enemyMapper]!!
-            var color = Color.GREEN
-            when (enemyComponent.state) {
-                EnemyState.Ambling -> color = Color.GREEN
-                EnemyState.Seeking -> color = Color.BLUE
-                EnemyState.ChasePlayer -> color = Color.RED
+            if(renderStates) {
+                var color = Color.GREEN
+                when (enemyComponent.state) {
+                    EnemyState.Ambling -> color = Color.GREEN
+                    EnemyState.Seeking -> color = Color.BLUE
+                    EnemyState.ChasePlayer -> color = Color.RED
+                }
+                shapeDrawer.filledCircle(entity[transformMapper]!!.position, 5f, color)
             }
-            shapeDrawer.filledCircle(entity[transformMapper]!!.position, 5f,color)
-            if(enemyComponent.state == EnemyState.Seeking)
+            if(renderScans && enemyComponent.state == EnemyState.Seeking)
                 shapeDrawer.line(enemyComponent.scanVectorStart, enemyComponent.scanVectorEnd, Color.RED, .1f)
         }
     }

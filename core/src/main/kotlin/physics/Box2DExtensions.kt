@@ -114,6 +114,15 @@ inline fun <reified T: Component>Contact.hasComponent():Boolean {
     return false
 }
 
+inline fun <reified T: Component>Contact.bothHaveComponent(): Boolean {
+    if(this.isEntityContact()) {
+        val mapper = mapperFor<T>()
+        return this.fixtureA.getEntity().has(mapper) &&
+                this.fixtureB.getEntity().has(mapper)
+    }
+    return false
+}
+
 inline fun <reified T:Component> Contact.getEntityFor(): Entity {
     val mapper = mapperFor<T>()
     val entityA = this.fixtureA.getEntity()

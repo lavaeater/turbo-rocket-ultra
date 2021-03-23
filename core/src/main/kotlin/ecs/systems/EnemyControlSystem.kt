@@ -19,7 +19,9 @@ class EnemyControlSystem : IteratingSystem(
     allOf(
         EnemyComponent::class,
         BodyComponent::class,
-        TransformComponent::class).get()) {
+        TransformComponent::class
+    ).get()
+) {
 
     @ExperimentalStdlibApi
     override fun processEntity(entity: Entity, deltaTime: Float) {
@@ -32,16 +34,19 @@ class EnemyControlSystem : IteratingSystem(
             EnemyState.ChasePlayer -> chasePlayer(enemyComponent, transformComponent)
             EnemyState.Ambling -> amble(enemyComponent)
             EnemyState.Seeking -> seek(entity, enemyComponent, bodyComponent)
+            EnemyState.FollowAFriend -> followAFriend(enemyComponent, transformComponent)
         }
 
         when (enemyComponent.state) {
-            EnemyState.ChasePlayer -> moveEnemy(enemyComponent, bodyComponent, 8f)
+            EnemyState.ChasePlayer -> moveEnemy(enemyComponent, bodyComponent, 3.5f)
+            EnemyState.FollowAFriend -> moveEnemy(enemyComponent, bodyComponent)
             EnemyState.Ambling -> moveEnemy(enemyComponent, bodyComponent)
-            EnemyState.Seeking -> {}
+            EnemyState.Seeking -> {
+            }
         }
     }
 
-    private fun moveEnemy(enemyComponent: EnemyComponent, bodyComponent: BodyComponent, speed: Float = 5f) {
+    private fun moveEnemy(enemyComponent: EnemyComponent, bodyComponent: BodyComponent, speed: Float = 2.5f) {
         bodyComponent.body.setLinearVelocity(
             enemyComponent.directionVector.x * speed,
             enemyComponent.directionVector.y * speed
@@ -59,7 +64,7 @@ class EnemyControlSystem : IteratingSystem(
     @ExperimentalStdlibApi
     private fun seek(entity: Entity, enemyComponent: EnemyComponent, bodyComponent: BodyComponent) {
         //Pick a random direction
-        if(enemyComponent.needsScanVector) {
+        if (enemyComponent.needsScanVector) {
             val unitVectorRange = -1f..1f
             enemyComponent.directionVector.set(Vector2.Zero)
             enemyComponent.scanVector.set(unitVectorRange.random(), unitVectorRange.random()).nor()
@@ -83,7 +88,7 @@ class EnemyControlSystem : IteratingSystem(
         val pointOfHit = vec2()
         val hitNormal = vec2()
 
-        if(enemyComponent.keepScanning) {
+        if (enemyComponent.keepScanning) {
             enemyComponent.scanCount++
             if (enemyComponent.scanCount > enemyComponent.maxNumberOfScans) {
                 enemyComponent.keepScanning = false
@@ -92,12 +97,15 @@ class EnemyControlSystem : IteratingSystem(
 
             enemyComponent.scanVectorEnd.set(enemyComponent.scanVectorStart)
                 .add(enemyComponent.scanVector)
-                .sub(enemyComponent.scanVectorStart )
+                .sub(enemyComponent.scanVectorStart)
                 .scl(30f)
                 .add(enemyComponent.scanVectorStart)
                 .add(enemyComponent.scanVector)
 
-            world().rayCast(enemyComponent.scanVectorStart, enemyComponent.scanVectorEnd) { fixture, point, normal, fraction ->
+            world().rayCast(
+                enemyComponent.scanVectorStart,
+                enemyComponent.scanVectorEnd
+            ) { fixture, point, normal, fraction ->
                 if (fraction < lowestFraction && !fixture.isSensor) {
                     lowestFraction = fraction
                     closestFixture = fixture
@@ -125,11 +133,22 @@ class EnemyControlSystem : IteratingSystem(
         }
     }
 
+    private fun followAFriend(
+        enemyComponent: EnemyComponent,
+        transformComponent: TransformComponent) {
+        val friendPosition =
+            if (enemyComponent.chaseTransform != null) enemyComponent.chaseTransform!!.position else transformComponent.position
+
+        enemyComponent.directionVector.set(friendPosition).sub(transformComponent.position)
+            .nor()
+    }
+
+
     private fun chasePlayer(
         enemyComponent: EnemyComponent,
-        transformComponent: TransformComponent
-    ) {
-        val playerPosition = if(enemyComponent.chaseTransform != null) enemyComponent.chaseTransform!!.position else transformComponent.position
+        transformComponent: TransformComponent) {
+        val playerPosition =
+            if (enemyComponent.chaseTransform != null) enemyComponent.chaseTransform!!.position else transformComponent.position
         val distance = vec2().set(transformComponent.position).sub(playerPosition).len2()
         if (distance < 5f)
             enemyComponent.directionVector.set(Vector2.Zero)
@@ -144,4 +163,7 @@ sealed class EnemyState {
     object ChasePlayer : EnemyState()
     object Ambling : EnemyState()
     object Seeking : EnemyState()
+    object FollowAFriend : EnemyState() {
+
+    }
 }
