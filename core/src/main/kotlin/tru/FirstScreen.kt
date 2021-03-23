@@ -62,8 +62,8 @@ class FirstScreen : Screen {
             for (y in 0..25) {
                 obstacle(x * 25f + randomFactor.random(), y * 25f + randomFactor.random())
             }
-        for (x in -50..50)
-            for (y in -50..50)
+        for (x in -10..10)
+            for (y in -10..10)
                 enemy(x * 3f * randomFactor.random(), y * 3f * randomFactor.random())
     }
 

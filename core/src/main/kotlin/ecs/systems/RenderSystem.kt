@@ -1,42 +1,39 @@
 package ecs.systems
 
 import com.badlogic.ashley.core.Entity
-import com.badlogic.ashley.systems.IteratingSystem
-import com.badlogic.gdx.graphics.Color
-import com.badlogic.gdx.graphics.Pixmap
-import com.badlogic.gdx.graphics.Texture
+import com.badlogic.ashley.systems.SortedIteratingSystem
 import com.badlogic.gdx.graphics.g2d.Batch
-import com.badlogic.gdx.graphics.g2d.TextureRegion
-import ecs.components.CharacterSpriteComponent
-import ecs.components.EnemyComponent
-import ecs.components.TransformComponent
+import ecs.components.*
 import ktx.ashley.allOf
 import ktx.ashley.get
-import ktx.ashley.has
 import ktx.ashley.mapperFor
 import ktx.graphics.use
-import ktx.scene2d.scene2d
-import physics.drawScaled
-import space.earlygrey.shapedrawer.ShapeDrawer
+import tru.Assets
+import java.util.*
 
 class RenderSystem(
     private val batch: Batch
-) : IteratingSystem(
+) : SortedIteratingSystem(
     allOf(
         TransformComponent::class,
-        CharacterSpriteComponent::class
-    ).get(), 100
-) {
+        RenderableComponent::class
+    ).get(), object : Comparator<Entity> {
+        val mapper = mapperFor<RenderableComponent>()
+        override fun compare(p0: Entity, p1: Entity): Int {
+            return mapper.get(p0).layer.compareTo(mapper.get(p1).layer)
+        }}) {
 
+    private val shapeDrawer by lazy { Assets.shapeDrawer }
     private val pixelsPerMeter = 16f
     private val scale = 1 / pixelsPerMeter
     private var animationStateTime = 0f
 
     private val tMapper = mapperFor<TransformComponent>()
     private val sMapper = mapperFor<CharacterSpriteComponent>()
+    private val pMapper = mapperFor<SplatterComponent>()
 
     override fun update(deltaTime: Float) {
-        animationStateTime+=deltaTime
+        animationStateTime += deltaTime
         batch.use {
             super.update(deltaTime)
         }
@@ -45,27 +42,22 @@ class RenderSystem(
     override fun processEntity(entity: Entity, deltaTime: Float) {
         //1. Just render the texture without animation
         val transform = tMapper.get(entity)
-        val spriteComponent = sMapper.get(entity)
-        val currentTextureRegion = spriteComponent.currentAnim.getKeyFrame(animationStateTime)
 
-        batch.drawScaled(
-            currentTextureRegion,
-            (transform.position.x + (currentTextureRegion.regionWidth / 2 * scale)),
-            (transform.position.y + (currentTextureRegion.regionHeight * scale / 5)),
-            scale
-        )
+        entity[sMapper]?.render(
+            transform.position,
+            transform.rotation,
+            scale,
+            animationStateTime,
+            batch,
+            shapeDrawer)
 
-//        for (obj in spriteComponent.objectsToDraw)
-//            batch.drawScaled(
-//                obj.currentTextureRegion,
-//                (transform.position.x + (obj.currentTextureRegion.regionWidth / 2 * scale)),
-//                (transform.position.y + (obj.currentTextureRegion.regionHeight * scale / 5)),
-//                scale
-//            )
-//
-//        for ((name, sprites) in Assets.objectSprites) {
-//            batch.draw(sprites.values.first(), transform.position.x, transform.position.y)
-//        }
+        entity[pMapper]?.render(
+            transform.position,
+            transform.rotation,
+            scale,
+            animationStateTime,
+            batch,
+            shapeDrawer)
     }
 }
 

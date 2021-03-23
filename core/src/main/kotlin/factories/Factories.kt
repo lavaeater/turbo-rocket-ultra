@@ -1,6 +1,7 @@
 package factories
 
 import com.badlogic.ashley.core.Engine
+import com.badlogic.gdx.graphics.Color
 import com.badlogic.gdx.math.MathUtils
 import com.badlogic.gdx.math.MathUtils.degreesToRadians
 import com.badlogic.gdx.math.Vector2
@@ -11,10 +12,8 @@ import ecs.components.*
 import gamestate.Player
 import injection.Context.inject
 import ktx.ashley.get
-import ktx.box2d.body
-import ktx.box2d.box
-import ktx.box2d.circle
-import ktx.box2d.polygon
+import ktx.box2d.*
+import ktx.math.random
 import ktx.math.vec2
 import physics.Mappers
 import tru.AnimState
@@ -29,41 +28,79 @@ fun engine(): Engine {
     return inject()
 }
 
-/**
- * Enemies, what are we doing this time?
- *
- * Well, the enemy is looking for players.
- *
- * So, the enemy has some kind of sensor component
- *
- * So the enemy could have a couple of states or something.
- *
- * This is quite obviously a decision tree. We should make
- * a DSL for decision trees, that would be cool. We could probably really
- * quickly construct a decision tree implementation quite simply.
- *
- * Anyways, the enemy is either:
- * - looking for the player
- * - chasing the player
- * - attacking the player
- *
- * Looking for the player
- *
- * How does an enemy look for the player?
- *
- * If the enemy has seen the player before, but no longer can see it, the enemy
- * should move towards the last known position, and then do something else there.
- *
- * This can all be handled with a decision tree.
- * Avoiding obstacles?
- *
- * If the enemy doesn't have knowledge of the players position...
- *
- * We need to quickly build a decision tree that can control an enemy thingamajig.
- *
- */
-fun enemy(x:Float = 0f, y: Float = 0f) {
-    enemy(vec2(x,y))
+fun enemy(x: Float = 0f, y: Float = 0f) {
+    enemy(vec2(x, y))
+}
+
+val colors = listOf(Color.RED, Color.BLUE, Color.GREEN, Color.BROWN, Color.CYAN)
+
+val colorRange = 0f..1f
+
+fun splatterParticles(
+    fromBody: Body,
+    towards: Vector2,
+    count: Int = 20,
+    life: Float = .5f,
+    force: ClosedFloatingPointRange<Float> = 1f..10f,
+    color: Color = Color.RED
+) {
+    val radius = fromBody.fixtureList.first { !it.isSensor }.shape.radius
+    towards.setLength(radius)
+    splatterParticles(fromBody.worldCenter.cpy().add(towards), towards, count, life, force, color)
+}
+
+fun splatterParticles(
+    from: Vector2,
+    towards: Vector2,
+    count: Int = 1,
+    life: Float = .5f,
+    force: ClosedFloatingPointRange<Float> = 1f..10f,
+    color: Color = Color(
+        colorRange.random(), colorRange.random(), colorRange.random(), 1f
+    )
+) {
+
+
+    val splatterAngle = (-1f..1f)
+    val splatRange = -1f..1f
+    val localPoint = vec2()
+    val pOrC = (0..9)
+    val forceVector = towards.cpy().scl(force.random())
+    forceVector.setAngleDeg((forceVector.angleDeg() + splatterAngle.random()))
+
+    for (i in 0 until count) {
+        val body = world().body {
+            type = BodyDef.BodyType.DynamicBody
+            position.set(from)
+
+//            if (pOrC.random() < 7) {
+//                polygon(vec2(0f, 0f), vec2(-.1f, .1f), vec2(.1f, .1f)) {
+//                    restitution = 1f
+//                    density = .1f
+//                }
+//            } else {
+                circle(0.05f) {
+                    density = 0.1f
+                    restitution = 1f
+                }
+//            }
+            linearDamping = (25f..125f).random()
+            angularDamping = 5f
+        }
+        val entity = engine().createEntity().apply {
+            add(BodyComponent(body))
+            add(TransformComponent(from))
+            add(ParticleComponent(life, color = Color((0.5f..0.7f).random(), 0f, 0f, (.5f..1f).random())))
+        }
+        body.userData = entity
+        engine().addEntity(entity)
+        //val applicationVector = body.getWorldPoint(localPoint.set(splatRange.random(), splatRange.random()))
+        body.applyLinearImpulse(
+forceVector,
+            body.worldCenter,
+            true
+        )
+    }
 }
 
 fun player(): Player {
@@ -83,12 +120,8 @@ fun player(): Player {
         add(BodyComponent(body))
         add(TransformComponent())
         add(PlayerControlComponent(inject())) //We will have multiple components later
-        add(CharacterSpriteComponent(Assets.characters["player"]!!, mutableListOf(
-            ConditionalObjectSprite(
-                Assets.objectSprites["gun"]!!,
-                { this[Mappers.characterSpriteComponentMapper]!!.currentAnimState == AnimState.Aiming },
-                { this[Mappers.characterSpriteComponentMapper]!!.currentDirection }))
-        ))
+        add(CharacterSpriteComponent(Assets.characters["player"]!!))
+        add(RenderableComponent(1))
         add(PlayerComponent())
     }
 
@@ -98,13 +131,13 @@ fun player(): Player {
     return Player(body, entity)
 }
 
-fun semicircle() : List<Vector2> {
+fun semicircle(): List<Vector2> {
     val radius = 5f
     val vs = mutableListOf<Vector2>()
-    vs.add(vec2(0f,0f))
-    for(i in 0 until 7) {
+    vs.add(vec2(0f, 0f))
+    for (i in 0 until 7) {
         val angle = (i / 6.0f * 180 * degreesToRadians)
-        vs.add(vec2(radius * MathUtils.cos(angle), radius * MathUtils.sin(angle) ))
+        vs.add(vec2(radius * MathUtils.cos(angle), radius * MathUtils.sin(angle)))
     }
     return vs
 }
@@ -117,7 +150,7 @@ fun enemy(at: Vector2) {
         circle(1f) {
             density = FirstScreen.ENEMY_DENSITY
         }
-        circle (10f) {
+        circle(10f) {
             density = .1f
             isSensor = true
         }
@@ -129,11 +162,11 @@ fun enemy(at: Vector2) {
         add(EnemySensorComponent())
         add(EnemyComponent())
         add(CharacterSpriteComponent(Assets.characters["enemy"]!!))
+        add(RenderableComponent(1))
     }
     body.userData = entity
     engine().addEntity(entity)
 }
-
 
 
 fun vehicle(at: Vector2): Body {
@@ -159,7 +192,7 @@ fun vehicle(at: Vector2): Body {
     return body
 }
 
-fun shot(from: Vector2, towards: Vector2) :Body {
+fun shot(from: Vector2, towards: Vector2): Body {
     val shot = world().body {
         type = BodyDef.BodyType.DynamicBody
         position.set(from)
@@ -183,7 +216,7 @@ fun obstacle(
     y: Float = 0f,
     width: Float = 2f,
     height: Float = 2f
-) : Body {
+): Body {
     val body = world().body {
         type = BodyDef.BodyType.StaticBody
         position.set(x, y)

@@ -39,8 +39,11 @@ class UserInterface(
     private val bodyPos get() = bodyComponent.body.position
     private val bodyRotation get() = bodyComponent.body.angle
 
+    private val particleCount get() = engine.getEntitiesFor(allOf(ParticleComponent::class).get()).count()
+
     private val firing get() = playerControlComponent.firing
     private val coolDown get() = playerControlComponent.cooldownRemaining
+
 
 
     private lateinit var rootTable: KTableWidget
@@ -77,6 +80,7 @@ class UserInterface(
         infoLabel.setText(
             """
       AimVector: ${playerControlComponent.aimVector}
+      Particles: $particleCount
 
     """.trimIndent()
         )

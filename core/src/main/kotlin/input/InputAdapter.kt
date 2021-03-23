@@ -14,8 +14,7 @@ import ktx.ashley.mapperFor
 import ktx.math.vec3
 
 class InputAdapter(
-    private var currentControlMapper: ControlMapper = inject(),
-    private val camera : OrthographicCamera = inject()) :
+    private var currentControlMapper: ControlMapper = inject()) :
     KtxInputAdapter {
 
     private val controllers by lazy { Controllers.getControllers() }
