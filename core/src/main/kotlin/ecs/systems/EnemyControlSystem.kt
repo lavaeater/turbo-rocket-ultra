@@ -121,6 +121,15 @@ class EnemyControlSystem : IteratingSystem(
                     foundPlayer = true
                     enemyComponent.newState(EnemyState.ChasePlayer)
                     enemyComponent.chaseTransform = closestFixture.getEntity().getComponent()
+                } else if(closestFixture.isEntity() && closestFixture.body.isEnemy()) {
+                    val friend =closestFixture.getEntity().getComponent<EnemyComponent>()
+                    if(friend.state == EnemyState.ChasePlayer) {
+                        enemyComponent.keepScanning = false
+                        enemyComponent.needsScanVector = true
+                        foundPlayer = true
+                        enemyComponent.newState(EnemyState.ChasePlayer)
+                        enemyComponent.chaseTransform = friend.chaseTransform
+                    }
                 }
             }
             enemyComponent.scanVector.setAngleDeg(enemyComponent.scanVector.angleDeg() + scanResolution)

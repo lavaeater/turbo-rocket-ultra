@@ -44,8 +44,6 @@ fun splatterParticles(
     force: ClosedFloatingPointRange<Float> = 1f..10f,
     color: Color = Color.RED
 ) {
-//    val radius = fromBody.fixtureList.first { !it.isSensor }.shape.radius
-//    towards.setLength(radius)
     splatterParticles(fromBody.worldCenter.cpy(), towards, count, life, force, color)
 }
 
