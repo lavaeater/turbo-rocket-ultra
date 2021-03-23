@@ -41,6 +41,12 @@ When ambling about, they simply walk in some direction for some time, after whic
 How will they find the player? I just figured it out, actually. They have *passive* and *active* sensors. The passive sensors are just a circle around them that notices if the player enters it. The active sensors on the other hand, they simply activate when stopping to check for a direction to walk in. It is the direction they will walk in described as a triangle, basically, or polygon if you will.
 I implemented the active sensors simply by raycasting in a semicircle, so the enemy stops and scans an area. If the enemy finds the player, the chase is on, otherwise, it will amble on. I also added a feature where the enemy will follow another enemy if they discover each other-unless it is already following the player. This means enemies will cluster together in packs after a while of running around aimlessly.
 
+### 2. Graphics of the enemies
+So, I already had the graphics in hand, just needed to add setting the animstate and direction of the sprites, which was easy enough. 
+
+### 3. Sounds of enemies
+I won't be doing sounds for the enemies right now.
+
 ## Done: Shooting System v0.1
 So, I have added some sprites to the game and am now working on a shooting system. I will publish a video on how I implemented that and with some trouble shooting related to framerates, vector maths, raycasting in box2d, etc, very soon. So, the first thing was actually shooting, then adding some kind of rate of fire (for different types of weapons). Then doing damage (done) and destroying enemies when they are dead - also done.
 
@@ -233,7 +239,7 @@ Next should probably be the feature that requires the least work to make it a "g
 
 So the next feature will be ship collisions.
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbLTExMzY5OTE2NjgsLTIxMTg4OTAxMDksMT
+eyJoaXN0b3J5IjpbLTIwMzQwMTQ3MDksLTIxMTg4OTAxMDksMT
 cwNDk0NjE5OCw0NDM4NDkzNjQsMTQ4Nzc4NDQ0NiwtMTQ3MjQ4
 MTI5OSwtNzY3NzEyNzcxLC00MDA4OTIwOTAsMTA2MTQ4MjUzNi
 wyMTE3OTc1OTYxLDE5NDAyNjQ3NywtMTA3MTQwOTU4NCw3NDEw
