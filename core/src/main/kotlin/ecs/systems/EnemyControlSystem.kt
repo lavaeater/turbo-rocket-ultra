@@ -6,55 +6,42 @@ import com.badlogic.gdx.math.Vector2
 import com.badlogic.gdx.physics.box2d.Fixture
 import ecs.components.BodyComponent
 import ecs.components.EnemyComponent
-import ecs.components.SeesPlayerComponent
+import ecs.components.TransformComponent
 import factories.world
 import ktx.ashley.allOf
-import ktx.ashley.get
-import ktx.ashley.has
-import ktx.ashley.mapperFor
 import ktx.box2d.RayCast
 import ktx.box2d.rayCast
 import ktx.math.random
 import ktx.math.vec2
-import physics.getComponent
-import physics.getEntity
-import physics.isEntity
-import physics.isPlayer
+import physics.*
 
-class EnemyControlSystem : IteratingSystem(allOf(EnemyComponent::class, BodyComponent::class).get()) {
-
-    val ecMapper = mapperFor<EnemyComponent>()
-    val bcMapper = mapperFor<BodyComponent>()
-    val spMapper = mapperFor<SeesPlayerComponent>()
+class EnemyControlSystem : IteratingSystem(
+    allOf(
+        EnemyComponent::class,
+        BodyComponent::class,
+        TransformComponent::class).get()) {
 
     @ExperimentalStdlibApi
     override fun processEntity(entity: Entity, deltaTime: Float) {
-        val enemyComponent = entity[ecMapper]!!
-        val bodyComponent = entity[bcMapper]!!
+        val enemyComponent = entity.getComponent<EnemyComponent>()
+        val bodyComponent = entity.getComponent<BodyComponent>()
+        val transformComponent = entity.getComponent<TransformComponent>()
         enemyComponent.coolDown(deltaTime)
-        if (entity.has(spMapper)) {
-            val sp = entity[spMapper]!!
-            if (sp.shouldUpdateState) {
-                enemyComponent.newState(EnemyState.ChasePlayer)
-                sp.shouldUpdateState = false
-            }
-        } else {
-            enemyComponent.newState(EnemyState.Ambling, (5f..15f).random())
-        }
 
         when (enemyComponent.state) {
-            EnemyState.ChasePlayer -> chasePlayer(enemyComponent, bodyComponent, entity[spMapper]!!)
+            EnemyState.ChasePlayer -> chasePlayer(enemyComponent, transformComponent)
             EnemyState.Ambling -> amble(enemyComponent)
             EnemyState.Seeking -> seek(entity, enemyComponent, bodyComponent)
         }
 
         when (enemyComponent.state) {
-            EnemyState.ChasePlayer, EnemyState.Ambling -> moveEnemy(enemyComponent, bodyComponent)
+            EnemyState.ChasePlayer -> moveEnemy(enemyComponent, bodyComponent, 8f)
+            EnemyState.Ambling -> moveEnemy(enemyComponent, bodyComponent)
             EnemyState.Seeking -> {}
         }
     }
 
-    private fun moveEnemy(enemyComponent: EnemyComponent, bodyComponent: BodyComponent, speed: Float = 10f) {
+    private fun moveEnemy(enemyComponent: EnemyComponent, bodyComponent: BodyComponent, speed: Float = 5f) {
         bodyComponent.body.setLinearVelocity(
             enemyComponent.directionVector.x * speed,
             enemyComponent.directionVector.y * speed
@@ -62,46 +49,55 @@ class EnemyControlSystem : IteratingSystem(allOf(EnemyComponent::class, BodyComp
     }
 
     private fun amble(enemyComponent: EnemyComponent) {
-        if (enemyComponent.timeRemaining == 0f)
+        if (enemyComponent.timeRemaining <= 0f)
             enemyComponent.newState(EnemyState.Seeking)
     }
+
+    val fieldOfView = 180
+    val scanResolution = 1
 
     @ExperimentalStdlibApi
     private fun seek(entity: Entity, enemyComponent: EnemyComponent, bodyComponent: BodyComponent) {
         //Pick a random direction
-        val unitVectorRange = -1f..1f
-        enemyComponent.directionVector.set(unitVectorRange.random(), unitVectorRange.random()).nor()
-        val scanVector = vec2().set(enemyComponent.directionVector)
+        if(enemyComponent.needsScanVector) {
+            val unitVectorRange = -1f..1f
+            enemyComponent.directionVector.set(Vector2.Zero)
+            enemyComponent.scanVector.set(unitVectorRange.random(), unitVectorRange.random()).nor()
+            enemyComponent.scanVector.setAngleDeg(enemyComponent.scanVector.angleDeg() - 45f)
+            enemyComponent.maxNumberOfScans = fieldOfView / scanResolution //one scan per degree of angle, easy peasy
+
+            enemyComponent.needsScanVector = false
+            enemyComponent.keepScanning = true
+        }
         /*
         Do some intricate raycasting in that direction to see if we find the player there...
         like, simply create a second vector starting with the unit vector, then rotate it first slightly left,
         then iterate over increments of angles until we have surpassed 90 degrees, then we're done
+        Hey, and also, we do this every update, not all in one go, so that we can actually see it happening
          */
-        scanVector.setAngleDeg(scanVector.angleDeg() - 45f)
 
-        val endAngle = scanVector.angleDeg() + 90f
-        val start = vec2().set(bodyComponent.body.position)
-        val end = vec2()
+        enemyComponent.scanVectorStart.set(bodyComponent.body.position)
         var lowestFraction = 1f
-        var keepScanning = true
         var foundPlayer = false
         lateinit var closestFixture: Fixture
         val pointOfHit = vec2()
         val hitNormal = vec2()
 
-        while (keepScanning) {
-            if (scanVector.angleDeg() < endAngle)
-                keepScanning = false
+        if(enemyComponent.keepScanning) {
+            enemyComponent.scanCount++
+            if (enemyComponent.scanCount > enemyComponent.maxNumberOfScans) {
+                enemyComponent.keepScanning = false
+                enemyComponent.scanCount = 0
+            }
 
-            end.set(start)
-                .add(scanVector)
-                .sub(start)
-                .scl(15f)
-                .add(start)
-                .add(scanVector)
+            enemyComponent.scanVectorEnd.set(enemyComponent.scanVectorStart)
+                .add(enemyComponent.scanVector)
+                .sub(enemyComponent.scanVectorStart )
+                .scl(30f)
+                .add(enemyComponent.scanVectorStart)
+                .add(enemyComponent.scanVector)
 
-            world().rayCast(start, end) { fixture, point, normal, fraction ->
-
+            world().rayCast(enemyComponent.scanVectorStart, enemyComponent.scanVectorEnd) { fixture, point, normal, fraction ->
                 if (fraction < lowestFraction && !fixture.isSensor) {
                     lowestFraction = fraction
                     closestFixture = fixture
@@ -112,29 +108,33 @@ class EnemyControlSystem : IteratingSystem(allOf(EnemyComponent::class, BodyComp
             }
             if (lowestFraction < 1f) {
                 if (closestFixture.isEntity() && closestFixture.body.isPlayer()) {
-                    keepScanning = false
+                    enemyComponent.keepScanning = false
+                    enemyComponent.needsScanVector = true
                     foundPlayer = true
-                    entity.add(SeesPlayerComponent(closestFixture.getEntity().getComponent()))
                     enemyComponent.newState(EnemyState.ChasePlayer)
+                    enemyComponent.chaseTransform = closestFixture.getEntity().getComponent()
                 }
             }
-            scanVector.setAngleDeg(scanVector.angleDeg() + 5f)
+            enemyComponent.scanVector.setAngleDeg(enemyComponent.scanVector.angleDeg() + scanResolution)
         }
-        if (!foundPlayer) {
+        if (!foundPlayer && !enemyComponent.keepScanning) {
+            enemyComponent.needsScanVector = true
+            enemyComponent.chaseTransform = null
+            enemyComponent.directionVector.set(enemyComponent.scanVector)
             enemyComponent.newState(EnemyState.Ambling, (5f..30f).random())
         }
     }
 
     private fun chasePlayer(
         enemyComponent: EnemyComponent,
-        bodyComponent: BodyComponent,
-        seesPlayerComponent: SeesPlayerComponent
+        transformComponent: TransformComponent
     ) {
-        val distance = vec2().set(bodyComponent.body.position).sub(seesPlayerComponent.playerPosition).len2()
+        val playerPosition = if(enemyComponent.chaseTransform != null) enemyComponent.chaseTransform!!.position else transformComponent.position
+        val distance = vec2().set(transformComponent.position).sub(playerPosition).len2()
         if (distance < 5f)
             enemyComponent.directionVector.set(Vector2.Zero)
         else {
-            enemyComponent.directionVector.set(seesPlayerComponent.playerPosition).sub(bodyComponent.body.position)
+            enemyComponent.directionVector.set(playerPosition).sub(transformComponent.position)
                 .nor()
         }
     }

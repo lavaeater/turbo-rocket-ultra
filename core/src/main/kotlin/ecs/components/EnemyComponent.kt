@@ -6,7 +6,16 @@ import ecs.systems.EnemyState
 import ktx.math.vec2
 
 class EnemyComponent(health: Int = 25) : Component {
+    var maxNumberOfScans = 0
+    var scanCount = 0
+    var endAngle = 0f
+    var keepScanning = true
+    val scanVector = vec2()
+    var needsScanVector = true
+    var chaseTransform: TransformComponent? = null
     val directionVector = vec2()
+    val scanVectorStart = vec2()
+    val scanVectorEnd = vec2()
 
     var state : EnemyState = EnemyState.Ambling
     private set

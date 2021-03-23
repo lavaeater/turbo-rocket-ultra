@@ -52,7 +52,7 @@ class FirstScreen : Screen {
     }
 
     private fun setupInput() {
-      Gdx.input.inputProcessor = InputAdapter()
+        Gdx.input.inputProcessor = InputAdapter()
     }
 
     private fun generateMap() {
@@ -62,9 +62,9 @@ class FirstScreen : Screen {
             for (y in 0..25) {
                 obstacle(x * 25f + randomFactor.random(), y * 25f + randomFactor.random())
             }
-        for(x in 0..15)
-            for(y in 0..15)
-                enemy(x * 5f * randomFactor.random(), y * 5f * randomFactor.random())
+        for (x in -25..25)
+            for (y in -25..25)
+                enemy(x * 5 * randomFactor.random(), y * 5 * randomFactor.random())
     }
 
     override fun render(delta: Float) {

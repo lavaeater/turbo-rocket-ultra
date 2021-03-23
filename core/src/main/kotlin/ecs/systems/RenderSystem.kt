@@ -25,7 +25,7 @@ class RenderSystem(
     allOf(
         TransformComponent::class,
         CharacterSpriteComponent::class
-    ).get(), 0
+    ).get(), 100
 ) {
 
     private val pixelsPerMeter = 16f
@@ -34,17 +34,6 @@ class RenderSystem(
 
     private val tMapper = mapperFor<TransformComponent>()
     private val sMapper = mapperFor<CharacterSpriteComponent>()
-    private val enemyMapper= mapperFor<EnemyComponent>()
-
-    private val textureRegion: TextureRegion by lazy {
-        val pixmap = Pixmap(1, 1, Pixmap.Format.RGBA8888)
-        pixmap.setColor(Color.WHITE)
-        pixmap.drawPixel(0, 0)
-        val texture = Texture(pixmap) //remember to dispose of later
-        pixmap.dispose()
-        TextureRegion(texture, 0, 0, 1, 1)
-    }
-    private val shapeDrawer: ShapeDrawer by lazy { ShapeDrawer(batch, textureRegion) }
 
     override fun update(deltaTime: Float) {
         animationStateTime+=deltaTime
@@ -58,16 +47,7 @@ class RenderSystem(
         val transform = tMapper.get(entity)
         val spriteComponent = sMapper.get(entity)
         val currentTextureRegion = spriteComponent.currentAnim.getKeyFrame(animationStateTime)
-        if(entity.has(enemyMapper)) {
-            val enemyComponent = entity[enemyMapper]!!
-            var color = Color.GREEN
-            when (enemyComponent.state) {
-                EnemyState.Ambling -> color = Color.GREEN
-                EnemyState.Seeking -> color = Color.BLUE
-                EnemyState.ChasePlayer -> color = Color.RED
-            }
-            shapeDrawer.filledCircle(transform.position, 5f,color)
-        }
+
         batch.drawScaled(
             currentTextureRegion,
             (transform.position.x + (currentTextureRegion.regionWidth / 2 * scale)),

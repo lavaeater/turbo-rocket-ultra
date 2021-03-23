@@ -2,6 +2,7 @@ package physics
 
 import com.badlogic.gdx.physics.box2d.*
 import ecs.components.*
+import ecs.systems.EnemyState
 import gamestate.Player
 import injection.Context.inject
 import ktx.ashley.remove
@@ -24,8 +25,11 @@ class ContactManager: ContactListener {
             }
             if(contact.hasComponent<EnemySensorComponent>()) {//this is an enemy noticing the player - no system needed
                 val enemy = contact.getEntityFor<EnemySensorComponent>()
+                    val enemyComponent = enemy.getComponent<EnemyComponent>()
                 val player = contact.getEntityFor<PlayerComponent>()
-                enemy.add(SeesPlayerComponent(Mappers.transformMapper.get(player)))
+                enemyComponent.newState(EnemyState.ChasePlayer)
+                enemyComponent.chaseTransform = player.getComponent<TransformComponent>()
+                enemy.add(PlayerIsInSensorRangeComponent())
             }
         }
 
@@ -39,7 +43,7 @@ class ContactManager: ContactListener {
         if(contact.isPlayerContact()) {
             if(contact.hasComponent<EnemySensorComponent>()) {
                 val enemy = contact.getEntityFor<EnemySensorComponent>()
-                enemy.remove<SeesPlayerComponent>()
+                enemy.remove<PlayerIsInSensorRangeComponent>()
             }
         }
     }

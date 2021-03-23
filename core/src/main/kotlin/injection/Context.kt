@@ -66,6 +66,8 @@ object Context {
             addSystem(PlayerShootingSystem(inject()))
             addSystem(EnemyDeathSystem())
             addSystem(EnemyControlSystem())
+            addSystem(EnemyDebugRenderSystem())
+            addSystem(EnemyDirectionSystem())
             addSystem(RenderSystem(inject<PolygonSpriteBatch>() as Batch))
         }
     }
