@@ -47,6 +47,9 @@ So, I already had the graphics in hand, just needed to add setting the animstate
 ### 3. Sounds of enemies
 I won't be doing sounds for the enemies right now.
 
+### 4. Polish
+No polish right now. If we want more advanced behaviors in the future, behavior trees are the way to go. These are included in the libGDX core and are a bit tricky to use but once you get the hang of it, it's really cool.
+
 ## Done: Shooting System v0.1
 So, I have added some sprites to the game and am now working on a shooting system. I will publish a video on how I implemented that and with some trouble shooting related to framerates, vector maths, raycasting in box2d, etc, very soon. So, the first thing was actually shooting, then adding some kind of rate of fire (for different types of weapons). Then doing damage (done) and destroying enemies when they are dead - also done.
 
@@ -239,7 +242,7 @@ Next should probably be the feature that requires the least work to make it a "g
 
 So the next feature will be ship collisions.
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbLTIwMzQwMTQ3MDksLTIxMTg4OTAxMDksMT
+eyJoaXN0b3J5IjpbLTEzODcyMTAxMTEsLTIxMTg4OTAxMDksMT
 cwNDk0NjE5OCw0NDM4NDkzNjQsMTQ4Nzc4NDQ0NiwtMTQ3MjQ4
 MTI5OSwtNzY3NzEyNzcxLC00MDA4OTIwOTAsMTA2MTQ4MjUzNi
 wyMTE3OTc1OTYxLDE5NDAyNjQ3NywtMTA3MTQwOTU4NCw3NDEw
