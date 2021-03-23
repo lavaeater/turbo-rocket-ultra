@@ -27,7 +27,8 @@ To make the graphics and environment easy I am currently working with the concep
 * Blood Splatter
 * Different weapons to shoot with
 
-
+## Doing now: Blood Splatter
+I got a crazy idea on how to do blood splatter.
 
 ## Done: Enemies v0.1
 
@@ -245,9 +246,9 @@ Next should probably be the feature that requires the least work to make it a "g
 
 So the next feature will be ship collisions.
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbNjU3MDAwNjIwLC0yMTE4ODkwMTA5LDE3MD
-Q5NDYxOTgsNDQzODQ5MzY0LDE0ODc3ODQ0NDYsLTE0NzI0ODEy
-OTksLTc2NzcxMjc3MSwtNDAwODkyMDkwLDEwNjE0ODI1MzYsMj
-ExNzk3NTk2MSwxOTQwMjY0NzcsLTEwNzE0MDk1ODQsNzQxMDA3
-NTMxLDY5MzIyMjg3Nl19
+eyJoaXN0b3J5IjpbMjEzNTgxOTAwNCwtMjExODg5MDEwOSwxNz
+A0OTQ2MTk4LDQ0Mzg0OTM2NCwxNDg3Nzg0NDQ2LC0xNDcyNDgx
+Mjk5LC03Njc3MTI3NzEsLTQwMDg5MjA5MCwxMDYxNDgyNTM2LD
+IxMTc5NzU5NjEsMTk0MDI2NDc3LC0xMDcxNDA5NTg0LDc0MTAw
+NzUzMSw2OTMyMjI4NzZdfQ==
 -->
