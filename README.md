@@ -30,7 +30,9 @@ To make the graphics and environment easy I am currently working with the concep
 ## Doing now: Blood Splatter
 I got a crazy idea on how to do blood splatter. It's so cool I can't even focus on creating enemy attacks...
 
-The idea: when an enemy is hit, some box2d bodies "as particles", will be created and flung out from the enemy in like the direction of the hit with some randomization
+The idea: when an enemy is hit, some box2d bodies "as particles", will be created and flung out from the enemy in like the direction of the hit with some randomization thrown in.
+
+Bu
 
 ## Done: Enemies v0.1
 
@@ -248,9 +250,10 @@ Next should probably be the feature that requires the least work to make it a "g
 
 So the next feature will be ship collisions.
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbLTM2ODg1MzUxMiwyMTM1ODE5MDA0LC0yMT
-E4ODkwMTA5LDE3MDQ5NDYxOTgsNDQzODQ5MzY0LDE0ODc3ODQ0
-NDYsLTE0NzI0ODEyOTksLTc2NzcxMjc3MSwtNDAwODkyMDkwLD
-EwNjE0ODI1MzYsMjExNzk3NTk2MSwxOTQwMjY0NzcsLTEwNzE0
-MDk1ODQsNzQxMDA3NTMxLDY5MzIyMjg3Nl19
+eyJoaXN0b3J5IjpbLTEzMDYyMzE2MDYsLTM2ODg1MzUxMiwyMT
+M1ODE5MDA0LC0yMTE4ODkwMTA5LDE3MDQ5NDYxOTgsNDQzODQ5
+MzY0LDE0ODc3ODQ0NDYsLTE0NzI0ODEyOTksLTc2NzcxMjc3MS
+wtNDAwODkyMDkwLDEwNjE0ODI1MzYsMjExNzk3NTk2MSwxOTQw
+MjY0NzcsLTEwNzE0MDk1ODQsNzQxMDA3NTMxLDY5MzIyMjg3Nl
+19
 -->
