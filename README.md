@@ -33,7 +33,7 @@ To make the graphics and environment easy I am currently working with the concep
 ## Doing Now: Objectives
 
 ### Mechanics
-I want to have many different mechanics in the game, but the base mechanic will, for now, be different points to visit on the map. These will be indicated on the minimap (nice)
+I want to have many different mechanics in the game, but the base mechanic will, for now, be different points to visit on the map. These will be indicated on the minimap (nice) and to clear the level, the player has to go to the objective. Every level will increase the number of objectives and the number of enemies. Yay!
 
 ## Done: Blood Splatter v0.1
 I got a crazy idea on how to do blood splatter. It's so cool I can't even focus on creating enemy attacks...
@@ -258,10 +258,10 @@ Next should probably be the feature that requires the least work to make it a "g
 
 So the next feature will be ship collisions.
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbNzc1MjA1ODg5LC0xNjQxMTQwMjg3LDEzMT
-UzMTc3MzYsLTM2ODg1MzUxMiwyMTM1ODE5MDA0LC0yMTE4ODkw
-MTA5LDE3MDQ5NDYxOTgsNDQzODQ5MzY0LDE0ODc3ODQ0NDYsLT
-E0NzI0ODEyOTksLTc2NzcxMjc3MSwtNDAwODkyMDkwLDEwNjE0
-ODI1MzYsMjExNzk3NTk2MSwxOTQwMjY0NzcsLTEwNzE0MDk1OD
-QsNzQxMDA3NTMxLDY5MzIyMjg3Nl19
+eyJoaXN0b3J5IjpbLTE2OTgyMTM3NDMsLTE2NDExNDAyODcsMT
+MxNTMxNzczNiwtMzY4ODUzNTEyLDIxMzU4MTkwMDQsLTIxMTg4
+OTAxMDksMTcwNDk0NjE5OCw0NDM4NDkzNjQsMTQ4Nzc4NDQ0Ni
+wtMTQ3MjQ4MTI5OSwtNzY3NzEyNzcxLC00MDA4OTIwOTAsMTA2
+MTQ4MjUzNiwyMTE3OTc1OTYxLDE5NDAyNjQ3NywtMTA3MTQwOT
+U4NCw3NDEwMDc1MzEsNjkzMjIyODc2XX0=
 -->
