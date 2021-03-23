@@ -30,6 +30,11 @@ To make the graphics and environment easy I am currently working with the concep
 * Blood Splatter <- Done
 * MiniMap <- Done
 
+## Doing Now: Objectives
+
+### Mechanics
+I want to have many different mechanics in the game, but the base mechanic will, for now, be different points to visit on the map. 
+
 ## Done: Blood Splatter v0.1
 I got a crazy idea on how to do blood splatter. It's so cool I can't even focus on creating enemy attacks...
 
@@ -253,7 +258,7 @@ Next should probably be the feature that requires the least work to make it a "g
 
 So the next feature will be ship collisions.
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbLTEzNzQ4MjM2NTQsLTE2NDExNDAyODcsMT
+eyJoaXN0b3J5IjpbLTEzMTYyNzA2MjksLTE2NDExNDAyODcsMT
 MxNTMxNzczNiwtMzY4ODUzNTEyLDIxMzU4MTkwMDQsLTIxMTg4
 OTAxMDksMTcwNDk0NjE5OCw0NDM4NDkzNjQsMTQ4Nzc4NDQ0Ni
 wtMTQ3MjQ4MTI5OSwtNzY3NzEyNzcxLC00MDA4OTIwOTAsMTA2
