@@ -26,7 +26,7 @@ To make the graphics and environment easy I am currently working with the concep
 * Enemies
 * Different weapons to shoot with
 
-## Doing now: Enemies
+## Done: Enemies v0.1
 
 Enemies are SO important for a game, right? 
 
@@ -242,9 +242,9 @@ Next should probably be the feature that requires the least work to make it a "g
 
 So the next feature will be ship collisions.
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbLTEzODcyMTAxMTEsLTIxMTg4OTAxMDksMT
-cwNDk0NjE5OCw0NDM4NDkzNjQsMTQ4Nzc4NDQ0NiwtMTQ3MjQ4
-MTI5OSwtNzY3NzEyNzcxLC00MDA4OTIwOTAsMTA2MTQ4MjUzNi
-wyMTE3OTc1OTYxLDE5NDAyNjQ3NywtMTA3MTQwOTU4NCw3NDEw
-MDc1MzEsNjkzMjIyODc2XX0=
+eyJoaXN0b3J5IjpbMjYwMDY5MjA1LC0yMTE4ODkwMTA5LDE3MD
+Q5NDYxOTgsNDQzODQ5MzY0LDE0ODc3ODQ0NDYsLTE0NzI0ODEy
+OTksLTc2NzcxMjc3MSwtNDAwODkyMDkwLDEwNjE0ODI1MzYsMj
+ExNzk3NTk2MSwxOTQwMjY0NzcsLTEwNzE0MDk1ODQsNzQxMDA3
+NTMxLDY5MzIyMjg3Nl19
 -->
