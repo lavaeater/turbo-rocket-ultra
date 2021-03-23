@@ -4,9 +4,7 @@ import com.badlogic.ashley.core.Entity
 import com.badlogic.ashley.systems.IteratingSystem
 import com.badlogic.gdx.graphics.Color
 import com.badlogic.gdx.graphics.OrthographicCamera
-import ecs.components.CharacterSpriteComponent
-import ecs.components.PlayerComponent
-import ecs.components.TransformComponent
+import ecs.components.*
 import injection.Context.inject
 import ktx.ashley.allOf
 import ktx.ashley.mapperFor
@@ -14,9 +12,12 @@ import ktx.graphics.use
 import ktx.math.vec2
 import tru.Assets
 
-class RenderMiniMapSystem : IteratingSystem(allOf(CharacterSpriteComponent::class, TransformComponent::class).get(), 20) {
+class RenderMiniMapSystem : IteratingSystem(allOf(RenderableComponent::class, TransformComponent::class).get(), 20) {
     private val tMapper = mapperFor<TransformComponent>()
     private val pMapper = mapperFor<PlayerComponent>()
+    private val gMapper = mapperFor<ObjectiveComponent>()
+    private val oMapper = mapperFor<ObstacleComponent>()
+    private val sMapper = mapperFor<CharacterSpriteComponent>()
     private val shapeDrawer by lazy { Assets.shapeDrawer }
     private val scale = 100f
     private val center = vec2()
@@ -30,16 +31,23 @@ class RenderMiniMapSystem : IteratingSystem(allOf(CharacterSpriteComponent::clas
         }
     }
 
-
     override fun processEntity(entity: Entity, deltaTime: Float) {
         val transform = tMapper.get(entity)
-        if(transform.position.dst2(camera.position.x, camera.position.y) < 20000f) {
+        if((gMapper.has(entity) || oMapper.has(entity) && transform.position.dst2(camera.position.x, camera.position.y) < 200000f) || (sMapper.has(entity) && transform.position.dst2(camera.position.x, camera.position.y) < 20000f)) {
 
             var color = Color.RED
             var radius = .1f
             if (pMapper.has(entity)) {
                 color = Color.GREEN
                 radius = .3f
+            }
+            if(oMapper.has(entity)) {
+                color = Color.YELLOW
+                radius = .1f
+            }
+            if(gMapper.has(entity)) {
+                color = Color.CORAL
+                radius = .2f
             }
             center.set(
                 transform.position.x / scale + xOffset, transform.position.y / scale + yOffset

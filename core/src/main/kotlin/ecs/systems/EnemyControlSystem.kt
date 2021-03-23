@@ -168,11 +168,3 @@ class EnemyControlSystem : IteratingSystem(
     }
 }
 
-sealed class EnemyState {
-    object ChasePlayer : EnemyState()
-    object Ambling : EnemyState()
-    object Seeking : EnemyState()
-    object FollowAFriend : EnemyState() {
-
-    }
-}

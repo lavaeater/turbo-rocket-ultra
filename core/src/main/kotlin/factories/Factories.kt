@@ -11,12 +11,9 @@ import com.badlogic.gdx.physics.box2d.World
 import ecs.components.*
 import gamestate.Player
 import injection.Context.inject
-import ktx.ashley.get
 import ktx.box2d.*
 import ktx.math.random
 import ktx.math.vec2
-import physics.Mappers
-import tru.AnimState
 import tru.Assets
 import tru.FirstScreen
 
@@ -35,6 +32,19 @@ fun enemy(x: Float = 0f, y: Float = 0f) {
 val colors = listOf(Color.RED, Color.BLUE, Color.GREEN, Color.BROWN, Color.CYAN)
 
 val colorRange = 0f..1f
+
+object categories {
+    const val splatter : Short = 0x0002
+    const val player: Short  = 0x0003
+    const val enemy: Short = 0x0004
+    const val objective: Short = 0x0005
+    const val obstacle: Short = 0x0006
+}
+
+object collisionMasks {
+    const val splatter = categories.splatter
+    const val players = categories.player
+}
 
 fun splatterParticles(
     fromBody: Body,
@@ -71,21 +81,14 @@ fun splatterParticles(
             type = BodyDef.BodyType.DynamicBody
             position.set(from)
 
-//            if (pOrC.random() < 7) {
-//                polygon(vec2(0f, 0f), vec2(-.1f, .1f), vec2(.1f, .1f)) {
-//                    restitution = 1f
-//                    density = .1f
-//                }
-//            } else {
                 circle(0.05f) {
                     density = 0.1f
                     restitution = 1f
                     filter {
-                        categoryBits = 0x0002
-                        maskBits = 0x0002
+                        categoryBits = categories.splatter
+                        maskBits = collisionMasks.splatter
                     }
                 }
-//            }
             linearDamping = (25f..125f).random()
             angularDamping = 5f
         }
@@ -111,6 +114,9 @@ fun player(): Player {
         position.setZero()
         circle(1f) {
             density = FirstScreen.PLAYER_DENSITY
+            filter {
+                categoryBits = categories.player
+            }
         }
 
         linearDamping = FirstScreen.SHIP_LINEAR_DAMPING
@@ -151,6 +157,9 @@ fun enemy(at: Vector2) {
         position.set(at)
         circle(1f) {
             density = FirstScreen.ENEMY_DENSITY
+            filter {
+                categoryBits = categories.enemy
+            }
         }
         circle(10f) {
             density = .1f
@@ -224,12 +233,45 @@ fun obstacle(
         position.set(x, y)
         box(width, height) {
             restitution = 0f
+            filter {
+                categoryBits = categories.obstacle
+            }
         }
     }
     val entity = engine().createEntity().apply {
         add(BodyComponent(body))
         add(TransformComponent(body.position))
         add(ObstacleComponent())
+        add(RenderableComponent())
+    }
+    body.userData = entity
+    engine().addEntity(entity)
+    return body
+}
+
+fun objective(
+    x: Float = (-100f..100f).random(),
+    y: Float = (-100f..100f).random(),
+    width: Float = 2f,
+    height: Float = 2f
+): Body {
+    val body = world().body {
+        type = BodyDef.BodyType.StaticBody
+        position.set(x, y)
+        box(width, height) {
+            restitution = 0f
+            filter {
+                categoryBits = categories.objective
+                maskBits = collisionMasks.players
+            }
+        }
+    }
+    val entity = engine().createEntity().apply {
+        add(BodyComponent(body))
+        add(TransformComponent(body.position))
+        add(BoxComponent())
+        add(ObjectiveComponent())
+        add(RenderableComponent())
     }
     body.userData = entity
     engine().addEntity(entity)

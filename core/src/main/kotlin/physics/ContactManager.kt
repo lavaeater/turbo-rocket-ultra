@@ -31,6 +31,9 @@ class ContactManager: ContactListener {
                 enemyComponent.chaseTransform = player.getComponent<TransformComponent>()
                 enemy.add(PlayerIsInSensorRangeComponent())
             }
+            if(contact.hasComponent<ObjectiveComponent>()) {
+                val something = "This is it"
+            }
         }
 
         if(contact.bothHaveComponent<EnemySensorComponent>()) {

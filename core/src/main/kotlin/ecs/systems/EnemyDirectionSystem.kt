@@ -3,20 +3,16 @@ package ecs.systems
 import com.badlogic.ashley.core.Entity
 import com.badlogic.ashley.systems.IteratingSystem
 import ecs.components.CharacterSpriteComponent
-import ecs.components.PlayerControlComponent
+import ecs.components.EnemyComponent
 import ktx.ashley.allOf
+import ktx.ashley.mapperFor
 import physics.Mappers
+import tru.AnimState
 import tru.SpriteDirection
 
-
-class CharacterWalkAndShootDirectionSystem :
-    IteratingSystem(
-        allOf(
-            CharacterSpriteComponent::class,
-            PlayerControlComponent::class
-        ).get(), 10) {
-
+class EnemyDirectionSystem : IteratingSystem(allOf(CharacterSpriteComponent::class, EnemyComponent::class).get()) {
     var characterAngle = 0f
+    val enemyMapper = mapperFor<EnemyComponent>()
     override fun processEntity(entity: Entity, deltaTime: Float) {
         /**
          * The difficult thing here is how we know if a character is walking or not... and what the character
@@ -29,8 +25,9 @@ class CharacterWalkAndShootDirectionSystem :
          * The current anim is managed by something else... the input system, obviously
          */
         val characterSpriteComponent = Mappers.characterSpriteComponentMapper.get(entity)
-        val controlComponet = Mappers.playerControlMapper.get(entity)
-        characterAngle = if(controlComponet.moving) controlComponet.walkVector.angleDeg() else controlComponet.aimVector.angleDeg()
+        val enemyComponent = enemyMapper.get(entity)
+        characterAngle = if(enemyComponent.state == EnemyState.Seeking) enemyComponent.scanVector.angleDeg() else enemyComponent.directionVector.angleDeg()
+        characterSpriteComponent.currentAnimState = if(enemyComponent.state == EnemyState.Seeking) AnimState.Idle else AnimState.Walk
 
         when (characterAngle) {
             in 150f..209f -> characterSpriteComponent.currentDirection = SpriteDirection.East

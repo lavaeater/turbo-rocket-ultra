@@ -43,6 +43,7 @@ class UserInterface(
     private val particleCount get() = engine.getEntitiesFor(allOf(ParticleComponent::class).get()).count()
     private val splatterCount get() = engine.getEntitiesFor(allOf(SplatterComponent::class).get()).count()
     private val enemyCount get() = engine.getEntitiesFor(allOf(EnemyComponent::class).get()).count()
+    private val objectiveCount get() = engine.getEntitiesFor(allOf(ObjectiveComponent::class).get()).count()
 
     private val firing get() = playerControlComponent.firing
     private val coolDown get() = playerControlComponent.cooldownRemaining
@@ -86,7 +87,7 @@ class UserInterface(
       Particles: $particleCount
       Splatter: $splatterCount
       Enemies: $enemyCount
-
+      Objectives: $objectiveCount
     """.trimIndent()
         )
     }

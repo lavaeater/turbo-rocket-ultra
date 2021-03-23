@@ -9,6 +9,7 @@ import com.badlogic.gdx.graphics.OrthographicCamera
 import com.badlogic.gdx.graphics.g2d.PolygonSpriteBatch
 import com.badlogic.gdx.utils.viewport.ExtendViewport
 import factories.enemy
+import factories.objective
 import factories.obstacle
 import injection.Context.inject
 import input.InputAdapter
@@ -56,16 +57,24 @@ class FirstScreen : Screen {
     }
 
     private fun generateMap() {
-        val randomFactor = 10f..25f
+        val randomFactor = -1000f..1000f
 
-        for (x in 0..25)
-            for (y in 0..25) {
-                obstacle(x * 25f + randomFactor.random(), y * 25f + randomFactor.random())
+        for (x in 1..25)
+            for (y in 1..25) {
+                obstacle(x * randomFactor.random(), y * randomFactor.random())
             }
-        for (x in -10..10)
-            for (y in -10..10)
-                enemy(x * 3f * randomFactor.random(), y * 3f * randomFactor.random())
+
+        for(i in 0..1000)
+            enemy(randomFactor.random(), randomFactor.random())
+
+        objective()
+        objective()
+        objective()
+        objective()
+        objective()
     }
+
+
 
     override fun render(delta: Float) {
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT)
