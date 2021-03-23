@@ -35,7 +35,7 @@ To make the graphics and environment easy I am currently working with the concep
 ### Mechanics
 I want to have many different mechanics in the game, but the base mechanic will, for now, be different points to visit on the map. These will be indicated on the minimap (nice) and to clear the level, the player has to go to the objective. Every level will increase the number of objectives and the number of enemies. Yay!
 
-Object pooling will be necessary soon
+Object pooling will be necessary soon.
 
 ## Done: Blood Splatter v0.1
 I got a crazy idea on how to do blood splatter. It's so cool I can't even focus on creating enemy attacks...
@@ -260,7 +260,7 @@ Next should probably be the feature that requires the least work to make it a "g
 
 So the next feature will be ship collisions.
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbLTE3MjY5Njk0NSwtMTY5ODIxMzc0MywtMT
+eyJoaXN0b3J5IjpbMTg1MTcwOTMyNSwtMTY5ODIxMzc0MywtMT
 Y0MTE0MDI4NywxMzE1MzE3NzM2LC0zNjg4NTM1MTIsMjEzNTgx
 OTAwNCwtMjExODg5MDEwOSwxNzA0OTQ2MTk4LDQ0Mzg0OTM2NC
 wxNDg3Nzg0NDQ2LC0xNDcyNDgxMjk5LC03Njc3MTI3NzEsLTQw
