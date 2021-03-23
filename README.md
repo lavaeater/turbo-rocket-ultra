@@ -24,7 +24,7 @@ To make the graphics and environment easy I am currently working with the concep
 * Vehicles
 * Towers
 * Enemies
-* Blood Splatter
+* Blood Splatter <- Done
 * Different weapons to shoot with
 
 ## Doing now: Blood Splatter
@@ -250,10 +250,10 @@ Next should probably be the feature that requires the least work to make it a "g
 
 So the next feature will be ship collisions.
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbMTMxNTMxNzczNiwtMzY4ODUzNTEyLDIxMz
-U4MTkwMDQsLTIxMTg4OTAxMDksMTcwNDk0NjE5OCw0NDM4NDkz
-NjQsMTQ4Nzc4NDQ0NiwtMTQ3MjQ4MTI5OSwtNzY3NzEyNzcxLC
-00MDA4OTIwOTAsMTA2MTQ4MjUzNiwyMTE3OTc1OTYxLDE5NDAy
-NjQ3NywtMTA3MTQwOTU4NCw3NDEwMDc1MzEsNjkzMjIyODc2XX
-0=
+eyJoaXN0b3J5IjpbODkzNjk4ODcxLDEzMTUzMTc3MzYsLTM2OD
+g1MzUxMiwyMTM1ODE5MDA0LC0yMTE4ODkwMTA5LDE3MDQ5NDYx
+OTgsNDQzODQ5MzY0LDE0ODc3ODQ0NDYsLTE0NzI0ODEyOTksLT
+c2NzcxMjc3MSwtNDAwODkyMDkwLDEwNjE0ODI1MzYsMjExNzk3
+NTk2MSwxOTQwMjY0NzcsLTEwNzE0MDk1ODQsNzQxMDA3NTMxLD
+Y5MzIyMjg3Nl19
 -->
