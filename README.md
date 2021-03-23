@@ -32,7 +32,7 @@ I got a crazy idea on how to do blood splatter. It's so cool I can't even focus 
 
 The idea: when an enemy is hit, some box2d bodies "as particles", will be created and flung out from the enemy in like the direction of the hit with some randomization thrown in.
 
-But what are other, more efficient and not as demanding ways of doing blood splatter? I could imagine just actually creating textures as we go, using pixmaps, and drawing them rotated. That could
+But what are other, more efficient and not as demanding ways of doing blood splatter? I could imagine just actually creating textures as we go, using pixmaps, and drawing them rotated. That could work as well, and I will try that - because this thing with the 
 
 ## Done: Enemies v0.1
 
@@ -250,7 +250,7 @@ Next should probably be the feature that requires the least work to make it a "g
 
 So the next feature will be ship collisions.
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbMTI2MjA3NzQwMywtMzY4ODUzNTEyLDIxMz
+eyJoaXN0b3J5IjpbMTMxNTMxNzczNiwtMzY4ODUzNTEyLDIxMz
 U4MTkwMDQsLTIxMTg4OTAxMDksMTcwNDk0NjE5OCw0NDM4NDkz
 NjQsMTQ4Nzc4NDQ0NiwtMTQ3MjQ4MTI5OSwtNzY3NzEyNzcxLC
 00MDA4OTIwOTAsMTA2MTQ4MjUzNiwyMTE3OTc1OTYxLDE5NDAy
