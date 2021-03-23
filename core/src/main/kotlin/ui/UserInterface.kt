@@ -24,6 +24,7 @@ import ktx.scene2d.scene2d
 import ktx.scene2d.table
 import physics.to360Degrees
 import physics.toDegrees
+import kotlin.math.roundToInt
 
 class UserInterface(
     private val batch: Batch,
@@ -41,6 +42,7 @@ class UserInterface(
 
     private val particleCount get() = engine.getEntitiesFor(allOf(ParticleComponent::class).get()).count()
     private val splatterCount get() = engine.getEntitiesFor(allOf(SplatterComponent::class).get()).count()
+    private val enemyCount get() = engine.getEntitiesFor(allOf(EnemyComponent::class).get()).count()
 
     private val firing get() = playerControlComponent.firing
     private val coolDown get() = playerControlComponent.cooldownRemaining
@@ -80,9 +82,10 @@ class UserInterface(
     private fun updateInfo(delta: Float) {
         infoLabel.setText(
             """
-      AimVector: ${playerControlComponent.aimVector}
+      AimVector: ${(playerControlComponent.aimVector.x * 100).roundToInt() }, ${(playerControlComponent.aimVector.y * 100).roundToInt() }
       Particles: $particleCount
       Splatter: $splatterCount
+      Enemies: $enemyCount
 
     """.trimIndent()
         )
@@ -126,7 +129,7 @@ Mouse -> Aim & Shoot
       """
             )
             infoLabel = label("InfoLabel")
-            npcLabel = label("NpcInfo")
+//            npcLabel = label("NpcInfo")
         }
 
         rootTable = scene2d.table {

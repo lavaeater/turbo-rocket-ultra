@@ -73,6 +73,7 @@ object Context {
             addSystem(AddSplatterSystem())
             addSystem(SplatterRemovalSystem())
             addSystem(RenderSystem(inject<PolygonSpriteBatch>() as Batch))
+            addSystem(RenderMiniMapSystem())
         }
     }
 }
