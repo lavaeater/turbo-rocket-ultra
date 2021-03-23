@@ -15,6 +15,7 @@ import ktx.ashley.allOf
 import ktx.ashley.mapperFor
 import ktx.math.vec2
 import space.earlygrey.shapedrawer.ShapeDrawer
+import tru.Assets
 
 
 class ShootDebugRenderSystem(private val debug: Boolean = true) : IteratingSystem(
@@ -28,15 +29,7 @@ class ShootDebugRenderSystem(private val debug: Boolean = true) : IteratingSyste
     private val transformMapper = mapperFor<TransformComponent>()
 
     private val batch: Batch by lazy { inject<PolygonSpriteBatch>() }
-    private val textureRegion: TextureRegion by lazy {
-        val pixmap = Pixmap(1, 1, Pixmap.Format.RGBA8888)
-        pixmap.setColor(Color.WHITE)
-        pixmap.drawPixel(0, 0)
-        val texture = Texture(pixmap) //remember to dispose of later
-        pixmap.dispose()
-        TextureRegion(texture, 0, 0, 1, 1)
-    }
-    private val shapeDrawer: ShapeDrawer by lazy { ShapeDrawer(batch, textureRegion) }
+    private val shapeDrawer by lazy { Assets.shapeDrawer }
     private val aimVector = vec2(0f, 0f)
 
     override fun processEntity(entity: Entity, deltaTime: Float) {

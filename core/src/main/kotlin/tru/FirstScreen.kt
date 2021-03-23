@@ -27,8 +27,8 @@ class FirstScreen : Screen {
         const val SHIP_LINEAR_DAMPING = 20f
         const val SHIP_ANGULAR_DAMPING = 20f
 
-        const val GAMEWIDTH = 16f
-        const val GAMEHEIGHT = 10f
+        const val GAMEWIDTH = 128f
+        const val GAMEHEIGHT = 96f
     }
 
     private var needsInit = true
@@ -52,19 +52,19 @@ class FirstScreen : Screen {
     }
 
     private fun setupInput() {
-      Gdx.input.inputProcessor = InputAdapter()
+        Gdx.input.inputProcessor = InputAdapter()
     }
 
     private fun generateMap() {
-        val randomFactor = 0f..15f
+        val randomFactor = 10f..25f
 
         for (x in 0..25)
             for (y in 0..25) {
                 obstacle(x * 25f + randomFactor.random(), y * 25f + randomFactor.random())
             }
-        for(x in 0..99)
-            for(y in 0..99)
-                enemy(x * randomFactor.random(), y * randomFactor.random())
+        for (x in -10..10)
+            for (y in -10..10)
+                enemy(x * 3f * randomFactor.random(), y * 3f * randomFactor.random())
     }
 
     override fun render(delta: Float) {

@@ -2,7 +2,6 @@ package injection
 
 import audio.AudioPlayer
 import com.badlogic.ashley.core.Engine
-import com.badlogic.gdx.Audio
 import com.badlogic.gdx.graphics.Camera
 import com.badlogic.gdx.graphics.OrthographicCamera
 import com.badlogic.gdx.graphics.g2d.Batch
@@ -30,6 +29,8 @@ object Context {
         return context.inject()
     }
 
+
+
     private fun buildContext() {
         context.register {
             bindSingleton(ControlMapper())
@@ -54,7 +55,7 @@ object Context {
     private fun getEngine(): Engine {
         return Engine().apply {
             addSystem(PhysicsSystem(inject()))
-//            addSystem(PhysicsDebugRendererSystem(inject(), inject()))
+       //     addSystem(PhysicsDebugRendererSystem(inject(), inject()))
             addSystem(CameraUpdateSystem())
             addSystem(PlayerControlSystem())
             addSystem(BodyDestroyerSystem(inject())) //world
@@ -65,6 +66,11 @@ object Context {
             addSystem(ShootDebugRenderSystem())
             addSystem(PlayerShootingSystem(inject()))
             addSystem(EnemyDeathSystem())
+            addSystem(EnemyControlSystem())
+            addSystem(EnemyDebugRenderSystem())
+            addSystem(EnemyDirectionSystem())
+            addSystem(AddSplatterSystem())
+            addSystem(SplatterRemovalSystem())
             addSystem(RenderSystem(inject<PolygonSpriteBatch>() as Batch))
         }
     }

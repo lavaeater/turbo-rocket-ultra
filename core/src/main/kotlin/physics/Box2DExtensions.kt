@@ -80,6 +80,13 @@ fun Body.isEnemy() : Boolean {
     return (userData as Entity).hasComponent<EnemyComponent>()
 }
 
+@ExperimentalStdlibApi
+fun Body.isPlayer() : Boolean {
+    return (userData as Entity).hasComponent<PlayerComponent>()
+}
+
+
+
 fun Fixture.isEntity() : Boolean {
     return this.body.userData is Entity
 }
@@ -102,6 +109,15 @@ inline fun <reified T: Component>Contact.hasComponent():Boolean {
     if(this.isEntityContact()) {
         val mapper = mapperFor<T>()
         return this.fixtureA.getEntity().has(mapper) ||
+                this.fixtureB.getEntity().has(mapper)
+    }
+    return false
+}
+
+inline fun <reified T: Component>Contact.bothHaveComponent(): Boolean {
+    if(this.isEntityContact()) {
+        val mapper = mapperFor<T>()
+        return this.fixtureA.getEntity().has(mapper) &&
                 this.fixtureB.getEntity().has(mapper)
     }
     return false
