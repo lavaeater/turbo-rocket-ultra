@@ -33,6 +33,7 @@ class ContactManager: ContactListener {
             }
             if(contact.hasComponent<ObjectiveComponent>()) {
                 val something = "This is it"
+                player.touchedObjectives.add(contact.getEntityFor<ObjectiveComponent>().getComponent())
             }
         }
 

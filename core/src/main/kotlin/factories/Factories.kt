@@ -242,6 +242,7 @@ fun obstacle(
         add(BodyComponent(body))
         add(TransformComponent(body.position))
         add(ObstacleComponent())
+        add(BoxComponent(color = Color.BLUE))
         add(RenderableComponent())
     }
     body.userData = entity

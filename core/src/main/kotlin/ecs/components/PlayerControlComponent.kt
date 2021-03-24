@@ -10,7 +10,7 @@ import tru.AnimState
 
 class PlayerControlComponent(
     private val controlMapper: ControlMapper,
-    private val rof: Float = 2f) : Component {
+    private val rof: Float = 3f) : Component {
 
     private val camera : OrthographicCamera by lazy { inject() }
     var cooldownRemaining = 0f

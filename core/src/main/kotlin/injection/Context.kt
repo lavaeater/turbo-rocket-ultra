@@ -68,7 +68,7 @@ object Context {
             addSystem(PlayerShootingSystem(inject()))
             addSystem(EnemyDeathSystem())
             addSystem(EnemyControlSystem())
-            addSystem(EnemyDebugRenderSystem())
+            //addSystem(EnemyDebugRenderSystem())
             addSystem(EnemyDirectionSystem())
             addSystem(AddSplatterSystem())
             addSystem(SplatterRemovalSystem())
