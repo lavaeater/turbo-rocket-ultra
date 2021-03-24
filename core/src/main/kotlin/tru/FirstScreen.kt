@@ -7,11 +7,13 @@ import com.badlogic.gdx.Screen
 import com.badlogic.gdx.graphics.GL20
 import com.badlogic.gdx.graphics.OrthographicCamera
 import com.badlogic.gdx.graphics.g2d.PolygonSpriteBatch
+import com.badlogic.gdx.math.Vector2
 import com.badlogic.gdx.physics.box2d.World
 import com.badlogic.gdx.utils.viewport.ExtendViewport
 import ecs.components.BodyComponent
 import ecs.components.EnemyComponent
 import ecs.components.ObjectiveComponent
+import ecs.components.TransformComponent
 import factories.enemy
 import factories.objective
 import factories.obstacle
@@ -53,6 +55,7 @@ class FirstScreen : Screen {
     private val ui: IUserInterface by lazy { inject() }
     private val audioPlayer: AudioPlayer by lazy { inject() }
     private val player: Player by lazy { inject() }
+    private val transformMapper = mapperFor<TransformComponent>()
 
     override fun show() {
         if (needsInit) {
@@ -70,7 +73,7 @@ class FirstScreen : Screen {
     }
 
 
-    var currentLevel = 1
+    var currentLevel = 0
     var numberOfObjectives = 1
     var numberOfEnemies = 1
     val randomFactor = -500f..500f
@@ -83,8 +86,12 @@ class FirstScreen : Screen {
 
     private val bodyMapper = mapperFor<BodyComponent>()
     private fun generateMap() {
+
+        var randomAngle = (0f..360f)
+        val startVector = Vector2.X.cpy().scl(50f).setAngleDeg(randomAngle.random())
+
         player.touchedObjectives.clear()
-        numberOfEnemies = 2f.pow(currentLevel).roundToInt() * 10
+        numberOfEnemies = 2f.pow(currentLevel).roundToInt() * 3
         numberOfObjectives = 2f.pow(currentLevel).roundToInt()
 
         for (enemy in engine.getEntitiesFor(allOf(EnemyComponent::class).get())) {
@@ -108,11 +115,17 @@ class FirstScreen : Screen {
                 obstacle(x * randomFactor.random(), y * randomFactor.random())
             }
 
+        val position = transformMapper.get(player.entity).position.cpy()
+
         for(i in 0 until numberOfObjectives) {
-            val position = vec2(randomFactor.random(), randomFactor.random())
+            position.add(startVector)
             objective(position.x, position.y)
+
             for(e in 0 until numberOfEnemies)
                 enemy(position.x + enemyRandomFactor.random(), position.y + enemyRandomFactor.random())
+
+            randomAngle = (0f..(randomAngle.endInclusive / 2f))
+            startVector.setAngleDeg(randomAngle.random())
         }
 
 
