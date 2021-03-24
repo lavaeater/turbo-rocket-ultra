@@ -18,19 +18,24 @@ Inspirations off the bat for this game are:
 To make the graphics and environment easy I am currently working with the concept of "zombie tower defense", which is obviously lame and very boring, but hey... it's easy to find art for.
 
 ### MVP
-* Objectives
 * Player damage / Enemy attacks
 * Multiplayer
 * Controller support
 * Twin Stick shooting
-* Vehicles
 * Towers
+* Vehicles
 * Different weapons to shoot with
+* Objectives <- Done!
 * Enemies <- Done
 * Blood Splatter <- Done
 * MiniMap <- Done
 
-## Doing Now: Objectives
+## Doing now: Player Damage / Enemy Attacks
+
+### Mechanics
+Just like when the player shoots, enemy attacks will have a cooldown. When they are within a certain range, they will simply attack the player and with some probability they will succeed. Blood must splatter, health must be reduced, the player must be careful
+
+## Done: Objectives v0.1
 
 ### Mechanics
 I want to have many different mechanics in the game, but the base mechanic will, for now, be different points to visit on the map. These will be indicated on the minimap (nice) and to clear the level, the player has to go to the objective. Every level will increase the number of objectives and the number of enemies. Yay!
@@ -260,11 +265,11 @@ Next should probably be the feature that requires the least work to make it a "g
 
 So the next feature will be ship collisions.
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbMTg1MTcwOTMyNSwtMTY5ODIxMzc0MywtMT
-Y0MTE0MDI4NywxMzE1MzE3NzM2LC0zNjg4NTM1MTIsMjEzNTgx
-OTAwNCwtMjExODg5MDEwOSwxNzA0OTQ2MTk4LDQ0Mzg0OTM2NC
-wxNDg3Nzg0NDQ2LC0xNDcyNDgxMjk5LC03Njc3MTI3NzEsLTQw
-MDg5MjA5MCwxMDYxNDgyNTM2LDIxMTc5NzU5NjEsMTk0MDI2ND
-c3LC0xMDcxNDA5NTg0LDc0MTAwNzUzMSw2OTMyMjI4NzZdfQ==
-
+eyJoaXN0b3J5IjpbOTU0NDQyMzQ1LDE4NTE3MDkzMjUsLTE2OT
+gyMTM3NDMsLTE2NDExNDAyODcsMTMxNTMxNzczNiwtMzY4ODUz
+NTEyLDIxMzU4MTkwMDQsLTIxMTg4OTAxMDksMTcwNDk0NjE5OC
+w0NDM4NDkzNjQsMTQ4Nzc4NDQ0NiwtMTQ3MjQ4MTI5OSwtNzY3
+NzEyNzcxLC00MDA4OTIwOTAsMTA2MTQ4MjUzNiwyMTE3OTc1OT
+YxLDE5NDAyNjQ3NywtMTA3MTQwOTU4NCw3NDEwMDc1MzEsNjkz
+MjIyODc2XX0=
 -->
