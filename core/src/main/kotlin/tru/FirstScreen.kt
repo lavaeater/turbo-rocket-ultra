@@ -56,7 +56,7 @@ class FirstScreen : Screen {
 
     override fun show() {
         if (needsInit) {
-            Gdx.gl.glClearColor(.3f, .5f, .8f, 1f)
+            Gdx.gl.glClearColor(.4f, .4f, .4f, 1f)
             Assets.load()
             setupInput()
             generateMap()

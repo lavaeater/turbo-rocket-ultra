@@ -67,7 +67,7 @@ class UserInterface(
 
     companion object {
         private const val aspectRatio = 16 / 9
-        const val uiWidth = 400f
+        const val uiWidth = 720f
         const val uiHeight = uiWidth * aspectRatio
     }
 
@@ -82,14 +82,12 @@ class UserInterface(
         stage.act(delta)
         stage.draw()
     }
+//    AimVectorAngle: ${playerControlComponent.aimVector.angleDeg()}
 
     private fun updateInfo(delta: Float) {
         infoLabel.setText(
             """
-      Objectives: $objectiveCount
-      Touched: $touchedObjectiveCount
-      AimVectorAngle: ${playerControlComponent.aimVector.angleDeg()}
-      Particles: $particleCount
+      Objectives Left: ${objectiveCount - touchedObjectiveCount}
       Splatter: $splatterCount
       Enemies: $enemyCount
     """.trimIndent()
@@ -126,15 +124,8 @@ class UserInterface(
 
     private fun setupInfo() {
         infoBoard = scene2d.table {
-            label(
-                """
-Controls and stuff:
-WASD -> Move
-Mouse -> Aim & Shoot
-      """
-            )
+
             infoLabel = label("InfoLabel")
-//            npcLabel = label("NpcInfo")
         }
 
         rootTable = scene2d.table {
