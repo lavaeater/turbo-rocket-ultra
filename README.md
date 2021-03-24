@@ -32,6 +32,8 @@ To make the graphics and environment easy I am currently working with the concep
 
 ## Doing now: Player Damage / Enemy Attacks
 
+### Mechanics
+Just like when the player shoots, enemy attacks will have a cooldown. 
 
 ## Done: Objectives v0.1
 
@@ -263,7 +265,7 @@ Next should probably be the feature that requires the least work to make it a "g
 
 So the next feature will be ship collisions.
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbLTI3NDU1MzU0LDE4NTE3MDkzMjUsLTE2OT
+eyJoaXN0b3J5IjpbNDI4NDA2MzIyLDE4NTE3MDkzMjUsLTE2OT
 gyMTM3NDMsLTE2NDExNDAyODcsMTMxNTMxNzczNiwtMzY4ODUz
 NTEyLDIxMzU4MTkwMDQsLTIxMTg4OTAxMDksMTcwNDk0NjE5OC
 w0NDM4NDkzNjQsMTQ4Nzc4NDQ0NiwtMTQ3MjQ4MTI5OSwtNzY3
