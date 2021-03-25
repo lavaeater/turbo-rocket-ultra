@@ -10,6 +10,10 @@ import com.badlogic.gdx.graphics.g2d.PolygonSpriteBatch
 import com.badlogic.gdx.utils.viewport.ExtendViewport
 import ecs.components.ControlMapper
 import ecs.systems.*
+import ecs.systems.ai.AmblingSystem
+import ecs.systems.ai.BehaviorTreeSystem
+import ecs.systems.ai.ChasePlayerSystem
+import ecs.systems.ai.SeekingPlayerSystem
 import factories.player
 import ktx.box2d.createWorld
 import ktx.inject.Context
@@ -67,8 +71,11 @@ object Context {
             addSystem(ShootDebugRenderSystem())
             addSystem(PlayerShootingSystem(inject()))
             addSystem(EnemyDeathSystem())
-            addSystem(EnemyControlSystem())
-            //addSystem(EnemyDebugRenderSystem())
+            addSystem(EnemyMovementSystem())
+            addSystem(AmblingSystem())
+            addSystem(BehaviorTreeSystem())
+            addSystem(ChasePlayerSystem())
+            addSystem(SeekingPlayerSystem())
             addSystem(EnemyDirectionSystem())
             addSystem(AddSplatterSystem())
             addSystem(SplatterRemovalSystem())

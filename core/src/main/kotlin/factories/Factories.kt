@@ -1,5 +1,6 @@
 package factories
 
+import ai.Tree
 import com.badlogic.ashley.core.Engine
 import com.badlogic.gdx.graphics.Color
 import com.badlogic.gdx.math.MathUtils
@@ -9,6 +10,7 @@ import com.badlogic.gdx.physics.box2d.Body
 import com.badlogic.gdx.physics.box2d.BodyDef
 import com.badlogic.gdx.physics.box2d.World
 import ecs.components.*
+import ecs.components.ai.BehaviorComponent
 import gamestate.Player
 import injection.Context.inject
 import ktx.box2d.*
@@ -175,6 +177,8 @@ fun enemy(at: Vector2) {
         add(CharacterSpriteComponent(Assets.characters["enemy"]!!))
         add(RenderableComponent(1))
     }
+    entity.add(BehaviorComponent(Tree.bt().apply { `object` = entity}))
+
     body.userData = entity
     engine().addEntity(entity)
 }
