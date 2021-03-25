@@ -1,12 +1,11 @@
 package ecs.components.ai
 
-import com.badlogic.ashley.core.Component
-import ktx.math.vec2
+import ktx.math.random
 
 class Amble: TaskComponent() {
-    var coolDown = 30f
+    var coolDown = (20f..45f).random()
     override fun reset() {
-        coolDown = 30f
+        coolDown = (20f..45f).random()
         super.reset()
     }
 }

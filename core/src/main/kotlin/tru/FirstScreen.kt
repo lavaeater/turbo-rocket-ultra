@@ -88,10 +88,10 @@ class FirstScreen : Screen {
     private fun generateMap() {
 
         var randomAngle = (0f..360f)
-        val startVector = Vector2.X.cpy().scl(50f).setAngleDeg(randomAngle.random())
+        val startVector = Vector2.X.cpy().scl(100f).setAngleDeg(randomAngle.random())
 
         player.touchedObjectives.clear()
-        numberOfEnemies = 2f.pow(currentLevel).roundToInt() * 3
+        numberOfEnemies = 2f.pow(currentLevel).roundToInt() * 10
         numberOfObjectives = 2f.pow(currentLevel).roundToInt()
 
         for (enemy in engine.getEntitiesFor(allOf(EnemyComponent::class).get())) {
