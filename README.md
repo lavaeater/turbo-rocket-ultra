@@ -36,7 +36,9 @@ To make the graphics and environment easy I am currently working with the concep
 
 ### Mechanics
 
-This feature will add about 20 sub-features. To have multiplayer, we must now have a way of starting the game, pausing the game, adding players, removing players, etc. And of course the most important one of them all: selecting the player character. 
+This feature will add about 20 sub-features. To have multiplayer, we must now have a way of starting the game, pausing the game, adding players, removing players, etc. And of course the most important one of them all: selecting the player character. So I will add:
+* A FSM for the Game state <- this is where these are actually **very** useful
+* 
 
 ## Done: Twin Stick v0.1
 
@@ -283,7 +285,7 @@ Next should probably be the feature that requires the least work to make it a "g
 
 So the next feature will be ship collisions.
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbODY1NTkxMDk0LDE1NzE0MTYwODUsLTIxND
+eyJoaXN0b3J5IjpbNjgwMDE5MTYyLDE1NzE0MTYwODUsLTIxND
 YwNDE1NzksLTkwMzY2NTkyNSw5NTQ0NDIzNDUsMTg1MTcwOTMy
 NSwtMTY5ODIxMzc0MywtMTY0MTE0MDI4NywxMzE1MzE3NzM2LC
 0zNjg4NTM1MTIsMjEzNTgxOTAwNCwtMjExODg5MDEwOSwxNzA0
