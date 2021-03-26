@@ -15,9 +15,11 @@ fun <T> tree(block: TreeBuilder<T>.() -> Unit) = TreeBuilder<T>().apply(block).b
 fun <T> selector(block: SelectorBuilder<T>.() -> Unit) = SelectorBuilder<T>().apply(block).build()
 fun <T> sequence(block: SequenceBuilder<T>.() -> Unit) = SequenceBuilder<T>().apply(block).build()
 fun <T> parallel(block: ParallelBuilder<T>.() -> Unit) = ParallelBuilder<T>().apply(block).build()
+
 inline fun <reified T : TaskComponent> isEntity() = HasComponentBuilder(T::class.java).build()
 inline fun <reified T : TaskComponent> start() = AddComponentBuilder(T::class.java).build()
 inline fun <reified T : TaskComponent> stop() = RemoveComponentBuilder(T::class.java).build()
 inline fun <reified T: TaskComponent> execute() = CheckComponentStatusBuilder(T::class.java).build()
+
 inline fun <reified T: TaskComponent> entityDo() = EntityComponentTaskBuilder(T::class.java).build()
 

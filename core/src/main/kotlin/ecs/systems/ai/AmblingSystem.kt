@@ -14,6 +14,7 @@ class AmblingSystem : IteratingSystem(allOf(Amble::class, EnemyComponent::class)
 
     private val mapper = mapperFor<Amble>()
     private val eMapper = mapperFor<EnemyComponent>()
+
     override fun processEntity(entity: Entity, deltaTime: Float) {
         val component = mapper.get(entity)
         if (component.status == Task.Status.RUNNING) {

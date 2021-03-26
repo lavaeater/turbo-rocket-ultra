@@ -3,9 +3,10 @@ package ecs.components.ai
 import ktx.math.random
 
 class Amble: TaskComponent() {
-    var coolDown = (20f..45f).random()
+    var coolDown = (5f..10f).random()
     override fun reset() {
-        coolDown = (20f..45f).random()
+        coolDown = (5f..10f).random()
         super.reset()
     }
 }
+

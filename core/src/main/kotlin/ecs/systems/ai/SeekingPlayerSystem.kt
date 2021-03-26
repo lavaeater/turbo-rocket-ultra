@@ -9,6 +9,7 @@ import com.badlogic.gdx.math.Vector2
 import com.badlogic.gdx.physics.box2d.Fixture
 import ecs.components.BodyComponent
 import ecs.components.EnemyComponent
+import ecs.components.ai.ChasePlayer
 import factories.world
 import ktx.ashley.allOf
 import ktx.ashley.mapperFor
@@ -88,13 +89,13 @@ class SeekingPlayerSystem : IteratingSystem(allOf(SeekPlayer::class).get()) {
                     foundPlayer = true
                     seekComponent.status = Task.Status.SUCCEEDED
 
-                } else if (closestFixture.isEntity() && closestFixture.body.isEnemy()) {
-                    val friend = closestFixture.getEntity().getComponent<EnemyComponent>()
-                    if (friend.state == EnemyState.ChasePlayer) {
-                        seekComponent.keepScanning = false
-                        foundPlayer = true
-                        seekComponent.status = Task.Status.SUCCEEDED
-                    }
+                } else if (
+                    closestFixture.isEntity() &&
+                    closestFixture.body.isEnemy() &&
+                    closestFixture.getEntity().hasComponent<ChasePlayer>()) {
+                    seekComponent.keepScanning = false
+                    foundPlayer = true
+                    seekComponent.status = Task.Status.SUCCEEDED
                 }
             }
             seekComponent.scanVector.setAngleDeg(seekComponent.scanVector.angleDeg() + seekComponent.scanResolution)

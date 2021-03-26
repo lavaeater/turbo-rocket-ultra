@@ -177,7 +177,7 @@ fun enemy(at: Vector2) {
         add(CharacterSpriteComponent(Assets.characters["enemy"]!!))
         add(RenderableComponent(1))
     }
-    entity.add(BehaviorComponent(Tree.bt().apply { `object` = entity}))
+    entity.add(BehaviorComponent(Tree.getEnemyBehaviorTree().apply { `object` = entity}))
 
     body.userData = entity
     engine().addEntity(entity)

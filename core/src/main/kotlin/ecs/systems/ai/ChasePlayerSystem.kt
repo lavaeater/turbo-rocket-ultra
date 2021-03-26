@@ -17,6 +17,7 @@ class ChasePlayerSystem: IteratingSystem(allOf(ChasePlayer::class, EnemyComponen
     private val eMapper = mapperFor<EnemyComponent>()
     private val player by lazy { inject<Player>() }
     private val tMapper = mapperFor<TransformComponent>()
+
     override fun processEntity(entity: Entity, deltaTime: Float) {
         val chasePlayer = mapper[entity]
         if(chasePlayer.status == Task.Status.RUNNING) {

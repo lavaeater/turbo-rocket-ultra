@@ -8,12 +8,17 @@ import com.badlogic.gdx.graphics.g2d.Batch
 import com.badlogic.gdx.graphics.g2d.PolygonSpriteBatch
 import ecs.components.EnemyComponent
 import ecs.components.TransformComponent
+import ecs.components.ai.Amble
+import ecs.components.ai.AttackPlayer
+import ecs.components.ai.ChasePlayer
+import ecs.components.ai.SeekPlayer
 import injection.Context.inject
 import ktx.ashley.allOf
 import ktx.ashley.get
 import ktx.ashley.has
 import ktx.ashley.mapperFor
 import ktx.graphics.use
+import physics.hasComponent
 import tru.Assets
 
 class EnemyDebugRenderSystem(private val renderStates: Boolean = false, private val renderScans: Boolean = false) : IteratingSystem(
@@ -33,15 +38,17 @@ class EnemyDebugRenderSystem(private val renderStates: Boolean = false, private 
         }
     }
 
+    @ExperimentalStdlibApi
     override fun processEntity(entity: Entity, deltaTime: Float) {
         if(entity.has(enemyMapper)) {
             val enemyComponent = entity[enemyMapper]!!
             if(renderStates) {
                 var color = Color.GREEN
-                when (enemyComponent.state) {
-                    EnemyState.Ambling -> color = Color.GREEN
-                    EnemyState.Seeking -> color = Color.BLUE
-                    EnemyState.ChasePlayer -> color = Color.RED
+                when {
+                    entity.hasComponent<Amble>() -> color = Color.GREEN
+                    entity.hasComponent<SeekPlayer>() -> color = Color.CYAN
+                    entity.hasComponent<ChasePlayer>() -> color = Color.YELLOW
+                    entity.hasComponent<AttackPlayer>() -> color = Color.RED
                 }
                 shapeDrawer.filledCircle(entity[transformMapper]!!.position, 5f, color)
             }
