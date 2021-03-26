@@ -74,11 +74,12 @@ class UserInterface(
     private fun updateInfo(delta: Float) {
         infoLabel.setText(
             """
-      AimVector: ${playerControlComponent.aimVector.angleDeg()}
-      WalkVector: ${playerControlComponent.walkVector.angleDeg()}
-      AimVector: ${controlMapper.aimVector.angleDeg()}
-      WalkVector: ${controlMapper.walkVector.angleDeg()}
-      Direction: ${player.entity.getComponent<CharacterSpriteComponent>().currentDirection}
+    FPS:            ${Gdx.graphics.framesPerSecond}
+    Player Health:  ${player.health}
+    Targets Left:   ${objectiveCount - touchedObjectiveCount}
+    Splatter Count: $splatterCount
+    Enemies Left:   $enemyCount
+      
     """.trimIndent()
         )
     }

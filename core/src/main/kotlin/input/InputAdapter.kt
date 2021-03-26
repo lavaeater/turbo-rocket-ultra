@@ -11,13 +11,13 @@ import ktx.ashley.hasNot
 import ktx.ashley.mapperFor
 
 class InputAdapter(
-    private val controllers: MutableSet<Controller>,
+    private val controllers: MutableSet<Controller> = mutableSetOf(),
     private var currentControlMapper: ControlMapper = inject()
 ) :
     KtxInputAdapter, ControllerListener {
 
     private val player: Player by lazy { inject() }
-    private val currentController by lazy { controllers.first() }
+//    private val currentController by lazy { controllers.first() }
 
     override fun keyDown(keycode: Int): Boolean {
         when (keycode) {
@@ -87,14 +87,17 @@ class InputAdapter(
     }
 
     override fun buttonUp(controller: Controller, buttonCode: Int): Boolean {
-        when(buttonMap[buttonCode]) {
+        when (buttonMap[buttonCode]) {
             is Button.Green -> currentControlMapper.useGamePad = true
             is Button.Red -> currentControlMapper.useGamePad = false
-            is Button.Blue -> {}
-            is Button.Yellow -> {}
+            is Button.Blue -> {
+            }
+            is Button.Yellow -> {
+            }
         }
         return true
     }
+
     private val buttonMap = mapOf(
         0 to Button.Green,
         1 to Button.Red,
@@ -111,14 +114,20 @@ class InputAdapter(
     )
 
     override fun axisMoved(controller: Controller, axisCode: Int, value: Float): Boolean {
-        if (controller == currentController) {
-            when (axisMap[axisCode]) {
-                is Axis.TriggerPull -> currentControlMapper.firing = value > 0.3f
-                is Axis.LeftX ->  if(valueOK(value)) currentControlMapper.turning = value else currentControlMapper.turning = 0f
-                is Axis.LeftY -> if(valueOK(value)) currentControlMapper.thrust = -value else currentControlMapper.thrust = 0f
-                is Axis.RightX -> if(valueOK(value)) currentControlMapper.aimVector.set(value, currentControlMapper.aimVector.y) else currentControlMapper.aimVector.set(0f, currentControlMapper.aimVector.y)
-                is Axis.RightY -> if(valueOK(value)) currentControlMapper.aimVector.set(currentControlMapper.aimVector.x, value) else currentControlMapper.aimVector.set(currentControlMapper.aimVector.x, 0f)
-            }
+        when (axisMap[axisCode]) {
+            is Axis.TriggerPull -> currentControlMapper.firing = value > 0.3f
+            is Axis.LeftX -> if (valueOK(value)) currentControlMapper.turning =
+                value else currentControlMapper.turning = 0f
+            is Axis.LeftY -> if (valueOK(value)) currentControlMapper.thrust = -value else currentControlMapper.thrust =
+                0f
+            is Axis.RightX -> if (valueOK(value)) currentControlMapper.aimVector.set(
+                value,
+                currentControlMapper.aimVector.y
+            ) else currentControlMapper.aimVector.set(0f, currentControlMapper.aimVector.y)
+            is Axis.RightY -> if (valueOK(value)) currentControlMapper.aimVector.set(
+                currentControlMapper.aimVector.x,
+                value
+            ) else currentControlMapper.aimVector.set(currentControlMapper.aimVector.x, 0f)
         }
         return true
     }

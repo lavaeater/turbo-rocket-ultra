@@ -70,9 +70,9 @@ class FirstScreen : Screen {
 
     private lateinit var inputAdapter:InputAdapter
     private fun setupInput() {
-        inputAdapter = InputAdapter(Controllers.getControllers().toMutableSet())
+        inputAdapter = InputAdapter()
         Gdx.input.inputProcessor = inputAdapter
-        Controllers.addListener(inputAdapter)
+//        Controllers.addListener(inputAdapter)
     }
 
 
