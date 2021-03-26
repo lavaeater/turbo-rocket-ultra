@@ -32,6 +32,11 @@ To make the graphics and environment easy I am currently working with the concep
 * Blood Splatter <- Done
 * MiniMap <- Done
 
+## Doing now: Controller Support
+### Mechanics
+
+I want to support 
+
 ## Done: Player Damage / Enemy Attacks v0.1
 
 ### Mechanics
@@ -267,11 +272,11 @@ Next should probably be the feature that requires the least work to make it a "g
 
 So the next feature will be ship collisions.
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbLTkwMzY2NTkyNSw5NTQ0NDIzNDUsMTg1MT
-cwOTMyNSwtMTY5ODIxMzc0MywtMTY0MTE0MDI4NywxMzE1MzE3
-NzM2LC0zNjg4NTM1MTIsMjEzNTgxOTAwNCwtMjExODg5MDEwOS
-wxNzA0OTQ2MTk4LDQ0Mzg0OTM2NCwxNDg3Nzg0NDQ2LC0xNDcy
-NDgxMjk5LC03Njc3MTI3NzEsLTQwMDg5MjA5MCwxMDYxNDgyNT
-M2LDIxMTc5NzU5NjEsMTk0MDI2NDc3LC0xMDcxNDA5NTg0LDc0
-MTAwNzUzMV19
+eyJoaXN0b3J5IjpbLTY5ODYyMDQwLC05MDM2NjU5MjUsOTU0ND
+QyMzQ1LDE4NTE3MDkzMjUsLTE2OTgyMTM3NDMsLTE2NDExNDAy
+ODcsMTMxNTMxNzczNiwtMzY4ODUzNTEyLDIxMzU4MTkwMDQsLT
+IxMTg4OTAxMDksMTcwNDk0NjE5OCw0NDM4NDkzNjQsMTQ4Nzc4
+NDQ0NiwtMTQ3MjQ4MTI5OSwtNzY3NzEyNzcxLC00MDA4OTIwOT
+AsMTA2MTQ4MjUzNiwyMTE3OTc1OTYxLDE5NDAyNjQ3NywtMTA3
+MTQwOTU4NF19
 -->
