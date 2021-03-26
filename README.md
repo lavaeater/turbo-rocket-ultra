@@ -32,6 +32,11 @@ To make the graphics and environment easy I am currently working with the concep
 * Blood Splatter <- Done
 * MiniMap <- Done
 
+## Done: Twin Stick v0.1
+
+Needs tweaking of the aiming, it is by far not perfected. We need to move to a polling system for the axes, to enable fiddling with the aim, but using lerp was a boon.
+
+
 ## Done: Controller Support v0.1
 ### Mechanics
 
@@ -272,11 +277,11 @@ Next should probably be the feature that requires the least work to make it a "g
 
 So the next feature will be ship collisions.
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbMTAzMDM5MDUyMCwxNTcxNDE2MDg1LC0yMT
-Q2MDQxNTc5LC05MDM2NjU5MjUsOTU0NDQyMzQ1LDE4NTE3MDkz
-MjUsLTE2OTgyMTM3NDMsLTE2NDExNDAyODcsMTMxNTMxNzczNi
-wtMzY4ODUzNTEyLDIxMzU4MTkwMDQsLTIxMTg4OTAxMDksMTcw
-NDk0NjE5OCw0NDM4NDkzNjQsMTQ4Nzc4NDQ0NiwtMTQ3MjQ4MT
-I5OSwtNzY3NzEyNzcxLC00MDA4OTIwOTAsMTA2MTQ4MjUzNiwy
-MTE3OTc1OTYxXX0=
+eyJoaXN0b3J5IjpbLTE3MDI0NDMsMTU3MTQxNjA4NSwtMjE0Nj
+A0MTU3OSwtOTAzNjY1OTI1LDk1NDQ0MjM0NSwxODUxNzA5MzI1
+LC0xNjk4MjEzNzQzLC0xNjQxMTQwMjg3LDEzMTUzMTc3MzYsLT
+M2ODg1MzUxMiwyMTM1ODE5MDA0LC0yMTE4ODkwMTA5LDE3MDQ5
+NDYxOTgsNDQzODQ5MzY0LDE0ODc3ODQ0NDYsLTE0NzI0ODEyOT
+ksLTc2NzcxMjc3MSwtNDAwODkyMDkwLDEwNjE0ODI1MzYsMjEx
+Nzk3NTk2MV19
 -->
