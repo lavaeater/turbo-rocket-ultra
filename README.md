@@ -20,8 +20,8 @@ To make the graphics and environment easy I am currently working with the concep
 ### MVP
 * Controller support
 * Twin Stick shooting
-* Multiplayer
 * Towers
+* Multiplayer
 * Vehicles <- nice to have
 * Different weapons to shoot with
 * Player damage / Enemy attacks <- Done
@@ -265,11 +265,11 @@ Next should probably be the feature that requires the least work to make it a "g
 
 So the next feature will be ship collisions.
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbLTEwMTIxNDQxNjMsOTU0NDQyMzQ1LDE4NT
-E3MDkzMjUsLTE2OTgyMTM3NDMsLTE2NDExNDAyODcsMTMxNTMx
-NzczNiwtMzY4ODUzNTEyLDIxMzU4MTkwMDQsLTIxMTg4OTAxMD
-ksMTcwNDk0NjE5OCw0NDM4NDkzNjQsMTQ4Nzc4NDQ0NiwtMTQ3
-MjQ4MTI5OSwtNzY3NzEyNzcxLC00MDA4OTIwOTAsMTA2MTQ4Mj
-UzNiwyMTE3OTc1OTYxLDE5NDAyNjQ3NywtMTA3MTQwOTU4NCw3
-NDEwMDc1MzFdfQ==
+eyJoaXN0b3J5IjpbMTM4MDc5NDYyNSw5NTQ0NDIzNDUsMTg1MT
+cwOTMyNSwtMTY5ODIxMzc0MywtMTY0MTE0MDI4NywxMzE1MzE3
+NzM2LC0zNjg4NTM1MTIsMjEzNTgxOTAwNCwtMjExODg5MDEwOS
+wxNzA0OTQ2MTk4LDQ0Mzg0OTM2NCwxNDg3Nzg0NDQ2LC0xNDcy
+NDgxMjk5LC03Njc3MTI3NzEsLTQwMDg5MjA5MCwxMDYxNDgyNT
+M2LDIxMTc5NzU5NjEsMTk0MDI2NDc3LC0xMDcxNDA5NTg0LDc0
+MTAwNzUzMV19
 -->
