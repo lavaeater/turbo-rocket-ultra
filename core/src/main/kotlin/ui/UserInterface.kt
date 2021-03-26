@@ -23,6 +23,8 @@ import ktx.scene2d.KTableWidget
 import ktx.scene2d.label
 import ktx.scene2d.scene2d
 import ktx.scene2d.table
+import physics.getComponent
+import physics.hasComponent
 import physics.to360Degrees
 import physics.toDegrees
 import kotlin.math.roundToInt
@@ -38,6 +40,8 @@ class UserInterface(
     private val objectiveCount get() = engine.getEntitiesFor(allOf(ObjectiveComponent::class).get()).count()
     private val player: Player by lazy { inject() }
     private val touchedObjectiveCount get () = player.touchedObjectives.count()
+    @ExperimentalStdlibApi
+    private val currentControlMapper get() = player.entity.getComponent<PlayerControlComponent>()
 
     private lateinit var rootTable: KTableWidget
     private lateinit var infoBoard: KTableWidget
@@ -60,6 +64,7 @@ class UserInterface(
         setup()
     }
 
+    @ExperimentalStdlibApi
     override fun update(delta: Float) {
         batch.projectionMatrix = stage.camera.combined
 
@@ -68,13 +73,18 @@ class UserInterface(
         stage.draw()
     }
 
+//    Player Health:  ${player.health}
+//    Targets Left:   ${objectiveCount - touchedObjectiveCount}
+//    Splatter Count: $splatterCount
+//    Enemies Left:   $enemyCount
+
+    @ExperimentalStdlibApi
     private fun updateInfo(delta: Float) {
         infoLabel.setText(
             """
-      Player Health:  ${player.health}
-      Targets Left:   ${objectiveCount - touchedObjectiveCount}
-      Splatter Count: $splatterCount
-      Enemies Left:   $enemyCount
+      AimVector: ${currentControlMapper.aimVector.angleDeg()}
+      WalkVector: ${currentControlMapper.walkVector.angleDeg()}
+      Direction: ${player.entity.getComponent<CharacterSpriteComponent>().currentDirection}
     """.trimIndent()
         )
     }
