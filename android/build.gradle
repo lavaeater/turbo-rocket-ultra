@@ -64,7 +64,6 @@ dependencies {
 	implementation project(':core')
 	implementation "com.badlogicgames.gdx:gdx-backend-android:$gdxVersion"
 	implementation "com.badlogicgames.gdx-controllers:gdx-controllers-android:$gdxControllersVersion"
-	implementation "de.golfgl.gdxcontrollerutils:gdx-controllers-android:$controllerUtilsVersion"
 
 	natives "com.badlogicgames.gdx:gdx-platform:$gdxVersion:natives-armeabi"
 	natives "com.badlogicgames.gdx:gdx-platform:$gdxVersion:natives-armeabi-v7a"
