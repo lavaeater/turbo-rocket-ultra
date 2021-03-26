@@ -3,12 +3,15 @@ package input
 import com.badlogic.gdx.Input
 import com.badlogic.gdx.controllers.Controller
 import com.badlogic.gdx.controllers.ControllerListener
+import com.badlogic.gdx.controllers.PovDirection
+import com.badlogic.gdx.math.Vector3
 import ecs.components.*
 import gamestate.Player
 import injection.Context.inject
 import ktx.app.KtxInputAdapter
 import ktx.ashley.hasNot
 import ktx.ashley.mapperFor
+
 
 class InputAdapter(
     private val controllers: MutableSet<Controller> = mutableSetOf(),
@@ -129,6 +132,22 @@ class InputAdapter(
                 value
             ) else currentControlMapper.aimVector.set(currentControlMapper.aimVector.x, 0f)
         }
+        return true
+    }
+
+    override fun povMoved(controller: Controller?, povCode: Int, value: PovDirection?): Boolean {
+        return true
+    }
+
+    override fun xSliderMoved(controller: Controller?, sliderCode: Int, value: Boolean): Boolean {
+        return true
+    }
+
+    override fun ySliderMoved(controller: Controller?, sliderCode: Int, value: Boolean): Boolean {
+        return true
+    }
+
+    override fun accelerometerMoved(controller: Controller?, accelerometerCode: Int, value: Vector3?): Boolean {
         return true
     }
 
