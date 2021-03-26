@@ -30,7 +30,7 @@ To make the graphics and environment easy I am currently working with the concep
 * Blood Splatter <- Done
 * MiniMap <- Done
 
-## Doing now: Player Damage / Enemy Attacks
+## Done: Player Damage / Enemy Attacks v0.1
 
 ### Mechanics
 Just like when the player shoots, enemy attacks will have a cooldown. When they are within a certain range, they will simply attack the player and with some probability they will succeed. Blood must splatter, health must be reduced, the player must be careful
@@ -265,11 +265,11 @@ Next should probably be the feature that requires the least work to make it a "g
 
 So the next feature will be ship collisions.
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbLTU2MzY3NzI2Miw5NTQ0NDIzNDUsMTg1MT
-cwOTMyNSwtMTY5ODIxMzc0MywtMTY0MTE0MDI4NywxMzE1MzE3
-NzM2LC0zNjg4NTM1MTIsMjEzNTgxOTAwNCwtMjExODg5MDEwOS
-wxNzA0OTQ2MTk4LDQ0Mzg0OTM2NCwxNDg3Nzg0NDQ2LC0xNDcy
-NDgxMjk5LC03Njc3MTI3NzEsLTQwMDg5MjA5MCwxMDYxNDgyNT
-M2LDIxMTc5NzU5NjEsMTk0MDI2NDc3LC0xMDcxNDA5NTg0LDc0
-MTAwNzUzMV19
+eyJoaXN0b3J5IjpbMTMzNzY3NzA2LDk1NDQ0MjM0NSwxODUxNz
+A5MzI1LC0xNjk4MjEzNzQzLC0xNjQxMTQwMjg3LDEzMTUzMTc3
+MzYsLTM2ODg1MzUxMiwyMTM1ODE5MDA0LC0yMTE4ODkwMTA5LD
+E3MDQ5NDYxOTgsNDQzODQ5MzY0LDE0ODc3ODQ0NDYsLTE0NzI0
+ODEyOTksLTc2NzcxMjc3MSwtNDAwODkyMDkwLDEwNjE0ODI1Mz
+YsMjExNzk3NTk2MSwxOTQwMjY0NzcsLTEwNzE0MDk1ODQsNzQx
+MDA3NTMxXX0=
 -->
