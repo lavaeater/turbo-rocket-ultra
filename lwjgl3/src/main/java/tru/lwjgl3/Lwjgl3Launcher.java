@@ -19,8 +19,8 @@ public class Lwjgl3Launcher {
 	private static Lwjgl3ApplicationConfiguration getDefaultConfiguration() {
 		Lwjgl3ApplicationConfiguration configuration = new Lwjgl3ApplicationConfiguration();
 		configuration.setTitle("turbo-rocket-ultra");
-//		configuration.setFullscreenMode(Lwjgl3ApplicationConfiguration.getDisplayMode());
-		configuration.setWindowedMode(1200, 900);
+		configuration.setFullscreenMode(Lwjgl3ApplicationConfiguration.getDisplayMode());
+//		configuration.setWindowedMode(1600, 1600);
 		configuration.setWindowIcon("libgdx128.png", "libgdx64.png", "libgdx32.png", "libgdx16.png");
 		return configuration;
 	}
