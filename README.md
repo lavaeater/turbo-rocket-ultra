@@ -35,7 +35,7 @@ To make the graphics and environment easy I am currently working with the concep
 ## Doing now: Controller Support
 ### Mechanics
 
-I want to support 
+Controllers will be used in the classic Twin-Stick-Shooter manner. The only thing needed is basically just implementing it. 
 
 ## Done: Player Damage / Enemy Attacks v0.1
 
@@ -272,11 +272,11 @@ Next should probably be the feature that requires the least work to make it a "g
 
 So the next feature will be ship collisions.
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbLTY5ODYyMDQwLC05MDM2NjU5MjUsOTU0ND
-QyMzQ1LDE4NTE3MDkzMjUsLTE2OTgyMTM3NDMsLTE2NDExNDAy
-ODcsMTMxNTMxNzczNiwtMzY4ODUzNTEyLDIxMzU4MTkwMDQsLT
-IxMTg4OTAxMDksMTcwNDk0NjE5OCw0NDM4NDkzNjQsMTQ4Nzc4
-NDQ0NiwtMTQ3MjQ4MTI5OSwtNzY3NzEyNzcxLC00MDA4OTIwOT
-AsMTA2MTQ4MjUzNiwyMTE3OTc1OTYxLDE5NDAyNjQ3NywtMTA3
-MTQwOTU4NF19
+eyJoaXN0b3J5IjpbLTIxNDYwNDE1NzksLTkwMzY2NTkyNSw5NT
+Q0NDIzNDUsMTg1MTcwOTMyNSwtMTY5ODIxMzc0MywtMTY0MTE0
+MDI4NywxMzE1MzE3NzM2LC0zNjg4NTM1MTIsMjEzNTgxOTAwNC
+wtMjExODg5MDEwOSwxNzA0OTQ2MTk4LDQ0Mzg0OTM2NCwxNDg3
+Nzg0NDQ2LC0xNDcyNDgxMjk5LC03Njc3MTI3NzEsLTQwMDg5Mj
+A5MCwxMDYxNDgyNTM2LDIxMTc5NzU5NjEsMTk0MDI2NDc3LC0x
+MDcxNDA5NTg0XX0=
 -->
