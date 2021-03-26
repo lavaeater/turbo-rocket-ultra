@@ -113,14 +113,18 @@ class InputAdapter(
     override fun axisMoved(controller: Controller, axisCode: Int, value: Float): Boolean {
         if (controller == currentController) {
             when (axisMap[axisCode]) {
-                is Axis.TriggerPull -> currentControlMapper.firing = value > 0.1f
-                is Axis.LeftX -> currentControlMapper.turning = value
-                is Axis.LeftY -> currentControlMapper.thrust = -value
-                is Axis.RightX -> currentControlMapper.aimVector.set(value, currentControlMapper.aimVector.y)
-                is Axis.RightY -> currentControlMapper.aimVector.set(currentControlMapper.aimVector.x, value)
+                is Axis.TriggerPull -> currentControlMapper.firing = value > 0.3f
+                is Axis.LeftX ->  if(valueOK(value)) currentControlMapper.turning = value else currentControlMapper.turning = 0f
+                is Axis.LeftY -> if(valueOK(value)) currentControlMapper.thrust = -value else currentControlMapper.thrust = 0f
+                is Axis.RightX -> if(valueOK(value)) currentControlMapper.aimVector.set(value, currentControlMapper.aimVector.y) else currentControlMapper.aimVector.set(0f, currentControlMapper.aimVector.y)
+                is Axis.RightY -> if(valueOK(value)) currentControlMapper.aimVector.set(currentControlMapper.aimVector.x, value) else currentControlMapper.aimVector.set(currentControlMapper.aimVector.x, 0f)
             }
         }
         return true
+    }
+
+    fun valueOK(value: Float): Boolean {
+        return value > 0.3f || value < -0.3f
     }
 }
 

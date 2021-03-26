@@ -1,33 +1,24 @@
 package ui
 
 import com.badlogic.ashley.core.Engine
-import com.badlogic.ashley.core.Entity
 import com.badlogic.gdx.Gdx
 import com.badlogic.gdx.graphics.OrthographicCamera
 import com.badlogic.gdx.graphics.g2d.Batch
-import com.badlogic.gdx.graphics.g2d.PolygonSpriteBatch
 import com.badlogic.gdx.math.Vector2
 import com.badlogic.gdx.scenes.scene2d.Stage
 import com.badlogic.gdx.scenes.scene2d.ui.Label
 import com.badlogic.gdx.utils.Align
 import com.badlogic.gdx.utils.viewport.ExtendViewport
 import ecs.components.*
-import factories.player
 import gamestate.Player
 import injection.Context.inject
 import ktx.ashley.allOf
-import ktx.ashley.get
-import ktx.ashley.mapperFor
 import ktx.math.vec2
 import ktx.scene2d.KTableWidget
 import ktx.scene2d.label
 import ktx.scene2d.scene2d
 import ktx.scene2d.table
 import physics.getComponent
-import physics.hasComponent
-import physics.to360Degrees
-import physics.toDegrees
-import kotlin.math.roundToInt
 
 class UserInterface(
     private val batch: Batch,
@@ -41,7 +32,8 @@ class UserInterface(
     private val player: Player by lazy { inject() }
     private val touchedObjectiveCount get () = player.touchedObjectives.count()
     @ExperimentalStdlibApi
-    private val currentControlMapper get() = player.entity.getComponent<PlayerControlComponent>()
+    private val playerControlComponent get() = player.entity.getComponent<PlayerControlComponent>()
+    private val controlMapper: ControlMapper by lazy { inject() }
 
     private lateinit var rootTable: KTableWidget
     private lateinit var infoBoard: KTableWidget
@@ -82,8 +74,10 @@ class UserInterface(
     private fun updateInfo(delta: Float) {
         infoLabel.setText(
             """
-      AimVector: ${currentControlMapper.aimVector.angleDeg()}
-      WalkVector: ${currentControlMapper.walkVector.angleDeg()}
+      AimVector: ${playerControlComponent.aimVector.angleDeg()}
+      WalkVector: ${playerControlComponent.walkVector.angleDeg()}
+      AimVector: ${controlMapper.aimVector.angleDeg()}
+      WalkVector: ${controlMapper.walkVector.angleDeg()}
       Direction: ${player.entity.getComponent<CharacterSpriteComponent>().currentDirection}
     """.trimIndent()
         )
