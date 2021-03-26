@@ -3,12 +3,16 @@ package input
 import com.badlogic.gdx.Input
 import com.badlogic.gdx.controllers.Controller
 import com.badlogic.gdx.controllers.ControllerListener
+import com.badlogic.gdx.controllers.PovDirection
+import com.badlogic.gdx.math.MathUtils
+import com.badlogic.gdx.math.Vector3
 import ecs.components.*
 import gamestate.Player
 import injection.Context.inject
 import ktx.app.KtxInputAdapter
 import ktx.ashley.hasNot
 import ktx.ashley.mapperFor
+
 
 class InputAdapter(
     private val controllers: MutableSet<Controller> = mutableSetOf(),
@@ -120,15 +124,32 @@ class InputAdapter(
                 value else currentControlMapper.turning = 0f
             is Axis.LeftY -> if (valueOK(value)) currentControlMapper.thrust = -value else currentControlMapper.thrust =
                 0f
+
             is Axis.RightX -> if (valueOK(value)) currentControlMapper.aimVector.set(
-                value,
+                MathUtils.lerp(currentControlMapper.aimVector.x, value, 0.1f),
                 currentControlMapper.aimVector.y
-            ) else currentControlMapper.aimVector.set(0f, currentControlMapper.aimVector.y)
+            )
             is Axis.RightY -> if (valueOK(value)) currentControlMapper.aimVector.set(
                 currentControlMapper.aimVector.x,
-                value
-            ) else currentControlMapper.aimVector.set(currentControlMapper.aimVector.x, 0f)
+                MathUtils.lerp(currentControlMapper.aimVector.y, value, 0.1f)
+            )
         }
+        return true
+    }
+
+    override fun povMoved(controller: Controller?, povCode: Int, value: PovDirection?): Boolean {
+        return true
+    }
+
+    override fun xSliderMoved(controller: Controller?, sliderCode: Int, value: Boolean): Boolean {
+        return true
+    }
+
+    override fun ySliderMoved(controller: Controller?, sliderCode: Int, value: Boolean): Boolean {
+        return true
+    }
+
+    override fun accelerometerMoved(controller: Controller?, accelerometerCode: Int, value: Vector3?): Boolean {
         return true
     }
 

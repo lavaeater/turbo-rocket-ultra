@@ -5,7 +5,6 @@ dependencies {
 	api "com.badlogicgames.gdx:gdx:$gdxVersion"
 	api "com.badlogicgames.gdx:gdx-tools:$gdxVersion"
 	api "org.jetbrains.kotlin:kotlin-stdlib:$kotlinVersion"
-	api "com.badlogicgames.gdx-controllers:gdx-controllers-core:$gdxControllersVersion"
 	api "com.badlogicgames.box2dlights:box2dlights:$box2dlightsVersion"
 	api "com.badlogicgames.gdx:gdx-box2d:$gdxVersion"
 	api "com.badlogicgames.gdx:gdx-ai:$aiVersion"
@@ -41,4 +40,5 @@ dependencies {
 	api "io.github.libktx:ktx-i18n:$ktxI18nVersion"
 	api "io.github.libktx:ktx-tiled:$ktxTiledVersion"
 	api "space.earlygrey:shapedrawer:$shapeDrawerVersion"
+	implementation "uk.co.electronstudio.sdl2gdx:sdl2gdx:1.0.4"
 }
