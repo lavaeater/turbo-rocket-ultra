@@ -36,18 +36,14 @@ class RenderMiniMapSystem : IteratingSystem(allOf(RenderableComponent::class, Tr
         if((gMapper.has(entity) || oMapper.has(entity) && transform.position.dst2(camera.position.x, camera.position.y) < 200000f) || (sMapper.has(entity) && transform.position.dst2(camera.position.x, camera.position.y) < 20000f)) {
 
             var color = Color.RED
-            var radius = .1f
+            var radius = .2f
             if (pMapper.has(entity)) {
-                color = Color.GREEN
-                radius = .3f
-            }
-            if(oMapper.has(entity)) {
-                color = Color.YELLOW
+                color = Color.WHITE
                 radius = .1f
             }
             if(gMapper.has(entity)) {
-                color = Color.CORAL
-                radius = .2f
+                color = Color.GREEN
+                radius = .3f
             }
             center.set(
                 transform.position.x / scale + xOffset, transform.position.y / scale + yOffset
