@@ -4,6 +4,7 @@ import audio.AudioPlayer
 import com.badlogic.ashley.core.Engine
 import com.badlogic.gdx.Gdx
 import com.badlogic.gdx.Screen
+import com.badlogic.gdx.controllers.Controllers
 import com.badlogic.gdx.graphics.GL20
 import com.badlogic.gdx.graphics.OrthographicCamera
 import com.badlogic.gdx.graphics.g2d.PolygonSpriteBatch
@@ -24,7 +25,6 @@ import ktx.ashley.allOf
 import ktx.ashley.mapperFor
 import ktx.ashley.remove
 import ktx.math.random
-import ktx.math.vec2
 import ui.IUserInterface
 import kotlin.math.pow
 import kotlin.math.roundToInt
@@ -68,8 +68,11 @@ class FirstScreen : Screen {
         }
     }
 
+    private lateinit var inputAdapter:InputAdapter
     private fun setupInput() {
-        Gdx.input.inputProcessor = InputAdapter()
+        inputAdapter = InputAdapter()
+        Gdx.input.inputProcessor = inputAdapter
+//        Controllers.addListener(inputAdapter)
     }
 
 
