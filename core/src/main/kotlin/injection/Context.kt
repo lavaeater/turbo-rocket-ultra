@@ -27,10 +27,9 @@ object Context {
         buildContext()
     }
 
-    inline fun <reified T>inject():T {
+    inline fun <reified T> inject(): T {
         return context.inject()
     }
-
 
 
     private fun buildContext() {
@@ -44,7 +43,8 @@ object Context {
                     FirstScreen.GAMEWIDTH,
                     FirstScreen.GAMEHEIGHT,
                     inject<OrthographicCamera>() as Camera
-                ))
+                )
+            )
             bindSingleton(createWorld().apply {
                 setContactListener(ContactManager())
             })
@@ -57,7 +57,7 @@ object Context {
     private fun getEngine(): Engine {
         return PooledEngine().apply {
             addSystem(PhysicsSystem(inject()))
-       //     addSystem(PhysicsDebugRendererSystem(inject(), inject()))
+            //     addSystem(PhysicsDebugRendererSystem(inject(), inject()))
             addSystem(CameraUpdateSystem())
             addSystem(PlayerControlSystem())
             addSystem(BodyDestroyerSystem(inject())) //world
@@ -77,7 +77,6 @@ object Context {
             addSystem(EnemyDirectionSystem())
             addSystem(AddSplatterSystem())
             addSystem(SplatterRemovalSystem())
-            addSystem(EnemyDebugRenderSystem(true, true))
             addSystem(RenderSystem(inject<PolygonSpriteBatch>() as Batch))
             addSystem(RenderMiniMapSystem())
         }
