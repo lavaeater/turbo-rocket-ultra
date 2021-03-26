@@ -32,6 +32,12 @@ To make the graphics and environment easy I am currently working with the concep
 * Blood Splatter <- Done
 * MiniMap <- Done
 
+## Doing now: Multiplayer
+
+### Mechanics
+
+This feature will add about 20 sub-features. To have multiplayer, we must now have a way of starting the game, pausing the game, adding players, removing players, etc.  A
+
 ## Done: Twin Stick v0.1
 
 Needs tweaking of the aiming, it is by far not perfected. We need to move to a polling system for the axes, to enable fiddling with the aim, but using lerp was a boon.
@@ -277,11 +283,11 @@ Next should probably be the feature that requires the least work to make it a "g
 
 So the next feature will be ship collisions.
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbLTE3MDI0NDMsMTU3MTQxNjA4NSwtMjE0Nj
-A0MTU3OSwtOTAzNjY1OTI1LDk1NDQ0MjM0NSwxODUxNzA5MzI1
-LC0xNjk4MjEzNzQzLC0xNjQxMTQwMjg3LDEzMTUzMTc3MzYsLT
-M2ODg1MzUxMiwyMTM1ODE5MDA0LC0yMTE4ODkwMTA5LDE3MDQ5
-NDYxOTgsNDQzODQ5MzY0LDE0ODc3ODQ0NDYsLTE0NzI0ODEyOT
-ksLTc2NzcxMjc3MSwtNDAwODkyMDkwLDEwNjE0ODI1MzYsMjEx
-Nzk3NTk2MV19
+eyJoaXN0b3J5IjpbODQ5MTM1NzgzLDE1NzE0MTYwODUsLTIxND
+YwNDE1NzksLTkwMzY2NTkyNSw5NTQ0NDIzNDUsMTg1MTcwOTMy
+NSwtMTY5ODIxMzc0MywtMTY0MTE0MDI4NywxMzE1MzE3NzM2LC
+0zNjg4NTM1MTIsMjEzNTgxOTAwNCwtMjExODg5MDEwOSwxNzA0
+OTQ2MTk4LDQ0Mzg0OTM2NCwxNDg3Nzg0NDQ2LC0xNDcyNDgxMj
+k5LC03Njc3MTI3NzEsLTQwMDg5MjA5MCwxMDYxNDgyNTM2LDIx
+MTc5NzU5NjFdfQ==
 -->
