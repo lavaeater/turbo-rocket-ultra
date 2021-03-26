@@ -23,7 +23,7 @@ To make the graphics and environment easy I am currently working with the concep
 * Fix enemy sensors / noticing
 * Vehicles <- nice to have
 * Different weapons to shoot with
-* Controller support
+* Controller support <- Done
 * Twin Stick shooting
 * Multiplayer
 * Player damage / Enemy attacks <- Done
@@ -32,7 +32,7 @@ To make the graphics and environment easy I am currently working with the concep
 * Blood Splatter <- Done
 * MiniMap <- Done
 
-## Doing now: Controller Support
+## Done: Controller Support v0.1
 ### Mechanics
 
 Controllers will be used in the classic Twin-Stick-Shooter manner. The only thing needed is basically just implementing it. 
@@ -272,11 +272,11 @@ Next should probably be the feature that requires the least work to make it a "g
 
 So the next feature will be ship collisions.
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbMTU3MTQxNjA4NSwtMjE0NjA0MTU3OSwtOT
-AzNjY1OTI1LDk1NDQ0MjM0NSwxODUxNzA5MzI1LC0xNjk4MjEz
-NzQzLC0xNjQxMTQwMjg3LDEzMTUzMTc3MzYsLTM2ODg1MzUxMi
-wyMTM1ODE5MDA0LC0yMTE4ODkwMTA5LDE3MDQ5NDYxOTgsNDQz
-ODQ5MzY0LDE0ODc3ODQ0NDYsLTE0NzI0ODEyOTksLTc2NzcxMj
-c3MSwtNDAwODkyMDkwLDEwNjE0ODI1MzYsMjExNzk3NTk2MSwx
-OTQwMjY0NzddfQ==
+eyJoaXN0b3J5IjpbMTAzMDM5MDUyMCwxNTcxNDE2MDg1LC0yMT
+Q2MDQxNTc5LC05MDM2NjU5MjUsOTU0NDQyMzQ1LDE4NTE3MDkz
+MjUsLTE2OTgyMTM3NDMsLTE2NDExNDAyODcsMTMxNTMxNzczNi
+wtMzY4ODUzNTEyLDIxMzU4MTkwMDQsLTIxMTg4OTAxMDksMTcw
+NDk0NjE5OCw0NDM4NDkzNjQsMTQ4Nzc4NDQ0NiwtMTQ3MjQ4MT
+I5OSwtNzY3NzEyNzcxLC00MDA4OTIwOTAsMTA2MTQ4MjUzNiwy
+MTE3OTc1OTYxXX0=
 -->
