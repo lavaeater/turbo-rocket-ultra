@@ -35,7 +35,7 @@ object Context {
         context.register {
             bindSingleton(PolygonSpriteBatch())
             bindSingleton(OrthographicCamera())
-            bindSingleton<IUserInterface>(UserInterface(inject<PolygonSpriteBatch>() as Batch))
+            bind<IUserInterface> { UserInterface(inject<PolygonSpriteBatch>() as Batch)}
             bindSingleton(
                 ExtendViewport(
                     GameScreen.GAMEWIDTH,

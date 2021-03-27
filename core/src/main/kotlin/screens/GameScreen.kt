@@ -61,6 +61,7 @@ class GameScreen : KtxScreen {
 
     override fun show() {
         initializeIfNeeded()
+        ui.show()
         Gdx.input.inputProcessor = engine.getSystem(KeyboardInputSystem::class.java)
         Controllers.addListener(engine.getSystem(GamepadInputSystem::class.java))
     }
@@ -168,6 +169,7 @@ class GameScreen : KtxScreen {
     }
 
     override fun hide() {
+        ui.hide()
         pauseGame()
     }
 
