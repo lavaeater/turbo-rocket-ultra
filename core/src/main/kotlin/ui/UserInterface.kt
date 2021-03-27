@@ -27,16 +27,10 @@ class UserInterface(
     debug: Boolean = false
 ) : IUserInterface {
 
-    private val engine: Engine by lazy { inject() }
-    private val splatterCount get() = engine.getEntitiesFor(allOf(SplatterComponent::class).get()).count()
-    private val enemyCount get() = engine.getEntitiesFor(allOf(EnemyComponent::class).get()).count()
-    private val objectiveCount get() = engine.getEntitiesFor(allOf(ObjectiveComponent::class).get()).count()
     private val players get() = Players.players
-    private val touchedObjectiveCount get () = players.map{ it.value.touchedObjectives.count() }.sum()
 
     private lateinit var rootTable: KTableWidget
     private lateinit var infoBoard: KTableWidget
-    private lateinit var infoLabel: Label
 
 
     override val hudViewPort = ExtendViewport(uiWidth, uiHeight, OrthographicCamera())
@@ -64,31 +58,19 @@ class UserInterface(
         stage.draw()
     }
 
-//    Player Health:  ${player.health}
-//    Targets Left:   ${objectiveCount - touchedObjectiveCount}
-//    Splatter Count: $splatterCount
-//    Enemies Left:   $enemyCount
-
     @ExperimentalStdlibApi
     private fun updateInfo(delta: Float) {
-        infoLabel.setText(
-            """
-    FPS:            ${Gdx.graphics.framesPerSecond}
-    Targets Left:   ${objectiveCount - touchedObjectiveCount}
-    Splatter Count: $splatterCount
-    Enemies Left:   $enemyCount
-      
-    """.trimIndent()
-        )
+        var index = 1
+        for ((l,p) in playerLabels) {
+            l.setText(
+"""
+Player $index                    
+Health: ${p.health}
+""".trimIndent()
+            )
+            index++
+        }
     }
-//Player Health:  ${player.health}
-//
-    private val mouseVector = vec2()
-    private fun getMousePosition(): Vector2 {
-        mouseVector.set(Gdx.input.x.toFloat(), Gdx.input.y.toFloat())
-        return mouseVector
-    }
-
     override fun dispose() {
         stage.dispose()
     }
@@ -102,10 +84,12 @@ class UserInterface(
         setupInfo()
     }
 
+    private val playerLabels = mutableMapOf<Label, Player>()
     private fun setupInfo() {
         infoBoard = scene2d.table {
-
-            infoLabel = label("InfoLabel")
+            for((c,p) in players) {
+                playerLabels[label("PlayerLabel")] = p
+            }
         }
 
         rootTable = scene2d.table {
