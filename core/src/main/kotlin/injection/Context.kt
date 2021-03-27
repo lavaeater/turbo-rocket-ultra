@@ -16,7 +16,7 @@ import ktx.box2d.createWorld
 import ktx.inject.Context
 import ktx.inject.register
 import physics.ContactManager
-import tru.FirstScreen
+import screens.FirstScreen
 import ui.IUserInterface
 import ui.UserInterface
 

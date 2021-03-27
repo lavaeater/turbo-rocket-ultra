@@ -17,7 +17,7 @@ import ktx.box2d.*
 import ktx.math.random
 import ktx.math.vec2
 import tru.Assets
-import tru.FirstScreen
+import screens.FirstScreen
 
 fun world(): World {
     return inject()

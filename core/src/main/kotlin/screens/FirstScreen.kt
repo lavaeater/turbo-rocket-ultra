@@ -1,10 +1,8 @@
-package tru
+package screens
 
 import audio.AudioPlayer
 import com.badlogic.ashley.core.Engine
 import com.badlogic.gdx.Gdx
-import com.badlogic.gdx.Screen
-import com.badlogic.gdx.controllers.Controller
 import com.badlogic.gdx.controllers.Controllers
 import com.badlogic.gdx.graphics.GL20
 import com.badlogic.gdx.graphics.OrthographicCamera
@@ -22,17 +20,18 @@ import factories.obstacle
 import gamestate.Player
 import injection.Context.inject
 import input.InputAdapter
+import ktx.app.KtxScreen
 import ktx.ashley.allOf
 import ktx.ashley.mapperFor
 import ktx.ashley.remove
-import ktx.collections.GdxArray
 import ktx.math.random
+import tru.Assets
 import ui.IUserInterface
 import kotlin.math.pow
 import kotlin.math.roundToInt
 
 
-class FirstScreen : Screen {
+class FirstScreen : KtxScreen {
 
     companion object {
         const val ENEMY_DENSITY = .1f
@@ -60,14 +59,7 @@ class FirstScreen : Screen {
     private val transformMapper = mapperFor<TransformComponent>()
 
     override fun show() {
-        if (needsInit) {
-            Gdx.gl.glClearColor(.4f, .4f, .4f, 1f)
-            Assets.load()
-            setupInput()
-            generateMap()
-            camera.setToOrtho(true, viewPort.maxWorldWidth, viewPort.maxWorldHeight)
-            needsInit = false
-        }
+        initializeIfNeeded()
     }
 
     private lateinit var inputAdapter:InputAdapter
@@ -153,8 +145,20 @@ class FirstScreen : Screen {
     }
 
     override fun resize(width: Int, height: Int) {
+        initializeIfNeeded()
         viewPort.update(width, height)
         batch.projectionMatrix = camera.combined
+    }
+
+    private fun initializeIfNeeded() {
+        if (needsInit) {
+            Gdx.gl.glClearColor(.4f, .4f, .4f, 1f)
+            Assets.load()
+            setupInput()
+            generateMap()
+            camera.setToOrtho(true, viewPort.maxWorldWidth, viewPort.maxWorldHeight)
+            needsInit = false
+        }
     }
 
     override fun pause() {
