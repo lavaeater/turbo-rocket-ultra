@@ -8,15 +8,16 @@ import com.badlogic.gdx.graphics.OrthographicCamera
 import com.badlogic.gdx.graphics.g2d.Batch
 import com.badlogic.gdx.graphics.g2d.PolygonSpriteBatch
 import com.badlogic.gdx.utils.viewport.ExtendViewport
-import ecs.components.ControlMapper
+import input.ControlMapper
 import ecs.systems.*
 import ecs.systems.ai.*
 import factories.player
+import input.InputHandlerThingie
 import ktx.box2d.createWorld
 import ktx.inject.Context
 import ktx.inject.register
 import physics.ContactManager
-import screens.FirstScreen
+import screens.GameScreen
 import ui.IUserInterface
 import ui.UserInterface
 
@@ -35,13 +36,14 @@ object Context {
     private fun buildContext() {
         context.register {
             bindSingleton(ControlMapper())
+            bindSingleton(InputHandlerThingie())
             bindSingleton(PolygonSpriteBatch())
             bindSingleton(OrthographicCamera())
             bindSingleton<IUserInterface>(UserInterface(inject<PolygonSpriteBatch>() as Batch))
             bindSingleton(
                 ExtendViewport(
-                    FirstScreen.GAMEWIDTH,
-                    FirstScreen.GAMEHEIGHT,
+                    GameScreen.GAMEWIDTH,
+                    GameScreen.GAMEHEIGHT,
                     inject<OrthographicCamera>() as Camera
                 )
             )

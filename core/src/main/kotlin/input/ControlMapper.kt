@@ -1,4 +1,4 @@
-package ecs.components
+package input
 
 import com.badlogic.gdx.graphics.OrthographicCamera
 import com.badlogic.gdx.math.Vector2

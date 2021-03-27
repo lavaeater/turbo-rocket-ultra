@@ -12,6 +12,7 @@ import com.badlogic.gdx.utils.viewport.ExtendViewport
 import ecs.components.*
 import gamestate.Player
 import injection.Context.inject
+import input.ControlMapper
 import ktx.ashley.allOf
 import ktx.math.vec2
 import ktx.scene2d.KTableWidget
@@ -31,9 +32,6 @@ class UserInterface(
     private val objectiveCount get() = engine.getEntitiesFor(allOf(ObjectiveComponent::class).get()).count()
     private val player: Player by lazy { inject() }
     private val touchedObjectiveCount get () = player.touchedObjectives.count()
-    @ExperimentalStdlibApi
-    private val playerControlComponent get() = player.entity.getComponent<PlayerControlComponent>()
-    private val controlMapper: ControlMapper by lazy { inject() }
 
     private lateinit var rootTable: KTableWidget
     private lateinit var infoBoard: KTableWidget

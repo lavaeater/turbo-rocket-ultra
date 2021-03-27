@@ -14,7 +14,7 @@ import ktx.ashley.hasNot
 import ktx.ashley.mapperFor
 
 
-class InputAdapter(
+class InputHandlerThingie(
     private val controllers: MutableSet<Controller> = mutableSetOf(),
     private var currentControlMapper: ControlMapper = inject()
 ) :

@@ -5,6 +5,7 @@ import com.badlogic.ashley.systems.IteratingSystem
 import com.badlogic.gdx.Gdx
 import ecs.components.*
 import injection.Context.inject
+import input.ControlMapper
 import ktx.ashley.allOf
 import ktx.ashley.mapperFor
 

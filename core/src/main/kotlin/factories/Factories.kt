@@ -17,7 +17,7 @@ import ktx.box2d.*
 import ktx.math.random
 import ktx.math.vec2
 import tru.Assets
-import screens.FirstScreen
+import screens.GameScreen
 
 fun world(): World {
     return inject()
@@ -115,14 +115,14 @@ fun player(): Player {
         type = BodyDef.BodyType.DynamicBody
         position.setZero()
         circle(1f) {
-            density = FirstScreen.PLAYER_DENSITY
+            density = GameScreen.PLAYER_DENSITY
             filter {
                 categoryBits = categories.player
             }
         }
 
-        linearDamping = FirstScreen.SHIP_LINEAR_DAMPING
-        angularDamping = FirstScreen.SHIP_ANGULAR_DAMPING
+        linearDamping = GameScreen.SHIP_LINEAR_DAMPING
+        angularDamping = GameScreen.SHIP_ANGULAR_DAMPING
     }
 
     val entity = engine().createEntity().apply {
@@ -158,7 +158,7 @@ fun enemy(at: Vector2) {
         type = BodyDef.BodyType.DynamicBody
         position.set(at)
         circle(1f) {
-            density = FirstScreen.ENEMY_DENSITY
+            density = GameScreen.ENEMY_DENSITY
             filter {
                 categoryBits = categories.enemy
             }
@@ -192,7 +192,7 @@ fun vehicle(at: Vector2): Body {
         type = BodyDef.BodyType.DynamicBody
         position.set(at)
         box(2f, 4f) {
-            density = FirstScreen.CAR_DENSITY
+            density = GameScreen.CAR_DENSITY
         }
     }
 
@@ -212,7 +212,7 @@ fun shot(from: Vector2, towards: Vector2): Body {
         type = BodyDef.BodyType.DynamicBody
         position.set(from)
         circle(radius = .2f) {
-            density = FirstScreen.SHOT_DENSITY
+            density = GameScreen.SHOT_DENSITY
         }
     }
     val entity = engine().createEntity().apply {

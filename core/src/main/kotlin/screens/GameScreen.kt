@@ -18,8 +18,9 @@ import factories.enemy
 import factories.objective
 import factories.obstacle
 import gamestate.Player
+import injection.Context
 import injection.Context.inject
-import input.InputAdapter
+import input.InputHandlerThingie
 import ktx.app.KtxScreen
 import ktx.ashley.allOf
 import ktx.ashley.mapperFor
@@ -31,7 +32,7 @@ import kotlin.math.pow
 import kotlin.math.roundToInt
 
 
-class FirstScreen : KtxScreen {
+class GameScreen : KtxScreen {
 
     companion object {
         const val ENEMY_DENSITY = .1f
@@ -62,13 +63,13 @@ class FirstScreen : KtxScreen {
         initializeIfNeeded()
     }
 
-    private lateinit var inputAdapter:InputAdapter
-    private fun setupInput() {
-        inputAdapter = InputAdapter()
-        Gdx.input.inputProcessor = inputAdapter
-        Controllers.addListener(inputAdapter)
+    private fun initializeIfNeeded() {
+        if (needsInit) {
+            generateMap()
+            camera.setToOrtho(true, viewPort.maxWorldWidth, viewPort.maxWorldHeight)
+            needsInit = false
+        }
     }
-
 
     var currentLevel = 0
     var numberOfObjectives = 1
@@ -129,7 +130,6 @@ class FirstScreen : KtxScreen {
 
     }
 
-
     override fun render(delta: Float) {
         Gdx.gl.glClearColor(.4f, .4f, .4f, 1f)
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT)
@@ -150,27 +150,26 @@ class FirstScreen : KtxScreen {
         batch.projectionMatrix = camera.combined
     }
 
-    private fun initializeIfNeeded() {
-        if (needsInit) {
-            Gdx.gl.glClearColor(.4f, .4f, .4f, 1f)
-            Assets.load()
-            setupInput()
-            generateMap()
-            camera.setToOrtho(true, viewPort.maxWorldWidth, viewPort.maxWorldHeight)
-            needsInit = false
-        }
-    }
-
     override fun pause() {
-        // Invoked when your application is paused.
+        pauseGame()
     }
 
     override fun resume() {
-        // Invoked when your application is resumed after pause.
+        Gdx.input.inputProcessor = inject<InputHandlerThingie>()
+        Controllers.addListener(inject<InputHandlerThingie>())
+        for (system in engine.systems)
+            system.setProcessing(true)
     }
 
     override fun hide() {
-        // This method is called when another screen replaces this one.
+        pauseGame()
+    }
+
+    private fun pauseGame() {
+        Gdx.input.inputProcessor = null
+        Controllers.removeListener(inject<InputHandlerThingie>())
+        for (system in engine.systems)
+            system.setProcessing(false)
     }
 
     override fun dispose() {
