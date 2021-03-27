@@ -130,8 +130,8 @@ class FirstScreen : KtxScreen {
     }
 
 
-
     override fun render(delta: Float) {
+        Gdx.gl.glClearColor(.4f, .4f, .4f, 1f)
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT)
         //Update viewport and camera here and nowhere else...
 
