@@ -8,8 +8,6 @@ import injection.Context.inject
 import ktx.ashley.remove
 
 class ContactManager: ContactListener {
-    private val player: Player by lazy { inject() }
-    private val ship: Body by lazy { player.body }
 
     @ExperimentalStdlibApi
     override fun beginContact(contact: Contact) {
@@ -17,11 +15,7 @@ class ContactManager: ContactListener {
         if (contact.isPlayerContact()) {
             if (contact.hasComponent<ShotComponent>()) {
                 //A shot does 20 damage
-                player.health -= 20
-            }
-            if (contact.hasComponent<ObstacleComponent>()) {
-                val vel = ship.linearVelocity.len2()
-                player.health -= (vel / 15).toInt()
+                contact.getPlayerFor().health -= 20
             }
             if(contact.hasComponent<EnemySensorComponent>()) {//this is an enemy noticing the player - no system needed
                 val enemy = contact.getEntityFor<EnemySensorComponent>()
@@ -33,7 +27,7 @@ class ContactManager: ContactListener {
             }
             if(contact.hasComponent<ObjectiveComponent>()) {
                 val something = "This is it"
-                player.touchedObjectives.add(contact.getEntityFor<ObjectiveComponent>().getComponent())
+                contact.getPlayerFor().touchedObjectives.add(contact.getEntityFor<ObjectiveComponent>().getComponent())
             }
         }
 

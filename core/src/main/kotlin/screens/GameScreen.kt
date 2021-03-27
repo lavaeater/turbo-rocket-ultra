@@ -14,19 +14,19 @@ import ecs.components.BodyComponent
 import ecs.components.EnemyComponent
 import ecs.components.ObjectiveComponent
 import ecs.components.TransformComponent
+import ecs.systems.GamepadInputSystem
 import factories.enemy
 import factories.objective
 import factories.obstacle
 import gamestate.Player
-import injection.Context
 import injection.Context.inject
-import input.InputHandlerThingie
+import ecs.systems.KeyboardInputSystem
+import factories.player
 import ktx.app.KtxScreen
 import ktx.ashley.allOf
 import ktx.ashley.mapperFor
 import ktx.ashley.remove
 import ktx.math.random
-import tru.Assets
 import ui.IUserInterface
 import kotlin.math.pow
 import kotlin.math.roundToInt
@@ -56,18 +56,27 @@ class GameScreen : KtxScreen {
     private val batch: PolygonSpriteBatch by lazy { inject() }
     private val ui: IUserInterface by lazy { inject() }
     private val audioPlayer: AudioPlayer by lazy { inject() }
-    private val player: Player by lazy { inject() }
     private val transformMapper = mapperFor<TransformComponent>()
+    private val player by lazy { Players.players.values.first() }
 
     override fun show() {
         initializeIfNeeded()
+        Gdx.input.inputProcessor = engine.getSystem(KeyboardInputSystem::class.java)
+        Controllers.addListener(engine.getSystem(GamepadInputSystem::class.java))
     }
 
     private fun initializeIfNeeded() {
         if (needsInit) {
+            addPlayers()
             generateMap()
             camera.setToOrtho(true, viewPort.maxWorldWidth, viewPort.maxWorldHeight)
             needsInit = false
+        }
+    }
+
+    private fun addPlayers() {
+        for(( controlComponent, player) in Players.players) {
+            player(player, controlComponent)
         }
     }
 
@@ -88,7 +97,6 @@ class GameScreen : KtxScreen {
         var randomAngle = (0f..360f)
         val startVector = Vector2.X.cpy().scl(100f).setAngleDeg(randomAngle.random())
 
-        player.touchedObjectives.clear()
         numberOfEnemies = 2f.pow(currentLevel).roundToInt() * 10
         numberOfObjectives = 2f.pow(currentLevel).roundToInt()
 
@@ -126,8 +134,6 @@ class GameScreen : KtxScreen {
             startVector.setAngleDeg(randomAngle.random())
         }
 
-
-
     }
 
     override fun render(delta: Float) {
@@ -155,8 +161,8 @@ class GameScreen : KtxScreen {
     }
 
     override fun resume() {
-        Gdx.input.inputProcessor = inject<InputHandlerThingie>()
-        Controllers.addListener(inject<InputHandlerThingie>())
+        Gdx.input.inputProcessor = engine.getSystem(KeyboardInputSystem::class.java)
+        Controllers.addListener(engine.getSystem(GamepadInputSystem::class.java))
         for (system in engine.systems)
             system.setProcessing(true)
     }
@@ -167,7 +173,7 @@ class GameScreen : KtxScreen {
 
     private fun pauseGame() {
         Gdx.input.inputProcessor = null
-        Controllers.removeListener(inject<InputHandlerThingie>())
+        Controllers.removeListener(inject<GamepadInputSystem>())
         for (system in engine.systems)
             system.setProcessing(false)
     }

@@ -1,14 +1,24 @@
 package screens
 
+import com.badlogic.gdx.Input
+import com.badlogic.gdx.controllers.Controller
 import com.badlogic.gdx.scenes.scene2d.ui.Table
+import gamestate.GameEvent
+import gamestate.GameState
+import gamestate.MainGame
 import gamestate.Player
+import input.Button
 import input.ControlMapper
+import input.GamepadControl
+import input.KeyboardControl
 import ktx.scene2d.image
 import ktx.scene2d.scene2d
-import ktx.scene2d.table
+import ktx.scene2d.table//        setScreen<GameScreen>()
+import statemachine.StateMachine
+
 import tru.Assets
 
-class SplashScreen : UserInterfaceScreen() {
+class SplashScreen(gameState: StateMachine<GameState, GameEvent>) : UserInterfaceScreen(gameState) {
     override fun show() {
         initSplash()
         super.show()
@@ -26,9 +36,60 @@ class SplashScreen : UserInterfaceScreen() {
 
         stage.addActor(rootTable)
     }
+
+    override fun keyUp(keycode: Int): Boolean {
+        return when(keycode) {
+            Input.Keys.SPACE -> toggleKeyboardPlayer()
+            Input.Keys.ENTER -> startGame()
+            else -> super.keyUp(keycode)
+        }
+    }
+
+    private fun startGame(): Boolean {
+        gameState.acceptEvent(GameEvent.StartedGame)
+        return true
+    }
+
+    override fun buttonUp(controller: Controller, buttonCode: Int): Boolean {
+        return when(Button.getButton(buttonCode)) {
+            Button.Green -> addIfNotAdded(controller)
+            Button.Blue -> startGame()
+            Button.Red -> removeIfAdded(controller)
+            else -> super.buttonUp(controller, buttonCode)
+        }
+    }
+
+    private fun removeIfAdded(controller: Controller): Boolean {
+        val toRemove = Players.players.filterKeys { it.isGamepad && (it as GamepadControl).controller == controller}.keys.firstOrNull()
+
+        if(toRemove != null) {
+            Players.players.remove(toRemove)
+            return true
+        }
+        return false
+    }
+
+    private fun addIfNotAdded(controller: Controller): Boolean {
+        if(!Players.players.filterKeys { it.isGamepad && (it as GamepadControl).controller == controller }.any() ) {
+            Players.players[GamepadControl(controller)] = Player()
+            return true
+        }
+        return false
+    }
+
+    private fun toggleKeyboardPlayer(): Boolean {
+        val toRemove = Players.players.filter { it.key.isKeyboard }.keys.firstOrNull()
+        if(toRemove == null) {
+            Players.players[KeyboardControl()] = Player()
+            return true
+        } else {
+            Players.players.remove(toRemove)
+            return false
+        }
+    }
 }
 
 object Players {
-    val players = mutableMapOf<Player, ControlMapper>()
+    val players = mutableMapOf<ControlMapper, Player>()
 }
 

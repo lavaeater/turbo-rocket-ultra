@@ -9,7 +9,7 @@ import input.ControlMapper
 import ktx.ashley.allOf
 import ktx.ashley.mapperFor
 
-class PlayerControlSystem(
+class PlayerMoveSystem(
     private val speed: Float = 25f,
     private val thrust: Float = 25f): IteratingSystem(
     allOf(
@@ -21,18 +21,16 @@ class PlayerControlSystem(
     private val bcMapper = mapperFor<BodyComponent>()
     private val anMapper = mapperFor<CharacterSpriteComponent>()
     private val tMapper = mapperFor<TransformComponent>()
-    private val controlMapper by lazy { inject<ControlMapper>() }
 
     override fun processEntity(entity: Entity, deltaTime: Float) {
         val pcc = pccMapper.get(entity)
         val bc = bcMapper.get(entity)
         val csc = anMapper.get(entity)
         val tc = tMapper.get(entity)
-        controlMapper.setAimVector(Gdx.input.x, Gdx.input.y, tc.position)
-        handleInput(pcc, bc, csc, tc)
+        executeMove(pcc, bc, csc, tc)
     }
 
-    private fun handleInput(
+    private fun executeMove(
         playerControlComponent: PlayerControlComponent,
         bodyComponent: BodyComponent,
         characterSpriteComponent: CharacterSpriteComponent,

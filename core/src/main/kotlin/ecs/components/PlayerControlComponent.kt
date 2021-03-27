@@ -10,10 +10,8 @@ import ktx.math.vec3
 import tru.AnimState
 
 class PlayerControlComponent(
-    private val controlMapper: ControlMapper,
+    val controlMapper: ControlMapper,
     private val rof: Float = 3f) : Component {
-
-    private val camera : OrthographicCamera by lazy { inject() }
     private var cooldownRemaining = 0f
 
     var shotDrawCoolDown = 0f

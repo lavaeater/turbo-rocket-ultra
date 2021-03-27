@@ -1,9 +1,11 @@
 package screens
 
-import ktx.actors.KtxInputListener
+import gamestate.GameEvent
+import gamestate.GameState
 import ktx.actors.stage
+import statemachine.StateMachine
 
-abstract class UserInterfaceScreen : BasicScreen() {
+abstract class UserInterfaceScreen(gameState: StateMachine<GameState, GameEvent>) : BasicScreen(gameState) {
     protected val stage = stage(batch, viewPort)
     override fun render(delta: Float) {
         super.render(delta)

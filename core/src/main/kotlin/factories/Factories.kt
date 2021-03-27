@@ -13,6 +13,7 @@ import ecs.components.*
 import ecs.components.ai.BehaviorComponent
 import gamestate.Player
 import injection.Context.inject
+import input.ControlMapper
 import ktx.box2d.*
 import ktx.math.random
 import ktx.math.vec2
@@ -110,7 +111,7 @@ forceVector,
     }
 }
 
-fun player(): Player {
+fun player(player: Player, controlMapper: ControlMapper) {
     val body = world().body {
         type = BodyDef.BodyType.DynamicBody
         position.setZero()
@@ -129,16 +130,18 @@ fun player(): Player {
         add(CameraFollowComponent())
         add(BodyComponent(body))
         add(TransformComponent())
-        add(PlayerControlComponent(inject())) //We will have multiple components later
+        add(controlMapper)
+        add(PlayerControlComponent(controlMapper)) //We will have multiple components later
         add(CharacterSpriteComponent(Assets.characters["player"]!!))
         add(RenderableComponent(1))
-        add(PlayerComponent())
+        add(PlayerComponent(player))
     }
 
     body.userData = entity
 
     engine().addEntity(entity)
-    return Player(body, entity)
+    player.body = body
+    player.entity = entity
 }
 
 fun semicircle(): List<Vector2> {

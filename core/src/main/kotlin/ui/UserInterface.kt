@@ -20,6 +20,7 @@ import ktx.scene2d.label
 import ktx.scene2d.scene2d
 import ktx.scene2d.table
 import physics.getComponent
+import screens.Players
 
 class UserInterface(
     private val batch: Batch,
@@ -30,8 +31,8 @@ class UserInterface(
     private val splatterCount get() = engine.getEntitiesFor(allOf(SplatterComponent::class).get()).count()
     private val enemyCount get() = engine.getEntitiesFor(allOf(EnemyComponent::class).get()).count()
     private val objectiveCount get() = engine.getEntitiesFor(allOf(ObjectiveComponent::class).get()).count()
-    private val player: Player by lazy { inject() }
-    private val touchedObjectiveCount get () = player.touchedObjectives.count()
+    private val players get() = Players.players
+    private val touchedObjectiveCount get () = players.map{ it.value.touchedObjectives.count() }.sum()
 
     private lateinit var rootTable: KTableWidget
     private lateinit var infoBoard: KTableWidget
@@ -73,7 +74,6 @@ class UserInterface(
         infoLabel.setText(
             """
     FPS:            ${Gdx.graphics.framesPerSecond}
-    Player Health:  ${player.health}
     Targets Left:   ${objectiveCount - touchedObjectiveCount}
     Splatter Count: $splatterCount
     Enemies Left:   $enemyCount
@@ -81,7 +81,8 @@ class UserInterface(
     """.trimIndent()
         )
     }
-
+//Player Health:  ${player.health}
+//
     private val mouseVector = vec2()
     private fun getMousePosition(): Vector2 {
         mouseVector.set(Gdx.input.x.toFloat(), Gdx.input.y.toFloat())

@@ -11,6 +11,7 @@ import com.badlogic.gdx.physics.box2d.Body
 import com.badlogic.gdx.physics.box2d.Contact
 import com.badlogic.gdx.physics.box2d.Fixture
 import ecs.components.*
+import gamestate.Player
 import ktx.ashley.has
 import ktx.ashley.mapperFor
 import ktx.math.times
@@ -85,6 +86,16 @@ fun Body.isPlayer() : Boolean {
     return (userData as Entity).hasComponent<PlayerComponent>()
 }
 
+@ExperimentalStdlibApi
+fun Body.playerComponent() : PlayerComponent {
+    return (userData as Entity).getComponent()
+}
+
+@ExperimentalStdlibApi
+fun Body.player() : Player {
+    return (userData as Entity).getComponent<PlayerComponent>().player
+}
+
 
 
 fun Fixture.isEntity() : Boolean {
@@ -121,6 +132,11 @@ inline fun <reified T: Component>Contact.bothHaveComponent(): Boolean {
                 this.fixtureB.getEntity().has(mapper)
     }
     return false
+}
+
+@ExperimentalStdlibApi
+inline fun Contact.getPlayerFor(): Player {
+    return this.getEntityFor<PlayerComponent>().getComponent<PlayerComponent>().player
 }
 
 inline fun <reified T:Component> Contact.getEntityFor(): Entity {

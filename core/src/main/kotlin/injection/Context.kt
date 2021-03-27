@@ -8,11 +8,9 @@ import com.badlogic.gdx.graphics.OrthographicCamera
 import com.badlogic.gdx.graphics.g2d.Batch
 import com.badlogic.gdx.graphics.g2d.PolygonSpriteBatch
 import com.badlogic.gdx.utils.viewport.ExtendViewport
-import input.ControlMapper
 import ecs.systems.*
 import ecs.systems.ai.*
-import factories.player
-import input.InputHandlerThingie
+import ecs.systems.KeyboardInputSystem
 import ktx.box2d.createWorld
 import ktx.inject.Context
 import ktx.inject.register
@@ -35,8 +33,6 @@ object Context {
 
     private fun buildContext() {
         context.register {
-            bindSingleton(ControlMapper())
-            bindSingleton(InputHandlerThingie())
             bindSingleton(PolygonSpriteBatch())
             bindSingleton(OrthographicCamera())
             bindSingleton<IUserInterface>(UserInterface(inject<PolygonSpriteBatch>() as Batch))
@@ -52,7 +48,6 @@ object Context {
             })
             bindSingleton(AudioPlayer())
             bindSingleton(getEngine())
-            bindSingleton(player())
         }
     }
 
@@ -61,7 +56,9 @@ object Context {
             addSystem(PhysicsSystem(inject()))
             //     addSystem(PhysicsDebugRendererSystem(inject(), inject()))
             addSystem(CameraUpdateSystem())
-            addSystem(PlayerControlSystem())
+            addSystem(PlayerMoveSystem())
+            addSystem(KeyboardInputSystem())
+            addSystem(GamepadInputSystem())
             addSystem(BodyDestroyerSystem(inject())) //world
             addSystem(EnterVehicleSystem())
             addSystem(ExitVehicleSystem())

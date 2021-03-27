@@ -7,10 +7,12 @@ import statemachine.StateMachine
 import tru.Assets
 
 class MainGame : KtxGame<Screen>() {
+
     val gameState = StateMachine.buildStateMachine<GameState, GameEvent>(GameState.Splash, ::stateChanged) {
             state(GameState.Splash) {
                 action { setScreen<SplashScreen>() }
                 edge(GameEvent.LeftSplash, GameState.Setup) {}
+                edge(GameEvent.StartedGame, GameState.Running) {}
             }
             state(GameState.Setup) {
                 action { setScreen<SetupScreen>() }
@@ -40,13 +42,11 @@ class MainGame : KtxGame<Screen>() {
     override fun create() {
 
         Assets.load()
-        //These will basically be global... we can also have multiple listeners and so on.
-
-        addScreen(SplashScreen())
-        addScreen(SetupScreen())
+        addScreen(SplashScreen(gameState))
         addScreen(GameScreen())
-        addScreen(PauseScreen())
-        addScreen(GameOverScreen())
-        setScreen<SplashScreen>()
+        addScreen(PauseScreen(gameState))
+        addScreen(GameOverScreen(gameState))
+        gameState.initialize()
+//        setScreen<SplashScreen>()
     }
 }
