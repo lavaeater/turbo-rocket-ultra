@@ -35,7 +35,9 @@ To make the graphics and environment easy I am currently working with the concep
 
 ## Doing now: Advanced behaviors using Ashley
 
-How do I implement guards and interruption of actions being performed? As it is now, these types of tasks I have implemented simply return success or failure OR running - but it would be cool to add some kind of guard / interruption of these tasks using some kind of "simple" mechanic - whi
+How do I implement guards and interruption of actions being performed? As it is now, these types of tasks I have implemented simply return success or failure OR running - but it would be cool to add some kind of guard / interruption of these tasks using some kind of "simple" mechanic - which of course could be done in several ways.
+
+How about messages? A message from the ContactManager to the behaviorsystem (yes probably)? Or the contact manager adds a component and that component is marked as a "failcurrent task"-component? An interrupt-component, if you will? So, that could be super sim
 
 ## Done: Multiplayer v0.1
 
@@ -295,11 +297,11 @@ Next should probably be the feature that requires the least work to make it a "g
 
 So the next feature will be ship collisions.
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbODQwMjIxMDQ0LDMzNTUwMzM0MSwxMDI3MD
-g0MDEsMTU3MTQxNjA4NSwtMjE0NjA0MTU3OSwtOTAzNjY1OTI1
-LDk1NDQ0MjM0NSwxODUxNzA5MzI1LC0xNjk4MjEzNzQzLC0xNj
-QxMTQwMjg3LDEzMTUzMTc3MzYsLTM2ODg1MzUxMiwyMTM1ODE5
-MDA0LC0yMTE4ODkwMTA5LDE3MDQ5NDYxOTgsNDQzODQ5MzY0LD
-E0ODc3ODQ0NDYsLTE0NzI0ODEyOTksLTc2NzcxMjc3MSwtNDAw
-ODkyMDkwXX0=
+eyJoaXN0b3J5IjpbLTkwNTYzNTY4MSwzMzU1MDMzNDEsMTAyNz
+A4NDAxLDE1NzE0MTYwODUsLTIxNDYwNDE1NzksLTkwMzY2NTky
+NSw5NTQ0NDIzNDUsMTg1MTcwOTMyNSwtMTY5ODIxMzc0MywtMT
+Y0MTE0MDI4NywxMzE1MzE3NzM2LC0zNjg4NTM1MTIsMjEzNTgx
+OTAwNCwtMjExODg5MDEwOSwxNzA0OTQ2MTk4LDQ0Mzg0OTM2NC
+wxNDg3Nzg0NDQ2LC0xNDcyNDgxMjk5LC03Njc3MTI3NzEsLTQw
+MDg5MjA5MF19
 -->
