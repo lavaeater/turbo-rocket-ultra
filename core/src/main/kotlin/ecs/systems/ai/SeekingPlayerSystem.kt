@@ -1,18 +1,16 @@
 package ecs.systems.ai
 
-import com.badlogic.ashley.core.Component
 import ecs.components.ai.SeekPlayer
 import com.badlogic.ashley.core.Entity
 import com.badlogic.ashley.systems.IteratingSystem
 import com.badlogic.gdx.ai.btree.Task
 import com.badlogic.gdx.math.Vector2
 import com.badlogic.gdx.physics.box2d.Fixture
-import com.badlogic.gdx.utils.Pool
 import ecs.components.BodyComponent
-import ecs.components.EnemyComponent
+import ecs.components.enemy.EnemyComponent
 import ecs.components.ai.ChasePlayer
+import ecs.components.ai.PlayerTrackComponent
 import factories.world
-import gamestate.Player
 import ktx.ashley.allOf
 import ktx.ashley.mapperFor
 import ktx.box2d.RayCast
@@ -112,9 +110,3 @@ class SeekingPlayerSystem : IteratingSystem(allOf(SeekPlayer::class).get()) {
 
 }
 
-class PlayerTrackComponent : Component, Pool.Poolable {
-    var player: Player? = null
-    override fun reset() {
-        player = null
-    }
-}

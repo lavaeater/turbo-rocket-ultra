@@ -5,10 +5,9 @@ import com.badlogic.gdx.controllers.Controller
 import com.badlogic.gdx.scenes.scene2d.ui.Table
 import gamestate.GameEvent
 import gamestate.GameState
-import gamestate.MainGame
 import gamestate.Player
+import gamestate.Players
 import input.Button
-import input.ControlMapper
 import input.GamepadControl
 import input.KeyboardControl
 import ktx.scene2d.image
@@ -87,9 +86,5 @@ class SplashScreen(gameState: StateMachine<GameState, GameEvent>) : UserInterfac
             return false
         }
     }
-}
-
-object Players {
-    val players = mutableMapOf<ControlMapper, Player>()
 }
 

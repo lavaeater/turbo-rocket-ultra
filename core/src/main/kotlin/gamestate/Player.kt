@@ -2,7 +2,7 @@ package gamestate
 
 import com.badlogic.ashley.core.Entity
 import com.badlogic.gdx.physics.box2d.Body
-import ecs.components.ObjectiveComponent
+import ecs.components.gameplay.ObjectiveComponent
 
 class Player() {
     lateinit var body: Body

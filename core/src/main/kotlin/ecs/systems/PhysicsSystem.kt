@@ -4,18 +4,22 @@ import com.badlogic.ashley.core.Entity
 import com.badlogic.ashley.systems.IteratingSystem
 import com.badlogic.gdx.physics.box2d.World
 import ecs.components.*
+import ecs.components.gameplay.TransformComponent
+import ecs.components.graphics.ParticleComponent
+import ecs.components.graphics.RenderableComponent
+import ecs.components.fx.SplatterComponent
 import ktx.ashley.allOf
 import ktx.ashley.has
 import ktx.ashley.mapperFor
-import physics.Mappers
+import physics.AshleyMappers
 
 class PhysicsSystem(private val world: World, private val timeStep : Float = 1/60f) :
     IteratingSystem(allOf(BodyComponent::class, TransformComponent::class).get()) {
 
     private val velIters = 2
     private val posIters = 2
-    private val tMapper = Mappers.transformMapper
-    private val bMapper = Mappers.bodyMapper
+    private val tMapper = AshleyMappers.transformMapper
+    private val bMapper = AshleyMappers.bodyMapper
     private val pMapper = mapperFor<ParticleComponent>()
 
     var accumulator = 0f

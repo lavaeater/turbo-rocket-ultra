@@ -1,17 +1,26 @@
 package ui
 
+import com.badlogic.ashley.core.Engine
+import com.badlogic.ashley.core.Entity
+import com.badlogic.gdx.ai.btree.BehaviorTree
+import com.badlogic.gdx.ai.btree.Task
 import com.badlogic.gdx.graphics.OrthographicCamera
 import com.badlogic.gdx.graphics.g2d.Batch
 import com.badlogic.gdx.scenes.scene2d.Stage
 import com.badlogic.gdx.scenes.scene2d.ui.Label
 import com.badlogic.gdx.utils.Align
 import com.badlogic.gdx.utils.viewport.ExtendViewport
+import ecs.components.ai.BehaviorComponent
+import ecs.components.enemy.EnemyComponent
+import factories.engine
 import gamestate.Player
 import ktx.scene2d.KTableWidget
 import ktx.scene2d.label
 import ktx.scene2d.scene2d
 import ktx.scene2d.table
-import screens.Players
+import gamestate.Players
+import injection.Context.inject
+import ktx.ashley.allOf
 
 class UserInterface(
     private val batch: Batch,
@@ -19,6 +28,10 @@ class UserInterface(
 ) : IUserInterface {
 
     private val players get() = Players.players
+    private val engine by lazy { inject<Engine>() }
+    private val enemy by lazy { engine.getEntitiesFor(allOf(EnemyComponent::class, BehaviorComponent::class).get()).first() }
+    private val tree by lazy { enemy.getComponent(BehaviorComponent::class.java).tree }
+
 
     private lateinit var rootTable: KTableWidget
     private lateinit var infoBoard: KTableWidget
@@ -65,6 +78,7 @@ Health: ${p.health}
             )
             index++
         }
+        enemyLabel.setText(enemyInfo)
     }
     override fun dispose() {
         stage.dispose()
@@ -75,11 +89,24 @@ Health: ${p.health}
     }
 
     private fun setup() {
+        tree.addListener(object : BehaviorTree.Listener<Entity> {
+            override fun statusUpdated(task: Task<Entity>?, previousStatus: Task.Status?) {
+                enemyInfo = "$task - $previousStatus"
+            }
+
+            override fun childAdded(task: Task<Entity>?, index: Int) {
+
+            }
+
+        })
         stage.clear()
         setupInfo()
     }
 
+    private var enemyInfo = ""
+
     private val playerLabels = mutableMapOf<Label, Player>()
+    private lateinit var enemyLabel: Label
     private fun setupInfo() {
 
         infoBoard = scene2d.table {
@@ -87,6 +114,7 @@ Health: ${p.health}
                 val l = label("PlayerLabel")
                 playerLabels[l] = p
             }
+            enemyLabel= label("nuthin")
         }
 
         rootTable = scene2d.table {

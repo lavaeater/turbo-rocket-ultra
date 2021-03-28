@@ -11,6 +11,12 @@ import com.badlogic.gdx.physics.box2d.BodyDef
 import com.badlogic.gdx.physics.box2d.World
 import ecs.components.*
 import ecs.components.ai.BehaviorComponent
+import ecs.components.enemy.EnemyComponent
+import ecs.components.enemy.EnemySensorComponent
+import ecs.components.gameplay.ObjectiveComponent
+import ecs.components.gameplay.ObstacleComponent
+import ecs.components.gameplay.TransformComponent
+import ecs.components.graphics.*
 import gamestate.Player
 import injection.Context.inject
 import input.ControlMapper
@@ -32,11 +38,9 @@ fun enemy(x: Float = 0f, y: Float = 0f) {
     enemy(vec2(x, y))
 }
 
-val colors = listOf(Color.RED, Color.BLUE, Color.GREEN, Color.BROWN, Color.CYAN)
-
 val colorRange = 0f..1f
 
-object categories {
+object Box2dCategories {
     const val splatter : Short = 0x0002
     const val player: Short  = 0x0003
     const val enemy: Short = 0x0004
@@ -44,9 +48,9 @@ object categories {
     const val obstacle: Short = 0x0006
 }
 
-object collisionMasks {
-    const val splatter = categories.splatter
-    const val players = categories.player
+object Box2dCollisionMasks {
+    const val splatter = Box2dCategories.splatter
+    const val players = Box2dCategories.player
 }
 
 fun splatterParticles(
@@ -88,8 +92,8 @@ fun splatterParticles(
                     density = 0.1f
                     restitution = 1f
                     filter {
-                        categoryBits = categories.splatter
-                        maskBits = collisionMasks.splatter
+                        categoryBits = Box2dCategories.splatter
+                        maskBits = Box2dCollisionMasks.splatter
                     }
                 }
             linearDamping = (25f..125f).random()
@@ -118,7 +122,7 @@ fun player(player: Player, controlMapper: ControlMapper) {
         circle(1f) {
             density = GameScreen.PLAYER_DENSITY
             filter {
-                categoryBits = categories.player
+                categoryBits = Box2dCategories.player
             }
         }
 
@@ -163,7 +167,7 @@ fun enemy(at: Vector2) {
         circle(1f) {
             density = GameScreen.ENEMY_DENSITY
             filter {
-                categoryBits = categories.enemy
+                categoryBits = Box2dCategories.enemy
             }
         }
         circle(10f) {
@@ -241,7 +245,7 @@ fun obstacle(
         box(width, height) {
             restitution = 0f
             filter {
-                categoryBits = categories.obstacle
+                categoryBits = Box2dCategories.obstacle
             }
         }
     }
@@ -269,8 +273,8 @@ fun objective(
         box(width, height) {
             restitution = 0f
             filter {
-                categoryBits = categories.objective
-                maskBits = collisionMasks.players
+                categoryBits = Box2dCategories.objective
+                maskBits = Box2dCollisionMasks.players
             }
         }
     }

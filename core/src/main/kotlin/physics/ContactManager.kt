@@ -3,11 +3,18 @@ package physics
 import com.badlogic.gdx.physics.box2d.*
 import ecs.components.*
 import ai.enemy.EnemyState
-import gamestate.Player
+import com.badlogic.ashley.core.Engine
+import ecs.components.ai.PlayerTrackComponent
+import ecs.components.enemy.EnemyComponent
+import ecs.components.enemy.EnemySensorComponent
+import ecs.components.gameplay.DestroyComponent
+import ecs.components.gameplay.ObjectiveComponent
+import ecs.components.gameplay.TransformComponent
 import injection.Context.inject
 import ktx.ashley.remove
 
 class ContactManager: ContactListener {
+    private val engine by lazy {inject<Engine>()}
 
     @ExperimentalStdlibApi
     override fun beginContact(contact: Contact) {
@@ -19,11 +26,7 @@ class ContactManager: ContactListener {
             }
             if(contact.hasComponent<EnemySensorComponent>()) {//this is an enemy noticing the player - no system needed
                 val enemy = contact.getEntityFor<EnemySensorComponent>()
-                    val enemyComponent = enemy.getComponent<EnemyComponent>()
-                val player = contact.getEntityFor<PlayerComponent>()
-                enemyComponent.newState(EnemyState.ChasePlayer)
-                enemyComponent.chaseTransform = player.getComponent<TransformComponent>()
-                enemy.add(PlayerIsInSensorRangeComponent())
+                enemy.add(engine.createComponent(PlayerTrackComponent::class.java).apply { player = contact.getPlayerFor() })
             }
             if(contact.hasComponent<ObjectiveComponent>()) {
                 val something = "This is it"

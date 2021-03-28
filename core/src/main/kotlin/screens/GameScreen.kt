@@ -11,17 +11,17 @@ import com.badlogic.gdx.math.Vector2
 import com.badlogic.gdx.physics.box2d.World
 import com.badlogic.gdx.utils.viewport.ExtendViewport
 import ecs.components.BodyComponent
-import ecs.components.EnemyComponent
-import ecs.components.ObjectiveComponent
-import ecs.components.TransformComponent
-import ecs.systems.GamepadInputSystem
+import ecs.components.enemy.EnemyComponent
+import ecs.components.gameplay.ObjectiveComponent
+import ecs.components.gameplay.TransformComponent
+import ecs.systems.input.GamepadInputSystem
 import factories.enemy
 import factories.objective
 import factories.obstacle
-import gamestate.Player
 import injection.Context.inject
-import ecs.systems.KeyboardInputSystem
+import ecs.systems.input.KeyboardInputSystem
 import factories.player
+import gamestate.Players
 import ktx.app.KtxScreen
 import ktx.ashley.allOf
 import ktx.ashley.mapperFor
@@ -98,7 +98,7 @@ class GameScreen : KtxScreen {
         var randomAngle = (0f..360f)
         val startVector = Vector2.X.cpy().scl(100f).setAngleDeg(randomAngle.random())
 
-        numberOfEnemies = 2f.pow(currentLevel).roundToInt() * 10
+        numberOfEnemies = 1 // 2f.pow(currentLevel).roundToInt() * 1
         numberOfObjectives = 2f.pow(currentLevel).roundToInt()
 
         for (enemy in engine.getEntitiesFor(allOf(EnemyComponent::class).get())) {
@@ -175,7 +175,7 @@ class GameScreen : KtxScreen {
 
     private fun pauseGame() {
         Gdx.input.inputProcessor = null
-        Controllers.removeListener(inject<GamepadInputSystem>())
+        Controllers.removeListener(engine.getSystem(GamepadInputSystem::class.java))
         for (system in engine.systems)
             system.setProcessing(false)
     }

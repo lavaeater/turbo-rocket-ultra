@@ -3,16 +3,14 @@ package ecs.systems.ai
 import com.badlogic.ashley.core.Entity
 import com.badlogic.ashley.systems.IteratingSystem
 import com.badlogic.gdx.ai.btree.Task
-import ecs.components.EnemyComponent
-import ecs.components.TransformComponent
+import ecs.components.enemy.EnemyComponent
+import ecs.components.gameplay.TransformComponent
 import ecs.components.ai.AttackPlayer
-import gamestate.Player
-import injection.Context
+import ecs.components.ai.PlayerTrackComponent
 import ktx.ashley.allOf
 import ktx.ashley.mapperFor
 import ktx.math.random
 import ktx.math.vec2
-import screens.Players
 
 class AttackPlayerSystem : IteratingSystem(allOf(
     AttackPlayer::class,
