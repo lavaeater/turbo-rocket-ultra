@@ -9,7 +9,7 @@ import ecs.components.PlayerIsInSensorRangeComponent
 import ecs.components.ai.*
 
 object Tree {
-    fun getEnemyBehaviorTree() = tree<Entity> {
+    fun getEnemyBehaviorTree_new() = tree<Entity> {
         dynamicGuardSelector {
             first(entityDo<Amble>())
             then(invert(entityDo<SeekPlayer>()))
@@ -17,7 +17,7 @@ object Tree {
             last(entityDo<AttackPlayer>())
         }
     }
-    fun getEnemyBehaviorTree_old() = tree<Entity> {
+    fun getEnemyBehaviorTree() = tree<Entity> {
         selector {
             first(entityDo<Amble>())
             then(invert(entityDo<SeekPlayer>()))
