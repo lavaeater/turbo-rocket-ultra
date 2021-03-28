@@ -18,9 +18,9 @@ Inspirations off the bat for this game are:
 To make the graphics and environment easy I am currently working with the concept of "zombie tower defense", which is obviously lame and very boring, but hey... it's easy to find art for.
 
 ### MVP
+* Fix enemy sensors / noticing
 * Towers
 * Fix enemy direction systems <- done?
-* Fix enemy sensors / noticing
 * Vehicles <- nice to have
 * Different weapons to shoot with
 * Controller support <- Done
@@ -290,11 +290,11 @@ Next should probably be the feature that requires the least work to make it a "g
 
 So the next feature will be ship collisions.
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbLTEzOTM3NDYzNzAsMzM1NTAzMzQxLDEwMj
-cwODQwMSwxNTcxNDE2MDg1LC0yMTQ2MDQxNTc5LC05MDM2NjU5
-MjUsOTU0NDQyMzQ1LDE4NTE3MDkzMjUsLTE2OTgyMTM3NDMsLT
-E2NDExNDAyODcsMTMxNTMxNzczNiwtMzY4ODUzNTEyLDIxMzU4
-MTkwMDQsLTIxMTg4OTAxMDksMTcwNDk0NjE5OCw0NDM4NDkzNj
-QsMTQ4Nzc4NDQ0NiwtMTQ3MjQ4MTI5OSwtNzY3NzEyNzcxLC00
-MDA4OTIwOTBdfQ==
+eyJoaXN0b3J5IjpbMTk5NDIwMDEyNiwzMzU1MDMzNDEsMTAyNz
+A4NDAxLDE1NzE0MTYwODUsLTIxNDYwNDE1NzksLTkwMzY2NTky
+NSw5NTQ0NDIzNDUsMTg1MTcwOTMyNSwtMTY5ODIxMzc0MywtMT
+Y0MTE0MDI4NywxMzE1MzE3NzM2LC0zNjg4NTM1MTIsMjEzNTgx
+OTAwNCwtMjExODg5MDEwOSwxNzA0OTQ2MTk4LDQ0Mzg0OTM2NC
+wxNDg3Nzg0NDQ2LC0xNDcyNDgxMjk5LC03Njc3MTI3NzEsLTQw
+MDg5MjA5MF19
 -->
