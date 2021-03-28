@@ -19,7 +19,7 @@ To make the graphics and environment easy I am currently working with the concep
 
 ### MVP
 * Towers
-* Fix enemy direction systems
+* Fix enemy direction systems <- done?
 * Fix enemy sensors / noticing
 * Vehicles <- nice to have
 * Different weapons to shoot with
@@ -290,7 +290,7 @@ Next should probably be the feature that requires the least work to make it a "g
 
 So the next feature will be ship collisions.
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbLTEwNjUzODI4MTAsMzM1NTAzMzQxLDEwMj
+eyJoaXN0b3J5IjpbLTEzOTM3NDYzNzAsMzM1NTAzMzQxLDEwMj
 cwODQwMSwxNTcxNDE2MDg1LC0yMTQ2MDQxNTc5LC05MDM2NjU5
 MjUsOTU0NDQyMzQ1LDE4NTE3MDkzMjUsLTE2OTgyMTM3NDMsLT
 E2NDExNDAyODcsMTMxNTMxNzczNiwtMzY4ODUzNTEyLDIxMzU4
