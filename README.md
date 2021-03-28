@@ -24,8 +24,8 @@ To make the graphics and environment easy I am currently working with the concep
 * Vehicles <- nice to have
 * Different weapons to shoot with
 * Controller support <- Done
-* Twin Stick shooting
-* Multiplayer
+* Twin Stick shooting <- done
+* Multiplayer <- done
 * Player damage / Enemy attacks <- Done
 * Objectives <- Done!
 * Enemies <- Done
@@ -290,11 +290,11 @@ Next should probably be the feature that requires the least work to make it a "g
 
 So the next feature will be ship collisions.
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbMzM1NTAzMzQxLDEwMjcwODQwMSwxNTcxND
-E2MDg1LC0yMTQ2MDQxNTc5LC05MDM2NjU5MjUsOTU0NDQyMzQ1
-LDE4NTE3MDkzMjUsLTE2OTgyMTM3NDMsLTE2NDExNDAyODcsMT
-MxNTMxNzczNiwtMzY4ODUzNTEyLDIxMzU4MTkwMDQsLTIxMTg4
-OTAxMDksMTcwNDk0NjE5OCw0NDM4NDkzNjQsMTQ4Nzc4NDQ0Ni
-wtMTQ3MjQ4MTI5OSwtNzY3NzEyNzcxLC00MDA4OTIwOTAsMTA2
-MTQ4MjUzNl19
+eyJoaXN0b3J5IjpbLTE2NTc1NTYyNzUsMzM1NTAzMzQxLDEwMj
+cwODQwMSwxNTcxNDE2MDg1LC0yMTQ2MDQxNTc5LC05MDM2NjU5
+MjUsOTU0NDQyMzQ1LDE4NTE3MDkzMjUsLTE2OTgyMTM3NDMsLT
+E2NDExNDAyODcsMTMxNTMxNzczNiwtMzY4ODUzNTEyLDIxMzU4
+MTkwMDQsLTIxMTg4OTAxMDksMTcwNDk0NjE5OCw0NDM4NDkzNj
+QsMTQ4Nzc4NDQ0NiwtMTQ3MjQ4MTI5OSwtNzY3NzEyNzcxLC00
+MDA4OTIwOTBdfQ==
 -->
