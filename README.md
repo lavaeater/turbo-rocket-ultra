@@ -39,7 +39,7 @@ How do I implement guards and interruption of actions being performed? As it is 
 
 How about messages? A message from the ContactManager to the behaviorsystem (yes probably)? Or the contact manager adds a component and that component is marked as a "failcurrent task"-component? An interrupt-component, if you will? So, that could be super simple, to make some kind of "guard" system happen. An interrupt occurs... more on this later.
 
-Implement my own Interrupt-decorator. Basically "Interrupted if has" - same as I already did, of course. What is the change? No change... damn.
+Implement my own Interrupt-decorator. Basically "Interrupted if has" - same as I already did, of course. What is the change? No change... damn. Add Interrupt-component to all entitycomponent-tasks, could work, all these systems could look for some particular component and say "fail" if it shows up, we will try that, won't we?
 
 ## Done: Multiplayer v0.1
 
@@ -299,11 +299,11 @@ Next should probably be the feature that requires the least work to make it a "g
 
 So the next feature will be ship collisions.
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbODA0NzAzNjAwLDE3Njk2ODM5NzcsMzM1NT
-AzMzQxLDEwMjcwODQwMSwxNTcxNDE2MDg1LC0yMTQ2MDQxNTc5
-LC05MDM2NjU5MjUsOTU0NDQyMzQ1LDE4NTE3MDkzMjUsLTE2OT
-gyMTM3NDMsLTE2NDExNDAyODcsMTMxNTMxNzczNiwtMzY4ODUz
-NTEyLDIxMzU4MTkwMDQsLTIxMTg4OTAxMDksMTcwNDk0NjE5OC
-w0NDM4NDkzNjQsMTQ4Nzc4NDQ0NiwtMTQ3MjQ4MTI5OSwtNzY3
-NzEyNzcxXX0=
+eyJoaXN0b3J5IjpbMTk2MDY5NTIxMywxNzY5NjgzOTc3LDMzNT
+UwMzM0MSwxMDI3MDg0MDEsMTU3MTQxNjA4NSwtMjE0NjA0MTU3
+OSwtOTAzNjY1OTI1LDk1NDQ0MjM0NSwxODUxNzA5MzI1LC0xNj
+k4MjEzNzQzLC0xNjQxMTQwMjg3LDEzMTUzMTc3MzYsLTM2ODg1
+MzUxMiwyMTM1ODE5MDA0LC0yMTE4ODkwMTA5LDE3MDQ5NDYxOT
+gsNDQzODQ5MzY0LDE0ODc3ODQ0NDYsLTE0NzI0ODEyOTksLTc2
+NzcxMjc3MV19
 -->
