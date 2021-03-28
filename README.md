@@ -38,10 +38,10 @@ To make the graphics and environment easy I am currently working with the concep
 
 This feature will add about 20 sub-features. To have multiplayer, we must now have a way of starting the game, pausing the game, adding players, removing players, etc. And of course the most important one of them all: selecting the player character. So I will add:
 * A FSM for the Game state <- this is where these are actually **very** useful
-* A game setup screen
-* A pause screen
-* A game over screen
-* Ways to move between these etc.
+* A game setup screen <- not done
+* A pause screen <- "done"
+* A game over screen <- "done"
+* Ways to move between these etc. <- done
 
 After that, we can actually use the multiplayer functionality, shouldn't be too difficult.
 
@@ -290,7 +290,7 @@ Next should probably be the feature that requires the least work to make it a "g
 
 So the next feature will be ship collisions.
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbLTE2NTc1NTYyNzUsMzM1NTAzMzQxLDEwMj
+eyJoaXN0b3J5IjpbLTEwNjUzODI4MTAsMzM1NTAzMzQxLDEwMj
 cwODQwMSwxNTcxNDE2MDg1LC0yMTQ2MDQxNTc5LC05MDM2NjU5
 MjUsOTU0NDQyMzQ1LDE4NTE3MDkzMjUsLTE2OTgyMTM3NDMsLT
 E2NDExNDAyODcsMTMxNTMxNzczNiwtMzY4ODUzNTEyLDIxMzU4
