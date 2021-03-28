@@ -2,10 +2,10 @@ package ecs.systems
 
 import com.badlogic.ashley.core.Entity
 import com.badlogic.ashley.systems.IteratingSystem
-import ecs.components.CharacterSpriteComponent
+import ecs.components.graphics.CharacterSpriteComponent
 import ecs.components.PlayerControlComponent
 import ktx.ashley.allOf
-import physics.Mappers
+import physics.AshleyMappers
 import tru.SpriteDirection
 
 
@@ -28,8 +28,8 @@ class CharacterWalkAndShootDirectionSystem :
          * The current anim is managed by something else... the input system, obviously
          * The current anim is managed by something else... the input system, obviously
          */
-        val characterSpriteComponent = Mappers.characterSpriteComponentMapper.get(entity)
-        val controlComponet = Mappers.playerControlMapper.get(entity)
+        val characterSpriteComponent = AshleyMappers.characterSpriteComponentMapper.get(entity)
+        val controlComponet = AshleyMappers.playerControlMapper.get(entity)
         characterAngle = if(controlComponet.moving) controlComponet.walkVector.angleDeg() else controlComponet.aimVector.angleDeg()
 
         when (characterAngle) {

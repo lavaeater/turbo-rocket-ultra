@@ -1,46 +1,51 @@
 package ui
 
 import com.badlogic.ashley.core.Engine
-import com.badlogic.gdx.Gdx
+import com.badlogic.ashley.core.Entity
+import com.badlogic.gdx.ai.btree.BehaviorTree
+import com.badlogic.gdx.ai.btree.Task
 import com.badlogic.gdx.graphics.OrthographicCamera
 import com.badlogic.gdx.graphics.g2d.Batch
-import com.badlogic.gdx.math.Vector2
 import com.badlogic.gdx.scenes.scene2d.Stage
 import com.badlogic.gdx.scenes.scene2d.ui.Label
 import com.badlogic.gdx.utils.Align
 import com.badlogic.gdx.utils.viewport.ExtendViewport
-import ecs.components.*
+import ecs.components.ai.BehaviorComponent
+import ecs.components.enemy.EnemyComponent
+import factories.engine
 import gamestate.Player
-import injection.Context.inject
-import ktx.ashley.allOf
-import ktx.math.vec2
 import ktx.scene2d.KTableWidget
 import ktx.scene2d.label
 import ktx.scene2d.scene2d
 import ktx.scene2d.table
-import physics.getComponent
+import gamestate.Players
+import injection.Context.inject
+import ktx.ashley.allOf
 
 class UserInterface(
     private val batch: Batch,
     debug: Boolean = false
 ) : IUserInterface {
 
-    private val engine: Engine by lazy { inject() }
-    private val splatterCount get() = engine.getEntitiesFor(allOf(SplatterComponent::class).get()).count()
-    private val enemyCount get() = engine.getEntitiesFor(allOf(EnemyComponent::class).get()).count()
-    private val objectiveCount get() = engine.getEntitiesFor(allOf(ObjectiveComponent::class).get()).count()
-    private val player: Player by lazy { inject() }
-    private val touchedObjectiveCount get () = player.touchedObjectives.count()
-    @ExperimentalStdlibApi
-    private val playerControlComponent get() = player.entity.getComponent<PlayerControlComponent>()
-    private val controlMapper: ControlMapper by lazy { inject() }
+    private val players get() = Players.players
+    private val engine by lazy { inject<Engine>() }
+    private val enemy by lazy { engine.getEntitiesFor(allOf(EnemyComponent::class, BehaviorComponent::class).get()).first() }
+    private val tree by lazy { enemy.getComponent(BehaviorComponent::class.java).tree }
+
 
     private lateinit var rootTable: KTableWidget
     private lateinit var infoBoard: KTableWidget
-    private lateinit var infoLabel: Label
 
 
     override val hudViewPort = ExtendViewport(uiWidth, uiHeight, OrthographicCamera())
+    override fun show() {
+        setup()
+    }
+
+    override fun hide() {
+        //setup clears everything, not needed.
+    }
+
     override val stage = Stage(hudViewPort, batch)
         .apply {
             isDebugAll = debug
@@ -52,10 +57,6 @@ class UserInterface(
         const val uiHeight = uiWidth * aspectRatio
     }
 
-    init {
-        setup()
-    }
-
     @ExperimentalStdlibApi
     override fun update(delta: Float) {
         batch.projectionMatrix = stage.camera.combined
@@ -65,31 +66,20 @@ class UserInterface(
         stage.draw()
     }
 
-//    Player Health:  ${player.health}
-//    Targets Left:   ${objectiveCount - touchedObjectiveCount}
-//    Splatter Count: $splatterCount
-//    Enemies Left:   $enemyCount
-
     @ExperimentalStdlibApi
     private fun updateInfo(delta: Float) {
-        infoLabel.setText(
-            """
-    FPS:            ${Gdx.graphics.framesPerSecond}
-    Player Health:  ${player.health}
-    Targets Left:   ${objectiveCount - touchedObjectiveCount}
-    Splatter Count: $splatterCount
-    Enemies Left:   $enemyCount
-      
-    """.trimIndent()
-        )
+        var index = 1
+        for ((l,p) in playerLabels) {
+            l.setText(
+"""
+Player $index                    
+Health: ${p.health}
+""".trimIndent()
+            )
+            index++
+        }
+        enemyLabel.setText(enemyInfo)
     }
-
-    private val mouseVector = vec2()
-    private fun getMousePosition(): Vector2 {
-        mouseVector.set(Gdx.input.x.toFloat(), Gdx.input.y.toFloat())
-        return mouseVector
-    }
-
     override fun dispose() {
         stage.dispose()
     }
@@ -99,14 +89,32 @@ class UserInterface(
     }
 
     private fun setup() {
+        tree.addListener(object : BehaviorTree.Listener<Entity> {
+            override fun statusUpdated(task: Task<Entity>?, previousStatus: Task.Status?) {
+                enemyInfo = "$task - $previousStatus"
+            }
+
+            override fun childAdded(task: Task<Entity>?, index: Int) {
+
+            }
+
+        })
         stage.clear()
         setupInfo()
     }
 
-    private fun setupInfo() {
-        infoBoard = scene2d.table {
+    private var enemyInfo = ""
 
-            infoLabel = label("InfoLabel")
+    private val playerLabels = mutableMapOf<Label, Player>()
+    private lateinit var enemyLabel: Label
+    private fun setupInfo() {
+
+        infoBoard = scene2d.table {
+            for((c,p) in players) {
+                val l = label("PlayerLabel")
+                playerLabels[l] = p
+            }
+            enemyLabel= label("nuthin")
         }
 
         rootTable = scene2d.table {

@@ -25,6 +25,10 @@ object Assets : Disposable {
         SpriteLoader.initCharachterAnims()
     }
 
+    val splashTexture: Texture by lazy {
+        Texture(Gdx.files.internal("splash/splash_1.png"))
+    }
+
     val shapeDrawerRegion: TextureRegion by lazy {
         val pixmap = Pixmap(1, 1, Pixmap.Format.RGBA8888)
         pixmap.setColor(Color.WHITE)

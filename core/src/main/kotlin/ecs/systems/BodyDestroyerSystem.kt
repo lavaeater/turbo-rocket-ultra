@@ -4,7 +4,7 @@ import com.badlogic.ashley.core.Entity
 import com.badlogic.ashley.systems.IteratingSystem
 import com.badlogic.gdx.physics.box2d.World
 import ecs.components.BodyComponent
-import ecs.components.DestroyComponent
+import ecs.components.gameplay.DestroyComponent
 import ktx.ashley.allOf
 import ktx.ashley.mapperFor
 import ktx.ashley.remove

@@ -4,15 +4,14 @@ import com.badlogic.ashley.core.Component
 import com.badlogic.gdx.graphics.OrthographicCamera
 import com.badlogic.gdx.math.Vector2
 import injection.Context.inject
+import input.ControlMapper
 import ktx.math.vec2
 import ktx.math.vec3
 import tru.AnimState
 
 class PlayerControlComponent(
-    private val controlMapper: ControlMapper,
+    val controlMapper: ControlMapper,
     private val rof: Float = 3f) : Component {
-
-    private val camera : OrthographicCamera by lazy { inject() }
     private var cooldownRemaining = 0f
 
     var shotDrawCoolDown = 0f
