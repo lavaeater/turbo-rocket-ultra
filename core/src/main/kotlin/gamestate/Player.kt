@@ -7,8 +7,10 @@ import ecs.components.gameplay.ObjectiveComponent
 class Player() {
     lateinit var body: Body
     lateinit var entity: Entity
+    var lives = 3
     var health: Int = 100
     val touchedObjectives = mutableSetOf<ObjectiveComponent>()
-    val dead : Boolean
+    var respawning = false
+    val isDead : Boolean
         get() = health < 1
 }
