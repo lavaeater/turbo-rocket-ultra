@@ -19,8 +19,8 @@ To make the graphics and environment easy I am currently working with the concep
 
 ### MVP
 
-* Fix enemy sensors / noticing <- advanced behaviors
 * Towers
+* Fix enemy sensors / noticing <- advanced behaviors
 * Fix enemy direction systems <- done?
 * Vehicles <- nice to have
 * Different weapons to shoot with
@@ -36,7 +36,7 @@ To make the graphics and environment easy I am currently working with the concep
 ## Done: Interrupted Tasks v0.1
 
 ### Notes
-So, what I wanted to achieve as a proof-of-concept was the idea of zombies hearing stuff, getting distracted and the like. So if you run around shooting zombies, they might be attracted to the noise. Hypothetically this could be a play strategy, like putting out "thumpers" that make noise and attract zombies, etc. We'll see. This is done by simply adding a component to the zombie from some other part of the game (a noticing system, or contact manager), which interrupts what the zombie is doing right now and sends it away to investigate the noise for some time. It took way too much effort because I misunderstood decorators and guards completely. Decorator wrap
+So, what I wanted to achieve as a proof-of-concept was the idea of zombies hearing stuff, getting distracted and the like. So if you run around shooting zombies, they might be attracted to the noise. Hypothetically this could be a play strategy, like putting out "thumpers" that make noise and attract zombies, etc. We'll see. This is done by simply adding a component to the zombie from some other part of the game (a noticing system, or contact manager), which interrupts what the zombie is doing right now and sends it away to investigate the noise for some time. It took way too much effort because I misunderstood decorators and guards completely. Decorator wraps tasks and adds special behavior to them, Guards are tasks that evaluate to success or fail - and depending on that the actual task is executed or not.
 
 ### Mechanics
 
@@ -316,11 +316,11 @@ Next should probably be the feature that requires the least work to make it a "g
 
 So the next feature will be ship collisions.
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbNjcwODMxMTA5LDMwMzU4MTMwNywtMjEwNj
-I1NTAxNywxOTYwNjk1MjEzLDE3Njk2ODM5NzcsMzM1NTAzMzQx
-LDEwMjcwODQwMSwxNTcxNDE2MDg1LC0yMTQ2MDQxNTc5LC05MD
-M2NjU5MjUsOTU0NDQyMzQ1LDE4NTE3MDkzMjUsLTE2OTgyMTM3
-NDMsLTE2NDExNDAyODcsMTMxNTMxNzczNiwtMzY4ODUzNTEyLD
-IxMzU4MTkwMDQsLTIxMTg4OTAxMDksMTcwNDk0NjE5OCw0NDM4
-NDkzNjRdfQ==
+eyJoaXN0b3J5IjpbLTE2MjM5NDE4NzMsMzAzNTgxMzA3LC0yMT
+A2MjU1MDE3LDE5NjA2OTUyMTMsMTc2OTY4Mzk3NywzMzU1MDMz
+NDEsMTAyNzA4NDAxLDE1NzE0MTYwODUsLTIxNDYwNDE1NzksLT
+kwMzY2NTkyNSw5NTQ0NDIzNDUsMTg1MTcwOTMyNSwtMTY5ODIx
+Mzc0MywtMTY0MTE0MDI4NywxMzE1MzE3NzM2LC0zNjg4NTM1MT
+IsMjEzNTgxOTAwNCwtMjExODg5MDEwOSwxNzA0OTQ2MTk4LDQ0
+Mzg0OTM2NF19
 -->
