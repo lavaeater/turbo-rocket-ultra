@@ -47,7 +47,7 @@ Why didn't it work before, then? Make it work this time...
 
 So, an important PSA about Guards - I for some reason got it into my head that guards = decorators, but that is absolutely not the case. Instead it is more like, well, guards could be any task. It could be an entire subtree of the behavior tree, or an imported tree, or whatever. 
 
-So,
+So, if I understand correctly, the dynamic guard selector evaluates the childrens guards and it picks the FIRST child whose guard evaluates to true. So ou
 
 ## Done: Multiplayer v0.1
 
@@ -307,11 +307,11 @@ Next should probably be the feature that requires the least work to make it a "g
 
 So the next feature will be ship collisions.
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbMjM3NTIyNzAzLC0yMTA2MjU1MDE3LDE5Nj
-A2OTUyMTMsMTc2OTY4Mzk3NywzMzU1MDMzNDEsMTAyNzA4NDAx
-LDE1NzE0MTYwODUsLTIxNDYwNDE1NzksLTkwMzY2NTkyNSw5NT
-Q0NDIzNDUsMTg1MTcwOTMyNSwtMTY5ODIxMzc0MywtMTY0MTE0
-MDI4NywxMzE1MzE3NzM2LC0zNjg4NTM1MTIsMjEzNTgxOTAwNC
-wtMjExODg5MDEwOSwxNzA0OTQ2MTk4LDQ0Mzg0OTM2NCwxNDg3
-Nzg0NDQ2XX0=
+eyJoaXN0b3J5IjpbLTE3NjgyNjQzNTQsLTIxMDYyNTUwMTcsMT
+k2MDY5NTIxMywxNzY5NjgzOTc3LDMzNTUwMzM0MSwxMDI3MDg0
+MDEsMTU3MTQxNjA4NSwtMjE0NjA0MTU3OSwtOTAzNjY1OTI1LD
+k1NDQ0MjM0NSwxODUxNzA5MzI1LC0xNjk4MjEzNzQzLC0xNjQx
+MTQwMjg3LDEzMTUzMTc3MzYsLTM2ODg1MzUxMiwyMTM1ODE5MD
+A0LC0yMTE4ODkwMTA5LDE3MDQ5NDYxOTgsNDQzODQ5MzY0LDE0
+ODc3ODQ0NDZdfQ==
 -->
