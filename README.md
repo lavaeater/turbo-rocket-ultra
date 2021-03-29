@@ -41,7 +41,9 @@ How about messages? A message from the ContactManager to the behaviorsystem (yes
 
 Implement my own Interrupt-decorator. Basically "Interrupted if has" - same as I already did, of course. What is the change? No change... damn. Add Interrupt-component to all entitycomponent-tasks, could work, all these systems could look for some particular component and say "fail" if it shows up, we will try that, won't we?
 
-Decor
+Decorator aren't guards. What .. the .. hell.
+
+Why didn't it work before, then? Make it work this time...
 
 ## Done: Multiplayer v0.1
 
@@ -301,11 +303,11 @@ Next should probably be the feature that requires the least work to make it a "g
 
 So the next feature will be ship collisions.
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbMTc1MjUxMjkwOCwxOTYwNjk1MjEzLDE3Nj
-k2ODM5NzcsMzM1NTAzMzQxLDEwMjcwODQwMSwxNTcxNDE2MDg1
-LC0yMTQ2MDQxNTc5LC05MDM2NjU5MjUsOTU0NDQyMzQ1LDE4NT
-E3MDkzMjUsLTE2OTgyMTM3NDMsLTE2NDExNDAyODcsMTMxNTMx
-NzczNiwtMzY4ODUzNTEyLDIxMzU4MTkwMDQsLTIxMTg4OTAxMD
-ksMTcwNDk0NjE5OCw0NDM4NDkzNjQsMTQ4Nzc4NDQ0NiwtMTQ3
-MjQ4MTI5OV19
+eyJoaXN0b3J5IjpbLTIxMDYyNTUwMTcsMTk2MDY5NTIxMywxNz
+Y5NjgzOTc3LDMzNTUwMzM0MSwxMDI3MDg0MDEsMTU3MTQxNjA4
+NSwtMjE0NjA0MTU3OSwtOTAzNjY1OTI1LDk1NDQ0MjM0NSwxOD
+UxNzA5MzI1LC0xNjk4MjEzNzQzLC0xNjQxMTQwMjg3LDEzMTUz
+MTc3MzYsLTM2ODg1MzUxMiwyMTM1ODE5MDA0LC0yMTE4ODkwMT
+A5LDE3MDQ5NDYxOTgsNDQzODQ5MzY0LDE0ODc3ODQ0NDYsLTE0
+NzI0ODEyOTldfQ==
 -->
