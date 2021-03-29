@@ -36,7 +36,7 @@ To make the graphics and environment easy I am currently working with the concep
 ## Done: Interrupted Tasks v0.1
 
 ### Notes
-So, what I wanted to achieve as a proof-of-concept was the idea of zombies hearing stuff, getting distracted and the like. So if you run around shooting zombies, they might be attracted to the noise. Hypothetically this could be a play strategy, like putting out "thumpers" that make noise and attract zombies, etc. We'll see. 
+So, what I wanted to achieve as a proof-of-concept was the idea of zombies hearing stuff, getting distracted and the like. So if you run around shooting zombies, they might be attracted to the noise. Hypothetically this could be a play strategy, like putting out "thumpers" that make noise and attract zombies, etc. We'll see. This is done by simply adding a component to the zombie from some other part of the game (a noticing system, or contact manager)
 
 ### Mechanics
 
@@ -316,7 +316,7 @@ Next should probably be the feature that requires the least work to make it a "g
 
 So the next feature will be ship collisions.
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbLTU2ODQxMjE5MCwzMDM1ODEzMDcsLTIxMD
+eyJoaXN0b3J5IjpbLTE5ODE0NjMzMywzMDM1ODEzMDcsLTIxMD
 YyNTUwMTcsMTk2MDY5NTIxMywxNzY5NjgzOTc3LDMzNTUwMzM0
 MSwxMDI3MDg0MDEsMTU3MTQxNjA4NSwtMjE0NjA0MTU3OSwtOT
 AzNjY1OTI1LDk1NDQ0MjM0NSwxODUxNzA5MzI1LC0xNjk4MjEz
