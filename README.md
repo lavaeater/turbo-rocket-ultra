@@ -18,19 +18,40 @@ Inspirations off the bat for this game are:
 To make the graphics and environment easy I am currently working with the concept of "zombie tower defense", which is obviously lame and very boring, but hey... it's easy to find art for.
 
 ### MVP
+
+* Fix enemy sensors / noticing <- advanced behaviors
 * Towers
-* Fix enemy direction systems
-* Fix enemy sensors / noticing
+* Fix enemy direction systems <- done?
 * Vehicles <- nice to have
 * Different weapons to shoot with
 * Controller support <- Done
-* Twin Stick shooting
-* Multiplayer
+* Twin Stick shooting <- done
+* Multiplayer <- done
 * Player damage / Enemy attacks <- Done
 * Objectives <- Done!
 * Enemies <- Done
 * Blood Splatter <- Done
 * MiniMap <- Done
+
+## Doing now: Advanced behaviors using Ashley
+
+How do I implement guards and interruption of actions being performed? As it is now, these types of tasks I have implemented simply return success or failure OR running - but it would be cool to add some kind of guard / interruption of these tasks using some kind of "simple" mechanic - which of course could be done in several ways.
+
+How about messages? A message from the ContactManager to the behaviorsystem (yes probably)? Or the contact manager adds a component and that component is marked as a "failcurrent task"-component? An interrupt-component, if you will? So, that could be super simple, to make some kind of "guard" system happen. An interrupt occurs... more on this later.
+
+Implement my own Interrupt-decorator. Basically "Interrupted if has" - same as I already did, of course. What is the change? No change... damn. Add Interrupt-component to all entitycomponent-tasks, could work, all these systems could look for some particular component and say "fail" if it shows up, we will try that, won't we?
+
+Decorator aren't guards. What .. the .. hell.
+
+Why didn't it work before, then? Make it work this time...
+
+So, an important PSA about Guards - I for some reason got it into my head that guards = decorators, but that is absolutely not the case. Instead it is more like, well, guards could be any task. It could be an entire subtree of the behavior tree, or an imported tree, or whatever. 
+
+So, if I understand correctly, the dynamic guard selector evaluates the childrens guards and it picks the FIRST child whose guard evaluates to true. So our investigate-task should only be run when the enemy has noticed something, and the noticing function is there again. 
+
+So I will try to set up the tree to have like "HasComponentTask" as guard - but the task can't then be inverted, or can it? Yes it can. The inverter inverts the result of the child task, which means we have to take that into account when doing this logic. It will work.
+
+
 
 ## Done: Multiplayer v0.1
 
@@ -38,10 +59,10 @@ To make the graphics and environment easy I am currently working with the concep
 
 This feature will add about 20 sub-features. To have multiplayer, we must now have a way of starting the game, pausing the game, adding players, removing players, etc. And of course the most important one of them all: selecting the player character. So I will add:
 * A FSM for the Game state <- this is where these are actually **very** useful
-* A game setup screen
-* A pause screen
-* A game over screen
-* Ways to move between these etc.
+* A game setup screen <- not done
+* A pause screen <- "done"
+* A game over screen <- "done"
+* Ways to move between these etc. <- done
 
 After that, we can actually use the multiplayer functionality, shouldn't be too difficult.
 
@@ -290,11 +311,11 @@ Next should probably be the feature that requires the least work to make it a "g
 
 So the next feature will be ship collisions.
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbMzM1NTAzMzQxLDEwMjcwODQwMSwxNTcxND
-E2MDg1LC0yMTQ2MDQxNTc5LC05MDM2NjU5MjUsOTU0NDQyMzQ1
-LDE4NTE3MDkzMjUsLTE2OTgyMTM3NDMsLTE2NDExNDAyODcsMT
-MxNTMxNzczNiwtMzY4ODUzNTEyLDIxMzU4MTkwMDQsLTIxMTg4
-OTAxMDksMTcwNDk0NjE5OCw0NDM4NDkzNjQsMTQ4Nzc4NDQ0Ni
-wtMTQ3MjQ4MTI5OSwtNzY3NzEyNzcxLC00MDA4OTIwOTAsMTA2
-MTQ4MjUzNl19
+eyJoaXN0b3J5IjpbMzAzNTgxMzA3LC0yMTA2MjU1MDE3LDE5Nj
+A2OTUyMTMsMTc2OTY4Mzk3NywzMzU1MDMzNDEsMTAyNzA4NDAx
+LDE1NzE0MTYwODUsLTIxNDYwNDE1NzksLTkwMzY2NTkyNSw5NT
+Q0NDIzNDUsMTg1MTcwOTMyNSwtMTY5ODIxMzc0MywtMTY0MTE0
+MDI4NywxMzE1MzE3NzM2LC0zNjg4NTM1MTIsMjEzNTgxOTAwNC
+wtMjExODg5MDEwOSwxNzA0OTQ2MTk4LDQ0Mzg0OTM2NCwxNDg3
+Nzg0NDQ2XX0=
 -->
