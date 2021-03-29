@@ -20,6 +20,7 @@ import ecs.systems.graphics.RenderSystem
 import ecs.systems.graphics.ShootDebugRenderSystem
 import ecs.systems.input.GamepadInputSystem
 import ecs.systems.input.VehicleControlSystem
+import ecs.systems.player.PlayerDeathSystem
 import ecs.systems.player.PlayerMoveSystem
 import ecs.systems.player.PlayerShootingSystem
 import ktx.box2d.createWorld
@@ -90,6 +91,7 @@ object Context {
             addSystem(EnemyHearsShotsSystem())
             addSystem(InvestigateSystem())
             addSystem(EnemyDebugRenderSystem(true, true))
+            addSystem(PlayerDeathSystem())
             addSystem(RenderSystem(inject<PolygonSpriteBatch>() as Batch))
             addSystem(RenderMiniMapSystem())
         }

@@ -74,6 +74,7 @@ class UserInterface(
 """
 Player $index                    
 Health: ${p.health}
+Lives: ${p.lives}
 """.trimIndent()
             )
             index++
