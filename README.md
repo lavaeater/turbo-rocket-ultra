@@ -47,7 +47,9 @@ Why didn't it work before, then? Make it work this time...
 
 So, an important PSA about Guards - I for some reason got it into my head that guards = decorators, but that is absolutely not the case. Instead it is more like, well, guards could be any task. It could be an entire subtree of the behavior tree, or an imported tree, or whatever. 
 
-So, if I understand correctly, the dynamic guard selector evaluates the childrens guards and it picks the FIRST child whose guard evaluates to true. So ou
+So, if I understand correctly, the dynamic guard selector evaluates the childrens guards and it picks the FIRST child whose guard evaluates to true. So our investigate-task should only be run when the enemy has noticed something, and the noticing function is there again. 
+
+So 
 
 ## Done: Multiplayer v0.1
 
@@ -307,7 +309,7 @@ Next should probably be the feature that requires the least work to make it a "g
 
 So the next feature will be ship collisions.
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbLTE3NjgyNjQzNTQsLTIxMDYyNTUwMTcsMT
+eyJoaXN0b3J5IjpbLTEyNDUzOTI5NDIsLTIxMDYyNTUwMTcsMT
 k2MDY5NTIxMywxNzY5NjgzOTc3LDMzNTUwMzM0MSwxMDI3MDg0
 MDEsMTU3MTQxNjA4NSwtMjE0NjA0MTU3OSwtOTAzNjY1OTI1LD
 k1NDQ0MjM0NSwxODUxNzA5MzI1LC0xNjk4MjEzNzQzLC0xNjQx
