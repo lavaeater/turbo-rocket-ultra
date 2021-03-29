@@ -1,6 +1,5 @@
 package ecs.systems.enemy
 
-import ai.enemy.EnemyState
 import com.badlogic.ashley.core.Entity
 import com.badlogic.ashley.systems.IteratingSystem
 import com.badlogic.gdx.graphics.Color
@@ -18,7 +17,9 @@ import ktx.graphics.use
 import physics.hasComponent
 import tru.Assets
 
-class EnemyDebugRenderSystem(private val renderStates: Boolean = false, private val renderScans: Boolean = false) : IteratingSystem(
+class EnemyDebugRenderSystem(
+    private val renderStates: Boolean = false,
+    private val renderScans: Boolean = false) : IteratingSystem(
     allOf(
         EnemyComponent::class,
         TransformComponent::class).get()) {

@@ -90,7 +90,7 @@ object Context {
             addSystem(SplatterRemovalSystem())
             addSystem(EnemyHearsShotsSystem())
             addSystem(InvestigateSystem())
-            addSystem(EnemyDebugRenderSystem(true, true))
+            addSystem(EnemyDebugRenderSystem(false, true))
             addSystem(PlayerDeathSystem())
             addSystem(RenderSystem(inject<PolygonSpriteBatch>() as Batch))
             addSystem(RenderMiniMapSystem())

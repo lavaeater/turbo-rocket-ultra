@@ -141,7 +141,7 @@ fun player(player: Player, mapper: ControlMapper) {
         addComponent<TransformComponent>()
         add(mapper)
         addComponent<PlayerControlComponent> { controlMapper = mapper }//We will have multiple components later
-        addComponent<CharacterSpriteComponent> { anims = Assets.characters["player"]!! }
+        add(CharacterSpriteComponent(Assets.characters["player"]!!))
         addComponent<RenderableComponent> { layer = 1 }
         addComponent<PlayerComponent> { this.player = player }
         addComponent<FiredShotsComponent>()
@@ -187,7 +187,7 @@ fun enemy(at: Vector2) {
         addComponent<TransformComponent> { position.set(box2dBody.position) }
         addComponent<EnemySensorComponent>()
         addComponent<EnemyComponent>()
-        addComponent<CharacterSpriteComponent> { anims = Assets.characters["enemy"]!! }
+        add(CharacterSpriteComponent(Assets.characters["enemy"]!!))
         addComponent<RenderableComponent> { layer = 1 }
     }
     entity.addComponent<BehaviorComponent> { tree = Tree.getEnemyBehaviorTree().apply { `object` = entity } }
