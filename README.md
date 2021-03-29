@@ -33,7 +33,12 @@ To make the graphics and environment easy I am currently working with the concep
 * Blood Splatter <- Done
 * MiniMap <- Done
 
-## Doing now: Advanced behaviors using Ashley
+## Done: Interrupted Tasks v0.1
+
+### Notes
+So, what I wanted to achieve as a proof-of-concept was the idea of zombies hearing stuff, getting distracted and the like. So if you run around shooting zombies, they might be attracted to the noise. Hypothetically this could be a play strategy, like putting out "thumpers" that make noise and attract zombies, etc. We'll see. 
+
+### Mechanics
 
 How do I implement guards and interruption of actions being performed? As it is now, these types of tasks I have implemented simply return success or failure OR running - but it would be cool to add some kind of guard / interruption of these tasks using some kind of "simple" mechanic - which of course could be done in several ways.
 
@@ -311,11 +316,11 @@ Next should probably be the feature that requires the least work to make it a "g
 
 So the next feature will be ship collisions.
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbMzAzNTgxMzA3LC0yMTA2MjU1MDE3LDE5Nj
-A2OTUyMTMsMTc2OTY4Mzk3NywzMzU1MDMzNDEsMTAyNzA4NDAx
-LDE1NzE0MTYwODUsLTIxNDYwNDE1NzksLTkwMzY2NTkyNSw5NT
-Q0NDIzNDUsMTg1MTcwOTMyNSwtMTY5ODIxMzc0MywtMTY0MTE0
-MDI4NywxMzE1MzE3NzM2LC0zNjg4NTM1MTIsMjEzNTgxOTAwNC
-wtMjExODg5MDEwOSwxNzA0OTQ2MTk4LDQ0Mzg0OTM2NCwxNDg3
-Nzg0NDQ2XX0=
+eyJoaXN0b3J5IjpbLTU2ODQxMjE5MCwzMDM1ODEzMDcsLTIxMD
+YyNTUwMTcsMTk2MDY5NTIxMywxNzY5NjgzOTc3LDMzNTUwMzM0
+MSwxMDI3MDg0MDEsMTU3MTQxNjA4NSwtMjE0NjA0MTU3OSwtOT
+AzNjY1OTI1LDk1NDQ0MjM0NSwxODUxNzA5MzI1LC0xNjk4MjEz
+NzQzLC0xNjQxMTQwMjg3LDEzMTUzMTc3MzYsLTM2ODg1MzUxMi
+wyMTM1ODE5MDA0LC0yMTE4ODkwMTA5LDE3MDQ5NDYxOTgsNDQz
+ODQ5MzY0XX0=
 -->
