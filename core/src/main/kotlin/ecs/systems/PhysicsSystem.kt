@@ -40,9 +40,16 @@ class PhysicsSystem(private val world: World, private val timeStep : Float = 1/6
                 if(entity.has(pMapper)) {
                     val pC = pMapper.get(entity)
                     val bloodEntity = engine.createEntity().apply {
-                        add(TransformComponent(transformComponent.position.cpy(), transformComponent.rotation))
-                        add(SplatterComponent(.1f, pC.color, pC.life / 2f))
-                        add(RenderableComponent(0))
+                        add(engine.createComponent(TransformComponent::class.java).apply {
+                            position.set(transformComponent.position)
+                            rotation = transformComponent.rotation
+                        })
+                        add(engine.createComponent(SplatterComponent::class.java).apply {
+                            radius = .1f
+                            color = pC.color
+                            life = pC.life / 2f
+                        })
+                        add(engine.createComponent(RenderableComponent::class.java))
                     }
                     engine.addEntity(bloodEntity)
                 }

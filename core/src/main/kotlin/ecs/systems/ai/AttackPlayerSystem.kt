@@ -28,7 +28,7 @@ class AttackPlayerSystem : IteratingSystem(allOf(
         val player = trackerMapper[entity].player!!
         if(attackPlayer.status == Task.Status.RUNNING) {
             if(attackPlayer.coolDown <= 0f) {
-                attackPlayer.coolDown = (.1f..0.5f).random() //This guy needs to wait a little before attacking again.
+                attackPlayer.coolDown = attackPlayer.coolDownRange.random()//This guy needs to wait a little before attacking again.
                 if((1..3).random() == 1) {
                     player.health -= (5..15).random()
                 }

@@ -50,7 +50,7 @@ class EnemyDebugRenderSystem(private val renderStates: Boolean = false, private 
                 }
                 shapeDrawer.filledCircle(entity[transformMapper]!!.position, 5f, color)
             }
-            if(renderScans && enemyComponent.state == EnemyState.Seeking)
+            if(renderScans && entity.hasComponent<SeekPlayer>())
                 shapeDrawer.line(enemyComponent.scanVectorStart, enemyComponent.scanVectorEnd, Color.RED, .1f)
         }
     }

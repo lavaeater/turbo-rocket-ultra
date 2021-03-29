@@ -63,7 +63,6 @@ dependencies {
 	coreLibraryDesugaring 'com.android.tools:desugar_jdk_libs:1.0.10'
 	implementation project(':core')
 	implementation "com.badlogicgames.gdx:gdx-backend-android:$gdxVersion"
-	implementation "com.badlogicgames.gdx-controllers:gdx-controllers-android:$gdxControllersVersion"
 
 	natives "com.badlogicgames.gdx:gdx-platform:$gdxVersion:natives-armeabi"
 	natives "com.badlogicgames.gdx:gdx-platform:$gdxVersion:natives-armeabi-v7a"

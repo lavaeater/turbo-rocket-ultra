@@ -4,9 +4,11 @@ import com.badlogic.ashley.core.Component
 import com.badlogic.ashley.core.Entity
 import com.badlogic.ashley.systems.IteratingSystem
 import ecs.components.ai.CoolDownComponent
+import ecs.components.graphics.RenderableComponent
 import ecs.components.player.PlayerComponent
 import ktx.ashley.allOf
 import ktx.ashley.mapperFor
+import ktx.ashley.remove
 import physics.getComponent
 import physics.hasComponent
 
@@ -25,16 +27,20 @@ class PlayerRespawning: CoolDownComponent() {
 }
 class PlayerIsDead: Component
 
-
 class PlayerDeathSystem: IteratingSystem(allOf(PlayerComponent::class).get()) {
     val mapper = mapperFor<PlayerComponent>()
     @ExperimentalStdlibApi
     override fun processEntity(entity: Entity, deltaTime: Float) {
         val pc = mapper[entity]
         if(pc.player.isDead && pc.player.lives > 0 && !entity.hasComponent<PlayerWaitingForRespawn>() && !entity.hasComponent<PlayerRespawning>()) {
-    entity.add(engine.createComponent(PlayerIsDead::class.java))
+            pc.player.lives -= 1
+            entity.add(engine.createComponent(PlayerWaitingForRespawn::class.java))
+        } else if(pc.player.isDead && pc.player.lives <= 0){
+            entity.add(engine.createComponent(PlayerIsDead::class.java))
         }
+
         if(entity.hasComponent<PlayerWaitingForRespawn>()) {
+            entity.remove<RenderableComponent>()
             val dc = entity.getComponent<PlayerWaitingForRespawn>()
             dc.coolDown-= deltaTime
             if(dc.coolDown < 0f) {
@@ -44,6 +50,11 @@ class PlayerDeathSystem: IteratingSystem(allOf(PlayerComponent::class).get()) {
             }
         }
         if(entity.hasComponent<PlayerRespawning>()) {
+            if(!entity.hasComponent<RenderableComponent>()) {
+                entity.add(engine.createComponent(RenderableComponent::class.java).apply {
+                    layer = 1
+                })
+            }
             val rc = entity.getComponent<PlayerRespawning>()
             rc.coolDown-= deltaTime
             if(rc.coolDown < 0f) {

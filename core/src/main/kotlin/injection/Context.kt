@@ -72,9 +72,9 @@ object Context {
             addSystem(KeyboardInputSystem())
             addSystem(GamepadInputSystem())
             addSystem(BodyDestroyerSystem(inject())) //world
-            addSystem(EnterVehicleSystem())
-            addSystem(ExitVehicleSystem())
-            addSystem(VehicleControlSystem())
+//            addSystem(EnterVehicleSystem())
+//            addSystem(ExitVehicleSystem())
+//            addSystem(VehicleControlSystem())
             addSystem(CharacterWalkAndShootDirectionSystem())
             addSystem(ShootDebugRenderSystem())
             addSystem(PlayerShootingSystem(inject()))

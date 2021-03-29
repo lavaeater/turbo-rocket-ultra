@@ -116,7 +116,7 @@ inline fun <reified T: Component>Contact.bothHaveComponent(): Boolean {
 }
 
 @ExperimentalStdlibApi
-inline fun Contact.getPlayerFor(): Player {
+fun Contact.getPlayerFor(): Player {
     return this.getEntityFor<PlayerComponent>().getComponent<PlayerComponent>().player
 }
 

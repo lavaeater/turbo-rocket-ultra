@@ -10,8 +10,7 @@ import ktx.ashley.allOf
 import ktx.ashley.mapperFor
 
 class PlayerMoveSystem(
-    private val speed: Float = 25f,
-    private val thrust: Float = 25f): IteratingSystem(
+    private val speed: Float = 25f): IteratingSystem(
     allOf(
         PlayerControlComponent::class,
         BodyComponent::class,
@@ -20,21 +19,18 @@ class PlayerMoveSystem(
     private val pccMapper = mapperFor<PlayerControlComponent>()
     private val bcMapper = mapperFor<BodyComponent>()
     private val anMapper = mapperFor<CharacterSpriteComponent>()
-    private val tMapper = mapperFor<TransformComponent>()
 
     override fun processEntity(entity: Entity, deltaTime: Float) {
         val pcc = pccMapper.get(entity)
         val bc = bcMapper.get(entity)
         val csc = anMapper.get(entity)
-        val tc = tMapper.get(entity)
-        executeMove(pcc, bc, csc, tc)
+        executeMove(pcc, bc, csc)
     }
 
     private fun executeMove(
         playerControlComponent: PlayerControlComponent,
         bodyComponent: BodyComponent,
-        characterSpriteComponent: CharacterSpriteComponent,
-        transformComponent: TransformComponent
+        characterSpriteComponent: CharacterSpriteComponent
     ) {
 
         bodyComponent.body.setLinearVelocity(playerControlComponent.walkVector.x * speed, playerControlComponent.walkVector.y * speed)

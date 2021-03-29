@@ -3,6 +3,7 @@ package ecs.systems.player
 import audio.AudioPlayer
 import com.badlogic.ashley.core.Entity
 import com.badlogic.ashley.systems.IteratingSystem
+import com.badlogic.gdx.graphics.Color
 import com.badlogic.gdx.physics.box2d.Fixture
 import com.badlogic.gdx.physics.box2d.World
 import ecs.components.enemy.EnemyComponent
@@ -101,7 +102,8 @@ class PlayerShootingSystem(private val audioPlayer: AudioPlayer) : IteratingSyst
                 if (closestFixture.isEntity() && closestFixture.body.isEnemy()) {
                     val enemyEntity = closestFixture.getEntity()
                     enemyEntity.getComponent<EnemyComponent>().takeDamage(10..25)
-                    splatterParticles(closestFixture.body, controlComponent.aimVector.cpy())
+                    splatterParticles(closestFixture.body, controlComponent.aimVector.cpy(),
+                        color = Color((0.5f..0.7f).random(), 0f, 0f, (.5f..1f).random()))
                 }
             }
         }

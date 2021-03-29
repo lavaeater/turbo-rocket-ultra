@@ -1,5 +1,7 @@
 package ecs.systems.fx
 
+import com.badlogic.ashley.core.Component
+import com.badlogic.ashley.core.Engine
 import com.badlogic.ashley.core.Entity
 import com.badlogic.ashley.systems.IteratingSystem
 import ecs.components.gameplay.DestroyComponent
@@ -7,7 +9,9 @@ import ecs.components.gameplay.TransformComponent
 import ecs.components.graphics.ParticleComponent
 import ecs.components.graphics.RenderableComponent
 import ecs.components.fx.SplatterComponent
+import factories.engine
 import ktx.ashley.allOf
+import ktx.ashley.create
 import ktx.ashley.mapperFor
 
 class AddSplatterSystem: IteratingSystem(allOf(ParticleComponent::class, TransformComponent::class).get()) {
@@ -18,15 +22,33 @@ class AddSplatterSystem: IteratingSystem(allOf(ParticleComponent::class, Transfo
         val transformComponent = transformMapper.get(entity)
         val particleComponent = particleMapper.get(entity)
         val bloodEntity = engine.createEntity().apply {
-            add(TransformComponent(transformComponent.position.cpy(), transformComponent.rotation))
-            add(SplatterComponent(20f, particleComponent.color, 0.2f))
-            add(RenderableComponent(0))
+            addComponent<TransformComponent> {
+                position.set(transformComponent.position)
+                rotation = transformComponent.rotation
+            }
+            addComponent<SplatterComponent> {
+                life = 20f
+                color = particleComponent.color
+                radius = 0.2f
+            }
+            addComponent<RenderableComponent>()
         }
         engine.addEntity(bloodEntity)
 
         particleComponent.life -= deltaTime
         if(particleComponent.life < 0f)
-            entity.add(DestroyComponent())
+            entity.addComponent<DestroyComponent>()
     }
 }
 
+inline fun<reified T: Component>Entity.addComponent(block: T.() -> Unit = {}) {
+    this.add(component(block))
+}
+
+inline fun<reified T: Component>component(block: T.()-> Unit = {}) :T {
+    return engine().createComponent(block)
+}
+
+inline fun<reified T: Component> Engine.createComponent(block: T.() -> Unit = {}): T {
+    return this.createComponent(T::class.java).apply(block)
+}

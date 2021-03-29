@@ -111,7 +111,7 @@ Lives: ${p.lives}
     private fun setupInfo() {
 
         infoBoard = scene2d.table {
-            for((c,p) in players) {
+            for((_,p) in players) {
                 val l = label("PlayerLabel")
                 playerLabels[l] = p
             }
