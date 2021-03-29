@@ -1,7 +1,6 @@
 package physics
 
 import com.badlogic.gdx.physics.box2d.*
-import ecs.components.*
 import ai.enemy.EnemyState
 import com.badlogic.ashley.core.Engine
 import ecs.components.ai.PlayerTrackComponent
@@ -9,9 +8,8 @@ import ecs.components.enemy.EnemyComponent
 import ecs.components.enemy.EnemySensorComponent
 import ecs.components.gameplay.DestroyComponent
 import ecs.components.gameplay.ObjectiveComponent
-import ecs.components.gameplay.TransformComponent
+import ecs.components.gameplay.ShotComponent
 import injection.Context.inject
-import ktx.ashley.remove
 
 class ContactManager: ContactListener {
     private val engine by lazy {inject<Engine>()}
@@ -47,16 +45,6 @@ class ContactManager: ContactListener {
                 enemyA.newState(EnemyState.ChasePlayer)
                 enemyA.chaseTransform = enemyB.chaseTransform
             }
-//            else if(enemyB.state != EnemyState.FollowAFriend) {
-//                enemyB.newState(EnemyState.FollowAFriend)
-//                enemyB.chaseTransform = contact.fixtureA.getEntity().getComponent()
-//            }
-
-            /*
-            And if no one is chasing the player, we'll just make them follow each other
-            Somehow
-             */
-
         }
 
         if (contact.hasComponent<ShotComponent>()) {
@@ -66,12 +54,12 @@ class ContactManager: ContactListener {
     }
 
     override fun endContact(contact: Contact) {
-        if(contact.isPlayerContact()) {
-            if(contact.hasComponent<EnemySensorComponent>()) {
-                val enemy = contact.getEntityFor<EnemySensorComponent>()
-                enemy.remove<PlayerIsInSensorRangeComponent>()
-            }
-        }
+//        if(contact.isPlayerContact()) {
+//            if(contact.hasComponent<EnemySensorComponent>()) {
+//                val enemy = contact.getEntityFor<EnemySensorComponent>()
+//                enemy.remove<NoticedSomething>()
+//            }
+//        }
     }
 
     override fun preSolve(contact: Contact, oldManifold: Manifold?) {

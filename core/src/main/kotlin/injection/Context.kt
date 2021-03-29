@@ -10,10 +10,8 @@ import com.badlogic.gdx.graphics.g2d.PolygonSpriteBatch
 import com.badlogic.gdx.utils.viewport.ExtendViewport
 import ecs.systems.*
 import ecs.systems.ai.*
+import ecs.systems.enemy.*
 import ecs.systems.input.KeyboardInputSystem
-import ecs.systems.enemy.EnemyDeathSystem
-import ecs.systems.enemy.EnemyDirectionSystem
-import ecs.systems.enemy.EnemyMovementSystem
 import ecs.systems.fx.AddSplatterSystem
 import ecs.systems.fx.SplatterRemovalSystem
 import ecs.systems.graphics.CameraUpdateSystem
@@ -89,6 +87,9 @@ object Context {
             addSystem(EnemyDirectionSystem())
             addSystem(AddSplatterSystem())
             addSystem(SplatterRemovalSystem())
+            addSystem(EnemyHearsShotsSystem())
+            addSystem(InvestigateSystem())
+            addSystem(EnemyDebugRenderSystem(true, true))
             addSystem(RenderSystem(inject<PolygonSpriteBatch>() as Batch))
             addSystem(RenderMiniMapSystem())
         }

@@ -5,6 +5,9 @@ import com.badlogic.ashley.core.Entity
 import com.badlogic.gdx.ai.btree.Task
 import ecs.components.ai.TaskComponent
 
+
+
+
 class EntityComponentTask<T: TaskComponent>(private val componentClass: Class<T>) : EntityTask() {
     private val mapper by lazy { ComponentMapper.getFor(componentClass) }
 

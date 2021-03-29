@@ -1,9 +1,7 @@
-package ecs.components
+package ecs.components.player
 
 import com.badlogic.ashley.core.Component
-import com.badlogic.gdx.graphics.OrthographicCamera
 import com.badlogic.gdx.math.Vector2
-import injection.Context.inject
 import input.ControlMapper
 import ktx.math.vec2
 import ktx.math.vec3

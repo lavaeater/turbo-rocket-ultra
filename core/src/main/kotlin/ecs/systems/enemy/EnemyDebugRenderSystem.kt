@@ -6,12 +6,9 @@ import com.badlogic.ashley.systems.IteratingSystem
 import com.badlogic.gdx.graphics.Color
 import com.badlogic.gdx.graphics.g2d.Batch
 import com.badlogic.gdx.graphics.g2d.PolygonSpriteBatch
+import ecs.components.ai.*
 import ecs.components.enemy.EnemyComponent
 import ecs.components.gameplay.TransformComponent
-import ecs.components.ai.Amble
-import ecs.components.ai.AttackPlayer
-import ecs.components.ai.ChasePlayer
-import ecs.components.ai.SeekPlayer
 import injection.Context.inject
 import ktx.ashley.allOf
 import ktx.ashley.get
@@ -45,6 +42,7 @@ class EnemyDebugRenderSystem(private val renderStates: Boolean = false, private 
             if(renderStates) {
                 var color = Color.GREEN
                 when {
+                    entity.hasComponent<Investigate>() -> color = Color.PURPLE
                     entity.hasComponent<Amble>() -> color = Color.GREEN
                     entity.hasComponent<SeekPlayer>() -> color = Color.CYAN
                     entity.hasComponent<ChasePlayer>() -> color = Color.YELLOW

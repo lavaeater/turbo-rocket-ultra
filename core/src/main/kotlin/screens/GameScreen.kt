@@ -98,7 +98,7 @@ class GameScreen : KtxScreen {
         var randomAngle = (0f..360f)
         val startVector = Vector2.X.cpy().scl(100f).setAngleDeg(randomAngle.random())
 
-        numberOfEnemies = 1 // 2f.pow(currentLevel).roundToInt() * 1
+        numberOfEnemies = 2 //2f.pow(currentLevel).roundToInt() * 10
         numberOfObjectives = 2f.pow(currentLevel).roundToInt()
 
         for (enemy in engine.getEntitiesFor(allOf(EnemyComponent::class).get())) {

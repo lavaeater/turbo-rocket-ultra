@@ -1,23 +1,23 @@
 package ai
 
-import ai.builders.doesEntityHave
-import ai.builders.entityDo
-import ai.builders.invert
-import ai.builders.tree
+import ai.builders.*
 import com.badlogic.ashley.core.Entity
-import ecs.components.PlayerIsInSensorRangeComponent
+import ecs.components.ai.NoticedSomething
 import ecs.components.ai.*
 
 object Tree {
-    fun getEnemyBehaviorTree_new() = tree<Entity> {
+    fun getEnemyBehaviorTree() = tree<Entity> {
         dynamicGuardSelector {
-            first(entityDo<Amble>())
-            then(invert(entityDo<SeekPlayer>()))
-            then(invert(entityDo<ChasePlayer>()))
-            last(entityDo<AttackPlayer>())
+            first(entityDo<Investigate> { ifEntityHas<NoticedSomething>() })
+            then(entityDo<AttackPlayer> { ifEntityHas<PlayerInRangeComponent>() })
+            then(ai.builders.selector {
+                first(invert(entityDo<SeekPlayer>{ unlessEntityHas<NoticedSomething>()}))
+                last(invert(entityDo<ChasePlayer>{ unlessEntityHas<NoticedSomething>() }))
+            })
+            then(entityDo<Amble> { unlessEntityHas<NoticedSomething>()})
         }
     }
-    fun getEnemyBehaviorTree() = tree<Entity> {
+    fun getEnemyBehaviorTree_old() = tree<Entity> {
         selector {
             first(entityDo<Amble>())
             then(invert(entityDo<SeekPlayer>()))

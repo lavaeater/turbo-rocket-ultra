@@ -6,6 +6,7 @@ import com.badlogic.gdx.ai.btree.Task
 import ecs.components.enemy.EnemyComponent
 import ecs.components.gameplay.TransformComponent
 import ecs.components.ai.AttackPlayer
+import ecs.components.ai.PlayerInRangeComponent
 import ecs.components.ai.PlayerTrackComponent
 import ktx.ashley.allOf
 import ktx.ashley.mapperFor
@@ -36,6 +37,7 @@ class AttackPlayerSystem : IteratingSystem(allOf(
                 val playerPosition = tMapper.get(player.entity).position
                 val distance = vec2().set(transformComponent.position).sub(playerPosition).len2()
                 if (distance > 5f) {
+                    entity.remove(PlayerInRangeComponent::class.java)
                     //player has moved away, we have failed
                     attackPlayer.status = Task.Status.FAILED
                 }

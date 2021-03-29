@@ -1,6 +1,8 @@
 package ai.builders
 
+import ai.tasks.EntityTask
 import com.badlogic.ashley.core.Component
+import com.badlogic.ashley.core.Entity
 import com.badlogic.gdx.ai.btree.Task
 import com.badlogic.gdx.ai.btree.decorator.*
 import com.badlogic.gdx.ai.utils.random.IntegerDistribution
@@ -21,3 +23,9 @@ inline fun <reified T : Component> doesEntityHave() = HasComponentBuilder(T::cla
 
 inline fun <reified T: TaskComponent> entityDo(block: EntityComponentTaskBuilder<T>.() -> Unit = {}) = EntityComponentTaskBuilder(T::class.java).apply(block).build()
 
+inline fun <reified T: Component>unlessEntityHas(
+    task: Task<Entity>,
+    block: EntityDoesNotHaveComponentGuardBuilder<T>.()-> Unit = {}) = EntityDoesNotHaveComponentGuardBuilder(task, T::class.java).apply(block).build()
+inline fun <reified T: Component>ifEntityHas
+            (task: Task<Entity>,
+             block: EntityHasComponentGuardBuilder<T>.()-> Unit = {}) = EntityHasComponentGuardBuilder(task, T::class.java).apply(block).build()

@@ -5,6 +5,7 @@ import com.badlogic.ashley.systems.IteratingSystem
 import ecs.components.*
 import ecs.components.gameplay.TransformComponent
 import ecs.components.graphics.CharacterSpriteComponent
+import ecs.components.player.PlayerControlComponent
 import ktx.ashley.allOf
 import ktx.ashley.mapperFor
 

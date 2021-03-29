@@ -1,4 +1,4 @@
-package ecs.components
+package ecs.components.gameplay
 
 import com.badlogic.ashley.core.Component
 

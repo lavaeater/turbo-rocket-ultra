@@ -2,7 +2,8 @@ package ai.builders
 
 import com.badlogic.gdx.ai.btree.Task
 
-abstract class CompositeTaskBuilder<T>: TaskBuilder<T>() {
+
+abstract class CompositeTaskBuilder<T> : TaskBuilder<T>() {
     protected val tasks = mutableListOf<Task<T>>()
 
     fun first(task: Task<T>) {

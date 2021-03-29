@@ -4,12 +4,12 @@ import com.badlogic.ashley.core.Entity
 import com.badlogic.ashley.systems.IteratingSystem
 import com.badlogic.gdx.graphics.Color
 import com.badlogic.gdx.graphics.OrthographicCamera
-import ecs.components.*
 import ecs.components.gameplay.ObjectiveComponent
 import ecs.components.gameplay.ObstacleComponent
 import ecs.components.gameplay.TransformComponent
 import ecs.components.graphics.CharacterSpriteComponent
 import ecs.components.graphics.RenderableComponent
+import ecs.components.player.PlayerComponent
 import injection.Context.inject
 import ktx.ashley.allOf
 import ktx.ashley.mapperFor

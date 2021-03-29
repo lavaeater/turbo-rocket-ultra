@@ -15,8 +15,12 @@ import ecs.components.enemy.EnemyComponent
 import ecs.components.enemy.EnemySensorComponent
 import ecs.components.gameplay.ObjectiveComponent
 import ecs.components.gameplay.ObstacleComponent
+import ecs.components.gameplay.ShotComponent
 import ecs.components.gameplay.TransformComponent
 import ecs.components.graphics.*
+import ecs.components.player.FiredShotsComponent
+import ecs.components.player.PlayerComponent
+import ecs.components.player.PlayerControlComponent
 import gamestate.Player
 import injection.Context.inject
 import input.ControlMapper
@@ -139,6 +143,7 @@ fun player(player: Player, controlMapper: ControlMapper) {
         add(CharacterSpriteComponent(Assets.characters["player"]!!))
         add(RenderableComponent(1))
         add(PlayerComponent(player))
+        add(FiredShotsComponent())
     }
 
     body.userData = entity

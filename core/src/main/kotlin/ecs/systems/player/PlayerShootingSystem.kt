@@ -6,8 +6,9 @@ import com.badlogic.ashley.systems.IteratingSystem
 import com.badlogic.gdx.physics.box2d.Fixture
 import com.badlogic.gdx.physics.box2d.World
 import ecs.components.enemy.EnemyComponent
-import ecs.components.PlayerControlComponent
+import ecs.components.player.PlayerControlComponent
 import ecs.components.gameplay.TransformComponent
+import ecs.components.player.FiredShotsComponent
 import factories.splatterParticles
 import injection.Context.inject
 import ktx.ashley.allOf
@@ -36,6 +37,7 @@ class PlayerShootingSystem(private val audioPlayer: AudioPlayer) : IteratingSyst
 ) {
     private val controlMapper = mapperFor<PlayerControlComponent>()
     private val transformMapper = mapperFor<TransformComponent>()
+    private val shotsFiredMapper = mapperFor<FiredShotsComponent>()
     private val world: World by lazy { inject() }
 
     @ExperimentalStdlibApi
@@ -45,8 +47,14 @@ class PlayerShootingSystem(private val audioPlayer: AudioPlayer) : IteratingSyst
         controlComponent.coolDown(deltaTime)
 
         if (controlComponent.firing) {
-            //create raycast to find some targets
             val transform = transformMapper[entity]
+            shotsFiredMapper[entity].queue.addFirst(transform.position)
+            /*
+
+            Send a message to the "noticing system" for every shot
+             */
+
+            //create raycast to find some targets
             controlComponent.shoot()
             if((1..5).random() == 1)
                 audioPlayer.playSounds(mapOf("gunshot" to 0f, "shellcasing" to (0.1f..1f).random()))
