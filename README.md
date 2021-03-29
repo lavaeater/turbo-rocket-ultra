@@ -19,6 +19,8 @@ To make the graphics and environment easy I am currently working with the concep
 
 ### MVP
 
+* Objective counting in multiplayer
+* Player death and game over man
 * Towers
 * Fix enemy sensors / noticing <- advanced behaviors
 * Fix enemy direction systems <- done?
@@ -316,11 +318,11 @@ Next should probably be the feature that requires the least work to make it a "g
 
 So the next feature will be ship collisions.
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbLTE2MjM5NDE4NzMsMzAzNTgxMzA3LC0yMT
-A2MjU1MDE3LDE5NjA2OTUyMTMsMTc2OTY4Mzk3NywzMzU1MDMz
-NDEsMTAyNzA4NDAxLDE1NzE0MTYwODUsLTIxNDYwNDE1NzksLT
-kwMzY2NTkyNSw5NTQ0NDIzNDUsMTg1MTcwOTMyNSwtMTY5ODIx
-Mzc0MywtMTY0MTE0MDI4NywxMzE1MzE3NzM2LC0zNjg4NTM1MT
-IsMjEzNTgxOTAwNCwtMjExODg5MDEwOSwxNzA0OTQ2MTk4LDQ0
-Mzg0OTM2NF19
+eyJoaXN0b3J5IjpbMTM1ODE4NzMxNCwzMDM1ODEzMDcsLTIxMD
+YyNTUwMTcsMTk2MDY5NTIxMywxNzY5NjgzOTc3LDMzNTUwMzM0
+MSwxMDI3MDg0MDEsMTU3MTQxNjA4NSwtMjE0NjA0MTU3OSwtOT
+AzNjY1OTI1LDk1NDQ0MjM0NSwxODUxNzA5MzI1LC0xNjk4MjEz
+NzQzLC0xNjQxMTQwMjg3LDEzMTUzMTc3MzYsLTM2ODg1MzUxMi
+wyMTM1ODE5MDA0LC0yMTE4ODkwMTA5LDE3MDQ5NDYxOTgsNDQz
+ODQ5MzY0XX0=
 -->
