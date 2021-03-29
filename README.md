@@ -45,6 +45,8 @@ Decorator aren't guards. What .. the .. hell.
 
 Why didn't it work before, then? Make it work this time...
 
+So, an important PSA about Guards - I for some reason got it into my head that guards = decorators, but that is absolutely not the case. Instead it is more like, well, 
+
 ## Done: Multiplayer v0.1
 
 ### Mechanics
@@ -303,11 +305,11 @@ Next should probably be the feature that requires the least work to make it a "g
 
 So the next feature will be ship collisions.
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbLTIxMDYyNTUwMTcsMTk2MDY5NTIxMywxNz
-Y5NjgzOTc3LDMzNTUwMzM0MSwxMDI3MDg0MDEsMTU3MTQxNjA4
-NSwtMjE0NjA0MTU3OSwtOTAzNjY1OTI1LDk1NDQ0MjM0NSwxOD
-UxNzA5MzI1LC0xNjk4MjEzNzQzLC0xNjQxMTQwMjg3LDEzMTUz
-MTc3MzYsLTM2ODg1MzUxMiwyMTM1ODE5MDA0LC0yMTE4ODkwMT
-A5LDE3MDQ5NDYxOTgsNDQzODQ5MzY0LDE0ODc3ODQ0NDYsLTE0
-NzI0ODEyOTldfQ==
+eyJoaXN0b3J5IjpbLTExMTYyOTk5MTQsLTIxMDYyNTUwMTcsMT
+k2MDY5NTIxMywxNzY5NjgzOTc3LDMzNTUwMzM0MSwxMDI3MDg0
+MDEsMTU3MTQxNjA4NSwtMjE0NjA0MTU3OSwtOTAzNjY1OTI1LD
+k1NDQ0MjM0NSwxODUxNzA5MzI1LC0xNjk4MjEzNzQzLC0xNjQx
+MTQwMjg3LDEzMTUzMTc3MzYsLTM2ODg1MzUxMiwyMTM1ODE5MD
+A0LC0yMTE4ODkwMTA5LDE3MDQ5NDYxOTgsNDQzODQ5MzY0LDE0
+ODc3ODQ0NDZdfQ==
 -->
