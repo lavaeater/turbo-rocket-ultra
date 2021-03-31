@@ -9,6 +9,9 @@ class Player() {
     lateinit var entity: Entity
     var lives = 3
     var health: Int = 100
+    set(value) {
+        field = value.coerceAtLeast(0)
+    }
     val touchedObjectives = mutableSetOf<ObjectiveComponent>()
     var respawning = false
     val isDead : Boolean
