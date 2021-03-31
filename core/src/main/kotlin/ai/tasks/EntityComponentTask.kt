@@ -36,6 +36,6 @@ class EntityComponentTask<T: TaskComponent>(private val componentClass: Class<T>
     }
 
     override fun execute(): Status {
-        return mapper[entity].status
+        return if(!mapper.has(entity)) Status.FAILED else mapper[entity].status
     }
 }
