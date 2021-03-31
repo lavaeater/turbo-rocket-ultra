@@ -9,6 +9,7 @@ import com.badlogic.gdx.graphics.g2d.Batch
 import com.badlogic.gdx.scenes.scene2d.Stage
 import com.badlogic.gdx.scenes.scene2d.ui.Label
 import com.badlogic.gdx.utils.Align
+import com.badlogic.gdx.utils.Queue
 import com.badlogic.gdx.utils.viewport.ExtendViewport
 import ecs.components.ai.BehaviorComponent
 import ecs.components.enemy.EnemyComponent
@@ -29,7 +30,9 @@ class UserInterface(
 
     private val players get() = Players.players
     private val engine by lazy { inject<Engine>() }
-    private val enemy by lazy { engine.getEntitiesFor(allOf(EnemyComponent::class, BehaviorComponent::class).get()).first() }
+    private val enemy by lazy {
+        engine.getEntitiesFor(allOf(EnemyComponent::class, BehaviorComponent::class).get()).first()
+    }
     private val tree by lazy { enemy.getComponent(BehaviorComponent::class.java).tree }
 
 
@@ -66,12 +69,14 @@ class UserInterface(
         stage.draw()
     }
 
+    var accumulator = 0f
+
     @ExperimentalStdlibApi
     private fun updateInfo(delta: Float) {
         var index = 1
-        for ((l,p) in playerLabels) {
+        for ((l, p) in playerLabels) {
             l.setText(
-"""
+                """
 Player $index                    
 Health: ${p.health}
 Lives: ${p.lives}
@@ -79,8 +84,15 @@ Lives: ${p.lives}
             )
             index++
         }
-        enemyLabel.setText(enemyInfo)
+        accumulator += delta
+        if (enemyInfo.notEmpty()) {
+            currentInfo = enemyInfo.removeFirst()
+        }
+        enemyLabel.setText(currentInfo)
     }
+
+    var currentInfo = ""
+
     override fun dispose() {
         stage.dispose()
     }
@@ -89,10 +101,19 @@ Lives: ${p.lives}
         stage.clear()
     }
 
+    val enemyInfo = Queue<String>()
+
     private fun setup() {
         tree.addListener(object : BehaviorTree.Listener<Entity> {
             override fun statusUpdated(task: Task<Entity>?, previousStatus: Task.Status?) {
-                enemyInfo = "$task - $previousStatus"
+                if (task != null && previousStatus != null && !task?.toString()?.substringAfterLast(".")
+                        .contains("BehaviorTree")
+                )
+                    enemyInfo.addLast(
+                        "${task?.toString()?.substringAfterLast(".")} - ${
+                            previousStatus.toString().substringAfterLast(".")
+                        }"
+                    )
             }
 
             override fun childAdded(task: Task<Entity>?, index: Int) {
@@ -104,18 +125,16 @@ Lives: ${p.lives}
         setupInfo()
     }
 
-    private var enemyInfo = ""
-
     private val playerLabels = mutableMapOf<Label, Player>()
     private lateinit var enemyLabel: Label
     private fun setupInfo() {
 
         infoBoard = scene2d.table {
-            for((_,p) in players) {
+            for ((_, p) in players) {
                 val l = label("PlayerLabel")
                 playerLabels[l] = p
             }
-            enemyLabel= label("nuthin")
+            enemyLabel = label("nuthin")
         }
 
         rootTable = scene2d.table {

@@ -9,6 +9,7 @@ import com.badlogic.gdx.physics.box2d.Fixture
 import ecs.components.BodyComponent
 import ecs.components.enemy.EnemyComponent
 import ecs.components.ai.ChasePlayer
+import ecs.components.ai.NoticedSomething
 import ecs.components.ai.TrackingPlayerComponent
 import factories.world
 import ktx.ashley.allOf
@@ -37,9 +38,16 @@ class SeekingPlayerSystem : IteratingSystem(allOf(SeekPlayer::class).get()) {
     @ExperimentalStdlibApi
     private fun seek(entity: Entity, seekComponent: SeekPlayer, bodyComponent: BodyComponent) {
         //Pick a random direction
+        seekComponent.scanVectorStart.set(bodyComponent.body.position)
         if (seekComponent.needsScanVector) {
-            val unitVectorRange = -1f..1f
-            seekComponent.scanVector.set(unitVectorRange.random(), unitVectorRange.random()).nor()
+
+            if(entity.hasComponent<NoticedSomething>()) {
+                val noticeVector = entity.getComponent<NoticedSomething>().noticedWhere
+                seekComponent.scanVector.set(noticeVector).sub(seekComponent.scanVectorStart).nor()
+            } else {
+                val unitVectorRange = -1f..1f
+                seekComponent.scanVector.set(unitVectorRange.random(), unitVectorRange.random()).nor()
+            }
             seekComponent.scanVector.setAngleDeg(seekComponent.scanVector.angleDeg() - 45f)
             seekComponent.needsScanVector = false
             seekComponent.keepScanning = true
@@ -51,7 +59,6 @@ class SeekingPlayerSystem : IteratingSystem(allOf(SeekPlayer::class).get()) {
         Hey, and also, we do this every update, not all in one go, so that we can actually see it happening
          */
 
-        seekComponent.scanVectorStart.set(bodyComponent.body.position)
         var lowestFraction = 1f
         var foundPlayer = false
         lateinit var closestFixture: Fixture
