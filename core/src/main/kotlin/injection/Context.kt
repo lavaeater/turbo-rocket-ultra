@@ -66,15 +66,11 @@ object Context {
     private fun getEngine(): Engine {
         return PooledEngine().apply {
             addSystem(PhysicsSystem(inject()))
-            //     addSystem(PhysicsDebugRendererSystem(inject(), inject()))
             addSystem(CameraUpdateSystem())
             addSystem(PlayerMoveSystem())
             addSystem(KeyboardInputSystem())
             addSystem(GamepadInputSystem())
             addSystem(BodyDestroyerSystem(inject())) //world
-//            addSystem(EnterVehicleSystem())
-//            addSystem(ExitVehicleSystem())
-//            addSystem(VehicleControlSystem())
             addSystem(CharacterWalkAndShootDirectionSystem())
             addSystem(ShootDebugRenderSystem())
             addSystem(PlayerShootingSystem(inject()))
