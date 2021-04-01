@@ -2,6 +2,7 @@ package ecs.systems.graphics
 
 import com.badlogic.ashley.core.Entity
 import com.badlogic.ashley.systems.IteratingSystem
+import com.badlogic.ashley.systems.SortedIteratingSystem
 import com.badlogic.gdx.graphics.Color
 import com.badlogic.gdx.graphics.OrthographicCamera
 import ecs.components.gameplay.ObjectiveComponent
@@ -16,8 +17,14 @@ import ktx.ashley.mapperFor
 import ktx.graphics.use
 import ktx.math.vec2
 import tru.Assets
+import java.util.Comparator
 
-class RenderMiniMapSystem : IteratingSystem(allOf(RenderableComponent::class, TransformComponent::class).get(), 20) {
+class RenderMiniMapSystem : SortedIteratingSystem(allOf(RenderableComponent::class, TransformComponent::class).get(), object :
+    Comparator<Entity> {
+    val mapper = mapperFor<RenderableComponent>()
+    override fun compare(p0: Entity, p1: Entity): Int {
+        return mapper.get(p0).layer.compareTo(mapper.get(p1).layer)
+    }}, 20) {
     private val tMapper = mapperFor<TransformComponent>()
     private val pMapper = mapperFor<PlayerComponent>()
     private val gMapper = mapperFor<ObjectiveComponent>()
@@ -41,14 +48,14 @@ class RenderMiniMapSystem : IteratingSystem(allOf(RenderableComponent::class, Tr
         if((gMapper.has(entity) || oMapper.has(entity) && transform.position.dst2(camera.position.x, camera.position.y) < 200000f) || (sMapper.has(entity) && transform.position.dst2(camera.position.x, camera.position.y) < 20000f)) {
 
             var color = Color.RED
-            var radius = .2f
+            var radius = .1f
             if (pMapper.has(entity)) {
                 color = Color.WHITE
                 radius = .1f
             }
             if(gMapper.has(entity)) {
                 color = Color.GREEN
-                radius = .3f
+                radius = .1f
             }
             center.set(
                 transform.position.x / scale + xOffset, transform.position.y / scale + yOffset

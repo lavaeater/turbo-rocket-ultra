@@ -8,7 +8,7 @@ import ecs.components.gameplay.TransformComponent
 import ktx.math.vec2
 
 class EnemyComponent : Component, Pool.Poolable {
-    var speed = 2.5f
+    var speed = 1f
 
     val directionVector = vec2()
     var health = 25

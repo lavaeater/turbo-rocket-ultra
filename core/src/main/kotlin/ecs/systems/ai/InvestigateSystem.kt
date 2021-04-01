@@ -23,18 +23,22 @@ class InvestigateSystem : IteratingSystem(allOf(Investigate::class, EnemyCompone
         component.coolDown -= deltaTime
 
         if (component.status == Task.Status.RUNNING) {
+            val enemyComponent = eMapper[entity]
             val notice = nMapper[entity]
             val transformComponent = tMapper[entity]
 
             if(transformComponent.position.dst(notice.noticedWhere) > 2f) {
                 val directionVector = notice.noticedWhere.cpy().sub(transformComponent.position).nor()
-                eMapper[entity].directionVector.set(directionVector)
+                enemyComponent.directionVector.set(directionVector)
+                enemyComponent.speed = 3.5f
             } else {
-                eMapper[entity].directionVector.set(Vector2.Zero)
+                enemyComponent.speed = 1f
+                enemyComponent.directionVector.set(Vector2.Zero)
                 entity.remove(NoticedSomething::class.java)
             }
         }
-        if(component.coolDown <= 0f)
+        if(component.coolDown <= 0f) {
             component.status = Task.Status.FAILED
+        }
     }
 }

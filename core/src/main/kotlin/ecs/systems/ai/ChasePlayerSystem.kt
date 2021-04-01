@@ -38,11 +38,12 @@ class ChasePlayerSystem: IteratingSystem(allOf(
                     chasePlayer.status = Task.Status.SUCCEEDED
                 }
                 chasePlayer.coolDown > 0f -> {
-                    enemyComponent.speed = 3.5f
+                    enemyComponent.speed = 5f
                     enemyComponent.directionVector.set(playerPosition).sub(transformComponent.position)
                         .nor()
                 }
                 else -> {
+                    enemyComponent.speed = 1f
                     chasePlayer.status = Task.Status.FAILED
                 }
             }
