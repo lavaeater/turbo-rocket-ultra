@@ -32,7 +32,7 @@ class PlayerMoveSystem(
         bodyComponent: BodyComponent,
         characterSpriteComponent: CharacterSpriteComponent
     ) {
-        speedFactor = if(playerControlComponent.triggerPulled) 0.5f else 1f
+        speedFactor = if(playerControlComponent.triggerPulled) 0.2f else 1f
         bodyComponent.body.setLinearVelocity(playerControlComponent.walkVector.x * speed * speedFactor, playerControlComponent.walkVector.y * speed * speedFactor)
 
         characterSpriteComponent.currentAnimState = playerControlComponent.playerAnimState
