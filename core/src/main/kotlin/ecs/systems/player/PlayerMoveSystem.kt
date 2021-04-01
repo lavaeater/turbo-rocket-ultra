@@ -10,7 +10,7 @@ import ktx.ashley.allOf
 import ktx.ashley.mapperFor
 
 class PlayerMoveSystem(
-    private val speed: Float = 25f): IteratingSystem(
+    private var speed: Float = 25f): IteratingSystem(
     allOf(
         PlayerControlComponent::class,
         BodyComponent::class,
@@ -26,14 +26,14 @@ class PlayerMoveSystem(
         val csc = anMapper.get(entity)
         executeMove(pcc, bc, csc)
     }
-
+    private var speedFactor = 1f
     private fun executeMove(
         playerControlComponent: PlayerControlComponent,
         bodyComponent: BodyComponent,
         characterSpriteComponent: CharacterSpriteComponent
     ) {
-
-        bodyComponent.body.setLinearVelocity(playerControlComponent.walkVector.x * speed, playerControlComponent.walkVector.y * speed)
+        speedFactor = if(playerControlComponent.triggerPulled) 0.5f else 1f
+        bodyComponent.body.setLinearVelocity(playerControlComponent.walkVector.x * speed * speedFactor, playerControlComponent.walkVector.y * speed * speedFactor)
 
         characterSpriteComponent.currentAnimState = playerControlComponent.playerAnimState
     }

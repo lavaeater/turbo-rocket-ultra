@@ -12,6 +12,7 @@ import com.badlogic.gdx.physics.box2d.World
 import com.badlogic.gdx.utils.viewport.ExtendViewport
 import ecs.components.BodyComponent
 import ecs.components.enemy.EnemyComponent
+import ecs.components.enemy.EnemySpawnerComponent
 import ecs.components.gameplay.ObjectiveComponent
 import ecs.components.gameplay.TransformComponent
 import ecs.systems.input.GamepadInputSystem
@@ -98,7 +99,7 @@ class GameScreen : KtxScreen {
         var randomAngle = (0f..360f)
         val startVector = Vector2.X.cpy().scl(100f).setAngleDeg(randomAngle.random())
 
-        numberOfEnemies = 2f.pow(currentLevel).roundToInt() * 10
+        numberOfEnemies = 2f.pow(currentLevel).roundToInt() * 2
         numberOfObjectives = 2f.pow(currentLevel).roundToInt()
 
         for (enemy in engine.getEntitiesFor(allOf(EnemyComponent::class).get())) {
@@ -127,6 +128,9 @@ class GameScreen : KtxScreen {
         for(i in 0 until numberOfObjectives) {
             position.add(startVector)
             objective(position.x, position.y)
+
+            val emitter = obstacle(position.x + 10f, position.y + 10f)
+            emitter.add(engine.createComponent(EnemySpawnerComponent::class.java))
 
             for(e in 0 until numberOfEnemies)
                 enemy(position.x + enemyRandomFactor.random(), position.y + enemyRandomFactor.random())

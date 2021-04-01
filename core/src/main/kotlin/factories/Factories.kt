@@ -2,6 +2,7 @@ package factories
 
 import ai.Tree
 import com.badlogic.ashley.core.Engine
+import com.badlogic.ashley.core.Entity
 import com.badlogic.gdx.graphics.Color
 import com.badlogic.gdx.math.MathUtils
 import com.badlogic.gdx.math.MathUtils.degreesToRadians
@@ -244,7 +245,7 @@ fun obstacle(
     y: Float = 0f,
     width: Float = 2f,
     height: Float = 2f
-): Body {
+): Entity {
     val box2dBody = world().body {
         type = BodyDef.BodyType.StaticBody
         position.set(x, y)
@@ -264,7 +265,7 @@ fun obstacle(
     }
     box2dBody.userData = entity
     engine().addEntity(entity)
-    return box2dBody
+    return entity
 }
 
 fun objective(

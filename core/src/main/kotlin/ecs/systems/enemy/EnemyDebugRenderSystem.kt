@@ -14,12 +14,13 @@ import ktx.ashley.get
 import ktx.ashley.has
 import ktx.ashley.mapperFor
 import ktx.graphics.use
+import physics.getComponent
 import physics.hasComponent
 import tru.Assets
 
 class EnemyDebugRenderSystem(
     private val renderStates: Boolean = false,
-    private val renderScans: Boolean = false) : IteratingSystem(
+    private val renderScans: Boolean = true) : IteratingSystem(
     allOf(
         EnemyComponent::class,
         TransformComponent::class).get()) {
@@ -39,7 +40,6 @@ class EnemyDebugRenderSystem(
     @ExperimentalStdlibApi
     override fun processEntity(entity: Entity, deltaTime: Float) {
         if(entity.has(enemyMapper)) {
-            val enemyComponent = entity[enemyMapper]!!
             if(renderStates) {
                 var color = Color.GREEN
                 when {
@@ -51,8 +51,10 @@ class EnemyDebugRenderSystem(
                 }
                 shapeDrawer.filledCircle(entity[transformMapper]!!.position, 5f, color)
             }
-            if(renderScans && entity.hasComponent<SeekPlayer>())
-                shapeDrawer.line(enemyComponent.scanVectorStart, enemyComponent.scanVectorEnd, Color.RED, .1f)
+            if(renderScans && entity.hasComponent<SeekPlayer>()) {
+                val seekComponent = entity.getComponent<SeekPlayer>()
+                shapeDrawer.line(seekComponent.scanVectorStart, seekComponent.scanVectorEnd, Color.RED, .1f)
+            }
         }
     }
 }

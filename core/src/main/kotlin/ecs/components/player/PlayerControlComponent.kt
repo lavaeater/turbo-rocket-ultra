@@ -30,12 +30,12 @@ class PlayerControlComponent : Component, Pool.Poolable {
 
     val drawShot get() = shotDrawCoolDown > 0f
     private val mousePosition3D = vec3()
-    private val triggerPulled get() = controlMapper.firing
+    val triggerPulled get() = controlMapper.firing
     val firing get() = controlMapper.firing && cooldownRemaining <= 0f
     val aimVector get() = controlMapper.aimVector
     val mousePosition get() = controlMapper.mousePosition
     var latestHitPoint = vec2(0f,0f)
-    val walkVector: Vector2 get() = if(triggerPulled) Vector2.Zero else controlMapper.walkVector.nor()
+    val walkVector: Vector2 get() = controlMapper.walkVector.nor()
     val turning : Float get() { return if(stationary) 0f else controlMapper.turning }
     val walking : Float get()  { return if(stationary) 0f else controlMapper.thrust }
     val moving get() = walkVector.len2() != 0f

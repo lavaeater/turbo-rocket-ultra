@@ -10,6 +10,8 @@ import ecs.components.enemy.EnemyComponent
 import ecs.components.player.PlayerControlComponent
 import ecs.components.gameplay.TransformComponent
 import ecs.components.player.FiredShotsComponent
+import ecs.components.player.PlayerRespawning
+import ecs.components.player.PlayerWaitsForRespawn
 import factories.splatterParticles
 import injection.Context.inject
 import ktx.ashley.allOf
@@ -18,10 +20,7 @@ import ktx.box2d.RayCast
 import ktx.box2d.rayCast
 import ktx.math.random
 import ktx.math.vec2
-import physics.getComponent
-import physics.getEntity
-import physics.isEnemy
-import physics.isEntity
+import physics.*
 
 
 /**
@@ -47,7 +46,7 @@ class PlayerShootingSystem(private val audioPlayer: AudioPlayer) : IteratingSyst
         val controlComponent = controlMapper[entity]
         controlComponent.coolDown(deltaTime)
 
-        if (controlComponent.firing) {
+        if (controlComponent.firing && !(entity.hasComponent<PlayerRespawning>() || entity.hasComponent<PlayerWaitsForRespawn>())) {
             val transform = transformMapper[entity]
             shotsFiredMapper[entity].queue.addFirst(transform.position)
             /*

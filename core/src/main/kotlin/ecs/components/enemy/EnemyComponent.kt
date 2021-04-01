@@ -9,15 +9,8 @@ import ktx.math.vec2
 
 class EnemyComponent : Component, Pool.Poolable {
     var speed = 2.5f
-    var maxNumberOfScans = 0
-    var scanCount = 0
-    var keepScanning = true
-    val scanVector = vec2()
-    var needsScanVector = true
-    var chaseTransform: TransformComponent? = null
+
     val directionVector = vec2()
-    val scanVectorStart = vec2()
-    val scanVectorEnd = vec2()
     var health = 25
     private set
 
@@ -35,13 +28,7 @@ class EnemyComponent : Component, Pool.Poolable {
 
     override fun reset() {
         speed = 2.5f
-        keepScanning = true
-        scanVector.set(Vector2.Zero)
-        needsScanVector = true
-        chaseTransform = null
         directionVector.set(Vector2.Zero)
-        scanVectorStart.set(Vector2.Zero)
-        scanVectorEnd.set(Vector2.Zero)
         health = 25
         timeRemaining = 0f
     }

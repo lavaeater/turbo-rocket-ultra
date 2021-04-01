@@ -88,6 +88,7 @@ object Context {
             addSystem(InvestigateSystem())
             addSystem(EnemyDebugRenderSystem(false, true))
             addSystem(PlayerDeathSystem())
+            addSystem(EnemySpawnSystem())
             addSystem(RenderSystem(inject<PolygonSpriteBatch>() as Batch))
             addSystem(RenderMiniMapSystem())
         }

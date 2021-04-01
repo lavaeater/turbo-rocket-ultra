@@ -8,19 +8,20 @@ import ecs.components.graphics.CharacterSpriteComponent
 import ktx.ashley.allOf
 import ktx.ashley.mapperFor
 import physics.AshleyMappers
+import physics.getComponent
 import physics.hasComponent
 import tru.AnimState
 import tru.SpriteDirection
 
 class EnemyDirectionSystem : IteratingSystem(allOf(CharacterSpriteComponent::class, EnemyComponent::class).get()) {
     var characterAngle = 0f
-    val enemyMapper = mapperFor<EnemyComponent>()
+    private val enemyMapper = mapperFor<EnemyComponent>()
     @ExperimentalStdlibApi
     override fun processEntity(entity: Entity, deltaTime: Float) {
 
         val characterSpriteComponent = AshleyMappers.characterSpriteComponentMapper.get(entity)
         val enemyComponent = enemyMapper.get(entity)
-        characterAngle = if(entity.hasComponent<SeekPlayer>()) enemyComponent.scanVector.angleDeg() else enemyComponent.directionVector.angleDeg()
+        characterAngle = if(entity.hasComponent<SeekPlayer>()) entity.getComponent<SeekPlayer>().scanVector.angleDeg() else enemyComponent.directionVector.angleDeg()
 
         //TODO: add more animstates
         characterSpriteComponent.currentAnimState = if(entity.hasComponent<SeekPlayer>()) AnimState.Idle else AnimState.Walk

@@ -7,13 +7,10 @@ import ecs.components.ai.BehaviorComponent
 import ktx.ashley.allOf
 import ktx.ashley.mapperFor
 
-class BehaviorTreeSystem : IntervalIteratingSystem(allOf(BehaviorComponent::class).get(), .1f) {
+class BehaviorTreeSystem : IteratingSystem(allOf(BehaviorComponent::class).get()) {
     val mapper = mapperFor<BehaviorComponent>()
-    override fun processEntity(entity: Entity) {
+
+    override fun processEntity(entity: Entity, deltaTime: Float) {
         mapper[entity].tree.step()
     }
-
-//    override fun processEntity(entity: Entity, deltaTime: Float) {
-//        mapper[entity].tree.step()
-//    }
 }

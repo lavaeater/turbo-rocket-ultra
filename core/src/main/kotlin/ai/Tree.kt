@@ -9,13 +9,13 @@ object Tree {
     fun getEnemyBehaviorTree() = tree<Entity> {
         dynamicGuardSelector {
             first(entityDo<AttackPlayer> { ifEntityHas<PlayerIsInRange>() })
+            then(entityDo<ChasePlayer> { ifEntityHas<TrackingPlayerComponent>()})
             ifThen(
                 entityHas<NoticedSomething>(),
                 selector {
                     first(entityDo<SeekPlayer>())
                     then(entityDo<Investigate>())
                     then(entityDo<SeekPlayer>())
-                    then(entityDo<ChasePlayer>())
             })
             last(
             selector<Entity> {

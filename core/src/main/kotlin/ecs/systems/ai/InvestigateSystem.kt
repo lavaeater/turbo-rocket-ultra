@@ -20,6 +20,7 @@ class InvestigateSystem : IteratingSystem(allOf(Investigate::class, EnemyCompone
 
     override fun processEntity(entity: Entity, deltaTime: Float) {
         val component = mapper.get(entity)
+        component.coolDown -= deltaTime
 
         if (component.status == Task.Status.RUNNING) {
             val notice = nMapper[entity]
@@ -28,13 +29,12 @@ class InvestigateSystem : IteratingSystem(allOf(Investigate::class, EnemyCompone
             if(transformComponent.position.dst(notice.noticedWhere) > 2f) {
                 val directionVector = notice.noticedWhere.cpy().sub(transformComponent.position).nor()
                 eMapper[entity].directionVector.set(directionVector)
-                component.coolDown -= deltaTime
             } else {
                 eMapper[entity].directionVector.set(Vector2.Zero)
                 entity.remove(NoticedSomething::class.java)
             }
-            if(component.coolDown <= 0f)
-                component.status = Task.Status.FAILED
         }
+        if(component.coolDown <= 0f)
+            component.status = Task.Status.FAILED
     }
 }
