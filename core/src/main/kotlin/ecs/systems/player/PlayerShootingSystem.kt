@@ -3,12 +3,15 @@ package ecs.systems.player
 import audio.AudioPlayer
 import com.badlogic.ashley.core.Entity
 import com.badlogic.ashley.systems.IteratingSystem
+import com.badlogic.gdx.graphics.Color
 import com.badlogic.gdx.physics.box2d.Fixture
 import com.badlogic.gdx.physics.box2d.World
 import ecs.components.enemy.EnemyComponent
 import ecs.components.player.PlayerControlComponent
 import ecs.components.gameplay.TransformComponent
 import ecs.components.player.FiredShotsComponent
+import ecs.components.player.PlayerRespawning
+import ecs.components.player.PlayerWaitsForRespawn
 import factories.splatterParticles
 import injection.Context.inject
 import ktx.ashley.allOf
@@ -17,10 +20,7 @@ import ktx.box2d.RayCast
 import ktx.box2d.rayCast
 import ktx.math.random
 import ktx.math.vec2
-import physics.getComponent
-import physics.getEntity
-import physics.isEnemy
-import physics.isEntity
+import physics.*
 
 
 /**
@@ -46,7 +46,7 @@ class PlayerShootingSystem(private val audioPlayer: AudioPlayer) : IteratingSyst
         val controlComponent = controlMapper[entity]
         controlComponent.coolDown(deltaTime)
 
-        if (controlComponent.firing) {
+        if (controlComponent.firing && !(entity.hasComponent<PlayerRespawning>() || entity.hasComponent<PlayerWaitsForRespawn>())) {
             val transform = transformMapper[entity]
             shotsFiredMapper[entity].queue.addFirst(transform.position)
             /*
@@ -101,7 +101,8 @@ class PlayerShootingSystem(private val audioPlayer: AudioPlayer) : IteratingSyst
                 if (closestFixture.isEntity() && closestFixture.body.isEnemy()) {
                     val enemyEntity = closestFixture.getEntity()
                     enemyEntity.getComponent<EnemyComponent>().takeDamage(10..25)
-                    splatterParticles(closestFixture.body, controlComponent.aimVector.cpy())
+                    splatterParticles(closestFixture.body, controlComponent.aimVector.cpy(),
+                        color = Color((0.5f..0.7f).random(), 0f, 0f, (.5f..1f).random()))
                 }
             }
         }

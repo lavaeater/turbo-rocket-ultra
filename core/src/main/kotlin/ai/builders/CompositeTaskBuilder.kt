@@ -10,6 +10,11 @@ abstract class CompositeTaskBuilder<T> : TaskBuilder<T>() {
         tasks.add(0, task)
     }
 
+    fun ifThen(guardTask: Task<T>, task:Task<T>) {
+        task.guard = guardTask
+        add(task)
+    }
+
     fun then(task: Task<T>) {
         add(task)
     }

@@ -28,10 +28,14 @@ class EnemyHearsShotsSystem : IteratingSystem(allOf(FiredShotsComponent::class).
         while(!firedShotsComponent.queue.isEmpty && index < 10) {
             val fc = firedShotsComponent.queue.removeLast()
             circle.set(fc.x, fc.y, 50f)
-            for (enemy in enemies.filter { !noticedMapper.has(it) }) {
+            for (enemy in enemies) {
                 val enemyPosition = transformMapper[enemy].position
-                if(circle.contains(enemyPosition)) {// && (0..2).random()==0) {
-                    enemy.add(engine.createComponent(NoticedSomething::class.java).apply { noticedWhere.set(fc) })
+                if(circle.contains(enemyPosition) && (0..2).random()==0) {
+                    if(noticedMapper.has(enemy)) {
+                        noticedMapper[enemy].noticedWhere.set(fc)
+                    } else {
+                        enemy.add(engine.createComponent(NoticedSomething::class.java).apply { noticedWhere.set(fc) })
+                    }
                 }
             }
             index++

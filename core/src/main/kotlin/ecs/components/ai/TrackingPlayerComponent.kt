@@ -2,9 +2,11 @@ package ecs.components.ai
 
 import com.badlogic.ashley.core.Component
 import com.badlogic.gdx.utils.Pool
+import gamestate.Player
 
-class PlayerInRangeComponent : Component, Pool.Poolable {
+class TrackingPlayerComponent : Component, Pool.Poolable {
+    var player: Player? = null
     override fun reset() {
-
+        player = null
     }
 }

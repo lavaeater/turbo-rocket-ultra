@@ -10,6 +10,7 @@ import ecs.components.ai.TaskComponent
 
 class EntityComponentTask<T: TaskComponent>(private val componentClass: Class<T>) : EntityTask() {
     private val mapper by lazy { ComponentMapper.getFor(componentClass) }
+    private val classInfo = componentClass.toString()
 
     override fun start() {
         entity.add(engine.createComponent(componentClass))
@@ -36,6 +37,10 @@ class EntityComponentTask<T: TaskComponent>(private val componentClass: Class<T>
     }
 
     override fun execute(): Status {
-        return mapper[entity].status
+        return if(!mapper.has(entity)) Status.FAILED else mapper[entity].status
+    }
+
+    override fun toString(): String {
+        return classInfo
     }
 }

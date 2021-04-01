@@ -1,14 +1,13 @@
 package physics
 
 import com.badlogic.gdx.physics.box2d.*
-import ai.enemy.EnemyState
 import com.badlogic.ashley.core.Engine
-import ecs.components.ai.PlayerTrackComponent
-import ecs.components.enemy.EnemyComponent
+import ecs.components.ai.TrackingPlayerComponent
 import ecs.components.enemy.EnemySensorComponent
 import ecs.components.gameplay.DestroyComponent
 import ecs.components.gameplay.ObjectiveComponent
 import ecs.components.gameplay.ShotComponent
+import ecs.systems.fx.addComponent
 import injection.Context.inject
 
 class ContactManager: ContactListener {
@@ -24,10 +23,9 @@ class ContactManager: ContactListener {
             }
             if(contact.hasComponent<EnemySensorComponent>()) {//this is an enemy noticing the player - no system needed
                 val enemy = contact.getEntityFor<EnemySensorComponent>()
-                enemy.add(engine.createComponent(PlayerTrackComponent::class.java).apply { player = contact.getPlayerFor() })
+                enemy.add(engine.createComponent(TrackingPlayerComponent::class.java).apply { player = contact.getPlayerFor() })
             }
             if(contact.hasComponent<ObjectiveComponent>()) {
-                val something = "This is it"
                 contact.getPlayerFor().touchedObjectives.add(contact.getEntityFor<ObjectiveComponent>().getComponent())
             }
         }
@@ -36,14 +34,12 @@ class ContactManager: ContactListener {
             /*
             This is an enemy noticing an enemy - if that enemy is chasing the player, then both should do that!
              */
-            val enemyA = contact.fixtureA.getEntity().getComponent<EnemyComponent>()
-            val enemyB = contact.fixtureB.getEntity().getComponent<EnemyComponent>()
-            if(enemyA.state == EnemyState.ChasePlayer && enemyB.state != EnemyState.ChasePlayer) {
-                enemyB.newState(EnemyState.ChasePlayer)
-                enemyB.chaseTransform = enemyA.chaseTransform
-            } else if(enemyB.state == EnemyState.ChasePlayer && enemyA.state != EnemyState.ChasePlayer) {
-                enemyA.newState(EnemyState.ChasePlayer)
-                enemyA.chaseTransform = enemyB.chaseTransform
+            val enemyAEntity = contact.fixtureA.getEntity()
+            val enemyBEntity = contact.fixtureB.getEntity()
+            if(enemyAEntity.hasComponent<TrackingPlayerComponent>() && !enemyBEntity.hasComponent<TrackingPlayerComponent>()) {
+                enemyBEntity.addComponent<TrackingPlayerComponent> { player = enemyAEntity.getComponent<TrackingPlayerComponent>().player }
+            } else if(enemyBEntity.hasComponent<TrackingPlayerComponent>() && !enemyAEntity.hasComponent<TrackingPlayerComponent>()) {
+                enemyAEntity.addComponent<TrackingPlayerComponent> { player = enemyBEntity.getComponent<TrackingPlayerComponent>().player }
             }
         }
 

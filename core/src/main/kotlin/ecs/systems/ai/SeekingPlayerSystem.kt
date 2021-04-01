@@ -9,9 +9,11 @@ import com.badlogic.gdx.physics.box2d.Fixture
 import ecs.components.BodyComponent
 import ecs.components.enemy.EnemyComponent
 import ecs.components.ai.ChasePlayer
-import ecs.components.ai.PlayerTrackComponent
+import ecs.components.ai.NoticedSomething
+import ecs.components.ai.TrackingPlayerComponent
 import factories.world
 import ktx.ashley.allOf
+import ktx.ashley.has
 import ktx.ashley.mapperFor
 import ktx.box2d.RayCast
 import ktx.box2d.rayCast
@@ -36,9 +38,16 @@ class SeekingPlayerSystem : IteratingSystem(allOf(SeekPlayer::class).get()) {
     @ExperimentalStdlibApi
     private fun seek(entity: Entity, seekComponent: SeekPlayer, bodyComponent: BodyComponent) {
         //Pick a random direction
+        seekComponent.scanVectorStart.set(bodyComponent.body.position)
         if (seekComponent.needsScanVector) {
-            val unitVectorRange = -1f..1f
-            seekComponent.scanVector.set(unitVectorRange.random(), unitVectorRange.random()).nor()
+
+            if(entity.hasComponent<NoticedSomething>()) {
+                val noticeVector = entity.getComponent<NoticedSomething>().noticedWhere
+                seekComponent.scanVector.set(noticeVector).sub(seekComponent.scanVectorStart).nor()
+            } else {
+                val unitVectorRange = -1f..1f
+                seekComponent.scanVector.set(unitVectorRange.random(), unitVectorRange.random()).nor()
+            }
             seekComponent.scanVector.setAngleDeg(seekComponent.scanVector.angleDeg() - 45f)
             seekComponent.needsScanVector = false
             seekComponent.keepScanning = true
@@ -50,7 +59,6 @@ class SeekingPlayerSystem : IteratingSystem(allOf(SeekPlayer::class).get()) {
         Hey, and also, we do this every update, not all in one go, so that we can actually see it happening
          */
 
-        seekComponent.scanVectorStart.set(bodyComponent.body.position)
         var lowestFraction = 1f
         var foundPlayer = false
         lateinit var closestFixture: Fixture
@@ -86,15 +94,22 @@ class SeekingPlayerSystem : IteratingSystem(allOf(SeekPlayer::class).get()) {
             if (lowestFraction < 1f) {
                 if (closestFixture.isEntity() && closestFixture.body.isPlayer()) {
                     seekComponent.keepScanning = false
-                    entity.add(engine.createComponent(PlayerTrackComponent::class.java).apply { player = closestFixture.body.player()  })
+                    entity.add(
+                        engine.createComponent(TrackingPlayerComponent::class.java)
+                            .apply { player = closestFixture.body.player() })
                     foundPlayer = true
                     seekComponent.status = Task.Status.SUCCEEDED
 
                 } else if (
                     closestFixture.isEntity() &&
                     closestFixture.body.isEnemy() &&
-                    closestFixture.getEntity().hasComponent<ChasePlayer>()) {
-                    entity.add(engine.createComponent(PlayerTrackComponent::class.java).apply { player = closestFixture.getEntity().getComponent<PlayerTrackComponent>().player   })
+                    closestFixture.getEntity().hasComponent<ChasePlayer>() &&
+                    closestFixture.getEntity().hasComponent<TrackingPlayerComponent>()
+                ) {
+
+                    entity.add(engine.createComponent(TrackingPlayerComponent::class.java).apply {
+                        player = closestFixture.getEntity().getComponent<TrackingPlayerComponent>().player
+                    })
                     seekComponent.keepScanning = false
                     foundPlayer = true
                     seekComponent.status = Task.Status.SUCCEEDED
@@ -103,7 +118,7 @@ class SeekingPlayerSystem : IteratingSystem(allOf(SeekPlayer::class).get()) {
             seekComponent.scanVector.setAngleDeg(seekComponent.scanVector.angleDeg() + seekComponent.scanResolution)
         }
         if (!foundPlayer && !seekComponent.keepScanning) {
-            entity.remove(PlayerTrackComponent::class.java)
+            entity.remove(TrackingPlayerComponent::class.java)
             seekComponent.status = Task.Status.FAILED
         }
     }

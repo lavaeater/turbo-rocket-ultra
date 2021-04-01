@@ -19,7 +19,7 @@ fun <T> selector(block: SelectorBuilder<T>.() -> Unit) = SelectorBuilder<T>().ap
 fun <T> sequence(block: SequenceBuilder<T>.() -> Unit) = SequenceBuilder<T>().apply(block).build()
 fun <T> parallel(block: ParallelBuilder<T>.() -> Unit) = ParallelBuilder<T>().apply(block).build()
 
-inline fun <reified T : Component> doesEntityHave() = HasComponentBuilder(T::class.java).build()
+inline fun <reified T : Component> entityHas() = HasComponentBuilder(T::class.java).build()
 
 inline fun <reified T: TaskComponent> entityDo(block: EntityComponentTaskBuilder<T>.() -> Unit = {}) = EntityComponentTaskBuilder(T::class.java).apply(block).build()
 

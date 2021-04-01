@@ -2,6 +2,7 @@ package factories
 
 import ai.Tree
 import com.badlogic.ashley.core.Engine
+import com.badlogic.ashley.core.Entity
 import com.badlogic.gdx.graphics.Color
 import com.badlogic.gdx.math.MathUtils
 import com.badlogic.gdx.math.MathUtils.degreesToRadians
@@ -15,12 +16,12 @@ import ecs.components.enemy.EnemyComponent
 import ecs.components.enemy.EnemySensorComponent
 import ecs.components.gameplay.ObjectiveComponent
 import ecs.components.gameplay.ObstacleComponent
-import ecs.components.gameplay.ShotComponent
 import ecs.components.gameplay.TransformComponent
 import ecs.components.graphics.*
 import ecs.components.player.FiredShotsComponent
 import ecs.components.player.PlayerComponent
 import ecs.components.player.PlayerControlComponent
+import ecs.systems.fx.addComponent
 import gamestate.Player
 import injection.Context.inject
 import input.ControlMapper
@@ -45,8 +46,8 @@ fun enemy(x: Float = 0f, y: Float = 0f) {
 val colorRange = 0f..1f
 
 object Box2dCategories {
-    const val splatter : Short = 0x0002
-    const val player: Short  = 0x0003
+    const val splatter: Short = 0x0002
+    const val player: Short = 0x0003
     const val enemy: Short = 0x0004
     const val objective: Short = 0x0005
     const val obstacle: Short = 0x0006
@@ -72,55 +73,56 @@ fun splatterParticles(
     from: Vector2,
     towards: Vector2,
     count: Int = 1,
-    life: Float = .5f,
+    lifeInSeconds: Float = .5f,
     force: ClosedFloatingPointRange<Float> = 1f..10f,
-    color: Color = Color(
+    c: Color = Color(
         colorRange.random(), colorRange.random(), colorRange.random(), 1f
     )
 ) {
 
 
     val splatterAngle = (-1f..1f)
-    val splatRange = -1f..1f
-    val localPoint = vec2()
-    val pOrC = (0..9)
     val forceVector = towards.cpy().scl(force.random())
     forceVector.setAngleDeg((forceVector.angleDeg() + splatterAngle.random()))
 
     for (i in 0 until count) {
-        val body = world().body {
+        val box2dBody = world().body {
             type = BodyDef.BodyType.DynamicBody
             position.set(from)
 
-                circle(0.05f) {
-                    density = 0.1f
-                    restitution = 1f
-                    filter {
-                        categoryBits = Box2dCategories.splatter
-                        maskBits = Box2dCollisionMasks.splatter
-                    }
+            circle(0.05f) {
+                density = 0.1f
+                restitution = 1f
+                filter {
+                    categoryBits = Box2dCategories.splatter
+                    maskBits = Box2dCollisionMasks.splatter
                 }
+            }
             linearDamping = (25f..125f).random()
             angularDamping = 5f
         }
         val entity = engine().createEntity().apply {
-            add(BodyComponent(body))
-            add(TransformComponent(from))
-            add(ParticleComponent(life, color = Color((0.5f..0.7f).random(), 0f, 0f, (.5f..1f).random())))
+            addComponent<BodyComponent> { body = box2dBody }
+            addComponent<TransformComponent> {
+                position.set(from)
+            }
+            addComponent<ParticleComponent> {
+                life = lifeInSeconds
+                color = c
+            }
         }
-        body.userData = entity
+        box2dBody.userData = entity
         engine().addEntity(entity)
-        //val applicationVector = body.getWorldPoint(localPoint.set(splatRange.random(), splatRange.random()))
-        body.applyLinearImpulse(
-forceVector,
-            body.worldCenter,
+        box2dBody.applyLinearImpulse(
+            forceVector,
+            box2dBody.worldCenter,
             true
         )
     }
 }
 
-fun player(player: Player, controlMapper: ControlMapper) {
-    val body = world().body {
+fun player(player: Player, mapper: ControlMapper) {
+    val box2dBody = world().body {
         type = BodyDef.BodyType.DynamicBody
         position.setZero()
         circle(1f) {
@@ -135,21 +137,21 @@ fun player(player: Player, controlMapper: ControlMapper) {
     }
 
     val entity = engine().createEntity().apply {
-        add(CameraFollowComponent())
-        add(BodyComponent(body))
-        add(TransformComponent())
-        add(controlMapper)
-        add(PlayerControlComponent(controlMapper)) //We will have multiple components later
+        addComponent<CameraFollowComponent>()
+        addComponent<BodyComponent> { body = box2dBody }
+        addComponent<TransformComponent>()
+        add(mapper)
+        addComponent<PlayerControlComponent> { controlMapper = mapper }//We will have multiple components later
         add(CharacterSpriteComponent(Assets.characters["player"]!!))
-        add(RenderableComponent(1))
-        add(PlayerComponent(player))
-        add(FiredShotsComponent())
+        addComponent<RenderableComponent> { layer = 1 }
+        addComponent<PlayerComponent> { this.player = player }
+        addComponent<FiredShotsComponent>()
     }
 
-    body.userData = entity
+    box2dBody.userData = entity
 
     engine().addEntity(entity)
-    player.body = body
+    player.body = box2dBody
     player.entity = entity
 }
 
@@ -166,7 +168,7 @@ fun semicircle(): List<Vector2> {
 
 fun enemy(at: Vector2) {
 
-    val body = world().body {
+    val box2dBody = world().body {
         type = BodyDef.BodyType.DynamicBody
         position.set(at)
         circle(1f) {
@@ -182,69 +184,69 @@ fun enemy(at: Vector2) {
     }
 
     val entity = engine().createEntity().apply {
-        add(BodyComponent(body))
-        add(TransformComponent(body.position))
-        add(EnemySensorComponent())
-        add(EnemyComponent())
+        addComponent<BodyComponent> { body = box2dBody }
+        addComponent<TransformComponent> { position.set(box2dBody.position) }
+        addComponent<EnemySensorComponent>()
+        addComponent<EnemyComponent>()
         add(CharacterSpriteComponent(Assets.characters["enemy"]!!))
-        add(RenderableComponent(1))
+        addComponent<RenderableComponent> { layer = 1 }
     }
-    entity.add(BehaviorComponent(Tree.getEnemyBehaviorTree().apply { `object` = entity}))
+    entity.addComponent<BehaviorComponent> { tree = Tree.getEnemyBehaviorTree().apply { `object` = entity } }
 
-    body.userData = entity
+    box2dBody.userData = entity
     engine().addEntity(entity)
 }
 
 
-fun vehicle(at: Vector2): Body {
-    /*
-    Make stuff up and then we change it all later...
-     */
-    val body = world().body {
-        type = BodyDef.BodyType.DynamicBody
-        position.set(at)
-        box(2f, 4f) {
-            density = GameScreen.CAR_DENSITY
-        }
-    }
+//fun vehicle(at: Vector2): Body {
+//    /*
+//    Make stuff up and then we change it all later...
+//     */
+//    val body = world().body {
+//        type = BodyDef.BodyType.DynamicBody
+//        position.set(at)
+//        box(2f, 4f) {
+//            density = GameScreen.CAR_DENSITY
+//        }
+//    }
+//
+//    val entity = engine().createEntity().apply {
+//        add(BodyComponent(body))
+//        add(TransformComponent(body.position))
+//        add(VehicleControlComponent(inject()))
+//        add(VehicleComponent())
+//    }
+//    body.userData = entity
+//    engine().addEntity(entity)
+//    return body
+//}
 
-    val entity = engine().createEntity().apply {
-        add(BodyComponent(body))
-        add(TransformComponent(body.position))
-        add(VehicleControlComponent(inject()))
-        add(VehicleComponent())
-    }
-    body.userData = entity
-    engine().addEntity(entity)
-    return body
-}
-
-fun shot(from: Vector2, towards: Vector2): Body {
-    val shot = world().body {
-        type = BodyDef.BodyType.DynamicBody
-        position.set(from)
-        circle(radius = .2f) {
-            density = GameScreen.SHOT_DENSITY
-        }
-    }
-    val entity = engine().createEntity().apply {
-        add(BodyComponent(shot))
-        add(TransformComponent(shot.position))
-        add(ShotComponent())
-    }
-    shot.userData = entity
-    shot.linearVelocity = towards.scl(10000f)
-    engine().addEntity(entity)
-    return shot
-}
+//fun shot(from: Vector2, towards: Vector2): Body {
+//    val shot = world().body {
+//        type = BodyDef.BodyType.DynamicBody
+//        position.set(from)
+//        circle(radius = .2f) {
+//            density = GameScreen.SHOT_DENSITY
+//        }
+//    }
+//    val entity = engine().createEntity().apply {
+//        add(BodyComponent(shot))
+//        add(TransformComponent(shot.position))
+//        add(ShotComponent())
+//    }
+//    shot.userData = entity
+//    shot.linearVelocity = towards.scl(10000f)
+//    engine().addEntity(entity)
+//    return shot
+//}
 
 fun obstacle(
     x: Float = 0f,
     y: Float = 0f,
     width: Float = 2f,
     height: Float = 2f
-): Body {
-    val body = world().body {
+): Entity {
+    val box2dBody = world().body {
         type = BodyDef.BodyType.StaticBody
         position.set(x, y)
         box(width, height) {
@@ -255,15 +257,15 @@ fun obstacle(
         }
     }
     val entity = engine().createEntity().apply {
-        add(BodyComponent(body))
-        add(TransformComponent(body.position))
-        add(ObstacleComponent())
-        add(BoxComponent(color = Color.BLUE))
-        add(RenderableComponent())
+        addComponent<BodyComponent> { body = box2dBody }
+        addComponent<TransformComponent> { position.set(box2dBody.position) }
+        addComponent<ObstacleComponent>()
+        addComponent<BoxComponent> { color = Color.BLUE }
+        addComponent<RenderableComponent>()
     }
-    body.userData = entity
+    box2dBody.userData = entity
     engine().addEntity(entity)
-    return body
+    return entity
 }
 
 fun objective(
@@ -272,7 +274,7 @@ fun objective(
     width: Float = 2f,
     height: Float = 2f
 ): Body {
-    val body = world().body {
+    val box2dBody = world().body {
         type = BodyDef.BodyType.StaticBody
         position.set(x, y)
         box(width, height) {
@@ -284,14 +286,14 @@ fun objective(
         }
     }
     val entity = engine().createEntity().apply {
-        add(BodyComponent(body))
-        add(TransformComponent(body.position))
-        add(BoxComponent())
-        add(ObjectiveComponent())
-        add(RenderableComponent())
+        addComponent<BodyComponent> { body = box2dBody }
+        addComponent<TransformComponent> { position.set(box2dBody.position) }
+        addComponent<BoxComponent>()
+        addComponent<ObjectiveComponent>()
+        addComponent<RenderableComponent> { layer = 2 }
     }
-    body.userData = entity
+    box2dBody.userData = entity
     engine().addEntity(entity)
-    return body
+    return box2dBody
 }
 

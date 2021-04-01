@@ -8,17 +8,26 @@ import ecs.components.ai.*
 object Tree {
     fun getEnemyBehaviorTree() = tree<Entity> {
         dynamicGuardSelector {
-            first(entityDo<Investigate> { ifEntityHas<NoticedSomething>() })
-            then(entityDo<AttackPlayer> { ifEntityHas<PlayerInRangeComponent>() })
-            then(ai.builders.selector {
-                first(invert(entityDo<SeekPlayer>{ unlessEntityHas<NoticedSomething>()}))
-                last(invert(entityDo<ChasePlayer>{ unlessEntityHas<NoticedSomething>() }))
+            first(entityDo<AttackPlayer> { ifEntityHas<PlayerIsInRange>() })
+            then(entityDo<ChasePlayer> { ifEntityHas<TrackingPlayerComponent>()})
+            ifThen(
+                entityHas<NoticedSomething>(),
+                selector {
+                    first(entityDo<SeekPlayer>())
+                    then(entityDo<Investigate>())
+                    then(entityDo<SeekPlayer>())
             })
-            then(entityDo<Amble> { unlessEntityHas<NoticedSomething>()})
+            last(
+            selector<Entity> {
+                first(entityDo<Amble>())
+                then(invert(entityDo<SeekPlayer>()))
+                last(invert(entityDo<ChasePlayer>()))
+            })
         }
     }
+
     fun getEnemyBehaviorTree_old() = tree<Entity> {
-        selector {
+        selector<Entity> {
             first(entityDo<Amble>())
             then(invert(entityDo<SeekPlayer>()))
             then(invert(entityDo<ChasePlayer>()))
