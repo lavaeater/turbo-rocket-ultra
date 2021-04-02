@@ -21,19 +21,23 @@ import factories.objective
 import factories.obstacle
 import injection.Context.inject
 import ecs.systems.input.KeyboardInputSystem
+import ecs.systems.player.GameOverSystem
 import factories.player
+import gamestate.GameEvent
+import gamestate.GameState
 import gamestate.Players
 import ktx.app.KtxScreen
 import ktx.ashley.allOf
 import ktx.ashley.mapperFor
 import ktx.ashley.remove
 import ktx.math.random
+import statemachine.StateMachine
 import ui.IUserInterface
 import kotlin.math.pow
 import kotlin.math.roundToInt
 
 
-class GameScreen : KtxScreen {
+class GameScreen(private val gameState: StateMachine<GameState, GameEvent>) : KtxScreen {
 
     companion object {
         const val ENEMY_DENSITY = .1f
@@ -72,6 +76,8 @@ class GameScreen : KtxScreen {
             addPlayers()
             generateMap()
             camera.setToOrtho(true, viewPort.maxWorldWidth, viewPort.maxWorldHeight)
+            //Dirty smelly bullshit
+            engine.addSystem(GameOverSystem(gameState))
             needsInit = false
         }
     }

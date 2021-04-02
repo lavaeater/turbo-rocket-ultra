@@ -1,6 +1,8 @@
 package ecs.systems.player
 
 import com.badlogic.ashley.core.Entity
+import com.badlogic.ashley.core.EntitySystem
+import com.badlogic.ashley.systems.IntervalSystem
 import com.badlogic.ashley.systems.IteratingSystem
 import ecs.components.ai.AttackPlayer
 import ecs.components.ai.ChasePlayer
@@ -11,11 +13,26 @@ import ecs.components.player.PlayerComponent
 import ecs.components.player.PlayerIsDead
 import ecs.components.player.PlayerRespawning
 import ecs.components.player.PlayerWaitsForRespawn
+import gamestate.GameEvent
+import gamestate.GameState
 import ktx.ashley.allOf
 import ktx.ashley.mapperFor
 import ktx.ashley.remove
 import physics.getComponent
 import physics.hasComponent
+import statemachine.StateMachine
+
+class GameOverSystem(private val gameState: StateMachine<GameState, GameEvent>) : IntervalSystem(1f) {
+
+    private val playerFamily = allOf(PlayerComponent::class).get()
+    private val players get() = engine.getEntitiesFor(playerFamily)
+
+    @ExperimentalStdlibApi
+    override fun update() {
+        if(players.map { it.getComponent<PlayerComponent>() }.all { it.player.lives < 1 && it.player.isDead })
+            gameState.acceptEvent(GameEvent.GameOver)
+    }
+}
 
 class PlayerDeathSystem: IteratingSystem(allOf(PlayerComponent::class).get()) {
     val mapper = mapperFor<PlayerComponent>()

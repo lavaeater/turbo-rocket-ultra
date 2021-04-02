@@ -40,13 +40,11 @@ class MainGame : KtxGame<Screen>() {
     }
 
     override fun create() {
-
         Assets.load()
         addScreen(SplashScreen(gameState))
-        addScreen(GameScreen())
+        addScreen(GameScreen(gameState))
         addScreen(PauseScreen(gameState))
         addScreen(GameOverScreen(gameState))
         gameState.initialize()
-//        setScreen<SplashScreen>()
     }
 }
