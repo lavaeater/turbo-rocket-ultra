@@ -20,7 +20,8 @@ To make the graphics and environment easy I am currently working with the concep
 ### MVP
 
 * Objective counting in multiplayer
-* Player death and game over man
+* Game over man <-Doing
+* Player death <- Done
 * Towers
 * Fix enemy sensors / noticing <- advanced behaviors
 * Fix enemy direction systems <- done?
@@ -34,6 +35,15 @@ To make the graphics and environment easy I am currently working with the concep
 * Enemies <- Done
 * Blood Splatter <- Done
 * MiniMap <- Done
+
+## Doing now: Game Over, Man!
+
+### Mechanics
+
+When all players have died their final death, the game should move to the game over screen. This could be a scene2d stage with some info on how the game went. In this we should also add - kill counts! Yay! And objective counts, per player, perhaps?
+
+1. Make game transition to game over screen when all lives are spent
+2. Count number of kills per player.
 
 ## Done: Interrupted Tasks v0.1
 
@@ -318,11 +328,11 @@ Next should probably be the feature that requires the least work to make it a "g
 
 So the next feature will be ship collisions.
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbMTM1ODE4NzMxNCwzMDM1ODEzMDcsLTIxMD
-YyNTUwMTcsMTk2MDY5NTIxMywxNzY5NjgzOTc3LDMzNTUwMzM0
-MSwxMDI3MDg0MDEsMTU3MTQxNjA4NSwtMjE0NjA0MTU3OSwtOT
-AzNjY1OTI1LDk1NDQ0MjM0NSwxODUxNzA5MzI1LC0xNjk4MjEz
-NzQzLC0xNjQxMTQwMjg3LDEzMTUzMTc3MzYsLTM2ODg1MzUxMi
-wyMTM1ODE5MDA0LC0yMTE4ODkwMTA5LDE3MDQ5NDYxOTgsNDQz
-ODQ5MzY0XX0=
+eyJoaXN0b3J5IjpbNzI4OTI5NzA2LDEzNTgxODczMTQsMzAzNT
+gxMzA3LC0yMTA2MjU1MDE3LDE5NjA2OTUyMTMsMTc2OTY4Mzk3
+NywzMzU1MDMzNDEsMTAyNzA4NDAxLDE1NzE0MTYwODUsLTIxND
+YwNDE1NzksLTkwMzY2NTkyNSw5NTQ0NDIzNDUsMTg1MTcwOTMy
+NSwtMTY5ODIxMzc0MywtMTY0MTE0MDI4NywxMzE1MzE3NzM2LC
+0zNjg4NTM1MTIsMjEzNTgxOTAwNCwtMjExODg5MDEwOSwxNzA0
+OTQ2MTk4XX0=
 -->
