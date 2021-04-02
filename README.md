@@ -40,7 +40,10 @@ To make the graphics and environment easy I am currently working with the concep
 
 ### Mechanics
 
-When all players have died their final death, the game should move to the game over screen. This could be a scene2d stage with some info on how the game went. In this we should also add - kill counts! Yay! And ob
+When all players have died their final death, the game should move to the game over screen. This could be a scene2d stage with some info on how the game went. In this we should also add - kill counts! Yay! And objective counts, per player, perhaps?
+
+1. Make game transition to game over screen when all lives are spent
+2. Count number of kills per player.
 
 ## Done: Interrupted Tasks v0.1
 
@@ -325,11 +328,11 @@ Next should probably be the feature that requires the least work to make it a "g
 
 So the next feature will be ship collisions.
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbNzYyMzA3MTAxLDEzNTgxODczMTQsMzAzNT
-gxMzA3LC0yMTA2MjU1MDE3LDE5NjA2OTUyMTMsMTc2OTY4Mzk3
-NywzMzU1MDMzNDEsMTAyNzA4NDAxLDE1NzE0MTYwODUsLTIxND
-YwNDE1NzksLTkwMzY2NTkyNSw5NTQ0NDIzNDUsMTg1MTcwOTMy
-NSwtMTY5ODIxMzc0MywtMTY0MTE0MDI4NywxMzE1MzE3NzM2LC
-0zNjg4NTM1MTIsMjEzNTgxOTAwNCwtMjExODg5MDEwOSwxNzA0
-OTQ2MTk4XX0=
+eyJoaXN0b3J5IjpbLTE2MTE0NjE3MiwxMzU4MTg3MzE0LDMwMz
+U4MTMwNywtMjEwNjI1NTAxNywxOTYwNjk1MjEzLDE3Njk2ODM5
+NzcsMzM1NTAzMzQxLDEwMjcwODQwMSwxNTcxNDE2MDg1LC0yMT
+Q2MDQxNTc5LC05MDM2NjU5MjUsOTU0NDQyMzQ1LDE4NTE3MDkz
+MjUsLTE2OTgyMTM3NDMsLTE2NDExNDAyODcsMTMxNTMxNzczNi
+wtMzY4ODUzNTEyLDIxMzU4MTkwMDQsLTIxMTg4OTAxMDksMTcw
+NDk0NjE5OF19
 -->
