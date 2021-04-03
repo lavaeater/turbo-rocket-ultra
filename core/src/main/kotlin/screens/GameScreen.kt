@@ -47,7 +47,7 @@ class GameScreen(private val gameState: StateMachine<GameState, GameEvent>) : Kt
         const val CAR_DENSITY = .3f
         const val SHIP_LINEAR_DAMPING = 20f
         const val SHIP_ANGULAR_DAMPING = 20f
-        const val MAX_ENEMIES = 500
+        const val MAX_ENEMIES = 700
 
         const val GAMEWIDTH = 64f
         const val GAMEHEIGHT = 48f
