@@ -28,7 +28,7 @@ class GameOverSystem(private val gameState: StateMachine<GameState, GameEvent>) 
     private val players get() = engine.getEntitiesFor(playerFamily)
 
     @ExperimentalStdlibApi
-    override fun update() {
+    override fun updateInterval() {
         if(players.map { it.getComponent<PlayerComponent>() }.all { it.player.lives < 1 && it.player.isDead })
             gameState.acceptEvent(GameEvent.GameOver)
     }

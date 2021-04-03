@@ -37,8 +37,8 @@ class CameraUpdateSystem(
         camera.position.lerp(
             vec3(cameraPosition, 0f), 0.5f)
 
-        viewport.minWorldWidth = (transformComponents.maxOf { it.position.x } - transformComponents.minOf { it.position.x } + 15f).coerceIn(GameScreen.GAMEWIDTH, GameScreen.GAMEWIDTH * 3)
-        viewport.minWorldHeight = (transformComponents.maxOf { it.position.y } - transformComponents.minOf { it.position.y } + 15f).coerceIn(GameScreen.GAMEHEIGHT, GameScreen.GAMEHEIGHT * 3)
+        viewport.minWorldWidth = (transformComponents.maxOf { it.position.x } - transformComponents.minOf { it.position.x } + 100f).coerceIn(GameScreen.GAMEWIDTH, GameScreen.GAMEWIDTH * 3)
+        viewport.minWorldHeight = (transformComponents.maxOf { it.position.y } - transformComponents.minOf { it.position.y } + 100f).coerceIn(GameScreen.GAMEHEIGHT, GameScreen.GAMEHEIGHT * 30)
         viewport.update(Gdx.graphics.width, Gdx.graphics.height)
         camera.update()
     }

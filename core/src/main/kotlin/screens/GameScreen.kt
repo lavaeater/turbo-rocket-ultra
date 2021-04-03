@@ -105,7 +105,7 @@ class GameScreen(private val gameState: StateMachine<GameState, GameEvent>) : Kt
         var randomAngle = (0f..360f)
         val startVector = Vector2.X.cpy().scl(100f).setAngleDeg(randomAngle.random())
 
-        numberOfEnemies = 2f.pow(currentLevel).roundToInt() * 2
+        numberOfEnemies = 2f.pow(currentLevel).roundToInt()
         numberOfObjectives = 2f.pow(currentLevel).roundToInt()
 
         for (enemy in engine.getEntitiesFor(allOf(EnemyComponent::class).get())) {
