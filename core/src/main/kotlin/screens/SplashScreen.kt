@@ -24,16 +24,19 @@ class SplashScreen(gameState: StateMachine<GameState, GameEvent>) : UserInterfac
     }
 
     lateinit var rootTable: Table
+    var needInit = true
 
     private fun initSplash() {
+        if(needInit) {
+            rootTable = scene2d.table {
+                setFillParent(true)
+                image(Assets.splashTexture)
+                pad(10f)
+            }
 
-        rootTable = scene2d.table {
-            setFillParent(true)
-            image(Assets.splashTexture)
-            pad(10f)
+            stage.addActor(rootTable)
+            needInit = false
         }
-
-        stage.addActor(rootTable)
     }
 
     override fun keyUp(keycode: Int): Boolean {
@@ -85,6 +88,11 @@ class SplashScreen(gameState: StateMachine<GameState, GameEvent>) : UserInterfac
             Players.players.remove(toRemove)
             return false
         }
+    }
+
+    override fun resize(width: Int, height: Int) {
+        viewPort.update(width, height)
+        batch.projectionMatrix = camera.combined
     }
 }
 

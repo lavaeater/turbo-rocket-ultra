@@ -21,7 +21,7 @@ class MainGame : KtxGame<Screen>() {
             state(GameState.Running) {
                 action { setScreen<GameScreen>() }
                 edge(GameEvent.PausedGame, GameState.Paused) {}
-                edge(GameEvent.GameOver, GameState.Ended) {}
+                edge(GameEvent.GameOver, GameState.Splash) {}
             }
             state(GameState.Paused) {
                 action { setScreen<PauseScreen>() }
