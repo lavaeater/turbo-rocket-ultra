@@ -47,6 +47,7 @@ class GameScreen(private val gameState: StateMachine<GameState, GameEvent>) : Kt
         const val CAR_DENSITY = .3f
         const val SHIP_LINEAR_DAMPING = 20f
         const val SHIP_ANGULAR_DAMPING = 20f
+        const val MAX_ENEMIES = 500
 
         const val GAMEWIDTH = 64f
         const val GAMEHEIGHT = 48f
@@ -88,7 +89,7 @@ class GameScreen(private val gameState: StateMachine<GameState, GameEvent>) : Kt
         }
     }
 
-    var currentLevel = 0
+    var currentLevel = 4
     var numberOfObjectives = 1
     var numberOfEnemies = 1
     val randomFactor = -500f..500f
@@ -105,7 +106,7 @@ class GameScreen(private val gameState: StateMachine<GameState, GameEvent>) : Kt
         var randomAngle = (0f..360f)
         val startVector = Vector2.X.cpy().scl(100f).setAngleDeg(randomAngle.random())
 
-        numberOfEnemies = 2f.pow(currentLevel).roundToInt()
+        numberOfEnemies = (2f.pow(currentLevel).roundToInt() * 2).coerceAtMost(MAX_ENEMIES)
         numberOfObjectives = 2f.pow(currentLevel).roundToInt()
 
         for (enemy in engine.getEntitiesFor(allOf(EnemyComponent::class).get())) {

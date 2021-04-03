@@ -2,6 +2,7 @@ package ui
 
 import com.badlogic.ashley.core.Engine
 import com.badlogic.ashley.core.Entity
+import com.badlogic.gdx.Gdx
 import com.badlogic.gdx.ai.btree.BehaviorTree
 import com.badlogic.gdx.ai.btree.Task
 import com.badlogic.gdx.graphics.OrthographicCamera
@@ -30,11 +31,6 @@ class UserInterface(
 
     private val players get() = Players.players
     private val engine by lazy { inject<Engine>() }
-    private val enemy by lazy {
-        engine.getEntitiesFor(allOf(EnemyComponent::class, BehaviorComponent::class).get()).first()
-    }
-    private val tree by lazy { enemy.getComponent(BehaviorComponent::class.java).tree }
-
 
     private lateinit var rootTable: KTableWidget
     private lateinit var infoBoard: KTableWidget
@@ -88,7 +84,10 @@ Lives: ${p.lives}
         if (enemyInfo.notEmpty()) {
             currentInfo = enemyInfo.removeFirst()
         }
-        enemyLabel.setText(currentInfo)
+        enemyLabel.setText("""
+            Enemies: ${engine.getEntitiesFor(allOf(EnemyComponent::class).get()).count()}
+            FPS: ${Gdx.graphics.framesPerSecond}
+            """)
     }
 
     var currentInfo = ""
@@ -104,23 +103,6 @@ Lives: ${p.lives}
     val enemyInfo = Queue<String>()
 
     private fun setup() {
-        tree.addListener(object : BehaviorTree.Listener<Entity> {
-            override fun statusUpdated(task: Task<Entity>?, previousStatus: Task.Status?) {
-                if (task != null && previousStatus != null && !task?.toString()?.substringAfterLast(".")
-                        .contains("BehaviorTree")
-                )
-                    enemyInfo.addLast(
-                        "${task?.toString()?.substringAfterLast(".")} - ${
-                            previousStatus.toString().substringAfterLast(".")
-                        }"
-                    )
-            }
-
-            override fun childAdded(task: Task<Entity>?, index: Int) {
-
-            }
-
-        })
         stage.clear()
         setupInfo()
     }

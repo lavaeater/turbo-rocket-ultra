@@ -1,13 +1,15 @@
 package physics
 
-import com.badlogic.gdx.physics.box2d.*
 import com.badlogic.ashley.core.Engine
+import com.badlogic.gdx.physics.box2d.Contact
+import com.badlogic.gdx.physics.box2d.ContactImpulse
+import com.badlogic.gdx.physics.box2d.ContactListener
+import com.badlogic.gdx.physics.box2d.Manifold
 import ecs.components.ai.TrackingPlayerComponent
 import ecs.components.enemy.EnemySensorComponent
 import ecs.components.gameplay.DestroyComponent
 import ecs.components.gameplay.ObjectiveComponent
 import ecs.components.gameplay.ShotComponent
-import ecs.systems.fx.addComponent
 import injection.Context.inject
 
 class ContactManager: ContactListener {

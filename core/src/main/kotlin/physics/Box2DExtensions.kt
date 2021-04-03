@@ -1,6 +1,7 @@
 package physics
 
 import com.badlogic.ashley.core.Component
+import com.badlogic.ashley.core.Engine
 import com.badlogic.ashley.core.Entity
 import com.badlogic.gdx.graphics.g2d.Batch
 import com.badlogic.gdx.graphics.g2d.TextureRegion
@@ -13,6 +14,7 @@ import ecs.components.*
 import ecs.components.enemy.EnemyComponent
 import ecs.components.player.PlayerComponent
 import ecs.components.player.PlayerControlComponent
+import factories.engine
 import gamestate.Player
 import ktx.ashley.has
 import ktx.ashley.mapperFor
@@ -165,4 +167,17 @@ fun Batch.drawScaled(
         scale,
         scale,
         rotation)
+}
+
+
+inline fun<reified T: Component>Entity.addComponent(block: T.() -> Unit = {}) {
+    this.add(component(block))
+}
+
+inline fun<reified T: Component>component(block: T.()-> Unit = {}) :T {
+    return engine().createComponent(block)
+}
+
+inline fun<reified T: Component> Engine.createComponent(block: T.() -> Unit = {}): T {
+    return this.createComponent(T::class.java).apply(block)
 }
