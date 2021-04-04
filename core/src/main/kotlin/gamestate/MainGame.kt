@@ -14,7 +14,7 @@ class MainGame : KtxGame<Screen>() {
                 edge(GameEvent.LeftSplash, GameState.Setup) {}
                 edge(GameEvent.StartedGame, GameState.Running) {
                     action {
-                        startGame()
+                        resetPlayers()
                     }
                 }
             }
@@ -22,7 +22,7 @@ class MainGame : KtxGame<Screen>() {
                 action { setScreen<SetupScreen>() }
                 edge(GameEvent.StartedGame, GameState.Running) {
                     action {
-                        startGame()
+                        resetPlayers()
                     }
                 }
             }
@@ -51,7 +51,7 @@ class MainGame : KtxGame<Screen>() {
             }
         }
 
-    private fun startGame() {
+    private fun resetPlayers() {
         for (player in Players.players.values) {
             player.reset()
         }

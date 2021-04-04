@@ -15,6 +15,7 @@ import ecs.components.enemy.EnemyComponent
 import ecs.components.enemy.EnemySpawnerComponent
 import ecs.components.gameplay.ObjectiveComponent
 import ecs.components.gameplay.TransformComponent
+import ecs.systems.graphics.CameraUpdateSystem
 import ecs.systems.graphics.RenderMiniMapSystem
 import ecs.systems.graphics.RenderSystem
 import ecs.systems.input.GamepadInputSystem
@@ -74,7 +75,15 @@ class GameScreen(private val gameState: StateMachine<GameState, GameEvent>) : Kt
         Gdx.input.inputProcessor = engine.getSystem(KeyboardInputSystem::class.java)
         Controllers.addListener(engine.getSystem(GamepadInputSystem::class.java))
 
+        engine.removeSystem(engine.getSystem<CameraUpdateSystem>())
+        engine.addSystem(CameraUpdateSystem())
+
         engine.removeAllEntities()
+
+        for(system in engine.systems) {
+            system.setProcessing(true)
+        }
+
         addPlayers()
         generateMap()
     }
