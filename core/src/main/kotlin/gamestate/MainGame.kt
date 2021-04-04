@@ -12,20 +12,36 @@ class MainGame : KtxGame<Screen>() {
             state(GameState.Splash) {
                 action { setScreen<SplashScreen>() }
                 edge(GameEvent.LeftSplash, GameState.Setup) {}
-                edge(GameEvent.StartedGame, GameState.Running) {}
+                edge(GameEvent.StartedGame, GameState.Running) {
+                    action {
+                        startGame()
+                    }
+                }
             }
             state(GameState.Setup) {
                 action { setScreen<SetupScreen>() }
-                edge(GameEvent.StartedGame, GameState.Running) {}
+                edge(GameEvent.StartedGame, GameState.Running) {
+                    action {
+                        startGame()
+                    }
+                }
             }
             state(GameState.Running) {
-                action { setScreen<GameScreen>() }
-                edge(GameEvent.PausedGame, GameState.Paused) {}
-                edge(GameEvent.GameOver, GameState.Splash) {}
+                action {
+                    setScreen<GameScreen>()
+                }
+                edge(GameEvent.PausedGame, GameState.Paused) {
+
+                }
+                edge(GameEvent.GameOver, GameState.Splash) {
+
+                }
             }
             state(GameState.Paused) {
                 action { setScreen<PauseScreen>() }
-                edge(GameEvent.ResumedGame, GameState.Running) {}
+                edge(GameEvent.ResumedGame, GameState.Running) {
+                    action {  }
+                }
                 edge(GameEvent.ExitedGame, GameState.Setup) {}
             }
             state(GameState.Ended) {
@@ -34,6 +50,12 @@ class MainGame : KtxGame<Screen>() {
                 edge(GameEvent.RestartGame, GameState.Running) {}
             }
         }
+
+    private fun startGame() {
+        for (player in Players.players.values) {
+            player.reset()
+        }
+    }
 
     private fun stateChanged(gameState: GameState) {
 

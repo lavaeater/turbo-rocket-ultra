@@ -91,7 +91,9 @@ class SplashScreen(gameState: StateMachine<GameState, GameEvent>) : UserInterfac
     }
 
     override fun resize(width: Int, height: Int) {
-        viewPort.update(width, height)
+        camera.setToOrtho(false)
+        viewPort.update(width, height, true)
+        camera.update()
         batch.projectionMatrix = camera.combined
     }
 }

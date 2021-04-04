@@ -15,6 +15,8 @@ import ecs.components.enemy.EnemyComponent
 import ecs.components.enemy.EnemySpawnerComponent
 import ecs.components.gameplay.ObjectiveComponent
 import ecs.components.gameplay.TransformComponent
+import ecs.systems.graphics.RenderMiniMapSystem
+import ecs.systems.graphics.RenderSystem
 import ecs.systems.input.GamepadInputSystem
 import factories.enemy
 import factories.objective
@@ -28,6 +30,7 @@ import gamestate.GameState
 import gamestate.Players
 import ktx.app.KtxScreen
 import ktx.ashley.allOf
+import ktx.ashley.getSystem
 import ktx.ashley.mapperFor
 import ktx.ashley.remove
 import ktx.math.random
@@ -53,8 +56,7 @@ class GameScreen(private val gameState: StateMachine<GameState, GameEvent>) : Kt
         const val GAMEHEIGHT = 48f
     }
 
-    private var needsInit = true
-
+    private var firstRun = true
     private val camera: OrthographicCamera by lazy { inject() }
     private val viewPort: ExtendViewport by lazy { inject() }
     private val engine: Engine by lazy { inject() }
@@ -67,19 +69,63 @@ class GameScreen(private val gameState: StateMachine<GameState, GameEvent>) : Kt
 
     override fun show() {
         initializeIfNeeded()
+        camera.setToOrtho(true, viewPort.maxWorldWidth, viewPort.maxWorldHeight)
         ui.show()
         Gdx.input.inputProcessor = engine.getSystem(KeyboardInputSystem::class.java)
         Controllers.addListener(engine.getSystem(GamepadInputSystem::class.java))
+
+        engine.removeAllEntities()
+        addPlayers()
+        generateMap()
+    }
+
+    override fun render(delta: Float) {
+        Gdx.gl.glClearColor(.4f, .4f, .4f, 1f)
+        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT)
+        //Update viewport and camera here and nowhere else...
+
+        camera.update(true)
+        batch.projectionMatrix = camera.combined
+        engine.update(delta)
+        ui.update(delta)
+        audioPlayer.update(delta)
+        if(player.touchedObjectives.count() == numberOfObjectives) //Add check if we killed all enemies
+            nextLevel()
+    }
+
+    override fun resize(width: Int, height: Int) {
+        viewPort.update(width, height)
+        batch.projectionMatrix = camera.combined
+    }
+
+    override fun pause() {
+        for (system in engine.systems)
+            system.setProcessing(false)
+
+        //Continue to render, though
+        engine.getSystem<RenderSystem>().setProcessing(true)
+        engine.getSystem<RenderMiniMapSystem>().setProcessing(true)
+    }
+
+    override fun resume() {
+        Gdx.input.inputProcessor = engine.getSystem(KeyboardInputSystem::class.java)
+        Controllers.addListener(engine.getSystem(GamepadInputSystem::class.java))
+        for (system in engine.systems)
+            system.setProcessing(true)
+    }
+
+    override fun hide() {
+        ui.hide()
+        Gdx.input.inputProcessor = null
+        Controllers.removeListener(engine.getSystem(GamepadInputSystem::class.java))
+        for (system in engine.systems)
+            system.setProcessing(false)
     }
 
     private fun initializeIfNeeded() {
-        if (needsInit) {
-            addPlayers()
-            generateMap()
-            camera.setToOrtho(true, viewPort.maxWorldWidth, viewPort.maxWorldHeight)
-            //Dirty smelly bullshit
+        if (firstRun) {
             engine.addSystem(GameOverSystem(gameState))
-            needsInit = false
+            firstRun = false
         }
     }
 
@@ -147,50 +193,6 @@ class GameScreen(private val gameState: StateMachine<GameState, GameEvent>) : Kt
         }
 
     }
-
-    override fun render(delta: Float) {
-        Gdx.gl.glClearColor(.4f, .4f, .4f, 1f)
-        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT)
-        //Update viewport and camera here and nowhere else...
-
-        camera.update(true)
-        batch.projectionMatrix = camera.combined
-        engine.update(delta)
-        ui.update(delta)
-        audioPlayer.update(delta)
-        if(player.touchedObjectives.count() == numberOfObjectives) //Add check if we killed all enemies
-            nextLevel()
-    }
-
-    override fun resize(width: Int, height: Int) {
-        initializeIfNeeded()
-        viewPort.update(width, height)
-        batch.projectionMatrix = camera.combined
-    }
-
-    override fun pause() {
-        pauseGame()
-    }
-
-    override fun resume() {
-        Gdx.input.inputProcessor = engine.getSystem(KeyboardInputSystem::class.java)
-        Controllers.addListener(engine.getSystem(GamepadInputSystem::class.java))
-        for (system in engine.systems)
-            system.setProcessing(true)
-    }
-
-    override fun hide() {
-        ui.hide()
-        pauseGame()
-    }
-
-    private fun pauseGame() {
-        Gdx.input.inputProcessor = null
-        Controllers.removeListener(engine.getSystem(GamepadInputSystem::class.java))
-        for (system in engine.systems)
-            system.setProcessing(false)
-    }
-
     override fun dispose() {
         // Destroy screen's assets here.
     }

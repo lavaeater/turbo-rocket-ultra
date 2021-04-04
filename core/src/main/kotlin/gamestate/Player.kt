@@ -13,7 +13,12 @@ class Player() {
         field = value.coerceAtLeast(0)
     }
     val touchedObjectives = mutableSetOf<ObjectiveComponent>()
-    var respawning = false
     val isDead : Boolean
         get() = health < 1
+
+    fun reset() {
+        lives = 1
+        health = 100
+        touchedObjectives.clear()
+    }
 }
