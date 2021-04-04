@@ -75,9 +75,7 @@ class GameScreen(private val gameState: StateMachine<GameState, GameEvent>) : Kt
         Gdx.input.inputProcessor = engine.getSystem(KeyboardInputSystem::class.java)
         Controllers.addListener(engine.getSystem(GamepadInputSystem::class.java))
 
-        engine.removeSystem(engine.getSystem<CameraUpdateSystem>())
-        engine.addSystem(CameraUpdateSystem())
-
+        engine.getSystem<CameraUpdateSystem>().reset()
         engine.removeAllEntities()
 
         for(system in engine.systems) {
