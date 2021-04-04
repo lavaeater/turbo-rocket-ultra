@@ -71,12 +71,14 @@ class GameScreen(private val gameState: StateMachine<GameState, GameEvent>) : Kt
     override fun show() {
         initializeIfNeeded()
         camera.setToOrtho(true, viewPort.maxWorldWidth, viewPort.maxWorldHeight)
+        ui.reset()
         ui.show()
         Gdx.input.inputProcessor = engine.getSystem(KeyboardInputSystem::class.java)
         Controllers.addListener(engine.getSystem(GamepadInputSystem::class.java))
 
         engine.getSystem<CameraUpdateSystem>().reset()
         engine.removeAllEntities()
+        currentLevel = 1
 
         for(system in engine.systems) {
             system.setProcessing(true)
@@ -142,7 +144,7 @@ class GameScreen(private val gameState: StateMachine<GameState, GameEvent>) : Kt
         }
     }
 
-    var currentLevel = 4
+    var currentLevel = 1
     var numberOfObjectives = 1
     var numberOfEnemies = 1
     val randomFactor = -500f..500f

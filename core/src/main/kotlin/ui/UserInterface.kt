@@ -100,10 +100,15 @@ Lives: ${p.lives}
         stage.clear()
     }
 
+    override fun reset() {
+        setup()
+    }
+
     val enemyInfo = Queue<String>()
 
     private fun setup() {
         stage.clear()
+        playerLabels.clear()
         setupInfo()
     }
 
