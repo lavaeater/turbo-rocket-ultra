@@ -5,7 +5,6 @@ import com.badlogic.gdx.utils.Disposable
 import com.badlogic.gdx.utils.viewport.Viewport
 
 interface IUserInterface : Disposable {
-  val stage: Stage
   val hudViewPort: Viewport
   fun show()
   fun hide()

@@ -1,17 +1,19 @@
 package ui
 
+import com.badlogic.gdx.Gdx
 import com.badlogic.gdx.graphics.OrthographicCamera
 import com.badlogic.gdx.graphics.g2d.Batch
-import com.badlogic.gdx.scenes.scene2d.Stage
-import com.badlogic.gdx.scenes.scene2d.ui.Label
-import com.badlogic.gdx.utils.Align
+import com.badlogic.gdx.graphics.g2d.TextureRegion
+import com.badlogic.gdx.math.Vector2
 import com.badlogic.gdx.utils.Queue
 import com.badlogic.gdx.utils.viewport.ExtendViewport
 import ecs.components.graphics.CharacterSpriteComponent
-import gamestate.Player
 import gamestate.Players
-import ktx.scene2d.*
+import ktx.graphics.use
+import ktx.math.vec2
+import physics.drawScaled
 import physics.getComponent
+import tru.Assets
 
 class UserInterface(
     private val batch: Batch,
@@ -19,26 +21,17 @@ class UserInterface(
 ) : IUserInterface {
 
     private val players get() = Players.players
-
-    private lateinit var rootTable: KTableWidget
-    private lateinit var infoBoard: KTableWidget
-
-
-    override val hudViewPort = ExtendViewport(uiWidth, uiHeight, OrthographicCamera())
+    private val camera = OrthographicCamera()
+    override val hudViewPort = ExtendViewport(uiWidth, uiHeight, camera)
 
     @ExperimentalStdlibApi
     override fun show() {
-        setup()
+        hudViewPort.update(Gdx.graphics.width, Gdx.graphics.height, true)
     }
 
     override fun hide() {
         //setup clears everything, not needed.
     }
-
-    override val stage = Stage(hudViewPort, batch)
-        .apply {
-            isDebugAll = debug
-        }
 
     companion object {
         private const val aspectRatio = 16 / 9
@@ -48,89 +41,120 @@ class UserInterface(
 
     @ExperimentalStdlibApi
     override fun update(delta: Float) {
-        batch.projectionMatrix = stage.camera.combined
-
-        updateInfo(delta)
-        stage.act(delta)
-        stage.draw()
-    }
-
-    var accumulator = 0f
-
-
-    @ExperimentalStdlibApi
-    private fun updateInfo(delta: Float) {
-        var index = 1
-        for ((l, _) in playerLabels) {
-            l.setText(
-                """
-Player $index                    
-""".trimIndent()
-            )
-            index++
+        camera.update()
+        batch.projectionMatrix = camera.combined
+        batch.use {
+            newUi.render(batch)
         }
     }
 
     override fun dispose() {
-        stage.dispose()
     }
 
     override fun clear() {
-        stage.clear()
     }
 
     @ExperimentalStdlibApi
     override fun reset() {
-        setup()
     }
 
     val enemyInfo = Queue<String>()
 
     @ExperimentalStdlibApi
-    private fun setup() {
-        stage.clear()
-        playerLabels.clear()
-        setupInfo()
-    }
-
-    private val playerLabels = mutableMapOf<Label, Player>()
-
-    @ExperimentalStdlibApi
-    private fun setupInfo() {
-
-        infoBoard = scene2d.table {
-            setFillParent(false)
-            bottom()
-            left()
-            for ((_, p) in players) {
-                val l = label("PlayerLabel").cell(align = Align.left)
-                row()
-                playerLabels[l] = p
-                table {
-                    setFillParent(false)
-                    left()
-                    top()
-                    for (i in 0 until p.lives)
-                        image(
-                            p.entity.getComponent<CharacterSpriteComponent>()
-                                .currentAnim.keyFrames.first()) {
-                            setScale(0.35f)
-                            width = imageWidth * 0.35f
-                        }.cell(align = Align.topLeft)
-                    row().top()
-                    pack()
-                }
+    private val newUi by lazy {
+        SimpleContainer(vec2(20f, hudViewPort.worldHeight / 6)).apply {
+            for ((i, p) in players.values.withIndex()) {
+                children.add(
+                    TextActor(
+                        "Player $i",
+                        vec2(i * 10f, 10f)
+                    )
+                )
+                children.add(
+                    SpacedContainer(vec2(40f, 0f), vec2(i * 10f, 50f)).apply {
+                        children.add(
+                            TextureActor(
+                                p.entity.getComponent<CharacterSpriteComponent>().currentAnim.keyFrames.first(),
+                                vec2(0f, 0f),
+                                0.5f
+                            )
+                        )
+                        children.add(
+                            TextureActor(
+                                p.entity.getComponent<CharacterSpriteComponent>().currentAnim.keyFrames.first(),
+                                vec2(0f, 0f),
+                                0.5f
+                            )
+                        )
+                        children.add(
+                            TextureActor(
+                                p.entity.getComponent<CharacterSpriteComponent>().currentAnim.keyFrames.first(),
+                                vec2(0f, 0f),
+                                0.5f
+                            )
+                        )
+                    }
+                )
             }
         }
+    }
+}
 
-        rootTable = scene2d.table {
-            setFillParent(true)
-            bottom()
-            left()
-            add(infoBoard).align(Align.bottomLeft)
-            pad(10f)
+interface SimpleActor {
+    fun render(batch: Batch, parentPosition: Vector2 = vec2())
+}
+
+abstract class ContainerBaseActor(val position: Vector2) : SimpleActor {
+    val children = mutableListOf<SimpleActor>()
+    override fun render(batch: Batch, parentPosition: Vector2) {
+        for (child in children) {
+            child.render(batch, position)
         }
+    }
+}
 
-        stage.addActor(rootTable)
+abstract class LeafActor(val position: Vector2) : SimpleActor {
+    abstract override fun render(batch: Batch, parentPosition: Vector2)
+}
+
+class SimpleContainer(position: Vector2) : ContainerBaseActor(position)
+
+class SpacedContainer(private val offset: Vector2, position: Vector2) : ContainerBaseActor(position) {
+    override fun render(batch: Batch, parentPosition: Vector2) {
+        for ((index, child) in children.withIndex()) {
+            child.render(batch, vec2(parentPosition.x + index * offset.x, parentPosition.y -  index * offset.y))
+        }
+    }
+}
+
+class TextActor(
+    var text: String,
+    position: Vector2
+) : LeafActor(position) {
+    override fun render(batch: Batch, parentPosition: Vector2) {
+        Assets.font.draw(
+            batch,
+            text,
+            parentPosition.x + position.x,
+            parentPosition.y - position.y
+        )
+    }
+
+}
+
+class TextureActor(
+    val textureRegion: TextureRegion,
+    position: Vector2,
+    val scale: Float = 1f
+) : LeafActor(position) {
+    override fun render(batch: Batch, parentPosition: Vector2) {
+
+        batch.drawScaled(
+            textureRegion,
+            parentPosition.x + position.x,
+            parentPosition.y - position.y - textureRegion.regionHeight,
+            scale,
+            0f
+        )
     }
 }

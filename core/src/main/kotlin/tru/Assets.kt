@@ -14,6 +14,16 @@ import com.badlogic.gdx.utils.Disposable
 import injection.Context.inject
 import ktx.scene2d.Scene2DSkin
 import space.earlygrey.shapedrawer.ShapeDrawer
+import com.badlogic.gdx.graphics.g2d.BitmapFont
+import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator.FreeTypeFontParameter
+
+import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator
+
+
+
+
+
+
 
 /**
  * Actually load assets using the asset manager, maan
@@ -49,6 +59,10 @@ object Assets : Disposable {
             "gunshot" to Gdx.audio.newSound(Gdx.files.internal("audio/gunshot.wav")),
             "shellcasing" to Gdx.audio.newSound(Gdx.files.internal("audio/shellcasing.wav"))
         )
+    }
+
+    val font by lazy {
+        BitmapFont(Gdx.files.internal("font/arial-15.fnt"))
     }
 
     fun load(): AssetManager {
