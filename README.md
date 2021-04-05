@@ -21,6 +21,7 @@ To make the graphics and environment easy I am currently working with the concep
 
 * Start Screen that does *anything*
 * Game Over Screen that does *anything*
+* Towers
 * Scoring and Objectives <- done
 * Game over man <-Doing
 * Player death <- Done
@@ -333,7 +334,7 @@ Next should probably be the feature that requires the least work to make it a "g
 
 So the next feature will be ship collisions.
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbLTYxOTMyOTEwNiwtOTgzNjc2MTEzLDEyNj
+eyJoaXN0b3J5IjpbLTk5ODY2ODA2NCwtOTgzNjc2MTEzLDEyNj
 QyNDM0MjEsNzI4OTI5NzA2LDEzNTgxODczMTQsMzAzNTgxMzA3
 LC0yMTA2MjU1MDE3LDE5NjA2OTUyMTMsMTc2OTY4Mzk3NywzMz
 U1MDMzNDEsMTAyNzA4NDAxLDE1NzE0MTYwODUsLTIxNDYwNDE1
