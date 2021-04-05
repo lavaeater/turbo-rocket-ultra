@@ -38,7 +38,9 @@ To make the graphics and environment easy I am currently working with the concep
 * Blood Splatter <- Done
 * MiniMap <- Done
 
-## Doing now: Game Over, Man!
+
+
+## Done: Game Over, Man! - v0.1
 
 ### Mechanics
 
@@ -330,11 +332,11 @@ Next should probably be the feature that requires the least work to make it a "g
 
 So the next feature will be ship collisions.
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbMTI2NDI0MzQyMSw3Mjg5Mjk3MDYsMTM1OD
-E4NzMxNCwzMDM1ODEzMDcsLTIxMDYyNTUwMTcsMTk2MDY5NTIx
-MywxNzY5NjgzOTc3LDMzNTUwMzM0MSwxMDI3MDg0MDEsMTU3MT
-QxNjA4NSwtMjE0NjA0MTU3OSwtOTAzNjY1OTI1LDk1NDQ0MjM0
-NSwxODUxNzA5MzI1LC0xNjk4MjEzNzQzLC0xNjQxMTQwMjg3LD
-EzMTUzMTc3MzYsLTM2ODg1MzUxMiwyMTM1ODE5MDA0LC0yMTE4
-ODkwMTA5XX0=
+eyJoaXN0b3J5IjpbMTMyNDg0OTMyMiwxMjY0MjQzNDIxLDcyOD
+kyOTcwNiwxMzU4MTg3MzE0LDMwMzU4MTMwNywtMjEwNjI1NTAx
+NywxOTYwNjk1MjEzLDE3Njk2ODM5NzcsMzM1NTAzMzQxLDEwMj
+cwODQwMSwxNTcxNDE2MDg1LC0yMTQ2MDQxNTc5LC05MDM2NjU5
+MjUsOTU0NDQyMzQ1LDE4NTE3MDkzMjUsLTE2OTgyMTM3NDMsLT
+E2NDExNDAyODcsMTMxNTMxNzczNiwtMzY4ODUzNTEyLDIxMzU4
+MTkwMDRdfQ==
 -->
