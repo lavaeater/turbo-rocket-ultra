@@ -19,10 +19,12 @@ To make the graphics and environment easy I am currently working with the concep
 
 ### MVP
 
-* Objective counting in multiplayer
+* Start Screen that does *anything*
+* Game Over Screen that does *anything*
+* Scoring and Objectives
+* Towers
 * Game over man <-Doing
 * Player death <- Done
-* Towers
 * Fix enemy sensors / noticing <- advanced behaviors
 * Fix enemy direction systems <- done?
 * Vehicles <- nice to have
@@ -328,11 +330,11 @@ Next should probably be the feature that requires the least work to make it a "g
 
 So the next feature will be ship collisions.
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbNzI4OTI5NzA2LDEzNTgxODczMTQsMzAzNT
-gxMzA3LC0yMTA2MjU1MDE3LDE5NjA2OTUyMTMsMTc2OTY4Mzk3
-NywzMzU1MDMzNDEsMTAyNzA4NDAxLDE1NzE0MTYwODUsLTIxND
-YwNDE1NzksLTkwMzY2NTkyNSw5NTQ0NDIzNDUsMTg1MTcwOTMy
-NSwtMTY5ODIxMzc0MywtMTY0MTE0MDI4NywxMzE1MzE3NzM2LC
-0zNjg4NTM1MTIsMjEzNTgxOTAwNCwtMjExODg5MDEwOSwxNzA0
-OTQ2MTk4XX0=
+eyJoaXN0b3J5IjpbNzUxNTIwMjIxLDcyODkyOTcwNiwxMzU4MT
+g3MzE0LDMwMzU4MTMwNywtMjEwNjI1NTAxNywxOTYwNjk1MjEz
+LDE3Njk2ODM5NzcsMzM1NTAzMzQxLDEwMjcwODQwMSwxNTcxND
+E2MDg1LC0yMTQ2MDQxNTc5LC05MDM2NjU5MjUsOTU0NDQyMzQ1
+LDE4NTE3MDkzMjUsLTE2OTgyMTM3NDMsLTE2NDExNDAyODcsMT
+MxNTMxNzczNiwtMzY4ODUzNTEyLDIxMzU4MTkwMDQsLTIxMTg4
+OTAxMDldfQ==
 -->
