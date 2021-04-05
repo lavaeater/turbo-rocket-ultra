@@ -184,7 +184,7 @@ class GameScreen(private val gameState: StateMachine<GameState, GameEvent>) : Kt
                 obstacle(x * randomFactor.random(), y * randomFactor.random())
             }
 
-        val position = transformMapper.get(player.entity).position.cpy()
+        val position = transformMapper.get(Players.players.values.first().entity).position.cpy()
 
         for(i in 0 until numberOfObjectives) {
             position.add(startVector)
