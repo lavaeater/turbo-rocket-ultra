@@ -1,6 +1,7 @@
 package physics
 
 import com.badlogic.ashley.core.Engine
+import com.badlogic.gdx.graphics.Color
 import com.badlogic.gdx.physics.box2d.Contact
 import com.badlogic.gdx.physics.box2d.ContactImpulse
 import com.badlogic.gdx.physics.box2d.ContactListener
@@ -10,6 +11,7 @@ import ecs.components.enemy.EnemySensorComponent
 import ecs.components.gameplay.DestroyComponent
 import ecs.components.gameplay.ObjectiveComponent
 import ecs.components.gameplay.ShotComponent
+import ecs.components.graphics.BoxComponent
 import injection.Context.inject
 
 class ContactManager: ContactListener {
@@ -28,7 +30,13 @@ class ContactManager: ContactListener {
                 enemy.add(engine.createComponent(TrackingPlayerComponent::class.java).apply { player = contact.getPlayerFor() })
             }
             if(contact.hasComponent<ObjectiveComponent>()) {
-                contact.getPlayerFor().touchedObjectives.add(contact.getEntityFor<ObjectiveComponent>().getComponent())
+                val cEntity = contact.getEntityFor<ObjectiveComponent>()
+                val objectiveComponent = cEntity.getComponent<ObjectiveComponent>()
+                if(!objectiveComponent.touched)
+                    contact.getPlayerFor().touchedObjectives.add(objectiveComponent)
+
+                cEntity.getComponent<BoxComponent>().color = Color.PURPLE
+                objectiveComponent.touched = true
             }
         }
 

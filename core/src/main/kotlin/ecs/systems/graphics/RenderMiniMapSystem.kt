@@ -8,6 +8,7 @@ import com.badlogic.gdx.graphics.OrthographicCamera
 import ecs.components.gameplay.ObjectiveComponent
 import ecs.components.gameplay.ObstacleComponent
 import ecs.components.gameplay.TransformComponent
+import ecs.components.graphics.BoxComponent
 import ecs.components.graphics.CharacterSpriteComponent
 import ecs.components.graphics.RenderableComponent
 import ecs.components.player.PlayerComponent
@@ -16,6 +17,8 @@ import ktx.ashley.allOf
 import ktx.ashley.mapperFor
 import ktx.graphics.use
 import ktx.math.vec2
+import physics.getComponent
+import physics.hasComponent
 import tru.Assets
 import java.util.Comparator
 
@@ -27,8 +30,6 @@ class RenderMiniMapSystem : SortedIteratingSystem(allOf(RenderableComponent::cla
     }}, 20) {
     private val tMapper = mapperFor<TransformComponent>()
     private val pMapper = mapperFor<PlayerComponent>()
-    private val gMapper = mapperFor<ObjectiveComponent>()
-    private val oMapper = mapperFor<ObstacleComponent>()
     private val sMapper = mapperFor<CharacterSpriteComponent>()
     private val shapeDrawer by lazy { Assets.shapeDrawer }
     private val scale = 100f
@@ -43,24 +44,37 @@ class RenderMiniMapSystem : SortedIteratingSystem(allOf(RenderableComponent::cla
         }
     }
 
+    @ExperimentalStdlibApi
     override fun processEntity(entity: Entity, deltaTime: Float) {
         val transform = tMapper.get(entity)
-        if((gMapper.has(entity) || oMapper.has(entity) && transform.position.dst2(camera.position.x, camera.position.y) < 200000f) || (sMapper.has(entity) && transform.position.dst2(camera.position.x, camera.position.y) < 20000f)) {
-
-            var color = Color.RED
-            var radius = .1f
-            if (pMapper.has(entity)) {
-                color = Color.WHITE
-                radius = .1f
-            }
-            if(gMapper.has(entity)) {
-                color = Color.GREEN
-                radius = .1f
-            }
+        if(transform.position.dst2(camera.position.x, camera.position.y) < 200000f) {
             center.set(
                 transform.position.x / scale + xOffset, transform.position.y / scale + yOffset
             )
-            shapeDrawer.filledCircle(center, radius, color)
+            var color = Color.RED
+            var radius = .1f
+            if(sMapper.has(entity)) {
+                color = Color(.8f, 0f, 0f, 1f)
+                radius = .1f
+                shapeDrawer.filledCircle(center, radius, color)
+            }
+            if (pMapper.has(entity)) {
+                color = Color.WHITE
+                radius = .1f
+                shapeDrawer.filledCircle(center, radius, color)
+            }
+            if(entity.hasComponent<BoxComponent>()) {
+                val box = entity.getComponent<BoxComponent>()
+                shapeDrawer.filledRectangle(
+                    (transform.position.x - box.width) / scale + xOffset,
+                    (transform.position.y - box.height) / scale + yOffset,
+                    box.width / (scale / 10),
+                    box.height / (scale / 10),
+                    box.color)
+            }
+
+
+
         }
     }
 }

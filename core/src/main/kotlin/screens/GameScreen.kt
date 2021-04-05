@@ -66,7 +66,6 @@ class GameScreen(private val gameState: StateMachine<GameState, GameEvent>) : Kt
     private val ui: IUserInterface by lazy { inject() }
     private val audioPlayer: AudioPlayer by lazy { inject() }
     private val transformMapper = mapperFor<TransformComponent>()
-    private val player by lazy { Players.players.values.first() }
 
     override fun show() {
         initializeIfNeeded()
@@ -98,7 +97,7 @@ class GameScreen(private val gameState: StateMachine<GameState, GameEvent>) : Kt
         engine.update(delta)
         ui.update(delta)
         audioPlayer.update(delta)
-        if(player.touchedObjectives.count() == numberOfObjectives) //Add check if we killed all enemies
+        if(Players.players.values.sumOf { it.touchedObjectives.count() } == numberOfObjectives) //Add check if we killed all enemies
             nextLevel()
     }
 
