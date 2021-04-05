@@ -71,8 +71,6 @@ class GameScreen(private val gameState: StateMachine<GameState, GameEvent>) : Kt
     override fun show() {
         initializeIfNeeded()
         camera.setToOrtho(true, viewPort.maxWorldWidth, viewPort.maxWorldHeight)
-        ui.reset()
-        ui.show()
         Gdx.input.inputProcessor = engine.getSystem(KeyboardInputSystem::class.java)
         Controllers.addListener(engine.getSystem(GamepadInputSystem::class.java))
 
@@ -86,6 +84,8 @@ class GameScreen(private val gameState: StateMachine<GameState, GameEvent>) : Kt
 
         addPlayers()
         generateMap()
+        ui.reset()
+        ui.show()
     }
 
     override fun render(delta: Float) {

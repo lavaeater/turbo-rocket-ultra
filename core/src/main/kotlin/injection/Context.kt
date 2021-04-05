@@ -14,10 +14,7 @@ import ecs.systems.enemy.*
 import ecs.systems.input.KeyboardInputSystem
 import ecs.systems.fx.AddSplatterSystem
 import ecs.systems.fx.SplatterRemovalSystem
-import ecs.systems.graphics.CameraUpdateSystem
-import ecs.systems.graphics.RenderMiniMapSystem
-import ecs.systems.graphics.RenderSystem
-import ecs.systems.graphics.ShootDebugRenderSystem
+import ecs.systems.graphics.*
 import ecs.systems.input.GamepadInputSystem
 import ecs.systems.input.VehicleControlSystem
 import ecs.systems.player.PlayerDeathSystem
@@ -66,6 +63,7 @@ object Context {
     private fun getEngine(): Engine {
         return PooledEngine().apply {
             addSystem(PhysicsSystem(inject()))
+            addSystem(PhysicsDebugRendererSystem(inject(), inject()))
             addSystem(CameraUpdateSystem())
             addSystem(PlayerMoveSystem())
             addSystem(KeyboardInputSystem())
