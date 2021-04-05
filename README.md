@@ -38,7 +38,9 @@ To make the graphics and environment easy I am currently working with the concep
 * Blood Splatter <- Done
 * MiniMap <- Done
 
+## Notes on getting caught up in drama
 
+What do I even mean by that? Well, I am of course talking about game-altering ideas about new mechanics. Here's the thing: I want to make the game isometric, I have always wanted that. But now is not the time, keep the eye on the prize and keep chugging along - isometric is several levels of confusion added upon confusion. We can deal with that in another game at a later stage, when we have "all" things figured out for this game.
 
 ## Done: Game Over, Man! - v0.1
 
@@ -332,7 +334,7 @@ Next should probably be the feature that requires the least work to make it a "g
 
 So the next feature will be ship collisions.
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbMTMyNDg0OTMyMiwxMjY0MjQzNDIxLDcyOD
+eyJoaXN0b3J5IjpbLTk4MzY3NjExMywxMjY0MjQzNDIxLDcyOD
 kyOTcwNiwxMzU4MTg3MzE0LDMwMzU4MTMwNywtMjEwNjI1NTAx
 NywxOTYwNjk1MjEzLDE3Njk2ODM5NzcsMzM1NTAzMzQxLDEwMj
 cwODQwMSwxNTcxNDE2MDg1LC0yMTQ2MDQxNTc5LC05MDM2NjU5
