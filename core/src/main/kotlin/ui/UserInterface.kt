@@ -59,9 +59,12 @@ class UserInterface(
         SpacedContainer(vec2(50f, 0f), vec2(20f, hudViewPort.worldHeight / 6), true).apply {
             for ((i, p) in players.values.withIndex()) {
                 children.add(
-                    SpacedContainer(vec2(0f, 20f), vec2()).apply {
+                    SpacedContainer(vec2(0f, 25f), vec2()).apply {
                         children.add(
                             TextActor("Player ${i + 1}")
+                        )
+                        children.add(
+                            BoundTextActor( {"Kills: ${p.kills}"} )
                         )
                         children.add(
                             DataBoundMeter(

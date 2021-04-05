@@ -5,6 +5,7 @@ import com.badlogic.gdx.physics.box2d.Body
 import ecs.components.gameplay.ObjectiveComponent
 
 class Player() {
+    var kills = 0
     lateinit var body: Body
     lateinit var entity: Entity
     val startingHealth = 100
@@ -23,6 +24,7 @@ class Player() {
     fun reset() {
         lives = startingLives
         health = startingHealth
+        kills = 0
         touchedObjectives.clear()
     }
 }
