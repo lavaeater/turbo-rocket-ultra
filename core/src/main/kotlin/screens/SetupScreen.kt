@@ -4,11 +4,15 @@ import com.badlogic.gdx.graphics.OrthographicCamera
 import com.badlogic.gdx.utils.viewport.ExtendViewport
 import gamestate.GameEvent
 import gamestate.GameState
+import gamestate.Player
 import ktx.graphics.use
 import ktx.math.vec2
 import statemachine.StateMachine
 import tru.Assets
-import ui.ActualActor
+import ui.BoundTextElement
+import ui.CollectionContainerElement
+import ui.ContainerElement
+import ui.TextureElement
 import ui.builders.rootSpacedContainer
 import ui.builders.textLabel
 
@@ -28,20 +32,17 @@ class SetupScreen(gameState: StateMachine<GameState, GameEvent>) : BasicScreen(g
     override val camera = OrthographicCamera()
     override val viewport = ExtendViewport(800f, 600f, camera)
 
-    val debug = true
+    val debug = false
     val shapeDrawer by lazy { Assets.shapeDrawer }
-    val ui = rootSpacedContainer {
-        position = vec2(100f, 500f)
-        offset = vec2(20f, 20f)
-        textLabel("Press buttons and shit to start the game, shitface!")
-    }
 
-    val altUi = ActualActor()
+    private val altUi = CollectionContainerElement(
+        listOf(Player(), Player(), Player()),
+    listOf(BoundTextElement({ p -> p.lives.toString() }, vec2()),
+    BoundTextElement({p -> p.health.toString() }, vec2())), position = vec2(100f, 400f,))
 
     override fun render(delta: Float) {
         super.render(delta)
         batch.use {
-            ui.render(batch, debug = true)
             altUi.render(batch, debug)
         }
 
