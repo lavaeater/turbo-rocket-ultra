@@ -20,8 +20,8 @@ import statemachine.StateMachine
 
 abstract class BasicScreen(val gameState: StateMachine<GameState, GameEvent>) : KtxScreen, KtxInputAdapter, ControllerListener {
 
-    protected val camera: OrthographicCamera by lazy { Context.inject() }
-    protected val viewPort: ExtendViewport by lazy { Context.inject() }
+    open val camera: OrthographicCamera by lazy { Context.inject() }
+    open val viewport: ExtendViewport by lazy { Context.inject() }
     protected val batch: PolygonSpriteBatch by lazy { Context.inject() }
     protected val audioPlayer: AudioPlayer by lazy { Context.inject() }
 
