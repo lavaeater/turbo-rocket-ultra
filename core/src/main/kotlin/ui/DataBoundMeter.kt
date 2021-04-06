@@ -19,7 +19,7 @@ class DataBoundMeter(
 
     private val ratio = width / maxValue
 
-    override fun render(batch: Batch, parentPosition: Vector2) {
+    override fun render(batch: Batch, parentPosition: Vector2, debug: Boolean) {
         //1. Draw meter
         // Meter is used in percentage. So max value = full width. calculate ratio and then calculate width of meter
         val meterWidth = valueFunction() * ratio

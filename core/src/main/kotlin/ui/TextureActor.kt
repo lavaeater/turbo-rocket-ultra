@@ -11,7 +11,7 @@ open class TextureActor(
     position: Vector2,
     private val scale: Float = 1f
 ) : LeafActor(position) {
-    override fun render(batch: Batch, parentPosition: Vector2) {
+    override fun render(batch: Batch, parentPosition: Vector2, debug: Boolean) {
 
         batch.drawScaled(
             textureRegion,

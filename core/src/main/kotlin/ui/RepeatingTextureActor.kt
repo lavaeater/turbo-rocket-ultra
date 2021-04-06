@@ -17,8 +17,8 @@ open class RepeatingTextureActor(
 ) {
 
     private val spaceVector = vec2()
-    override fun render(batch: Batch, parentPosition: Vector2) {
+    override fun render(batch: Batch, parentPosition: Vector2, debug: Boolean) {
         for (n in 0 until repeatFor)
-            super.render(batch, spaceVector.set(parentPosition.x + n * offset.x, parentPosition.y - n * offset.y))
+            super.render(batch, spaceVector.set(parentPosition.x + n * offset.x, parentPosition.y - n * offset.y), debug)
     }
 }

@@ -6,7 +6,7 @@ import ktx.math.vec2
 
 class SpacedContainer(private val offset: Vector2, position: Vector2, root: Boolean = false) :
     ContainerBaseActor(position, root) {
-    override fun render(batch: Batch, parentPosition: Vector2) {
+    override fun render(batch: Batch, parentPosition: Vector2, debug: Boolean) {
         for ((index, child) in children.withIndex()) {
             if (root)
                 child.render(

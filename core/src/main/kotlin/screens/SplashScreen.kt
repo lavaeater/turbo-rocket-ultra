@@ -43,8 +43,14 @@ class SplashScreen(gameState: StateMachine<GameState, GameEvent>) : UserInterfac
         return when(keycode) {
             Input.Keys.SPACE -> toggleKeyboardPlayer()
             Input.Keys.ENTER -> startGame()
+            Input.Keys.S -> go2Setup()
             else -> super.keyUp(keycode)
         }
+    }
+
+    private fun go2Setup(): Boolean {
+        gameState.acceptEvent(GameEvent.LeftSplash)
+        return true
     }
 
     private fun startGame(): Boolean {
