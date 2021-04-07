@@ -19,7 +19,7 @@ import physics.hasComponent
 import tru.Assets
 
 class EnemyDebugRenderSystem(
-    private val renderStates: Boolean = false,
+    private val renderStates: Boolean = true,
     private val renderScans: Boolean = true) : IteratingSystem(
     allOf(
         EnemyComponent::class,
@@ -49,7 +49,7 @@ class EnemyDebugRenderSystem(
                     entity.hasComponent<ChasePlayer>() -> color = Color.YELLOW
                     entity.hasComponent<AttackPlayer>() -> color = Color.RED
                 }
-                shapeDrawer.filledCircle(entity[transformMapper]!!.position, 5f, color)
+                shapeDrawer.filledCircle(entity[transformMapper]!!.position, 1.5f, color)
             }
             if(renderScans && entity.hasComponent<SeekPlayer>()) {
                 val seekComponent = entity.getComponent<SeekPlayer>()

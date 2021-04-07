@@ -63,7 +63,7 @@ object Context {
     private fun getEngine(): Engine {
         return PooledEngine().apply {
             addSystem(PhysicsSystem(inject()))
-            addSystem(PhysicsDebugRendererSystem(inject(), inject()))
+//            addSystem(PhysicsDebugRendererSystem(inject(), inject()))
             addSystem(CameraUpdateSystem())
             addSystem(PlayerMoveSystem())
             addSystem(KeyboardInputSystem())
@@ -84,7 +84,7 @@ object Context {
             addSystem(SplatterRemovalSystem())
             addSystem(EnemyHearsShotsSystem())
             addSystem(InvestigateSystem())
-            addSystem(EnemyDebugRenderSystem(false, true))
+            addSystem(EnemyDebugRenderSystem(false, false))
             addSystem(PlayerDeathSystem())
             addSystem(EnemySpawnSystem())
             addSystem(EnemyOptimizerSystem())
