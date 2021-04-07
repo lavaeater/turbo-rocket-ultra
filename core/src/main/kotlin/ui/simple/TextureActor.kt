@@ -1,9 +1,8 @@
-package ui
+package ui.simple
 
 import com.badlogic.gdx.graphics.g2d.Batch
 import com.badlogic.gdx.graphics.g2d.TextureRegion
 import com.badlogic.gdx.math.Vector2
-import ktx.scene2d.scene2d
 import physics.drawScaled
 
 open class TextureActor(

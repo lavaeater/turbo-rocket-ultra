@@ -1,8 +1,7 @@
-package ui
+package ui.simple
 
 import com.badlogic.gdx.graphics.g2d.Batch
 import com.badlogic.gdx.math.Vector2
-import ktx.math.vec2
 
 class SpacedContainer(private val offset: Vector2, position: Vector2, root: Boolean = false) :
     ContainerBaseActor(position, root) {

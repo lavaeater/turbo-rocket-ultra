@@ -3,10 +3,10 @@ package ui.builders
 import com.badlogic.gdx.math.Vector2
 import ktx.math.vec2
 import tru.Builder
-import ui.ContainerBaseActor
-import ui.SimpleActor
-import ui.SpacedContainer
-import ui.TextActor
+import ui.simple.ContainerBaseActor
+import ui.simple.SimpleActor
+import ui.simple.SpacedContainer
+import ui.simple.TextActor
 
 fun textLabel(text: String = "", position: Vector2 = vec2()) = TextActorBuilder(text, position).build()
 fun rootSpacedContainer(block: SpacedContainerBuilder.() -> Unit) = SpacedContainerBuilder().apply { root = true }.apply(block).build()

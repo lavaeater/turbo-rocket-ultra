@@ -37,8 +37,10 @@ class SetupScreen(gameState: StateMachine<GameState, GameEvent>) : BasicScreen(g
 
     private val altUi = CollectionContainerElement(
         listOf(Player(), Player(), Player()),
-    listOf(BoundTextElement({ p -> p.lives.toString() }, vec2()),
-    BoundTextElement({p -> p.health.toString() }, vec2())), position = vec2(100f, 400f,))
+        listOf(BoundTextElement({ p -> p.lives.toString() }, vec2()),
+            BoundTextElement({ p -> p.health.toString() }, vec2())
+        ), position = vec2(100f, 400f)
+    )
 
     override fun render(delta: Float) {
         super.render(delta)
