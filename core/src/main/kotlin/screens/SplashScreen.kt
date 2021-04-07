@@ -39,12 +39,10 @@ class SplashScreen(gameState: StateMachine<GameState, GameEvent>) : UserInterfac
         }
     }
 
-    override fun keyUp(keycode: Int): Boolean {
+    override fun keyDown(keycode: Int): Boolean {
         return when(keycode) {
-            Input.Keys.SPACE -> toggleKeyboardPlayer()
-            Input.Keys.ENTER -> startGame()
-            Input.Keys.S -> go2Setup()
-            else -> super.keyUp(keycode)
+            Input.Keys.SPACE -> go2Setup()
+            else -> super.keyDown(keycode)
         }
     }
 
@@ -53,48 +51,7 @@ class SplashScreen(gameState: StateMachine<GameState, GameEvent>) : UserInterfac
         return true
     }
 
-    private fun startGame(): Boolean {
-        gameState.acceptEvent(GameEvent.StartedGame)
-        return true
-    }
 
-    override fun buttonUp(controller: Controller, buttonCode: Int): Boolean {
-        return when(Button.getButton(buttonCode)) {
-            Button.Green -> addIfNotAdded(controller)
-            Button.Blue -> startGame()
-            Button.Red -> removeIfAdded(controller)
-            else -> super.buttonUp(controller, buttonCode)
-        }
-    }
-
-    private fun removeIfAdded(controller: Controller): Boolean {
-        val toRemove = Players.players.filterKeys { it.isGamepad && (it as GamepadControl).controller == controller}.keys.firstOrNull()
-
-        if(toRemove != null) {
-            Players.players.remove(toRemove)
-            return true
-        }
-        return false
-    }
-
-    private fun addIfNotAdded(controller: Controller): Boolean {
-        if(!Players.players.filterKeys { it.isGamepad && (it as GamepadControl).controller == controller }.any() ) {
-            Players.players[GamepadControl(controller)] = Player()
-            return true
-        }
-        return false
-    }
-
-    private fun toggleKeyboardPlayer(): Boolean {
-        val toRemove = Players.players.filter { it.key.isKeyboard }.keys.firstOrNull()
-        if(toRemove == null) {
-            Players.players[KeyboardControl()] = Player()
-            return true
-        } else {
-            Players.players.remove(toRemove)
-            return false
-        }
-    }
 
     override fun resize(width: Int, height: Int) {
         camera.setToOrtho(false)

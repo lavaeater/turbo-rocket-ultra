@@ -31,9 +31,12 @@ import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator
 object Assets : Disposable {
 
     lateinit var am: AssetManager
+
     val characters :  Map<String, Map<AnimState, LpcCharacterAnim>> by lazy {
         SpriteLoader.initCharachterAnims()
     }
+
+    val playerCharacters by lazy { characters.filterNot { it.key == "enemy" } }
 
     val splashTexture: Texture by lazy {
         Texture(Gdx.files.internal("splash/splash_1.png"))

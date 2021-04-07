@@ -27,10 +27,10 @@ open class ContainerElement(position: Vector2, parent: AbstractElement? = null):
         }
     }
 
-    override fun render(batch: Batch, debug: Boolean) {
-        super.render(batch, debug)
+    override fun render(batch: Batch, delta: Float, debug: Boolean) {
+        super.render(batch, delta, debug)
         for (child in childActors) {
-            child.render(batch, debug)
+            child.render(batch, delta, debug)
         }
     }
 }

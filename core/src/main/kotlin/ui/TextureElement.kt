@@ -11,8 +11,8 @@ open class TextureElement(open val texture: TextureRegion, position: Vector2 = v
     override val bounds: Rectangle
         get() = Rectangle(actualPosition.x, actualPosition.y, texture.regionWidth * scale, texture.regionHeight * scale)
 
-    override fun render(batch: Batch, debug: Boolean) {
-        super.render(batch, debug)
+    override fun render(batch: Batch, delta: Float, debug: Boolean) {
+        super.render(batch, delta, debug)
         batch.drawScaled(
             texture,
             actualPosition.x,

@@ -142,7 +142,7 @@ fun player(player: Player, mapper: ControlMapper) {
         addComponent<TransformComponent>()
         add(mapper)
         addComponent<PlayerControlComponent> { controlMapper = mapper }//We will have multiple components later
-        add(CharacterSpriteComponent(Assets.characters["player"]!!))
+        add(CharacterSpriteComponent(Assets.characters[player.selectedCharacterSpriteName]!!))
         addComponent<RenderableComponent> { layer = 1 }
         addComponent<PlayerComponent> { this.player = player }
         addComponent<FiredShotsComponent>()

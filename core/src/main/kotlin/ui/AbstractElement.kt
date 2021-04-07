@@ -51,7 +51,7 @@ abstract class AbstractElement(
     }
     private val centerVector = vec2()
 
-    open fun render(batch: Batch, debug: Boolean = false) {
+    open fun render(batch: Batch, delta:Float, debug: Boolean = false) {
         if (debug)
             renderBounds()
     }
