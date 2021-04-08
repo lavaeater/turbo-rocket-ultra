@@ -33,7 +33,7 @@ class MainGame : KtxGame<Screen>() {
                 edge(GameEvent.PausedGame, GameState.Paused) {
 
                 }
-                edge(GameEvent.GameOver, GameState.Splash) {
+                edge(GameEvent.GameOver, GameState.Setup) {
 
                 }
             }
@@ -43,11 +43,6 @@ class MainGame : KtxGame<Screen>() {
                     action {  }
                 }
                 edge(GameEvent.ExitedGame, GameState.Setup) {}
-            }
-            state(GameState.Ended) {
-                action { setScreen<GameOverScreen>() }
-                edge(GameEvent.ExitedGame, GameState.Setup) {}
-                edge(GameEvent.RestartGame, GameState.Running) {}
             }
         }
 
