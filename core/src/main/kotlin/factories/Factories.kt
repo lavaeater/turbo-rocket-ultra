@@ -290,7 +290,7 @@ fun objective(
         addComponent<TransformComponent> { position.set(box2dBody.position) }
         addComponent<BoxComponent>()
         addComponent<ObjectiveComponent>()
-        addComponent<RenderableComponent> { layer = 2 }
+        addComponent<RenderableComponent> { layer = 0 }
     }
     box2dBody.userData = entity
     engine().addEntity(entity)

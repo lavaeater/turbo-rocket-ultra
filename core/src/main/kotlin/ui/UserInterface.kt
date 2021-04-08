@@ -70,6 +70,9 @@ class UserInterface(
                             BoundTextActor( {"Objectives: ${p.touchedObjectives.count()}"} )
                         )
                         children.add(
+                            BoundTextActor({ "Score: ${p.score}" })
+                        )
+                        children.add(
                             DataBoundMeter(
                                 { p.health },
                                 p.startingHealth,

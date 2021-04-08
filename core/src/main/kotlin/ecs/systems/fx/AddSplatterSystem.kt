@@ -24,7 +24,6 @@ class AddSplatterSystem: IteratingSystem(allOf(ParticleComponent::class, Transfo
                 rotation = transformComponent.rotation
             }
             addComponent<SplatterComponent> {
-                life = 20f
                 color = particleComponent.color
                 radius = 0.2f
             }

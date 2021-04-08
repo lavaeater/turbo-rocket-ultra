@@ -49,6 +49,8 @@ class SetupScreen(gameState: StateMachine<GameState, GameEvent>) : BasicScreen(g
         listOf(
             BoundTextElement({ p -> p.second.selectedCharacterSpriteName }),
             BoundTextElement({ p -> p.first.controllerId }),
+            BoundTextElement({ p -> p.second.kills.toString() }),
+            BoundTextElement({ p -> p.second.score.toString() }),
             BoundAnimationElement( { p -> p.second.selectedSprite[AnimState.Walk]!!.animations[SpriteDirection.South]!! })
         ), position = vec2(50f, 400f)
     )
@@ -89,11 +91,6 @@ class SetupScreen(gameState: StateMachine<GameState, GameEvent>) : BasicScreen(g
         gameState.acceptEvent(GameEvent.StartedGame)
         return true
     }
-
-    override fun povMoved(controller: Controller, povCode: Int, value: PovDirection?): Boolean {
-        return super.povMoved(controller, povCode, value)
-    }
-
 
     override fun buttonUp(controller: Controller, buttonCode: Int): Boolean {
         return when(Button.getButton(buttonCode)) {

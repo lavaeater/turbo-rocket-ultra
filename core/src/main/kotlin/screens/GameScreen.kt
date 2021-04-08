@@ -150,6 +150,9 @@ class GameScreen(private val gameState: StateMachine<GameState, GameEvent>) : Kt
     val enemyRandomFactor = -15f..15f
 
     fun nextLevel() {
+        for(player in Players.players.values) {
+            player.touchedObjectives.clear()
+        }
         currentLevel++
         generateMap()
     }

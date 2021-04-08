@@ -1,20 +1,13 @@
 package screens
 
 import com.badlogic.gdx.Input
-import com.badlogic.gdx.controllers.Controller
 import com.badlogic.gdx.scenes.scene2d.ui.Table
 import gamestate.GameEvent
 import gamestate.GameState
-import gamestate.Player
-import gamestate.Players
-import input.Button
-import input.GamepadControl
-import input.KeyboardControl
 import ktx.scene2d.image
 import ktx.scene2d.scene2d
-import ktx.scene2d.table//        setScreen<GameScreen>()
+import ktx.scene2d.table
 import statemachine.StateMachine
-
 import tru.Assets
 
 class SplashScreen(gameState: StateMachine<GameState, GameEvent>) : UserInterfaceScreen(gameState) {
@@ -39,7 +32,7 @@ class SplashScreen(gameState: StateMachine<GameState, GameEvent>) : UserInterfac
         }
     }
 
-    override fun keyDown(keycode: Int): Boolean {
+    override fun keyUp(keycode: Int): Boolean {
         return when(keycode) {
             Input.Keys.SPACE -> go2Setup()
             else -> super.keyDown(keycode)

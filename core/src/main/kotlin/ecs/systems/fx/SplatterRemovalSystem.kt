@@ -8,7 +8,7 @@ import ktx.ashley.mapperFor
 
 class SplatterRemovalSystem: IteratingSystem(allOf(SplatterComponent::class).get()) {
     private val splatterMapper = mapperFor<SplatterComponent>()
-    private var timeBeforeCleanUp = 3f
+    private var timeBeforeCleanUp = 30f
     private var timeToCleanUp = false
 
 
@@ -20,7 +20,7 @@ class SplatterRemovalSystem: IteratingSystem(allOf(SplatterComponent::class).get
         super.update(deltaTime)
         if(timeToCleanUp) {
             timeToCleanUp = false
-            timeBeforeCleanUp = 3f
+            timeBeforeCleanUp = 30f
         }
     }
 
