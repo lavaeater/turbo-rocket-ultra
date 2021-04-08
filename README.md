@@ -20,6 +20,7 @@ To make the graphics and environment easy I am currently working with the concep
 ### MVP
 
 * Towers <- doing
+* "Levels" or "Maps" in a more structured way
 * Game Over Screen that does *anything* <- DONE!
 * Start Screen that does *anything* <- done
 * Scoring and Objectives <- done
@@ -340,7 +341,7 @@ Next should probably be the feature that requires the least work to make it a "g
 
 So the next feature will be ship collisions.
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbLTEyNDI3OTkxNjIsMjQ0NTY1ODA0LDE3ND
+eyJoaXN0b3J5IjpbLTE0MzI1NTE4ODYsMjQ0NTY1ODA0LDE3ND
 cwMDM1NjUsLTk5ODY2ODA2NCwtOTgzNjc2MTEzLDEyNjQyNDM0
 MjEsNzI4OTI5NzA2LDEzNTgxODczMTQsMzAzNTgxMzA3LC0yMT
 A2MjU1MDE3LDE5NjA2OTUyMTMsMTc2OTY4Mzk3NywzMzU1MDMz
