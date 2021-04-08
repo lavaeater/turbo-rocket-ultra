@@ -50,7 +50,10 @@ How are towers supposed to work, really? Well, I propose that a player at any ti
 
 #### Towers
 
-Towers are simply entities with a bucket of components. They might have behavior trees connected to them, for instance. 
+Towers are simply entities with a bucket of components. They might have behavior trees connected to them, for instance. Cool. Easy. 
+
+### Graphics
+Just some kind of graphics related to towers would be nice.
 
 ## Notes on getting caught up in drama
 
@@ -348,11 +351,11 @@ Next should probably be the feature that requires the least work to make it a "g
 
 So the next feature will be ship collisions.
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbLTcxODQzMzQzNCwyNDQ1NjU4MDQsMTc0Nz
-AwMzU2NSwtOTk4NjY4MDY0LC05ODM2NzYxMTMsMTI2NDI0MzQy
-MSw3Mjg5Mjk3MDYsMTM1ODE4NzMxNCwzMDM1ODEzMDcsLTIxMD
-YyNTUwMTcsMTk2MDY5NTIxMywxNzY5NjgzOTc3LDMzNTUwMzM0
-MSwxMDI3MDg0MDEsMTU3MTQxNjA4NSwtMjE0NjA0MTU3OSwtOT
-AzNjY1OTI1LDk1NDQ0MjM0NSwxODUxNzA5MzI1LC0xNjk4MjEz
-NzQzXX0=
+eyJoaXN0b3J5IjpbLTE1MjEwMDQzMzYsMjQ0NTY1ODA0LDE3ND
+cwMDM1NjUsLTk5ODY2ODA2NCwtOTgzNjc2MTEzLDEyNjQyNDM0
+MjEsNzI4OTI5NzA2LDEzNTgxODczMTQsMzAzNTgxMzA3LC0yMT
+A2MjU1MDE3LDE5NjA2OTUyMTMsMTc2OTY4Mzk3NywzMzU1MDMz
+NDEsMTAyNzA4NDAxLDE1NzE0MTYwODUsLTIxNDYwNDE1NzksLT
+kwMzY2NTkyNSw5NTQ0NDIzNDUsMTg1MTcwOTMyNSwtMTY5ODIx
+Mzc0M119
 -->
