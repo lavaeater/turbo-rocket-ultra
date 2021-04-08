@@ -20,6 +20,7 @@ To make the graphics and environment easy I am currently working with the concep
 ### MVP
 
 * Towers <- doing
+* Player graphics made from components / parts etc.
 * "Levels" or "Maps" in a more structured way
 * Game Over Screen that does *anything* <- DONE!
 * Start Screen that does *anything* <- done
@@ -351,11 +352,11 @@ Next should probably be the feature that requires the least work to make it a "g
 
 So the next feature will be ship collisions.
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbLTE1MjEwMDQzMzYsMjQ0NTY1ODA0LDE3ND
-cwMDM1NjUsLTk5ODY2ODA2NCwtOTgzNjc2MTEzLDEyNjQyNDM0
-MjEsNzI4OTI5NzA2LDEzNTgxODczMTQsMzAzNTgxMzA3LC0yMT
-A2MjU1MDE3LDE5NjA2OTUyMTMsMTc2OTY4Mzk3NywzMzU1MDMz
-NDEsMTAyNzA4NDAxLDE1NzE0MTYwODUsLTIxNDYwNDE1NzksLT
-kwMzY2NTkyNSw5NTQ0NDIzNDUsMTg1MTcwOTMyNSwtMTY5ODIx
-Mzc0M119
+eyJoaXN0b3J5IjpbNjA1ODgwMTM0LDI0NDU2NTgwNCwxNzQ3MD
+AzNTY1LC05OTg2NjgwNjQsLTk4MzY3NjExMywxMjY0MjQzNDIx
+LDcyODkyOTcwNiwxMzU4MTg3MzE0LDMwMzU4MTMwNywtMjEwNj
+I1NTAxNywxOTYwNjk1MjEzLDE3Njk2ODM5NzcsMzM1NTAzMzQx
+LDEwMjcwODQwMSwxNTcxNDE2MDg1LC0yMTQ2MDQxNTc5LC05MD
+M2NjU5MjUsOTU0NDQyMzQ1LDE4NTE3MDkzMjUsLTE2OTgyMTM3
+NDNdfQ==
 -->
