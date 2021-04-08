@@ -19,7 +19,7 @@ To make the graphics and environment easy I am currently working with the concep
 
 ### MVP
 
-* Towers
+* Towers <- doing
 * Game Over Screen that does *anything* <- DONE!
 * Start Screen that does *anything* <- done
 * Scoring and Objectives <- done
@@ -340,11 +340,11 @@ Next should probably be the feature that requires the least work to make it a "g
 
 So the next feature will be ship collisions.
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbMjQ0NTY1ODA0LDE3NDcwMDM1NjUsLTk5OD
-Y2ODA2NCwtOTgzNjc2MTEzLDEyNjQyNDM0MjEsNzI4OTI5NzA2
-LDEzNTgxODczMTQsMzAzNTgxMzA3LC0yMTA2MjU1MDE3LDE5Nj
-A2OTUyMTMsMTc2OTY4Mzk3NywzMzU1MDMzNDEsMTAyNzA4NDAx
-LDE1NzE0MTYwODUsLTIxNDYwNDE1NzksLTkwMzY2NTkyNSw5NT
-Q0NDIzNDUsMTg1MTcwOTMyNSwtMTY5ODIxMzc0MywtMTY0MTE0
-MDI4N119
+eyJoaXN0b3J5IjpbLTEyNDI3OTkxNjIsMjQ0NTY1ODA0LDE3ND
+cwMDM1NjUsLTk5ODY2ODA2NCwtOTgzNjc2MTEzLDEyNjQyNDM0
+MjEsNzI4OTI5NzA2LDEzNTgxODczMTQsMzAzNTgxMzA3LC0yMT
+A2MjU1MDE3LDE5NjA2OTUyMTMsMTc2OTY4Mzk3NywzMzU1MDMz
+NDEsMTAyNzA4NDAxLDE1NzE0MTYwODUsLTIxNDYwNDE1NzksLT
+kwMzY2NTkyNSw5NTQ0NDIzNDUsMTg1MTcwOTMyNSwtMTY5ODIx
+Mzc0M119
 -->
