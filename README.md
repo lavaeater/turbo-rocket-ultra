@@ -19,8 +19,8 @@ To make the graphics and environment easy I am currently working with the concep
 
 ### MVP
 
-* Game Over Screen that does *anything* <- DONE!
 * Towers
+* Game Over Screen that does *anything* <- DONE!
 * Start Screen that does *anything* <- done
 * Scoring and Objectives <- done
 * Game over man <-Doing
@@ -37,6 +37,10 @@ To make the graphics and environment easy I am currently working with the concep
 * Enemies <- Done
 * Blood Splatter <- Done
 * MiniMap <- Done
+
+## Doing now: Towers!!
+
+This is
 
 ## Notes on getting caught up in drama
 
@@ -334,11 +338,11 @@ Next should probably be the feature that requires the least work to make it a "g
 
 So the next feature will be ship collisions.
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbNjE1NDc3ODYzLDE3NDcwMDM1NjUsLTk5OD
-Y2ODA2NCwtOTgzNjc2MTEzLDEyNjQyNDM0MjEsNzI4OTI5NzA2
-LDEzNTgxODczMTQsMzAzNTgxMzA3LC0yMTA2MjU1MDE3LDE5Nj
-A2OTUyMTMsMTc2OTY4Mzk3NywzMzU1MDMzNDEsMTAyNzA4NDAx
-LDE1NzE0MTYwODUsLTIxNDYwNDE1NzksLTkwMzY2NTkyNSw5NT
-Q0NDIzNDUsMTg1MTcwOTMyNSwtMTY5ODIxMzc0MywtMTY0MTE0
-MDI4N119
+eyJoaXN0b3J5IjpbLTIwNjk2ODgwMzQsMTc0NzAwMzU2NSwtOT
+k4NjY4MDY0LC05ODM2NzYxMTMsMTI2NDI0MzQyMSw3Mjg5Mjk3
+MDYsMTM1ODE4NzMxNCwzMDM1ODEzMDcsLTIxMDYyNTUwMTcsMT
+k2MDY5NTIxMywxNzY5NjgzOTc3LDMzNTUwMzM0MSwxMDI3MDg0
+MDEsMTU3MTQxNjA4NSwtMjE0NjA0MTU3OSwtOTAzNjY1OTI1LD
+k1NDQ0MjM0NSwxODUxNzA5MzI1LC0xNjk4MjEzNzQzLC0xNjQx
+MTQwMjg3XX0=
 -->
