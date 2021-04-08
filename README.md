@@ -45,7 +45,12 @@ This is going to be FUN!
 
 ### Mechanics
 
-How are towers supposed to work, really? Well, I propose that a player at any time can press a "build" button, which brings up a small interface to build a tower. The interface could be overlayed over that players HUD-spot, to not interfere with the gameplay, perhaps. We need a nice mechanism for
+#### Building Towers
+How are towers supposed to work, really? Well, I propose that a player at any time can press a "build" button, which brings up a small interface to build a tower. The interface could be overlayed over that players HUD-spot, to not interfere with the gameplay, perhaps. We need a nice mechanism for that. There might be some limitation on how many, how fast and what type of towers a player can build.
+
+#### Towers
+
+Towers are simply entities with a bucket of components. They might have behavior trees connected to them, for instance. 
 
 ## Notes on getting caught up in drama
 
@@ -343,7 +348,7 @@ Next should probably be the feature that requires the least work to make it a "g
 
 So the next feature will be ship collisions.
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbLTkyOTk5Njg2MCwyNDQ1NjU4MDQsMTc0Nz
+eyJoaXN0b3J5IjpbLTcxODQzMzQzNCwyNDQ1NjU4MDQsMTc0Nz
 AwMzU2NSwtOTk4NjY4MDY0LC05ODM2NzYxMTMsMTI2NDI0MzQy
 MSw3Mjg5Mjk3MDYsMTM1ODE4NzMxNCwzMDM1ODEzMDcsLTIxMD
 YyNTUwMTcsMTk2MDY5NTIxMywxNzY5NjgzOTc3LDMzNTUwMzM0
