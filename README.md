@@ -59,8 +59,7 @@ Towers are simply entities with a bucket of components. They might have behavior
 * Distractors / Thumpers - towers that get zombies or creatures to go towards them
 * Gun Towers - towers that shoot at enemies at some distance from them
 
-It's good to start with at least two different types of towers because that forces me to make a UI for bui
-
+It's good to start with at least two different types of towers because that forces me to make a UI for building the two types, makes me have to have factories for the two types, AI and other systems for the two types. Very cool stuff. 
 
 ### Graphics
 Just some kind of graphics related to towers would be nice.
@@ -361,7 +360,7 @@ Next should probably be the feature that requires the least work to make it a "g
 
 So the next feature will be ship collisions.
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbMTMxNTgxNDAyNyw2MDU4ODAxMzQsMjQ0NT
+eyJoaXN0b3J5IjpbMTUzMTc4ODEzMSw2MDU4ODAxMzQsMjQ0NT
 Y1ODA0LDE3NDcwMDM1NjUsLTk5ODY2ODA2NCwtOTgzNjc2MTEz
 LDEyNjQyNDM0MjEsNzI4OTI5NzA2LDEzNTgxODczMTQsMzAzNT
 gxMzA3LC0yMTA2MjU1MDE3LDE5NjA2OTUyMTMsMTc2OTY4Mzk3
