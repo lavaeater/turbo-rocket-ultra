@@ -61,6 +61,8 @@ Towers are simply entities with a bucket of components. They might have behavior
 
 It's good to start with at least two different types of towers because that forces me to make a UI for building the two types, makes me have to have factories for the two types, AI and other systems for the two types. Very cool stuff. 
 
+The behaviors of the towers should be controllable by using BTs, no issue there - and I mean the shooting towers, of course.
+
 ### Graphics
 Just some kind of graphics related to towers would be nice.
 
@@ -360,11 +362,11 @@ Next should probably be the feature that requires the least work to make it a "g
 
 So the next feature will be ship collisions.
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbMTUzMTc4ODEzMSw2MDU4ODAxMzQsMjQ0NT
-Y1ODA0LDE3NDcwMDM1NjUsLTk5ODY2ODA2NCwtOTgzNjc2MTEz
-LDEyNjQyNDM0MjEsNzI4OTI5NzA2LDEzNTgxODczMTQsMzAzNT
-gxMzA3LC0yMTA2MjU1MDE3LDE5NjA2OTUyMTMsMTc2OTY4Mzk3
-NywzMzU1MDMzNDEsMTAyNzA4NDAxLDE1NzE0MTYwODUsLTIxND
-YwNDE1NzksLTkwMzY2NTkyNSw5NTQ0NDIzNDUsMTg1MTcwOTMy
+eyJoaXN0b3J5IjpbLTgwNTkwNzExMCwxNTMxNzg4MTMxLDYwNT
+g4MDEzNCwyNDQ1NjU4MDQsMTc0NzAwMzU2NSwtOTk4NjY4MDY0
+LC05ODM2NzYxMTMsMTI2NDI0MzQyMSw3Mjg5Mjk3MDYsMTM1OD
+E4NzMxNCwzMDM1ODEzMDcsLTIxMDYyNTUwMTcsMTk2MDY5NTIx
+MywxNzY5NjgzOTc3LDMzNTUwMzM0MSwxMDI3MDg0MDEsMTU3MT
+QxNjA4NSwtMjE0NjA0MTU3OSwtOTAzNjY1OTI1LDk1NDQ0MjM0
 NV19
 -->
