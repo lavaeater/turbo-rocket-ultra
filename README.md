@@ -44,7 +44,9 @@ To make the graphics and environment easy I am currently working with the concep
 
 This is going to be FUN!
 
-##
+### DevLog
+
+The most important thing in game development is to not do what you have decided to do, but something else entirely - in this case particle effects. Thing is, it's not on the docket. This is an MVP, this is a proof of concept of a playable game, so we should focus on just doing towers.
 
 ### Mechanics
 
@@ -354,11 +356,11 @@ Next should probably be the feature that requires the least work to make it a "g
 
 So the next feature will be ship collisions.
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbLTE0ODc4NTcwMjIsNjA1ODgwMTM0LDI0ND
-U2NTgwNCwxNzQ3MDAzNTY1LC05OTg2NjgwNjQsLTk4MzY3NjEx
-MywxMjY0MjQzNDIxLDcyODkyOTcwNiwxMzU4MTg3MzE0LDMwMz
-U4MTMwNywtMjEwNjI1NTAxNywxOTYwNjk1MjEzLDE3Njk2ODM5
-NzcsMzM1NTAzMzQxLDEwMjcwODQwMSwxNTcxNDE2MDg1LC0yMT
-Q2MDQxNTc5LC05MDM2NjU5MjUsOTU0NDQyMzQ1LDE4NTE3MDkz
-MjVdfQ==
+eyJoaXN0b3J5IjpbMTMwMTk2NzgxNyw2MDU4ODAxMzQsMjQ0NT
+Y1ODA0LDE3NDcwMDM1NjUsLTk5ODY2ODA2NCwtOTgzNjc2MTEz
+LDEyNjQyNDM0MjEsNzI4OTI5NzA2LDEzNTgxODczMTQsMzAzNT
+gxMzA3LC0yMTA2MjU1MDE3LDE5NjA2OTUyMTMsMTc2OTY4Mzk3
+NywzMzU1MDMzNDEsMTAyNzA4NDAxLDE1NzE0MTYwODUsLTIxND
+YwNDE1NzksLTkwMzY2NTkyNSw5NTQ0NDIzNDUsMTg1MTcwOTMy
+NV19
 -->
