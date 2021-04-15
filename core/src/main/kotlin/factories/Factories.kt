@@ -262,7 +262,6 @@ fun obstacle(
         addComponent<ObstacleComponent>()
         addComponent<BoxComponent> { color = Color.BLUE }
         addComponent<RenderableComponent>()
-        addComponent<BloodParticle>()
     }
     box2dBody.userData = entity
     engine().addEntity(entity)
