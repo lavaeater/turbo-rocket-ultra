@@ -44,6 +44,8 @@ To make the graphics and environment easy I am currently working with the concep
 
 This is going to be FUN!
 
+##
+
 ### Mechanics
 
 #### Building Towers
@@ -352,11 +354,11 @@ Next should probably be the feature that requires the least work to make it a "g
 
 So the next feature will be ship collisions.
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbNjA1ODgwMTM0LDI0NDU2NTgwNCwxNzQ3MD
-AzNTY1LC05OTg2NjgwNjQsLTk4MzY3NjExMywxMjY0MjQzNDIx
-LDcyODkyOTcwNiwxMzU4MTg3MzE0LDMwMzU4MTMwNywtMjEwNj
-I1NTAxNywxOTYwNjk1MjEzLDE3Njk2ODM5NzcsMzM1NTAzMzQx
-LDEwMjcwODQwMSwxNTcxNDE2MDg1LC0yMTQ2MDQxNTc5LC05MD
-M2NjU5MjUsOTU0NDQyMzQ1LDE4NTE3MDkzMjUsLTE2OTgyMTM3
-NDNdfQ==
+eyJoaXN0b3J5IjpbLTE0ODc4NTcwMjIsNjA1ODgwMTM0LDI0ND
+U2NTgwNCwxNzQ3MDAzNTY1LC05OTg2NjgwNjQsLTk4MzY3NjEx
+MywxMjY0MjQzNDIxLDcyODkyOTcwNiwxMzU4MTg3MzE0LDMwMz
+U4MTMwNywtMjEwNjI1NTAxNywxOTYwNjk1MjEzLDE3Njk2ODM5
+NzcsMzM1NTAzMzQxLDEwMjcwODQwMSwxNTcxNDE2MDg1LC0yMT
+Q2MDQxNTc5LC05MDM2NjU5MjUsOTU0NDQyMzQ1LDE4NTE3MDkz
+MjVdfQ==
 -->
