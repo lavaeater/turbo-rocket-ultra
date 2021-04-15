@@ -53,11 +53,14 @@ The most important thing in game development is to not do what you have decided 
 #### Building Towers
 How are towers supposed to work, really? Well, I propose that a player at any time can press a "build" button, which brings up a small interface to build a tower. The interface could be overlayed over that players HUD-spot, to not interfere with the gameplay, perhaps. We need a nice mechanism for that. There might be some limitation on how many, how fast and what type of towers a player can build.
 
-
-
 #### Towers
 
-Towers are simply entities with a bucket of components. They might have behavior trees connected to them, for instance. Cool. Easy. 
+Towers are simply entities with a bucket of components. They might have behavior trees connected to them, for instance. Cool. Easy. There should be different types of towers, and I propose two basic types to begin with:
+* Distractors / Thumpers - towers that get zombies or creatures to go towards them
+* Gun Towers - towers that shoot at enemies at some distance from them
+
+It's good to start with at least two different types of towers because that forces me to make a UI for bui
+
 
 ### Graphics
 Just some kind of graphics related to towers would be nice.
@@ -358,11 +361,11 @@ Next should probably be the feature that requires the least work to make it a "g
 
 So the next feature will be ship collisions.
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbLTE1OTAyMzM2MTksNjA1ODgwMTM0LDI0ND
-U2NTgwNCwxNzQ3MDAzNTY1LC05OTg2NjgwNjQsLTk4MzY3NjEx
-MywxMjY0MjQzNDIxLDcyODkyOTcwNiwxMzU4MTg3MzE0LDMwMz
-U4MTMwNywtMjEwNjI1NTAxNywxOTYwNjk1MjEzLDE3Njk2ODM5
-NzcsMzM1NTAzMzQxLDEwMjcwODQwMSwxNTcxNDE2MDg1LC0yMT
-Q2MDQxNTc5LC05MDM2NjU5MjUsOTU0NDQyMzQ1LDE4NTE3MDkz
-MjVdfQ==
+eyJoaXN0b3J5IjpbMTMxNTgxNDAyNyw2MDU4ODAxMzQsMjQ0NT
+Y1ODA0LDE3NDcwMDM1NjUsLTk5ODY2ODA2NCwtOTgzNjc2MTEz
+LDEyNjQyNDM0MjEsNzI4OTI5NzA2LDEzNTgxODczMTQsMzAzNT
+gxMzA3LC0yMTA2MjU1MDE3LDE5NjA2OTUyMTMsMTc2OTY4Mzk3
+NywzMzU1MDMzNDEsMTAyNzA4NDAxLDE1NzE0MTYwODUsLTIxND
+YwNDE1NzksLTkwMzY2NTkyNSw5NTQ0NDIzNDUsMTg1MTcwOTMy
+NV19
 -->
