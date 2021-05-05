@@ -42,6 +42,8 @@ To make the graphics and environment easy I am currently working with the concep
 
 ## Doing now: Towers!!
 
+
+
 This is going to be FUN!
 
 ### DevLog
@@ -416,11 +418,11 @@ Det här gör vi på det gamla vanliga sättet. Vi bygger en box2d-värld, vi kl
 
 Oj oj oj,  vad roligt. Vi kan göra en box2d-kropp med leder, per tutorials etc. Superkul ju.
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbLTEyOTQxODA5MTAsLTgwNTkwNzExMCwxNT
-MxNzg4MTMxLDYwNTg4MDEzNCwyNDQ1NjU4MDQsMTc0NzAwMzU2
-NSwtOTk4NjY4MDY0LC05ODM2NzYxMTMsMTI2NDI0MzQyMSw3Mj
-g5Mjk3MDYsMTM1ODE4NzMxNCwzMDM1ODEzMDcsLTIxMDYyNTUw
-MTcsMTk2MDY5NTIxMywxNzY5NjgzOTc3LDMzNTUwMzM0MSwxMD
-I3MDg0MDEsMTU3MTQxNjA4NSwtMjE0NjA0MTU3OSwtOTAzNjY1
-OTI1XX0=
+eyJoaXN0b3J5IjpbMTM4NjU0NzEwLC0xMjk0MTgwOTEwLC04MD
+U5MDcxMTAsMTUzMTc4ODEzMSw2MDU4ODAxMzQsMjQ0NTY1ODA0
+LDE3NDcwMDM1NjUsLTk5ODY2ODA2NCwtOTgzNjc2MTEzLDEyNj
+QyNDM0MjEsNzI4OTI5NzA2LDEzNTgxODczMTQsMzAzNTgxMzA3
+LC0yMTA2MjU1MDE3LDE5NjA2OTUyMTMsMTc2OTY4Mzk3NywzMz
+U1MDMzNDEsMTAyNzA4NDAxLDE1NzE0MTYwODUsLTIxNDYwNDE1
+NzldfQ==
 -->
