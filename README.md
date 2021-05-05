@@ -295,6 +295,8 @@ So, how do we do it? Well, using box2d, we can probably link bodies to each othe
 
 So, first step is to create some kind of vehicle. Easy
 
+
+
 ## Even later,  Tuesday 29th of December
 
 Never quit while behind. No, really, an important thing is this: take a break. I played some Inside with the kids and then I managed to solve the problem when returning. I implemented some display of debug info using the old Scene2d UI from other games. What had happened was that I rationalized away a separate vector for the **direction** of new shots. It worked for a while because we were going around 0,0, but as we move away, the vector used to calculate speed and direction became more and more corrupt and weird.
@@ -322,6 +324,27 @@ OK, whatever,  but the aiming suddenly breaking down is NOT cool. That is a game
 This is my devlog.
 
 I am going to try to make some kind of AI-training in all of this. The AI will have inputs, rewards etc. I will try to make some deepq stuff or something.
+
+
+
+## Roadmap
+
+### Up next
+
+### TODO:
+* Introduce Ashley <- done
+* More variables to be able to control aspects of game, such as linear drag etc.  <- "done"
+* Better controls, as in mouse aim perhaps? <- done
+* Ability to enter vehicles and drive around / shoot from. 
+
+# Later dude
+* Draw a sprite for the character
+* Textures and sprites?
+
+## Shooting from a platform
+
+
+
 
 ## Walking is different from flying 
 
@@ -361,12 +384,43 @@ If I want the multiplayer aspect to work, I should try controller support. But p
 Next should probably be the feature that requires the least work to make it a "game". So, so far we can fly, we can shoot, but we cannot die, we cannot win. 
 
 So the next feature will be ship collisions.
+
+
+## Alla framsteg KAN ju noteras här?
+
+Hur ska jag egentligen jobba med någonting alls, egentligen? Man måste anteckna så mycket att man kan hoppa tillbaka in i projektet när som helst i någon framtid. Vart man är, vart man är på väg. Anteckningarna ska väcka ens minnen, ens känslor, och ha information så att man kan tekniskt förstå vad som behöver och kan göras.
+
+Så, det här är TurboRaketti Ultra. Eller?
+
+Jag konstaterade efter att vi spelat Lovers in a Dangerous Space Time att det jag mest av allt vill göra är att utveckla ett gameplay. Jag vill göra narrativa spel också, men jag vill också kunna göra actionspel - med kooperativ multiplayer. Det är the name of the game.
+
+Så, jag tänker inte anteckna någonting om en stor roadmap för hela spelet, utan bara börja med det som behövs och bara anteckna det som behövs.
+
+Så, det jag tänker göra härnäst är... 
+
+# WIP - skepp med styrning och framdrivning
+
+## Skjutning
+
+Jag har råkat påbörja och avsluta den grundläggande skjutningen. Poängen här var litegrann att få till riktningen och hastigheten 100% korrekt. Det gör man genom att stanna vid ett givet koncept och verkligen satsa på att få det rätt, innan man går vidare till nästa del. 
+
+## Styrning
+
+Styrning implementeras med en ShipControl-klass som ska agera mellanhand mellan input-system (tangentbord, handkontroll) och kroppen i världen. Vad vi behöver göra härnäst är att ta emot input från tangentbordet, sen handkontroller, om möjligt i linux, förstås.
+
+Styrning är samma sak som att ta input från något vad som helst och göra om det till kommandon eller liknande som t.ex. gasar eller annat på vårat skepp. Vi vill stödja handkontroller såsom Xbox360-kontrollers (fungerar det på linux? Eller, what what? Fan också.), så vi behöver något slags *abstraktion* för kontrollen. 
+
+Vår kontroll ska vara thrust-rotation-baserad. Så spelaren använder någon kontroll för att "gasa" och en annan kontroll för att rotera skeppet med- eller motsols. 
+
+Det här gör vi på det gamla vanliga sättet. Vi bygger en box2d-värld, vi klistrar på texturer på de objekten, allt blir bra. Men hur fungerar det då...
+
+Oj oj oj,  vad roligt. Vi kan göra en box2d-kropp med leder, per tutorials etc. Superkul ju.
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbLTgwNTkwNzExMCwxNTMxNzg4MTMxLDYwNT
-g4MDEzNCwyNDQ1NjU4MDQsMTc0NzAwMzU2NSwtOTk4NjY4MDY0
-LC05ODM2NzYxMTMsMTI2NDI0MzQyMSw3Mjg5Mjk3MDYsMTM1OD
-E4NzMxNCwzMDM1ODEzMDcsLTIxMDYyNTUwMTcsMTk2MDY5NTIx
-MywxNzY5NjgzOTc3LDMzNTUwMzM0MSwxMDI3MDg0MDEsMTU3MT
-QxNjA4NSwtMjE0NjA0MTU3OSwtOTAzNjY1OTI1LDk1NDQ0MjM0
-NV19
+eyJoaXN0b3J5IjpbLTEyOTQxODA5MTAsLTgwNTkwNzExMCwxNT
+MxNzg4MTMxLDYwNTg4MDEzNCwyNDQ1NjU4MDQsMTc0NzAwMzU2
+NSwtOTk4NjY4MDY0LC05ODM2NzYxMTMsMTI2NDI0MzQyMSw3Mj
+g5Mjk3MDYsMTM1ODE4NzMxNCwzMDM1ODEzMDcsLTIxMDYyNTUw
+MTcsMTk2MDY5NTIxMywxNzY5NjgzOTc3LDMzNTUwMzM0MSwxMD
+I3MDg0MDEsMTU3MTQxNjA4NSwtMjE0NjA0MTU3OSwtOTAzNjY1
+OTI1XX0=
 -->
