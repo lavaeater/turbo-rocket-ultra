@@ -24,6 +24,10 @@ import ecs.components.player.PlayerControlComponent
 import gamestate.Player
 import injection.Context.inject
 import input.ControlMapper
+import ktx.ashley.configureEntity
+import ktx.ashley.create
+import ktx.ashley.entity
+import ktx.ashley.with
 import ktx.box2d.*
 import ktx.math.random
 import ktx.math.vec2
@@ -119,6 +123,25 @@ fun splatterParticles(
             true
         )
     }
+}
+
+fun tower(at: Vector2 = vec2()) {
+    val towerBody = world().body {
+        type = BodyDef.BodyType.StaticBody
+        position.set(at)
+        box(2f, 2f) {}
+    }
+
+    val towerEntity = engine().entity {
+        with<BodyComponent> {
+            body = towerBody
+        }
+        with<TransformComponent>()
+        with<BoxComponent>()
+        with<RenderableComponent>()
+    }
+    towerBody.userData = towerEntity
+
 }
 
 fun player(player: Player, mapper: ControlMapper) {
