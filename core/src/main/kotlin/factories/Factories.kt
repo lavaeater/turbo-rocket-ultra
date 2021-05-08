@@ -21,6 +21,7 @@ import ecs.components.graphics.*
 import ecs.components.player.FiredShotsComponent
 import ecs.components.player.PlayerComponent
 import ecs.components.player.PlayerControlComponent
+import ecs.components.towers.TowerComponent
 import gamestate.Player
 import injection.Context.inject
 import input.ControlMapper
@@ -139,7 +140,9 @@ fun tower(at: Vector2 = vec2()) {
         with<TransformComponent>()
         with<BoxComponent>()
         with<RenderableComponent>()
+        with<TowerComponent>()
     }
+    towerEntity.addComponent<BehaviorComponent> { tree = Tree.getTowerBehaviorTree().apply { `object` = towerEntity } }
     towerBody.userData = towerEntity
 
 }

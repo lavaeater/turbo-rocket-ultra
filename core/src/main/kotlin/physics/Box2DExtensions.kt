@@ -79,7 +79,10 @@ fun Body.player() : Player {
     return (userData as Entity).getComponent<PlayerComponent>().player
 }
 
-
+@OptIn(ExperimentalStdlibApi::class)
+fun Fixture.isPlayer() : Boolean {
+    return this.body.userData is Entity && (this.body.isPlayer())
+}
 
 fun Fixture.isEntity() : Boolean {
     return this.body.userData is Entity
