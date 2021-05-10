@@ -45,7 +45,7 @@ Later we can add the tower needing to rotate to the proper angle (this can be it
 the desired angle
  */
                 targetInRange.aimTarget.set(targetPosition.minus(towerPosition).nor())
-                targetInRange.aimTarget.setAngleDeg(targetInRange.aimTarget.angleDeg() + (-1f..1f).random()).setLength(100f)
+                targetInRange.aimTarget.setAngleDeg(targetInRange.aimTarget.angleDeg() + (-10f..10f).random()).setLength(100f)
 
                 var lowestFraction = 1f
 
@@ -65,14 +65,9 @@ the desired angle
                     RayCast.CONTINUE
                 }
                 if (lowestFraction < 1f) {
-//                    controlComponent.latestHitPoint.set(pointOfHit)
-                    //we have a hit!
                     if (closestFixture.isEntity() && closestFixture.body.isEnemy()) {
                         val enemyEntity = closestFixture.getEntity()
-                        enemyEntity.getComponent<EnemyComponent>().takeDamage(10..25)
-//                        if(enemyEntity.getComponent<EnemyComponent>().health < 0) {
-//                            entity.getComponent<PlayerComponent>().player.kills++
-//                        }
+                        enemyEntity.getComponent<EnemyComponent>().takeDamage(3..8)
                         splatterParticles(
                             closestFixture.body, targetInRange.aimTarget.cpy().nor(),
                             color = Color((0.5f..0.7f).random(), 0f, 0f, (.5f..1f).random())

@@ -5,7 +5,7 @@ import com.badlogic.ashley.systems.SortedIteratingSystem
 import com.badlogic.gdx.graphics.g2d.Batch
 import ecs.components.gameplay.TransformComponent
 import ecs.components.graphics.CharacterSpriteComponent
-import ecs.components.graphics.RenderableComponent
+import ecs.components.graphics.RenderLayerComponent
 import ecs.components.fx.SplatterComponent
 import ecs.components.graphics.BoxComponent
 import ktx.ashley.allOf
@@ -20,9 +20,9 @@ class RenderSystem(
 ) : SortedIteratingSystem(
     allOf(
         TransformComponent::class,
-        RenderableComponent::class
+        RenderLayerComponent::class
     ).get(), object : Comparator<Entity> {
-        val renderableMapper = mapperFor<RenderableComponent>()
+        val renderableMapper = mapperFor<RenderLayerComponent>()
         val transformMapper = mapperFor<TransformComponent>()
         override fun compare(p0: Entity, p1: Entity): Int {
             val layer0 = renderableMapper.get(p0).layer
