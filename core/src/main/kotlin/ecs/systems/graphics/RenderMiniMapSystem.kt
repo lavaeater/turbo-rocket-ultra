@@ -26,7 +26,7 @@ class RenderMiniMapSystem : SortedIteratingSystem(allOf(RenderableComponent::cla
     Comparator<Entity> {
     val mapper = mapperFor<RenderableComponent>()
     override fun compare(p0: Entity, p1: Entity): Int {
-        return mapper.get(p0).layer.compareTo(mapper.get(p1).layer)
+        return mapper.get(p1).layer.compareTo(mapper.get(p0).layer)
     }}, 20) {
     private val tMapper = mapperFor<TransformComponent>()
     private val pMapper = mapperFor<PlayerComponent>()
