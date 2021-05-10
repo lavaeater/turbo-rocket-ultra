@@ -55,6 +55,7 @@ Todo:
 * Tower AI <- done
 * Building Towers 
 * Tower Health
+* Dismantling Towers
 * Sound effects
 * Rotation speed
 * Tower Types and Variants
@@ -427,7 +428,7 @@ Det här gör vi på det gamla vanliga sättet. Vi bygger en box2d-värld, vi kl
 
 Oj oj oj,  vad roligt. Vi kan göra en box2d-kropp med leder, per tutorials etc. Superkul ju.
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbLTE4MDAzMDY1NjMsMTM4NjU0NzEwLC0xMj
+eyJoaXN0b3J5IjpbLTEzOTcwMzc5NzUsMTM4NjU0NzEwLC0xMj
 k0MTgwOTEwLC04MDU5MDcxMTAsMTUzMTc4ODEzMSw2MDU4ODAx
 MzQsMjQ0NTY1ODA0LDE3NDcwMDM1NjUsLTk5ODY2ODA2NCwtOT
 gzNjc2MTEzLDEyNjQyNDM0MjEsNzI4OTI5NzA2LDEzNTgxODcz
