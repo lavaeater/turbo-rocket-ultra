@@ -51,16 +51,14 @@ This is going to be FUN!
 ### Mechanics
 
 Todo: 
-* Tower entities <- done
-* Tower AI <- done
 * Building Towers  
 * Tower Health
 * Dismantling Towers
 * Sound effects
 * Rotation speed
 * Tower Types and Variants
-
-
+* Tower entities <- done
+* Tower AI <- done
 
 #### Building Towers
 How are towers supposed to work, really? Well, I propose that a player at any time can press a "build" button, which brings up a small interface to build a tower. The interface could be overlayed over that players HUD-spot, to not interfere with the gameplay, perhaps. We need a nice mechanism for that. There might be some limitation on how many, how fast and what type of towers a player can build.
@@ -428,11 +426,11 @@ Det här gör vi på det gamla vanliga sättet. Vi bygger en box2d-värld, vi kl
 
 Oj oj oj,  vad roligt. Vi kan göra en box2d-kropp med leder, per tutorials etc. Superkul ju.
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbLTEwOTcwNDcyNzcsMTM4NjU0NzEwLC0xMj
-k0MTgwOTEwLC04MDU5MDcxMTAsMTUzMTc4ODEzMSw2MDU4ODAx
-MzQsMjQ0NTY1ODA0LDE3NDcwMDM1NjUsLTk5ODY2ODA2NCwtOT
-gzNjc2MTEzLDEyNjQyNDM0MjEsNzI4OTI5NzA2LDEzNTgxODcz
-MTQsMzAzNTgxMzA3LC0yMTA2MjU1MDE3LDE5NjA2OTUyMTMsMT
-c2OTY4Mzk3NywzMzU1MDMzNDEsMTAyNzA4NDAxLDE1NzE0MTYw
-ODVdfQ==
+eyJoaXN0b3J5IjpbNTQyNzE2ODQ3LC0xMDk3MDQ3Mjc3LDEzOD
+Y1NDcxMCwtMTI5NDE4MDkxMCwtODA1OTA3MTEwLDE1MzE3ODgx
+MzEsNjA1ODgwMTM0LDI0NDU2NTgwNCwxNzQ3MDAzNTY1LC05OT
+g2NjgwNjQsLTk4MzY3NjExMywxMjY0MjQzNDIxLDcyODkyOTcw
+NiwxMzU4MTg3MzE0LDMwMzU4MTMwNywtMjEwNjI1NTAxNywxOT
+YwNjk1MjEzLDE3Njk2ODM5NzcsMzM1NTAzMzQxLDEwMjcwODQw
+MV19
 -->
