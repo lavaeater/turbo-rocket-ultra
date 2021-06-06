@@ -20,6 +20,7 @@ To make the graphics and environment easy I am currently working with the concep
 ### MVP
 
 * Towers <- doing
+* Interactable Components in-the-game
 * Player graphics made from components / parts etc.
 * "Levels" or "Maps" in a more structured way
 * Game Over Screen that does *anything* <- DONE!
@@ -426,11 +427,11 @@ Det här gör vi på det gamla vanliga sättet. Vi bygger en box2d-värld, vi kl
 
 Oj oj oj,  vad roligt. Vi kan göra en box2d-kropp med leder, per tutorials etc. Superkul ju.
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbNTQyNzE2ODQ3LC0xMDk3MDQ3Mjc3LDEzOD
-Y1NDcxMCwtMTI5NDE4MDkxMCwtODA1OTA3MTEwLDE1MzE3ODgx
-MzEsNjA1ODgwMTM0LDI0NDU2NTgwNCwxNzQ3MDAzNTY1LC05OT
-g2NjgwNjQsLTk4MzY3NjExMywxMjY0MjQzNDIxLDcyODkyOTcw
-NiwxMzU4MTg3MzE0LDMwMzU4MTMwNywtMjEwNjI1NTAxNywxOT
-YwNjk1MjEzLDE3Njk2ODM5NzcsMzM1NTAzMzQxLDEwMjcwODQw
+eyJoaXN0b3J5IjpbNDQ1NjkzODIxLDU0MjcxNjg0NywtMTA5Nz
+A0NzI3NywxMzg2NTQ3MTAsLTEyOTQxODA5MTAsLTgwNTkwNzEx
+MCwxNTMxNzg4MTMxLDYwNTg4MDEzNCwyNDQ1NjU4MDQsMTc0Nz
+AwMzU2NSwtOTk4NjY4MDY0LC05ODM2NzYxMTMsMTI2NDI0MzQy
+MSw3Mjg5Mjk3MDYsMTM1ODE4NzMxNCwzMDM1ODEzMDcsLTIxMD
+YyNTUwMTcsMTk2MDY5NTIxMywxNzY5NjgzOTc3LDMzNTUwMzM0
 MV19
 -->
