@@ -23,6 +23,10 @@ import ui.*
 import kotlin.properties.Delegates
 import kotlin.properties.ObservableProperty
 
+class AnimEditorScreen(gameState: StateMachine<GameState, GameEvent>) : BasicScreen {
+    
+}
+
 class SetupScreen(gameState: StateMachine<GameState, GameEvent>) : BasicScreen(gameState) {
 
     /*

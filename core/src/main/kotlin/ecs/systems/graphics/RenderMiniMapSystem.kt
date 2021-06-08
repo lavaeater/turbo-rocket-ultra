@@ -69,9 +69,6 @@ class RenderMiniMapSystem : SortedIteratingSystem(allOf(RenderLayerComponent::cl
                     box.height / (scale / 10),
                     box.color)
             }
-
-
-
         }
     }
 }
