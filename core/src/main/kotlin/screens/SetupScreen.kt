@@ -2,7 +2,6 @@ package screens
 
 import com.badlogic.gdx.Input
 import com.badlogic.gdx.controllers.Controller
-import com.badlogic.gdx.controllers.PovDirection
 import com.badlogic.gdx.graphics.OrthographicCamera
 import com.badlogic.gdx.utils.viewport.ExtendViewport
 import gamestate.GameEvent
@@ -19,13 +18,9 @@ import statemachine.StateMachine
 import tru.AnimState
 import tru.Assets
 import tru.SpriteDirection
-import ui.*
-import kotlin.properties.Delegates
-import kotlin.properties.ObservableProperty
-
-class AnimEditorScreen(gameState: StateMachine<GameState, GameEvent>) : BasicScreen {
-    
-}
+import ui.BoundAnimationElement
+import ui.BoundTextElement
+import ui.CollectionContainerElement
 
 class SetupScreen(gameState: StateMachine<GameState, GameEvent>) : BasicScreen(gameState) {
 
