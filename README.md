@@ -19,6 +19,7 @@ To make the graphics and environment easy I am currently working with the concep
 
 ### MVP
 
+* Basic Sprite Editor <- doing
 * Towers <- doing
 * Interactable Components in-the-game
 * Player graphics made from components / parts etc.
@@ -427,11 +428,11 @@ Det här gör vi på det gamla vanliga sättet. Vi bygger en box2d-värld, vi kl
 
 Oj oj oj,  vad roligt. Vi kan göra en box2d-kropp med leder, per tutorials etc. Superkul ju.
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbNDQ1NjkzODIxLDU0MjcxNjg0NywtMTA5Nz
-A0NzI3NywxMzg2NTQ3MTAsLTEyOTQxODA5MTAsLTgwNTkwNzEx
-MCwxNTMxNzg4MTMxLDYwNTg4MDEzNCwyNDQ1NjU4MDQsMTc0Nz
-AwMzU2NSwtOTk4NjY4MDY0LC05ODM2NzYxMTMsMTI2NDI0MzQy
-MSw3Mjg5Mjk3MDYsMTM1ODE4NzMxNCwzMDM1ODEzMDcsLTIxMD
-YyNTUwMTcsMTk2MDY5NTIxMywxNzY5NjgzOTc3LDMzNTUwMzM0
-MV19
+eyJoaXN0b3J5IjpbMTc4MzE0ODgzNSw0NDU2OTM4MjEsNTQyNz
+E2ODQ3LC0xMDk3MDQ3Mjc3LDEzODY1NDcxMCwtMTI5NDE4MDkx
+MCwtODA1OTA3MTEwLDE1MzE3ODgxMzEsNjA1ODgwMTM0LDI0ND
+U2NTgwNCwxNzQ3MDAzNTY1LC05OTg2NjgwNjQsLTk4MzY3NjEx
+MywxMjY0MjQzNDIxLDcyODkyOTcwNiwxMzU4MTg3MzE0LDMwMz
+U4MTMwNywtMjEwNjI1NTAxNywxOTYwNjk1MjEzLDE3Njk2ODM5
+NzddfQ==
 -->
