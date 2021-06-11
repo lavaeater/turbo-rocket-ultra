@@ -51,7 +51,9 @@ I am not doing a sprite editor. Thing is, I use free resources for characters an
 
 So, when you use textures and stuff and you have some kind of actual operation up and running, you can just decide that all spritesheets should be structured in a specific way, like just the way it is structured - so that you can structure your animations and stuff properly.
 
+But when buying sprites and stuff or using free assets, you do not have that freedom. So I actually built a small tool using C# and XAML to "tag" sprites in a spritesheet in a way that I can then use to load the assets.
 
+However... that was made four years ago using C# and WPF - but I am not doing development using C# anymore and I basically hate WPF, like everyone else. But doing UI in LibGDX is absolutely awf
 
 ## Paused: Towers!!
 
@@ -435,11 +437,11 @@ Det här gör vi på det gamla vanliga sättet. Vi bygger en box2d-värld, vi kl
 
 Oj oj oj,  vad roligt. Vi kan göra en box2d-kropp med leder, per tutorials etc. Superkul ju.
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbMTI1MjU4NzQzMiw0NDU2OTM4MjEsNTQyNz
-E2ODQ3LC0xMDk3MDQ3Mjc3LDEzODY1NDcxMCwtMTI5NDE4MDkx
-MCwtODA1OTA3MTEwLDE1MzE3ODgxMzEsNjA1ODgwMTM0LDI0ND
-U2NTgwNCwxNzQ3MDAzNTY1LC05OTg2NjgwNjQsLTk4MzY3NjEx
-MywxMjY0MjQzNDIxLDcyODkyOTcwNiwxMzU4MTg3MzE0LDMwMz
-U4MTMwNywtMjEwNjI1NTAxNywxOTYwNjk1MjEzLDE3Njk2ODM5
-NzddfQ==
+eyJoaXN0b3J5IjpbOTc3ODkwODE0LDQ0NTY5MzgyMSw1NDI3MT
+Y4NDcsLTEwOTcwNDcyNzcsMTM4NjU0NzEwLC0xMjk0MTgwOTEw
+LC04MDU5MDcxMTAsMTUzMTc4ODEzMSw2MDU4ODAxMzQsMjQ0NT
+Y1ODA0LDE3NDcwMDM1NjUsLTk5ODY2ODA2NCwtOTgzNjc2MTEz
+LDEyNjQyNDM0MjEsNzI4OTI5NzA2LDEzNTgxODczMTQsMzAzNT
+gxMzA3LC0yMTA2MjU1MDE3LDE5NjA2OTUyMTMsMTc2OTY4Mzk3
+N119
 -->
