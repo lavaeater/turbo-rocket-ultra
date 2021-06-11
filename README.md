@@ -46,7 +46,9 @@ To make the graphics and environment easy I am currently working with the concep
 
 The most important thing in game development is to not do what you have decided to do, but something else entirely - in this case particle effects. Thing is, it's not on the docket. This is an MVP, this is a proof of concept of a playable game, so we should focus on just doing towers.
 
-## Doing now: Towers!!
+
+
+## Paused: Towers!!
 
 This is going to be FUN!
 
@@ -428,7 +430,7 @@ Det här gör vi på det gamla vanliga sättet. Vi bygger en box2d-värld, vi kl
 
 Oj oj oj,  vad roligt. Vi kan göra en box2d-kropp med leder, per tutorials etc. Superkul ju.
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbMTI3MzQ3MzgxOCw0NDU2OTM4MjEsNTQyNz
+eyJoaXN0b3J5IjpbLTYzNzMwMDA1OSw0NDU2OTM4MjEsNTQyNz
 E2ODQ3LC0xMDk3MDQ3Mjc3LDEzODY1NDcxMCwtMTI5NDE4MDkx
 MCwtODA1OTA3MTEwLDE1MzE3ODgxMzEsNjA1ODgwMTM0LDI0ND
 U2NTgwNCwxNzQ3MDAzNTY1LC05OTg2NjgwNjQsLTk4MzY3NjEx
