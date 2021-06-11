@@ -57,7 +57,14 @@ However... that was made four years ago using C# and WPF - but I am not doing de
 
 So, anyways, I have started doing my OWN ui Framework, because I just love to waste time. 
 
-Here's what I want
+Here's what I want:
+* select an image from disk
+* show that image
+* allow specifying sprite dimensions
+* draw lines over texture for sprites
+* iterate over lines and tag them with some kind of metadata
+
+That's what we should do now
 
 ## Paused: Towers!!
 
@@ -441,11 +448,11 @@ Det här gör vi på det gamla vanliga sättet. Vi bygger en box2d-värld, vi kl
 
 Oj oj oj,  vad roligt. Vi kan göra en box2d-kropp med leder, per tutorials etc. Superkul ju.
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbLTgwNjk1MzAzOCw0NDU2OTM4MjEsNTQyNz
-E2ODQ3LC0xMDk3MDQ3Mjc3LDEzODY1NDcxMCwtMTI5NDE4MDkx
-MCwtODA1OTA3MTEwLDE1MzE3ODgxMzEsNjA1ODgwMTM0LDI0ND
-U2NTgwNCwxNzQ3MDAzNTY1LC05OTg2NjgwNjQsLTk4MzY3NjEx
-MywxMjY0MjQzNDIxLDcyODkyOTcwNiwxMzU4MTg3MzE0LDMwMz
-U4MTMwNywtMjEwNjI1NTAxNywxOTYwNjk1MjEzLDE3Njk2ODM5
-NzddfQ==
+eyJoaXN0b3J5IjpbLTE0MTIyNTk4OTYsNDQ1NjkzODIxLDU0Mj
+cxNjg0NywtMTA5NzA0NzI3NywxMzg2NTQ3MTAsLTEyOTQxODA5
+MTAsLTgwNTkwNzExMCwxNTMxNzg4MTMxLDYwNTg4MDEzNCwyND
+Q1NjU4MDQsMTc0NzAwMzU2NSwtOTk4NjY4MDY0LC05ODM2NzYx
+MTMsMTI2NDI0MzQyMSw3Mjg5Mjk3MDYsMTM1ODE4NzMxNCwzMD
+M1ODEzMDcsLTIxMDYyNTUwMTcsMTk2MDY5NTIxMywxNzY5Njgz
+OTc3XX0=
 -->
