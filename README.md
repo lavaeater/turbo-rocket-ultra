@@ -63,8 +63,9 @@ Here's what I want:
 * allow specifying sprite dimensions
 * draw lines over texture for sprites
 * iterate over lines and tag them with some kind of metadata
+* save this data so it can be loaded later
 
-That's what we should do now
+That's what we should do now.
 
 ## Paused: Towers!!
 
@@ -448,11 +449,11 @@ Det här gör vi på det gamla vanliga sättet. Vi bygger en box2d-värld, vi kl
 
 Oj oj oj,  vad roligt. Vi kan göra en box2d-kropp med leder, per tutorials etc. Superkul ju.
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbLTE0MTIyNTk4OTYsNDQ1NjkzODIxLDU0Mj
-cxNjg0NywtMTA5NzA0NzI3NywxMzg2NTQ3MTAsLTEyOTQxODA5
-MTAsLTgwNTkwNzExMCwxNTMxNzg4MTMxLDYwNTg4MDEzNCwyND
-Q1NjU4MDQsMTc0NzAwMzU2NSwtOTk4NjY4MDY0LC05ODM2NzYx
-MTMsMTI2NDI0MzQyMSw3Mjg5Mjk3MDYsMTM1ODE4NzMxNCwzMD
-M1ODEzMDcsLTIxMDYyNTUwMTcsMTk2MDY5NTIxMywxNzY5Njgz
-OTc3XX0=
+eyJoaXN0b3J5IjpbMzE5NjIzNDAyLC0xNDEyMjU5ODk2LDQ0NT
+Y5MzgyMSw1NDI3MTY4NDcsLTEwOTcwNDcyNzcsMTM4NjU0NzEw
+LC0xMjk0MTgwOTEwLC04MDU5MDcxMTAsMTUzMTc4ODEzMSw2MD
+U4ODAxMzQsMjQ0NTY1ODA0LDE3NDcwMDM1NjUsLTk5ODY2ODA2
+NCwtOTgzNjc2MTEzLDEyNjQyNDM0MjEsNzI4OTI5NzA2LDEzNT
+gxODczMTQsMzAzNTgxMzA3LC0yMTA2MjU1MDE3LDE5NjA2OTUy
+MTNdfQ==
 -->
