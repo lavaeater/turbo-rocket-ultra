@@ -49,7 +49,9 @@ The most important thing in game development is to not do what you have decided 
 ## Doing now: Sprite Editor
 I am not doing a sprite editor. Thing is, I use free resources for characters and animations and I just got a bit fed up with available anims and stuff, so I actually went out and bought some assets on itch.io - but then I have to set up the textures and stuff to actually use them.
 
-So, when you use textures and stuff and you have some kind of actual operation u
+So, when you use textures and stuff and you have some kind of actual operation up and running, you can just decide that all spritesheets should be structured in a specific way, like just the way it is structured - so that you can structure your animations and stuff properly.
+
+
 
 ## Paused: Towers!!
 
@@ -433,7 +435,7 @@ Det här gör vi på det gamla vanliga sättet. Vi bygger en box2d-värld, vi kl
 
 Oj oj oj,  vad roligt. Vi kan göra en box2d-kropp med leder, per tutorials etc. Superkul ju.
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbLTkyNzQ1OTQyOSw0NDU2OTM4MjEsNTQyNz
+eyJoaXN0b3J5IjpbMTI1MjU4NzQzMiw0NDU2OTM4MjEsNTQyNz
 E2ODQ3LC0xMDk3MDQ3Mjc3LDEzODY1NDcxMCwtMTI5NDE4MDkx
 MCwtODA1OTA3MTEwLDE1MzE3ODgxMzEsNjA1ODgwMTM0LDI0ND
 U2NTgwNCwxNzQ3MDAzNTY1LC05OTg2NjgwNjQsLTk4MzY3NjEx
