@@ -67,6 +67,9 @@ Here's what I want:
 
 That's what we should do now.
 
+### Step one: select image from disk
+
+
 ## Paused: Towers!!
 
 This is going to be FUN!
@@ -449,11 +452,11 @@ Det här gör vi på det gamla vanliga sättet. Vi bygger en box2d-värld, vi kl
 
 Oj oj oj,  vad roligt. Vi kan göra en box2d-kropp med leder, per tutorials etc. Superkul ju.
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbMzE5NjIzNDAyLC0xNDEyMjU5ODk2LDQ0NT
-Y5MzgyMSw1NDI3MTY4NDcsLTEwOTcwNDcyNzcsMTM4NjU0NzEw
-LC0xMjk0MTgwOTEwLC04MDU5MDcxMTAsMTUzMTc4ODEzMSw2MD
-U4ODAxMzQsMjQ0NTY1ODA0LDE3NDcwMDM1NjUsLTk5ODY2ODA2
-NCwtOTgzNjc2MTEzLDEyNjQyNDM0MjEsNzI4OTI5NzA2LDEzNT
-gxODczMTQsMzAzNTgxMzA3LC0yMTA2MjU1MDE3LDE5NjA2OTUy
-MTNdfQ==
+eyJoaXN0b3J5IjpbLTE3ODkzOTc4NTcsMzE5NjIzNDAyLC0xND
+EyMjU5ODk2LDQ0NTY5MzgyMSw1NDI3MTY4NDcsLTEwOTcwNDcy
+NzcsMTM4NjU0NzEwLC0xMjk0MTgwOTEwLC04MDU5MDcxMTAsMT
+UzMTc4ODEzMSw2MDU4ODAxMzQsMjQ0NTY1ODA0LDE3NDcwMDM1
+NjUsLTk5ODY2ODA2NCwtOTgzNjc2MTEzLDEyNjQyNDM0MjEsNz
+I4OTI5NzA2LDEzNTgxODczMTQsMzAzNTgxMzA3LC0yMTA2MjU1
+MDE3XX0=
 -->
