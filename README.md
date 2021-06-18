@@ -70,6 +70,12 @@ That's what we should do now.
 ### Step one: select image from disk
 I will not implement a file select dialog. I will simply list all files in a pre-specified folder and then allow the user to select a file in that list.
 
+I will skip this step because it is not important.
+
+### Step two: display an image
+
+So, this should be easy, right? ;-)
+
 ## Paused: Towers!!
 
 This is going to be FUN!
@@ -452,11 +458,11 @@ Det här gör vi på det gamla vanliga sättet. Vi bygger en box2d-värld, vi kl
 
 Oj oj oj,  vad roligt. Vi kan göra en box2d-kropp med leder, per tutorials etc. Superkul ju.
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbLTk1NjQwMjAwNSwzMTk2MjM0MDIsLTE0MT
-IyNTk4OTYsNDQ1NjkzODIxLDU0MjcxNjg0NywtMTA5NzA0NzI3
-NywxMzg2NTQ3MTAsLTEyOTQxODA5MTAsLTgwNTkwNzExMCwxNT
-MxNzg4MTMxLDYwNTg4MDEzNCwyNDQ1NjU4MDQsMTc0NzAwMzU2
-NSwtOTk4NjY4MDY0LC05ODM2NzYxMTMsMTI2NDI0MzQyMSw3Mj
-g5Mjk3MDYsMTM1ODE4NzMxNCwzMDM1ODEzMDcsLTIxMDYyNTUw
-MTddfQ==
+eyJoaXN0b3J5IjpbLTEwODgxODI5MzIsLTk1NjQwMjAwNSwzMT
+k2MjM0MDIsLTE0MTIyNTk4OTYsNDQ1NjkzODIxLDU0MjcxNjg0
+NywtMTA5NzA0NzI3NywxMzg2NTQ3MTAsLTEyOTQxODA5MTAsLT
+gwNTkwNzExMCwxNTMxNzg4MTMxLDYwNTg4MDEzNCwyNDQ1NjU4
+MDQsMTc0NzAwMzU2NSwtOTk4NjY4MDY0LC05ODM2NzYxMTMsMT
+I2NDI0MzQyMSw3Mjg5Mjk3MDYsMTM1ODE4NzMxNCwzMDM1ODEz
+MDddfQ==
 -->
