@@ -68,7 +68,7 @@ Here's what I want:
 That's what we should do now.
 
 ### Step one: select image from disk
-
+I will not implement a file select dialog. I will simply list all files in a pre-specified folder and then allow the user to select a file in that list.
 
 ## Paused: Towers!!
 
@@ -452,11 +452,11 @@ Det här gör vi på det gamla vanliga sättet. Vi bygger en box2d-värld, vi kl
 
 Oj oj oj,  vad roligt. Vi kan göra en box2d-kropp med leder, per tutorials etc. Superkul ju.
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbLTE3ODkzOTc4NTcsMzE5NjIzNDAyLC0xND
-EyMjU5ODk2LDQ0NTY5MzgyMSw1NDI3MTY4NDcsLTEwOTcwNDcy
-NzcsMTM4NjU0NzEwLC0xMjk0MTgwOTEwLC04MDU5MDcxMTAsMT
-UzMTc4ODEzMSw2MDU4ODAxMzQsMjQ0NTY1ODA0LDE3NDcwMDM1
-NjUsLTk5ODY2ODA2NCwtOTgzNjc2MTEzLDEyNjQyNDM0MjEsNz
-I4OTI5NzA2LDEzNTgxODczMTQsMzAzNTgxMzA3LC0yMTA2MjU1
-MDE3XX0=
+eyJoaXN0b3J5IjpbLTk1NjQwMjAwNSwzMTk2MjM0MDIsLTE0MT
+IyNTk4OTYsNDQ1NjkzODIxLDU0MjcxNjg0NywtMTA5NzA0NzI3
+NywxMzg2NTQ3MTAsLTEyOTQxODA5MTAsLTgwNTkwNzExMCwxNT
+MxNzg4MTMxLDYwNTg4MDEzNCwyNDQ1NjU4MDQsMTc0NzAwMzU2
+NSwtOTk4NjY4MDY0LC05ODM2NzYxMTMsMTI2NDI0MzQyMSw3Mj
+g5Mjk3MDYsMTM1ODE4NzMxNCwzMDM1ODEzMDcsLTIxMDYyNTUw
+MTddfQ==
 -->
