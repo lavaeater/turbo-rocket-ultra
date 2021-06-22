@@ -8,4 +8,6 @@ sealed class GameEvent {
     object ExitedGame: GameEvent()
     object GameOver: GameEvent()
     object RestartGame : GameEvent()
+    object StartEditor : GameEvent()
+    object StopEditor : GameEvent()
 }

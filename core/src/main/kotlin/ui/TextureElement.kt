@@ -7,7 +7,12 @@ import com.badlogic.gdx.math.Vector2
 import ktx.math.vec2
 import physics.drawScaled
 
-open class TextureElement(open val texture: TextureRegion, position: Vector2 = vec2(), var rotation: Float = 0f, val scale: Float = 1f, parent: AbstractElement? = null): AbstractElement(position, parent = parent) {
+open class TextureElement(
+    open val texture: TextureRegion,
+    position: Vector2 = vec2(),
+    var rotation: Float = 0f,
+    val scale: Float = 1f,
+    parent: AbstractElement? = null) : AbstractElement(position, parent = parent) {
     override val bounds: Rectangle
         get() = Rectangle(actualPosition.x, actualPosition.y, texture.regionWidth * scale, texture.regionHeight * scale)
 

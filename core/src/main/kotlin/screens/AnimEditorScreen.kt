@@ -1,7 +1,10 @@
 package screens
 
+import com.badlogic.gdx.Gdx
 import com.badlogic.gdx.Input
 import com.badlogic.gdx.graphics.OrthographicCamera
+import com.badlogic.gdx.graphics.Texture
+import com.badlogic.gdx.graphics.g2d.TextureRegion
 import com.badlogic.gdx.utils.viewport.ExtendViewport
 import gamestate.GameEvent
 import gamestate.GameState
@@ -14,6 +17,7 @@ import tru.SpriteDirection
 import ui.BoundAnimationElement
 import ui.BoundTextElement
 import ui.CollectionContainerElement
+import ui.TextureElement
 
 class AnimEditorScreen(gameState: StateMachine<GameState, GameEvent>) : BasicScreen(gameState) {
 
@@ -27,16 +31,9 @@ class AnimEditorScreen(gameState: StateMachine<GameState, GameEvent>) : BasicScr
 
     val fileName = "1.png"
     val baseFolder = "sheets"
+    val region = TextureRegion(Texture(Gdx.files.internal("$baseFolder/$fileName")))
 
-
-    val activePlayers = listOf ( "Test", "Test", "Test")
-
-    private val altUi = CollectionContainerElement(
-        activePlayers,
-        listOf(
-            BoundTextElement({ p -> p }),
-        ), position = vec2(50f, 400f)
-    )
+    private val altUi = TextureElement(region)
 
     override fun render(delta: Float) {
         super.render(delta)
@@ -63,10 +60,6 @@ class AnimEditorScreen(gameState: StateMachine<GameState, GameEvent>) : BasicScr
 
     override fun keyUp(keycode: Int): Boolean {
         return when(keycode) {
-            Input.Keys.SPACE -> toggleKeyboardPlayer()
-            Input.Keys.LEFT -> changeSpriteKeyboard(-1)
-            Input.Keys.RIGHT -> changeSpriteKeyboard(1)
-            Input.Keys.ENTER -> startGame()
             else -> super.keyUp(keycode)
         }
     }

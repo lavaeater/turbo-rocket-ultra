@@ -75,6 +75,7 @@ class SetupScreen(gameState: StateMachine<GameState, GameEvent>) : BasicScreen(g
             Input.Keys.LEFT -> changeSpriteKeyboard(-1)
             Input.Keys.RIGHT -> changeSpriteKeyboard(1)
             Input.Keys.ENTER -> startGame()
+            Input.Keys.E -> startEditor()
             else -> super.keyUp(keycode)
         }
     }
@@ -90,6 +91,12 @@ class SetupScreen(gameState: StateMachine<GameState, GameEvent>) : BasicScreen(g
         gameState.acceptEvent(GameEvent.StartedGame)
         return true
     }
+
+    private fun startEditor(): Boolean {
+        gameState.acceptEvent(GameEvent.StartEditor)
+        return true
+    }
+
 
     override fun buttonUp(controller: Controller, buttonCode: Int): Boolean {
         return when(Button.getButton(buttonCode)) {
