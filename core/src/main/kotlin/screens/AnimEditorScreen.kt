@@ -26,6 +26,8 @@ class AnimEditorScreen(gameState: StateMachine<GameState, GameEvent>) : BasicScr
     val commandManager = CommandManager()
 
     val fileName = "1.png"
+    val baseFolder = "sheets"
+
 
     val activePlayers = listOf ( "Test", "Test", "Test")
 
