@@ -14,10 +14,7 @@ import statemachine.StateMachine
 import tru.AnimState
 import tru.Assets
 import tru.SpriteDirection
-import ui.BoundAnimationElement
-import ui.BoundTextElement
-import ui.CollectionContainerElement
-import ui.TextureElement
+import ui.*
 
 class AnimEditorScreen(gameState: StateMachine<GameState, GameEvent>) : BasicScreen(gameState) {
 
@@ -29,11 +26,20 @@ class AnimEditorScreen(gameState: StateMachine<GameState, GameEvent>) : BasicScr
 
     val commandManager = CommandManager()
 
-    val fileName = "1.png"
-    val baseFolder = "sheets"
-    val region = TextureRegion(Texture(Gdx.files.internal("$baseFolder/$fileName")))
+    private val fileName = "2.png"
+    private val baseFolder = "sheets"
+    private val texture = Texture(Gdx.files.internal("$baseFolder/$fileName"))
+    private val region = TextureRegion(texture)
 
-    private val altUi = TextureElement(region)
+    private val textureElement = TextureElement(region)
+    private val boundGridElement = BoundGridElement(region.regionWidth.toFloat(), region.regionHeight.toFloat(),gridUpdated = textureElement::gridUpdated)
+
+    private val altUi = ContainerElement(vec2()).apply {
+        addChild(textureElement)
+        addChild(boundGridElement)
+        addChild(BindableTextElement({ "width: ${boundGridElement.gridWidth}"}, vec2(200f, -200f)))
+        addChild(BindableTextElement({ "height: ${boundGridElement.gridHeight}"}, vec2(200f, -220f)))
+    }
 
     override fun render(delta: Float) {
         super.render(delta)
@@ -50,18 +56,32 @@ class AnimEditorScreen(gameState: StateMachine<GameState, GameEvent>) : BasicScr
         batch.projectionMatrix = camera.combined
     }
 
-    /*
-
-    Commands is a list of commands with names
-    and functions they perform. They can be used to create menu systems
-    with active commands and stuff like that.
-     */
 
 
     override fun keyUp(keycode: Int): Boolean {
-        return when(keycode) {
+        return when (keycode) {
+            Input.Keys.LEFT -> {
+                boundGridElement.decrementGridWidth()
+                true
+            }
+            Input.Keys.RIGHT -> {
+                boundGridElement.incrementGridWidth()
+                true
+            }
+            Input.Keys.DOWN -> {
+                boundGridElement.decrementGridHeight()
+                true
+            }
+            Input.Keys.UP -> {
+                boundGridElement.incrementGridHeight()
+                true
+            }
             else -> super.keyUp(keycode)
         }
+    }
+
+    private fun decrement(gridWidth: Float): Boolean {
+        TODO("Not yet implemented")
     }
 
 
