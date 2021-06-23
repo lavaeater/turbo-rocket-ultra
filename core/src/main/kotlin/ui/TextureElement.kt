@@ -20,7 +20,7 @@ open class TextureElement(
 
     var regionWidth = 32
     var regionHeight = 32
-    val frameCount get() =  texture.regionWidth / regionWidth
+    val frameCount get() =  4//texture.regionWidth / regionWidth
     val animCount get() = texture.regionHeight / regionHeight
     val anims = mutableListOf<Animation<TextureRegion>>()
 
@@ -29,8 +29,14 @@ open class TextureElement(
         regionWidth = gridWidth
         regionHeight = gridHeight
         for (row in 0..animCount) {
-            val regions = Array<TextureRegion>(frameCount - 1) {
+            var regions = Array<TextureRegion>(frameCount) {
                 TextureRegion(texture.texture, it * regionWidth, row * regionHeight, regionWidth, regionHeight)
+            }.toGdxArray()
+
+            anims.add(Animation(0.2f, regions, Animation.PlayMode.LOOP))
+
+            regions = Array<TextureRegion>(frameCount - 1) {
+                TextureRegion(texture.texture, (it + 4) * regionWidth, row * regionHeight, regionWidth, regionHeight)
             }.toGdxArray()
 
             anims.add(Animation(0.2f, regions, Animation.PlayMode.LOOP))
@@ -52,10 +58,12 @@ open class TextureElement(
 
         for((index, anim) in anims.withIndex()) {
             val frame = anim.getKeyFrame(stateTime)
+            var row = if (index < 10) index else index - 10
+            var column = if (index < 10) 0 else 1
             batch.drawScaled(
                 frame,
-                400f,
-                500f - regionHeight * index,
+                400f + regionWidth * column,
+                470f - regionHeight * row,
                 scale,
                 rotation
             )

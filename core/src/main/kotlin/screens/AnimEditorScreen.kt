@@ -31,14 +31,35 @@ class AnimEditorScreen(gameState: StateMachine<GameState, GameEvent>) : BasicScr
     private val texture = Texture(Gdx.files.internal("$baseFolder/$fileName"))
     private val region = TextureRegion(texture)
 
+
     private val textureElement = TextureElement(region)
-    private val boundGridElement = BoundGridElement(region.regionWidth.toFloat(), region.regionHeight.toFloat(),gridUpdated = textureElement::gridUpdated)
+    private val boundGridElement = BoundGridElement(
+        region.regionWidth.toFloat(),
+        region.regionHeight.toFloat(),
+        gridUpdated = textureElement::gridUpdated
+    )
+    private val animEditorElement = AnimationEditorElement(texture, boundGridElement::gridWidth, boundGridElement::gridHeight)
+
+    private val inputters = listOf(
+        Inputter(
+            "Grid",
+            mapOf(
+                Input.Keys.LEFT to boundGridElement::decrementGridWidth,
+                Input.Keys.RIGHT to boundGridElement::incrementGridWidth,
+                Input.Keys.UP to boundGridElement::incrementGridHeight,
+                Input.Keys.DOWN to boundGridElement::decrementGridHeight
+            )
+        ))
+    private var inputIndex = 0
+    private val currentInputter get() = inputters[inputIndex]
 
     private val altUi = ContainerElement(vec2()).apply {
         addChild(textureElement)
         addChild(boundGridElement)
-        addChild(BindableTextElement({ "width: ${boundGridElement.gridWidth}"}, vec2(200f, -200f)))
-        addChild(BindableTextElement({ "height: ${boundGridElement.gridHeight}"}, vec2(200f, -220f)))
+        addChild(animEditorElement)
+        addChild(BindableTextElement({ "width: ${boundGridElement.gridWidth}" }, vec2(200f, -200f)))
+        addChild(BindableTextElement({ "height: ${boundGridElement.gridHeight}" }, vec2(200f, -220f)))
+        addChild(BindableTextElement({currentInputter.name}, vec2(300f, -300f)))
     }
 
     override fun render(delta: Float) {
@@ -56,28 +77,8 @@ class AnimEditorScreen(gameState: StateMachine<GameState, GameEvent>) : BasicScr
         batch.projectionMatrix = camera.combined
     }
 
-
-
     override fun keyUp(keycode: Int): Boolean {
-        return when (keycode) {
-            Input.Keys.LEFT -> {
-                boundGridElement.decrementGridWidth()
-                true
-            }
-            Input.Keys.RIGHT -> {
-                boundGridElement.incrementGridWidth()
-                true
-            }
-            Input.Keys.DOWN -> {
-                boundGridElement.decrementGridHeight()
-                true
-            }
-            Input.Keys.UP -> {
-                boundGridElement.incrementGridHeight()
-                true
-            }
-            else -> super.keyUp(keycode)
-        }
+        return currentInputter.handleInput(keycode)
     }
 
     private fun decrement(gridWidth: Float): Boolean {
@@ -106,6 +107,15 @@ class CommandManager(val commandList: MutableList<Command> = mutableListOf()) : 
     }
 
     override val items get() = commandList
+}
+
+class Inputter(val name: String, val inputMap: Map<Int, () -> Unit>) {
+    fun handleInput(keyCode: Int): Boolean {
+        if (inputMap.containsKey(keyCode)) {
+            inputMap[keyCode]!!()
+        }
+        return true
+    }
 }
 
 interface DataList<T> {
