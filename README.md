@@ -58,11 +58,11 @@ However... that was made four years ago using C# and WPF - but I am not doing de
 So, anyways, I have started doing my OWN ui Framework, because I just love to waste time. 
 
 Here's what I want:
-* select an image from disk
-* show that image
-* allow specifying sprite dimensions
-* draw lines over texture for sprites
-* iterate over lines and tag them with some kind of metadata
+* select an image from disk <- not doing
+* show that image <- done
+* allow specifying sprite dimensions <- done
+* draw lines over texture for sprites <- done
+* iterate over lines and tag them with some kind of metadata <- not done
 * save this data so it can be loaded later
 
 That's what we should do now.
@@ -458,11 +458,11 @@ Det här gör vi på det gamla vanliga sättet. Vi bygger en box2d-värld, vi kl
 
 Oj oj oj,  vad roligt. Vi kan göra en box2d-kropp med leder, per tutorials etc. Superkul ju.
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbLTEwODgxODI5MzIsLTk1NjQwMjAwNSwzMT
-k2MjM0MDIsLTE0MTIyNTk4OTYsNDQ1NjkzODIxLDU0MjcxNjg0
-NywtMTA5NzA0NzI3NywxMzg2NTQ3MTAsLTEyOTQxODA5MTAsLT
-gwNTkwNzExMCwxNTMxNzg4MTMxLDYwNTg4MDEzNCwyNDQ1NjU4
-MDQsMTc0NzAwMzU2NSwtOTk4NjY4MDY0LC05ODM2NzYxMTMsMT
-I2NDI0MzQyMSw3Mjg5Mjk3MDYsMTM1ODE4NzMxNCwzMDM1ODEz
-MDddfQ==
+eyJoaXN0b3J5IjpbNjY0NDAxNTIsLTEwODgxODI5MzIsLTk1Nj
+QwMjAwNSwzMTk2MjM0MDIsLTE0MTIyNTk4OTYsNDQ1NjkzODIx
+LDU0MjcxNjg0NywtMTA5NzA0NzI3NywxMzg2NTQ3MTAsLTEyOT
+QxODA5MTAsLTgwNTkwNzExMCwxNTMxNzg4MTMxLDYwNTg4MDEz
+NCwyNDQ1NjU4MDQsMTc0NzAwMzU2NSwtOTk4NjY4MDY0LC05OD
+M2NzYxMTMsMTI2NDI0MzQyMSw3Mjg5Mjk3MDYsMTM1ODE4NzMx
+NF19
 -->
