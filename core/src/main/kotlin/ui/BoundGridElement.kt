@@ -9,8 +9,8 @@ import kotlin.math.roundToInt
 class BoundGridElement(
     width: Float,
     height: Float,
-    var gridWidth: Float = 32f,
-    var gridHeight: Float = 32f,
+    var gridWidth: Float = 31f,
+    var gridHeight: Float = 31f,
     var aspectLocked: Boolean = true,
     private val gridUpdated: (Int, Int)-> Unit = { _, _ -> },
     position: Vector2 = vec2(),

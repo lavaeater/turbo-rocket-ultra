@@ -38,7 +38,10 @@ class AnimEditorScreen(gameState: StateMachine<GameState, GameEvent>) : BasicScr
         region.regionHeight.toFloat(),
         gridUpdated = textureElement::gridUpdated
     )
-    private val animEditorElement = AnimationEditorElement(texture, boundGridElement::gridWidth, boundGridElement::gridHeight)
+    private val animEditorElement = AnimationEditorElement(
+        texture,
+        boundGridElement::gridWidth,
+        boundGridElement::gridHeight, vec2(400f, -200f))
 
     private val inputters = listOf(
         Inputter(
@@ -49,7 +52,8 @@ class AnimEditorScreen(gameState: StateMachine<GameState, GameEvent>) : BasicScr
                 Input.Keys.UP to boundGridElement::incrementGridHeight,
                 Input.Keys.DOWN to boundGridElement::decrementGridHeight
             )
-        ))
+        ),
+    OtherPutter("Anim Edit", animEditorElement::handleInput))
     private var inputIndex = 0
     private val currentInputter get() = inputters[inputIndex]
 
@@ -57,9 +61,12 @@ class AnimEditorScreen(gameState: StateMachine<GameState, GameEvent>) : BasicScr
         addChild(textureElement)
         addChild(boundGridElement)
         addChild(animEditorElement)
-        addChild(BindableTextElement({ "width: ${boundGridElement.gridWidth}" }, vec2(200f, -200f)))
-        addChild(BindableTextElement({ "height: ${boundGridElement.gridHeight}" }, vec2(200f, -220f)))
+        addChild(BindableTextElement({ "width: ${boundGridElement.gridWidth}" }, vec2(300f, -200f)))
+        addChild(BindableTextElement({ "height: ${boundGridElement.gridHeight}" }, vec2(300f, -220f)))
         addChild(BindableTextElement({currentInputter.name}, vec2(300f, -300f)))
+        addChild(BindableTextElement({"AnimState: ${animEditorElement.currentAnimState}"}, vec2(500f, -220f)))
+        addChild(BindableTextElement({"AnimState: ${animEditorElement.currentDirection}"}, vec2(500f, -200f)))
+        addChild(BindableTextElement({ animEditorElement.defs.joinToString("\n") { it.toString() } }, vec2(400f, -200f)))
     }
 
     override fun render(delta: Float) {
@@ -78,7 +85,18 @@ class AnimEditorScreen(gameState: StateMachine<GameState, GameEvent>) : BasicScr
     }
 
     override fun keyUp(keycode: Int): Boolean {
-        return currentInputter.handleInput(keycode)
+        return when (keycode) {
+            Input.Keys.C -> nextInputter()
+            else ->currentInputter.handleInput(keycode)
+        }
+    }
+
+    private fun nextInputter(): Boolean {
+        inputIndex++
+        if(inputIndex >= inputters.size) {
+            inputIndex = 0
+        }
+        return true
     }
 
     private fun decrement(gridWidth: Float): Boolean {
@@ -109,8 +127,20 @@ class CommandManager(val commandList: MutableList<Command> = mutableListOf()) : 
     override val items get() = commandList
 }
 
-class Inputter(val name: String, val inputMap: Map<Int, () -> Unit>) {
-    fun handleInput(keyCode: Int): Boolean {
+interface InputThing {
+    val name: String
+    fun handleInput(keyCode: Int): Boolean
+}
+
+class OtherPutter(override val name: String, val handler: (Int)-> Boolean) : InputThing {
+    override fun handleInput(keyCode: Int): Boolean {
+        return handler(keyCode)
+    }
+
+}
+
+class Inputter(override val name: String, val inputMap: Map<Int, () -> Unit>) : InputThing {
+    override fun handleInput(keyCode: Int): Boolean {
         if (inputMap.containsKey(keyCode)) {
             inputMap[keyCode]!!()
         }

@@ -56,17 +56,17 @@ open class TextureElement(
             rotation
         )
 
-        for((index, anim) in anims.withIndex()) {
-            val frame = anim.getKeyFrame(stateTime)
-            var row = if (index < 10) index else index - 10
-            var column = if (index < 10) 0 else 1
-            batch.drawScaled(
-                frame,
-                400f + regionWidth * column,
-                470f - regionHeight * row,
-                scale,
-                rotation
-            )
-        }
+//        for((index, anim) in anims.withIndex()) {
+//            val frame = anim.getKeyFrame(stateTime)
+//            var row = if (index < 10) index else index - 10
+//            var column = if (index < 10) 0 else 1
+//            batch.drawScaled(
+//                frame,
+//                400f + regionWidth * column,
+//                470f - regionHeight * row,
+//                scale,
+//                rotation
+//            )
+//        }
     }
 }
