@@ -70,7 +70,7 @@ class AnimationEditorElement(
     }
 
     private fun saveAnim() {
-        defs.add(AnimDef(currentAnimState, currentDirection, spriteRowForY(row), startCol, endCol))
+        defs.add(AnimDef(currentAnimState, currentDirection, gridRowForY(row), startCol, endCol))
 
         val jsonString = Json.encodeToString(defs)
 
@@ -115,7 +115,7 @@ class AnimationEditorElement(
     var anim = Animation(0.2f, regions, Animation.PlayMode.LOOP)
 
     private fun gridRowForY(y: Int): Int = maxRow - y - 1
-    private fun spriteRowForY(y: Int): Int = maxRow - y - 2
+    private fun spriteRowForY(y: Int): Int = y
 
     private fun updateAnim() {
         if (endRow < startRow)
