@@ -1,5 +1,6 @@
 package ui
 
+import com.badlogic.gdx.Gdx
 import com.badlogic.gdx.Input
 import com.badlogic.gdx.graphics.Color
 import com.badlogic.gdx.graphics.Texture
@@ -7,14 +8,15 @@ import com.badlogic.gdx.graphics.g2d.Animation
 import com.badlogic.gdx.graphics.g2d.Batch
 import com.badlogic.gdx.graphics.g2d.TextureRegion
 import com.badlogic.gdx.math.Vector2
+import kotlinx.serialization.encodeToString
+import kotlinx.serialization.json.Json
 import ktx.collections.toGdxArray
 import ktx.math.vec2
 import physics.drawScaled
 import tru.AnimDef
 import tru.AnimState
 import tru.SpriteDirection
-import kotlinx.serialization.*
-import kotlinx.serialization.json.*
+
 
 class AnimationEditorElement(
     private val texture: Texture,
@@ -42,8 +44,9 @@ class AnimationEditorElement(
     val defs = mutableListOf<AnimDef>()
 
 
-    private val numberOfFrames: Int get() {
-        return if (endRow == startRow && startCol == endCol) {
+    private val numberOfFrames: Int
+        get() {
+            return if (endRow == startRow && startCol == endCol) {
                 1
             } else if (endRow == startRow) {
                 endCol - startCol
@@ -70,13 +73,13 @@ class AnimationEditorElement(
     }
 
     private fun saveAnim() {
-        defs.add(AnimDef(currentAnimState, currentDirection, gridRowForY(row), startCol, endCol))
+        defs.add(AnimDef(currentAnimState, currentDirection, row, startCol, endCol))
 
         val jsonString = Json.encodeToString(defs)
 
         //Wutwut
-        val bing = jsonString
-
+        val file = Gdx.files.local("files/sheet.json")
+        file.writeString(jsonString, false)
     }
 
     var stateIndex = 0
@@ -86,13 +89,13 @@ class AnimationEditorElement(
 
     private fun nextState() {
         stateIndex++
-        if(stateIndex >= AnimState.animStates.size)
+        if (stateIndex >= AnimState.animStates.size)
             stateIndex = 0
     }
 
     private fun nextDirection() {
         directionIndex++
-        if(directionIndex >= SpriteDirection.spriteDirections.size)
+        if (directionIndex >= SpriteDirection.spriteDirections.size)
             directionIndex = 0
 
     }
@@ -127,7 +130,8 @@ class AnimationEditorElement(
         var y = startRow
 
         val array = Array(numberOfFrames) {
-            val region = TextureRegion(texture, x * spriteWidth, spriteRowForY(y) * spriteHeight, spriteWidth, spriteHeight)
+            val region =
+                TextureRegion(texture, x * spriteWidth, spriteRowForY(y) * spriteHeight, spriteWidth, spriteHeight)
             x++
             if (x > maxCol) {
                 x = 0

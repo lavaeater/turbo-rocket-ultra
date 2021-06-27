@@ -26,8 +26,8 @@ class AnimEditorScreen(gameState: StateMachine<GameState, GameEvent>) : BasicScr
 
     val commandManager = CommandManager()
 
-    private val fileName = "2.png"
-    private val baseFolder = "sheets"
+    private val fileName = "blonde.png"
+    private val baseFolder = "sprites/sheets"
     private val texture = Texture(Gdx.files.internal("$baseFolder/$fileName"))
     private val region = TextureRegion(texture)
 
