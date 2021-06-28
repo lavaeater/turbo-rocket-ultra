@@ -67,14 +67,18 @@ object SpriteLoader {
         for (c in newCharacters) {
             anims[c] = mutableMapOf()
             val texture = Texture(Gdx.files.internal("sprites/sheets/$c.png"))
+
+            /*
+            mY DATA is a list of animations on states and directions - this must be mapped
+            to a hierarchy
+             */
+
             for (animDef in animDefs) {
                 val dMap = mutableMapOf<SpriteDirection, Animation<TextureRegion>>()
-                for(direction in SpriteDirection.spriteDirections) {
-                    val textureRegions = (animDef.startCol..animDef.endCol).map {
+                val textureRegions = (animDef.startCol..animDef.endCol).map {
                         TextureRegion(texture, it * 31, animDef.row * 31, 31,31)
                     }
-                    dMap[direction] = Animation(0.2f, textureRegions.toGdxArray(), Animation.PlayMode.LOOP)
-                }
+                    dMap[animDef.direction] = Animation(0.2f, textureRegions.toGdxArray(), Animation.PlayMode.LOOP)
                 anims[c]!![animDef.state] = LpcCharacterAnim(animDef.state, dMap)
             }
         }

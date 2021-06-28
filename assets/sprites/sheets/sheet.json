@@ -1,6 +1,50 @@
 [
   {
     "state": {
+      "type": "tru.AnimState.Idle"
+    },
+    "direction": {
+      "type": "tru.SpriteDirection.South"
+    },
+    "row": 0,
+    "startCol": 0,
+    "endCol": 0
+  },
+  {
+    "state": {
+      "type": "tru.AnimState.Idle"
+    },
+    "direction": {
+      "type": "tru.SpriteDirection.West"
+    },
+    "row": 1,
+    "startCol": 0,
+    "endCol": 0
+  },
+  {
+    "state": {
+      "type": "tru.AnimState.Idle"
+    },
+    "direction": {
+      "type": "tru.SpriteDirection.East"
+    },
+    "row": 2,
+    "startCol": 0,
+    "endCol": 0
+  },
+  {
+    "state": {
+      "type": "tru.AnimState.Idle"
+    },
+    "direction": {
+      "type": "tru.SpriteDirection.North"
+    },
+    "row": 3,
+    "startCol": 0,
+    "endCol": 0
+  },
+  {
+    "state": {
       "type": "tru.AnimState.Walk"
     },
     "direction": {
