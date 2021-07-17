@@ -19,13 +19,10 @@ import ecs.systems.graphics.CameraUpdateSystem
 import ecs.systems.graphics.RenderMiniMapSystem
 import ecs.systems.graphics.RenderSystem
 import ecs.systems.input.GamepadInputSystem
-import factories.enemy
-import factories.objective
-import factories.obstacle
 import injection.Context.inject
 import ecs.systems.input.KeyboardInputSystem
 import ecs.systems.player.GameOverSystem
-import factories.player
+import factories.*
 import gamestate.GameEvent
 import gamestate.GameState
 import gamestate.Players
@@ -35,6 +32,7 @@ import ktx.ashley.getSystem
 import ktx.ashley.mapperFor
 import ktx.ashley.remove
 import ktx.math.random
+import ktx.math.vec2
 import statemachine.StateMachine
 import ui.IUserInterface
 import kotlin.math.pow
@@ -83,8 +81,13 @@ class GameScreen(private val gameState: StateMachine<GameState, GameEvent>) : Kt
 
         addPlayers()
         generateMap()
+        addTower()
         ui.reset()
         ui.show()
+    }
+
+    private fun addTower() {
+         tower(vec2(-2f,2f))
     }
 
     override fun render(delta: Float) {

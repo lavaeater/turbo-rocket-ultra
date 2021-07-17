@@ -10,6 +10,8 @@ import com.badlogic.gdx.graphics.g2d.PolygonSpriteBatch
 import com.badlogic.gdx.utils.viewport.ExtendViewport
 import ecs.systems.*
 import ecs.systems.ai.*
+import ecs.systems.ai.towers.TowerShootSystem
+import ecs.systems.ai.towers.TowerTargetFinderSystem
 import ecs.systems.enemy.*
 import ecs.systems.input.KeyboardInputSystem
 import ecs.systems.fx.AddSplatterSystem
@@ -88,6 +90,9 @@ object Context {
             addSystem(PlayerDeathSystem())
             addSystem(EnemySpawnSystem())
             addSystem(EnemyOptimizerSystem())
+            addSystem(TowerDebugSystem())
+            addSystem(TowerTargetFinderSystem())
+            addSystem(TowerShootSystem())
             addSystem(RenderSystem(inject<PolygonSpriteBatch>() as Batch))
             addSystem(RenderMiniMapSystem())
         }

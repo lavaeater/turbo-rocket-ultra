@@ -1,0 +1,266 @@
+[
+  {
+    "state": {
+      "type": "tru.AnimState.Idle"
+    },
+    "direction": {
+      "type": "tru.SpriteDirection.South"
+    },
+    "row": 0,
+    "startCol": 0,
+    "endCol": 0
+  },
+  {
+    "state": {
+      "type": "tru.AnimState.Idle"
+    },
+    "direction": {
+      "type": "tru.SpriteDirection.West"
+    },
+    "row": 1,
+    "startCol": 0,
+    "endCol": 0
+  },
+  {
+    "state": {
+      "type": "tru.AnimState.Idle"
+    },
+    "direction": {
+      "type": "tru.SpriteDirection.East"
+    },
+    "row": 2,
+    "startCol": 0,
+    "endCol": 0
+  },
+  {
+    "state": {
+      "type": "tru.AnimState.Idle"
+    },
+    "direction": {
+      "type": "tru.SpriteDirection.North"
+    },
+    "row": 3,
+    "startCol": 0,
+    "endCol": 0
+  },
+  {
+    "state": {
+      "type": "tru.AnimState.Walk"
+    },
+    "direction": {
+      "type": "tru.SpriteDirection.South"
+    },
+    "row": 0,
+    "startCol": 0,
+    "endCol": 4
+  },
+  {
+    "state": {
+      "type": "tru.AnimState.Walk"
+    },
+    "direction": {
+      "type": "tru.SpriteDirection.West"
+    },
+    "row": 1,
+    "startCol": 0,
+    "endCol": 4
+  },
+  {
+    "state": {
+      "type": "tru.AnimState.Walk"
+    },
+    "direction": {
+      "type": "tru.SpriteDirection.East"
+    },
+    "row": 2,
+    "startCol": 0,
+    "endCol": 4
+  },
+  {
+    "state": {
+      "type": "tru.AnimState.Walk"
+    },
+    "direction": {
+      "type": "tru.SpriteDirection.North"
+    },
+    "row": 3,
+    "startCol": 0,
+    "endCol": 4
+  },
+  {
+    "state": {
+      "type": "tru.AnimState.Run"
+    },
+    "direction": {
+      "type": "tru.SpriteDirection.South"
+    },
+    "row": 4,
+    "startCol": 0,
+    "endCol": 4
+  },
+  {
+    "state": {
+      "type": "tru.AnimState.Run"
+    },
+    "direction": {
+      "type": "tru.SpriteDirection.West"
+    },
+    "row": 5,
+    "startCol": 0,
+    "endCol": 4
+  },
+  {
+    "state": {
+      "type": "tru.AnimState.Run"
+    },
+    "direction": {
+      "type": "tru.SpriteDirection.East"
+    },
+    "row": 6,
+    "startCol": 0,
+    "endCol": 4
+  },
+  {
+    "state": {
+      "type": "tru.AnimState.Run"
+    },
+    "direction": {
+      "type": "tru.SpriteDirection.North"
+    },
+    "row": 7,
+    "startCol": 0,
+    "endCol": 4
+  },
+  {
+    "state": {
+      "type": "tru.AnimState.WalkWithGun"
+    },
+    "direction": {
+      "type": "tru.SpriteDirection.South"
+    },
+    "row": 8,
+    "startCol": 0,
+    "endCol": 4
+  },
+  {
+    "state": {
+      "type": "tru.AnimState.WalkWithGun"
+    },
+    "direction": {
+      "type": "tru.SpriteDirection.West"
+    },
+    "row": 9,
+    "startCol": 0,
+    "endCol": 4
+  },
+  {
+    "state": {
+      "type": "tru.AnimState.WalkWithGun"
+    },
+    "direction": {
+      "type": "tru.SpriteDirection.East"
+    },
+    "row": 10,
+    "startCol": 0,
+    "endCol": 4
+  },
+  {
+    "state": {
+      "type": "tru.AnimState.WalkWithGun"
+    },
+    "direction": {
+      "type": "tru.SpriteDirection.North"
+    },
+    "row": 11,
+    "startCol": 0,
+    "endCol": 4
+  },
+  {
+    "state": {
+      "type": "tru.AnimState.RunWithGun"
+    },
+    "direction": {
+      "type": "tru.SpriteDirection.South"
+    },
+    "row": 12,
+    "startCol": 0,
+    "endCol": 4
+  },
+  {
+    "state": {
+      "type": "tru.AnimState.RunWithGun"
+    },
+    "direction": {
+      "type": "tru.SpriteDirection.West"
+    },
+    "row": 13,
+    "startCol": 0,
+    "endCol": 4
+  },
+  {
+    "state": {
+      "type": "tru.AnimState.RunWithGun"
+    },
+    "direction": {
+      "type": "tru.SpriteDirection.East"
+    },
+    "row": 14,
+    "startCol": 0,
+    "endCol": 4
+  },
+  {
+    "state": {
+      "type": "tru.AnimState.RunWithGun"
+    },
+    "direction": {
+      "type": "tru.SpriteDirection.North"
+    },
+    "row": 15,
+    "startCol": 0,
+    "endCol": 4
+  },
+  {
+    "state": {
+      "type": "tru.AnimState.Shoot"
+    },
+    "direction": {
+      "type": "tru.SpriteDirection.South"
+    },
+    "row": 12,
+    "startCol": 4,
+    "endCol": 7
+  },
+  {
+    "state": {
+      "type": "tru.AnimState.Shoot"
+    },
+    "direction": {
+      "type": "tru.SpriteDirection.West"
+    },
+    "row": 13,
+    "startCol": 4,
+    "endCol": 7
+  },
+  {
+    "state": {
+      "type": "tru.AnimState.Shoot"
+    },
+    "direction": {
+      "type": "tru.SpriteDirection.East"
+    },
+    "row": 14,
+    "startCol": 4,
+    "endCol": 7
+  },
+  {
+    "state": {
+      "type": "tru.AnimState.Shoot"
+    },
+    "direction": {
+      "type": "tru.SpriteDirection.North"
+    },
+    "row": 15,
+    "startCol": 4,
+    "endCol": 7
+  }
+]

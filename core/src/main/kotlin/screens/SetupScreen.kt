@@ -2,7 +2,6 @@ package screens
 
 import com.badlogic.gdx.Input
 import com.badlogic.gdx.controllers.Controller
-import com.badlogic.gdx.controllers.PovDirection
 import com.badlogic.gdx.graphics.OrthographicCamera
 import com.badlogic.gdx.utils.viewport.ExtendViewport
 import gamestate.GameEvent
@@ -19,9 +18,9 @@ import statemachine.StateMachine
 import tru.AnimState
 import tru.Assets
 import tru.SpriteDirection
-import ui.*
-import kotlin.properties.Delegates
-import kotlin.properties.ObservableProperty
+import ui.BoundAnimationElement
+import ui.BoundTextElement
+import ui.CollectionContainerElement
 
 class SetupScreen(gameState: StateMachine<GameState, GameEvent>) : BasicScreen(gameState) {
 
@@ -76,6 +75,7 @@ class SetupScreen(gameState: StateMachine<GameState, GameEvent>) : BasicScreen(g
             Input.Keys.LEFT -> changeSpriteKeyboard(-1)
             Input.Keys.RIGHT -> changeSpriteKeyboard(1)
             Input.Keys.ENTER -> startGame()
+            Input.Keys.E -> startEditor()
             else -> super.keyUp(keycode)
         }
     }
@@ -91,6 +91,12 @@ class SetupScreen(gameState: StateMachine<GameState, GameEvent>) : BasicScreen(g
         gameState.acceptEvent(GameEvent.StartedGame)
         return true
     }
+
+    private fun startEditor(): Boolean {
+        gameState.acceptEvent(GameEvent.StartEditor)
+        return true
+    }
+
 
     override fun buttonUp(controller: Controller, buttonCode: Int): Boolean {
         return when(Button.getButton(buttonCode)) {

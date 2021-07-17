@@ -6,10 +6,7 @@ import com.badlogic.gdx.physics.box2d.World
 import ecs.components.*
 import ecs.components.gameplay.TransformComponent
 import ecs.components.graphics.ParticleComponent
-import ecs.components.graphics.RenderableComponent
-import ecs.components.fx.SplatterComponent
 import ktx.ashley.allOf
-import ktx.ashley.has
 import ktx.ashley.mapperFor
 import physics.AshleyMappers
 

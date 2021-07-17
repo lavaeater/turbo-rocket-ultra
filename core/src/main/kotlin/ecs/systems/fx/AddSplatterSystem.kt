@@ -6,7 +6,7 @@ import ecs.components.fx.SplatterComponent
 import ecs.components.gameplay.DestroyComponent
 import ecs.components.gameplay.TransformComponent
 import ecs.components.graphics.ParticleComponent
-import ecs.components.graphics.RenderableComponent
+import ecs.components.graphics.RenderLayerComponent
 import ktx.ashley.allOf
 import ktx.ashley.mapperFor
 import physics.addComponent
@@ -27,7 +27,7 @@ class AddSplatterSystem: IteratingSystem(allOf(ParticleComponent::class, Transfo
                 color = particleComponent.color
                 radius = 0.2f
             }
-            addComponent<RenderableComponent>()
+            addComponent<RenderLayerComponent>()
         }
         engine.addEntity(bloodEntity)
 

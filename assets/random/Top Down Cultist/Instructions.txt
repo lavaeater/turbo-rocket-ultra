@@ -1,0 +1,35 @@
+
+Thank you for downloading this asset. 
+The following information is useful when importing the sprite sheets:
+----------------
+
+Cultist.png
+123 frames, frame resolution: 64x64px 
+
+Cultist_AttackNoEffect.png
+27 frames, frame resolution: 64x64px 
+
+Cultist_DeathNoBlood.png
+24 frames, frame resolution: 64x64px 
+
+Cultist_SpellcastNoEffect.png
+42 frames, frame resolution: 64x64px 
+
+Fireball.png
+5 frames, frame resolution: 64x32px 
+
+
+Animations:
+🔹 Idle  1 frame (1 fps)
+🔹 Walk  6 frames (6 fps)
+🔹 Attack  9 frames (10 fps)
+🔹 Spellcast  14 frames (10 fps)
+🔹 Hurt  3 frames (10 fps)
+🔹 Death 8 frames (10 fps)
+
+----------------
+Check out the Preview files for more info.
+I want to thank you for supporting my work and for making it possible for me to continue doing what I love. 
+
+Best regards,
+ Sven

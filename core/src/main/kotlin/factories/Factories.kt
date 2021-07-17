@@ -21,9 +21,12 @@ import ecs.components.graphics.*
 import ecs.components.player.FiredShotsComponent
 import ecs.components.player.PlayerComponent
 import ecs.components.player.PlayerControlComponent
+import ecs.components.towers.TowerComponent
 import gamestate.Player
 import injection.Context.inject
 import input.ControlMapper
+import ktx.ashley.entity
+import ktx.ashley.with
 import ktx.box2d.*
 import ktx.math.random
 import ktx.math.vec2
@@ -121,6 +124,27 @@ fun splatterParticles(
     }
 }
 
+fun tower(at: Vector2 = vec2()) {
+    val towerBody = world().body {
+        type = BodyDef.BodyType.StaticBody
+        position.set(at)
+        box(2f, 2f) {}
+    }
+
+    val towerEntity = engine().entity {
+        with<BodyComponent> {
+            body = towerBody
+        }
+        with<TransformComponent>()
+        with<BoxComponent>()
+        with<RenderLayerComponent>()
+        with<TowerComponent>()
+    }
+    towerEntity.addComponent<BehaviorComponent> { tree = Tree.getTowerBehaviorTree().apply { `object` = towerEntity } }
+    towerBody.userData = towerEntity
+
+}
+
 fun player(player: Player, mapper: ControlMapper) {
     val box2dBody = world().body {
         type = BodyDef.BodyType.DynamicBody
@@ -143,7 +167,7 @@ fun player(player: Player, mapper: ControlMapper) {
         add(mapper)
         addComponent<PlayerControlComponent> { controlMapper = mapper }//We will have multiple components later
         add(CharacterSpriteComponent(Assets.characters[player.selectedCharacterSpriteName]!!))
-        addComponent<RenderableComponent> { layer = 1 }
+        addComponent<RenderLayerComponent> { layer = 1 }
         addComponent<PlayerComponent> { this.player = player }
         addComponent<FiredShotsComponent>()
     }
@@ -189,7 +213,7 @@ fun enemy(at: Vector2) {
         addComponent<EnemySensorComponent>()
         addComponent<EnemyComponent>()
         add(CharacterSpriteComponent(Assets.characters["enemy"]!!))
-        addComponent<RenderableComponent> { layer = 1 }
+        addComponent<RenderLayerComponent> { layer = 1 }
     }
     entity.addComponent<BehaviorComponent> { tree = Tree.getEnemyBehaviorTree().apply { `object` = entity } }
 
@@ -261,7 +285,7 @@ fun obstacle(
         addComponent<TransformComponent> { position.set(box2dBody.position) }
         addComponent<ObstacleComponent>()
         addComponent<BoxComponent> { color = Color.BLUE }
-        addComponent<RenderableComponent>()
+        addComponent<RenderLayerComponent>()
     }
     box2dBody.userData = entity
     engine().addEntity(entity)
@@ -290,7 +314,7 @@ fun objective(
         addComponent<TransformComponent> { position.set(box2dBody.position) }
         addComponent<BoxComponent>()
         addComponent<ObjectiveComponent>()
-        addComponent<RenderableComponent> { layer = 0 }
+        addComponent<RenderLayerComponent> { layer = 0 }
     }
     box2dBody.userData = entity
     engine().addEntity(entity)
