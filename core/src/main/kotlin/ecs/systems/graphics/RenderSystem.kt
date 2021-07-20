@@ -24,6 +24,7 @@ class RenderSystem(
     ).get(), object : Comparator<Entity> {
         val renderableMapper = mapperFor<RenderLayerComponent>()
         val transformMapper = mapperFor<TransformComponent>()
+
         override fun compare(p0: Entity, p1: Entity): Int {
             val layer0 = renderableMapper.get(p0).layer
             val layer1 = renderableMapper.get(p1).layer
