@@ -4,6 +4,7 @@ import com.badlogic.ashley.core.Component
 import com.badlogic.gdx.graphics.OrthographicCamera
 import com.badlogic.gdx.math.Vector2
 import injection.Context
+import isometric.toIsometric
 import ktx.math.vec2
 import ktx.math.vec3
 
@@ -27,6 +28,6 @@ class KeyboardControl: ControlMapper, Component {
         mousePosition3D.set(screenX.toFloat(), screenY.toFloat(), 0f)
         camera.unproject(mousePosition3D)
         mousePosition.set(mousePosition3D.x, mousePosition3D.y)
-        aimVector.set(mousePosition).sub(position).nor()
+        aimVector.set(mousePosition).sub(position.toIsometric()).nor().toIsometric()
     }
 }

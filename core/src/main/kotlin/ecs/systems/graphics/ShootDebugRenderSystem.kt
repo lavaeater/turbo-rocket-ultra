@@ -8,6 +8,7 @@ import com.badlogic.gdx.graphics.g2d.PolygonSpriteBatch
 import ecs.components.player.PlayerControlComponent
 import ecs.components.gameplay.TransformComponent
 import injection.Context.inject
+import isometric.toIsometric
 import ktx.ashley.allOf
 import ktx.ashley.mapperFor
 import ktx.graphics.use
@@ -15,7 +16,7 @@ import ktx.math.vec2
 import tru.Assets
 
 
-class ShootDebugRenderSystem(private val debug: Boolean = false, private val renderRedDot: Boolean = true) :
+class ShootDebugRenderSystem(private val debug: Boolean = true, private val renderRedDot: Boolean = true) :
     IteratingSystem(
         allOf(
             TransformComponent::class,
@@ -29,6 +30,7 @@ class ShootDebugRenderSystem(private val debug: Boolean = false, private val ren
     private val batch: Batch by lazy { inject<PolygonSpriteBatch>() }
     private val shapeDrawer by lazy { Assets.shapeDrawer }
     private val aimVector = vec2(0f, 0f)
+    private val endPoint = vec2(0f, 0f)
 
     override fun update(deltaTime: Float) {
         batch.use {
@@ -47,12 +49,20 @@ class ShootDebugRenderSystem(private val debug: Boolean = false, private val ren
 //            batch.end()
 //        }
         if (renderRedDot) {
-                shapeDrawer.line(transform.position, aimVector.setLength(50f).add(transform.position), Color.RED, .1f)
+                shapeDrawer.line(transform.position.toIsometric(), aimVector.setLength(50f).add(transform.position.toIsometric()), Color.RED, .1f)
         }
 
+            endPoint.set(controlComponent.mousePosition)
+//            .add(controlComponent.aimVector)
+//            .sub(transform.position)
+//            .scl(50f)
+//            .add(transform.position)
+//            .add(controlComponent.aimVector)
+//            .toIsometric()
+
         if (debug) {
-            shapeDrawer.line(transform.position, aimVector.add(transform.position), Color.BLUE, 0.2f)
-            shapeDrawer.line(transform.position, controlComponent.mousePosition, Color.RED, 0.05f)
+            shapeDrawer.line(transform.position.toIsometric(), endPoint, Color.BLUE, 0.2f)
+//            shapeDrawer.line(transform.position.toIsometric(), controlComponent.mousePosition, Color.GREEN, 0.15f)
         }
     }
 
