@@ -4,7 +4,8 @@ import com.badlogic.gdx.Gdx
 import com.badlogic.gdx.graphics.OrthographicCamera
 import com.badlogic.gdx.graphics.g2d.Batch
 import com.badlogic.gdx.utils.viewport.ExtendViewport
-import ecs.components.graphics.CharacterSpriteComponent
+import ecs.components.graphics.renderables.AnimatedCharacterSprite
+import ecs.components.graphics.RenderableComponent
 import gamestate.Players
 import ktx.graphics.use
 import ktx.math.vec2
@@ -84,8 +85,8 @@ class UserInterface(
                             DataBoundRepeatingTextureActor(
                                 { p.lives },
                                 vec2(20f, 0f),
-                                p.entity
-                                    .getComponent<CharacterSpriteComponent>()
+                                (p.entity
+                                    .getComponent<RenderableComponent>().renderable as AnimatedCharacterSprite)
                                     .currentAnim
                                     .keyFrames
                                     .first(),

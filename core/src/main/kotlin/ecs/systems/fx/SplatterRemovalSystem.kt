@@ -6,7 +6,7 @@ import ecs.components.fx.SplatterComponent
 import ktx.ashley.allOf
 import ktx.ashley.mapperFor
 
-class SplatterRemovalSystem: IteratingSystem(allOf(SplatterComponent::class).get()) {
+class SplatterRemovalSystem : IteratingSystem(allOf(SplatterComponent::class).get()) {
     private val splatterMapper = mapperFor<SplatterComponent>()
     private var timeBeforeCleanUp = 30f
     private var timeToCleanUp = false
@@ -14,11 +14,11 @@ class SplatterRemovalSystem: IteratingSystem(allOf(SplatterComponent::class).get
 
     override fun update(deltaTime: Float) {
         timeBeforeCleanUp -= deltaTime
-        if(timeBeforeCleanUp < 0f)
+        if (timeBeforeCleanUp < 0f)
             timeToCleanUp = true
 
         super.update(deltaTime)
-        if(timeToCleanUp) {
+        if (timeToCleanUp) {
             timeToCleanUp = false
             timeBeforeCleanUp = 30f
         }
@@ -28,7 +28,7 @@ class SplatterRemovalSystem: IteratingSystem(allOf(SplatterComponent::class).get
     override fun processEntity(entity: Entity, deltaTime: Float) {
         val splatterComponent = splatterMapper.get(entity)
         splatterComponent.life -= deltaTime
-        if(timeToCleanUp || splatterComponent.life < 0f)
+        if (timeToCleanUp || splatterComponent.life < 0f)
             engine.removeEntity(entity)
     }
 }

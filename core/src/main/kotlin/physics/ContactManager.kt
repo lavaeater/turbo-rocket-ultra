@@ -11,7 +11,8 @@ import ecs.components.enemy.EnemySensorComponent
 import ecs.components.gameplay.DestroyComponent
 import ecs.components.gameplay.ObjectiveComponent
 import ecs.components.gameplay.ShotComponent
-import ecs.components.graphics.BoxComponent
+import ecs.components.graphics.renderables.RenderableBox
+import ecs.components.graphics.RenderableComponent
 import injection.Context.inject
 
 class ContactManager: ContactListener {
@@ -35,7 +36,8 @@ class ContactManager: ContactListener {
                 if(!objectiveComponent.touched)
                     contact.getPlayerFor().touchObjective(objectiveComponent)
 
-                cEntity.getComponent<BoxComponent>().color = Color.PURPLE
+                //Switch texture, mate!
+                //(cEntity.getComponent<RenderableComponent>()?.renderable as RenderableBox)?.color = Color.PURPLE
                 objectiveComponent.touched = true
             }
         }

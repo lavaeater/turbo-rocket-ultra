@@ -10,10 +10,10 @@ import gamestate.GameEvent
 import gamestate.GameState
 import ktx.graphics.use
 import ktx.math.vec2
+import screens.ui.Inputter
+import screens.ui.OtherPutter
 import statemachine.StateMachine
-import tru.AnimState
 import tru.Assets
-import tru.SpriteDirection
 import ui.*
 
 class AnimEditorScreen(gameState: StateMachine<GameState, GameEvent>) : BasicScreen(gameState) {
@@ -23,8 +23,6 @@ class AnimEditorScreen(gameState: StateMachine<GameState, GameEvent>) : BasicScr
 
     val debug = false
     val shapeDrawer by lazy { Assets.shapeDrawer }
-
-    val commandManager = CommandManager()
 
     private val fileName = "blonde.png"
     private val baseFolder = "sprites/sheets"
@@ -53,7 +51,8 @@ class AnimEditorScreen(gameState: StateMachine<GameState, GameEvent>) : BasicScr
                 Input.Keys.DOWN to boundGridElement::decrementGridHeight
             )
         ),
-    OtherPutter("Anim Edit", animEditorElement::handleInput))
+    OtherPutter("Anim Edit", animEditorElement::handleInput)
+    )
     private var inputIndex = 0
     private val currentInputter get() = inputters[inputIndex]
 
@@ -104,53 +103,4 @@ class AnimEditorScreen(gameState: StateMachine<GameState, GameEvent>) : BasicScr
     }
 
 
-}
-
-class Command(val name: String, action: () -> Unit) {
-
-}
-
-class CommandManager(val commandList: MutableList<Command> = mutableListOf()) : DataList<Command> {
-    var activeItemIndex = 0
-    override val activeItem get() = commandList[activeItemIndex]
-
-    override fun previousItem() {
-        activeItemIndex--
-        activeItemIndex.coerceAtLeast(0)
-    }
-
-    override fun nextItem() {
-        activeItemIndex++
-        activeItemIndex.coerceAtMost(commandList.size - 1)
-    }
-
-    override val items get() = commandList
-}
-
-interface InputThing {
-    val name: String
-    fun handleInput(keyCode: Int): Boolean
-}
-
-class OtherPutter(override val name: String, val handler: (Int)-> Boolean) : InputThing {
-    override fun handleInput(keyCode: Int): Boolean {
-        return handler(keyCode)
-    }
-
-}
-
-class Inputter(override val name: String, val inputMap: Map<Int, () -> Unit>) : InputThing {
-    override fun handleInput(keyCode: Int): Boolean {
-        if (inputMap.containsKey(keyCode)) {
-            inputMap[keyCode]!!()
-        }
-        return true
-    }
-}
-
-interface DataList<T> {
-    val activeItem: T
-    fun previousItem()
-    fun nextItem()
-    val items: List<T>
 }
