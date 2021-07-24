@@ -168,7 +168,7 @@ fun player(player: Player, mapper: ControlMapper) {
         addComponent<BodyComponent> { body = box2dBody }
         addComponent<TransformComponent>()
         add(mapper)
-        addComponent<PlayerControlComponent> { controlMapper = mapper }//We will have multiple components later
+        add(PlayerControlComponent(mapper))
         addComponent<RenderableComponent> { renderable = AnimatedCharacterSprite(Assets.characters[player.selectedCharacterSpriteName]!!) }
         addComponent<RenderLayerComponent>()// { layer = 1 }
         addComponent<PlayerComponent> { this.player = player }

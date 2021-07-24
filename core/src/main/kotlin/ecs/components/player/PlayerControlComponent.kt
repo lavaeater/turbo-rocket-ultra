@@ -8,9 +8,8 @@ import ktx.math.vec2
 import ktx.math.vec3
 import tru.AnimState
 
-class PlayerControlComponent : Component, Pool.Poolable {
+class PlayerControlComponent(var controlMapper: ControlMapper) : Component {
     private var cooldownRemaining = 0f
-    lateinit var controlMapper: ControlMapper
     private val rof: Float = 3f
 
     var shotDrawCoolDown = 0f
@@ -39,7 +38,10 @@ class PlayerControlComponent : Component, Pool.Poolable {
     val turning : Float get() { return if(playerMode != PlayerMode.Control) 0f else controlMapper.turning }
     val thrust : Float get()  { return if(playerMode != PlayerMode.Control) 0f else controlMapper.thrust }
     val moving get() = walkVector.len2() != 0f
-    var playerMode = PlayerMode.Control
+    var playerMode get() = controlMapper.playerMode
+        set(value) {
+            controlMapper.playerMode = value
+        }
 
     fun coolDown(deltaTime: Float) {
         cooldownRemaining-=deltaTime
@@ -52,9 +54,6 @@ class PlayerControlComponent : Component, Pool.Poolable {
         shotsFired++
         cooldownRemaining += 1f/rof
         shotDrawCoolDown = cooldownRemaining / 4
-    }
-
-    override fun reset() {
     }
 }
 

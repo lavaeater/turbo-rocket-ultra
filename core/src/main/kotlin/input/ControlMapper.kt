@@ -2,6 +2,7 @@ package input
 
 import com.badlogic.ashley.core.Component
 import com.badlogic.gdx.math.Vector2
+import ecs.components.player.PlayerMode
 
 interface ControlMapper: Component {
 
@@ -15,6 +16,7 @@ interface ControlMapper: Component {
 
     val walkVector: Vector2
     val controllerId: String
+    var playerMode: PlayerMode
 
     fun setAimVector(screenX: Int, screenY: Int, position: Vector2)
 

@@ -6,6 +6,7 @@ import com.badlogic.gdx.Gdx
 import com.badlogic.gdx.Input
 import com.badlogic.gdx.math.Vector2
 import ecs.components.gameplay.TransformComponent
+import ecs.components.player.PlayerMode
 import input.*
 import ktx.app.KtxInputAdapter
 import ktx.ashley.allOf
@@ -47,7 +48,10 @@ class KeyboardInputSystem:
     }
 
     private fun toggleBuildMode() {
-        TODO("Not yet implemented")
+        when(keyboardControl.playerMode) {
+            PlayerMode.Control -> keyboardControl.playerMode = PlayerMode.Building
+            PlayerMode.Building -> keyboardControl.playerMode = PlayerMode.Control
+        }
     }
 
     override fun touchDown(screenX: Int, screenY: Int, pointer: Int, button: Int): Boolean {

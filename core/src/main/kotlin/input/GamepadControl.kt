@@ -3,6 +3,7 @@ package input
 import com.badlogic.ashley.core.Component
 import com.badlogic.gdx.controllers.Controller
 import com.badlogic.gdx.math.Vector2
+import ecs.components.player.PlayerMode
 import ktx.math.vec2
 import uk.co.electronstudio.sdl2gdx.SDL2Controller
 
@@ -23,6 +24,8 @@ class GamepadControl(val controller: Controller): ControlMapper, Component {
             else
                 controller.toString()
         }
+    override var playerMode: PlayerMode = PlayerMode.Control
+
 
     override fun setAimVector(screenX: Int, screenY: Int, position: Vector2) {
         //no-op because this is a gamepad, mate.
