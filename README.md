@@ -46,7 +46,7 @@ To make the graphics and environment easy I am currently working with the concep
 
 The most important thing in game development is to not do what you have decided to do, but something else entirely - in this case particle effects. Thing is, it's not on the docket. This is an MVP, this is a proof of concept of a playable game, so we should focus on just doing towers.
 
-## Doing now: Sprite Editor
+## Done: Sprite Editor
 I am not doing a sprite editor. Thing is, I use free resources for characters and animations and I just got a bit fed up with available anims and stuff, so I actually went out and bought some assets on itch.io - but then I have to set up the textures and stuff to actually use them.
 
 So, when you use textures and stuff and you have some kind of actual operation up and running, you can just decide that all spritesheets should be structured in a specific way, like just the way it is structured - so that you can structure your animations and stuff properly.
@@ -458,11 +458,11 @@ Det här gör vi på det gamla vanliga sättet. Vi bygger en box2d-värld, vi kl
 
 Oj oj oj,  vad roligt. Vi kan göra en box2d-kropp med leder, per tutorials etc. Superkul ju.
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbLTE2NDAxNDEwMDIsLTEwODgxODI5MzIsLT
-k1NjQwMjAwNSwzMTk2MjM0MDIsLTE0MTIyNTk4OTYsNDQ1Njkz
-ODIxLDU0MjcxNjg0NywtMTA5NzA0NzI3NywxMzg2NTQ3MTAsLT
-EyOTQxODA5MTAsLTgwNTkwNzExMCwxNTMxNzg4MTMxLDYwNTg4
-MDEzNCwyNDQ1NjU4MDQsMTc0NzAwMzU2NSwtOTk4NjY4MDY0LC
-05ODM2NzYxMTMsMTI2NDI0MzQyMSw3Mjg5Mjk3MDYsMTM1ODE4
-NzMxNF19
+eyJoaXN0b3J5IjpbMTE0NDExMTk0NSwtMTY0MDE0MTAwMiwtMT
+A4ODE4MjkzMiwtOTU2NDAyMDA1LDMxOTYyMzQwMiwtMTQxMjI1
+OTg5Niw0NDU2OTM4MjEsNTQyNzE2ODQ3LC0xMDk3MDQ3Mjc3LD
+EzODY1NDcxMCwtMTI5NDE4MDkxMCwtODA1OTA3MTEwLDE1MzE3
+ODgxMzEsNjA1ODgwMTM0LDI0NDU2NTgwNCwxNzQ3MDAzNTY1LC
+05OTg2NjgwNjQsLTk4MzY3NjExMywxMjY0MjQzNDIxLDcyODky
+OTcwNl19
 -->
