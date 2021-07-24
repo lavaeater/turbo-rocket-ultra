@@ -48,6 +48,7 @@ class RenderSystem(
 
     override fun update(deltaTime: Float) {
         animationStateTime += deltaTime
+        forceSort()
         batch.use {
             super.update(deltaTime)
         }
