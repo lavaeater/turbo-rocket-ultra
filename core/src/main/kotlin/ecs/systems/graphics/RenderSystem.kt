@@ -28,8 +28,8 @@ class RenderSystem(
             val layer0 = renderableMapper.get(p0).layer
             val layer1 = renderableMapper.get(p1).layer
              return if(layer0 == layer1) {
-                 val y0 = transformMapper.get(p0).position.y
-                 val y1 = transformMapper.get(p1).position.y
+                 val y0 = (transformMapper.get(p0).position.y)
+                 val y1 = (transformMapper.get(p1).position.y)
                  val compareVal = y0.compareTo(y1)
                  if(compareVal != 0)
                      return compareVal

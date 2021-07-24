@@ -16,7 +16,6 @@ class PlayerControlComponent : Component, Pool.Poolable {
     var shotDrawCoolDown = 0f
         private set
 
-
     var shotsFired = 0
         private set
 
@@ -35,11 +34,12 @@ class PlayerControlComponent : Component, Pool.Poolable {
     val aimVector get() = controlMapper.aimVector
     val mousePosition get() = controlMapper.mousePosition
     var latestHitPoint = vec2(0f,0f)
-    val walkVector: Vector2 get() = controlMapper.walkVector.nor()
-    val turning : Float get() { return if(stationary) 0f else controlMapper.turning }
-    val walking : Float get()  { return if(stationary) 0f else controlMapper.thrust }
+    val walkVector: Vector2 = vec2(turning, thrust)
+        get() = field.set(turning, -thrust).nor()
+    val turning : Float get() { return if(playerMode != PlayerMode.Control) 0f else controlMapper.turning }
+    val thrust : Float get()  { return if(playerMode != PlayerMode.Control) 0f else controlMapper.thrust }
     val moving get() = walkVector.len2() != 0f
-    var stationary = false
+    var playerMode = PlayerMode.Control
 
     fun coolDown(deltaTime: Float) {
         cooldownRemaining-=deltaTime
@@ -56,4 +56,9 @@ class PlayerControlComponent : Component, Pool.Poolable {
 
     override fun reset() {
     }
+}
+
+sealed class PlayerMode {
+    object Control: PlayerMode()
+    object Building: PlayerMode()
 }

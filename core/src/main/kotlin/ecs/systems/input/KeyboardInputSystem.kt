@@ -40,9 +40,14 @@ class KeyboardInputSystem:
             Input.Keys.A -> keyboardControl.turning = 0f
             Input.Keys.D -> keyboardControl.turning = 0f
             Input.Keys.SPACE -> keyboardControl.firing = false
+            Input.Keys.B -> toggleBuildMode()
             else -> return false
         }
         return true
+    }
+
+    private fun toggleBuildMode() {
+        TODO("Not yet implemented")
     }
 
     override fun touchDown(screenX: Int, screenY: Int, pointer: Int, button: Int): Boolean {
