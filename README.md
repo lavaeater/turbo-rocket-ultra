@@ -19,6 +19,7 @@ To make the graphics and environment easy I am currently working with the concep
 
 ### MVP
 
+* Build Towers <- Doing
 * Basic Sprite Editor <- done, kinda?
 * IsoMetric Projection <- done!
 * Towers <- Done
@@ -459,11 +460,11 @@ Det här gör vi på det gamla vanliga sättet. Vi bygger en box2d-värld, vi kl
 
 Oj oj oj,  vad roligt. Vi kan göra en box2d-kropp med leder, per tutorials etc. Superkul ju.
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbMTQ0ODU3OTQyOSwtMTY0MDE0MTAwMiwtMT
-A4ODE4MjkzMiwtOTU2NDAyMDA1LDMxOTYyMzQwMiwtMTQxMjI1
-OTg5Niw0NDU2OTM4MjEsNTQyNzE2ODQ3LC0xMDk3MDQ3Mjc3LD
-EzODY1NDcxMCwtMTI5NDE4MDkxMCwtODA1OTA3MTEwLDE1MzE3
-ODgxMzEsNjA1ODgwMTM0LDI0NDU2NTgwNCwxNzQ3MDAzNTY1LC
-05OTg2NjgwNjQsLTk4MzY3NjExMywxMjY0MjQzNDIxLDcyODky
-OTcwNl19
+eyJoaXN0b3J5IjpbLTE2Nzg4Nzk2MDUsLTE2NDAxNDEwMDIsLT
+EwODgxODI5MzIsLTk1NjQwMjAwNSwzMTk2MjM0MDIsLTE0MTIy
+NTk4OTYsNDQ1NjkzODIxLDU0MjcxNjg0NywtMTA5NzA0NzI3Ny
+wxMzg2NTQ3MTAsLTEyOTQxODA5MTAsLTgwNTkwNzExMCwxNTMx
+Nzg4MTMxLDYwNTg4MDEzNCwyNDQ1NjU4MDQsMTc0NzAwMzU2NS
+wtOTk4NjY4MDY0LC05ODM2NzYxMTMsMTI2NDI0MzQyMSw3Mjg5
+Mjk3MDZdfQ==
 -->
