@@ -53,7 +53,10 @@ Towers is a rather large feature, I've come to realize. Break it down! So, in th
 
 How are towers supposed to work, really? Well, I propose that a player at any time can press a "build" button, which brings up a small interface to build a tower. The interface could be overlayed over that players HUD-spot, to not interfere with the gameplay, perhaps. We need a nice mechanism for that. There might be some limitation on how many, how fast and what type of towers a player can build.
 
+* Bring up Small interface to build towers
+That shit will take all day, ALL DAY!
 
+I've been fiddling with "simple" UI components and stuff
 
 ## Done: Sprite Editor
 I am not doing a sprite editor. Thing is, I use free resources for characters and animations and I just got a bit fed up with available anims and stuff, so I actually went out and bought some assets on itch.io - but then I have to set up the textures and stuff to actually use them.
@@ -464,11 +467,11 @@ Det här gör vi på det gamla vanliga sättet. Vi bygger en box2d-värld, vi kl
 
 Oj oj oj,  vad roligt. Vi kan göra en box2d-kropp med leder, per tutorials etc. Superkul ju.
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbLTE1MzM0NjgzOTEsLTE2NDAxNDEwMDIsLT
-EwODgxODI5MzIsLTk1NjQwMjAwNSwzMTk2MjM0MDIsLTE0MTIy
-NTk4OTYsNDQ1NjkzODIxLDU0MjcxNjg0NywtMTA5NzA0NzI3Ny
-wxMzg2NTQ3MTAsLTEyOTQxODA5MTAsLTgwNTkwNzExMCwxNTMx
-Nzg4MTMxLDYwNTg4MDEzNCwyNDQ1NjU4MDQsMTc0NzAwMzU2NS
-wtOTk4NjY4MDY0LC05ODM2NzYxMTMsMTI2NDI0MzQyMSw3Mjg5
-Mjk3MDZdfQ==
+eyJoaXN0b3J5IjpbMjcxNTgyNzQ5LC0xNjQwMTQxMDAyLC0xMD
+g4MTgyOTMyLC05NTY0MDIwMDUsMzE5NjIzNDAyLC0xNDEyMjU5
+ODk2LDQ0NTY5MzgyMSw1NDI3MTY4NDcsLTEwOTcwNDcyNzcsMT
+M4NjU0NzEwLC0xMjk0MTgwOTEwLC04MDU5MDcxMTAsMTUzMTc4
+ODEzMSw2MDU4ODAxMzQsMjQ0NTY1ODA0LDE3NDcwMDM1NjUsLT
+k5ODY2ODA2NCwtOTgzNjc2MTEzLDEyNjQyNDM0MjEsNzI4OTI5
+NzA2XX0=
 -->
