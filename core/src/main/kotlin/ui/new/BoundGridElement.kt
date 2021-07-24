@@ -1,4 +1,4 @@
-package ui
+package ui.new
 
 import com.badlogic.gdx.graphics.Color
 import com.badlogic.gdx.graphics.g2d.Batch
@@ -55,8 +55,8 @@ class BoundGridElement(
         gridUpdated(gridWidth.roundToInt(), gridHeight.toInt())
     }
 
-    override fun render(batch: Batch, delta: Float, debug: Boolean) {
-        super.render(batch, delta, debug)
+    override fun render(batch: Batch, delta: Float, scale: Float, debug: Boolean) {
+        super.render(batch, delta, scale, debug)
 
         val columns = (width / gridWidth).roundToInt()
         val rows = (height / gridHeight).roundToInt()

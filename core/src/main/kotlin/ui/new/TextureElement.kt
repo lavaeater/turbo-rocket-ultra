@@ -1,4 +1,4 @@
-package ui
+package ui.new
 
 import com.badlogic.gdx.graphics.g2d.Animation
 import com.badlogic.gdx.graphics.g2d.Batch
@@ -45,8 +45,8 @@ open class TextureElement(
 
     var stateTime = 0f
 
-    override fun render(batch: Batch, delta: Float, debug: Boolean) {
-        super.render(batch, delta, debug)
+    override fun render(batch: Batch, delta: Float, scale: Float, debug: Boolean) {
+        super.render(batch, delta, scale, debug)
         stateTime += delta
         batch.drawScaled(
             texture,

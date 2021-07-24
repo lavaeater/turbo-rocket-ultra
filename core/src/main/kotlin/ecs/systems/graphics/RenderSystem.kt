@@ -12,7 +12,6 @@ import ktx.ashley.get
 import ktx.ashley.mapperFor
 import ktx.graphics.use
 import tru.Assets
-import java.util.*
 
 class RenderSystem(
     private val batch: Batch
