@@ -60,7 +60,7 @@ I've been fiddling with "simple" UI components and stuff, it would be really coo
 
 How to handle the "build mode" - well, the player could very well have a state machine or a state stack (as in game programming patterns), but do we *really* need to refactor "everything" for that purpose right now? Maybe - we'll see. For now, we will have a method somewhere that says if we are in "control mode" or "build mode".
 
-Looking through the code, I find a remnant of the old vehicle code (removed since) that 
+Looking through the code, I find a remnant of the old vehicle code (removed since) that allows me to set a stationary flag. Fantastic. That will do for now, perhaps. But also perhaps, we need some kind of nifty mode.
 
 ## Done: Sprite Editor
 I am not doing a sprite editor. Thing is, I use free resources for characters and animations and I just got a bit fed up with available anims and stuff, so I actually went out and bought some assets on itch.io - but then I have to set up the textures and stuff to actually use them.
@@ -471,7 +471,7 @@ Det här gör vi på det gamla vanliga sättet. Vi bygger en box2d-värld, vi kl
 
 Oj oj oj,  vad roligt. Vi kan göra en box2d-kropp med leder, per tutorials etc. Superkul ju.
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbLTE2Mzc2OTU1MzEsMjkyNTUxMjYsLTE2ND
+eyJoaXN0b3J5IjpbLTEyODc3MTU2ODksMjkyNTUxMjYsLTE2ND
 AxNDEwMDIsLTEwODgxODI5MzIsLTk1NjQwMjAwNSwzMTk2MjM0
 MDIsLTE0MTIyNTk4OTYsNDQ1NjkzODIxLDU0MjcxNjg0NywtMT
 A5NzA0NzI3NywxMzg2NTQ3MTAsLTEyOTQxODA5MTAsLTgwNTkw
