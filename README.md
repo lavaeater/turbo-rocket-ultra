@@ -48,6 +48,9 @@ To make the graphics and environment easy I am currently working with the concep
 
 The most important thing in game development is to not do what you have decided to do, but something else entirely - in this case particle effects. Thing is, it's not on the docket. This is an MVP, this is a proof of concept of a playable game, so we should focus on just doing towers.
 
+## Building Towers
+How are towers supposed to work, really? Well, I propose that a player at any time can press a "build" button, which brings up a small interface to build a tower. The interface could be overlayed over that players HUD-spot, to not interfere with the gameplay, perhaps. We need a nice mechanism for that. There might be some limitation on how many, how fast and what type of towers a player can build.
+
 ## Done: Sprite Editor
 I am not doing a sprite editor. Thing is, I use free resources for characters and animations and I just got a bit fed up with available anims and stuff, so I actually went out and bought some assets on itch.io - but then I have to set up the textures and stuff to actually use them.
 
@@ -93,9 +96,6 @@ Todo:
 * Tower Types and Variants
 * Tower entities <- done
 * Tower AI <- done
-
-#### Building Towers
-How are towers supposed to work, really? Well, I propose that a player at any time can press a "build" button, which brings up a small interface to build a tower. The interface could be overlayed over that players HUD-spot, to not interfere with the gameplay, perhaps. We need a nice mechanism for that. There might be some limitation on how many, how fast and what type of towers a player can build.
 
 #### Towers
 
@@ -460,11 +460,11 @@ Det här gör vi på det gamla vanliga sättet. Vi bygger en box2d-värld, vi kl
 
 Oj oj oj,  vad roligt. Vi kan göra en box2d-kropp med leder, per tutorials etc. Superkul ju.
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbLTE2Nzg4Nzk2MDUsLTE2NDAxNDEwMDIsLT
-EwODgxODI5MzIsLTk1NjQwMjAwNSwzMTk2MjM0MDIsLTE0MTIy
-NTk4OTYsNDQ1NjkzODIxLDU0MjcxNjg0NywtMTA5NzA0NzI3Ny
-wxMzg2NTQ3MTAsLTEyOTQxODA5MTAsLTgwNTkwNzExMCwxNTMx
-Nzg4MTMxLDYwNTg4MDEzNCwyNDQ1NjU4MDQsMTc0NzAwMzU2NS
-wtOTk4NjY4MDY0LC05ODM2NzYxMTMsMTI2NDI0MzQyMSw3Mjg5
-Mjk3MDZdfQ==
+eyJoaXN0b3J5IjpbMTQwNzg0NTI5MSwtMTY0MDE0MTAwMiwtMT
+A4ODE4MjkzMiwtOTU2NDAyMDA1LDMxOTYyMzQwMiwtMTQxMjI1
+OTg5Niw0NDU2OTM4MjEsNTQyNzE2ODQ3LC0xMDk3MDQ3Mjc3LD
+EzODY1NDcxMCwtMTI5NDE4MDkxMCwtODA1OTA3MTEwLDE1MzE3
+ODgxMzEsNjA1ODgwMTM0LDI0NDU2NTgwNCwxNzQ3MDAzNTY1LC
+05OTg2NjgwNjQsLTk4MzY3NjExMywxMjY0MjQzNDIxLDcyODky
+OTcwNl19
 -->
