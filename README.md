@@ -58,6 +58,8 @@ That shit will take all day, ALL DAY!
 
 I've been fiddling with "simple" UI components and stuff, it would be really cool to be able to use something *very simple* to display a UI element. We'll see if it is actually possible. Scene2D isn't "bad" - but it's way too complicated and "complete" for what I need. So, game should still play, but the player should be immobilized when entering "build mode". Oh, and we need two types of towers so we can select what to build.
 
+How to handle the "build mode" - well, the player could very well have a state machine or a state stack (as in game programming patterns), but do we *really* need to refactor "everything" for that purpose right now? Maybe - we'll see. For now, we will have a method somewhere that says if we are in "control mode" or "build mode".
+
 ## Done: Sprite Editor
 I am not doing a sprite editor. Thing is, I use free resources for characters and animations and I just got a bit fed up with available anims and stuff, so I actually went out and bought some assets on itch.io - but then I have to set up the textures and stuff to actually use them.
 
@@ -467,11 +469,11 @@ Det här gör vi på det gamla vanliga sättet. Vi bygger en box2d-värld, vi kl
 
 Oj oj oj,  vad roligt. Vi kan göra en box2d-kropp med leder, per tutorials etc. Superkul ju.
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbMjkyNTUxMjYsLTE2NDAxNDEwMDIsLTEwOD
-gxODI5MzIsLTk1NjQwMjAwNSwzMTk2MjM0MDIsLTE0MTIyNTk4
-OTYsNDQ1NjkzODIxLDU0MjcxNjg0NywtMTA5NzA0NzI3NywxMz
-g2NTQ3MTAsLTEyOTQxODA5MTAsLTgwNTkwNzExMCwxNTMxNzg4
-MTMxLDYwNTg4MDEzNCwyNDQ1NjU4MDQsMTc0NzAwMzU2NSwtOT
-k4NjY4MDY0LC05ODM2NzYxMTMsMTI2NDI0MzQyMSw3Mjg5Mjk3
-MDZdfQ==
+eyJoaXN0b3J5IjpbLTE1NTcxMzgxNDEsMjkyNTUxMjYsLTE2ND
+AxNDEwMDIsLTEwODgxODI5MzIsLTk1NjQwMjAwNSwzMTk2MjM0
+MDIsLTE0MTIyNTk4OTYsNDQ1NjkzODIxLDU0MjcxNjg0NywtMT
+A5NzA0NzI3NywxMzg2NTQ3MTAsLTEyOTQxODA5MTAsLTgwNTkw
+NzExMCwxNTMxNzg4MTMxLDYwNTg4MDEzNCwyNDQ1NjU4MDQsMT
+c0NzAwMzU2NSwtOTk4NjY4MDY0LC05ODM2NzYxMTMsMTI2NDI0
+MzQyMV19
 -->
