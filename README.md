@@ -56,7 +56,7 @@ How are towers supposed to work, really? Well, I propose that a player at any ti
 * Bring up Small interface to build towers
 That shit will take all day, ALL DAY!
 
-I've been fiddling with "simple" UI components and stuff
+I've been fiddling with "simple" UI components and stuff, it would be really cool to be able to use something *very simple* to display a UI element. We'll see if it is actually possible. Scene2D isn't "bad" - but it's way too complicated and "complete" for what I need.
 
 ## Done: Sprite Editor
 I am not doing a sprite editor. Thing is, I use free resources for characters and animations and I just got a bit fed up with available anims and stuff, so I actually went out and bought some assets on itch.io - but then I have to set up the textures and stuff to actually use them.
@@ -467,7 +467,7 @@ Det här gör vi på det gamla vanliga sättet. Vi bygger en box2d-värld, vi kl
 
 Oj oj oj,  vad roligt. Vi kan göra en box2d-kropp med leder, per tutorials etc. Superkul ju.
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbMjcxNTgyNzQ5LC0xNjQwMTQxMDAyLC0xMD
+eyJoaXN0b3J5IjpbNzYyNDM3NTk5LC0xNjQwMTQxMDAyLC0xMD
 g4MTgyOTMyLC05NTY0MDIwMDUsMzE5NjIzNDAyLC0xNDEyMjU5
 ODk2LDQ0NTY5MzgyMSw1NDI3MTY4NDcsLTEwOTcwNDcyNzcsMT
 M4NjU0NzEwLC0xMjk0MTgwOTEwLC04MDU5MDcxMTAsMTUzMTc4
