@@ -139,7 +139,7 @@ fun tower(at: Vector2 = vec2()) {
             body = towerBody
         }
         with<TransformComponent>()
-        with<RenderableComponent>() { renderable = RenderableTextureRegion(Assets.tower) }
+        with<RenderableComponent> { renderable = RenderableTextureRegion(Assets.towers["machinegun"]!!) }
         with<RenderLayerComponent>()
         with<TowerComponent>()
     }
@@ -288,7 +288,7 @@ fun obstacle(
         addComponent<BodyComponent> { body = box2dBody }
         addComponent<TransformComponent> { position.set(box2dBody.position) }
         addComponent<ObstacleComponent>()
-        addComponent<RenderableComponent> { renderable = RenderableTextureRegion(Assets.tower) }
+        addComponent<RenderableComponent> { renderable = RenderableTextureRegion(Assets.towers["obstacle"]!!) }
         addComponent<RenderLayerComponent>()
     }
     box2dBody.userData = entity
@@ -316,7 +316,7 @@ fun objective(
     val entity = engine().createEntity().apply {
         addComponent<BodyComponent> { body = box2dBody }
         addComponent<TransformComponent> { position.set(box2dBody.position) }
-        addComponent<RenderableComponent> { renderable = RenderableTextureRegion(Assets.tower) }
+        addComponent<RenderableComponent> { renderable = RenderableTextureRegion(Assets.towers["objective"]!!) }
         addComponent<ObjectiveComponent>()
         addComponent<RenderLayerComponent>()
     }

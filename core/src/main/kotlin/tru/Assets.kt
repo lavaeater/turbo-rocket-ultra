@@ -20,11 +20,6 @@ import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator.FreeTypeFont
 import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator
 
 
-
-
-
-
-
 /**
  * Actually load assets using the asset manager, maan
  */
@@ -32,11 +27,19 @@ object Assets : Disposable {
 
     lateinit var am: AssetManager
 
-    val characters :  Map<String, Map<AnimState, LpcCharacterAnim>> by lazy {
+    val characters: Map<String, Map<AnimState, LpcCharacterAnim>> by lazy {
         SpriteLoader.initCharachterAnims()
     }
 
-    val tower by lazy { TextureRegion(Texture(Gdx.files.internal("sprites/towers/tower.png"))) }
+    val towers by lazy {
+        mapOf(
+            "machinegun" to TextureRegion(Texture(Gdx.files.internal("sprites/towers/mg-tower.png"))),
+            "flamethrower" to TextureRegion(Texture(Gdx.files.internal("sprites/towers/ft-tower.png"))),
+            "obstacle" to TextureRegion(Texture(Gdx.files.internal("sprites/towers/tower.png"))),
+            "objective" to TextureRegion(Texture(Gdx.files.internal("sprites/towers/objective-tower.png"))),
+            "noise" to TextureRegion(Texture(Gdx.files.internal("sprites/towers/ls-tower.png")))
+        )
+    }
 
     val playerCharacters by lazy { characters.filterNot { it.key == "enemy" } }
 
@@ -59,7 +62,7 @@ object Assets : Disposable {
 
     val objectSprites by lazy { SpriteLoader.initObjectSprites() }
 
-    val soundEffects : Map<String, Sound> by lazy {
+    val soundEffects: Map<String, Sound> by lazy {
         mapOf(
             "gunshot" to Gdx.audio.newSound(Gdx.files.internal("audio/gunshot.wav")),
             "shellcasing" to Gdx.audio.newSound(Gdx.files.internal("audio/shellcasing.wav"))
