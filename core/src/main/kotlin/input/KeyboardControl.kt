@@ -32,4 +32,6 @@ class KeyboardControl: ControlMapper, Component {
         mousePosition.set(mousePosition3D.x, mousePosition3D.y)
         aimVector.set(mousePosition).sub(position.toIsometric()).nor().toIsometric()
     }
+
+    override var uiControl: UserInterfaceControl = NoOpUserInterfaceControl.control
 }

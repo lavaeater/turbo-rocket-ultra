@@ -28,13 +28,13 @@ open class Carousel<T:Any>(items: List<T>,
         }
     }
 
-    private fun nextItem() {
+    fun nextItem() {
         selectedIndex++
         fixSelectedIndex()
         orderItems()
     }
 
-    private fun previousItem() {
+    fun previousItem() {
         selectedIndex--
         fixSelectedIndex()
         orderItems()
@@ -48,7 +48,6 @@ open class Carousel<T:Any>(items: List<T>,
             selectedIndex = 0
     }
 
-
     private fun calculateActualIndex(index: Int): Int {
         var newIndex = selectedIndex + index
         if(newIndex > items.lastIndex) {
@@ -56,7 +55,6 @@ open class Carousel<T:Any>(items: List<T>,
         }
         return newIndex
     }
-
 
     override fun render(batch: Batch, delta: Float, scale: Float, debug: Boolean) {
         if (debug)
@@ -70,9 +68,6 @@ open class Carousel<T:Any>(items: List<T>,
         for ((xIndex, item) in itemsToDisplay.withIndex()) {
             for((yIndex, element) in elements.withIndex()) {
                 var actualScale = 0.5f
-
-                val farLeft = vec2(visibleItemCount / 2 * -offset.x) //far left is number of items / 2 times offset
-                val farRight = vec2(visibleItemCount / 2 * offset.x)
                 var rightCount = 0
                 var leftCount = 0
                 if(xIndex == itemsToDisplay.lastIndex) {

@@ -19,8 +19,35 @@ interface ControlMapper: Component {
     var playerMode: PlayerMode
 
     fun setAimVector(screenX: Int, screenY: Int, position: Vector2)
+    var uiControl: UserInterfaceControl
+}
 
+interface UserInterfaceControl {
+    fun left()
+    fun right()
+    fun cancel()
+    fun select()
+}
 
+open class NoOpUserInterfaceControl : UserInterfaceControl {
 
+    companion object {
+        val control = NoOpUserInterfaceControl()
+    }
+
+    override fun left() {
+
+    }
+
+    override fun right() {
+
+    }
+
+    override fun cancel() {
+
+    }
+
+    override fun select() {
+    }
 }
 

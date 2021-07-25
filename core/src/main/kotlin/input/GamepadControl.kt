@@ -26,9 +26,9 @@ class GamepadControl(val controller: Controller): ControlMapper, Component {
         }
     override var playerMode: PlayerMode = PlayerMode.Control
 
-
     override fun setAimVector(screenX: Int, screenY: Int, position: Vector2) {
         //no-op because this is a gamepad, mate.
     }
 
+    override var uiControl: UserInterfaceControl = NoOpUserInterfaceControl.control
 }

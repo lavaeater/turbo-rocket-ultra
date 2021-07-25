@@ -5,6 +5,8 @@ import com.badlogic.ashley.systems.IteratingSystem
 import ecs.components.UiComponent
 import ecs.components.player.PlayerControlComponent
 import ecs.components.player.PlayerMode
+import input.ControlMapper
+import input.NoOpUserInterfaceControl
 import ktx.ashley.allOf
 import ktx.ashley.remove
 import physics.addComponent
@@ -17,10 +19,12 @@ class PlayerBuildModeSystem(): IteratingSystem(
     override fun processEntity(entity: Entity, deltaTime: Float) {
         val playerControlComponent = entity.getComponent<PlayerControlComponent>()
         if(playerControlComponent.playerMode == PlayerMode.Building && !entity.hasComponent<UiComponent>()) {
-            entity.addComponent<UiComponent> {  }
+            entity.getComponent<ControlMapper>().uiControl = entity.addComponent<UiComponent> {  }
+
         }
         if(playerControlComponent.playerMode == PlayerMode.Control && entity.hasComponent<UiComponent>()) {
             entity.remove<UiComponent>()
+            entity.getComponent<ControlMapper>().uiControl = NoOpUserInterfaceControl.control
         }
     }
 }
