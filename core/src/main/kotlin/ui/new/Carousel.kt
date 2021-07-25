@@ -61,12 +61,38 @@ open class Carousel<T:Any>(items: List<T>,
     override fun render(batch: Batch, delta: Float, scale: Float, debug: Boolean) {
         if (debug)
             renderBounds()
-        for ((xIndex, item) in orderedItems.withIndex()) {
+
+        val itemsToDisplay = orderedItems.takeLast(visibleItemCount)
+
+        val farLeft = vec2(visibleItemCount / 2 * -offset.x) //far left is number of items / 2 times offset
+        val farRight = vec2(visibleItemCount / 2 * offset.x)
+
+        for ((xIndex, item) in itemsToDisplay.withIndex()) {
             for((yIndex, element) in elements.withIndex()) {
-                element.position.set(offset.x * xIndex, offset.y * yIndex)
+                var actualScale = 0.5f
+
+                val farLeft = vec2(visibleItemCount / 2 * -offset.x) //far left is number of items / 2 times offset
+                val farRight = vec2(visibleItemCount / 2 * offset.x)
+                var rightCount = 0
+                var leftCount = 0
+                if(xIndex == itemsToDisplay.lastIndex) {
+                    element.position.set(0f, 0f)
+                    actualScale = 1f
+                } else {
+                    if(xIndex % 2 == 0) {
+                        farLeft.set(farLeft.x + offset.x * leftCount, farLeft.y)
+                        element.position.set(farLeft.x, offset.y * yIndex)
+                        leftCount++
+                    } else {
+                        farRight.set(farRight.x - offset.x * rightCount, farRight.y)
+                        element.position.set(farRight.x, offset.y * yIndex)
+                        rightCount++
+                    }
+                    actualScale = 0.5f
+                }
+
                 element.parent = this
                 element.currentItem = item
-                val actualScale = if(item == orderedItems.last()) 1f else 0.5f
                 element.render(batch, delta, actualScale * scale, debug)
             }
         }

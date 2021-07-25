@@ -76,7 +76,13 @@ object Assets : Disposable {
     fun load(): AssetManager {
         am = AssetManager()
         fixScene2dSkin()
+        fixFlip()
         return am
+    }
+
+    private fun fixFlip() {
+        for(t in towers.values)
+            t.flip(true, false)
     }
 
 
