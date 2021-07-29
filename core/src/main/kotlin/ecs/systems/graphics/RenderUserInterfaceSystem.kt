@@ -29,9 +29,10 @@ class RenderUserInterfaceSystem(private val batch: Batch) :
             towerBuildingUiComponent.ui.render(batch, deltaTime, .1f)
         }
         if(towerBuildingUiComponent.select) {
+            towerBuildingUiComponent.select = false
             val at = vec2(transform.position.x, transform.position.y) + entity.getComponent<PlayerControlComponent>().aimVector
-            //tower(at, towerBuildingUiComponent.ui.selectedItem)
-            entity.remove<TowerBuildingUiComponent>()
+            tower(at, towerBuildingUiComponent.ui.selectedItem)
+            towerBuildingUiComponent.cancel = true
         }
     }
 
