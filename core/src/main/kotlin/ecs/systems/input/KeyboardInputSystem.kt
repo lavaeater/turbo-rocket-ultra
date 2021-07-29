@@ -42,6 +42,9 @@ class KeyboardInputSystem:
             Input.Keys.D -> keyboardControl.turning = 0f
             Input.Keys.SPACE -> keyboardControl.firing = false
             Input.Keys.B -> toggleBuildMode()
+            Input.Keys.LEFT -> keyboardControl.uiControl.left()
+            Input.Keys.RIGHT -> keyboardControl.uiControl.right()
+            Input.Keys.ENTER -> keyboardControl.uiControl.select()
             else -> return false
         }
         return true
@@ -50,7 +53,10 @@ class KeyboardInputSystem:
     private fun toggleBuildMode() {
         when(keyboardControl.playerMode) {
             PlayerMode.Control -> keyboardControl.playerMode = PlayerMode.Building
-            PlayerMode.Building -> keyboardControl.playerMode = PlayerMode.Control
+            PlayerMode.Building -> {
+                keyboardControl.uiControl.cancel()
+                keyboardControl.playerMode = PlayerMode.Control
+            }
         }
     }
 

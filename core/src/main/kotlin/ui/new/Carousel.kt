@@ -15,6 +15,7 @@ open class Carousel<T:Any>(items: List<T>,
     var selectedIndex = items.size / 2
     private val workList = mutableListOf<T>()
     private val orderedItems get() = workList.reversed()
+    //val selectedItem: T by lazy { orderedItems[selectedIndex] }
 
     init {
         orderItems()

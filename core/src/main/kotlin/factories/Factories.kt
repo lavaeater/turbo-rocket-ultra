@@ -127,7 +127,7 @@ fun splatterParticles(
     }
 }
 
-fun tower(at: Vector2 = vec2()) {
+fun tower(at: Vector2 = vec2(), towerType: String = "machinegun") {
     val towerBody = world().body {
         type = BodyDef.BodyType.StaticBody
         position.set(at)
@@ -139,7 +139,7 @@ fun tower(at: Vector2 = vec2()) {
             body = towerBody
         }
         with<TransformComponent>()
-        with<RenderableComponent> { renderable = RenderableTextureRegion(Assets.towers["machinegun"]!!) }
+        with<RenderableComponent> { renderable = RenderableTextureRegion(Assets.towers[towerType]!!) }
         with<RenderLayerComponent>()
         with<TowerComponent>()
     }

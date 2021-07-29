@@ -3,29 +3,35 @@ package ecs.systems.graphics
 import com.badlogic.ashley.core.Entity
 import com.badlogic.ashley.systems.IteratingSystem
 import com.badlogic.gdx.graphics.g2d.Batch
-import ecs.components.UiComponent
+import ecs.components.TowerBuildingUiComponent
 import ecs.components.gameplay.TransformComponent
-import isometric.toIsometric
+import ecs.components.player.PlayerControlComponent
+import factories.tower
 import ktx.ashley.allOf
+import ktx.ashley.remove
 import ktx.graphics.use
+import ktx.math.plus
 import ktx.math.vec2
 import physics.getComponent
-import ui.new.BoundTextElement
-import ui.new.Carousel
 
 class RenderUserInterfaceSystem(private val batch: Batch) :
     IteratingSystem(
         allOf(
-            UiComponent::class
+            TowerBuildingUiComponent::class
         ).get()) {
 
     @OptIn(ExperimentalStdlibApi::class)
     override fun processEntity(entity: Entity, deltaTime: Float) {
         val transform = entity.getComponent<TransformComponent>()
-        val userinterface = entity.getComponent<UiComponent>()
-        userinterface.ui.position.set(transform.position)
+        val towerBuildingUiComponent = entity.getComponent<TowerBuildingUiComponent>()
+        towerBuildingUiComponent.ui.position.set(transform.position)
         batch.use {
-            userinterface.ui.render(batch, deltaTime, .1f)
+            towerBuildingUiComponent.ui.render(batch, deltaTime, .1f)
+        }
+        if(towerBuildingUiComponent.select) {
+            val at = vec2(transform.position.x, transform.position.y) + entity.getComponent<PlayerControlComponent>().aimVector
+            //tower(at, towerBuildingUiComponent.ui.selectedItem)
+            entity.remove<TowerBuildingUiComponent>()
         }
     }
 
