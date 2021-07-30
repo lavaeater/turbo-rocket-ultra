@@ -58,7 +58,7 @@ How are towers supposed to work, really? Well, I propose that a player at any ti
 * Build actions <- done, kinda
 
 ### How 'bout some polish, eh?
-I am against polish. Not *the* polish, they are some fine folks (having worked with a few), but the kind of polish that makes things shiny and new. Or rather, I know that polish takes a **ton** of time, the kind of time I don't have. But for this feature to *work*, it could use some pol
+I am against polish. Not *the* polish, they are some fine folks (having worked with a few), but the kind of polish that makes things shiny and new. Or rather, I know that polish takes a **ton** of time, the kind of time I don't have. But for this feature to *work*, it could use some polish.
 
 ### Different types of towers, eh?
 
@@ -482,7 +482,7 @@ Det här gör vi på det gamla vanliga sättet. Vi bygger en box2d-värld, vi kl
 
 Oj oj oj,  vad roligt. Vi kan göra en box2d-kropp med leder, per tutorials etc. Superkul ju.
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbLTQ5ODE2MTkxNiwzNjIwNjAxNzgsNTE0Mj
+eyJoaXN0b3J5IjpbLTkxMzUyMjk1NiwzNjIwNjAxNzgsNTE0Mj
 c0MjY5LC0xMjg3NzE1Njg5LDI5MjU1MTI2LC0xNjQwMTQxMDAy
 LC0xMDg4MTgyOTMyLC05NTY0MDIwMDUsMzE5NjIzNDAyLC0xND
 EyMjU5ODk2LDQ0NTY5MzgyMSw1NDI3MTY4NDcsLTEwOTcwNDcy
