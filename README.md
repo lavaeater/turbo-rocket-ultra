@@ -55,7 +55,11 @@ How are towers supposed to work, really? Well, I propose that a player at any ti
 
 * Build interface <- doing
 * Tower sprites <- done
-* Build actions
+* Build actions <- done, kinda
+
+### Different types of towers, eh?
+
+So, to build towers, it would be cool to actually have different types of towers. I have made a very poor graphic of 
 
 ### Bring up Small interface to build towers
 That shit will take all day, ALL DAY!
@@ -475,11 +479,11 @@ Det här gör vi på det gamla vanliga sättet. Vi bygger en box2d-värld, vi kl
 
 Oj oj oj,  vad roligt. Vi kan göra en box2d-kropp med leder, per tutorials etc. Superkul ju.
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbMzYyMDYwMTc4LDUxNDI3NDI2OSwtMTI4Nz
-cxNTY4OSwyOTI1NTEyNiwtMTY0MDE0MTAwMiwtMTA4ODE4Mjkz
-MiwtOTU2NDAyMDA1LDMxOTYyMzQwMiwtMTQxMjI1OTg5Niw0ND
-U2OTM4MjEsNTQyNzE2ODQ3LC0xMDk3MDQ3Mjc3LDEzODY1NDcx
-MCwtMTI5NDE4MDkxMCwtODA1OTA3MTEwLDE1MzE3ODgxMzEsNj
-A1ODgwMTM0LDI0NDU2NTgwNCwxNzQ3MDAzNTY1LC05OTg2Njgw
-NjRdfQ==
+eyJoaXN0b3J5IjpbNDEwMDU4NTk0LDM2MjA2MDE3OCw1MTQyNz
+QyNjksLTEyODc3MTU2ODksMjkyNTUxMjYsLTE2NDAxNDEwMDIs
+LTEwODgxODI5MzIsLTk1NjQwMjAwNSwzMTk2MjM0MDIsLTE0MT
+IyNTk4OTYsNDQ1NjkzODIxLDU0MjcxNjg0NywtMTA5NzA0NzI3
+NywxMzg2NTQ3MTAsLTEyOTQxODA5MTAsLTgwNTkwNzExMCwxNT
+MxNzg4MTMxLDYwNTg4MDEzNCwyNDQ1NjU4MDQsMTc0NzAwMzU2
+NV19
 -->
