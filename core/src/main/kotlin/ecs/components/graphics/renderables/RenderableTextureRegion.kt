@@ -4,8 +4,6 @@ import com.badlogic.gdx.graphics.Color
 import com.badlogic.gdx.graphics.g2d.Batch
 import com.badlogic.gdx.graphics.g2d.TextureRegion
 import com.badlogic.gdx.math.Vector2
-import isometric.polygonFromPos
-import isometric.toIsometric
 import ktx.math.vec2
 import physics.drawScaled
 import space.earlygrey.shapedrawer.ShapeDrawer
@@ -22,13 +20,12 @@ class RenderableTextureRegion(val textureRegion: TextureRegion) : Renderable {
         batch: Batch,
         shapeDrawer: ShapeDrawer
     ) {
-        position.toIsometric(isoPos)
         val width = 2f
         val height = 2f
         val color = Color.GREEN
 
         shapeDrawer.setColor(color)
-        shapeDrawer.filledPolygon(position.polygonFromPos(width, height))
+        shapeDrawer.filledRectangle(position.x, position.y, width, height)
 
         batch.drawScaled(
             this.textureRegion,

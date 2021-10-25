@@ -1,11 +1,9 @@
 package ecs.components.graphics.renderables
 
-import com.badlogic.gdx.graphics.Color
 import com.badlogic.gdx.graphics.g2d.Animation
 import com.badlogic.gdx.graphics.g2d.Batch
 import com.badlogic.gdx.graphics.g2d.TextureRegion
 import com.badlogic.gdx.math.Vector2
-import isometric.toIsometric
 import ktx.math.vec2
 import physics.drawScaled
 import space.earlygrey.shapedrawer.ShapeDrawer
@@ -26,8 +24,6 @@ class AnimatedCharacterSprite(private val anims: Map<AnimState, LpcCharacterAnim
     override val renderableType: RenderableType
         get() = RenderableType.AnimatedCharacterSprite
 
-    val isoPos = vec2()
-
     override fun render(
         position: Vector2,
         rotation:Float,
@@ -36,14 +32,12 @@ class AnimatedCharacterSprite(private val anims: Map<AnimState, LpcCharacterAnim
         batch: Batch,
         shapeDrawer: ShapeDrawer) {
 
-        position.toIsometric(isoPos)
-
         val currentTextureRegion = currentTextureRegion(animationStateTime)
 
         batch.drawScaled(
             currentTextureRegion(animationStateTime),
-            (isoPos.x + (currentTextureRegion.regionWidth / 2 * scale)),
-            (isoPos.y + (currentTextureRegion.regionHeight * scale / 2)),
+            (position.x + (currentTextureRegion.regionWidth / 2 * scale)),
+            (position.y + (currentTextureRegion.regionHeight * scale / 2)),
             scale
         )
         //Debug thing

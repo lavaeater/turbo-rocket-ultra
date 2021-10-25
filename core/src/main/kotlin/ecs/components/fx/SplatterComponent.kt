@@ -7,7 +7,6 @@ import com.badlogic.gdx.math.Vector2
 import com.badlogic.gdx.utils.Pool
 import ecs.components.graphics.renderables.Renderable
 import ecs.components.graphics.renderables.RenderableType
-import isometric.toIsometric
 import ktx.math.vec2
 import space.earlygrey.shapedrawer.ShapeDrawer
 
@@ -26,12 +25,9 @@ class SplatterComponent(
         batch: Batch,
         shapeDrawer: ShapeDrawer
     ) {
-        val isoPos = position.toIsometric()
-        val radii = vec2(radius).toIsometric()
-
         shapeDrawer.setColor(color)
         //This might, just might, actually work
-        shapeDrawer.filledEllipse(isoPos.x, isoPos.y, radii.x, radii.y)
+        shapeDrawer.filledCircle(position, radius)
     }
 
     override fun reset() {
