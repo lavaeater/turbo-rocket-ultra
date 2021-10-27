@@ -37,6 +37,9 @@ object Assets : Disposable {
     }
 
     val tower by lazy { TextureRegion(Texture(Gdx.files.internal("sprites/towers/tower.png"))) }
+    val towerGun by lazy { TextureRegion(Texture(Gdx.files.internal("sprites/towers/tower.png"))) }
+    val towerSpawnEnemies by lazy { TextureRegion(Texture(Gdx.files.internal("sprites/towers/tower.png"))) }
+    val towerObjective by lazy { TextureRegion(Texture(Gdx.files.internal("sprites/towers/tower.png"))) }
 
     val playerCharacters by lazy { characters.filterNot { it.key == "enemy" } }
 

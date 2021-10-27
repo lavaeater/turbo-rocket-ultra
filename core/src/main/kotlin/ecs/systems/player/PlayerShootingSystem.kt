@@ -101,8 +101,9 @@ class PlayerShootingSystem(private val audioPlayer: AudioPlayer) : IteratingSyst
                     if(enemyEntity.getComponent<EnemyComponent>().health < 0) {
                         entity.getComponent<PlayerComponent>().player.kills++
                     }
-                    splatterParticles(closestFixture.body, controlComponent.aimVector.cpy(),
-                        color = Color((0.5f..0.7f).random(), 0f, 0f, (.5f..1f).random()))
+                    //TODO: Better splatter particles, mate
+//                    splatterParticles(closestFixture.body, controlComponent.aimVector.cpy(),
+//                        color = Color((0.5f..0.7f).random(), 0f, 0f, (.5f..1f).random()))
                 }
             }
         }
