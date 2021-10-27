@@ -92,7 +92,7 @@ object Context {
             addSystem(PlayerDeathSystem())
             addSystem(EnemySpawnSystem())
             addSystem(EnemyOptimizerSystem())
-            addSystem(TowerDebugSystem())
+            //addSystem(TowerDebugSystem())
             addSystem(TowerTargetFinderSystem())
             addSystem(TowerShootSystem())
             addSystem(RenderSystem(inject<PolygonSpriteBatch>() as Batch))

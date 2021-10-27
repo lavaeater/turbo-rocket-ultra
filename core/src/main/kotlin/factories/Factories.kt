@@ -19,7 +19,6 @@ import ecs.components.gameplay.ObstacleComponent
 import ecs.components.gameplay.TransformComponent
 import ecs.components.graphics.*
 import ecs.components.graphics.renderables.AnimatedCharacterSprite
-import ecs.components.graphics.renderables.RenderableBox
 import ecs.components.graphics.renderables.RenderableTextureRegion
 import ecs.components.player.FiredShotsComponent
 import ecs.components.player.PlayerComponent

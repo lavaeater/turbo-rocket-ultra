@@ -24,8 +24,6 @@ class RenderableTextureRegion(val textureRegion: TextureRegion) : Renderable {
         val height = 2f
         val color = Color.GREEN
 
-        shapeDrawer.setColor(color)
-        shapeDrawer.filledRectangle(position.x, position.y, width, height)
 
         batch.drawScaled(
             this.textureRegion,
@@ -34,6 +32,7 @@ class RenderableTextureRegion(val textureRegion: TextureRegion) : Renderable {
             scale
         )
         //Debug thing
+        shapeDrawer.setColor(color)
         shapeDrawer.filledCircle(isoPos, .2f, Color.BLACK)
     }
 }
