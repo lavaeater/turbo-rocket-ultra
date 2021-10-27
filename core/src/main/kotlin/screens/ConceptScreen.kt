@@ -4,7 +4,7 @@ import com.badlogic.gdx.Input
 import com.badlogic.gdx.graphics.Color
 import com.badlogic.gdx.graphics.OrthographicCamera
 import com.badlogic.gdx.utils.viewport.ExtendViewport
-import ecs.components.gameplay.Transform
+import input.Transform
 import gamestate.GameEvent
 import gamestate.GameState
 import ktx.graphics.use
@@ -22,7 +22,7 @@ class ConceptScreen(gameState: StateMachine<GameState, GameEvent>) : BasicScreen
     override fun render(delta: Float) {
         super.render(delta)
 
-        transform.rotate(rotation)
+        transform.rotate(rotation * delta)
 
         batch.use {
             shapeDrawer.pixelSize = 1f
@@ -57,8 +57,8 @@ class ConceptScreen(gameState: StateMachine<GameState, GameEvent>) : BasicScreen
         when (keycode) {
 //            Input.Keys.W -> keyboardControl.thrust = 0f
 //            Input.Keys.S -> keyboardControl.thrust = 0f
-            Input.Keys.A -> rotation = 1f
-            Input.Keys.D -> rotation = -1f
+            Input.Keys.A -> rotation = 90f
+            Input.Keys.D -> rotation = -90f
         }
         return true
     }
