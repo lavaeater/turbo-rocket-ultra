@@ -75,9 +75,15 @@ class SetupScreen(gameState: StateMachine<GameState, GameEvent>) : BasicScreen(g
             Input.Keys.LEFT -> changeSpriteKeyboard(-1)
             Input.Keys.RIGHT -> changeSpriteKeyboard(1)
             Input.Keys.ENTER -> startGame()
+            Input.Keys.C -> startConceptScreen()
             Input.Keys.E -> startEditor()
             else -> super.keyUp(keycode)
         }
+    }
+
+    private fun startConceptScreen(): Boolean {
+        gameState.acceptEvent(GameEvent.StartConcept)
+        return true
     }
 
     private fun changeSpriteKeyboard(indexChange: Int): Boolean {

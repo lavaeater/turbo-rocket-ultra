@@ -127,10 +127,17 @@ fun splatterParticles(
 }
 
 fun tower(at: Vector2 = vec2(), towerType: String = "machinegun") {
+
+    /*
+    There should be an abstract "bounds" concept that defines the actual
+    width and height of the object (i.e. the sprite). This height and
+    width can then be used to create the projection on the floor of the sprite object,
+    given a proper anchor etc.
+     */
     val towerBody = world().body {
         type = BodyDef.BodyType.StaticBody
         position.set(at)
-        box(2f, 2f) {}
+        box(2f, 1f) {}
     }
 
     val towerEntity = engine().entity {
@@ -148,6 +155,12 @@ fun tower(at: Vector2 = vec2(), towerType: String = "machinegun") {
 }
 
 fun player(player: Player, mapper: ControlMapper) {
+    /*
+    The player should be two bodies, one for collision detection for
+    movement, like a projection of the characters body on "the floor"
+    whereas the other one symbolizes the characters actual body and is for hit detection
+    from shots etc. Nice.
+     */
     val box2dBody = world().body {
         type = BodyDef.BodyType.DynamicBody
         position.setZero()
