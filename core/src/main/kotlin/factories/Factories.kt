@@ -137,7 +137,7 @@ fun tower(at: Vector2 = vec2(), towerType: String = "machinegun") {
     val towerBody = world().body {
         type = BodyDef.BodyType.StaticBody
         position.set(at)
-        box(2f, 1f) {}
+        box(3f, 1.5f) {}
     }
 
     val towerEntity = engine().entity {
@@ -145,7 +145,7 @@ fun tower(at: Vector2 = vec2(), towerType: String = "machinegun") {
             body = towerBody
         }
         with<TransformComponent>()
-        with<RenderableComponent> { renderable = RenderableTextureRegion(Assets.towers[towerType]!!, 4f, 4f) }
+        with<RenderableComponent> { renderable = RenderableTextureRegion(Assets.towers[towerType]!!, 4f, 0f, -5f) }
         with<RenderLayerComponent>()
         with<TowerComponent>()
     }
@@ -164,13 +164,13 @@ fun player(player: Player, mapper: ControlMapper) {
     val box2dBody = world().body {
         type = BodyDef.BodyType.DynamicBody
         position.setZero()
-        circle(1f) {
+        fixedRotation = true
+        box(2f,1f) {
             density = GameScreen.PLAYER_DENSITY
             filter {
                 categoryBits = Box2dCategories.player
             }
         }
-
         linearDamping = GameScreen.SHIP_LINEAR_DAMPING
         angularDamping = GameScreen.SHIP_ANGULAR_DAMPING
     }
@@ -181,7 +181,10 @@ fun player(player: Player, mapper: ControlMapper) {
         addComponent<TransformComponent>()
         add(mapper)
         add(PlayerControlComponent(mapper))
-        addComponent<RenderableComponent> { renderable = AnimatedCharacterSprite(Assets.characters[player.selectedCharacterSpriteName]!!) }
+        addComponent<RenderableComponent> { renderable = AnimatedCharacterSprite(
+            Assets.characters[player.selectedCharacterSpriteName]!!,
+            1f,
+            0f, -20f) }
         addComponent<RenderLayerComponent>()// { layer = 1 }
         addComponent<PlayerComponent> { this.player = player }
         addComponent<FiredShotsComponent>()
@@ -210,10 +213,11 @@ fun enemy(at: Vector2) {
     val box2dBody = world().body {
         type = BodyDef.BodyType.DynamicBody
         position.set(at)
-        circle(1f) {
-            density = GameScreen.ENEMY_DENSITY
+        fixedRotation = true
+        box(2f,1f) {
+            density = GameScreen.PLAYER_DENSITY
             filter {
-                categoryBits = Box2dCategories.enemy
+                categoryBits = Box2dCategories.player
             }
         }
         circle(10f) {
@@ -228,7 +232,9 @@ fun enemy(at: Vector2) {
         addComponent<EnemySensorComponent>()
         addComponent<EnemyComponent>()
         addComponent<RenderableComponent> {
-            renderable = AnimatedCharacterSprite(Assets.characters["enemy"]!!) }
+            renderable = AnimatedCharacterSprite(Assets.characters["enemy"]!!,
+                1f,
+                0f, -20f) }
         addComponent<RenderLayerComponent>()// { layer = 1 }
     }
     entity.addComponent<BehaviorComponent> { tree = Tree.getEnemyBehaviorTree().apply { `object` = entity } }
@@ -283,7 +289,7 @@ fun enemy(at: Vector2) {
 fun obstacle(
     x: Float = 0f,
     y: Float = 0f,
-    width: Float = 2f,
+    width: Float = 4f,
     height: Float = 2f
 ): Entity {
     val box2dBody = world().body {
@@ -300,7 +306,7 @@ fun obstacle(
         addComponent<BodyComponent> { body = box2dBody }
         addComponent<TransformComponent> { position.set(box2dBody.position) }
         addComponent<ObstacleComponent>()
-        addComponent<RenderableComponent> { renderable = RenderableTextureRegion(Assets.towers["obstacle"]!!, 4f, 4f) }
+        addComponent<RenderableComponent> { renderable = RenderableTextureRegion(Assets.towers["obstacle"]!!, 4f, 0f, -6f) }
         addComponent<RenderLayerComponent>()
     }
     box2dBody.userData = entity

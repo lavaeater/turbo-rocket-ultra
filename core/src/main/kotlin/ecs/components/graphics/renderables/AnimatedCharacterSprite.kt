@@ -11,7 +11,7 @@ import tru.AnimState
 import tru.LpcCharacterAnim
 import tru.SpriteDirection
 
-class AnimatedCharacterSprite(private val anims: Map<AnimState, LpcCharacterAnim>) : Renderable {
+class AnimatedCharacterSprite(private val anims: Map<AnimState, LpcCharacterAnim>, val scale: Float = 1f, val offsetX: Float = 0f, val offsetY: Float = 0f) : Renderable {
 
     var currentAnimState : AnimState = anims.values.first().state
     var currentDirection: SpriteDirection = SpriteDirection.South
@@ -36,9 +36,9 @@ class AnimatedCharacterSprite(private val anims: Map<AnimState, LpcCharacterAnim
 
         batch.drawScaled(
             currentTextureRegion(animationStateTime),
-            (position.x + (currentTextureRegion.regionWidth / 2 * scale)),
-            (position.y + (currentTextureRegion.regionHeight * scale / 2)),
-            scale
+            (position.x + (currentTextureRegion.regionWidth / 2 * scale) + (offsetX * scale * this.scale)),
+            (position.y + (currentTextureRegion.regionHeight / 2 * scale) + (offsetY * scale * this.scale)),
+            scale * this.scale
         )
         //Debug thing
         //shapeDrawer.filledCircle(isoPos, .2f, Color.GREEN)
