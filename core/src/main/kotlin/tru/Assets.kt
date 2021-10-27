@@ -33,11 +33,11 @@ object Assets : Disposable {
 
     val towers by lazy {
         mapOf(
-            "machinegun" to TextureRegion(Texture(Gdx.files.internal("sprites/towers/tower-gun.png"))),
-            "flamethrower" to TextureRegion(Texture(Gdx.files.internal("sprites/towers/tower-gun.png"))),
-            "obstacle" to TextureRegion(Texture(Gdx.files.internal("sprites/towers/tower-objective.png"))),
+            "machinegun" to TextureRegion(Texture(Gdx.files.internal("sprites/towers/tower-1.png"))),
+            "flamethrower" to TextureRegion(Texture(Gdx.files.internal("sprites/towers/tower-1.png"))),
+            "obstacle" to TextureRegion(Texture(Gdx.files.internal("sprites/towers/tower-obstacle.png"))),
             "objective" to TextureRegion(Texture(Gdx.files.internal("sprites/towers/tower-objective.png"))),
-            "noise" to TextureRegion(Texture(Gdx.files.internal("sprites/towers/tower-gun.png")))
+            "noise" to TextureRegion(Texture(Gdx.files.internal("sprites/towers/tower-1.png")))
         )
     }
 
@@ -83,6 +83,7 @@ object Assets : Disposable {
     private fun fixFlip() {
         for(t in towers.values)
             t.flip(true, false)
+
     }
 
 
