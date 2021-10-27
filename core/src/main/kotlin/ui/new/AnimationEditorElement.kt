@@ -1,4 +1,4 @@
-package ui
+package ui.new
 
 import com.badlogic.gdx.Gdx
 import com.badlogic.gdx.Input
@@ -170,8 +170,8 @@ class AnimationEditorElement(
     }
 
     var stateTime = 0f
-    override fun render(batch: Batch, delta: Float, debug: Boolean) {
-        super.render(batch, delta, debug)
+    override fun render(batch: Batch, delta: Float, scale: Float, debug: Boolean) {
+        super.render(batch, delta, scale, debug)
 
         stateTime += delta
         val frame = anim.getKeyFrame(stateTime)
@@ -212,8 +212,4 @@ class AnimationEditorElement(
 
 
     }
-}
-
-sealed class AnimEditMode {
-    object Navigate : AnimEditMode()
 }

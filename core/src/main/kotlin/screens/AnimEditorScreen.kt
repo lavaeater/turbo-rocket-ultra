@@ -14,7 +14,7 @@ import screens.ui.Inputter
 import screens.ui.OtherPutter
 import statemachine.StateMachine
 import tru.Assets
-import ui.*
+import ui.new.*
 
 class AnimEditorScreen(gameState: StateMachine<GameState, GameEvent>) : BasicScreen(gameState) {
 
@@ -71,7 +71,7 @@ class AnimEditorScreen(gameState: StateMachine<GameState, GameEvent>) : BasicScr
     override fun render(delta: Float) {
         super.render(delta)
         batch.use {
-            altUi.render(batch, delta, debug)
+            altUi.render(batch, delta, 1f, debug)
         }
 
     }

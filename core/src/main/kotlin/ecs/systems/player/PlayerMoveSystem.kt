@@ -3,8 +3,8 @@ package ecs.systems.player
 import com.badlogic.ashley.core.Entity
 import com.badlogic.ashley.systems.IteratingSystem
 import ecs.components.BodyComponent
-import ecs.components.graphics.renderables.AnimatedCharacterSprite
 import ecs.components.graphics.RenderableComponent
+import ecs.components.graphics.renderables.AnimatedCharacterSprite
 import ecs.components.player.PlayerControlComponent
 import ktx.ashley.allOf
 import ktx.ashley.mapperFor

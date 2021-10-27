@@ -20,11 +20,6 @@ import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator.FreeTypeFont
 import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator
 
 
-
-
-
-
-
 /**
  * Actually load assets using the asset manager, maan
  */
@@ -32,14 +27,19 @@ object Assets : Disposable {
 
     lateinit var am: AssetManager
 
-    val characters :  Map<String, Map<AnimState, LpcCharacterAnim>> by lazy {
+    val characters: Map<String, Map<AnimState, LpcCharacterAnim>> by lazy {
         SpriteLoader.initCharachterAnims()
     }
 
-    val tower by lazy { TextureRegion(Texture(Gdx.files.internal("sprites/towers/tower.png"))) }
-    val towerGun by lazy { TextureRegion(Texture(Gdx.files.internal("sprites/towers/tower.png"))) }
-    val towerSpawnEnemies by lazy { TextureRegion(Texture(Gdx.files.internal("sprites/towers/tower.png"))) }
-    val towerObjective by lazy { TextureRegion(Texture(Gdx.files.internal("sprites/towers/tower.png"))) }
+    val towers by lazy {
+        mapOf(
+            "machinegun" to TextureRegion(Texture(Gdx.files.internal("sprites/towers/tower-gun.png"))),
+            "flamethrower" to TextureRegion(Texture(Gdx.files.internal("sprites/towers/tower-gun.png"))),
+            "obstacle" to TextureRegion(Texture(Gdx.files.internal("sprites/towers/tower-objective.png"))),
+            "objective" to TextureRegion(Texture(Gdx.files.internal("sprites/towers/tower-objective.png"))),
+            "noise" to TextureRegion(Texture(Gdx.files.internal("sprites/towers/tower-gun.png")))
+        )
+    }
 
     val playerCharacters by lazy { characters.filterNot { it.key == "enemy" } }
 
@@ -62,7 +62,7 @@ object Assets : Disposable {
 
     val objectSprites by lazy { SpriteLoader.initObjectSprites() }
 
-    val soundEffects : Map<String, Sound> by lazy {
+    val soundEffects: Map<String, Sound> by lazy {
         mapOf(
             "gunshot" to Gdx.audio.newSound(Gdx.files.internal("audio/gunshot.wav")),
             "shellcasing" to Gdx.audio.newSound(Gdx.files.internal("audio/shellcasing.wav"))
@@ -76,7 +76,13 @@ object Assets : Disposable {
     fun load(): AssetManager {
         am = AssetManager()
         fixScene2dSkin()
+        fixFlip()
         return am
+    }
+
+    private fun fixFlip() {
+        for(t in towers.values)
+            t.flip(true, false)
     }
 
 

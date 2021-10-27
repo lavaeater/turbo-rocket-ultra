@@ -127,7 +127,7 @@ fun splatterParticles(
     }
 }
 
-fun tower(at: Vector2 = vec2()) {
+fun tower(at: Vector2 = vec2(), towerType: String = "machinegun") {
     val towerBody = world().body {
         type = BodyDef.BodyType.StaticBody
         position.set(at)
@@ -139,7 +139,7 @@ fun tower(at: Vector2 = vec2()) {
             body = towerBody
         }
         with<TransformComponent>()
-        with<RenderableComponent>() { renderable = RenderableTextureRegion(Assets.tower) }
+        with<RenderableComponent> { renderable = RenderableTextureRegion(Assets.towers[towerType]!!) }
         with<RenderLayerComponent>()
         with<TowerComponent>()
     }
@@ -168,7 +168,7 @@ fun player(player: Player, mapper: ControlMapper) {
         addComponent<BodyComponent> { body = box2dBody }
         addComponent<TransformComponent>()
         add(mapper)
-        addComponent<PlayerControlComponent> { controlMapper = mapper }//We will have multiple components later
+        add(PlayerControlComponent(mapper))
         addComponent<RenderableComponent> { renderable = AnimatedCharacterSprite(Assets.characters[player.selectedCharacterSpriteName]!!) }
         addComponent<RenderLayerComponent>()// { layer = 1 }
         addComponent<PlayerComponent> { this.player = player }
@@ -288,7 +288,7 @@ fun obstacle(
         addComponent<BodyComponent> { body = box2dBody }
         addComponent<TransformComponent> { position.set(box2dBody.position) }
         addComponent<ObstacleComponent>()
-        addComponent<RenderableComponent> { renderable = RenderableTextureRegion(Assets.tower) }
+        addComponent<RenderableComponent> { renderable = RenderableTextureRegion(Assets.towers["obstacle"]!!) }
         addComponent<RenderLayerComponent>()
     }
     box2dBody.userData = entity
@@ -316,7 +316,7 @@ fun objective(
     val entity = engine().createEntity().apply {
         addComponent<BodyComponent> { body = box2dBody }
         addComponent<TransformComponent> { position.set(box2dBody.position) }
-        addComponent<RenderableComponent> { renderable = RenderableTextureRegion(Assets.tower) }
+        addComponent<RenderableComponent> { renderable = RenderableTextureRegion(Assets.towers["objective"]!!) }
         addComponent<ObjectiveComponent>()
         addComponent<RenderLayerComponent>()
     }

@@ -19,6 +19,7 @@ import ecs.systems.fx.SplatterRemovalSystem
 import ecs.systems.graphics.*
 import ecs.systems.input.GamepadInputSystem
 import ecs.systems.input.VehicleControlSystem
+import ecs.systems.player.PlayerBuildModeSystem
 import ecs.systems.player.PlayerDeathSystem
 import ecs.systems.player.PlayerMoveSystem
 import ecs.systems.player.PlayerShootingSystem
@@ -68,6 +69,7 @@ object Context {
 //            addSystem(PhysicsDebugRendererSystem(inject(), inject()))
             addSystem(CameraUpdateSystem())
             addSystem(PlayerMoveSystem())
+            addSystem(PlayerBuildModeSystem())
             addSystem(KeyboardInputSystem())
             addSystem(GamepadInputSystem())
             addSystem(BodyDestroyerSystem(inject())) //world
@@ -94,6 +96,7 @@ object Context {
             addSystem(TowerTargetFinderSystem())
             addSystem(TowerShootSystem())
             addSystem(RenderSystem(inject<PolygonSpriteBatch>() as Batch))
+            addSystem(RenderUserInterfaceSystem(inject<PolygonSpriteBatch>() as Batch))
             addSystem(RenderMiniMapSystem())
         }
     }

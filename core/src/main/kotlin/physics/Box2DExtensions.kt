@@ -173,8 +173,10 @@ fun Batch.drawScaled(
         rotation)
 }
 
-inline fun<reified T: Component>Entity.addComponent(block: T.() -> Unit = {}) {
-    this.add(component(block))
+inline fun<reified T: Component>Entity.addComponent(block: T.() -> Unit = {}) :T {
+    val c = component(block)
+    this.add(c)
+    return c
 }
 
 inline fun<reified T: Component>component(block: T.()-> Unit = {}) :T {

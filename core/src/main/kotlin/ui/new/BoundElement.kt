@@ -1,4 +1,4 @@
-package ui
+package ui.new
 
 import com.badlogic.gdx.math.Vector2
 

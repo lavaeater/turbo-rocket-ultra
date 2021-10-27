@@ -12,7 +12,6 @@ import ktx.ashley.get
 import ktx.ashley.mapperFor
 import ktx.graphics.use
 import tru.Assets
-import java.util.*
 
 class RenderSystem(
     private val batch: Batch
@@ -28,9 +27,16 @@ class RenderSystem(
             val layer0 = renderableMapper.get(p0).layer
             val layer1 = renderableMapper.get(p1).layer
              return if(layer0 == layer1) {
-                 val y0 = transformMapper.get(p0).position.y
-                 val y1 = transformMapper.get(p1).position.y
-                 y0.compareTo(y1)
+                 val y0 = (transformMapper.get(p0).position.y)
+                 val y1 = (transformMapper.get(p1).position.y)
+                 val compareVal = y0.compareTo(y1)
+                 if(compareVal != 0)
+                     return compareVal
+                 else {
+                     val x0 = transformMapper.get(p0).position.y
+                     val x1 = transformMapper.get(p1).position.y
+                     x1.compareTo(x0)
+                 }
              } else {
                  layer0.compareTo(layer1)
              }
