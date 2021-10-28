@@ -317,7 +317,7 @@ fun obstacle(
 fun objective(
     x: Float = (-100f..100f).random(),
     y: Float = (-100f..100f).random(),
-    width: Float = 2f,
+    width: Float = 4f,
     height: Float = 2f
 ): Body {
     val box2dBody = world().body {
@@ -334,7 +334,7 @@ fun objective(
     val entity = engine().createEntity().apply {
         addComponent<BodyComponent> { body = box2dBody }
         addComponent<TransformComponent> { position.set(box2dBody.position) }
-        addComponent<RenderableComponent> { renderable = RenderableTextureRegion(Assets.towers["objective"]!!, 4f, 4f) }
+        addComponent<RenderableComponent> { renderable = RenderableTextureRegion(Assets.towers["objective"]!!, 4f, 0f,-6f) }
         addComponent<ObjectiveComponent>()
         addComponent<RenderLayerComponent>()
     }
