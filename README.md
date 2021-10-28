@@ -55,7 +55,7 @@ TODO:
 
 What if we create a snaking trail, a labyrinth of sorts, that just represents the players required route from start to finish, then we add some objectives along the road, enemy spawn points and a goal. That is something we could work with and expand upon. That would be kind of cool actually. 
 
-So, each section of the snaking map represents a length of "road". Lets start by assuming that this is maximally twice the size of the screen in size. Then we move from this sectio
+So, each section of the snaking map represents a length of "road". Lets start by assuming that this is maximally twice the size of the screen in size. We always start with a section of that specific size. We can then either move up, left or right. Every time we move to a new section, we have a set of possible directions we can move in. Lets go north, east, south, west instead. So, we start by being able to go in any of the four directions, but if we move for instance to the south on the first, then we can't go to the north on the next one. 
 
 ### DevLog
 
@@ -495,11 +495,11 @@ Det här gör vi på det gamla vanliga sättet. Vi bygger en box2d-värld, vi kl
 
 Oj oj oj,  vad roligt. Vi kan göra en box2d-kropp med leder, per tutorials etc. Superkul ju.
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbMjYzOTc1NTgyLDE3MDM0NjM0OTIsMTQ4MD
-g3ODgzMSwxMzMzNTcwNzc5LC0zOTU0NTM4MjMsLTkxMzUyMjk1
-NiwzNjIwNjAxNzgsNTE0Mjc0MjY5LC0xMjg3NzE1Njg5LDI5Mj
-U1MTI2LC0xNjQwMTQxMDAyLC0xMDg4MTgyOTMyLC05NTY0MDIw
-MDUsMzE5NjIzNDAyLC0xNDEyMjU5ODk2LDQ0NTY5MzgyMSw1ND
-I3MTY4NDcsLTEwOTcwNDcyNzcsMTM4NjU0NzEwLC0xMjk0MTgw
-OTEwXX0=
+eyJoaXN0b3J5IjpbLTg1MTQ4MzU5MCwxNzAzNDYzNDkyLDE0OD
+A4Nzg4MzEsMTMzMzU3MDc3OSwtMzk1NDUzODIzLC05MTM1MjI5
+NTYsMzYyMDYwMTc4LDUxNDI3NDI2OSwtMTI4NzcxNTY4OSwyOT
+I1NTEyNiwtMTY0MDE0MTAwMiwtMTA4ODE4MjkzMiwtOTU2NDAy
+MDA1LDMxOTYyMzQwMiwtMTQxMjI1OTg5Niw0NDU2OTM4MjEsNT
+QyNzE2ODQ3LC0xMDk3MDQ3Mjc3LDEzODY1NDcxMCwtMTI5NDE4
+MDkxMF19
 -->
