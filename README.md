@@ -19,13 +19,13 @@ To make the graphics and environment easy I am currently working with the concep
 
 ### MVP
 
+* "Levels" or "Maps" in a more structured way
 * Interactable Components in-the-game
+* Player graphics made from components / parts etc.
 * Build Towers <- Paused
 * Basic Sprite Editor <- done, kinda?
 * IsoMetric Projection <- done!
 * Towers <- Done
-* Player graphics made from components / parts etc.
-* "Levels" or "Maps" in a more structured way
 * Game Over Screen that does *anything* <- DONE!
 * Start Screen that does *anything* <- done
 * Scoring and Objectives <- done
@@ -482,11 +482,11 @@ Det här gör vi på det gamla vanliga sättet. Vi bygger en box2d-värld, vi kl
 
 Oj oj oj,  vad roligt. Vi kan göra en box2d-kropp med leder, per tutorials etc. Superkul ju.
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbMTAyOTEwNTI0OSwtOTEzNTIyOTU2LDM2Mj
-A2MDE3OCw1MTQyNzQyNjksLTEyODc3MTU2ODksMjkyNTUxMjYs
-LTE2NDAxNDEwMDIsLTEwODgxODI5MzIsLTk1NjQwMjAwNSwzMT
-k2MjM0MDIsLTE0MTIyNTk4OTYsNDQ1NjkzODIxLDU0MjcxNjg0
-NywtMTA5NzA0NzI3NywxMzg2NTQ3MTAsLTEyOTQxODA5MTAsLT
-gwNTkwNzExMCwxNTMxNzg4MTMxLDYwNTg4MDEzNCwyNDQ1NjU4
-MDRdfQ==
+eyJoaXN0b3J5IjpbLTEwOTAwMjc5ODMsLTkxMzUyMjk1NiwzNj
+IwNjAxNzgsNTE0Mjc0MjY5LC0xMjg3NzE1Njg5LDI5MjU1MTI2
+LC0xNjQwMTQxMDAyLC0xMDg4MTgyOTMyLC05NTY0MDIwMDUsMz
+E5NjIzNDAyLC0xNDEyMjU5ODk2LDQ0NTY5MzgyMSw1NDI3MTY4
+NDcsLTEwOTcwNDcyNzcsMTM4NjU0NzEwLC0xMjk0MTgwOTEwLC
+04MDU5MDcxMTAsMTUzMTc4ODEzMSw2MDU4ODAxMzQsMjQ0NTY1
+ODA0XX0=
 -->
