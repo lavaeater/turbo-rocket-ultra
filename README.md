@@ -50,7 +50,8 @@ One way of doing this is obviously TILED. LibGDX supports tiled out of the box, 
 
 But is that what I want? Do I want some kind of background, grass or something? How do I create tilesets that work the way **I** want?
 TODO: 
-- [ ] Check what tilesets / resources we have alrea
+- [ ] Check what tilesets / resources we have already
+- [ ] Generating a playable map from nothing?
 
 ### DevLog
 
@@ -490,11 +491,11 @@ Det här gör vi på det gamla vanliga sättet. Vi bygger en box2d-värld, vi kl
 
 Oj oj oj,  vad roligt. Vi kan göra en box2d-kropp med leder, per tutorials etc. Superkul ju.
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbLTEzNDQyMjI4MzQsMTMzMzU3MDc3OSwtMz
-k1NDUzODIzLC05MTM1MjI5NTYsMzYyMDYwMTc4LDUxNDI3NDI2
-OSwtMTI4NzcxNTY4OSwyOTI1NTEyNiwtMTY0MDE0MTAwMiwtMT
-A4ODE4MjkzMiwtOTU2NDAyMDA1LDMxOTYyMzQwMiwtMTQxMjI1
-OTg5Niw0NDU2OTM4MjEsNTQyNzE2ODQ3LC0xMDk3MDQ3Mjc3LD
-EzODY1NDcxMCwtMTI5NDE4MDkxMCwtODA1OTA3MTEwLDE1MzE3
-ODgxMzFdfQ==
+eyJoaXN0b3J5IjpbMTQ4MDg3ODgzMSwxMzMzNTcwNzc5LC0zOT
+U0NTM4MjMsLTkxMzUyMjk1NiwzNjIwNjAxNzgsNTE0Mjc0MjY5
+LC0xMjg3NzE1Njg5LDI5MjU1MTI2LC0xNjQwMTQxMDAyLC0xMD
+g4MTgyOTMyLC05NTY0MDIwMDUsMzE5NjIzNDAyLC0xNDEyMjU5
+ODk2LDQ0NTY5MzgyMSw1NDI3MTY4NDcsLTEwOTcwNDcyNzcsMT
+M4NjU0NzEwLC0xMjk0MTgwOTEwLC04MDU5MDcxMTAsMTUzMTc4
+ODEzMV19
 -->
