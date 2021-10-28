@@ -55,6 +55,8 @@ TODO:
 
 What if we create a snaking trail, a labyrinth of sorts, that just represents the players required route from start to finish, then we add some objectives along the road, enemy spawn points and a goal. That is something we could work with and expand upon. That would be kind of cool actually. 
 
+So, each section of the snaking map represents a length of "road". Lets start by assuming that this is maximally twice the size of the screen in size. Then we move from this sectio
+
 ### DevLog
 
 The most important thing in game development is to not do what you have decided to do, but something else entirely - in this case particle effects. Thing is, it's not on the docket. This is an MVP, this is a proof of concept of a playable game, so we should focus on just doing towers.
@@ -493,11 +495,11 @@ Det här gör vi på det gamla vanliga sättet. Vi bygger en box2d-värld, vi kl
 
 Oj oj oj,  vad roligt. Vi kan göra en box2d-kropp med leder, per tutorials etc. Superkul ju.
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbMTcwMzQ2MzQ5MiwxNDgwODc4ODMxLDEzMz
-M1NzA3NzksLTM5NTQ1MzgyMywtOTEzNTIyOTU2LDM2MjA2MDE3
-OCw1MTQyNzQyNjksLTEyODc3MTU2ODksMjkyNTUxMjYsLTE2ND
-AxNDEwMDIsLTEwODgxODI5MzIsLTk1NjQwMjAwNSwzMTk2MjM0
-MDIsLTE0MTIyNTk4OTYsNDQ1NjkzODIxLDU0MjcxNjg0NywtMT
-A5NzA0NzI3NywxMzg2NTQ3MTAsLTEyOTQxODA5MTAsLTgwNTkw
-NzExMF19
+eyJoaXN0b3J5IjpbMjYzOTc1NTgyLDE3MDM0NjM0OTIsMTQ4MD
+g3ODgzMSwxMzMzNTcwNzc5LC0zOTU0NTM4MjMsLTkxMzUyMjk1
+NiwzNjIwNjAxNzgsNTE0Mjc0MjY5LC0xMjg3NzE1Njg5LDI5Mj
+U1MTI2LC0xNjQwMTQxMDAyLC0xMDg4MTgyOTMyLC05NTY0MDIw
+MDUsMzE5NjIzNDAyLC0xNDEyMjU5ODk2LDQ0NTY5MzgyMSw1ND
+I3MTY4NDcsLTEwOTcwNDcyNzcsMTM4NjU0NzEwLC0xMjk0MTgw
+OTEwXX0=
 -->
