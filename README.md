@@ -49,6 +49,8 @@ To make the graphics and environment easy I am currently working with the concep
 One way of doing this is obviously TILED. LibGDX supports tiled out of the box, which is nice. 
 
 But is that what I want? Do I want some kind of background, grass or something? How do I create tilesets that work the way **I** want?
+TODO: 
+- [ ] Check what tilesets / resources we have alrea
 
 ### DevLog
 
@@ -488,11 +490,11 @@ Det här gör vi på det gamla vanliga sättet. Vi bygger en box2d-värld, vi kl
 
 Oj oj oj,  vad roligt. Vi kan göra en box2d-kropp med leder, per tutorials etc. Superkul ju.
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbMTMzMzU3MDc3OSwtMzk1NDUzODIzLC05MT
-M1MjI5NTYsMzYyMDYwMTc4LDUxNDI3NDI2OSwtMTI4NzcxNTY4
-OSwyOTI1NTEyNiwtMTY0MDE0MTAwMiwtMTA4ODE4MjkzMiwtOT
-U2NDAyMDA1LDMxOTYyMzQwMiwtMTQxMjI1OTg5Niw0NDU2OTM4
-MjEsNTQyNzE2ODQ3LC0xMDk3MDQ3Mjc3LDEzODY1NDcxMCwtMT
-I5NDE4MDkxMCwtODA1OTA3MTEwLDE1MzE3ODgxMzEsNjA1ODgw
-MTM0XX0=
+eyJoaXN0b3J5IjpbLTEzNDQyMjI4MzQsMTMzMzU3MDc3OSwtMz
+k1NDUzODIzLC05MTM1MjI5NTYsMzYyMDYwMTc4LDUxNDI3NDI2
+OSwtMTI4NzcxNTY4OSwyOTI1NTEyNiwtMTY0MDE0MTAwMiwtMT
+A4ODE4MjkzMiwtOTU2NDAyMDA1LDMxOTYyMzQwMiwtMTQxMjI1
+OTg5Niw0NDU2OTM4MjEsNTQyNzE2ODQ3LC0xMDk3MDQ3Mjc3LD
+EzODY1NDcxMCwtMTI5NDE4MDkxMCwtODA1OTA3MTEwLDE1MzE3
+ODgxMzFdfQ==
 -->
