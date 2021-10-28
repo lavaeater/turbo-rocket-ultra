@@ -48,6 +48,8 @@ To make the graphics and environment easy I am currently working with the concep
 
 One way of doing this is obviously TILED. LibGDX supports tiled out of the box, which is nice. 
 
+But is that what I want? Do I 
+
 ### DevLog
 
 The most important thing in game development is to not do what you have decided to do, but something else entirely - in this case particle effects. Thing is, it's not on the docket. This is an MVP, this is a proof of concept of a playable game, so we should focus on just doing towers.
@@ -486,11 +488,11 @@ Det här gör vi på det gamla vanliga sättet. Vi bygger en box2d-värld, vi kl
 
 Oj oj oj,  vad roligt. Vi kan göra en box2d-kropp med leder, per tutorials etc. Superkul ju.
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbLTM5NTQ1MzgyMywtOTEzNTIyOTU2LDM2Mj
-A2MDE3OCw1MTQyNzQyNjksLTEyODc3MTU2ODksMjkyNTUxMjYs
-LTE2NDAxNDEwMDIsLTEwODgxODI5MzIsLTk1NjQwMjAwNSwzMT
-k2MjM0MDIsLTE0MTIyNTk4OTYsNDQ1NjkzODIxLDU0MjcxNjg0
-NywtMTA5NzA0NzI3NywxMzg2NTQ3MTAsLTEyOTQxODA5MTAsLT
-gwNTkwNzExMCwxNTMxNzg4MTMxLDYwNTg4MDEzNCwyNDQ1NjU4
-MDRdfQ==
+eyJoaXN0b3J5IjpbMTczOTUyMDMzNSwtMzk1NDUzODIzLC05MT
+M1MjI5NTYsMzYyMDYwMTc4LDUxNDI3NDI2OSwtMTI4NzcxNTY4
+OSwyOTI1NTEyNiwtMTY0MDE0MTAwMiwtMTA4ODE4MjkzMiwtOT
+U2NDAyMDA1LDMxOTYyMzQwMiwtMTQxMjI1OTg5Niw0NDU2OTM4
+MjEsNTQyNzE2ODQ3LC0xMDk3MDQ3Mjc3LDEzODY1NDcxMCwtMT
+I5NDE4MDkxMCwtODA1OTA3MTEwLDE1MzE3ODgxMzEsNjA1ODgw
+MTM0XX0=
 -->
