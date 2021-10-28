@@ -6,4 +6,5 @@ sealed class RenderableType {
     object Box: RenderableType()
     object NoOp : RenderableType()
     object Splatter : RenderableType()
+    object ListOfRenderables : RenderableType()
 }

@@ -7,6 +7,23 @@ import com.badlogic.gdx.math.Vector2
 import physics.drawScaled
 import space.earlygrey.shapedrawer.ShapeDrawer
 
+class RenderableTextureRegions(val regions: List<RenderableTextureRegion>) : Renderable {
+    override val renderableType: RenderableType
+        get() = RenderableType.ListOfRenderables
+
+    override fun render(
+        position: Vector2,
+        rotation: Float,
+        scale: Float,
+        animationStateTime: Float,
+        batch: Batch,
+        shapeDrawer: ShapeDrawer
+    ) {
+        regions.forEach { it.render(position, rotation, scale, animationStateTime, batch, shapeDrawer) }
+    }
+
+}
+
 class RenderableTextureRegion(val textureRegion: TextureRegion, val scale: Float = 1f, val offsetX: Float = 0f, val offsetY: Float = 0f) : Renderable {
     override val renderableType: RenderableType
         get() = RenderableType.Texture

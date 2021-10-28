@@ -41,6 +41,10 @@ object Assets : Disposable {
         )
     }
 
+    val towerShadow by lazy {
+        TextureRegion(Texture(Gdx.files.internal("sprites/towers/tower-shadow.png")))
+    }
+
     val playerCharacters by lazy { characters.filterNot { it.key == "enemy" } }
 
     val splashTexture: Texture by lazy {
@@ -83,6 +87,8 @@ object Assets : Disposable {
     private fun fixFlip() {
         for(t in towers.values)
             t.flip(true, false)
+
+        towerShadow.flip(true, false)
 
     }
 

@@ -20,6 +20,7 @@ import ecs.components.gameplay.TransformComponent
 import ecs.components.graphics.*
 import ecs.components.graphics.renderables.AnimatedCharacterSprite
 import ecs.components.graphics.renderables.RenderableTextureRegion
+import ecs.components.graphics.renderables.RenderableTextureRegions
 import ecs.components.player.FiredShotsComponent
 import ecs.components.player.PlayerComponent
 import ecs.components.player.PlayerControlComponent
@@ -165,7 +166,7 @@ fun player(player: Player, mapper: ControlMapper) {
         type = BodyDef.BodyType.DynamicBody
         position.setZero()
         fixedRotation = true
-        box(2f,1f) {
+        box(2f, 1f) {
             density = GameScreen.PLAYER_DENSITY
             filter {
                 categoryBits = Box2dCategories.player
@@ -181,10 +182,13 @@ fun player(player: Player, mapper: ControlMapper) {
         addComponent<TransformComponent>()
         add(mapper)
         add(PlayerControlComponent(mapper))
-        addComponent<RenderableComponent> { renderable = AnimatedCharacterSprite(
-            Assets.characters[player.selectedCharacterSpriteName]!!,
-            1f,
-            0f, -20f) }
+        addComponent<RenderableComponent> {
+            renderable = AnimatedCharacterSprite(
+                Assets.characters[player.selectedCharacterSpriteName]!!,
+                1f,
+                0f, -20f
+            )
+        }
         addComponent<RenderLayerComponent>()// { layer = 1 }
         addComponent<PlayerComponent> { this.player = player }
         addComponent<FiredShotsComponent>()
@@ -214,7 +218,7 @@ fun enemy(at: Vector2) {
         type = BodyDef.BodyType.DynamicBody
         position.set(at)
         fixedRotation = true
-        box(2f,1f) {
+        box(2f, 1f) {
             density = GameScreen.PLAYER_DENSITY
             filter {
                 categoryBits = Box2dCategories.player
@@ -232,9 +236,12 @@ fun enemy(at: Vector2) {
         addComponent<EnemySensorComponent>()
         addComponent<EnemyComponent>()
         addComponent<RenderableComponent> {
-            renderable = AnimatedCharacterSprite(Assets.characters["enemy"]!!,
+            renderable = AnimatedCharacterSprite(
+                Assets.characters["enemy"]!!,
                 1f,
-                0f, -20f) }
+                0f, -20f
+            )
+        }
         addComponent<RenderLayerComponent>()// { layer = 1 }
     }
     entity.addComponent<BehaviorComponent> { tree = Tree.getEnemyBehaviorTree().apply { `object` = entity } }
@@ -306,7 +313,9 @@ fun obstacle(
         addComponent<BodyComponent> { body = box2dBody }
         addComponent<TransformComponent> { position.set(box2dBody.position) }
         addComponent<ObstacleComponent>()
-        addComponent<RenderableComponent> { renderable = RenderableTextureRegion(Assets.towers["obstacle"]!!, 4f, 0f, -6f) }
+        addComponent<RenderableComponent> {
+            renderable = RenderableTextureRegion(Assets.towers["obstacle"]!!, 4f, 0f, -6f)
+        }
         addComponent<RenderLayerComponent>()
     }
     box2dBody.userData = entity
@@ -334,7 +343,14 @@ fun objective(
     val entity = engine().createEntity().apply {
         addComponent<BodyComponent> { body = box2dBody }
         addComponent<TransformComponent> { position.set(box2dBody.position) }
-        addComponent<RenderableComponent> { renderable = RenderableTextureRegion(Assets.towers["objective"]!!, 4f, 0f,-6f) }
+        addComponent<RenderableComponent> {
+            renderable = RenderableTextureRegions(
+                listOf(
+                    RenderableTextureRegion(Assets.towerShadow, 4f, 6f, -6f),
+                    RenderableTextureRegion(Assets.towers["objective"]!!, 4f, 0f, -6f)
+                )
+            )
+        }
         addComponent<ObjectiveComponent>()
         addComponent<RenderLayerComponent>()
     }
