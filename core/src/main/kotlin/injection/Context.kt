@@ -7,6 +7,7 @@ import com.badlogic.gdx.graphics.Camera
 import com.badlogic.gdx.graphics.OrthographicCamera
 import com.badlogic.gdx.graphics.g2d.Batch
 import com.badlogic.gdx.graphics.g2d.PolygonSpriteBatch
+import com.badlogic.gdx.maps.MapRenderer
 import com.badlogic.gdx.utils.viewport.ExtendViewport
 import ecs.systems.*
 import ecs.systems.ai.*
@@ -95,6 +96,7 @@ object Context {
             //addSystem(TowerDebugSystem())
             addSystem(TowerTargetFinderSystem())
             addSystem(TowerShootSystem())
+            addSystem(RenderMapSystem(inject<PolygonSpriteBatch>() as Batch, inject<OrthographicCamera>() as Camera))
             addSystem(RenderSystem(inject<PolygonSpriteBatch>() as Batch))
             addSystem(RenderUserInterfaceSystem(inject<PolygonSpriteBatch>() as Batch))
             addSystem(RenderMiniMapSystem())

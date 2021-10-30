@@ -42,7 +42,7 @@ object Assets : Disposable {
     }
 
     val tileTexture by lazy {
-        Texture(Gdx.files.internal("sprites/tiles/tiles.png"))
+        Texture(Gdx.files.internal("tiles/tiles.png"))
     }
     val tiles by lazy {
         val ts = mutableMapOf<String, TextureRegion>()
@@ -71,7 +71,7 @@ object Assets : Disposable {
     }
 
     val wallTiles by lazy {
-        tiles.filterKeys { it.contains("wall") && !it.contains("_end") }.values.toList()
+        tiles.filterKeys { it.contains("wall") && !it.contains("_end") && !it.contains("_shadow")}.values.toList()
     }
     val wallEndTile by lazy {
         tiles.filterKeys { it == "wall_end" }.values.first()

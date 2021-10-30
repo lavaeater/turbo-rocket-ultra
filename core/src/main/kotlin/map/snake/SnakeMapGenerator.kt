@@ -5,6 +5,9 @@ import com.badlogic.gdx.math.Rectangle
 import com.badlogic.gdx.math.Vector2
 import ecs.components.graphics.renderables.RenderableTextureRegion
 import ecs.components.graphics.renderables.RenderableTextureRegions
+import ktx.math.vec2
+import physics.drawScaled
+import space.earlygrey.shapedrawer.ShapeDrawer
 import tru.Assets
 
 fun <T> List<T>.random(): T {
@@ -22,7 +25,7 @@ class SnakeMapGenerator {
         for (i in 0..size) {
             if (i != 0) {
                 currentDirection =
-                    MapDirection.directions.filter { it != MapDirection.opposing[previousDirection] }.random()
+                    MapDirection.directions.filter { it != MapDirection.opposing[previousDirection]!! }.random()
             }
             val currentSection = SnakeMapSection(
                 previousSection.x + MapDirection.xIndex[currentDirection]!!,
@@ -42,10 +45,10 @@ sealed class MapDirection {
     object South : MapDirection()
     object West : MapDirection()
     companion object {
-        val opposing = mapOf(North to South, South to North, East to West, West to East)
-        val directions: List<MapDirection> = listOf(North, East, South, West)
-        val xIndex = mapOf(North to 0, South to 0, East to 1, West to -1)
-        val yIndex = mapOf(North to 1, South to -1, East to 0, West to 0)
+        val opposing by lazy { mapOf(North to South, South to North, East to West, West to East) }
+        val directions: List<MapDirection> by lazy { listOf(North, East, South, West) }
+        val xIndex by lazy {  mapOf(North to 0, South to 0, East to 1, West to -1) }
+        val yIndex by lazy { mapOf(North to -1, South to 1, East to 0, West to 0) }
     }
 }
 
@@ -72,12 +75,10 @@ sealed class TileAlignment {
 }
 
 class SnakeMapManager(
-    val startSection: SnakeMapSection,
+    var currentSection: SnakeMapSection,
     val tileWidth: Float = 16f,
     val tileHeight: Float = 16f
 ) {
-
-    var currentSection = startSection
     /*
     We use the worldcenter
     to keep track of which section we are inside. Very useful
@@ -95,11 +96,12 @@ class SnakeMapManager(
 
 
      */
-
-    val currentSectionX get() = currentSection.x.toFloat() * scale * tileScale
-    val currentSectionY get() = currentSection.y.toFloat() * scale * tileScale
-    val currentSectionWidth get() = SnakeMapSection.width * tileWidth * scale * tileScale
-    val currentSectionHeight get() = SnakeMapSection.height * tileHeight * scale * tileScale
+    val tileScale = .5f
+    val scale = .5f
+    private val currentSectionX get() = currentSection.x * SnakeMapSection.width * tileWidth * tileScale * scale
+    private val currentSectionY get() = currentSection.y * SnakeMapSection.height * tileHeight * tileScale * scale
+    private val currentSectionWidth get() = SnakeMapSection.width * tileWidth * scale * tileScale
+    private val currentSectionHeight get() = SnakeMapSection.height * tileHeight * scale * tileScale
 
     var bounds = Rectangle(
         currentSectionX,
@@ -108,42 +110,79 @@ class SnakeMapManager(
         currentSectionHeight
     )
 
-    fun updateBounds() {
+    var sectionsToRender: Array<SnakeMapSection> = arrayOf(currentSection, *currentSection.connections.values.toTypedArray(), *currentSection.connections.values.map { it.connections.values }.flatten().toTypedArray())
+
+    fun updateCurrentSection(newCurrentSection: SnakeMapSection) {
+        currentSection = newCurrentSection
         bounds = Rectangle(
             currentSectionX,
             currentSectionY,
             currentSectionWidth,
             currentSectionHeight
         )
+        sectionsToRender = arrayOf(newCurrentSection, *newCurrentSection.connections.values.toTypedArray())
     }
 
-    fun render(batch: Batch, delta: Float, worldCenter: Vector2, scale: Float = 1f) {
+    var firstRun = true
+    val tilePosition = vec2()
+    var animationStateTime = 0f
+    fun render(batch: Batch, shapeDrawer: ShapeDrawer, delta: Float, worldCenter: Vector2, scale: Float = 1f) {
+        if(firstRun) {
+            firstRun = false
+            updateCurrentSection(currentSection)
+        }
+
+        animationStateTime += delta
         //1. check if we are still inside this section!
         checkAndUpdateBoundsAndSection(worldCenter)
+        /*
+        We render the current section and then
+        we render all sections connected to this one.
+         */
+        var sectionCount = 0
+        for (section in sectionsToRender) {
+            sectionCount++
+            for ((x, tileArray) in section.tiles.withIndex())
+                for ((y, tile) in tileArray.withIndex()) {
+                    val sectionOffsetX = section.x * SnakeMapSection.width * tileWidth * tileScale * scale
+                    val sectionOffsetY = section.y * SnakeMapSection.height * tileHeight * tileScale * scale
+                    val tileX = x * 16f * tileScale * scale
+                    val tileY = y * 16f * tileScale * scale
+                    val actualX = tileX + sectionOffsetX
+                    val actualY = tileY + sectionOffsetY
+                    for (region in tile.renderables.regions) {
+                        val textureRegion = region.textureRegion
+                        batch.drawScaled(
+                            textureRegion,
+                            actualX,
+                            actualY,
+                            tileScale * scale
+                        )
+                    }
+                }
+        }
+
     }
 
-    val tileScale = 4f
-    val scale = 1f
     private fun checkAndUpdateBoundsAndSection(worldCenter: Vector2) {
         /*
         1. What are the bounds? I guess it's some kind of tilesize times scale? Ah, we will control
         all tiles, including objects, from here, so we will know the scale, which happens to be 4 at the moment,
         so we'll hardcode that.
          */
-        if (bounds.contains(worldCenter))
+        if (bounds.contains(worldCenter.scl(scale * tileScale)))
             return
         //1. Figure out if we are NORTH, EAST, SOUTH or WEST of this currentSection.
         // We should basically only be able to be either one of those things, since we
         // cannot move diagonally
-        var direction: MapDirection = if(worldCenter.x < bounds.left()) MapDirection.West
-        else if(worldCenter.x > bounds.right()) MapDirection.East
-        else if(worldCenter.y < bounds.bottom()) MapDirection.South
-        else MapDirection.North
+        var direction: MapDirection = if (worldCenter.x < bounds.left()) MapDirection.West
+        else if (worldCenter.x > bounds.right()) MapDirection.East
+        else if (worldCenter.y < bounds.bottom()) MapDirection.North
+        else MapDirection.South
 
         //Get the section for that particular direction and set that as the new currentDirection,
         // also recalculate bounds
-        val newCurrentSection = currentSection.connections[direction]!!
-
+        updateCurrentSection(currentSection.connections[direction]!!)
     }
 }
 
@@ -174,105 +213,107 @@ class SnakeMapSection(
     the outer rows are all wall, except for the ones where there is a connection, obviously.
      */
     companion object {
-        const val width = 32
-        const val height = 32
+        const val width = 8
+        const val height = 8
     }
 
-    val connectionAlignments = connections.keys.map { TileAlignment.directionAlignment[it]!! }
+    val connectionAlignments get() = connections.keys.map { TileAlignment.directionAlignment[it]!! }
 
     //Tiles can be changed later to add weird features or a class that is a maptile...
     //We should probably have a maptile right now
-    val tiles = Array(width * height) {
-        val x = it / width
-        val y = it % height
-        val tileAlignment = when (x) {
-            0 -> when (y) {
-                0 -> TileAlignment.TopLeft
-                height - 1 -> TileAlignment.BottomLeft
-                else -> TileAlignment.Left
-            }
-            width - 1 -> when (y) {
-                0 -> TileAlignment.TopRight
-                height - 1 -> TileAlignment.BottomRight
-                else -> TileAlignment.Right
-            }
-            else -> when (y) {
-                0 -> TileAlignment.Top
-                height - 1 -> TileAlignment.Bottom
-                else -> TileAlignment.Center
-            }
-        }
+    val tiles by lazy {
+        Array(width) { x ->
+            Array(height) { y ->
+                val tileAlignment = when (x) {
+                    0 -> when (y) {
+                        0 -> TileAlignment.TopLeft
+                        height - 1 -> TileAlignment.BottomLeft
+                        else -> TileAlignment.Left
+                    }
+                    width - 1 -> when (y) {
+                        0 -> TileAlignment.TopRight
+                        height - 1 -> TileAlignment.BottomRight
+                        else -> TileAlignment.Right
+                    }
+                    else -> when (y) {
+                        0 -> TileAlignment.Top
+                        height - 1 -> TileAlignment.Bottom
+                        else -> TileAlignment.Center
+                    }
+                }
 
-        return@Array when (tileAlignment) {
-            TileAlignment.Bottom -> if (connectionAlignments.contains(tileAlignment)) MapTile(
-                RenderableTextureRegions(
-                    listOf(RenderableTextureRegion(Assets.floorTiles.random()))
-                )
-            ) else MapTile(
-                RenderableTextureRegions(
-                    listOf(RenderableTextureRegion(Assets.wallTiles.random()))
-                )
-            )
-            TileAlignment.BottomLeft -> MapTile(
-                RenderableTextureRegions(
-                    listOf(RenderableTextureRegion(Assets.wallTiles.random()))
-                )
-            )
-            TileAlignment.BottomRight -> MapTile(
-                RenderableTextureRegions(
-                    listOf(RenderableTextureRegion(Assets.wallTiles.random()))
-                )
-            )
-            TileAlignment.Center -> MapTile(
-                RenderableTextureRegions(
-                    listOf(RenderableTextureRegion(Assets.floorTiles.random()))
-                )
-            )
-            TileAlignment.Left -> if (connectionAlignments.contains(tileAlignment)) MapTile(
-                RenderableTextureRegions(
-                    listOf(RenderableTextureRegion(Assets.floorTiles.random()))
-                )
-            ) else MapTile(
-                RenderableTextureRegions(
-                    listOf(RenderableTextureRegion(Assets.wallTiles.random()))
-                )
-            )
-            TileAlignment.Right -> if (connectionAlignments.contains(tileAlignment)) MapTile(
-                RenderableTextureRegions(
-                    listOf(RenderableTextureRegion(Assets.floorTiles.random()))
-                )
-            ) else MapTile(
-                RenderableTextureRegions(
-                    listOf(RenderableTextureRegion(Assets.wallTiles.random()))
-                )
-            )
-            TileAlignment.Top -> if (connectionAlignments.contains(tileAlignment)) MapTile(
-                RenderableTextureRegions(
-                    listOf(RenderableTextureRegion(Assets.floorTiles.random()))
-                )
-            ) else MapTile(
-                RenderableTextureRegions(
-                    listOf(RenderableTextureRegion(Assets.wallEndTile))
-                )
-            )
-            TileAlignment.TopLeft -> if (connectionAlignments.contains(tileAlignment)) MapTile(
-                RenderableTextureRegions(
-                    listOf(RenderableTextureRegion(Assets.floorTiles.random()))
-                )
-            ) else MapTile(
-                RenderableTextureRegions(
-                    listOf(RenderableTextureRegion(Assets.wallTiles.random()))
-                )
-            )
-            TileAlignment.TopRight -> if (connectionAlignments.contains(tileAlignment)) MapTile(
-                RenderableTextureRegions(
-                    listOf(RenderableTextureRegion(Assets.floorTiles.random()))
-                )
-            ) else MapTile(
-                RenderableTextureRegions(
-                    listOf(RenderableTextureRegion(Assets.wallTiles.random()))
-                )
-            )
+                return@Array when (tileAlignment) {
+                    TileAlignment.Bottom -> if (connectionAlignments.contains(tileAlignment)) MapTile(
+                        RenderableTextureRegions(
+                            listOf(RenderableTextureRegion(Assets.floorTiles.random()))
+                        )
+                    ) else MapTile(
+                        RenderableTextureRegions(
+                            listOf(RenderableTextureRegion(Assets.wallTiles.random()))
+                        )
+                    )
+                    TileAlignment.BottomLeft -> MapTile(
+                        RenderableTextureRegions(
+                            listOf(RenderableTextureRegion(Assets.wallTiles.random()))
+                        )
+                    )
+                    TileAlignment.BottomRight -> MapTile(
+                        RenderableTextureRegions(
+                            listOf(RenderableTextureRegion(Assets.wallTiles.random()))
+                        )
+                    )
+                    TileAlignment.Center -> MapTile(
+                        RenderableTextureRegions(
+                            listOf(RenderableTextureRegion(Assets.floorTiles.random()))
+                        )
+                    )
+                    TileAlignment.Left -> if (connectionAlignments.contains(tileAlignment)) MapTile(
+                        RenderableTextureRegions(
+                            listOf(RenderableTextureRegion(Assets.floorTiles.random()))
+                        )
+                    ) else MapTile(
+                        RenderableTextureRegions(
+                            listOf(RenderableTextureRegion(Assets.wallTiles.random()))
+                        )
+                    )
+                    TileAlignment.Right -> if (connectionAlignments.contains(tileAlignment)) MapTile(
+                        RenderableTextureRegions(
+                            listOf(RenderableTextureRegion(Assets.floorTiles.random()))
+                        )
+                    ) else MapTile(
+                        RenderableTextureRegions(
+                            listOf(RenderableTextureRegion(Assets.wallTiles.random()))
+                        )
+                    )
+                    TileAlignment.Top -> if (connectionAlignments.contains(tileAlignment)) MapTile(
+                        RenderableTextureRegions(
+                            listOf(RenderableTextureRegion(Assets.floorTiles.random()))
+                        )
+                    ) else MapTile(
+                        RenderableTextureRegions(
+                            listOf(RenderableTextureRegion(Assets.wallEndTile))
+                        )
+                    )
+                    TileAlignment.TopLeft -> if (connectionAlignments.contains(tileAlignment)) MapTile(
+                        RenderableTextureRegions(
+                            listOf(RenderableTextureRegion(Assets.floorTiles.random()))
+                        )
+                    ) else MapTile(
+                        RenderableTextureRegions(
+                            listOf(RenderableTextureRegion(Assets.wallTiles.random()))
+                        )
+                    )
+                    TileAlignment.TopRight -> if (connectionAlignments.contains(tileAlignment)) MapTile(
+                        RenderableTextureRegions(
+                            listOf(RenderableTextureRegion(Assets.floorTiles.random()))
+                        )
+                    ) else MapTile(
+                        RenderableTextureRegions(
+                            listOf(RenderableTextureRegion(Assets.wallTiles.random()))
+                        )
+                    )
+                }
+            }
         }
     }
 }
