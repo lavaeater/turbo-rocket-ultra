@@ -1,8 +1,10 @@
 package map.snake
 
 import com.badlogic.gdx.graphics.g2d.Batch
-import com.badlogic.gdx.graphics.g2d.TextureRegion
+import com.badlogic.gdx.graphics.g3d.particles.values.WeightMeshSpawnShapeValue
+import com.badlogic.gdx.math.Rectangle
 import com.badlogic.gdx.math.Vector2
+import com.dongbat.jbump.World
 import ecs.components.graphics.renderables.RenderableTextureRegion
 import ecs.components.graphics.renderables.RenderableTextureRegions
 import tru.Assets
@@ -12,23 +14,24 @@ fun <T> List<T>.random(): T {
 }
 
 class SnakeMapGenerator {
-    fun generate() {
+    fun generate() : SnakeMapManager {
 
         val size = (10..20).random()
         var previousDirection: MapDirection = MapDirection.North
         var currentDirection: MapDirection = MapDirection.North
-        var previousSection = SnakeMapSection()
+        var previousSection = SnakeMapSection(0,0)
         val snakeMapManager = SnakeMapManager(previousSection)
         for (i in 0..size) {
             if (i != 0) {
                 currentDirection =
                     MapDirection.directions.filter { it != MapDirection.opposing[previousDirection] }.random()
             }
-            val currentSection = SnakeMapSection()
+            val currentSection = SnakeMapSection(previousSection.x + MapDirection.xIndex[currentDirection]!!, previousSection.y + MapDirection.yIndex[currentDirection]!!)
             currentSection.connections[MapDirection.opposing[currentDirection]!!] = previousSection
             previousSection.connections[currentDirection] = currentSection
             previousSection = currentSection
         }
+        return snakeMapManager
     }
 }
 
@@ -40,6 +43,8 @@ sealed class MapDirection {
     companion object {
         val opposing = mapOf(North to South, South to North, East to West, West to East)
         val directions: List<MapDirection> = listOf(North, East, South, West)
+        val xIndex = mapOf(North to 0, South to 0, East to 1, West to -1)
+        val yIndex = mapOf(North to 1, South to -1, East to 0, West to 0)
     }
 }
 
@@ -65,19 +70,45 @@ sealed class TileAlignment {
 }
 
 class SnakeMapManager(val startSection: SnakeMapSection) {
+
+    var currentSection = startSection
     /*
     We use the worldcenter
     to keep track of which section we are inside. Very useful
 
+    Has to manage transitions between currentSection and, well, any other
+    sections. the sections are connected, so that shouldn't be a problem, and we want them seamless.
+
+    Given our actual geography-agnostic map structure, the index of the section actually works nicely - we just have
+    to keep track of wether or not the player moves into the "next" tile and then load a new set of tiles
+    to currently show when rendering below. Easy peasy.
+
+    Unless we have multiplayer. Fuuuck.
+
+    OK, we'll say we pass into the next section IF the worldCenter is out of bounds!
+
+
      */
 
 
-    fun render(batch: Batch, delta: Float, worldCenter: Vector2) {
+    fun render(batch: Batch, delta: Float, worldCenter: Vector2, scale: Float = 1f) {
+        //1. check if we are still inside this section!
+        checkBounds(worldCenter)
+    }
+
+    val tileScale = 4f
+    private fun checkBounds(worldCenter: Vector2) {
+        /*
+        1. What are the bounds? I guess it's some kind of tilesize times scale? Ah, we will control
+        all tiles, including objects, from here, so we will know the scale, which happens to be 4 at the moment,
+        so we'll hardcode that.
+         */
+        val bounds = Rectangle(currentSection.x.toFloat())
 
     }
 }
 
-class SnakeMapSection(val connections: MutableMap<MapDirection, SnakeMapSection> = mutableMapOf()) {
+class SnakeMapSection(val x: Int, val y: Int, val connections: MutableMap<MapDirection, SnakeMapSection> = mutableMapOf()) {
     /*
     All sections consist of width x height tiles, and
 
