@@ -17,7 +17,7 @@ fun <T> List<T>.random(): T {
 class SnakeMapGenerator {
     fun generate(): SnakeMapManager {
 
-        val size = (10..20).random()
+        val size = 16// (10..20).random()
         var previousDirection: MapDirection = MapDirection.North
         var currentDirection: MapDirection = MapDirection.North
         var previousSection = SnakeMapSection(0, 0)
@@ -96,8 +96,8 @@ class SnakeMapManager(
 
 
      */
-    val tileScale = .5f
-    val scale = .5f
+    val tileScale = 1 / 16f
+    val scale = 2f
     private val currentSectionX get() = currentSection.x * SnakeMapSection.width * tileWidth * tileScale * scale
     private val currentSectionY get() = currentSection.y * SnakeMapSection.height * tileHeight * tileScale * scale
     private val currentSectionWidth get() = SnakeMapSection.width * tileWidth * scale * tileScale
@@ -110,7 +110,7 @@ class SnakeMapManager(
         currentSectionHeight
     )
 
-    var sectionsToRender: Array<SnakeMapSection> = arrayOf(currentSection, *currentSection.connections.values.toTypedArray(), *currentSection.connections.values.map { it.connections.values }.flatten().toTypedArray())
+    var sectionsToRender: Array<SnakeMapSection> = arrayOf(currentSection, *currentSection.connections.values.toTypedArray())
 
     fun updateCurrentSection(newCurrentSection: SnakeMapSection) {
         currentSection = newCurrentSection
@@ -139,6 +139,10 @@ class SnakeMapManager(
         We render the current section and then
         we render all sections connected to this one.
          */
+
+        // Render a rectangle on the bounds
+
+        shapeDrawer.rectangle(bounds)
         var sectionCount = 0
         for (section in sectionsToRender) {
             sectionCount++
@@ -170,7 +174,7 @@ class SnakeMapManager(
         all tiles, including objects, from here, so we will know the scale, which happens to be 4 at the moment,
         so we'll hardcode that.
          */
-        if (bounds.contains(worldCenter.scl(scale * tileScale)))
+        if (bounds.contains(worldCenter))
             return
         //1. Figure out if we are NORTH, EAST, SOUTH or WEST of this currentSection.
         // We should basically only be able to be either one of those things, since we
