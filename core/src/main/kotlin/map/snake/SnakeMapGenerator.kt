@@ -142,7 +142,7 @@ class SnakeMapManager(
 
         //Get the section for that particular direction and set that as the new currentDirection,
         // also recalculate bounds
-        val newCurrentSecion = currentSection.connections[direction]!!
+        val newCurrentSection = currentSection.connections[direction]!!
 
     }
 }
