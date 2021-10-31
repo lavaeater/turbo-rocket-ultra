@@ -68,12 +68,15 @@ sealed class TileAlignment {
     object BottomLeft : TileAlignment()
     object BottomRight : TileAlignment()
 
+    /*
+    Its not enough
+     */
     companion object {
         val directionAlignment = mapOf(
-            MapDirection.North to Top,
-            MapDirection.East to Right,
-            MapDirection.South to Bottom,
-            MapDirection.West to Left
+            MapDirection.North to listOf(Top, TopLeft, TopRight),
+            MapDirection.East to listOf(Right, BottomRight, TopLeft),
+            MapDirection.South to listOf(Bottom, BottomRight),
+            MapDirection.West to listOf(Left, TopLeft, BottomLeft, BottomRight, TopRight)
         )
         val alignmentDirection = directionAlignment.entries.associateBy({ it.value }) { it.key }
     }
@@ -128,18 +131,19 @@ class SnakeMapManager(
             currentSectionHeight
         )
 
-        for(body in bodies) {
+        for (body in bodies) {
             world().destroyBody(body)
         }
         bodies.clear()
-        for((x, column) in currentSection.tiles.withIndex()) {
-            for((y, tile) in column.withIndex()) {
-                if(!tile.passable) {
+        for ((x, column) in currentSection.tiles.withIndex()) {
+            for ((y, tile) in column.withIndex()) {
+                if (!tile.passable) {
                     val body = world().body {
                         type = BodyDef.BodyType.StaticBody
                         position.set(
                             x * tileWidth * tileScale * scale - tileWidth * tileScale * scale / 2 + currentSection.x * tileWidth * tileScale * scale * SnakeMapSection.width,
-                            y * tileHeight * tileScale * scale - tileHeight * tileScale * scale / 2 + currentSection.y * tileHeight * tileScale * scale * SnakeMapSection.height)
+                            y * tileHeight * tileScale * scale - tileHeight * tileScale * scale / 2 + currentSection.y * tileHeight * tileScale * scale * SnakeMapSection.height
+                        )
                         box(tileWidth * tileScale * scale, tileHeight * tileScale * scale) {}
                     }
                     bodies.add(body)
@@ -189,6 +193,25 @@ class SnakeMapManager(
                             tileScale * scale
                         )
                     }
+                    val paintColor = when (x) {
+                        0 -> when (y) {
+                            0 -> Color.BLUE//TOPLeft
+                            SnakeMapSection.height - 1 -> Color.RED    // BottomLeft
+                            else -> Color.BLACK
+                        }
+                        SnakeMapSection.width - 1 -> when (y) {
+                            0 -> Color.GREEN//TOPRight
+                            SnakeMapSection.height - 1 -> Color.PURPLE    // BottomRIGHT
+                            else -> Color.BLACK
+                        }
+                        else -> Color.BLACK
+                    }
+                    shapeDrawer.filledCircle(
+                        actualX - tileWidth / 2 * scale * tileScale,
+                        actualY - tileHeight / 2 * scale * tileScale,
+                        1f,
+                        paintColor
+                    )
                 }
 
         }
@@ -197,7 +220,7 @@ class SnakeMapManager(
                 MapDirection.North -> batch.drawScaled(
                     Assets.arrows[direction]!!,
                     bounds.horizontalCenter(),
-                    bounds.bottom(),
+                    bounds.top(),
                     tileScale * scale
                 )
                 MapDirection.East -> batch.drawScaled(
@@ -209,7 +232,7 @@ class SnakeMapManager(
                 MapDirection.South -> batch.drawScaled(
                     Assets.arrows[direction]!!,
                     bounds.horizontalCenter(),
-                    bounds.top(),
+                    bounds.bottom(),
                     tileScale * scale
                 )
                 MapDirection.West -> batch.drawScaled(
@@ -284,7 +307,7 @@ class SnakeMapSection(
         const val height = 8
     }
 
-    val connectionAlignments get() = connections.keys.map { TileAlignment.directionAlignment[it]!! }
+    val connectionAlignments get() = connections.keys.map { TileAlignment.directionAlignment[it]!! }.flatten()
 
     //Tiles can be changed later to add weird features or a class that is a maptile...
     //We should probably have a maptile right now
@@ -319,16 +342,32 @@ class SnakeMapSection(
                             listOf(RenderableTextureRegion(Assets.wallTiles.random()))
                         ), false
                     )
-                    TileAlignment.BottomLeft -> MapTile(
-                        RenderableTextureRegions(
-                            listOf(RenderableTextureRegion(Assets.wallTiles.random()))
-                        ), false
-                    )
-                    TileAlignment.BottomRight -> MapTile(
-                        RenderableTextureRegions(
-                            listOf(RenderableTextureRegion(Assets.wallTiles.random()))
-                        ), false
-                    )
+                    TileAlignment.BottomLeft -> if (connectionAlignments.contains(tileAlignment)) {
+                        MapTile(
+                            RenderableTextureRegions(
+                                listOf(RenderableTextureRegion(Assets.wallTiles.random()))
+                            ), false
+                        )
+                    } else {
+                        MapTile(
+                            RenderableTextureRegions(
+                                listOf(RenderableTextureRegion(Assets.wallTiles.random()))
+                            ), false
+                        )
+                    }
+                    TileAlignment.BottomRight -> if (connectionAlignments.contains(tileAlignment)) {
+                        MapTile(
+                            RenderableTextureRegions(
+                                listOf(RenderableTextureRegion(Assets.wallTiles.random()))
+                            ), false
+                        )
+                    } else {
+                        MapTile(
+                            RenderableTextureRegions(
+                                listOf(RenderableTextureRegion(Assets.wallEndTile))
+                            ), false
+                        )
+                    }
                     TileAlignment.Center -> MapTile(
                         RenderableTextureRegions(
                             listOf(RenderableTextureRegion(Assets.floorTiles.random()))
@@ -361,24 +400,28 @@ class SnakeMapSection(
                             listOf(RenderableTextureRegion(Assets.wallEndTile))
                         ), false
                     )
-                    TileAlignment.TopLeft -> if (connectionAlignments.contains(tileAlignment)) MapTile(
-                        RenderableTextureRegions(
-                            listOf(RenderableTextureRegion(Assets.floorTiles.random()))
-                        ), true
-                    ) else MapTile(
-                        RenderableTextureRegions(
-                            listOf(RenderableTextureRegion(Assets.wallTiles.random()))
-                        ), false
-                    )
-                    TileAlignment.TopRight -> if (connectionAlignments.contains(tileAlignment)) MapTile(
-                        RenderableTextureRegions(
-                            listOf(RenderableTextureRegion(Assets.floorTiles.random()))
-                        ), true
-                    ) else MapTile(
-                        RenderableTextureRegions(
-                            listOf(RenderableTextureRegion(Assets.wallTiles.random()))
-                        ), false
-                    )
+                    TileAlignment.TopLeft -> if (connectionAlignments.contains(tileAlignment))
+                        MapTile(
+                            RenderableTextureRegions(
+                                listOf(RenderableTextureRegion(Assets.wallTiles.random()))
+                            ), false
+                        ) else
+                        MapTile(
+                            RenderableTextureRegions(
+                                listOf(RenderableTextureRegion(Assets.wallTiles.random()))
+                            ), false
+                        )
+
+                    TileAlignment.TopRight ->
+                        if (!connectionAlignments.contains(tileAlignment)) MapTile(
+                            RenderableTextureRegions(
+                                listOf(RenderableTextureRegion(Assets.wallEndTile))
+                            ), false
+                        ) else MapTile(
+                            RenderableTextureRegions(
+                                listOf(RenderableTextureRegion(Assets.wallTiles.random()))
+                            ), false
+                        )
                 }
             }
         }
