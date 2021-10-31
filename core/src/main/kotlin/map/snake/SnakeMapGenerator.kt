@@ -25,7 +25,7 @@ class SnakeMapGenerator {
         for (i in 0..size) {
             if (i != 0) {
                 currentDirection =
-                    MapDirection.directions.filter { it != MapDirection.opposing[previousDirection]!! }.random()
+                    MapDirection.directions.filter { it != MapDirection.opposing[currentDirection]!! }.random()
             }
             val currentSection = SnakeMapSection(
                 previousSection.x + MapDirection.xIndex[currentDirection]!!,
@@ -96,10 +96,10 @@ class SnakeMapManager(
 
 
      */
-    val tileScale = 1 / 16f
-    val scale = 2f
-    private val currentSectionX get() = currentSection.x * SnakeMapSection.width * tileWidth * tileScale * scale
-    private val currentSectionY get() = currentSection.y * SnakeMapSection.height * tileHeight * tileScale * scale
+    val tileScale = 1 / 4f
+    val scale = 1f
+    private val currentSectionX get() = currentSection.x * SnakeMapSection.width * tileWidth * tileScale * scale - tileWidth * tileScale * scale
+    private val currentSectionY get() = currentSection.y * SnakeMapSection.height * tileHeight * tileScale * scale - tileHeight * tileScale * scale
     private val currentSectionWidth get() = SnakeMapSection.width * tileWidth * scale * tileScale
     private val currentSectionHeight get() = SnakeMapSection.height * tileHeight * scale * tileScale
 
@@ -142,7 +142,7 @@ class SnakeMapManager(
 
         // Render a rectangle on the bounds
 
-        shapeDrawer.rectangle(bounds)
+
         var sectionCount = 0
         for (section in sectionsToRender) {
             sectionCount++
@@ -164,8 +164,17 @@ class SnakeMapManager(
                         )
                     }
                 }
-        }
 
+        }
+        for(direction in currentSection.connections.keys) {
+            when(direction) {
+                MapDirection.North -> batch.drawScaled(Assets.arrows[direction]!!, bounds.horizontalCenter(), bounds.bottom(), tileScale * scale)
+                MapDirection.East -> batch.drawScaled(Assets.arrows[direction]!!, bounds.right(), bounds.verticalCenter(), tileScale * scale)
+                MapDirection.South -> batch.drawScaled(Assets.arrows[direction]!!, bounds.horizontalCenter(), bounds.top(), tileScale * scale)
+                MapDirection.West -> batch.drawScaled(Assets.arrows[direction]!!, bounds.left(), bounds.verticalCenter(), tileScale * scale)
+            }
+        }
+        shapeDrawer.rectangle(bounds)
     }
 
     private fun checkAndUpdateBoundsAndSection(worldCenter: Vector2) {
@@ -200,6 +209,14 @@ fun Rectangle.right(): Float {
 
 fun Rectangle.top(): Float {
     return y + height
+}
+
+fun Rectangle.verticalCenter(): Float {
+    return y + height / 2
+}
+
+fun Rectangle.horizontalCenter() : Float {
+    return x + width / 2
 }
 
 fun Rectangle.bottom(): Float {

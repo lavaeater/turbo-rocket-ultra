@@ -18,6 +18,7 @@ import com.badlogic.gdx.graphics.g2d.BitmapFont
 import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator.FreeTypeFontParameter
 
 import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator
+import map.snake.MapDirection
 
 
 /**
@@ -38,6 +39,19 @@ object Assets : Disposable {
             "obstacle" to TextureRegion(Texture(Gdx.files.internal("sprites/towers/tower-obstacle.png"))),
             "objective" to TextureRegion(Texture(Gdx.files.internal("sprites/towers/tower-objective.png"))),
             "noise" to TextureRegion(Texture(Gdx.files.internal("sprites/towers/tower-1.png")))
+        )
+    }
+
+    val arrowTexture by lazy {
+        Texture(Gdx.files.internal("sprites/arrows.png"))
+    }
+
+    val arrows by lazy {
+        mapOf(
+            MapDirection.North to TextureRegion(arrowTexture, 0, 0,16,16),
+            MapDirection.West to TextureRegion(arrowTexture, 16, 0,16,16),
+            MapDirection.South to TextureRegion(arrowTexture, 16, 16,16,16),
+            MapDirection.East to TextureRegion(arrowTexture, 0, 16,16,16)
         )
     }
 
