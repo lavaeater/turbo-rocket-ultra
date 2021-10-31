@@ -75,8 +75,8 @@ sealed class TileAlignment {
         val directionAlignment = mapOf(
             MapDirection.North to listOf(Top),
             MapDirection.East to listOf(Right, TopRight),
-            MapDirection.South to listOf(Bottom, BottomLeft),
-            MapDirection.West to listOf(TopLeft,Left)
+            MapDirection.South to listOf(Bottom),
+            MapDirection.West to listOf(Left, TopLeft, TopLeft, TopLeft)
         )
         val alignmentDirection = directionAlignment.entries.associateBy({ it.value }) { it.key }
     }
@@ -307,7 +307,7 @@ class SnakeMapSection(
         const val height = 4
     }
 
-    val connectionAlignments get() = connections.keys.map { TileAlignment.directionAlignment[it]!! }.flatten()
+    val connectionAlignments get() = connections.keys.flatMap { TileAlignment.directionAlignment[it]!! }
 
     //Tiles can be changed later to add weird features or a class that is a maptile...
     //We should probably have a maptile right now
@@ -384,7 +384,7 @@ class SnakeMapSection(
                             listOf(RenderableTextureRegion(Assets.wallEndTile))
                         ), false
                     )
-                    TileAlignment.TopLeft -> if (connectionAlignments.contains(tileAlignment)) MapTile(
+                    TileAlignment.TopLeft -> if ( connectionAlignments.contains(tileAlignment)) MapTile(
                         RenderableTextureRegions(
                             listOf(RenderableTextureRegion(Assets.wallEndTile))
                         ), false
