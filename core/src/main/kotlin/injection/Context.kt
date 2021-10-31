@@ -20,13 +20,11 @@ import ecs.systems.fx.SplatterRemovalSystem
 import ecs.systems.graphics.*
 import ecs.systems.input.GamepadInputSystem
 import ecs.systems.input.VehicleControlSystem
-import ecs.systems.player.PlayerBuildModeSystem
-import ecs.systems.player.PlayerDeathSystem
-import ecs.systems.player.PlayerMoveSystem
-import ecs.systems.player.PlayerShootingSystem
+import ecs.systems.player.*
 import ktx.box2d.createWorld
 import ktx.inject.Context
 import ktx.inject.register
+import map.snake.SnakeMapGenerator
 import physics.ContactManager
 import screens.GameScreen
 import ui.IUserInterface
@@ -60,6 +58,7 @@ object Context {
                 setContactListener(ContactManager())
             })
             bindSingleton(AudioPlayer())
+            bindSingleton(SnakeMapGenerator().generate())
             bindSingleton(getEngine())
         }
     }
@@ -85,18 +84,15 @@ object Context {
             addSystem(SeekingPlayerSystem())
             addSystem(AttackPlayerSystem())
             addSystem(EnemyDirectionSystem())
-//            addSystem(AddSplatterSystem())
-//            addSystem(SplatterRemovalSystem())
             addSystem(EnemyHearsShotsSystem())
             addSystem(InvestigateSystem())
             addSystem(EnemyDebugRenderSystem(false, false))
             addSystem(PlayerDeathSystem())
             addSystem(EnemySpawnSystem())
             addSystem(EnemyOptimizerSystem())
-            //addSystem(TowerDebugSystem())
             addSystem(TowerTargetFinderSystem())
             addSystem(TowerShootSystem())
-            addSystem(RenderMapSystem(inject<PolygonSpriteBatch>() as Batch, inject<OrthographicCamera>() as Camera))
+            addSystem(RenderMapSystem(inject<PolygonSpriteBatch>() as Batch, inject<OrthographicCamera>() as Camera, inject()))
             addSystem(RenderSystem(inject<PolygonSpriteBatch>() as Batch))
             addSystem(RenderUserInterfaceSystem(inject<PolygonSpriteBatch>() as Batch))
             addSystem(RenderMiniMapSystem())

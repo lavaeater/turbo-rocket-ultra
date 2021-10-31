@@ -1,10 +1,16 @@
 package map.snake
 
+import com.badlogic.gdx.graphics.Color
 import com.badlogic.gdx.graphics.g2d.Batch
 import com.badlogic.gdx.math.Rectangle
 import com.badlogic.gdx.math.Vector2
+import com.badlogic.gdx.physics.box2d.Body
+import com.badlogic.gdx.physics.box2d.BodyDef
 import ecs.components.graphics.renderables.RenderableTextureRegion
 import ecs.components.graphics.renderables.RenderableTextureRegions
+import factories.world
+import ktx.box2d.body
+import ktx.box2d.box
 import ktx.math.vec2
 import physics.drawScaled
 import space.earlygrey.shapedrawer.ShapeDrawer
@@ -17,8 +23,7 @@ fun <T> List<T>.random(): T {
 class SnakeMapGenerator {
     fun generate(): SnakeMapManager {
 
-        val size = 16// (10..20).random()
-        var previousDirection: MapDirection = MapDirection.North
+        val size = (16..32).random()
         var currentDirection: MapDirection = MapDirection.North
         var previousSection = SnakeMapSection(0, 0)
         val snakeMapManager = SnakeMapManager(previousSection)
@@ -47,7 +52,7 @@ sealed class MapDirection {
     companion object {
         val opposing by lazy { mapOf(North to South, South to North, East to West, West to East) }
         val directions: List<MapDirection> by lazy { listOf(North, East, South, West) }
-        val xIndex by lazy {  mapOf(North to 0, South to 0, East to 1, West to -1) }
+        val xIndex by lazy { mapOf(North to 0, South to 0, East to 1, West to -1) }
         val yIndex by lazy { mapOf(North to -1, South to 1, East to 0, West to 0) }
     }
 }
@@ -96,7 +101,7 @@ class SnakeMapManager(
 
 
      */
-    val tileScale = 1 / 4f
+    val tileScale = 1 / 2f
     val scale = 1f
     private val currentSectionX get() = currentSection.x * SnakeMapSection.width * tileWidth * tileScale * scale - tileWidth * tileScale * scale
     private val currentSectionY get() = currentSection.y * SnakeMapSection.height * tileHeight * tileScale * scale - tileHeight * tileScale * scale
@@ -109,8 +114,10 @@ class SnakeMapManager(
         currentSectionWidth,
         currentSectionHeight
     )
+    var sectionsToRender: Array<SnakeMapSection> =
+        arrayOf(currentSection, *currentSection.connections.values.toTypedArray())
 
-    var sectionsToRender: Array<SnakeMapSection> = arrayOf(currentSection, *currentSection.connections.values.toTypedArray())
+    val bodies = mutableListOf<Body>()
 
     fun updateCurrentSection(newCurrentSection: SnakeMapSection) {
         currentSection = newCurrentSection
@@ -120,14 +127,33 @@ class SnakeMapManager(
             currentSectionWidth,
             currentSectionHeight
         )
+
+        for(body in bodies) {
+            world().destroyBody(body)
+        }
+        bodies.clear()
+        for((x, column) in currentSection.tiles.withIndex()) {
+            for((y, tile) in column.withIndex()) {
+                if(!tile.passable) {
+                    val body = world().body {
+                        type = BodyDef.BodyType.StaticBody
+                        position.set(
+                            x * tileWidth * tileScale * scale - tileWidth * tileScale * scale / 2 + currentSection.x * tileWidth * tileScale * scale * SnakeMapSection.width,
+                            y * tileHeight * tileScale * scale - tileHeight * tileScale * scale / 2 + currentSection.y * tileHeight * tileScale * scale * SnakeMapSection.height)
+                        box(tileWidth * tileScale * scale, tileHeight * tileScale * scale) {}
+                    }
+                    bodies.add(body)
+                }
+            }
+        }
+
         sectionsToRender = arrayOf(newCurrentSection, *newCurrentSection.connections.values.toTypedArray())
     }
 
     var firstRun = true
-    val tilePosition = vec2()
     var animationStateTime = 0f
     fun render(batch: Batch, shapeDrawer: ShapeDrawer, delta: Float, worldCenter: Vector2, scale: Float = 1f) {
-        if(firstRun) {
+        if (firstRun) {
             firstRun = false
             updateCurrentSection(currentSection)
         }
@@ -166,12 +192,32 @@ class SnakeMapManager(
                 }
 
         }
-        for(direction in currentSection.connections.keys) {
-            when(direction) {
-                MapDirection.North -> batch.drawScaled(Assets.arrows[direction]!!, bounds.horizontalCenter(), bounds.bottom(), tileScale * scale)
-                MapDirection.East -> batch.drawScaled(Assets.arrows[direction]!!, bounds.right(), bounds.verticalCenter(), tileScale * scale)
-                MapDirection.South -> batch.drawScaled(Assets.arrows[direction]!!, bounds.horizontalCenter(), bounds.top(), tileScale * scale)
-                MapDirection.West -> batch.drawScaled(Assets.arrows[direction]!!, bounds.left(), bounds.verticalCenter(), tileScale * scale)
+        for (direction in currentSection.connections.keys) {
+            when (direction) {
+                MapDirection.North -> batch.drawScaled(
+                    Assets.arrows[direction]!!,
+                    bounds.horizontalCenter(),
+                    bounds.bottom(),
+                    tileScale * scale
+                )
+                MapDirection.East -> batch.drawScaled(
+                    Assets.arrows[direction]!!,
+                    bounds.right(),
+                    bounds.verticalCenter(),
+                    tileScale * scale
+                )
+                MapDirection.South -> batch.drawScaled(
+                    Assets.arrows[direction]!!,
+                    bounds.horizontalCenter(),
+                    bounds.top(),
+                    tileScale * scale
+                )
+                MapDirection.West -> batch.drawScaled(
+                    Assets.arrows[direction]!!,
+                    bounds.left(),
+                    bounds.verticalCenter(),
+                    tileScale * scale
+                )
             }
         }
         shapeDrawer.rectangle(bounds)
@@ -208,19 +254,19 @@ fun Rectangle.right(): Float {
 }
 
 fun Rectangle.top(): Float {
-    return y + height
+    return y
 }
 
 fun Rectangle.verticalCenter(): Float {
     return y + height / 2
 }
 
-fun Rectangle.horizontalCenter() : Float {
+fun Rectangle.horizontalCenter(): Float {
     return x + width / 2
 }
 
 fun Rectangle.bottom(): Float {
-    return y
+    return y + height
 }
 
 class SnakeMapSection(
@@ -267,71 +313,71 @@ class SnakeMapSection(
                     TileAlignment.Bottom -> if (connectionAlignments.contains(tileAlignment)) MapTile(
                         RenderableTextureRegions(
                             listOf(RenderableTextureRegion(Assets.floorTiles.random()))
-                        )
+                        ), true
                     ) else MapTile(
                         RenderableTextureRegions(
                             listOf(RenderableTextureRegion(Assets.wallTiles.random()))
-                        )
+                        ), false
                     )
                     TileAlignment.BottomLeft -> MapTile(
                         RenderableTextureRegions(
                             listOf(RenderableTextureRegion(Assets.wallTiles.random()))
-                        )
+                        ), false
                     )
                     TileAlignment.BottomRight -> MapTile(
                         RenderableTextureRegions(
                             listOf(RenderableTextureRegion(Assets.wallTiles.random()))
-                        )
+                        ), false
                     )
                     TileAlignment.Center -> MapTile(
                         RenderableTextureRegions(
                             listOf(RenderableTextureRegion(Assets.floorTiles.random()))
-                        )
+                        ), true
                     )
                     TileAlignment.Left -> if (connectionAlignments.contains(tileAlignment)) MapTile(
                         RenderableTextureRegions(
                             listOf(RenderableTextureRegion(Assets.floorTiles.random()))
-                        )
+                        ), true
                     ) else MapTile(
                         RenderableTextureRegions(
                             listOf(RenderableTextureRegion(Assets.wallTiles.random()))
-                        )
+                        ), false
                     )
                     TileAlignment.Right -> if (connectionAlignments.contains(tileAlignment)) MapTile(
                         RenderableTextureRegions(
                             listOf(RenderableTextureRegion(Assets.floorTiles.random()))
-                        )
+                        ), true
                     ) else MapTile(
                         RenderableTextureRegions(
                             listOf(RenderableTextureRegion(Assets.wallTiles.random()))
-                        )
+                        ), false
                     )
                     TileAlignment.Top -> if (connectionAlignments.contains(tileAlignment)) MapTile(
                         RenderableTextureRegions(
                             listOf(RenderableTextureRegion(Assets.floorTiles.random()))
-                        )
+                        ), true
                     ) else MapTile(
                         RenderableTextureRegions(
                             listOf(RenderableTextureRegion(Assets.wallEndTile))
-                        )
+                        ), false
                     )
                     TileAlignment.TopLeft -> if (connectionAlignments.contains(tileAlignment)) MapTile(
                         RenderableTextureRegions(
                             listOf(RenderableTextureRegion(Assets.floorTiles.random()))
-                        )
+                        ), true
                     ) else MapTile(
                         RenderableTextureRegions(
                             listOf(RenderableTextureRegion(Assets.wallTiles.random()))
-                        )
+                        ), false
                     )
                     TileAlignment.TopRight -> if (connectionAlignments.contains(tileAlignment)) MapTile(
                         RenderableTextureRegions(
                             listOf(RenderableTextureRegion(Assets.floorTiles.random()))
-                        )
+                        ), true
                     ) else MapTile(
                         RenderableTextureRegions(
                             listOf(RenderableTextureRegion(Assets.wallTiles.random()))
-                        )
+                        ), false
                     )
                 }
             }
@@ -339,4 +385,4 @@ class SnakeMapSection(
     }
 }
 
-class MapTile(val renderables: RenderableTextureRegions, val passable: Boolean = true)
+class MapTile(val renderables: RenderableTextureRegions, val passable: Boolean)

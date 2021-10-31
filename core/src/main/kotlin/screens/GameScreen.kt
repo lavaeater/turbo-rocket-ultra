@@ -4,6 +4,7 @@ import audio.AudioPlayer
 import com.badlogic.ashley.core.Engine
 import com.badlogic.gdx.Gdx
 import com.badlogic.gdx.controllers.Controllers
+import com.badlogic.gdx.graphics.Color
 import com.badlogic.gdx.graphics.GL20
 import com.badlogic.gdx.graphics.OrthographicCamera
 import com.badlogic.gdx.graphics.g2d.PolygonSpriteBatch
@@ -103,7 +104,7 @@ D1B67A
     val blue = 118f/255f
 
     override fun render(delta: Float) {
-        Gdx.gl.glClearColor(red, green, blue, 1f)
+        Gdx.gl.glClearColor(0f,0f,0f,1f)
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT)
         //Update viewport and camera here and nowhere else...
 
