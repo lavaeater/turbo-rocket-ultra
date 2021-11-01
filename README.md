@@ -50,14 +50,15 @@ One way of doing this is obviously TILED. LibGDX supports tiled out of the box, 
 
 But is that what I want? Do I want some kind of background, grass or something? How do I create tilesets that work the way **I** want?
 TODO: 
-- [ ] Check what tilesets / resources we have already
-- [ ] Generating a playable map from nothing?
+- [x] Check what tilesets / resources we have already
+- [x] Generating a playable map from nothing?
 
 What if we create a snaking trail, a labyrinth of sorts, that just represents the players required route from start to finish, then we add some objectives along the road, enemy spawn points and a goal. That is something we could work with and expand upon. That would be kind of cool actually. 
 
 So, each section of the snaking map represents a length of "road". Lets start by assuming that this is maximally twice the size of the screen in size. We always start with a section of that specific size. We can then either move up, left or right. Every time we move to a new section, we have a set of possible directions we can move in. Lets go north, east, south, west instead. So, we start by being able to go in any of the four directions, but if we move for instance to the south on the first, then we can't go to the north on the next one. But we dont have to consider anything else than that, the map can curl around itself however it wants, because it becomes a grazy linked list and all we need to keep track of is exits and previous / next for overlapping display purposes (seamless transitions between parts).
 
-Data structure
+### Data structure
+I made it as a 
 
 ### DevLog
 
@@ -497,11 +498,11 @@ Det här gör vi på det gamla vanliga sättet. Vi bygger en box2d-värld, vi kl
 
 Oj oj oj,  vad roligt. Vi kan göra en box2d-kropp med leder, per tutorials etc. Superkul ju.
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbMTExOTE0ODk5MywtMTkwNjc1MTMzMywtOD
-UxNDgzNTkwLDE3MDM0NjM0OTIsMTQ4MDg3ODgzMSwxMzMzNTcw
-Nzc5LC0zOTU0NTM4MjMsLTkxMzUyMjk1NiwzNjIwNjAxNzgsNT
-E0Mjc0MjY5LC0xMjg3NzE1Njg5LDI5MjU1MTI2LC0xNjQwMTQx
-MDAyLC0xMDg4MTgyOTMyLC05NTY0MDIwMDUsMzE5NjIzNDAyLC
-0xNDEyMjU5ODk2LDQ0NTY5MzgyMSw1NDI3MTY4NDcsLTEwOTcw
-NDcyNzddfQ==
+eyJoaXN0b3J5IjpbLTM4NDk1ODY2MCwxMTE5MTQ4OTkzLC0xOT
+A2NzUxMzMzLC04NTE0ODM1OTAsMTcwMzQ2MzQ5MiwxNDgwODc4
+ODMxLDEzMzM1NzA3NzksLTM5NTQ1MzgyMywtOTEzNTIyOTU2LD
+M2MjA2MDE3OCw1MTQyNzQyNjksLTEyODc3MTU2ODksMjkyNTUx
+MjYsLTE2NDAxNDEwMDIsLTEwODgxODI5MzIsLTk1NjQwMjAwNS
+wzMTk2MjM0MDIsLTE0MTIyNTk4OTYsNDQ1NjkzODIxLDU0Mjcx
+Njg0N119
 -->
