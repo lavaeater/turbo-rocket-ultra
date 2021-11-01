@@ -71,15 +71,6 @@ sealed class TileAlignment {
     /*
     Its not enough
      */
-    companion object {
-        val directionAlignment = mapOf(
-            MapDirection.North to listOf(Top),
-            MapDirection.East to listOf(Right, TopRight),
-            MapDirection.South to listOf(Bottom),
-            MapDirection.West to listOf(Left, TopLeft, TopLeft, TopLeft)
-        )
-        val alignmentDirection = directionAlignment.entries.associateBy({ it.value }) { it.key }
-    }
 }
 
 class SnakeMapManager(
@@ -303,11 +294,18 @@ class SnakeMapSection(
     the outer rows are all wall, except for the ones where there is a connection, obviously.
      */
     companion object {
-        const val width = 4
-        const val height = 4
+        const val width = 12
+        const val height = 12
+        val directionAlignment by lazy {  mapOf(
+            MapDirection.West to listOf(TileAlignment.Left, TileAlignment.TopLeft),
+            MapDirection.North to listOf(TileAlignment.Top),
+            MapDirection.East to listOf(TileAlignment.Right, TileAlignment.TopRight),
+            MapDirection.South to listOf(TileAlignment.Bottom)
+        )}
     }
 
-    val connectionAlignments get() = connections.keys.flatMap { TileAlignment.directionAlignment[it]!! }
+
+    val connectionAlignments by lazy { connections.keys.map { directionAlignment[it]!! }.flatten() }
 
     //Tiles can be changed later to add weird features or a class that is a maptile...
     //We should probably have a maptile right now
