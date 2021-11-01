@@ -19,7 +19,7 @@ To make the graphics and environment easy I am currently working with the concep
 
 ### MVP
 
-* Objectives for auto-generated snake maps <- doing
+* Objectives for maps <- doing
 * Auto-generated Snake-maps <- done
 * Interactable Components in-the-game
 * Player graphics made from components / parts etc.
@@ -44,6 +44,11 @@ To make the graphics and environment easy I am currently working with the concep
 * Enemies <- Done
 * Blood Splatter <- Done
 * MiniMap <- Done
+
+## Objectives for maps
+
+So, next step is adding objectives and enemies on a per-map basis. We only render parts of the map, so it is not inconceivable... we could render the entirety of the map, the engine can handle it, 
+
 
 ## Levels and Maps
 
@@ -499,11 +504,11 @@ Det här gör vi på det gamla vanliga sättet. Vi bygger en box2d-värld, vi kl
 
 Oj oj oj,  vad roligt. Vi kan göra en box2d-kropp med leder, per tutorials etc. Superkul ju.
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbLTE3Nzc5NTk1NCwtMzg0OTU4NjYwLDExMT
-kxNDg5OTMsLTE5MDY3NTEzMzMsLTg1MTQ4MzU5MCwxNzAzNDYz
-NDkyLDE0ODA4Nzg4MzEsMTMzMzU3MDc3OSwtMzk1NDUzODIzLC
-05MTM1MjI5NTYsMzYyMDYwMTc4LDUxNDI3NDI2OSwtMTI4Nzcx
-NTY4OSwyOTI1NTEyNiwtMTY0MDE0MTAwMiwtMTA4ODE4MjkzMi
-wtOTU2NDAyMDA1LDMxOTYyMzQwMiwtMTQxMjI1OTg5Niw0NDU2
-OTM4MjFdfQ==
+eyJoaXN0b3J5IjpbLTE1NDE2ODUxOTAsLTM4NDk1ODY2MCwxMT
+E5MTQ4OTkzLC0xOTA2NzUxMzMzLC04NTE0ODM1OTAsMTcwMzQ2
+MzQ5MiwxNDgwODc4ODMxLDEzMzM1NzA3NzksLTM5NTQ1MzgyMy
+wtOTEzNTIyOTU2LDM2MjA2MDE3OCw1MTQyNzQyNjksLTEyODc3
+MTU2ODksMjkyNTUxMjYsLTE2NDAxNDEwMDIsLTEwODgxODI5Mz
+IsLTk1NjQwMjAwNSwzMTk2MjM0MDIsLTE0MTIyNTk4OTYsNDQ1
+NjkzODIxXX0=
 -->
