@@ -19,7 +19,8 @@ To make the graphics and environment easy I am currently working with the concep
 
 ### MVP
 
-* "Levels" or "Maps" in a more structured way <- in spec
+* Objectives for auto-generated snake maps <- doing
+* Auto-generated Snake-maps <- done
 * Interactable Components in-the-game
 * Player graphics made from components / parts etc.
 * Different weapons to shoot with
@@ -498,7 +499,7 @@ Det här gör vi på det gamla vanliga sättet. Vi bygger en box2d-värld, vi kl
 
 Oj oj oj,  vad roligt. Vi kan göra en box2d-kropp med leder, per tutorials etc. Superkul ju.
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbMTczMTYxNDA0MiwtMzg0OTU4NjYwLDExMT
+eyJoaXN0b3J5IjpbLTE3Nzc5NTk1NCwtMzg0OTU4NjYwLDExMT
 kxNDg5OTMsLTE5MDY3NTEzMzMsLTg1MTQ4MzU5MCwxNzAzNDYz
 NDkyLDE0ODA4Nzg4MzEsMTMzMzU3MDc3OSwtMzk1NDUzODIzLC
 05MTM1MjI5NTYsMzYyMDYwMTc4LDUxNDI3NDI2OSwtMTI4Nzcx
