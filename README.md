@@ -58,7 +58,7 @@ What if we create a snaking trail, a labyrinth of sorts, that just represents th
 So, each section of the snaking map represents a length of "road". Lets start by assuming that this is maximally twice the size of the screen in size. We always start with a section of that specific size. We can then either move up, left or right. Every time we move to a new section, we have a set of possible directions we can move in. Lets go north, east, south, west instead. So, we start by being able to go in any of the four directions, but if we move for instance to the south on the first, then we can't go to the north on the next one. But we dont have to consider anything else than that, the map can curl around itself however it wants, because it becomes a grazy linked list and all we need to keep track of is exits and previous / next for overlapping display purposes (seamless transitions between parts).
 
 ### Data structure
-I made it as a 
+I made it as a linked list, type of thing. What I want to do next is some weird kind of thing where we can have branching paths in this structure, that would probably require some kind of recursive code, it also would take slightly more effort than just changing three lines, so not just now.
 
 ### DevLog
 
@@ -498,11 +498,11 @@ Det här gör vi på det gamla vanliga sättet. Vi bygger en box2d-värld, vi kl
 
 Oj oj oj,  vad roligt. Vi kan göra en box2d-kropp med leder, per tutorials etc. Superkul ju.
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbLTM4NDk1ODY2MCwxMTE5MTQ4OTkzLC0xOT
-A2NzUxMzMzLC04NTE0ODM1OTAsMTcwMzQ2MzQ5MiwxNDgwODc4
-ODMxLDEzMzM1NzA3NzksLTM5NTQ1MzgyMywtOTEzNTIyOTU2LD
-M2MjA2MDE3OCw1MTQyNzQyNjksLTEyODc3MTU2ODksMjkyNTUx
-MjYsLTE2NDAxNDEwMDIsLTEwODgxODI5MzIsLTk1NjQwMjAwNS
-wzMTk2MjM0MDIsLTE0MTIyNTk4OTYsNDQ1NjkzODIxLDU0Mjcx
-Njg0N119
+eyJoaXN0b3J5IjpbMTczMTYxNDA0MiwtMzg0OTU4NjYwLDExMT
+kxNDg5OTMsLTE5MDY3NTEzMzMsLTg1MTQ4MzU5MCwxNzAzNDYz
+NDkyLDE0ODA4Nzg4MzEsMTMzMzU3MDc3OSwtMzk1NDUzODIzLC
+05MTM1MjI5NTYsMzYyMDYwMTc4LDUxNDI3NDI2OSwtMTI4Nzcx
+NTY4OSwyOTI1NTEyNiwtMTY0MDE0MTAwMiwtMTA4ODE4MjkzMi
+wtOTU2NDAyMDA1LDMxOTYyMzQwMiwtMTQxMjI1OTg5Niw0NDU2
+OTM4MjFdfQ==
 -->
