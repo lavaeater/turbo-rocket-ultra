@@ -164,7 +164,7 @@ fun player(player: Player, mapper: ControlMapper) {
      */
     val box2dBody = world().body {
         type = BodyDef.BodyType.DynamicBody
-        position.setZero()
+        position.set(10f, 10f)
         fixedRotation = true
         box(2f, 1f) {
             density = GameScreen.PLAYER_DENSITY
