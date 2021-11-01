@@ -47,7 +47,7 @@ To make the graphics and environment easy I am currently working with the concep
 
 ## Objectives for maps
 
-So, next step is adding objectives and enemies on a per-map basis. We only render parts of the map, so it is not inconceivable... we could render the entirety of the map, the engine can handle it, 
+So, next step is adding objectives and enemies on a per-map basis. We only render parts of the map, so it is not inconceivable... we could render the entirety of the map, the engine can handle it, of course, because that would make spawning of enemies easier etc... and otherwise we have to handle enemies just walking off into the sunset... Damn. I knew my cool idea was way too cool.
 
 
 ## Levels and Maps
@@ -504,11 +504,11 @@ Det här gör vi på det gamla vanliga sättet. Vi bygger en box2d-värld, vi kl
 
 Oj oj oj,  vad roligt. Vi kan göra en box2d-kropp med leder, per tutorials etc. Superkul ju.
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbLTE1NDE2ODUxOTAsLTM4NDk1ODY2MCwxMT
-E5MTQ4OTkzLC0xOTA2NzUxMzMzLC04NTE0ODM1OTAsMTcwMzQ2
-MzQ5MiwxNDgwODc4ODMxLDEzMzM1NzA3NzksLTM5NTQ1MzgyMy
-wtOTEzNTIyOTU2LDM2MjA2MDE3OCw1MTQyNzQyNjksLTEyODc3
-MTU2ODksMjkyNTUxMjYsLTE2NDAxNDEwMDIsLTEwODgxODI5Mz
-IsLTk1NjQwMjAwNSwzMTk2MjM0MDIsLTE0MTIyNTk4OTYsNDQ1
-NjkzODIxXX0=
+eyJoaXN0b3J5IjpbMjc5OTQ1NTc1LC0zODQ5NTg2NjAsMTExOT
+E0ODk5MywtMTkwNjc1MTMzMywtODUxNDgzNTkwLDE3MDM0NjM0
+OTIsMTQ4MDg3ODgzMSwxMzMzNTcwNzc5LC0zOTU0NTM4MjMsLT
+kxMzUyMjk1NiwzNjIwNjAxNzgsNTE0Mjc0MjY5LC0xMjg3NzE1
+Njg5LDI5MjU1MTI2LC0xNjQwMTQxMDAyLC0xMDg4MTgyOTMyLC
+05NTY0MDIwMDUsMzE5NjIzNDAyLC0xNDEyMjU5ODk2LDQ0NTY5
+MzgyMV19
 -->
