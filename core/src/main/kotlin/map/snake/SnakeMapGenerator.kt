@@ -122,18 +122,21 @@ class SnakeMapManager(
             currentSectionHeight
         )
 
+        sectionsToRender = arrayOf(newCurrentSection, *newCurrentSection.connections.values.toTypedArray(), *newCurrentSection.connections.values.flatMap { it.connections.values }.toTypedArray())
+
         for (body in bodies) {
             world().destroyBody(body)
         }
         bodies.clear()
-        for ((x, column) in currentSection.tiles.withIndex()) {
+        for(section in sectionsToRender)
+        for ((x, column) in  section.tiles.withIndex()) {
             for ((y, tile) in column.withIndex()) {
                 if (!tile.passable) {
                     val body = world().body {
                         type = BodyDef.BodyType.StaticBody
                         position.set(
-                            x * tileWidth * tileScale * scale - tileWidth * tileScale * scale / 2 + currentSection.x * tileWidth * tileScale * scale * SnakeMapSection.width,
-                            y * tileHeight * tileScale * scale - tileHeight * tileScale * scale / 2 + currentSection.y * tileHeight * tileScale * scale * SnakeMapSection.height
+                            x * tileWidth * tileScale * scale - tileWidth * tileScale * scale / 2 + section.x * tileWidth * tileScale * scale * SnakeMapSection.width,
+                            y * tileHeight * tileScale * scale - tileHeight * tileScale * scale / 2 + section.y * tileHeight * tileScale * scale * SnakeMapSection.height
                         )
                         box(tileWidth * tileScale * scale, tileHeight * tileScale * scale) {}
                     }
@@ -141,8 +144,6 @@ class SnakeMapManager(
                 }
             }
         }
-
-        sectionsToRender = arrayOf(newCurrentSection, *newCurrentSection.connections.values.toTypedArray())
     }
 
     var firstRun = true
@@ -184,28 +185,29 @@ class SnakeMapManager(
                             tileScale * scale
                         )
                     }
-                    val paintColor = when (x) {
-                        0 -> when (y) {
-                            0 -> Color.BLUE//TOPLeft
-                            SnakeMapSection.height - 1 -> Color.RED    // BottomLeft
-                            else -> Color.BLACK
-                        }
-                        SnakeMapSection.width - 1 -> when (y) {
-                            0 -> Color.GREEN//TOPRight
-                            SnakeMapSection.height - 1 -> Color.PURPLE    // BottomRIGHT
-                            else -> Color.BLACK
-                        }
-                        else -> Color.BLACK
-                    }
-                    shapeDrawer.filledCircle(
-                        actualX - tileWidth / 2 * scale * tileScale,
-                        actualY - tileHeight / 2 * scale * tileScale,
-                        1f,
-                        paintColor
-                    )
+//                    val paintColor = when (x) {
+//                        0 -> when (y) {
+//                            0 -> Color.BLUE//TOPLeft
+//                            SnakeMapSection.height - 1 -> Color.RED    // BottomLeft
+//                            else -> Color.BLACK
+//                        }
+//                        SnakeMapSection.width - 1 -> when (y) {
+//                            0 -> Color.GREEN//TOPRight
+//                            SnakeMapSection.height - 1 -> Color.PURPLE    // BottomRIGHT
+//                            else -> Color.BLACK
+//                        }
+//                        else -> Color.BLACK
+//                    }
+//                    shapeDrawer.filledCircle(
+//                        actualX - tileWidth / 2 * scale * tileScale,
+//                        actualY - tileHeight / 2 * scale * tileScale,
+//                        1f,
+//                        paintColor
+//                    )
                 }
 
         }
+        /*
         for (direction in currentSection.connections.keys) {
             when (direction) {
                 MapDirection.North -> batch.drawScaled(
@@ -234,7 +236,7 @@ class SnakeMapManager(
                 )
             }
         }
-        shapeDrawer.rectangle(bounds)
+        shapeDrawer.rectangle(bounds)*/
     }
 
     private fun checkAndUpdateBoundsAndSection(worldCenter: Vector2) {
@@ -294,8 +296,8 @@ class SnakeMapSection(
     the outer rows are all wall, except for the ones where there is a connection, obviously.
      */
     companion object {
-        const val width = 12
-        const val height = 12
+        const val width = 4
+        const val height = 4
         val directionAlignment by lazy {  mapOf(
             MapDirection.West to listOf(TileAlignment.Left, TileAlignment.TopLeft),
             MapDirection.North to listOf(TileAlignment.Top),
