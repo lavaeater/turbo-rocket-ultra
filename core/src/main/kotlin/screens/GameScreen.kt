@@ -16,6 +16,7 @@ import ecs.components.enemy.EnemyComponent
 import ecs.components.enemy.EnemySpawnerComponent
 import ecs.components.gameplay.ObjectiveComponent
 import ecs.components.gameplay.TransformComponent
+import ecs.components.player.PlayerComponent
 import ecs.systems.graphics.CameraUpdateSystem
 import ecs.systems.graphics.RenderMiniMapSystem
 import ecs.systems.graphics.RenderSystem
@@ -37,6 +38,7 @@ import ktx.math.vec2
 import map.grid.GridMapGenerator
 import map.grid.GridMapManager
 import map.snake.*
+import physics.getComponent
 import statemachine.StateMachine
 import ui.IUserInterface
 import kotlin.math.pow
@@ -171,7 +173,17 @@ D1B67A
         val xRange = startBounds.left()..startBounds.right()
         val yRange = startBounds.bottom()..startBounds.top()
         for ((controlComponent, player) in Players.players) {
-            player(player, controlComponent, vec2(xRange.random(), yRange.random()))
+            player(player, controlComponent, startBounds.randomPoint())
+        }
+    }
+
+    @OptIn(ExperimentalStdlibApi::class)
+    private fun movePlayersToStart() {
+        val startBounds = mapManager.gridMap.values.first { it.startSection }.innerBounds
+        val players = engine.getEntitiesFor(allOf(PlayerComponent::class).get())
+        for(player in players) {
+            val body = player.getComponent<BodyComponent>().body
+            body.setTransform(startBounds.randomPoint(), body.angle)
         }
     }
 
@@ -206,28 +218,35 @@ D1B67A
 
         Now add a goddamned  light
          */
+
+        for (enemy in engine.getEntitiesFor(allOf(EnemyComponent::class).get())) {
+            val bodyComponent = bodyMapper.get(enemy)
+            world.destroyBody(bodyComponent.body)
+            enemy.remove<BodyComponent>()
+        }
+
+        engine.removeAllEntities(allOf(EnemyComponent::class).get())
+
+        for (objective in engine.getEntitiesFor(allOf(ObjectiveComponent::class).get())) {
+            val bodyComponent = bodyMapper.get(objective)
+            world.destroyBody(bodyComponent.body)
+            objective.remove<BodyComponent>()
+        }
+        engine.removeAllEntities(allOf(ObjectiveComponent::class).get())
+
+        numberOfEnemies = (2f.pow(currentLevel).roundToInt() * 2).coerceAtMost(MAX_ENEMIES)
+        numberOfObjectives = 2f.pow(currentLevel).roundToInt()
+
         mapManager.gridMap = GridMapGenerator.generate(currentLevel * 16)
+        movePlayersToStart()
+
+
 //        var randomAngle = (0f..360f)
 //        val startVector = Vector2.X.cpy().scl(100f).setAngleDeg(randomAngle.random())
 //
-//        numberOfEnemies = (2f.pow(currentLevel).roundToInt() * 2).coerceAtMost(MAX_ENEMIES)
-//        numberOfObjectives = 2f.pow(currentLevel).roundToInt()
+
 //
-//        for (enemy in engine.getEntitiesFor(allOf(EnemyComponent::class).get())) {
-//            val bodyComponent = bodyMapper.get(enemy)
-//            world.destroyBody(bodyComponent.body)
-//            enemy.remove<BodyComponent>()
-//        }
 //
-//        engine.removeAllEntities(allOf(EnemyComponent::class).get())
-//
-//        for (objective in engine.getEntitiesFor(allOf(ObjectiveComponent::class).get())) {
-//            val bodyComponent = bodyMapper.get(objective)
-//            world.destroyBody(bodyComponent.body)
-//            objective.remove<BodyComponent>()
-//        }
-//
-//        engine.removeAllEntities(allOf(ObjectiveComponent::class).get())
 //
 //        for (x in 1..25)
 //            for (y in 1..25) {
@@ -236,18 +255,7 @@ D1B67A
 //
 //        val position = transformMapper.get(Players.players.values.first().entity).position.cpy()
 //
-//        for(i in 0 until numberOfObjectives) {
-//            position.add(startVector)
-//            objective(position.x, position.y)
 //
-//            val emitter = obstacle(position.x + 10f, position.y + 10f)
-//            emitter.add(engine.createComponent(EnemySpawnerComponent::class.java))
-//
-//
-//
-//            randomAngle = (0f..(randomAngle.endInclusive / 2f))
-//            startVector.setAngleDeg(randomAngle.random())
-//        }
 
     }
 

@@ -2,27 +2,43 @@ package map.grid
 
 import box2dLight.Light
 import box2dLight.RayHandler
+import com.badlogic.ashley.core.Engine
+import com.badlogic.gdx.math.Rectangle
+import ecs.components.enemy.EnemySpawnerComponent
 import factories.Box2dCategories
+import factories.objective
+import factories.obstacle
 import injection.Context
+import injection.Context.inject
 import map.snake.MapDirection
-import map.snake.SnakeMapGenerator
 import map.snake.random
+import map.snake.randomPoint
 
 class GridMapGenerator {
     companion object {
+        val engine by lazy { inject<Engine>() }
         val rayHandler by lazy { Context.inject<RayHandler>() }
-        fun generate(length: Int) : Map<Coordinate, GridMapSection> {
+        fun addObjective(bounds: Rectangle) {
+            val position = bounds.randomPoint()
+            objective(position.x, position.y)
+
+            val emitter = obstacle(position.x + 10f, position.y + 10f)
+            emitter.add(engine.createComponent(EnemySpawnerComponent::class.java))
+        }
+
+        fun generate(length: Int, objectiveDensity: Int = 4): Map<Coordinate, GridMapSection> {
             Light.setGlobalContactFilter(
                 Box2dCategories.light,
-                0, Box2dCategories.allButSensors)
-            rayHandler.setAmbientLight(.1f)
+                0, Box2dCategories.allButSensors
+            )
+            rayHandler.setAmbientLight(.05f)
             rayHandler.setBlurNum(3)
 
             val width = length
             val height = length
             var map = Array(width) {
                 Array(height) {
-                     false
+                    false
                 }
             }
             /*
@@ -35,7 +51,7 @@ class GridMapGenerator {
             val maxX = map.lastIndex
             val maxY = y
             map[x][y] = true
-            val startCoord = Coordinate(x,y)
+            val startCoord = Coordinate(x, y)
 
             for (index in 0 until length) {
                 /*
@@ -44,19 +60,19 @@ class GridMapGenerator {
                  */
                 var currentDirection: MapDirection = MapDirection.North
                 val directionsToFilter = mutableSetOf<MapDirection>()
-                if(index != 0) {
+                if (index != 0) {
                     directionsToFilter.clear()
-                    if(x == 0)
+                    if (x == 0)
                         directionsToFilter.add(MapDirection.West)
-                    if(x == maxX)
+                    if (x == maxX)
                         directionsToFilter.add(MapDirection.East)
-                    if(y == 0)
+                    if (y == 0)
                         directionsToFilter.add(MapDirection.North)
-                    if(y == maxY)
+                    if (y == maxY)
                         directionsToFilter.add(MapDirection.South)
 
                     directionsToFilter.add(MapDirection.opposing[currentDirection]!!)
-                    if(directionsToFilter.size == 4) {
+                    if (directionsToFilter.size == 4) {
                         val waht = "wwwaaat"
                     }
 
@@ -64,13 +80,13 @@ class GridMapGenerator {
                 }
                 x += MapDirection.xIndex[currentDirection]!!
                 y += MapDirection.yIndex[currentDirection]!!
-                if(x < 0)
+                if (x < 0)
                     x = 0
-                if(x > maxX)
+                if (x > maxX)
                     x = maxX
-                if(y < 0)
+                if (y < 0)
                     y = 0
-                if(y > maxY)
+                if (y > maxY)
                     y = maxY
 
                 map[x][y] = true
@@ -87,25 +103,32 @@ class GridMapGenerator {
              */
             val tileMap = mutableMapOf<Coordinate, GridMapSection>()
 
-            for((x, column) in map.withIndex()) {
-                for((y, tile) in column.withIndex())
-                    if(tile) {
+            var index = 0
+            for ((x, column) in map.withIndex()) {
+                for ((y, tile) in column.withIndex())
+                    if (tile) {
+                        index++
                         //1. Check neighbours - if they are true, we will add them as connections
                         val coordinate = Coordinate(x, y)
-                        tileMap[coordinate] = GridMapSection(coordinate, getConnections(x, y, map), coordinate == startCoord)
+                        val section = GridMapSection(coordinate, getConnections(x, y, map), coordinate == startCoord)
+
+                        tileMap[coordinate] = section
+                        if (index % objectiveDensity == 0)
+                            addObjective(section.innerBounds)
                     }
             }
             return tileMap
 
         }
-        fun getConnections(x: Int, y: Int, map: Array<Array<Boolean>>) : Set<MapDirection> {
+
+        fun getConnections(x: Int, y: Int, map: Array<Array<Boolean>>): Set<MapDirection> {
             val returnSet = mutableSetOf<MapDirection>()
-            for(direction in MapDirection.directions) {
+            for (direction in MapDirection.directions) {
                 val nX = x + MapDirection.xIndex[direction]!!
                 val nY = y + MapDirection.yIndex[direction]!!
-                if(nX >= 0 && nX <= map.lastIndex && nY >= 0 && nY <= map.first().lastIndex) {
+                if (nX >= 0 && nX <= map.lastIndex && nY >= 0 && nY <= map.first().lastIndex) {
                     //This tile exists, so we can have a connection to it
-                    if(map[nX][nY])
+                    if (map[nX][nY])
                         returnSet.add(direction)
                 }
             }

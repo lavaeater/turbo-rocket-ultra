@@ -68,10 +68,6 @@ class GridMapManager {
                     }
                 }
             }
-            /*
-                shapeDrawer.rectangle(section.bounds, Color.GREEN)
-                shapeDrawer.rectangle(section.innerBounds, Color.BLUE)
-             */
         }
     }
 }
