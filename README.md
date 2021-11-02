@@ -53,8 +53,7 @@ One of the points of doing the map as a series of inter-connected sections that 
 
 One idea was the "far off map rendering" strategy. This simply means that we take everything we do not currently render and render all of that somewhere out of the way. That would mean that enemies can meander about in that part of the map as they see fit. If they move into the sections that our intrepid player is in, we could just teleport them there. But that would also create the problem of keeping track of wether or not they could hear the players and stuff like that. Gaah. 
 
-The lowest effort thing to do would be to simply implement a generator that doesn't overlap itself - or can handle overlappi
-
+The lowest effort thing to do would be to simply implement a generator that doesn't overlap itself - or can handle overlapping. Th
 
 ## Lights and Particles
 
@@ -519,11 +518,11 @@ Det här gör vi på det gamla vanliga sättet. Vi bygger en box2d-värld, vi kl
 
 Oj oj oj,  vad roligt. Vi kan göra en box2d-kropp med leder, per tutorials etc. Superkul ju.
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbODg4MzU3NjE4LC0xNDM1ODYzNzIxLDI3OT
-k0NTU3NSwtMzg0OTU4NjYwLDExMTkxNDg5OTMsLTE5MDY3NTEz
-MzMsLTg1MTQ4MzU5MCwxNzAzNDYzNDkyLDE0ODA4Nzg4MzEsMT
-MzMzU3MDc3OSwtMzk1NDUzODIzLC05MTM1MjI5NTYsMzYyMDYw
-MTc4LDUxNDI3NDI2OSwtMTI4NzcxNTY4OSwyOTI1NTEyNiwtMT
-Y0MDE0MTAwMiwtMTA4ODE4MjkzMiwtOTU2NDAyMDA1LDMxOTYy
-MzQwMl19
+eyJoaXN0b3J5IjpbMTI2Mzg1NjQ3OSwtMTQzNTg2MzcyMSwyNz
+k5NDU1NzUsLTM4NDk1ODY2MCwxMTE5MTQ4OTkzLC0xOTA2NzUx
+MzMzLC04NTE0ODM1OTAsMTcwMzQ2MzQ5MiwxNDgwODc4ODMxLD
+EzMzM1NzA3NzksLTM5NTQ1MzgyMywtOTEzNTIyOTU2LDM2MjA2
+MDE3OCw1MTQyNzQyNjksLTEyODc3MTU2ODksMjkyNTUxMjYsLT
+E2NDAxNDEwMDIsLTEwODgxODI5MzIsLTk1NjQwMjAwNSwzMTk2
+MjM0MDJdfQ==
 -->
