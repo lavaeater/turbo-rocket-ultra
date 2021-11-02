@@ -57,6 +57,8 @@ So, what should we doing next? Traps? Bombs? Different guns? Ammo? Story?
 
 What happened to the energy?
 
+Lights, we need lights, one per section.
+
 Same goes for enemies, obviously. 
 
 So, next step is adding objectives and enemies on a per-map basis. We only render parts of the map, so it is not inconceivable... we could render the entirety of the map, the engine can handle it, of course, because that would make spawning of enemies easier etc... and otherwise we have to handle enemies just walking off into the sunset... Damn. I knew my cool idea was way too cool.
@@ -527,11 +529,11 @@ Det här gör vi på det gamla vanliga sättet. Vi bygger en box2d-värld, vi kl
 
 Oj oj oj,  vad roligt. Vi kan göra en box2d-kropp med leder, per tutorials etc. Superkul ju.
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbNzg2ODU3OTQ5LC03Mjg1NTc5OTQsLTI1OD
-k4Njk3OSwtMTM2OTA5MDAyMSwxNDI2NjQ5ODg1LC0zNzcxODkz
-NDMsLTE4MzcyMjcwOTgsLTE0MzU4NjM3MjEsMjc5OTQ1NTc1LC
-0zODQ5NTg2NjAsMTExOTE0ODk5MywtMTkwNjc1MTMzMywtODUx
-NDgzNTkwLDE3MDM0NjM0OTIsMTQ4MDg3ODgzMSwxMzMzNTcwNz
-c5LC0zOTU0NTM4MjMsLTkxMzUyMjk1NiwzNjIwNjAxNzgsNTE0
-Mjc0MjY5XX0=
+eyJoaXN0b3J5IjpbMTk0MjU4NzAwMSwtNzI4NTU3OTk0LC0yNT
+g5ODY5NzksLTEzNjkwOTAwMjEsMTQyNjY0OTg4NSwtMzc3MTg5
+MzQzLC0xODM3MjI3MDk4LC0xNDM1ODYzNzIxLDI3OTk0NTU3NS
+wtMzg0OTU4NjYwLDExMTkxNDg5OTMsLTE5MDY3NTEzMzMsLTg1
+MTQ4MzU5MCwxNzAzNDYzNDkyLDE0ODA4Nzg4MzEsMTMzMzU3MD
+c3OSwtMzk1NDUzODIzLC05MTM1MjI5NTYsMzYyMDYwMTc4LDUx
+NDI3NDI2OV19
 -->
