@@ -51,7 +51,7 @@ To make the graphics and environment easy I am currently working with the concep
 
 So, apart from the gibberish below, what is an objective on a map? The easiest concept is an area that one needs to get to, or several. We could have a "ratio" of objectives, so that we output something like number of sections / 4 objectives per map, and these are simply spots you need to "hit" to move further in the game.
 
-S
+Same goes for enemies, obviously. 
 
 So, next step is adding objectives and enemies on a per-map basis. We only render parts of the map, so it is not inconceivable... we could render the entirety of the map, the engine can handle it, of course, because that would make spawning of enemies easier etc... and otherwise we have to handle enemies just walking off into the sunset... Damn. I knew my cool idea was way too cool.
 
@@ -521,7 +521,7 @@ Det här gör vi på det gamla vanliga sättet. Vi bygger en box2d-värld, vi kl
 
 Oj oj oj,  vad roligt. Vi kan göra en box2d-kropp med leder, per tutorials etc. Superkul ju.
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbLTIzOTMwMjY3MSwtMTM2OTA5MDAyMSwxND
+eyJoaXN0b3J5IjpbLTI1ODk4Njk3OSwtMTM2OTA5MDAyMSwxND
 I2NjQ5ODg1LC0zNzcxODkzNDMsLTE4MzcyMjcwOTgsLTE0MzU4
 NjM3MjEsMjc5OTQ1NTc1LC0zODQ5NTg2NjAsMTExOTE0ODk5My
 wtMTkwNjc1MTMzMywtODUxNDgzNTkwLDE3MDM0NjM0OTIsMTQ4
