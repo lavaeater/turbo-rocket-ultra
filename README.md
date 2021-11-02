@@ -19,7 +19,8 @@ To make the graphics and environment easy I am currently working with the concep
 
 ### MVP
 
-* Objectives for maps <- doing
+* Lights and particles
+* Objectives for maps
 * Auto-generated Snake-maps <- done
 * Interactable Components in-the-game
 * Player graphics made from components / parts etc.
@@ -44,6 +45,10 @@ To make the graphics and environment easy I am currently working with the concep
 * Enemies <- Done
 * Blood Splatter <- Done
 * MiniMap <- Done
+
+## Lights and Particles
+
+So, we're revisiting particles, maybe, but mostly we want to use box2d lights in the game.
 
 ## Objectives for maps
 
@@ -504,11 +509,11 @@ Det här gör vi på det gamla vanliga sättet. Vi bygger en box2d-värld, vi kl
 
 Oj oj oj,  vad roligt. Vi kan göra en box2d-kropp med leder, per tutorials etc. Superkul ju.
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbMjc5OTQ1NTc1LC0zODQ5NTg2NjAsMTExOT
-E0ODk5MywtMTkwNjc1MTMzMywtODUxNDgzNTkwLDE3MDM0NjM0
-OTIsMTQ4MDg3ODgzMSwxMzMzNTcwNzc5LC0zOTU0NTM4MjMsLT
-kxMzUyMjk1NiwzNjIwNjAxNzgsNTE0Mjc0MjY5LC0xMjg3NzE1
-Njg5LDI5MjU1MTI2LC0xNjQwMTQxMDAyLC0xMDg4MTgyOTMyLC
-05NTY0MDIwMDUsMzE5NjIzNDAyLC0xNDEyMjU5ODk2LDQ0NTY5
-MzgyMV19
+eyJoaXN0b3J5IjpbLTE0MzU4NjM3MjEsMjc5OTQ1NTc1LC0zOD
+Q5NTg2NjAsMTExOTE0ODk5MywtMTkwNjc1MTMzMywtODUxNDgz
+NTkwLDE3MDM0NjM0OTIsMTQ4MDg3ODgzMSwxMzMzNTcwNzc5LC
+0zOTU0NTM4MjMsLTkxMzUyMjk1NiwzNjIwNjAxNzgsNTE0Mjc0
+MjY5LC0xMjg3NzE1Njg5LDI5MjU1MTI2LC0xNjQwMTQxMDAyLC
+0xMDg4MTgyOTMyLC05NTY0MDIwMDUsMzE5NjIzNDAyLC0xNDEy
+MjU5ODk2XX0=
 -->
