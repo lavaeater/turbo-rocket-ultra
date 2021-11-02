@@ -19,7 +19,7 @@ To make the graphics and environment easy I am currently working with the concep
 
 ### MVP
 
-* F
+* Far Off Map Rendering <- doing
 * Objectives for maps
 * Lights and particles <- done
 * Auto-generated Snake-maps <- done
@@ -46,6 +46,11 @@ To make the graphics and environment easy I am currently working with the concep
 * Enemies <- Done
 * Blood Splatter <- Done
 * MiniMap <- Done
+
+## Far Off Map Rendering
+
+One of the points of doing the map as a series of inter-connected sections that the player moves in and out of was that I wouldn't have to take into consideration the planar geometry of the actual map. This means that we can, for instance, go north, west, south, east and not come back to the start of the map
+
 
 ## Lights and Particles
 
@@ -510,11 +515,11 @@ Det här gör vi på det gamla vanliga sättet. Vi bygger en box2d-värld, vi kl
 
 Oj oj oj,  vad roligt. Vi kan göra en box2d-kropp med leder, per tutorials etc. Superkul ju.
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbMTI0NDA4NTE1OCwtMTQzNTg2MzcyMSwyNz
-k5NDU1NzUsLTM4NDk1ODY2MCwxMTE5MTQ4OTkzLC0xOTA2NzUx
-MzMzLC04NTE0ODM1OTAsMTcwMzQ2MzQ5MiwxNDgwODc4ODMxLD
-EzMzM1NzA3NzksLTM5NTQ1MzgyMywtOTEzNTIyOTU2LDM2MjA2
-MDE3OCw1MTQyNzQyNjksLTEyODc3MTU2ODksMjkyNTUxMjYsLT
-E2NDAxNDEwMDIsLTEwODgxODI5MzIsLTk1NjQwMjAwNSwzMTk2
-MjM0MDJdfQ==
+eyJoaXN0b3J5IjpbLTIwMzAxNjM3LC0xNDM1ODYzNzIxLDI3OT
+k0NTU3NSwtMzg0OTU4NjYwLDExMTkxNDg5OTMsLTE5MDY3NTEz
+MzMsLTg1MTQ4MzU5MCwxNzAzNDYzNDkyLDE0ODA4Nzg4MzEsMT
+MzMzU3MDc3OSwtMzk1NDUzODIzLC05MTM1MjI5NTYsMzYyMDYw
+MTc4LDUxNDI3NDI2OSwtMTI4NzcxNTY4OSwyOTI1NTEyNiwtMT
+Y0MDE0MTAwMiwtMTA4ODE4MjkzMiwtOTU2NDAyMDA1LDMxOTYy
+MzQwMl19
 -->
