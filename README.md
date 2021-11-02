@@ -47,6 +47,10 @@ To make the graphics and environment easy I am currently working with the concep
 * Blood Splatter <- Done
 * MiniMap <- Done
 
+## Objectives for maps
+
+So, next step is adding objectives and enemies on a per-map basis. We only render parts of the map, so it is not inconceivable... we could render the entirety of the map, the engine can handle it, of course, because that would make spawning of enemies easier etc... and otherwise we have to handle enemies just walking off into the sunset... Damn. I knew my cool idea was way too cool.
+
 ## Far Off Map Rendering
 
 One of the points of doing the map as a series of inter-connected sections that the player moves in and out of was that I wouldn't have to take into consideration the planar geometry of the actual map. This means that we can, for instance, go north, west, south, east and not come back to the start of the map. This is kind of cool and I kind of like that. But it puts a real damper on the ability to have enemies and other things live their actual lives on the map. So, what do we do about that?
@@ -58,11 +62,6 @@ The lowest effort thing to do would be to simply implement a generator that does
 ## Lights and Particles
 
 So, we're revisiting particles, maybe, but mostly we want to use box2d lights in the game.
-
-## Objectives for maps
-
-So, next step is adding objectives and enemies on a per-map basis. We only render parts of the map, so it is not inconceivable... we could render the entirety of the map, the engine can handle it, of course, because that would make spawning of enemies easier etc... and otherwise we have to handle enemies just walking off into the sunset... Damn. I knew my cool idea was way too cool.
-
 
 ## Levels and Maps
 
@@ -518,11 +517,11 @@ Det här gör vi på det gamla vanliga sättet. Vi bygger en box2d-värld, vi kl
 
 Oj oj oj,  vad roligt. Vi kan göra en box2d-kropp med leder, per tutorials etc. Superkul ju.
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbMTQyNjY0OTg4NSwtMzc3MTg5MzQzLC0xOD
-M3MjI3MDk4LC0xNDM1ODYzNzIxLDI3OTk0NTU3NSwtMzg0OTU4
-NjYwLDExMTkxNDg5OTMsLTE5MDY3NTEzMzMsLTg1MTQ4MzU5MC
-wxNzAzNDYzNDkyLDE0ODA4Nzg4MzEsMTMzMzU3MDc3OSwtMzk1
-NDUzODIzLC05MTM1MjI5NTYsMzYyMDYwMTc4LDUxNDI3NDI2OS
-wtMTI4NzcxNTY4OSwyOTI1NTEyNiwtMTY0MDE0MTAwMiwtMTA4
-ODE4MjkzMl19
+eyJoaXN0b3J5IjpbLTEzNjkwOTAwMjEsMTQyNjY0OTg4NSwtMz
+c3MTg5MzQzLC0xODM3MjI3MDk4LC0xNDM1ODYzNzIxLDI3OTk0
+NTU3NSwtMzg0OTU4NjYwLDExMTkxNDg5OTMsLTE5MDY3NTEzMz
+MsLTg1MTQ4MzU5MCwxNzAzNDYzNDkyLDE0ODA4Nzg4MzEsMTMz
+MzU3MDc3OSwtMzk1NDUzODIzLC05MTM1MjI5NTYsMzYyMDYwMT
+c4LDUxNDI3NDI2OSwtMTI4NzcxNTY4OSwyOTI1NTEyNiwtMTY0
+MDE0MTAwMl19
 -->
