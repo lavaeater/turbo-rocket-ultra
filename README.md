@@ -53,7 +53,7 @@ So, apart from the gibberish below, what is an objective on a map? The easiest c
 
 So, that is done, objectives, that is. 
 
-So, what should we doing next? Traps? Bombs? Diff
+So, what should we doing next? Traps? Bombs? Different guns? Ammo? Story
 
 Same goes for enemies, obviously. 
 
@@ -525,11 +525,11 @@ Det här gör vi på det gamla vanliga sättet. Vi bygger en box2d-värld, vi kl
 
 Oj oj oj,  vad roligt. Vi kan göra en box2d-kropp med leder, per tutorials etc. Superkul ju.
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbODM4MTcwMjk0LC03Mjg1NTc5OTQsLTI1OD
-k4Njk3OSwtMTM2OTA5MDAyMSwxNDI2NjQ5ODg1LC0zNzcxODkz
-NDMsLTE4MzcyMjcwOTgsLTE0MzU4NjM3MjEsMjc5OTQ1NTc1LC
-0zODQ5NTg2NjAsMTExOTE0ODk5MywtMTkwNjc1MTMzMywtODUx
-NDgzNTkwLDE3MDM0NjM0OTIsMTQ4MDg3ODgzMSwxMzMzNTcwNz
-c5LC0zOTU0NTM4MjMsLTkxMzUyMjk1NiwzNjIwNjAxNzgsNTE0
-Mjc0MjY5XX0=
+eyJoaXN0b3J5IjpbLTE1MDUyNDU5ODQsLTcyODU1Nzk5NCwtMj
+U4OTg2OTc5LC0xMzY5MDkwMDIxLDE0MjY2NDk4ODUsLTM3NzE4
+OTM0MywtMTgzNzIyNzA5OCwtMTQzNTg2MzcyMSwyNzk5NDU1Nz
+UsLTM4NDk1ODY2MCwxMTE5MTQ4OTkzLC0xOTA2NzUxMzMzLC04
+NTE0ODM1OTAsMTcwMzQ2MzQ5MiwxNDgwODc4ODMxLDEzMzM1Nz
+A3NzksLTM5NTQ1MzgyMywtOTEzNTIyOTU2LDM2MjA2MDE3OCw1
+MTQyNzQyNjldfQ==
 -->
