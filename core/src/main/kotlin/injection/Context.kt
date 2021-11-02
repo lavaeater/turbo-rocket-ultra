@@ -74,7 +74,7 @@ object Context {
             addSystem(GamepadInputSystem())
             addSystem(BodyDestroyerSystem(inject())) //world
             addSystem(CharacterWalkAndShootDirectionSystem())
-            addSystem(ShootDebugRenderSystem())
+  //          addSystem(ShootDebugRenderSystem())
             addSystem(PlayerShootingSystem(inject()))
             addSystem(EnemyDeathSystem())
             addSystem(EnemyMovementSystem())
@@ -86,7 +86,7 @@ object Context {
             addSystem(EnemyDirectionSystem())
             addSystem(EnemyHearsShotsSystem())
             addSystem(InvestigateSystem())
-            addSystem(EnemyDebugRenderSystem(false, false))
+//            addSystem(EnemyDebugRenderSystem(false, false))
             addSystem(PlayerDeathSystem())
             addSystem(EnemySpawnSystem())
             addSystem(EnemyOptimizerSystem())

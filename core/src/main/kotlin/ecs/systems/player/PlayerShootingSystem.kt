@@ -16,6 +16,7 @@ import ktx.box2d.rayCast
 import ktx.math.random
 import ktx.math.vec2
 import physics.*
+import tru.Assets
 
 
 class PlayerShootingSystem(private val audioPlayer: AudioPlayer) : IteratingSystem(
@@ -93,9 +94,11 @@ class PlayerShootingSystem(private val audioPlayer: AudioPlayer) : IteratingSyst
                     if(enemyEntity.getComponent<EnemyComponent>().health < 0) {
                         entity.getComponent<PlayerComponent>().player.kills++
                     }
-                    //TODO: Better splatter particles, mate
-//                    splatterParticles(closestFixture.body, controlComponent.aimVector.cpy(),
-//                        color = Color((0.5f..0.7f).random(), 0f, 0f, (.5f..1f).random()))
+                    val effect = Assets.splatterEffectPool.obtain()
+                    val emitter = effect.emitters.first()
+                    emitter.setPosition(closestFixture.body.worldCenter.x, closestFixture.body.worldCenter.y)
+                    emitter.rotation.setHigh(controlComponent.aimVector.cpy().nor().angleDeg())
+                    emitter.start()
                 }
             }
         }
