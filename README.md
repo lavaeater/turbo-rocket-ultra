@@ -19,7 +19,7 @@ To make the graphics and environment easy I am currently working with the concep
 
 ### MVP
 
-* Objectives for maps
+* Objectives for maps <- doing
 * Far Off Map Rendering <- done
 * Lights and particles <- done
 * Auto-generated Snake-maps <- done
@@ -521,11 +521,11 @@ Det här gör vi på det gamla vanliga sättet. Vi bygger en box2d-värld, vi kl
 
 Oj oj oj,  vad roligt. Vi kan göra en box2d-kropp med leder, per tutorials etc. Superkul ju.
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbMTY5NDUyNzE5MCwtMjU4OTg2OTc5LC0xMz
-Y5MDkwMDIxLDE0MjY2NDk4ODUsLTM3NzE4OTM0MywtMTgzNzIy
-NzA5OCwtMTQzNTg2MzcyMSwyNzk5NDU1NzUsLTM4NDk1ODY2MC
-wxMTE5MTQ4OTkzLC0xOTA2NzUxMzMzLC04NTE0ODM1OTAsMTcw
-MzQ2MzQ5MiwxNDgwODc4ODMxLDEzMzM1NzA3NzksLTM5NTQ1Mz
-gyMywtOTEzNTIyOTU2LDM2MjA2MDE3OCw1MTQyNzQyNjksLTEy
-ODc3MTU2ODldfQ==
+eyJoaXN0b3J5IjpbOTI3MTE0MTkyLC0yNTg5ODY5NzksLTEzNj
+kwOTAwMjEsMTQyNjY0OTg4NSwtMzc3MTg5MzQzLC0xODM3MjI3
+MDk4LC0xNDM1ODYzNzIxLDI3OTk0NTU3NSwtMzg0OTU4NjYwLD
+ExMTkxNDg5OTMsLTE5MDY3NTEzMzMsLTg1MTQ4MzU5MCwxNzAz
+NDYzNDkyLDE0ODA4Nzg4MzEsMTMzMzU3MDc3OSwtMzk1NDUzOD
+IzLC05MTM1MjI5NTYsMzYyMDYwMTc4LDUxNDI3NDI2OSwtMTI4
+NzcxNTY4OV19
 -->
