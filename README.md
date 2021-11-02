@@ -49,7 +49,9 @@ To make the graphics and environment easy I am currently working with the concep
 
 ## Far Off Map Rendering
 
-One of the points of doing the map as a series of inter-connected sections that the player moves in and out of was that I wouldn't have to take into consideration the planar geometry of the actual map. This means that we can, for instance, go north, west, south, east and not come back to the start of the map
+One of the points of doing the map as a series of inter-connected sections that the player moves in and out of was that I wouldn't have to take into consideration the planar geometry of the actual map. This means that we can, for instance, go north, west, south, east and not come back to the start of the map. This is kind of cool and I kind of like that. But it puts a real damper on the ability to have enemies and other things live their actual lives on the map. So, what do we do about that?
+
+One idea was the "far off map rendering" strategy. This simply means that we take everything we do not currently render and render all of that somewhere out of the way. 
 
 
 ## Lights and Particles
@@ -515,7 +517,7 @@ Det här gör vi på det gamla vanliga sättet. Vi bygger en box2d-värld, vi kl
 
 Oj oj oj,  vad roligt. Vi kan göra en box2d-kropp med leder, per tutorials etc. Superkul ju.
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbLTIwMzAxNjM3LC0xNDM1ODYzNzIxLDI3OT
+eyJoaXN0b3J5IjpbNjU3ODk1OTM0LC0xNDM1ODYzNzIxLDI3OT
 k0NTU3NSwtMzg0OTU4NjYwLDExMTkxNDg5OTMsLTE5MDY3NTEz
 MzMsLTg1MTQ4MzU5MCwxNzAzNDYzNDkyLDE0ODA4Nzg4MzEsMT
 MzMzU3MDc3OSwtMzk1NDUzODIzLC05MTM1MjI5NTYsMzYyMDYw
