@@ -1,12 +1,17 @@
 package map.snake
 
+import box2dLight.Light
 import box2dLight.RayHandler
+import com.badlogic.gdx.physics.box2d.Filter
+import factories.Box2dCategories
 import injection.Context.inject
 
 class SnakeMapGenerator {
     companion object {
         val rayHandler by lazy { inject<RayHandler>() }
         fun generate(minMax: IntRange = 16..32): SnakeMapSection {
+            Light.setGlobalContactFilter(Box2dCategories.light,
+                0, Box2dCategories.allButSensors)
             rayHandler.setAmbientLight(.1f)
             rayHandler.setBlurNum(3)
             val size = minMax.random()

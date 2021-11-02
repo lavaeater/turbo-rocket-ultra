@@ -3,10 +3,8 @@ package factories
 import ai.Tree
 import com.badlogic.ashley.core.Engine
 import com.badlogic.ashley.core.Entity
-import com.badlogic.gdx.graphics.Color
 import com.badlogic.gdx.math.MathUtils
 import com.badlogic.gdx.math.MathUtils.degreesToRadians
-import com.badlogic.gdx.math.Vector
 import com.badlogic.gdx.math.Vector2
 import com.badlogic.gdx.physics.box2d.Body
 import com.badlogic.gdx.physics.box2d.BodyDef
@@ -22,7 +20,6 @@ import ecs.components.gameplay.TransformComponent
 import ecs.components.graphics.*
 import ecs.components.graphics.renderables.AnimatedCharacterSprite
 import ecs.components.graphics.renderables.RenderableTextureRegion
-import ecs.components.graphics.renderables.RenderableTextureRegions
 import ecs.components.player.FiredShotsComponent
 import ecs.components.player.FlashlightComponent
 import ecs.components.player.PlayerComponent
@@ -39,6 +36,8 @@ import ktx.math.vec2
 import physics.addComponent
 import tru.Assets
 import screens.GameScreen
+import kotlin.experimental.or
+import kotlin.experimental.xor
 
 fun world(): World {
     return inject()
@@ -55,79 +54,19 @@ fun enemy(x: Float = 0f, y: Float = 0f) {
 val colorRange = 0f..1f
 
 object Box2dCategories {
-    const val splatter: Short = 0x0002
-    const val player: Short = 0x0003
-    const val enemy: Short = 0x0004
-    const val objective: Short = 0x0005
-    const val obstacle: Short = 0x0006
+    const val player: Short = 0x01
+    const val enemy: Short = 0x02
+    const val objective: Short = 0x04
+    const val obstacle: Short = 0x08
+    const val sensor: Short = 0x10
+    const val light: Short = 0x20
+    val all = player or enemy or objective or obstacle or sensor or light
+    val allButSensors = player or enemy or objective or obstacle or light
+    val allButLights = player or enemy or objective or obstacle or sensor
 }
 
 object Box2dCollisionMasks {
-    const val splatter = Box2dCategories.splatter
     const val players = Box2dCategories.player
-}
-
-fun splatterParticles(
-    fromBody: Body,
-    towards: Vector2,
-    count: Int = 30,
-    life: Float = .5f,
-    force: ClosedFloatingPointRange<Float> = 1f..10f,
-    color: Color = Color.RED
-) {
-    splatterParticles(fromBody.worldCenter.cpy(), towards, count, life, force, color)
-}
-
-fun splatterParticles(
-    from: Vector2,
-    towards: Vector2,
-    count: Int = 1,
-    lifeInSeconds: Float = .5f,
-    force: ClosedFloatingPointRange<Float> = 1f..10f,
-    c: Color = Color(
-        colorRange.random(), colorRange.random(), colorRange.random(), 1f
-    )
-) {
-
-
-    val splatterAngle = (-1f..1f)
-    val forceVector = towards.cpy().scl(force.random())
-    forceVector.setAngleDeg((forceVector.angleDeg() + splatterAngle.random()))
-
-    for (i in 0 until count) {
-        val box2dBody = world().body {
-            type = BodyDef.BodyType.DynamicBody
-            position.set(from)
-
-            circle(0.05f) {
-                density = 0.1f
-                restitution = 1f
-                filter {
-                    categoryBits = Box2dCategories.splatter
-                    maskBits = Box2dCollisionMasks.splatter
-                }
-            }
-            linearDamping = (25f..125f).random()
-            angularDamping = 5f
-        }
-        val entity = engine().createEntity().apply {
-            addComponent<BodyComponent> { body = box2dBody }
-            addComponent<TransformComponent> {
-                position.set(from)
-            }
-            addComponent<ParticleComponent> {
-                life = lifeInSeconds
-                color = c
-            }
-        }
-        box2dBody.userData = entity
-        engine().addEntity(entity)
-        box2dBody.applyLinearImpulse(
-            forceVector,
-            box2dBody.worldCenter,
-            true
-        )
-    }
 }
 
 fun splatterEntity(at: Vector2, angle: Float) {
@@ -234,12 +173,17 @@ fun enemy(at: Vector2) {
         box(2f, 1f) {
             density = GameScreen.PLAYER_DENSITY
             filter {
-                categoryBits = Box2dCategories.player
+                categoryBits = Box2dCategories.enemy
+                maskBits = Box2dCategories.all
             }
         }
         circle(10f) {
             density = .1f
             isSensor = true
+            filter {
+                categoryBits = Box2dCategories.sensor
+                maskBits = Box2dCategories.allButLights
+            }
         }
     }
 
