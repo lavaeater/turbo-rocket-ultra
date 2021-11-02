@@ -49,6 +49,10 @@ To make the graphics and environment easy I am currently working with the concep
 
 ## Objectives for maps
 
+So, apart from the gibberish below, what is an objective on a map? The easiest concept is an area that one needs to get to, or several. We could have a "ratio" of objectives, so that we output something like number of sections / 4 objectives per map, and these are simply spots you need to "hit" to move further in the game.
+
+S
+
 So, next step is adding objectives and enemies on a per-map basis. We only render parts of the map, so it is not inconceivable... we could render the entirety of the map, the engine can handle it, of course, because that would make spawning of enemies easier etc... and otherwise we have to handle enemies just walking off into the sunset... Damn. I knew my cool idea was way too cool.
 
 ## Far Off Map Rendering
@@ -517,11 +521,11 @@ Det här gör vi på det gamla vanliga sättet. Vi bygger en box2d-värld, vi kl
 
 Oj oj oj,  vad roligt. Vi kan göra en box2d-kropp med leder, per tutorials etc. Superkul ju.
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbLTEzNjkwOTAwMjEsMTQyNjY0OTg4NSwtMz
-c3MTg5MzQzLC0xODM3MjI3MDk4LC0xNDM1ODYzNzIxLDI3OTk0
-NTU3NSwtMzg0OTU4NjYwLDExMTkxNDg5OTMsLTE5MDY3NTEzMz
-MsLTg1MTQ4MzU5MCwxNzAzNDYzNDkyLDE0ODA4Nzg4MzEsMTMz
-MzU3MDc3OSwtMzk1NDUzODIzLC05MTM1MjI5NTYsMzYyMDYwMT
-c4LDUxNDI3NDI2OSwtMTI4NzcxNTY4OSwyOTI1NTEyNiwtMTY0
-MDE0MTAwMl19
+eyJoaXN0b3J5IjpbLTIzOTMwMjY3MSwtMTM2OTA5MDAyMSwxND
+I2NjQ5ODg1LC0zNzcxODkzNDMsLTE4MzcyMjcwOTgsLTE0MzU4
+NjM3MjEsMjc5OTQ1NTc1LC0zODQ5NTg2NjAsMTExOTE0ODk5My
+wtMTkwNjc1MTMzMywtODUxNDgzNTkwLDE3MDM0NjM0OTIsMTQ4
+MDg3ODgzMSwxMzMzNTcwNzc5LC0zOTU0NTM4MjMsLTkxMzUyMj
+k1NiwzNjIwNjAxNzgsNTE0Mjc0MjY5LC0xMjg3NzE1Njg5LDI5
+MjU1MTI2XX0=
 -->
