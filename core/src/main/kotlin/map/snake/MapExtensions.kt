@@ -10,7 +10,7 @@ fun Rectangle.right(): Float {
     return x + width
 }
 
-fun Rectangle.top(): Float {
+fun Rectangle.bottom(): Float {
     return y
 }
 
@@ -22,7 +22,7 @@ fun Rectangle.horizontalCenter(): Float {
     return x + width / 2
 }
 
-fun Rectangle.bottom(): Float {
+fun Rectangle.top(): Float {
     return y + height
 }
 fun <T> List<T>.random(): T {

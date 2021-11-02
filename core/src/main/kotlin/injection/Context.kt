@@ -23,6 +23,7 @@ import ecs.systems.player.*
 import ktx.box2d.createWorld
 import ktx.inject.Context
 import ktx.inject.register
+import map.grid.GridMapManager
 import map.snake.SnakeMapGenerator
 import map.snake.SnakeMapManager
 import physics.ContactManager
@@ -58,7 +59,7 @@ object Context {
                 setContactListener(ContactManager())
             })
             bindSingleton(AudioPlayer())
-            bindSingleton(SnakeMapManager())
+            bindSingleton(GridMapManager())
             bindSingleton(RayHandler(inject()))
             bindSingleton(getEngine())
         }
