@@ -14,6 +14,7 @@ import ecs.systems.ai.*
 import ecs.systems.ai.towers.TowerShootSystem
 import ecs.systems.ai.towers.TowerTargetFinderSystem
 import ecs.systems.enemy.*
+import ecs.systems.fx.BloodSplatterEffectRenderSystem
 import ecs.systems.input.KeyboardInputSystem
 import ecs.systems.fx.RenderBox2dLightSystem
 import ecs.systems.graphics.*
@@ -98,6 +99,7 @@ object Context {
             addSystem(RenderMiniMapSystem())
             addSystem(PlayerFlashlightSystem())
             addSystem(RenderBox2dLightSystem(inject(), inject()))
+            addSystem(BloodSplatterEffectRenderSystem(inject<PolygonSpriteBatch>() as Batch))
         }
     }
 }

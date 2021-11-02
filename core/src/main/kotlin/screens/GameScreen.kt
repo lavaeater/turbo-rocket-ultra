@@ -83,14 +83,25 @@ class GameScreen(private val gameState: StateMachine<GameState, GameEvent>) : Kt
         }
 
         addPlayers()
+        addEnemies()
+
         generateMap()
         addTower()
         ui.reset()
         ui.show()
     }
 
+    private fun addEnemies() {
+            enemy(11f,11f)
+
+        objective(0f, 0f)
+
+        val emitter = obstacle(10f, 10f)
+        emitter.add(engine.createComponent(EnemySpawnerComponent::class.java))
+    }
+
     private fun addTower() {
-         tower(vec2(-2f,2f))
+         //tower(vec2(-2f,2f))
     }
     /*
     4E4048
@@ -231,8 +242,7 @@ D1B67A
             val emitter = obstacle(position.x + 10f, position.y + 10f)
             emitter.add(engine.createComponent(EnemySpawnerComponent::class.java))
 
-            for(e in 0 until numberOfEnemies)
-                enemy(position.x + enemyRandomFactor.random(), position.y + enemyRandomFactor.random())
+
 
             randomAngle = (0f..(randomAngle.endInclusive / 2f))
             startVector.setAngleDeg(randomAngle.random())

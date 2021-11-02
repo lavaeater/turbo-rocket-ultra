@@ -22,8 +22,8 @@ timeline1: 0.96575344
 - Life - 
 lowMin: 150.0
 lowMax: 150.0
-highMin: 500.0
-highMax: 500.0
+highMin: 150.0
+highMax: 150.0
 relative: false
 scalingCount: 3
 scaling0: 1.0
@@ -133,16 +133,22 @@ lowMax: 0.0
 highMin: 1.0
 highMax: 1.0
 relative: false
-scalingCount: 4
-scaling0: 0.0
+scalingCount: 7
+scaling0: 0.9298246
 scaling1: 1.0
-scaling2: 0.75
-scaling3: 0.0
-timelineCount: 4
+scaling2: 0.94736844
+scaling3: 0.49122807
+scaling4: 0.24561404
+scaling5: 0.10526316
+scaling6: 0.0
+timelineCount: 7
 timeline0: 0.0
-timeline1: 0.2
-timeline2: 0.8
-timeline3: 1.0
+timeline1: 0.001
+timeline2: 0.46575344
+timeline3: 0.55479455
+timeline4: 0.6712329
+timeline5: 0.8356164
+timeline6: 1.0
 - Options - 
 attached: false
 continuous: false
@@ -152,5 +158,5 @@ behind: false
 premultipliedAlpha: false
 spriteMode: single
 - Image Paths -
-/home/tommie/projects/games/assets/my_assets/blood_particle.png
+blood_particle.png
 

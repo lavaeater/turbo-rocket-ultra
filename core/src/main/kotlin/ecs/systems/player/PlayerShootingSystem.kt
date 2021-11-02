@@ -8,6 +8,7 @@ import com.badlogic.gdx.physics.box2d.World
 import ecs.components.enemy.EnemyComponent
 import ecs.components.gameplay.TransformComponent
 import ecs.components.player.*
+import factories.splatterEntity
 import injection.Context.inject
 import ktx.ashley.allOf
 import ktx.ashley.mapperFor
@@ -94,11 +95,7 @@ class PlayerShootingSystem(private val audioPlayer: AudioPlayer) : IteratingSyst
                     if(enemyEntity.getComponent<EnemyComponent>().health < 0) {
                         entity.getComponent<PlayerComponent>().player.kills++
                     }
-                    val effect = Assets.splatterEffectPool.obtain()
-                    val emitter = effect.emitters.first()
-                    emitter.setPosition(closestFixture.body.worldCenter.x, closestFixture.body.worldCenter.y)
-                    emitter.rotation.setHigh(controlComponent.aimVector.cpy().nor().angleDeg())
-                    emitter.start()
+                    splatterEntity(closestFixture.body.worldCenter, controlComponent.aimVector.cpy().nor().angleDeg())
                 }
             }
         }

@@ -11,6 +11,7 @@ import ecs.components.enemy.EnemyComponent
 import ecs.components.gameplay.TransformComponent
 import ecs.components.towers.Shoot
 import ecs.components.towers.TargetInRange
+import factories.splatterEntity
 import injection.Context
 import ktx.ashley.allOf
 import ktx.box2d.RayCast
@@ -68,18 +69,7 @@ the desired angle
                     if (closestFixture.isEntity() && closestFixture.body.isEnemy()) {
                         val enemyEntity = closestFixture.getEntity()
                         enemyEntity.getComponent<EnemyComponent>().takeDamage(3..8)
-
-                        val effect = Assets.splatterEffectPool.obtain()
-                        val emitter = effect.emitters.first()
-                        emitter.setPosition(closestFixture.body.worldCenter.x, closestFixture.body.worldCenter.y)
-                        emitter.rotation.setHigh(targetInRange.aimTarget.cpy().nor().angleDeg())
-                        emitter.start()
-
-                        //TODO: Fix better blood splatter particles, somehow
-//                        splatterParticles(
-//                            closestFixture.body, targetInRange.aimTarget.cpy().nor(),
-//                            color = Color((0.5f..0.7f).random(), 0f, 0f, (.5f..1f).random())
-//                        )
+                        splatterEntity(closestFixture.body.worldCenter, targetInRange.aimTarget.cpy().nor().angleDeg())
                     }
                     shootComponent.status = Task.Status.SUCCEEDED
                 } else {

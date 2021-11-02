@@ -6,6 +6,7 @@ import com.badlogic.ashley.core.Entity
 import com.badlogic.gdx.graphics.Color
 import com.badlogic.gdx.math.MathUtils
 import com.badlogic.gdx.math.MathUtils.degreesToRadians
+import com.badlogic.gdx.math.Vector
 import com.badlogic.gdx.math.Vector2
 import com.badlogic.gdx.physics.box2d.Body
 import com.badlogic.gdx.physics.box2d.BodyDef
@@ -14,6 +15,7 @@ import ecs.components.*
 import ecs.components.ai.BehaviorComponent
 import ecs.components.enemy.EnemyComponent
 import ecs.components.enemy.EnemySensorComponent
+import ecs.components.fx.SplatterComponent
 import ecs.components.gameplay.ObjectiveComponent
 import ecs.components.gameplay.ObstacleComponent
 import ecs.components.gameplay.TransformComponent
@@ -125,6 +127,15 @@ fun splatterParticles(
             box2dBody.worldCenter,
             true
         )
+    }
+}
+
+fun splatterEntity(at: Vector2, angle: Float) {
+    val splatterEntity = engine().entity {
+        with<SplatterComponent> {
+            this.at = at.cpy()
+            this.rotation = angle
+        }
     }
 }
 

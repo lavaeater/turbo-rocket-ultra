@@ -42,7 +42,8 @@ object Assets : Disposable {
 
     val splatterEffectPool: ParticleEffectPool by lazy {
         val pe = ParticleEffect()
-        pe.load(Gdx.files.internal("particles/Particles.party"),Gdx.files.internal(""))
+        pe.load(Gdx.files.internal("particles/blood_splatter.effect"),Gdx.files.internal("particles/"))
+        pe.scaleEffect(0.025f)
         ParticleEffectPool(pe, 1000, 3000)
     }
 
