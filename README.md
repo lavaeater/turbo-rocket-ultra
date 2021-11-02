@@ -19,8 +19,8 @@ To make the graphics and environment easy I am currently working with the concep
 
 ### MVP
 
-* Lights and particles <- done
 * Objectives for maps
+* Lights and particles <- done
 * Auto-generated Snake-maps <- done
 * Interactable Components in-the-game
 * Player graphics made from components / parts etc.
@@ -509,7 +509,7 @@ Det här gör vi på det gamla vanliga sättet. Vi bygger en box2d-värld, vi kl
 
 Oj oj oj,  vad roligt. Vi kan göra en box2d-kropp med leder, per tutorials etc. Superkul ju.
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbMTYxOTcxMDQ3MCwtMTQzNTg2MzcyMSwyNz
+eyJoaXN0b3J5IjpbLTEwODMxMTc1MCwtMTQzNTg2MzcyMSwyNz
 k5NDU1NzUsLTM4NDk1ODY2MCwxMTE5MTQ4OTkzLC0xOTA2NzUx
 MzMzLC04NTE0ODM1OTAsMTcwMzQ2MzQ5MiwxNDgwODc4ODMxLD
 EzMzM1NzA3NzksLTM5NTQ1MzgyMywtOTEzNTIyOTU2LDM2MjA2
