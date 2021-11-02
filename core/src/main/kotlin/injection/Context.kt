@@ -1,13 +1,13 @@
 package injection
 
 import audio.AudioPlayer
+import box2dLight.RayHandler
 import com.badlogic.ashley.core.Engine
 import com.badlogic.ashley.core.PooledEngine
 import com.badlogic.gdx.graphics.Camera
 import com.badlogic.gdx.graphics.OrthographicCamera
 import com.badlogic.gdx.graphics.g2d.Batch
 import com.badlogic.gdx.graphics.g2d.PolygonSpriteBatch
-import com.badlogic.gdx.maps.MapRenderer
 import com.badlogic.gdx.utils.viewport.ExtendViewport
 import ecs.systems.*
 import ecs.systems.ai.*
@@ -15,16 +15,15 @@ import ecs.systems.ai.towers.TowerShootSystem
 import ecs.systems.ai.towers.TowerTargetFinderSystem
 import ecs.systems.enemy.*
 import ecs.systems.input.KeyboardInputSystem
-import ecs.systems.fx.AddSplatterSystem
-import ecs.systems.fx.SplatterRemovalSystem
+import ecs.systems.fx.RenderBox2dLightSystem
 import ecs.systems.graphics.*
 import ecs.systems.input.GamepadInputSystem
-import ecs.systems.input.VehicleControlSystem
 import ecs.systems.player.*
 import ktx.box2d.createWorld
 import ktx.inject.Context
 import ktx.inject.register
 import map.snake.SnakeMapGenerator
+import map.snake.SnakeMapManager
 import physics.ContactManager
 import screens.GameScreen
 import ui.IUserInterface
@@ -58,7 +57,8 @@ object Context {
                 setContactListener(ContactManager())
             })
             bindSingleton(AudioPlayer())
-            bindSingleton(SnakeMapGenerator().generate())
+            bindSingleton(SnakeMapManager())
+            bindSingleton(RayHandler(inject()))
             bindSingleton(getEngine())
         }
     }
@@ -66,7 +66,7 @@ object Context {
     private fun getEngine(): Engine {
         return PooledEngine().apply {
             addSystem(PhysicsSystem(inject()))
-            //addSystem(PhysicsDebugRendererSystem(inject(), inject()))
+            addSystem(PhysicsDebugRendererSystem(inject(), inject()))
             addSystem(CameraUpdateSystem())
             addSystem(PlayerMoveSystem())
             addSystem(PlayerBuildModeSystem())
@@ -96,6 +96,7 @@ object Context {
             addSystem(RenderSystem(inject<PolygonSpriteBatch>() as Batch))
             addSystem(RenderUserInterfaceSystem(inject<PolygonSpriteBatch>() as Batch))
             addSystem(RenderMiniMapSystem())
+            addSystem(RenderBox2dLightSystem(inject()))
         }
     }
 }

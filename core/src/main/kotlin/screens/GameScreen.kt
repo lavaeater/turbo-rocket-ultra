@@ -34,6 +34,8 @@ import ktx.ashley.mapperFor
 import ktx.ashley.remove
 import ktx.math.random
 import ktx.math.vec2
+import map.snake.SnakeMapGenerator
+import map.snake.SnakeMapManager
 import statemachine.StateMachine
 import ui.IUserInterface
 import kotlin.math.pow
@@ -174,7 +176,24 @@ D1B67A
     }
 
     private val bodyMapper = mapperFor<BodyComponent>()
+    private val mapManager by lazy { inject<SnakeMapManager>() }
     private fun generateMap() {
+        /*
+        We start the game with a map already generated. But when, how, will we create
+        all the entities and stuff? The map should and must be generated HERE, not
+        anywhere else.
+
+        And what do we do with the crazy fucking thing that the map makes no sense and
+        is all over the place? Damnit. That thing actually came back to bite me. Darn.
+
+        The absolutely easiest way to do it is to simply make the map geometrically consistent.
+
+        BORING!
+
+        Now add a goddamned  light
+         */
+
+        mapManager.currentSection = SnakeMapGenerator.generate((currentLevel*4)..(currentLevel*8))
 
         var randomAngle = (0f..360f)
         val startVector = Vector2.X.cpy().scl(100f).setAngleDeg(randomAngle.random())

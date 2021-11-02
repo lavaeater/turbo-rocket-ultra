@@ -40,6 +40,7 @@ dependencies {
 	api "io.github.libktx:ktx-i18n:$ktxI18nVersion"
 	api "io.github.libktx:ktx-tiled:$ktxTiledVersion"
 	api "space.earlygrey:shapedrawer:$shapeDrawerVersion"
+	api "com.badlogicgames.box2dlights:box2dlights:1.4"
 	implementation "uk.co.electronstudio.sdl2gdx:sdl2gdx:1.0.4"
 	implementation "org.jetbrains.kotlinx:kotlinx-serialization-json:1.2.1"
 
