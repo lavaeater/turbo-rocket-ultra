@@ -2,7 +2,6 @@ package map.snake
 
 import box2dLight.Light
 import box2dLight.RayHandler
-import com.badlogic.gdx.physics.box2d.Filter
 import factories.Box2dCategories
 import injection.Context.inject
 
