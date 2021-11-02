@@ -53,7 +53,10 @@ So, apart from the gibberish below, what is an objective on a map? The easiest c
 
 So, that is done, objectives, that is. 
 
-So, what should we doing next? Traps? Bombs? Different guns? Ammo? Story
+So, what should we doing next? Traps? Bombs? Different guns? Ammo? Story?
+
+What happened to the energy?
+
 
 Same goes for enemies, obviously. 
 
@@ -525,7 +528,7 @@ Det här gör vi på det gamla vanliga sättet. Vi bygger en box2d-värld, vi kl
 
 Oj oj oj,  vad roligt. Vi kan göra en box2d-kropp med leder, per tutorials etc. Superkul ju.
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbLTE1MDUyNDU5ODQsLTcyODU1Nzk5NCwtMj
+eyJoaXN0b3J5IjpbLTE5NTE2NDQ5MTcsLTcyODU1Nzk5NCwtMj
 U4OTg2OTc5LC0xMzY5MDkwMDIxLDE0MjY2NDk4ODUsLTM3NzE4
 OTM0MywtMTgzNzIyNzA5OCwtMTQzNTg2MzcyMSwyNzk5NDU1Nz
 UsLTM4NDk1ODY2MCwxMTE5MTQ4OTkzLC0xOTA2NzUxMzMzLC04
