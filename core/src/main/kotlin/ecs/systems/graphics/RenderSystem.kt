@@ -73,14 +73,6 @@ class RenderSystem(
             batch,
             shapeDrawer
         )
-        entity[splatterMapper]?.render(
-            transform.position,
-            transform.rotation,
-            scale,
-            animationStateTime,
-            batch,
-            shapeDrawer
-        )
     }
 }
 

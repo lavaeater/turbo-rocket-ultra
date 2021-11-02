@@ -6,19 +6,13 @@ import com.badlogic.gdx.audio.Sound
 import com.badlogic.gdx.graphics.Color
 import com.badlogic.gdx.graphics.Pixmap
 import com.badlogic.gdx.graphics.Texture
-import com.badlogic.gdx.graphics.g2d.Batch
-import com.badlogic.gdx.graphics.g2d.PolygonSpriteBatch
-import com.badlogic.gdx.graphics.g2d.TextureRegion
+import com.badlogic.gdx.graphics.g2d.*
 import com.badlogic.gdx.scenes.scene2d.ui.Skin
 import com.badlogic.gdx.utils.Disposable
 import injection.Context.inject
 import ktx.scene2d.Scene2DSkin
-import space.earlygrey.shapedrawer.ShapeDrawer
-import com.badlogic.gdx.graphics.g2d.BitmapFont
-import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator.FreeTypeFontParameter
-
-import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator
 import map.snake.MapDirection
+import space.earlygrey.shapedrawer.ShapeDrawer
 
 
 /**
@@ -44,6 +38,13 @@ object Assets : Disposable {
 
     val arrowTexture by lazy {
         Texture(Gdx.files.internal("sprites/arrows.png"))
+    }
+
+    val splatterEffectPool: ParticleEffectPool by lazy {
+        val pe = ParticleEffect()
+        pe.load(Gdx.files.internal("particles/blood_splatter.effect"),Gdx.files.internal("particles/"))
+        pe.scaleEffect(0.025f)
+        ParticleEffectPool(pe, 1000, 3000)
     }
 
     val arrows by lazy {
