@@ -7,7 +7,7 @@ class SnakeMapGenerator {
     companion object {
         val rayHandler by lazy { inject<RayHandler>() }
         fun generate(minMax: IntRange = 16..32): SnakeMapSection {
-            rayHandler.setAmbientLight(.3f)
+            rayHandler.setAmbientLight(.1f)
             rayHandler.setBlurNum(3)
             val size = minMax.random()
             var currentDirection: MapDirection = MapDirection.North

@@ -22,6 +22,7 @@ import ecs.components.graphics.renderables.AnimatedCharacterSprite
 import ecs.components.graphics.renderables.RenderableTextureRegion
 import ecs.components.graphics.renderables.RenderableTextureRegions
 import ecs.components.player.FiredShotsComponent
+import ecs.components.player.FlashlightComponent
 import ecs.components.player.PlayerComponent
 import ecs.components.player.PlayerControlComponent
 import ecs.components.towers.TowerComponent
@@ -192,6 +193,7 @@ fun player(player: Player, mapper: ControlMapper) {
         addComponent<RenderLayerComponent>()// { layer = 1 }
         addComponent<PlayerComponent> { this.player = player }
         addComponent<FiredShotsComponent>()
+        addComponent<FlashlightComponent>()
     }
 
     box2dBody.userData = entity
@@ -344,12 +346,7 @@ fun objective(
         addComponent<BodyComponent> { body = box2dBody }
         addComponent<TransformComponent> { position.set(box2dBody.position) }
         addComponent<RenderableComponent> {
-            renderable = RenderableTextureRegions(
-                listOf(
-                    RenderableTextureRegion(Assets.towerShadow, 4f, 6f, -6f),
-                    RenderableTextureRegion(Assets.towers["objective"]!!, 4f, 0f, -6f)
-                )
-            )
+            renderable = RenderableTextureRegion(Assets.towers["objective"]!!, 4f, 0f, -6f)
         }
         addComponent<ObjectiveComponent>()
         addComponent<RenderLayerComponent>()

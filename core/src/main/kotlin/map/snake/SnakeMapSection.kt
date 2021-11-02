@@ -33,9 +33,9 @@ class SnakeMapSection(
     val tileScale = 1 / 2f
     val scale = 1f
     private fun createLights() {
-        val lightX = x * width * 16f * tileScale * scale + tileWidth * tileScale * scale
-        val lightY = y * height * 16f * tileScale * scale + tileHeight * tileScale * scale
-        val pointLight = PointLight(rayHandler, 128, Color(1f, 0f, 1f, 1f), 10f, lightX, lightY)
+        val lightX = (x * width * 16f * tileScale * scale) / 2 // + tileWidth * tileScale * scale
+        val lightY = (y * height * 16f * tileScale * scale) / 2// + tileHeight * tileScale * scale
+        val pointLight = PointLight(rayHandler, 64, Color(.05f, .05f, .05f, 1f), 10f, lightX, lightY)
 
         rayHandler.setShadows(true)
         pointLight.isStaticLight = false

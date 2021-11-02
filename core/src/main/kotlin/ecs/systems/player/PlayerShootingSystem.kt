@@ -3,13 +3,11 @@ package ecs.systems.player
 import audio.AudioPlayer
 import com.badlogic.ashley.core.Entity
 import com.badlogic.ashley.systems.IteratingSystem
-import com.badlogic.gdx.graphics.Color
 import com.badlogic.gdx.physics.box2d.Fixture
 import com.badlogic.gdx.physics.box2d.World
 import ecs.components.enemy.EnemyComponent
 import ecs.components.gameplay.TransformComponent
 import ecs.components.player.*
-import factories.splatterParticles
 import injection.Context.inject
 import ktx.ashley.allOf
 import ktx.ashley.mapperFor
@@ -19,12 +17,6 @@ import ktx.math.random
 import ktx.math.vec2
 import physics.*
 
-
-/**
- * We need a cool-down system, which determines the rate of fire.
- *
- * This means you can always shoot if the weapon is cool.
- */
 
 class PlayerShootingSystem(private val audioPlayer: AudioPlayer) : IteratingSystem(
     allOf(

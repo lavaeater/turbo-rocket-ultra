@@ -164,8 +164,8 @@ class SnakeMapManager(
 //                        paintColor
 //                    )
                 }
-            for (light in section.lights)
-                shapeDrawer.filledCircle(light.x,light.y, 1f, Color.YELLOW)
+//            for (light in section.lights)
+//                shapeDrawer.filledCircle(light.x,light.y, 1f, Color.YELLOW)
         }
         /*
         for (direction in currentSection.connections.keys) {
