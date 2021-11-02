@@ -169,7 +169,7 @@ D1B67A
     private fun addPlayers() {
         val startBounds = mapManager.gridMap.values.first { it.startSection }.innerBounds
         val xRange = startBounds.left()..startBounds.right()
-        val yRange = startBounds.top()..startBounds.bottom()
+        val yRange = startBounds.bottom()..startBounds.top()
         for ((controlComponent, player) in Players.players) {
             player(player, controlComponent, vec2(xRange.random(), yRange.random()))
         }

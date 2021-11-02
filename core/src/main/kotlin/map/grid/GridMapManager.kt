@@ -1,5 +1,6 @@
 package map.grid
 
+import com.badlogic.gdx.graphics.Color
 import com.badlogic.gdx.graphics.g2d.Batch
 import com.badlogic.gdx.physics.box2d.Body
 import com.badlogic.gdx.physics.box2d.BodyDef
@@ -67,6 +68,10 @@ class GridMapManager {
                     }
                 }
             }
+            /*
+                shapeDrawer.rectangle(section.bounds, Color.GREEN)
+                shapeDrawer.rectangle(section.innerBounds, Color.BLUE)
+             */
         }
     }
 }

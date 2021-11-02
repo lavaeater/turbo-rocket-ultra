@@ -11,8 +11,8 @@ class GridMapSection(val coordinate: Coordinate, val connections: Set<MapDirecti
     val y get() = coordinate.y
     val sectionWidth = width * tileWidth * tileScale
     val sectionHeight = height * tileHeight * tileScale
-    val sectionOffsetX = x * sectionWidth
-    val sectionOffsetY = y * sectionHeight
+    val sectionOffsetX = x * sectionWidth - tileWidth * tileScale
+    val sectionOffsetY = y * sectionHeight - tileHeight * tileScale
     val bounds by lazy {
         Rectangle(
             sectionOffsetX,
@@ -24,7 +24,7 @@ class GridMapSection(val coordinate: Coordinate, val connections: Set<MapDirecti
     val innerBounds by lazy {
         Rectangle(
             bounds.left() + tileWidth * tileScale,
-            bounds.top() - tileHeight * tileScale,
+            bounds.bottom() + tileHeight * tileScale,
             bounds.width - tileWidth * tileScale * 2,
             bounds.height - tileHeight * tileScale * 2
         )
