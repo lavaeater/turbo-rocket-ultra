@@ -19,8 +19,8 @@ To make the graphics and environment easy I am currently working with the concep
 
 ### MVP
 
-* Far Off Map Rendering <- doing
-* Objectives for maps
+* Objectives for maps <- doing
+* Far Off Map Rendering <- done
 * Lights and particles <- done
 * Auto-generated Snake-maps <- done
 * Interactable Components in-the-game
@@ -47,6 +47,22 @@ To make the graphics and environment easy I am currently working with the concep
 * Blood Splatter <- Done
 * MiniMap <- Done
 
+## Objectives for maps
+
+So, apart from the gibberish below, what is an objective on a map? The easiest concept is an area that one needs to get to, or several. We could have a "ratio" of objectives, so that we output something like number of sections / 4 objectives per map, and these are simply spots you need to "hit" to move further in the game.
+
+So, that is done, objectives, that is. 
+
+So, what should we doing next? Traps? Bombs? Different guns? Ammo? Story?
+
+What happened to the energy?
+
+Lights, we need lights, one per section.
+
+Same goes for enemies, obviously. 
+
+So, next step is adding objectives and enemies on a per-map basis. We only render parts of the map, so it is not inconceivable... we could render the entirety of the map, the engine can handle it, of course, because that would make spawning of enemies easier etc... and otherwise we have to handle enemies just walking off into the sunset... Damn. I knew my cool idea was way too cool.
+
 ## Far Off Map Rendering
 
 One of the points of doing the map as a series of inter-connected sections that the player moves in and out of was that I wouldn't have to take into consideration the planar geometry of the actual map. This means that we can, for instance, go north, west, south, east and not come back to the start of the map. This is kind of cool and I kind of like that. But it puts a real damper on the ability to have enemies and other things live their actual lives on the map. So, what do we do about that?
@@ -58,11 +74,6 @@ The lowest effort thing to do would be to simply implement a generator that does
 ## Lights and Particles
 
 So, we're revisiting particles, maybe, but mostly we want to use box2d lights in the game.
-
-## Objectives for maps
-
-So, next step is adding objectives and enemies on a per-map basis. We only render parts of the map, so it is not inconceivable... we could render the entirety of the map, the engine can handle it, of course, because that would make spawning of enemies easier etc... and otherwise we have to handle enemies just walking off into the sunset... Damn. I knew my cool idea was way too cool.
-
 
 ## Levels and Maps
 
@@ -518,11 +529,11 @@ Det här gör vi på det gamla vanliga sättet. Vi bygger en box2d-värld, vi kl
 
 Oj oj oj,  vad roligt. Vi kan göra en box2d-kropp med leder, per tutorials etc. Superkul ju.
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbLTM3NzE4OTM0MywtMTgzNzIyNzA5OCwtMT
-QzNTg2MzcyMSwyNzk5NDU1NzUsLTM4NDk1ODY2MCwxMTE5MTQ4
-OTkzLC0xOTA2NzUxMzMzLC04NTE0ODM1OTAsMTcwMzQ2MzQ5Mi
-wxNDgwODc4ODMxLDEzMzM1NzA3NzksLTM5NTQ1MzgyMywtOTEz
-NTIyOTU2LDM2MjA2MDE3OCw1MTQyNzQyNjksLTEyODc3MTU2OD
-ksMjkyNTUxMjYsLTE2NDAxNDEwMDIsLTEwODgxODI5MzIsLTk1
-NjQwMjAwNV19
+eyJoaXN0b3J5IjpbMTk0MjU4NzAwMSwtNzI4NTU3OTk0LC0yNT
+g5ODY5NzksLTEzNjkwOTAwMjEsMTQyNjY0OTg4NSwtMzc3MTg5
+MzQzLC0xODM3MjI3MDk4LC0xNDM1ODYzNzIxLDI3OTk0NTU3NS
+wtMzg0OTU4NjYwLDExMTkxNDg5OTMsLTE5MDY3NTEzMzMsLTg1
+MTQ4MzU5MCwxNzAzNDYzNDkyLDE0ODA4Nzg4MzEsMTMzMzU3MD
+c3OSwtMzk1NDUzODIzLC05MTM1MjI5NTYsMzYyMDYwMTc4LDUx
+NDI3NDI2OV19
 -->
