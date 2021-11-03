@@ -35,8 +35,6 @@ class RenderableTextureRegion(val textureRegion: TextureRegion, val scale: Float
         batch: Batch,
         shapeDrawer: ShapeDrawer
     ) {
-        val width = 2f
-        val height = 2f
         val color = Color.GREEN
 
 

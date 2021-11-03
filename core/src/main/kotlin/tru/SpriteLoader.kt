@@ -3,10 +3,9 @@ package tru
 import com.badlogic.gdx.Gdx
 import com.badlogic.gdx.graphics.Texture
 import com.badlogic.gdx.graphics.g2d.Animation
-import com.badlogic.gdx.graphics.g2d.Sprite
 import com.badlogic.gdx.graphics.g2d.TextureRegion
-import kotlinx.serialization.decodeFromString
-import kotlinx.serialization.json.Json
+//import kotlinx.serialization.decodeFromString
+//import kotlinx.serialization.json.Json
 import ktx.collections.toGdxArray
 
 
@@ -60,28 +59,28 @@ object SpriteLoader {
 
         val newCharacters = listOf("blonde", "green_hair", "pigtails", "teal", "tomahawk")
         val file = Gdx.files.internal("sprites/sheets/sheet.json")
-        val json = file.readString()
-        val animDefs = Json.decodeFromString<List<AnimDef>>(json)
+//        val json = file.readString()
+//        val animDefs = Json.decodeFromString<List<AnimDef>>(json)
 
 
-        for (c in newCharacters) {
-            anims[c] = mutableMapOf()
-            val texture = Texture(Gdx.files.internal("sprites/sheets/$c.png"))
-
-            /*
-            mY DATA is a list of animations on states and directions - this must be mapped
-            to a hierarchy
-             */
-
-            for (animDef in animDefs) {
-                val dMap = mutableMapOf<SpriteDirection, Animation<TextureRegion>>()
-                val textureRegions = (animDef.startCol..animDef.endCol).map {
-                        TextureRegion(texture, it * 31, animDef.row * 31, 31,31)
-                    }
-                    dMap[animDef.direction] = Animation(0.2f, textureRegions.toGdxArray(), Animation.PlayMode.LOOP)
-                anims[c]!![animDef.state] = LpcCharacterAnim(animDef.state, dMap)
-            }
-        }
+//        for (c in newCharacters) {
+//            anims[c] = mutableMapOf()
+//            val texture = Texture(Gdx.files.internal("sprites/sheets/$c.png"))
+//
+//            /*
+//            mY DATA is a list of animations on states and directions - this must be mapped
+//            to a hierarchy
+//             */
+//
+//            for (animDef in animDefs) {
+//                val dMap = mutableMapOf<SpriteDirection, Animation<TextureRegion>>()
+//                val textureRegions = (animDef.startCol..animDef.endCol).map {
+//                        TextureRegion(texture, it * 31, animDef.row * 31, 31,31)
+//                    }
+//                    dMap[animDef.direction] = Animation(0.2f, textureRegions.toGdxArray(), Animation.PlayMode.LOOP)
+//                anims[c]!![animDef.state] = LpcCharacterAnim(animDef.state, dMap)
+//            }
+//        }
         return anims
     }
 }

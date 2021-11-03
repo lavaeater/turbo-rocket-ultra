@@ -8,8 +8,8 @@ import com.badlogic.gdx.graphics.g2d.Animation
 import com.badlogic.gdx.graphics.g2d.Batch
 import com.badlogic.gdx.graphics.g2d.TextureRegion
 import com.badlogic.gdx.math.Vector2
-import kotlinx.serialization.encodeToString
-import kotlinx.serialization.json.Json
+//import kotlinx.serialization.encodeToString
+//import kotlinx.serialization.json.Json
 import ktx.collections.toGdxArray
 import ktx.math.vec2
 import physics.drawScaled
@@ -75,11 +75,11 @@ class AnimationEditorElement(
     private fun saveAnim() {
         defs.add(AnimDef(currentAnimState, currentDirection, row, startCol, endCol))
 
-        val jsonString = Json.encodeToString(defs)
-
-        //Wutwut
-        val file = Gdx.files.local("files/sheet.json")
-        file.writeString(jsonString, false)
+//        val jsonString = Json.encodeToString(defs)
+//
+//        //Wutwut
+//        val file = Gdx.files.local("files/sheet.json")
+//        file.writeString(jsonString, false)
     }
 
     var stateIndex = 0

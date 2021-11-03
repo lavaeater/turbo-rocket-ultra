@@ -5,7 +5,6 @@ import com.badlogic.gdx.controllers.Controller
 import com.badlogic.gdx.math.Vector2
 import ecs.components.player.PlayerMode
 import ktx.math.vec2
-import uk.co.electronstudio.sdl2gdx.SDL2Controller
 
 class GamepadControl(val controller: Controller): ControlMapper, Component {
     override val aimVector = vec2()
@@ -19,10 +18,10 @@ class GamepadControl(val controller: Controller): ControlMapper, Component {
         get() = field.set(turning, -thrust)
     override val controllerId: String
         get() {
-            return if(controller is SDL2Controller)
-                "Gamepad ${controller.playerIndex + 1}"
-            else
-                controller.toString()
+//            return if(controller is SDL2Controller)
+//                "Gamepad ${controller.playerIndex + 1}"
+//            else
+                return controller.toString()
         }
     override var playerMode: PlayerMode = PlayerMode.Control
 

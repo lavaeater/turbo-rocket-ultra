@@ -1,8 +1,8 @@
 package tru
 
-import kotlinx.serialization.Serializable
+//import kotlinx.serialization.Serializable
 
-@Serializable
+//@Serializable
 sealed class SpriteDirection {
     companion object {
         val spriteDirections = listOf(North, West, South, East)
@@ -10,13 +10,13 @@ sealed class SpriteDirection {
     override fun toString(): String {
         return this::class.toString().substringAfter(".").substringAfter("$").substringBefore("@")
     }
-    @Serializable
+//    @Serializable
     object North : SpriteDirection()
-    @Serializable
+//    @Serializable
     object East: SpriteDirection()
-    @Serializable
+//    @Serializable
     object South: SpriteDirection()
-    @Serializable
+//    @Serializable
     object West: SpriteDirection()
 }
 

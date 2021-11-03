@@ -4,7 +4,6 @@ import com.badlogic.ashley.core.Entity
 import com.badlogic.ashley.systems.IteratingSystem
 import com.badlogic.gdx.controllers.Controller
 import com.badlogic.gdx.controllers.ControllerListener
-import com.badlogic.gdx.controllers.PovDirection
 import com.badlogic.gdx.math.MathUtils
 import com.badlogic.gdx.math.Vector3
 import input.Axis
@@ -70,22 +69,6 @@ class GamepadInputSystem() : IteratingSystem(allOf(GamepadControl::class).get())
             )
             Axis.Unknown -> {}
         }
-        return true
-    }
-
-    override fun povMoved(controller: Controller?, povCode: Int, value: PovDirection?): Boolean {
-        return true
-    }
-
-    override fun xSliderMoved(controller: Controller?, sliderCode: Int, value: Boolean): Boolean {
-        return true
-    }
-
-    override fun ySliderMoved(controller: Controller?, sliderCode: Int, value: Boolean): Boolean {
-        return true
-    }
-
-    override fun accelerometerMoved(controller: Controller?, accelerometerCode: Int, value: Vector3?): Boolean {
         return true
     }
 

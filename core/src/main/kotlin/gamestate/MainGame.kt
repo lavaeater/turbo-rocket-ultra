@@ -2,11 +2,12 @@ package gamestate
 
 import com.badlogic.gdx.Screen
 import ktx.app.KtxGame
+import ktx.app.KtxScreen
 import screens.*
 import statemachine.StateMachine
 import tru.Assets
 
-class MainGame : KtxGame<Screen>() {
+class MainGame : KtxGame<KtxScreen>() {
 
     val gameState = StateMachine.buildStateMachine<GameState, GameEvent>(GameState.Splash, ::stateChanged) {
             state(GameState.Splash) {

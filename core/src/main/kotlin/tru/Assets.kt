@@ -118,7 +118,7 @@ object Assets : Disposable {
         ShapeDrawer(inject<PolygonSpriteBatch>() as Batch, shapeDrawerRegion)
     }
 
-    val objectSprites by lazy { SpriteLoader.initObjectSprites() }
+//    val objectSprites by lazy { SpriteLoader.initObjectSprites() }
 
     val soundEffects: Map<String, Sound> by lazy {
         mapOf(
