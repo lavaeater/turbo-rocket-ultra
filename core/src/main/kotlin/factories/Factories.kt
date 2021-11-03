@@ -20,10 +20,7 @@ import ecs.components.gameplay.TransformComponent
 import ecs.components.graphics.*
 import ecs.components.graphics.renderables.AnimatedCharacterSprite
 import ecs.components.graphics.renderables.RenderableTextureRegion
-import ecs.components.player.FiredShotsComponent
-import ecs.components.player.FlashlightComponent
-import ecs.components.player.PlayerComponent
-import ecs.components.player.PlayerControlComponent
+import ecs.components.player.*
 import ecs.components.towers.TowerComponent
 import gamestate.Player
 import injection.Context.inject
@@ -138,6 +135,7 @@ fun player(player: Player, mapper: ControlMapper,at: Vector2) {
         }
         addComponent<RenderLayerComponent>()// { layer = 1 }
         addComponent<PlayerComponent> { this.player = player }
+        addComponent<WeaponComponent>()
         addComponent<FiredShotsComponent>()
         addComponent<FlashlightComponent>()
     }

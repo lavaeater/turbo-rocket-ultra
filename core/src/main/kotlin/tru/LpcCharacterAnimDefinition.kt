@@ -18,7 +18,7 @@ class LpcCharacterAnimDefinition(
             LpcCharacterAnimDefinition(AnimState.Idle, 8, 0..0),
             LpcCharacterAnimDefinition(AnimState.Walk, 8, 0..8),
             LpcCharacterAnimDefinition(AnimState.StartAim, 16, 0..4),
-            LpcCharacterAnimDefinition(AnimState.Aiming, 16, 4..4),
+            LpcCharacterAnimDefinition(AnimState.Aiming, 16, 11..11),
             LpcCharacterAnimDefinition(AnimState.Death, 20, 0..5, listOf(SpriteDirection.South))
         )
     }
