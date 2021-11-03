@@ -19,7 +19,7 @@ To make the graphics and environment easy I am currently working with the concep
 
 ### MVP
 
- Interactable Components in-the-game
+* Interactable Components in-the-game
 * Player graphics made from components / parts etc.
 * Different weapons to shoot with
 * Vehicles <- nice to have
@@ -529,11 +529,11 @@ Det här gör vi på det gamla vanliga sättet. Vi bygger en box2d-värld, vi kl
 
 Oj oj oj,  vad roligt. Vi kan göra en box2d-kropp med leder, per tutorials etc. Superkul ju.
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbLTE0ODEwMjg2MjYsMTk0MjU4NzAwMSwtNz
-I4NTU3OTk0LC0yNTg5ODY5NzksLTEzNjkwOTAwMjEsMTQyNjY0
-OTg4NSwtMzc3MTg5MzQzLC0xODM3MjI3MDk4LC0xNDM1ODYzNz
-IxLDI3OTk0NTU3NSwtMzg0OTU4NjYwLDExMTkxNDg5OTMsLTE5
-MDY3NTEzMzMsLTg1MTQ4MzU5MCwxNzAzNDYzNDkyLDE0ODA4Nz
-g4MzEsMTMzMzU3MDc3OSwtMzk1NDUzODIzLC05MTM1MjI5NTYs
-MzYyMDYwMTc4XX0=
+eyJoaXN0b3J5IjpbODI4MjYxMTk0LC0xNDgxMDI4NjI2LDE5ND
+I1ODcwMDEsLTcyODU1Nzk5NCwtMjU4OTg2OTc5LC0xMzY5MDkw
+MDIxLDE0MjY2NDk4ODUsLTM3NzE4OTM0MywtMTgzNzIyNzA5OC
+wtMTQzNTg2MzcyMSwyNzk5NDU1NzUsLTM4NDk1ODY2MCwxMTE5
+MTQ4OTkzLC0xOTA2NzUxMzMzLC04NTE0ODM1OTAsMTcwMzQ2Mz
+Q5MiwxNDgwODc4ODMxLDEzMzM1NzA3NzksLTM5NTQ1MzgyMywt
+OTEzNTIyOTU2XX0=
 -->
