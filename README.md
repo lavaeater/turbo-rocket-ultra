@@ -19,15 +19,15 @@ To make the graphics and environment easy I am currently working with the concep
 
 ### MVP
 
-* Objectives for maps <- doing
-* Far Off Map Rendering <- done
-* Lights and particles <- done
-* Auto-generated Snake-maps <- done
-* Interactable Components in-the-game
+ Interactable Components in-the-game
 * Player graphics made from components / parts etc.
 * Different weapons to shoot with
 * Vehicles <- nice to have
 * Build Towers <- Paused
+** Objectives for maps <- done
+* Far Off Map Rendering <- done
+* Lights and particles <- done
+* Auto-generated Snake-maps <- done
 * Basic Sprite Editor <- done, kinda?
 * IsoMetric Projection <- done!
 * Towers <- Done
@@ -529,11 +529,11 @@ Det här gör vi på det gamla vanliga sättet. Vi bygger en box2d-värld, vi kl
 
 Oj oj oj,  vad roligt. Vi kan göra en box2d-kropp med leder, per tutorials etc. Superkul ju.
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbMTk0MjU4NzAwMSwtNzI4NTU3OTk0LC0yNT
-g5ODY5NzksLTEzNjkwOTAwMjEsMTQyNjY0OTg4NSwtMzc3MTg5
-MzQzLC0xODM3MjI3MDk4LC0xNDM1ODYzNzIxLDI3OTk0NTU3NS
-wtMzg0OTU4NjYwLDExMTkxNDg5OTMsLTE5MDY3NTEzMzMsLTg1
-MTQ4MzU5MCwxNzAzNDYzNDkyLDE0ODA4Nzg4MzEsMTMzMzU3MD
-c3OSwtMzk1NDUzODIzLC05MTM1MjI5NTYsMzYyMDYwMTc4LDUx
-NDI3NDI2OV19
+eyJoaXN0b3J5IjpbLTIwMDE1MzY0NjgsMTk0MjU4NzAwMSwtNz
+I4NTU3OTk0LC0yNTg5ODY5NzksLTEzNjkwOTAwMjEsMTQyNjY0
+OTg4NSwtMzc3MTg5MzQzLC0xODM3MjI3MDk4LC0xNDM1ODYzNz
+IxLDI3OTk0NTU3NSwtMzg0OTU4NjYwLDExMTkxNDg5OTMsLTE5
+MDY3NTEzMzMsLTg1MTQ4MzU5MCwxNzAzNDYzNDkyLDE0ODA4Nz
+g4MzEsMTMzMzU3MDc3OSwtMzk1NDUzODIzLC05MTM1MjI5NTYs
+MzYyMDYwMTc4XX0=
 -->
