@@ -36,7 +36,7 @@ class GridMapSection(val coordinate: Coordinate, val connections: Set<MapDirecti
         )
     }
     val light by lazy {
-        val lightDirection = MapDirection.directions.filter { !connections.contains(it) }.random()
+        val lightDirection = if(MapDirection.directions.filter { !connections.contains(it) }.isEmpty()) MapDirection.South else MapDirection.directions.filter { !connections.contains(it) }.random()
 
         var lightPosition = vec2()
         when(lightDirection) {
