@@ -1,8 +1,14 @@
 package map.grid
 
+import box2dLight.ConeLight
+import box2dLight.PointLight
+import box2dLight.RayHandler
+import com.badlogic.gdx.graphics.Color
 import com.badlogic.gdx.math.Rectangle
 import ecs.components.graphics.renderables.RenderableTextureRegion
 import ecs.components.graphics.renderables.RenderableTextureRegions
+import injection.Context.inject
+import ktx.math.vec2
 import map.snake.*
 import tru.Assets
 
@@ -29,10 +35,37 @@ class GridMapSection(val coordinate: Coordinate, val connections: Set<MapDirecti
             bounds.height - tileHeight * tileScale * 2
         )
     }
+    val light by lazy {
+        val lightDirection = MapDirection.directions.filter { !connections.contains(it) }.random()
+
+        var lightPosition = vec2()
+        when(lightDirection) {
+            MapDirection.North -> lightPosition.set(innerBounds.horizontalCenter(), innerBounds.bottom())
+            MapDirection.East -> lightPosition.set(innerBounds.right(), innerBounds.verticalCenter())
+            MapDirection.South -> lightPosition.set(innerBounds.horizontalCenter(), innerBounds.top())
+            MapDirection.West -> lightPosition.set(innerBounds.left(), innerBounds.verticalCenter())
+        }
+        rayHandler.setShadows(true)
+
+        val pointLight = ConeLight(
+            rayHandler,
+            64,
+            directionColorMap[lightDirection]!!,//Color(.05f, .05f, .05f, 1f),
+            20f,
+            lightPosition.x,
+            lightPosition.y,
+            MapDirection.directionDegrees[lightDirection]!!,
+            45f
+        ).apply {
+            isStaticLight = false
+            isSoft = true
+        }
+        pointLight
+    }
 
     companion object {
-        val width = 8
-        val height = 8
+        val width = 5
+        val height = 5
         val tileWidth = 16f
         val tileHeight = 16f
         val tileScale = 1/2f
@@ -44,11 +77,14 @@ class GridMapSection(val coordinate: Coordinate, val connections: Set<MapDirecti
                 MapDirection.South to listOf(TileAlignment.Bottom)
             )
         }
+        val directionColorMap = mapOf(MapDirection.North to Color.RED, MapDirection.East to Color.GREEN, MapDirection.South to Color.BLUE, MapDirection.West to Color.YELLOW)
     }
 
     val connectionAlignments by lazy { connections.map { directionAlignment[it]!! }.flatten() }
+    val rayHandler by lazy { inject<RayHandler>() }
 
-    val tiles by lazy {
+     val tiles by lazy {
+
         Array(width) { x ->
             Array(height) { y ->
                 val tileAlignment = when (x) {

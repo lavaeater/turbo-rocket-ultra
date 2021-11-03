@@ -11,6 +11,7 @@ import ktx.box2d.filter
 import map.grid.GridMapSection.Companion.tileHeight
 import map.grid.GridMapSection.Companion.tileScale
 import map.grid.GridMapSection.Companion.tileWidth
+import map.snake.MapDirection
 import map.snake.SnakeMapSection
 import physics.drawScaled
 import space.earlygrey.shapedrawer.ShapeDrawer
@@ -68,6 +69,8 @@ class GridMapManager {
                     }
                 }
             }
+            section.light.isActive = true
         }
     }
+
 }
