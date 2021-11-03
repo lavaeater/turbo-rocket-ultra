@@ -50,7 +50,7 @@ To make the graphics and environment easy I am currently working with the concep
 
 ## Weapons 2 <- doing
 
-
+This, by nature, needs to consist of a **ton** of things, all very small, preferrably.
 
 ## Objectives for maps
 
@@ -534,11 +534,11 @@ Det här gör vi på det gamla vanliga sättet. Vi bygger en box2d-värld, vi kl
 
 Oj oj oj,  vad roligt. Vi kan göra en box2d-kropp med leder, per tutorials etc. Superkul ju.
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbMTczMDkwMjg3MiwtMTQ4MTAyODYyNiwxOT
-QyNTg3MDAxLC03Mjg1NTc5OTQsLTI1ODk4Njk3OSwtMTM2OTA5
-MDAyMSwxNDI2NjQ5ODg1LC0zNzcxODkzNDMsLTE4MzcyMjcwOT
-gsLTE0MzU4NjM3MjEsMjc5OTQ1NTc1LC0zODQ5NTg2NjAsMTEx
-OTE0ODk5MywtMTkwNjc1MTMzMywtODUxNDgzNTkwLDE3MDM0Nj
-M0OTIsMTQ4MDg3ODgzMSwxMzMzNTcwNzc5LC0zOTU0NTM4MjMs
-LTkxMzUyMjk1Nl19
+eyJoaXN0b3J5IjpbMTM2NjQ1MTI2LDE3MzA5MDI4NzIsLTE0OD
+EwMjg2MjYsMTk0MjU4NzAwMSwtNzI4NTU3OTk0LC0yNTg5ODY5
+NzksLTEzNjkwOTAwMjEsMTQyNjY0OTg4NSwtMzc3MTg5MzQzLC
+0xODM3MjI3MDk4LC0xNDM1ODYzNzIxLDI3OTk0NTU3NSwtMzg0
+OTU4NjYwLDExMTkxNDg5OTMsLTE5MDY3NTEzMzMsLTg1MTQ4Mz
+U5MCwxNzAzNDYzNDkyLDE0ODA4Nzg4MzEsMTMzMzU3MDc3OSwt
+Mzk1NDUzODIzXX0=
 -->
