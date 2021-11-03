@@ -24,7 +24,7 @@ To make the graphics and environment easy I am currently working with the concep
 * Different weapons to shoot with
 * Vehicles <- nice to have
 * Build Towers <- Paused
-** Objectives for maps <- done
+* Objectives for maps <- done
 * Far Off Map Rendering <- done
 * Lights and particles <- done
 * Auto-generated Snake-maps <- done
@@ -529,7 +529,7 @@ Det här gör vi på det gamla vanliga sättet. Vi bygger en box2d-värld, vi kl
 
 Oj oj oj,  vad roligt. Vi kan göra en box2d-kropp med leder, per tutorials etc. Superkul ju.
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbLTIwMDE1MzY0NjgsMTk0MjU4NzAwMSwtNz
+eyJoaXN0b3J5IjpbLTE0ODEwMjg2MjYsMTk0MjU4NzAwMSwtNz
 I4NTU3OTk0LC0yNTg5ODY5NzksLTEzNjkwOTAwMjEsMTQyNjY0
 OTg4NSwtMzc3MTg5MzQzLC0xODM3MjI3MDk4LC0xNDM1ODYzNz
 IxLDI3OTk0NTU3NSwtMzg0OTU4NjYwLDExMTkxNDg5OTMsLTE5
