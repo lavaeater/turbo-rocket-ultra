@@ -35,6 +35,20 @@ class GridMapSection(val coordinate: Coordinate, val connections: Set<MapDirecti
             bounds.height - tileHeight * tileScale * 2
         )
     }
+
+    /**
+     * These bounds can be used to
+     * spawn things safely within them
+     */
+    val safeBounds by lazy {
+        Rectangle(
+            innerBounds.left() - tileWidth * tileScale,
+            innerBounds.bottom() + tileHeight * tileScale,
+            innerBounds.width,
+            innerBounds.height
+        )
+    }
+
     val light by lazy {
         val lightDirection = if(MapDirection.directions.filter { !connections.contains(it) }.isEmpty()) MapDirection.South else MapDirection.directions.filter { !connections.contains(it) }.random()
 

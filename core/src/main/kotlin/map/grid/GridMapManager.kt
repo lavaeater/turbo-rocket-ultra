@@ -69,6 +69,9 @@ class GridMapManager {
                     }
                 }
             }
+//            shapeDrawer.rectangle(section.bounds, Color.BLUE)
+//            shapeDrawer.rectangle(section.innerBounds, Color.RED)
+//            shapeDrawer.rectangle(section.safeBounds, Color.GREEN)
             section.light.isActive = true
         }
     }
