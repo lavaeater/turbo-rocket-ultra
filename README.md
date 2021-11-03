@@ -48,6 +48,10 @@ To make the graphics and environment easy I am currently working with the concep
 * Blood Splatter <- Done
 * MiniMap <- Done
 
+## Weapons 2 <- doing
+
+
+
 ## Objectives for maps
 
 So, apart from the gibberish below, what is an objective on a map? The easiest concept is an area that one needs to get to, or several. We could have a "ratio" of objectives, so that we output something like number of sections / 4 objectives per map, and these are simply spots you need to "hit" to move further in the game.
@@ -530,11 +534,11 @@ Det här gör vi på det gamla vanliga sättet. Vi bygger en box2d-värld, vi kl
 
 Oj oj oj,  vad roligt. Vi kan göra en box2d-kropp med leder, per tutorials etc. Superkul ju.
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbLTE5MDYxNzQwNDUsLTE0ODEwMjg2MjYsMT
-k0MjU4NzAwMSwtNzI4NTU3OTk0LC0yNTg5ODY5NzksLTEzNjkw
-OTAwMjEsMTQyNjY0OTg4NSwtMzc3MTg5MzQzLC0xODM3MjI3MD
-k4LC0xNDM1ODYzNzIxLDI3OTk0NTU3NSwtMzg0OTU4NjYwLDEx
-MTkxNDg5OTMsLTE5MDY3NTEzMzMsLTg1MTQ4MzU5MCwxNzAzND
-YzNDkyLDE0ODA4Nzg4MzEsMTMzMzU3MDc3OSwtMzk1NDUzODIz
-LC05MTM1MjI5NTZdfQ==
+eyJoaXN0b3J5IjpbMTczMDkwMjg3MiwtMTQ4MTAyODYyNiwxOT
+QyNTg3MDAxLC03Mjg1NTc5OTQsLTI1ODk4Njk3OSwtMTM2OTA5
+MDAyMSwxNDI2NjQ5ODg1LC0zNzcxODkzNDMsLTE4MzcyMjcwOT
+gsLTE0MzU4NjM3MjEsMjc5OTQ1NTc1LC0zODQ5NTg2NjAsMTEx
+OTE0ODk5MywtMTkwNjc1MTMzMywtODUxNDgzNTkwLDE3MDM0Nj
+M0OTIsMTQ4MDg3ODgzMSwxMzMzNTcwNzc5LC0zOTU0NTM4MjMs
+LTkxMzUyMjk1Nl19
 -->
