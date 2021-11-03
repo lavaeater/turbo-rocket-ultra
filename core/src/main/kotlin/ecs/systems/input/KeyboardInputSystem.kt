@@ -6,11 +6,14 @@ import com.badlogic.gdx.Gdx
 import com.badlogic.gdx.Input
 import com.badlogic.gdx.math.Vector2
 import ecs.components.gameplay.TransformComponent
+import ecs.components.player.GunFrames
 import ecs.components.player.PlayerMode
+import ecs.components.player.WeaponComponent
 import input.*
 import ktx.app.KtxInputAdapter
 import ktx.ashley.allOf
 import ktx.ashley.mapperFor
+import physics.getComponent
 
 class KeyboardInputSystem:
     KtxInputAdapter, IteratingSystem(
@@ -61,10 +64,17 @@ class KeyboardInputSystem:
     }
 
     override fun touchDown(screenX: Int, screenY: Int, pointer: Int, button: Int): Boolean {
-        return if (button == Input.Buttons.LEFT) {
-            keyboardControl.firing = true
-            true
-        } else false
+        return when(button)  {
+            Input.Buttons.LEFT ->  {
+                keyboardControl.firing = true
+                true
+            }
+            Input.Buttons.RIGHT -> {
+
+                true
+            }
+            else -> false
+        }
     }
 
     override fun touchDragged(screenX: Int, screenY: Int, pointer: Int): Boolean {
@@ -76,15 +86,36 @@ class KeyboardInputSystem:
     }
 
     override fun touchUp(screenX: Int, screenY: Int, pointer: Int, button: Int): Boolean {
-        return if (button == Input.Buttons.LEFT) {
-            keyboardControl.firing = false
-            true
-        } else false
+        return when(button)  {
+            Input.Buttons.LEFT ->  {
+                keyboardControl.firing = false
+                true
+            }
+            Input.Buttons.RIGHT -> {
+                changeGun()
+                true
+            }
+            else -> false
+        }
     }
 
+    var needToChangeGun = false
+    private fun changeGun() {
+        needToChangeGun = true
+    }
+
+    @OptIn(ExperimentalStdlibApi::class)
     override fun processEntity(entity: Entity, deltaTime: Float) {
         keyboardControl = pccMapper[entity]
         updateMouseInput(tcMapper[entity].position)
+        if(needToChangeGun) {
+            needToChangeGun = false
+            val weaponComponent = entity.getComponent<WeaponComponent>()
+            when(weaponComponent.currentGun) {
+                GunFrames.handGun -> weaponComponent.currentGun = GunFrames.spas12
+                else -> weaponComponent.currentGun = GunFrames.handGun
+            }
+        }
 
     }
 

@@ -5,9 +5,7 @@ import com.badlogic.ashley.systems.IteratingSystem
 import com.badlogic.gdx.physics.box2d.World
 import ecs.components.*
 import ecs.components.gameplay.TransformComponent
-import ecs.components.graphics.ParticleComponent
 import ktx.ashley.allOf
-import ktx.ashley.mapperFor
 import physics.AshleyMappers
 
 class PhysicsSystem(private val world: World, private val timeStep : Float = 1/60f) :
@@ -17,7 +15,6 @@ class PhysicsSystem(private val world: World, private val timeStep : Float = 1/6
     private val posIters = 2
     private val tMapper = AshleyMappers.transformMapper
     private val bMapper = AshleyMappers.bodyMapper
-    private val pMapper = mapperFor<ParticleComponent>()
 
     var accumulator = 0f
 

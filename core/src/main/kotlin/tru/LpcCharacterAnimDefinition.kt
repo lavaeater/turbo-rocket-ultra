@@ -9,7 +9,7 @@ package tru
 class LpcCharacterAnimDefinition(
     val state: AnimState,
     val row: Int,
-    val frames: IntRange,
+    var frames: IntRange,
     val directions: List<SpriteDirection> = SpriteDirection.spriteDirections,
     val itemWidth: Int = 64,
     val itemHeight: Int = 64) {

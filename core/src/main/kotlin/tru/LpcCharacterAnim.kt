@@ -7,4 +7,4 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion
 //@Serializable
 class AnimDef(val state: AnimState, val direction: SpriteDirection, val row: Int, val startCol: Int, val endCol: Int)
 
-class LpcCharacterAnim(val state: AnimState, val animations: Map<SpriteDirection, Animation<TextureRegion>>)
+class LpcCharacterAnim<T>(val state: AnimState, val animations: Map<SpriteDirection, Animation<T>>)
