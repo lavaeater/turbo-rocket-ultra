@@ -276,8 +276,8 @@ fun obstacle(
         with<TextureComponent> {
             texture = Assets.towers["obstacle"]!!
             scale = 4f
-//            offsetX = 0f
-//            offsetY = -6f
+            offsetX = 1.5f
+            offsetY = -1f
             layer = 1
         }
         with<MiniMapComponent> {
@@ -311,8 +311,8 @@ fun objective(
         with<TextureComponent> {
             texture = Assets.towers["objective"]!!
             scale = 4f
-//            offsetX = 0f
-//            offsetY = -6f
+            offsetX = 1.5f
+            offsetY = -1f
             layer = 1
         }
         with<MiniMapComponent> {
