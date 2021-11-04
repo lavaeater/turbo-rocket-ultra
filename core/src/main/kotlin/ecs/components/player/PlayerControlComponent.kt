@@ -8,7 +8,7 @@ import ktx.math.vec2
 import ktx.math.vec3
 import tru.AnimState
 
-class PlayerControlComponent(var controlMapper: ControlMapper) : Component {
+class PlayerControlComponent(var controlMapper: ControlMapper) : Component, Pool.Poolable {
     private var cooldownRemaining = 0f
     private val rof: Float = 3f
 
@@ -54,6 +54,14 @@ class PlayerControlComponent(var controlMapper: ControlMapper) : Component {
         shotsFired++
         cooldownRemaining += 1f/rof
         shotDrawCoolDown = cooldownRemaining / 4
+    }
+
+    override fun reset() {
+        cooldownRemaining = 0f
+        shotsFired = 0
+        shotDrawCoolDown = 0f
+        latestHitPoint.setZero()
+
     }
 }
 

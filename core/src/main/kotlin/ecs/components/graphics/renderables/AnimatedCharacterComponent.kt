@@ -14,7 +14,6 @@ class AnimatedCharacterComponent: Component, Pool.Poolable {
     var currentAnimState: AnimState = AnimState.Idle
     lateinit var currentAnim : Animation<OffsetTextureRegion>
     var animationStateTime: Float = 0f
-    val currentTextureRegion get() = currentAnim.getKeyFrame(animationStateTime)
     override fun reset() {
         anims = emptyMap()
         animationStateTime = 0f

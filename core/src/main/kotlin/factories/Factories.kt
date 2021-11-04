@@ -3,6 +3,7 @@ package factories
 import ai.Tree
 import com.badlogic.ashley.core.Engine
 import com.badlogic.ashley.core.Entity
+import com.badlogic.gdx.graphics.Color
 import com.badlogic.gdx.math.MathUtils
 import com.badlogic.gdx.math.MathUtils.degreesToRadians
 import com.badlogic.gdx.math.Vector2
@@ -18,7 +19,7 @@ import ecs.components.gameplay.ObjectiveComponent
 import ecs.components.gameplay.ObstacleComponent
 import ecs.components.gameplay.TransformComponent
 import ecs.components.graphics.*
-import ecs.components.graphics.renderables.AnimatedCharacterSprite
+import ecs.components.graphics.renderables.AnimatedCharacterComponent
 import ecs.components.graphics.renderables.RenderableTextureRegion
 import ecs.components.player.*
 import ecs.components.towers.TowerComponent
@@ -34,7 +35,6 @@ import physics.addComponent
 import tru.Assets
 import screens.GameScreen
 import kotlin.experimental.or
-import kotlin.experimental.xor
 
 fun world(): World {
     return inject()
@@ -92,6 +92,16 @@ fun tower(at: Vector2 = vec2(), towerType: String = "machinegun") {
         with<TransformComponent>()
         with<RenderableComponent> { renderable = RenderableTextureRegion(Assets.towers[towerType]!!, 4f, 0f, -5f) }
         with<RenderLayerComponent>()
+        with<TextureComponent> {
+            texture = Assets.towers["obstacle"]!!
+            scale = 4f
+            offsetX = 0f
+            offsetY = -6f
+            layer = 1
+        }
+        with<MiniMapComponent> {
+            color = Color.GREEN
+        }
         with<TowerComponent>()
     }
     towerEntity.addComponent<BehaviorComponent> { tree = Tree.getTowerBehaviorTree().apply { `object` = towerEntity } }
@@ -120,29 +130,29 @@ fun player(player: Player, mapper: ControlMapper,at: Vector2) {
         angularDamping = GameScreen.SHIP_ANGULAR_DAMPING
     }
 
-    val entity = engine().createEntity().apply {
-        addComponent<CameraFollowComponent>()
-        addComponent<BodyComponent> { body = box2dBody }
-        addComponent<TransformComponent>()
-        add(mapper)
-        add(PlayerControlComponent(mapper))
-        addComponent<RenderableComponent> {
-            renderable = AnimatedCharacterSprite(
-                Assets.characters[player.selectedCharacterSpriteName]!!,
-                1f,
-                0f, -20f
-            )
+    val entity = engine().entity() {
+        with<CameraFollowComponent>()
+        with<BodyComponent> { body = box2dBody }
+        with<TransformComponent>()
+        with<AnimatedCharacterComponent> {
+            anims = Assets.characters[player.selectedCharacterSpriteName]!!
         }
-        addComponent<RenderLayerComponent>()// { layer = 1 }
-        addComponent<PlayerComponent> { this.player = player }
-        addComponent<WeaponComponent>()
-        addComponent<FiredShotsComponent>()
-        addComponent<FlashlightComponent>()
+        with<TextureComponent> {
+            layer = 1
+        }
+        with<MiniMapComponent> {
+            color = Color.GREEN
+        }
+        with<PlayerComponent> { this.player = player }
+        with<WeaponComponent>()
+        with<FiredShotsComponent>()
+        with<FlashlightComponent>()
     }
-
+    //TODO: Fix this hot mess
+    entity.add(mapper)
+    entity.add(PlayerControlComponent(mapper))
     box2dBody.userData = entity
 
-    engine().addEntity(entity)
     player.body = box2dBody
     player.entity = entity
 }
@@ -181,24 +191,23 @@ fun enemy(at: Vector2) {
         }
     }
 
-    val entity = engine().createEntity().apply {
-        addComponent<BodyComponent> { body = box2dBody }
-        addComponent<TransformComponent> { position.set(box2dBody.position) }
-        addComponent<EnemySensorComponent>()
-        addComponent<EnemyComponent>()
-        addComponent<RenderableComponent> {
-            renderable = AnimatedCharacterSprite(
-                Assets.characters["enemy"]!!,
-                1f,
-                0f, -20f
-            )
+    val entity = engine().entity {
+        with<BodyComponent> { body = box2dBody }
+        with<TransformComponent> { position.set(box2dBody.position) }
+        with<EnemySensorComponent>()
+        with<EnemyComponent>()
+        with<AnimatedCharacterComponent> {
+            anims = Assets.characters["enemy"]!!
         }
-        addComponent<RenderLayerComponent>()// { layer = 1 }
+        with<TextureComponent> {
+            layer = 1
+        }
+        with<MiniMapComponent> {
+            color = Color.RED
+        }
     }
     entity.addComponent<BehaviorComponent> { tree = Tree.getEnemyBehaviorTree().apply { `object` = entity } }
-
     box2dBody.userData = entity
-    engine().addEntity(entity)
 }
 
 
@@ -260,17 +269,22 @@ fun obstacle(
             }
         }
     }
-    val entity = engine().createEntity().apply {
-        addComponent<BodyComponent> { body = box2dBody }
-        addComponent<TransformComponent> { position.set(box2dBody.position) }
-        addComponent<ObstacleComponent>()
-        addComponent<RenderableComponent> {
-            renderable = RenderableTextureRegion(Assets.towers["obstacle"]!!, 4f, 0f, -6f)
+    val entity = engine().entity() {
+        with<BodyComponent> { body = box2dBody }
+        with<TransformComponent> { position.set(box2dBody.position) }
+        with<ObstacleComponent>()
+        with<TextureComponent> {
+            texture = Assets.towers["obstacle"]!!
+            scale = 4f
+            offsetX = 0f
+            offsetY = -6f
+            layer = 1
         }
-        addComponent<RenderLayerComponent>()
+        with<MiniMapComponent> {
+            color = Color.PINK
+        }
     }
     box2dBody.userData = entity
-    engine().addEntity(entity)
     return entity
 }
 
@@ -291,17 +305,22 @@ fun objective(
             }
         }
     }
-    val entity = engine().createEntity().apply {
-        addComponent<BodyComponent> { body = box2dBody }
-        addComponent<TransformComponent> { position.set(box2dBody.position) }
-        addComponent<RenderableComponent> {
-            renderable = RenderableTextureRegion(Assets.towers["objective"]!!, 4f, 0f, -6f)
+    val entity = engine().entity() {
+        with<BodyComponent> { body = box2dBody }
+        with<TransformComponent> { position.set(box2dBody.position) }
+        with<TextureComponent> {
+            texture = Assets.towers["objective"]!!
+            scale = 4f
+            offsetX = 0f
+            offsetY = -6f
+            layer = 1
         }
-        addComponent<ObjectiveComponent>()
-        addComponent<RenderLayerComponent>()
+        with<MiniMapComponent> {
+            color = Color.GREEN
+        }
+        with<ObjectiveComponent>()
     }
     box2dBody.userData = entity
-    engine().addEntity(entity)
     return box2dBody
 }
 

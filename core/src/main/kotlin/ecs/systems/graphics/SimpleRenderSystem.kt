@@ -1,35 +1,14 @@
 package ecs.systems.graphics
 
 import com.badlogic.ashley.core.Entity
-import com.badlogic.ashley.systems.IteratingSystem
 import com.badlogic.ashley.systems.SortedIteratingSystem
 import com.badlogic.gdx.graphics.g2d.Batch
 import ecs.components.gameplay.TransformComponent
 import ecs.components.graphics.TextureComponent
-import ecs.components.graphics.renderables.AnimatedCharacterComponent
 import ktx.ashley.allOf
 import ktx.ashley.mapperFor
 import ktx.graphics.use
 import physics.drawScaled
-
-class AnimationSystem: IteratingSystem(allOf(TextureComponent::class, AnimatedCharacterComponent::class).get(),2) {
-    private var animationStateTime = 0f
-    private val textureMapper = mapperFor<TextureComponent>()
-    private val aniMapper = mapperFor<AnimatedCharacterComponent>()
-
-    override fun update(deltaTime: Float) {
-        animationStateTime += deltaTime
-        super.update(deltaTime)
-    }
-
-    override fun processEntity(entity: Entity, deltaTime: Float) {
-        val animationComponent = aniMapper.get(entity)
-        animationComponent.animationStateTime = animationStateTime
-        animationComponent.currentAnim = animationComponent.anims[animationComponent.currentAnimState]!!.animations[animationComponent.currentDirection]!!
-        val textureComponent = textureMapper.get(entity)
-        textureComponent.texture = animationComponent.currentTextureRegion
-    }
-}
 
 class SimpleRenderSystem(
     private val batch: Batch
@@ -79,14 +58,14 @@ class SimpleRenderSystem(
 
         batch.drawScaled(
             textureComponent.texture,
-            transform.position.x + textureComponent.xOffset,
-            transform.position.y + textureComponent.yOffset,
+            transform.position.x + textureComponent.offsetX + textureComponent.texture.offsetX,
+            transform.position.y + textureComponent.offsetY + textureComponent.texture.offsetY,
             scale)
         for(texture in textureComponent.extraTextures) {
             batch.drawScaled(
                 texture,
-                transform.position.x + texture.offsetX,
-                transform.position.y + texture.offsetY
+                transform.position.x + textureComponent.offsetX + texture.offsetX,
+                transform.position.y + textureComponent.offsetY + texture.offsetY
             )
         }
     }

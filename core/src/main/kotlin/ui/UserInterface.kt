@@ -6,6 +6,8 @@ import com.badlogic.gdx.graphics.g2d.Batch
 import com.badlogic.gdx.utils.viewport.ExtendViewport
 import ecs.components.graphics.renderables.AnimatedCharacterSprite
 import ecs.components.graphics.RenderableComponent
+import ecs.components.graphics.TextureComponent
+import ecs.components.graphics.renderables.AnimatedCharacterComponent
 import gamestate.Players
 import ktx.graphics.use
 import ktx.math.vec2
@@ -86,7 +88,7 @@ class UserInterface(
                                 { p.lives },
                                 vec2(20f, 0f),
                                 (p.entity
-                                    .getComponent<RenderableComponent>().renderable as AnimatedCharacterSprite)
+                                    .getComponent<AnimatedCharacterComponent>())
                                     .currentAnim
                                     .keyFrames
                                     .first(),

@@ -24,7 +24,7 @@ object Assets : Disposable {
 
     lateinit var am: AssetManager
 
-    val characters: Map<String, Map<AnimState, LpcCharacterAnim<TextureRegion>>> by lazy {
+    val characters: Map<String, Map<AnimState, LpcCharacterAnim<OffsetTextureRegion>>> by lazy {
         SpriteLoader.initCharachterAnims()
     }
 
@@ -67,11 +67,11 @@ object Assets : Disposable {
 
     val towers by lazy {
         mapOf(
-            "machinegun" to TextureRegion(Texture(Gdx.files.internal("sprites/towers/tower-1.png"))),
-            "flamethrower" to TextureRegion(Texture(Gdx.files.internal("sprites/towers/tower-1.png"))),
-            "obstacle" to TextureRegion(Texture(Gdx.files.internal("sprites/towers/tower-obstacle.png"))),
-            "objective" to TextureRegion(Texture(Gdx.files.internal("sprites/towers/tower-objective.png"))),
-            "noise" to TextureRegion(Texture(Gdx.files.internal("sprites/towers/tower-1.png")))
+            "machinegun" to OffsetTextureRegion(Texture(Gdx.files.internal("sprites/towers/tower-1.png"))),
+            "flamethrower" to OffsetTextureRegion(Texture(Gdx.files.internal("sprites/towers/tower-1.png"))),
+            "obstacle" to OffsetTextureRegion(Texture(Gdx.files.internal("sprites/towers/tower-obstacle.png"))),
+            "objective" to OffsetTextureRegion(Texture(Gdx.files.internal("sprites/towers/tower-objective.png"))),
+            "noise" to OffsetTextureRegion(Texture(Gdx.files.internal("sprites/towers/tower-1.png")))
         )
     }
 
@@ -88,10 +88,10 @@ object Assets : Disposable {
 
     val arrows by lazy {
         mapOf(
-            MapDirection.North to TextureRegion(arrowTexture, 0, 0, 16, 16),
-            MapDirection.West to TextureRegion(arrowTexture, 16, 0, 16, 16),
-            MapDirection.South to TextureRegion(arrowTexture, 16, 16, 16, 16),
-            MapDirection.East to TextureRegion(arrowTexture, 0, 16, 16, 16)
+            MapDirection.North to OffsetTextureRegion(arrowTexture, 0, 0, 16, 16),
+            MapDirection.West to OffsetTextureRegion(arrowTexture, 16, 0, 16, 16),
+            MapDirection.South to OffsetTextureRegion(arrowTexture, 16, 16, 16, 16),
+            MapDirection.East to OffsetTextureRegion(arrowTexture, 0, 16, 16, 16)
         )
     }
 
@@ -99,21 +99,21 @@ object Assets : Disposable {
         Texture(Gdx.files.internal("tiles/tiles.png"))
     }
     val tiles by lazy {
-        val ts = mutableMapOf<String, TextureRegion>()
+        val ts = mutableMapOf<String, OffsetTextureRegion>()
         for (xTile in 0..3)
             for (yTile in 0..2) {
                 when (yTile) {
-                    0 -> ts["floor$xTile"] = TextureRegion(tileTexture, xTile * 16, yTile * 16, 16, 16)
+                    0 -> ts["floor$xTile"] = OffsetTextureRegion(tileTexture, xTile * 16, yTile * 16, 16, 16)
                     1 -> {
                         when (xTile) {
-                            0 -> ts["wall$xTile"] = TextureRegion(tileTexture, xTile * 16, yTile * 16, 16, 16)
-                            1 -> ts["wall$xTile"] = TextureRegion(tileTexture, xTile * 16, yTile * 16, 16, 16)
-                            2 -> ts["wall_end"] = TextureRegion(tileTexture, xTile * 16, yTile * 16, 16, 16)
+                            0 -> ts["wall$xTile"] = OffsetTextureRegion(tileTexture, xTile * 16, yTile * 16, 16, 16)
+                            1 -> ts["wall$xTile"] = OffsetTextureRegion(tileTexture, xTile * 16, yTile * 16, 16, 16)
+                            2 -> ts["wall_end"] = OffsetTextureRegion(tileTexture, xTile * 16, yTile * 16, 16, 16)
                         }
                     }
                     2 -> {
                         if (xTile in 0..1)
-                            ts["wall_shadow$xTile"] = TextureRegion(tileTexture, xTile * 16, yTile * 16, 16, 16)
+                            ts["wall_shadow$xTile"] = OffsetTextureRegion(tileTexture, xTile * 16, yTile * 16, 16, 16)
                     }
                 }
             }
@@ -131,17 +131,19 @@ object Assets : Disposable {
         tiles.filterKeys { it == "wall_end" }.values.first()
     }
 
-    val wallEndShadow by lazy { tiles["wall_shadow1"]!! }
-    val wallShadow by lazy { tiles["wall_shadow0"]!! }
-
-    val towerShadow by lazy {
-        TextureRegion(Texture(Gdx.files.internal("sprites/towers/tower-shadow.png")))
-    }
-
     val playerCharacters by lazy { characters.filterNot { it.key == "enemy" } }
 
     val splashTexture: Texture by lazy {
         Texture(Gdx.files.internal("splash/splash_1.png"))
+    }
+
+    val dummyRegion: OffsetTextureRegion by lazy {
+        val pixmap = Pixmap(1, 1, Pixmap.Format.RGBA8888)
+        pixmap.setColor(Color.WHITE)
+        pixmap.drawPixel(0, 0)
+        val texture = Texture(pixmap) //remember to dispose of later
+        pixmap.dispose()
+        OffsetTextureRegion(texture, 0, 0, 1, 1)
     }
 
     val shapeDrawerRegion: TextureRegion by lazy {
@@ -180,9 +182,6 @@ object Assets : Disposable {
     private fun fixFlip() {
         for (t in towers.values)
             t.flip(true, false)
-
-        towerShadow.flip(true, false)
-
     }
 
 

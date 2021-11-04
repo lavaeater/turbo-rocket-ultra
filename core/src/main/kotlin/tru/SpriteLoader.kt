@@ -4,6 +4,7 @@ import com.badlogic.gdx.Gdx
 import com.badlogic.gdx.graphics.Texture
 import com.badlogic.gdx.graphics.g2d.Animation
 import com.badlogic.gdx.graphics.g2d.TextureRegion
+import ecs.components.graphics.OffsetTextureRegion
 //import kotlinx.serialization.decodeFromString
 //import kotlinx.serialization.json.Json
 import ktx.collections.toGdxArray
@@ -29,7 +30,7 @@ object SpriteLoader {
         return map
     }
 
-    fun initCharachterAnims() : Map<String, Map<AnimState, LpcCharacterAnim>> {
+    fun initCharachterAnims() : Map<String, Map<AnimState, LpcCharacterAnim<OffsetTextureRegion>>> {
         /*
         For now, we will simply load the sheets and assign anims etc using
         some hardcoded stuff.
@@ -38,21 +39,21 @@ object SpriteLoader {
 
         So we should have anim and direction as two different things.
          */
-        val anims = mutableMapOf<String, MutableMap<AnimState, LpcCharacterAnim>>()
+        val anims = mutableMapOf<String, MutableMap<AnimState, LpcCharacterAnim<OffsetTextureRegion>>>()
         val characters = listOf("boy", "girl", "enemy")
         for (c in characters) {
             anims[c] = mutableMapOf()
             val texture = Texture(Gdx.files.internal("sprites/$c/$c.png"))
             for (animDef in LpcCharacterAnimDefinition.definitions) {
-                anims[c]!![animDef.state] = LpcCharacterAnim(animDef.state,
+                anims[c]!![animDef.state] = LpcCharacterAnim<OffsetTextureRegion>(animDef.state,
                     animDef.directions.mapIndexed
                     { row, r -> r to
-                    Animation(0.1f, (animDef.frames).map { TextureRegion(
+                    Animation(0.1f, (animDef.frames).map { OffsetTextureRegion(
                             texture,
                         (it)  * animDef.itemWidth,
                         (animDef.row + row)  * animDef.itemHeight,
                             animDef.itemWidth,
-                            animDef.itemHeight) }.toGdxArray(), Animation.PlayMode.LOOP)
+                            animDef.itemHeight, 0f, -20f) }.toGdxArray(), Animation.PlayMode.LOOP)
                 }.toMap())
             }
         }
