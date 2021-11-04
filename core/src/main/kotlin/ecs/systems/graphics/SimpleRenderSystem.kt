@@ -58,14 +58,14 @@ class SimpleRenderSystem(
 
         batch.drawScaled(
             textureComponent.texture,
-            transform.position.x + (textureComponent.offsetX + textureComponent.texture.offsetX * scale * textureComponent.scale),
-            transform.position.y - (textureComponent.offsetY - textureComponent.texture.offsetY) * scale * textureComponent.scale,
+            transform.position.x + (textureComponent.texture.regionWidth / 2 * scale) + (textureComponent.offsetX + textureComponent.texture.offsetX * scale * textureComponent.scale),
+            transform.position.y + (textureComponent.texture.regionHeight / 2 * scale) - (textureComponent.offsetY - textureComponent.texture.offsetY) * scale * textureComponent.scale,
             scale * textureComponent.scale)
         for(texture in textureComponent.extraTextures) {
             batch.drawScaled(
                 texture,
-                transform.position.x + (textureComponent.offsetX + texture.offsetX) * scale * textureComponent.scale,
-                transform.position.y - (textureComponent.offsetY - texture.offsetY) * scale * textureComponent.scale,
+                transform.position.x + (textureComponent.texture.regionWidth / 2 * scale) + (textureComponent.offsetX + texture.offsetX) * scale * textureComponent.scale,
+                transform.position.y + (textureComponent.texture.regionHeight / 2 * scale) - (textureComponent.offsetY - texture.offsetY) * scale * textureComponent.scale,
                 scale * textureComponent.scale
             )
         }
