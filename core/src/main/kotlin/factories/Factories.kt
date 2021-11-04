@@ -48,8 +48,6 @@ fun enemy(x: Float = 0f, y: Float = 0f) {
     enemy(vec2(x, y))
 }
 
-val colorRange = 0f..1f
-
 object Box2dCategories {
     const val player: Short = 0x01
     const val enemy: Short = 0x02
@@ -63,16 +61,15 @@ object Box2dCategories {
 }
 
 fun splatterEntity(at: Vector2, angle: Float) {
-    val splatterEntity = engine().entity {
+    engine().entity {
         with<SplatterComponent> {
             this.at = at.cpy()
-            this.rotation = angle
+            rotation = angle
         }
     }
 }
 
 fun tower(at: Vector2 = vec2(), towerType: String = "machinegun") {
-
     /*
     There should be an abstract "bounds" concept that defines the actual
     width and height of the object (i.e. the sprite). This height and
@@ -95,8 +92,6 @@ fun tower(at: Vector2 = vec2(), towerType: String = "machinegun") {
         with<TextureComponent> {
             texture = Assets.towers["obstacle"]!!
             scale = 4f
-//            offsetX = 0f
-//            offsetY = -6f
             layer = 1
         }
         with<MiniMapComponent> {
@@ -323,4 +318,3 @@ fun objective(
     box2dBody.userData = entity
     return box2dBody
 }
-
