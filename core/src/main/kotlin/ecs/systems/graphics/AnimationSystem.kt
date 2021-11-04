@@ -19,7 +19,6 @@ class AnimationSystem: IteratingSystem(allOf(TextureComponent::class, AnimatedCh
 
     override fun processEntity(entity: Entity, deltaTime: Float) {
         val animationComponent = aniMapper.get(entity)
-        animationComponent.animationStateTime = animationStateTime
         animationComponent.currentAnim = animationComponent.anims[animationComponent.currentAnimState]!!.animations[animationComponent.currentDirection]!!
         val textureComponent = textureMapper.get(entity)
         textureComponent.texture = animationComponent.currentAnim.getKeyFrame(animationStateTime)

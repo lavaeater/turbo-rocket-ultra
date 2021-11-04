@@ -13,10 +13,8 @@ class AnimatedCharacterComponent: Component, Pool.Poolable {
     var currentDirection: SpriteDirection = SpriteDirection.South
     var currentAnimState: AnimState = AnimState.Idle
     lateinit var currentAnim : Animation<OffsetTextureRegion>
-    var animationStateTime: Float = 0f
     override fun reset() {
         anims = emptyMap()
-        animationStateTime = 0f
         currentAnimState = AnimState.Idle
     }
 }
