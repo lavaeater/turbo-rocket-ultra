@@ -8,6 +8,7 @@ import ktx.math.vec2
 
 class GamepadControl(val controller: Controller): ControlMapper, Component {
     override val aimVector = vec2()
+    override var aiming: Boolean = aimVector.len2() > .5f
     override val mousePosition = vec2()
     override var firing = false
     override var turning = 0f

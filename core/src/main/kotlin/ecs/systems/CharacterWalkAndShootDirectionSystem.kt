@@ -4,6 +4,7 @@ import com.badlogic.ashley.core.Entity
 import com.badlogic.ashley.systems.IteratingSystem
 import ecs.components.graphics.renderables.AnimatedCharacterSprite
 import ecs.components.graphics.RenderableComponent
+import ecs.components.graphics.renderables.AnimatedCharacterComponent
 import ecs.components.player.PlayerControlComponent
 import ktx.ashley.allOf
 import ktx.ashley.mapperFor
@@ -14,12 +15,12 @@ import tru.SpriteDirection
 class CharacterWalkAndShootDirectionSystem :
     IteratingSystem(
         allOf(
-            RenderableComponent::class,
+            AnimatedCharacterComponent::class,
             PlayerControlComponent::class
         ).get(), 10) {
 
     var characterAngle = 0f
-    val renderableMapper = mapperFor<RenderableComponent>()
+    val renderableMapper = mapperFor<AnimatedCharacterComponent>()
     override fun processEntity(entity: Entity, deltaTime: Float) {
         /**
          * The difficult thing here is how we know if a character is walking or not... and what the character
@@ -31,17 +32,17 @@ class CharacterWalkAndShootDirectionSystem :
          * The current anim is managed by something else... the input system, obviously
          * The current anim is managed by something else... the input system, obviously
          */
-        val characterSprite = renderableMapper.get(entity).renderable as AnimatedCharacterSprite
+        val characterComponent = renderableMapper.get(entity)
         val controlComponet = AshleyMappers.playerControlMapper.get(entity)
-        characterAngle = if(controlComponet.moving) controlComponet.walkVector.angleDeg() else controlComponet.aimVector.angleDeg()
+        characterAngle = if(controlComponet.aiming) controlComponet.aimVector.angleDeg() else controlComponet.walkVector.angleDeg()
 
         when (characterAngle) {
-            in 150f..209f -> characterSprite.currentDirection = SpriteDirection.East
-            in 210f..329f -> characterSprite.currentDirection = SpriteDirection.North
-            in 330f..360f -> characterSprite.currentDirection = SpriteDirection.West
-            in 0f..29f -> characterSprite.currentDirection = SpriteDirection.West
-            in 30f..149f -> characterSprite.currentDirection = SpriteDirection.South
-            else -> characterSprite.currentDirection = SpriteDirection.South
+            in 150f..209f -> characterComponent.currentDirection = SpriteDirection.East
+            in 210f..329f -> characterComponent.currentDirection = SpriteDirection.North
+            in 330f..360f -> characterComponent.currentDirection = SpriteDirection.West
+            in 0f..29f -> characterComponent.currentDirection = SpriteDirection.West
+            in 30f..149f -> characterComponent.currentDirection = SpriteDirection.South
+            else -> characterComponent.currentDirection = SpriteDirection.South
         }
     }
 }

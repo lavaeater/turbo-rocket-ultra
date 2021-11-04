@@ -30,6 +30,7 @@ class PlayerControlComponent(var controlMapper: ControlMapper) : Component, Pool
     private val mousePosition3D = vec3()
     val triggerPulled get() = controlMapper.firing
     val firing get() = controlMapper.firing && cooldownRemaining <= 0f
+    val aiming get() = controlMapper.aiming
     val aimVector get() = controlMapper.aimVector
     val mousePosition get() = controlMapper.mousePosition
     var latestHitPoint = vec2(0f,0f)

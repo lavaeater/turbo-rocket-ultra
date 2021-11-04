@@ -1,18 +1,14 @@
 package map.grid
 
-import com.badlogic.gdx.graphics.Color
 import com.badlogic.gdx.graphics.g2d.Batch
 import com.badlogic.gdx.physics.box2d.Body
 import com.badlogic.gdx.physics.box2d.BodyDef
 import factories.world
 import ktx.box2d.body
 import ktx.box2d.box
-import ktx.box2d.filter
 import map.grid.GridMapSection.Companion.tileHeight
 import map.grid.GridMapSection.Companion.tileScale
 import map.grid.GridMapSection.Companion.tileWidth
-import map.snake.MapDirection
-import map.snake.SnakeMapSection
 import physics.drawScaled
 import space.earlygrey.shapedrawer.ShapeDrawer
 
@@ -72,7 +68,7 @@ class GridMapManager {
 //            shapeDrawer.rectangle(section.bounds, Color.BLUE)
 //            shapeDrawer.rectangle(section.innerBounds, Color.RED)
 //            shapeDrawer.rectangle(section.safeBounds, Color.GREEN)
-            section.light.isActive = true
+            section.lights.forEach { it.isActive = true }
         }
     }
 

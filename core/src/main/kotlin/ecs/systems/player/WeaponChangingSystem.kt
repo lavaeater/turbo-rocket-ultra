@@ -17,10 +17,9 @@ class WeaponUpdateSystem: IteratingSystem(allOf(WeaponComponent::class, Animated
         val animatedCharacterComponent = entity.getComponent<AnimatedCharacterComponent>()
         val textureComponent = entity.getComponent<TextureComponent>()
         if(animatedCharacterComponent.currentAnimState == AnimState.Aiming)  {
-            textureComponent.extraTextures.add(
-                Assets.weapons[weaponComponent.currentGun]!![animatedCharacterComponent.currentDirection]!!)
+            textureComponent.extraTextures["gun"] = Assets.weapons[weaponComponent.currentGun]!![animatedCharacterComponent.currentDirection]!!
         } else {
-            textureComponent.extraTextures.clear()
+            textureComponent.extraTextures.remove("gun")
         }
     }
 }

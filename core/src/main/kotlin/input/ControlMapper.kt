@@ -9,6 +9,7 @@ interface ControlMapper: Component {
     val isKeyboard: Boolean
     val isGamepad: Boolean
     val aimVector: Vector2
+    var aiming: Boolean
     val mousePosition: Vector2
     var firing: Boolean
     var turning: Float

@@ -42,24 +42,24 @@ object Assets : Disposable {
             GunFrames.handGun to
                     mapOf(
                         SpriteDirection.North to
-                                OffsetTextureRegion(handgunTexture, 0, 0,64, 64, 0f, 0f),
+                                OffsetTextureRegion(handgunTexture, 0, 0,64, 64, 0f, -20f),
                         SpriteDirection.West to
-                                OffsetTextureRegion(handgunTexture, 0, 64, 64, 64, 0f, 0f),
+                                OffsetTextureRegion(handgunTexture, 0, 64, 64, 64, 0f, -20f),
                         SpriteDirection.South to
-                                OffsetTextureRegion(handgunTexture, 0, 128, 64, 64, 0f,0f),
-                        SpriteDirection.West to
-                                OffsetTextureRegion(handgunTexture, 0, 172, 64,64, 0f, 0f)
+                                OffsetTextureRegion(handgunTexture, 0, 128, 64, 64, 0f,-20f),
+                        SpriteDirection.East to
+                                OffsetTextureRegion(handgunTexture, 0, 192, 64,64, 0f, -20f)
                         ),
             GunFrames.spas12 to
                     mapOf(
                         SpriteDirection.North to
-                                OffsetTextureRegion(spas12Texture, 0, 0,64, 64, 0f, 0f),
+                                OffsetTextureRegion(spas12Texture, 0, 0,64, 64, 0f, -20f),
                         SpriteDirection.West to
-                                OffsetTextureRegion(spas12Texture, 0, 64, 64, 64, 0f, 0f),
+                                OffsetTextureRegion(spas12Texture, 0, 64, 64, 64, 0f, -20f),
                         SpriteDirection.South to
-                                OffsetTextureRegion(spas12Texture, 0, 128, 64, 64, 0f,0f),
-                        SpriteDirection.West to
-                                OffsetTextureRegion(spas12Texture, 0, 172, 64,64, 0f, 0f)
+                                OffsetTextureRegion(spas12Texture, 0, 128, 64, 64, 0f,-20f),
+                        SpriteDirection.East to
+                                OffsetTextureRegion(spas12Texture, 0, 192, 64,64, 0f, -20f)
                     )
         )
     }

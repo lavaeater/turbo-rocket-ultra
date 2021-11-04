@@ -24,7 +24,7 @@ class MiniMapComponent: Component, Pool.Poolable {
 class TextureComponent: Component, Pool.Poolable {
     var layer: Int = 0
     var texture: OffsetTextureRegion = Assets.dummyRegion
-    val extraTextures = mutableSetOf<OffsetTextureRegion>()
+    val extraTextures = mutableMapOf<String, OffsetTextureRegion>()
     var offsetX: Float = 0f
     var offsetY: Float = 0f
     var scale: Float = 1f

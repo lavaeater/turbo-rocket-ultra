@@ -61,7 +61,7 @@ class SimpleRenderSystem(
             transform.position.x + (textureComponent.texture.regionWidth / 2 * scale) + (textureComponent.offsetX + textureComponent.texture.offsetX * scale * textureComponent.scale),
             transform.position.y + (textureComponent.texture.regionHeight / 2 * scale) - (textureComponent.offsetY - textureComponent.texture.offsetY) * scale * textureComponent.scale,
             scale * textureComponent.scale)
-        for(texture in textureComponent.extraTextures) {
+        for(texture in textureComponent.extraTextures.values) {
             batch.drawScaled(
                 texture,
                 transform.position.x + (textureComponent.texture.regionWidth / 2 * scale) + (textureComponent.offsetX + texture.offsetX) * scale * textureComponent.scale,

@@ -67,10 +67,10 @@ class KeyboardInputSystem:
         return when(button)  {
             Input.Buttons.LEFT ->  {
                 keyboardControl.firing = true
+                keyboardControl.aiming = true
                 true
             }
             Input.Buttons.RIGHT -> {
-
                 true
             }
             else -> false
@@ -89,6 +89,7 @@ class KeyboardInputSystem:
         return when(button)  {
             Input.Buttons.LEFT ->  {
                 keyboardControl.firing = false
+                keyboardControl.aiming = false
                 true
             }
             Input.Buttons.RIGHT -> {

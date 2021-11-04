@@ -14,6 +14,7 @@ class KeyboardControl: ControlMapper, Component {
     override val isKeyboard = true
     override val isGamepad = false
     override val aimVector = vec2()
+    override var aiming: Boolean = false
     override val mousePosition = vec2()
     override var firing = false
     override var turning = 0f
