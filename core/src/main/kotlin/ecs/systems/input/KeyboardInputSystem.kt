@@ -100,17 +100,16 @@ class KeyboardInputSystem:
         }
     }
 
-    var needToChangeGun = false
     private fun changeGun() {
-        needToChangeGun = true
+        keyboardControl.needToChangeGun = true
     }
 
     @OptIn(ExperimentalStdlibApi::class)
     override fun processEntity(entity: Entity, deltaTime: Float) {
         keyboardControl = pccMapper[entity]
         updateMouseInput(tcMapper[entity].position)
-        if(needToChangeGun) {
-            needToChangeGun = false
+        if(keyboardControl.needToChangeGun) {
+            keyboardControl.needToChangeGun = false
             val weaponComponent = entity.getComponent<WeaponComponent>()
             when(weaponComponent.currentGun) {
                 GunFrames.handGun -> weaponComponent.currentGun = GunFrames.spas12

@@ -19,6 +19,7 @@ class KeyboardControl: ControlMapper, Component {
     override var firing = false
     override var turning = 0f
     override var thrust = 0f
+    override var needToChangeGun: Boolean = false
     override val walkVector: Vector2 = vec2(turning, thrust)
         get() = field.set(turning, -thrust)
     override val controllerId: String

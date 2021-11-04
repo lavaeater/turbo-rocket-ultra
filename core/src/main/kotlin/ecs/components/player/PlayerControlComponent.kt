@@ -20,6 +20,7 @@ class PlayerControlComponent(var controlMapper: ControlMapper) : Component, Pool
 
     val playerAnimState : AnimState get() {
         return when {
+            aiming -> AnimState.Aiming
             triggerPulled -> AnimState.Aiming
             moving -> AnimState.Walk
             else -> AnimState.Idle

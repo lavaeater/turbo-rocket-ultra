@@ -14,6 +14,7 @@ interface ControlMapper: Component {
     var firing: Boolean
     var turning: Float
     var thrust: Float
+    var needToChangeGun: Boolean
 
     val walkVector: Vector2
     val controllerId: String

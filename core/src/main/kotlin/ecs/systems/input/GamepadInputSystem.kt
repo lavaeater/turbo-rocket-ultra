@@ -6,6 +6,8 @@ import com.badlogic.gdx.controllers.Controller
 import com.badlogic.gdx.controllers.ControllerListener
 import com.badlogic.gdx.math.MathUtils
 import com.badlogic.gdx.math.Vector3
+import ecs.components.player.GunFrames
+import ecs.components.player.WeaponComponent
 import input.Axis
 import input.Axis.Companion.valueOK
 import input.Button
@@ -13,6 +15,7 @@ import input.GamepadControl
 import ktx.ashley.allOf
 import ktx.ashley.mapperFor
 import gamestate.Players
+import physics.getComponent
 
 /**
  * Controllers will be handled by a polling system
@@ -20,7 +23,7 @@ import gamestate.Players
 class GamepadInputSystem() : IteratingSystem(allOf(GamepadControl::class).get()), ControllerListener {
 
     private val gcMapper = mapperFor<GamepadControl>()
-    private val controllers: List<GamepadControl> get() = Players.players.values.filterIsInstance<GamepadControl>().map { it }
+    private val controllers: List<GamepadControl> get() = Players.players.keys.filterIsInstance<GamepadControl>().map { it }
     override fun connected(controller: Controller) {
 
     }
@@ -36,7 +39,9 @@ class GamepadInputSystem() : IteratingSystem(allOf(GamepadControl::class).get())
         val actualController = controllers.firstOrNull { it.controller == controller }
         if(actualController != null) {
             when (Button.getButton(buttonCode)) {
-                Button.Green -> {}
+                Button.Green -> {
+                    actualController.needToChangeGun = true
+                }
                 Button.Red -> {}
                 Button.Blue -> {}
                 Button.Yellow -> {}
@@ -72,8 +77,17 @@ class GamepadInputSystem() : IteratingSystem(allOf(GamepadControl::class).get())
         return true
     }
 
+    @OptIn(ExperimentalStdlibApi::class)
     override fun processEntity(entity: Entity, deltaTime: Float) {
         val controlComponent = gcMapper[entity]
+        if(controlComponent.needToChangeGun) {
+            controlComponent.needToChangeGun = false
+            val weaponComponent = entity.getComponent<WeaponComponent>()
+            when(weaponComponent.currentGun) {
+                GunFrames.handGun -> weaponComponent.currentGun = GunFrames.spas12
+                else -> weaponComponent.currentGun = GunFrames.handGun
+            }
+        }
         val controller = controlComponent.controller
         for(axis in Axis.axisMap.keys) {
             axisMoved(controlComponent, axis, controller.getAxis(axis))
