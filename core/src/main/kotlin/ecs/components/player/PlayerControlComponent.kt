@@ -18,15 +18,21 @@ class PlayerControlComponent(var controlMapper: ControlMapper) : Component, Pool
     var shotsFired = 0
         private set
 
-    val playerAnimState : AnimState get() {
-        return when {
-            aiming -> AnimState.Aiming
-            triggerPulled -> AnimState.Aiming
-            moving -> AnimState.Walk
-            else -> AnimState.Idle
+    val playerAnimState: AnimState
+        get() {
+            return when {
+                aiming -> AnimState.Aiming
+                triggerPulled -> AnimState.Aiming
+                moving -> AnimState.Walk
+                else -> AnimState.Idle
+            }
         }
-    }
 
+    var needToChangeGun
+        get() = controlMapper.needToChangeGun
+        set(value) {
+            controlMapper.needToChangeGun = value
+        }
     val drawShot get() = shotDrawCoolDown > 0f
     private val mousePosition3D = vec3()
     val triggerPulled get() = controlMapper.firing
@@ -34,27 +40,34 @@ class PlayerControlComponent(var controlMapper: ControlMapper) : Component, Pool
     val aiming get() = controlMapper.aiming
     val aimVector get() = controlMapper.aimVector
     val mousePosition get() = controlMapper.mousePosition
-    var latestHitPoint = vec2(0f,0f)
+    var latestHitPoint = vec2(0f, 0f)
     val walkVector: Vector2 = vec2(turning, thrust)
         get() = field.set(turning, -thrust).nor()
-    val turning : Float get() { return if(playerMode != PlayerMode.Control) 0f else controlMapper.turning }
-    val thrust : Float get()  { return if(playerMode != PlayerMode.Control) 0f else controlMapper.thrust }
+    val turning: Float
+        get() {
+            return if (playerMode != PlayerMode.Control) 0f else controlMapper.turning
+        }
+    val thrust: Float
+        get() {
+            return if (playerMode != PlayerMode.Control) 0f else controlMapper.thrust
+        }
     val moving get() = walkVector.len2() != 0f
-    var playerMode get() = controlMapper.playerMode
+    var playerMode
+        get() = controlMapper.playerMode
         set(value) {
             controlMapper.playerMode = value
         }
 
     fun coolDown(deltaTime: Float) {
-        cooldownRemaining-=deltaTime
-        shotDrawCoolDown-=deltaTime
+        cooldownRemaining -= deltaTime
+        shotDrawCoolDown -= deltaTime
         cooldownRemaining = cooldownRemaining.coerceAtLeast(0f)
         shotDrawCoolDown = shotDrawCoolDown.coerceAtLeast(0f)
     }
 
     fun shoot() {
         shotsFired++
-        cooldownRemaining += 1f/rof
+        cooldownRemaining += 1f / rof
         shotDrawCoolDown = cooldownRemaining / 4
     }
 

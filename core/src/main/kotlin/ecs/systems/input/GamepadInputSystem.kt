@@ -79,14 +79,7 @@ class GamepadInputSystem() : IteratingSystem(allOf(GamepadControl::class).get())
     @OptIn(ExperimentalStdlibApi::class)
     override fun processEntity(entity: Entity, deltaTime: Float) {
         val controlComponent = gcMapper[entity]
-        if(controlComponent.needToChangeGun) {
-            controlComponent.needToChangeGun = false
-            val weaponComponent = entity.getComponent<WeaponComponent>()
-            when(weaponComponent.currentGun) {
-                GunFrames.handGun -> weaponComponent.currentGun = GunFrames.spas12
-                else -> weaponComponent.currentGun = GunFrames.handGun
-            }
-        }
+
         val controller = controlComponent.controller
         for(axis in Axis.axisMap.keys) {
             axisMoved(controlComponent, axis, controller.getAxis(axis))

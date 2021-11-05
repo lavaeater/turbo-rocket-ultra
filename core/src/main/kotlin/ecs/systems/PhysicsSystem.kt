@@ -38,23 +38,6 @@ class PhysicsSystem(private val world: World, private val timeStep : Float = 1/6
             transformComponent.position.set(bodyPosition)
             transformComponent.rotation = bodyRotation
 
-//                if(entity.has(pMapper)) {
-//                    val pC = pMapper.get(entity)
-//                    val bloodEntity = engine.createEntity().apply {
-//                        add(engine.createComponent(TransformComponent::class.java).apply {
-//                            position.set(transformComponent.position)
-//                            rotation = transformComponent.rotation
-//                        })
-//                        add(engine.createComponent(SplatterComponent::class.java).apply {
-//                            radius = .1f
-//                            color = pC.color
-//                            life = pC.life / 2f
-//                        })
-//                        add(engine.createComponent(RenderableComponent::class.java))
-//                    }
-//                    engine.addEntity(bloodEntity)
-//                }
-//        }
     }
 
 }

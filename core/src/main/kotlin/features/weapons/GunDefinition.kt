@@ -18,7 +18,7 @@ class GunDefinition(
         val guns = listOf(
             GunDefinition(
                 "Glock 17",
-                17,
+                300,
                 60f,
                 5f,
                 1,
@@ -28,7 +28,7 @@ class GunDefinition(
             ),
             GunDefinition(
                 "Franchi Spas 12",
-                10,
+                300,
                 30f,
                 5f,
                 8,
@@ -38,7 +38,7 @@ class GunDefinition(
             )
         )
     }
-    fun getWeapon(): Gun {
+    fun getGun(): Gun {
         return Gun(this)
     }
 }

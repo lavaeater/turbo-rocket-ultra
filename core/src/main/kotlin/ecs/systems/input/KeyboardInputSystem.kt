@@ -15,11 +15,13 @@ import ktx.ashley.allOf
 import ktx.ashley.mapperFor
 import physics.getComponent
 
-class KeyboardInputSystem:
+class KeyboardInputSystem :
     KtxInputAdapter, IteratingSystem(
     allOf(
         KeyboardControl::class,
-        TransformComponent::class).get()) {
+        TransformComponent::class
+    ).get()
+) {
 
     lateinit var keyboardControl: KeyboardControl
     private val pccMapper = mapperFor<KeyboardControl>()
@@ -54,7 +56,7 @@ class KeyboardInputSystem:
     }
 
     private fun toggleBuildMode() {
-        when(keyboardControl.playerMode) {
+        when (keyboardControl.playerMode) {
             PlayerMode.Control -> keyboardControl.playerMode = PlayerMode.Building
             PlayerMode.Building -> {
                 keyboardControl.uiControl.cancel()
@@ -64,8 +66,8 @@ class KeyboardInputSystem:
     }
 
     override fun touchDown(screenX: Int, screenY: Int, pointer: Int, button: Int): Boolean {
-        return when(button)  {
-            Input.Buttons.LEFT ->  {
+        return when (button) {
+            Input.Buttons.LEFT -> {
                 keyboardControl.firing = true
                 keyboardControl.aiming = true
                 true
@@ -86,13 +88,15 @@ class KeyboardInputSystem:
     }
 
     override fun touchUp(screenX: Int, screenY: Int, pointer: Int, button: Int): Boolean {
-        return when(button)  {
-            Input.Buttons.LEFT ->  {
+        return when (button) {
+            Input.Buttons.LEFT -> {
                 keyboardControl.firing = false
                 keyboardControl.aiming = false
                 true
             }
             Input.Buttons.RIGHT -> {
+                keyboardControl.firing = false
+                keyboardControl.aiming = false
                 changeGun()
                 true
             }
@@ -108,15 +112,6 @@ class KeyboardInputSystem:
     override fun processEntity(entity: Entity, deltaTime: Float) {
         keyboardControl = pccMapper[entity]
         updateMouseInput(tcMapper[entity].position)
-        if(keyboardControl.needToChangeGun) {
-            keyboardControl.needToChangeGun = false
-            val weaponComponent = entity.getComponent<WeaponComponent>()
-            when(weaponComponent.currentGun) {
-                GunFrames.handGun -> weaponComponent.currentGun = GunFrames.spas12
-                else -> weaponComponent.currentGun = GunFrames.handGun
-            }
-        }
-
     }
 
     private fun updateMouseInput(position: Vector2) {

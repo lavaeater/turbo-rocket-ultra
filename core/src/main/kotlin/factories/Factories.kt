@@ -23,6 +23,7 @@ import ecs.components.graphics.renderables.AnimatedCharacterComponent
 import ecs.components.graphics.renderables.RenderableTextureRegion
 import ecs.components.player.*
 import ecs.components.towers.TowerComponent
+import features.weapons.GunDefinition
 import gamestate.Player
 import injection.Context.inject
 import input.ControlMapper
@@ -139,6 +140,9 @@ fun player(player: Player, mapper: ControlMapper,at: Vector2) {
             color = Color.GREEN
         }
         with<PlayerComponent> { this.player = player }
+        with<InventoryComponent> {
+            GunDefinition.guns.forEach { guns.add(it.getGun()) }
+        }
         with<WeaponComponent>()
         with<FiredShotsComponent>()
         with<FlashlightComponent>()

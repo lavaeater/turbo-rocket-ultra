@@ -94,6 +94,7 @@ object Context {
             addSystem(TowerShootSystem())
             addSystem(AnimationSystem())
             addSystem(WeaponUpdateSystem())
+            addSystem(WeaponChangeSystem())
             addSystem(RenderMapSystem(inject<PolygonSpriteBatch>() as Batch, inject<OrthographicCamera>() as Camera, inject()))
             addSystem(SimpleRenderSystem(inject<PolygonSpriteBatch>() as Batch))
             addSystem(RenderUserInterfaceSystem(inject<PolygonSpriteBatch>() as Batch))
