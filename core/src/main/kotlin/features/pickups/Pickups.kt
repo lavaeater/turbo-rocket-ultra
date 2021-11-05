@@ -19,6 +19,23 @@ interface ILootTable : ILoot {
     val result: List<ILoot>
 }
 
+class LootTable(
+    override val contents: List<ILoot>,
+    override var probability: Float,
+    override val count: Int,
+    override val unique: Boolean = false,
+    override val always: Boolean = false,
+    override val enabled: Boolean = true,
+    override val preResultEvaluation: (ILoot) -> Unit = {},
+    override val hit: (ILoot) -> Unit = {},
+    override val postResultEvaluation: (ILoot) -> Unit = {}
+) : ILootTable {
+    override val result: List<ILoot> get() {
+        return emptyList()
+    }
+
+}
+
 
 interface ILootValue<T> : ILoot {
     val lootValue: T
@@ -35,25 +52,33 @@ class Loot(
 ) : ILoot
 
 class NullValue(
-    probability: Float, unique: Boolean, always: Boolean, enabled: Boolean,
-    preResultEvaluation: (ILoot) -> Unit, hit: (ILoot) -> Unit, postResultEvaluation: (ILoot) -> Unit
+    probability: Float,
+    unique: Boolean = false,
+    always: Boolean = false,
+    enabled: Boolean = true,
+    preResultEvaluation: (ILoot) -> Unit = {},
+    hit: (ILoot) -> Unit = {},
+    postResultEvaluation: (ILoot) -> Unit = {}
 ) : LootValue<Object?>(
+    null,
     probability,
     unique,
     always,
     enabled,
-    preResultEvaluation, hit, postResultEvaluation, null
+    preResultEvaluation,
+    hit,
+    postResultEvaluation
 )
 
 open class LootValue<T>(
+    override val lootValue: T,
     override var probability: Float,
-    override val unique: Boolean,
-    override val always: Boolean,
-    override val enabled: Boolean,
-    override val preResultEvaluation: (ILoot) -> Unit,
-    override val hit: (ILoot) -> Unit,
-    override val postResultEvaluation: (ILoot) -> Unit,
-    override val lootValue: T
+    override val unique: Boolean = false,
+    override val always: Boolean = false,
+    override val enabled: Boolean = true,
+    override val preResultEvaluation: (ILoot) -> Unit = {},
+    override val hit: (ILoot) -> Unit = {},
+    override val postResultEvaluation: (ILoot) -> Unit = {}
 ) : ILootValue<T>
 
 object Randomizer {
