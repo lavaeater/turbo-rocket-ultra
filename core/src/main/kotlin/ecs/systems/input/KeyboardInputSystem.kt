@@ -6,7 +6,7 @@ import com.badlogic.gdx.Gdx
 import com.badlogic.gdx.Input
 import com.badlogic.gdx.math.Vector2
 import ecs.components.gameplay.TransformComponent
-import ecs.components.player.GunFrames
+import features.weapons.GunFrames
 import ecs.components.player.PlayerMode
 import ecs.components.player.WeaponComponent
 import input.*

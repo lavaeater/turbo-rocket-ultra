@@ -10,7 +10,7 @@ import com.badlogic.gdx.graphics.g2d.*
 import com.badlogic.gdx.scenes.scene2d.ui.Skin
 import com.badlogic.gdx.utils.Disposable
 import ecs.components.graphics.OffsetTextureRegion
-import ecs.components.player.GunFrames
+import features.weapons.GunFrames
 import injection.Context.inject
 import ktx.scene2d.Scene2DSkin
 import map.snake.MapDirection

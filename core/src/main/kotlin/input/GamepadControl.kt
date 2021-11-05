@@ -19,13 +19,7 @@ class GamepadControl(val controller: Controller): ControlMapper, Component {
     override val isGamepad = true
     override val walkVector: Vector2 = vec2(turning, thrust)
         get() = field.set(turning, -thrust)
-    override val controllerId: String
-        get() {
-//            return if(controller is SDL2Controller)
-//                "Gamepad ${controller.playerIndex + 1}"
-//            else
-                return controller.toString()
-        }
+    override val controllerId: String get() = controller.toString()
     override var playerMode: PlayerMode = PlayerMode.Control
 
     override fun setAimVector(screenX: Int, screenY: Int, position: Vector2) {

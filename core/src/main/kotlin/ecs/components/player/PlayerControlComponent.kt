@@ -67,7 +67,3 @@ class PlayerControlComponent(var controlMapper: ControlMapper) : Component, Pool
     }
 }
 
-sealed class PlayerMode {
-    object Control: PlayerMode()
-    object Building: PlayerMode()
-}

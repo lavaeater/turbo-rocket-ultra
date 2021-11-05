@@ -1,13 +1,13 @@
 package input
 
-sealed class Button {
-    object Green : Button()
-    object Red : Button()
-    object Blue : Button()
-    object Yellow : Button()
-    object DPadLeft : Button()
-    object DPadRight : Button()
-    object Unknown : Button()
+sealed class Button(val playstationButtonName: String) {
+    object Green : Button("X")
+    object Red : Button("Dont know")
+    object Blue : Button("SQUARE")
+    object Yellow : Button("Dont know")
+    object DPadLeft : Button("Dpadleft - maybe not, it might be an axis?")
+    object DPadRight : Button("DpadRight")
+    object Unknown : Button("Unknown")
 
     companion object {
         fun getButton(buttonCode: Int): Button {
