@@ -18,8 +18,8 @@ class GunDefinition(
         val guns = listOf(
             GunDefinition(
                 "Glock 17",
-                300,
-                60f,
+                17,
+                120f,
                 5f,
                 1,
                 0f,
@@ -28,8 +28,8 @@ class GunDefinition(
             ),
             GunDefinition(
                 "Franchi Spas 12",
-                300,
-                30f,
+                8,
+                60f,
                 5f,
                 8,
                 30f,

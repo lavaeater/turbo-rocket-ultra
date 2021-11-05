@@ -22,6 +22,7 @@ class WeaponChangeSystem: IteratingSystem(
             val inventoryComponent = entity.getComponent<InventoryComponent>()
             val weaponComponent = entity.getComponent<WeaponComponent>()
             weaponComponent.currentGun = inventoryComponent.guns.nextItem()
+            controlComponent.setNewGun(weaponComponent.currentGun.rof / 60f)
         }
     }
 }
