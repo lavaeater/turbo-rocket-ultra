@@ -59,7 +59,7 @@ class UserInterface(
 
     @ExperimentalStdlibApi
     private val newUi by lazy {
-        SpacedContainer(vec2(100f, 0f), vec2(20f, hudViewPort.worldHeight / 6), true).apply {
+        SpacedContainer(vec2(100f, 0f), vec2(20f, hudViewPort.worldHeight / 4), true).apply {
             for ((i, p) in players.values.withIndex()) {
                 children.add(
                     SpacedContainer(vec2(0f, 25f), vec2()).apply {
@@ -74,6 +74,9 @@ class UserInterface(
                         )
                         children.add(
                             BoundTextActor({ "Score: ${p.score}" })
+                        )
+                        children.add(
+                            BoundTextActor({ "Ammo: ${p.ammoLeft} / ${p.totalAmmo}"})
                         )
                         children.add(
                             DataBoundMeter(

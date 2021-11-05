@@ -24,8 +24,6 @@ import ktx.box2d.createWorld
 import ktx.inject.Context
 import ktx.inject.register
 import map.grid.GridMapManager
-import map.snake.SnakeMapGenerator
-import map.snake.SnakeMapManager
 import physics.ContactManager
 import screens.GameScreen
 import ui.IUserInterface
@@ -94,7 +92,8 @@ object Context {
             addSystem(TowerShootSystem())
             addSystem(AnimationSystem())
             addSystem(WeaponUpdateSystem())
-            addSystem(WeaponChangeSystem())
+            addSystem(WeaponChangeAndReloadSystem())
+            addSystem(UpdatePlayerStatsSystem())
             addSystem(RenderMapSystem(inject<PolygonSpriteBatch>() as Batch, inject<OrthographicCamera>() as Camera, inject()))
             addSystem(SimpleRenderSystem(inject<PolygonSpriteBatch>() as Batch))
             addSystem(RenderUserInterfaceSystem(inject<PolygonSpriteBatch>() as Batch))

@@ -9,4 +9,5 @@ class Gun(private val gunDefinition: GunDefinition) {
     val numberOfProjectiles = gunDefinition.numberOfProjectiles
     val maxSpread = gunDefinition.maxSpread
     val textureName = gunDefinition.textureName
+    val ammoType = gunDefinition.ammoType
 }

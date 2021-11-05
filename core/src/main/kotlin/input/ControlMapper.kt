@@ -6,6 +6,7 @@ import ecs.components.player.PlayerMode
 
 interface ControlMapper: Component {
 
+    var needsReload: Boolean
     val isKeyboard: Boolean
     val isGamepad: Boolean
     val aimVector: Vector2

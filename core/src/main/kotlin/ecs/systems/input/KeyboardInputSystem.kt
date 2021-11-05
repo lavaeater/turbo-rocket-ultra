@@ -46,6 +46,7 @@ class KeyboardInputSystem :
             Input.Keys.A -> keyboardControl.turning = 0f
             Input.Keys.D -> keyboardControl.turning = 0f
             Input.Keys.SPACE -> keyboardControl.firing = false
+            Input.Keys.R -> keyboardControl.needsReload = true
             Input.Keys.B -> toggleBuildMode()
             Input.Keys.LEFT -> keyboardControl.uiControl.left()
             Input.Keys.RIGHT -> keyboardControl.uiControl.right()
