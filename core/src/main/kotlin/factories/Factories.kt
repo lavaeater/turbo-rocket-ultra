@@ -173,6 +173,17 @@ fun semicircle(): List<Vector2> {
     return vs
 }
 
+fun lootBox(at: Vector2) {
+    val box2dBody = world.body {
+        type = BodyDef.BodyType.StaticBody
+        position.set(at)
+        fixedRotation = true
+        box(1f, 1f) {
+
+        }
+    }
+}
+
 fun enemy(at: Vector2) {
 
     val box2dBody = world().body {
