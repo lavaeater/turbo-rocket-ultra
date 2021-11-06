@@ -21,8 +21,11 @@ import ecs.components.gameplay.TransformComponent
 import ecs.components.graphics.*
 import ecs.components.graphics.renderables.AnimatedCharacterComponent
 import ecs.components.graphics.renderables.RenderableTextureRegion
+import ecs.components.pickups.LootComponent
 import ecs.components.player.*
 import ecs.components.towers.TowerComponent
+import features.pickups.AmmoLoot
+import features.pickups.NullValue
 import features.weapons.AmmoType
 import features.weapons.GunDefinition
 import gamestate.Player
@@ -106,7 +109,7 @@ fun tower(at: Vector2 = vec2(), towerType: String = "machinegun") {
 
 }
 
-fun player(player: Player, mapper: ControlMapper,at: Vector2) {
+fun player(player: Player, mapper: ControlMapper, at: Vector2) {
     /*
     The player should be two bodies, one for collision detection for
     movement, like a projection of the characters body on "the floor"
@@ -200,6 +203,15 @@ fun enemy(at: Vector2) {
         with<EnemyComponent>()
         with<AnimatedCharacterComponent> {
             anims = Assets.characters["enemy"]!!
+        }
+        with<LootComponent> {
+            lootTable.contents.add(
+                AmmoLoot(AmmoType.nineMilliMeters, 6..17, 30f)
+            )
+            lootTable.contents.add(
+                AmmoLoot(AmmoType.twelveGaugeShotgun, 4..10, 10f)
+            )
+            lootTable.contents.add(NullValue(10f))
         }
         with<TextureComponent> {
             layer = 1
