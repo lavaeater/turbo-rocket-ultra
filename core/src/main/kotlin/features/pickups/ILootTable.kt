@@ -1,7 +1,7 @@
 package features.pickups
 
 interface ILootTable : ILoot {
-    val count: Int
-    val contents: List<ILoot>
+    var count: Int
+    val contents: MutableList<ILoot>
     val result: List<ILoot>
 }

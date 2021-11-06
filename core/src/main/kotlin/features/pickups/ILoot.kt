@@ -5,8 +5,7 @@ interface ILoot {
     val isUnique: Boolean
     val always: Boolean
     val enabled: Boolean
-    val preResultEvaluation: (ILoot) -> Unit
-    val hit: (ILoot) -> Unit
-    val postResultEvaluation: (ILoot) -> Unit
-
+    val preResultEvaluation: (List<ILoot>) -> Unit
+    val hit: (List<ILoot>) -> Unit
+    val postResultEvaluation: (List<ILoot>) -> Unit
 }

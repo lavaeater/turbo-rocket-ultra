@@ -5,9 +5,9 @@ class NullValue(
     unique: Boolean = false,
     always: Boolean = false,
     enabled: Boolean = true,
-    preResultEvaluation: (ILoot) -> Unit = {},
-    hit: (ILoot) -> Unit = {},
-    postResultEvaluation: (ILoot) -> Unit = {}
+    preResultEvaluation: (List<ILoot>) -> Unit = {},
+    hit: (List<ILoot>) -> Unit = {},
+    postResultEvaluation: (List<ILoot>) -> Unit = {}
 ) : LootValue<Object?>(
     null,
     probability,

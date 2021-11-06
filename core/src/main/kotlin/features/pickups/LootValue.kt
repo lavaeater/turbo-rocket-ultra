@@ -6,7 +6,7 @@ open class LootValue<T>(
     override val isUnique: Boolean = false,
     override val always: Boolean = false,
     override val enabled: Boolean = true,
-    override val preResultEvaluation: (ILoot) -> Unit = {},
-    override val hit: (ILoot) -> Unit = {},
-    override val postResultEvaluation: (ILoot) -> Unit = {}
+    override val preResultEvaluation: (List<ILoot>) -> Unit = {},
+    override val hit: (List<ILoot>) -> Unit = {},
+    override val postResultEvaluation: (List<ILoot>) -> Unit = {}
 ) : ILootValue<T>
