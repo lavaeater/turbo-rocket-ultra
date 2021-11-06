@@ -74,6 +74,9 @@ object Assets : Disposable {
             "noise" to OffsetTextureRegion(Texture(Gdx.files.internal("sprites/towers/tower-1.png")))
         )
     }
+    val lootBox by lazy {
+        OffsetTextureRegion(Texture(Gdx.files.internal("sprites/loot/lootbox.png")))
+    }
 
     val arrowTexture by lazy {
         Texture(Gdx.files.internal("sprites/arrows.png"))

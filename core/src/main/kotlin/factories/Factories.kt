@@ -22,9 +22,11 @@ import ecs.components.graphics.*
 import ecs.components.graphics.renderables.AnimatedCharacterComponent
 import ecs.components.graphics.renderables.RenderableTextureRegion
 import ecs.components.pickups.LootComponent
+import ecs.components.pickups.LootDropComponent
 import ecs.components.player.*
 import ecs.components.towers.TowerComponent
 import features.pickups.AmmoLoot
+import features.pickups.ILoot
 import features.pickups.NullValue
 import features.weapons.AmmoType
 import features.weapons.GunDefinition
@@ -60,9 +62,10 @@ object Box2dCategories {
     const val obstacle: Short = 0x08
     const val sensor: Short = 0x10
     const val light: Short = 0x20
-    val all = player or enemy or objective or obstacle or sensor or light
-    val allButSensors = player or enemy or objective or obstacle or light
-    val allButLights = player or enemy or objective or obstacle or sensor
+    const val loot: Short = 0x40
+    val all = player or enemy or objective or obstacle or sensor or light or loot
+    val allButSensors = player or enemy or objective or obstacle or light or loot
+    val allButLights = player or enemy or objective or obstacle or sensor or loot
 }
 
 fun splatterEntity(at: Vector2, angle: Float) {
@@ -173,15 +176,31 @@ fun semicircle(): List<Vector2> {
     return vs
 }
 
-fun lootBox(at: Vector2) {
-    val box2dBody = world.body {
+fun lootBox(at: Vector2, lootDrop: List<ILoot>) {
+    val box2dBody = world().body {
         type = BodyDef.BodyType.StaticBody
         position.set(at)
         fixedRotation = true
         box(1f, 1f) {
-
+            density = 1f
+            filter {
+                categoryBits = Box2dCategories.loot
+                maskBits = Box2dCategories.player
+            }
         }
     }
+    val entity = engine().entity {
+        with<BodyComponent> { body = box2dBody }
+        with<TransformComponent> { position.set(box2dBody.position) }
+        with<TextureComponent> {
+            texture = Assets.lootBox
+            layer = 1
+        }
+        with<LootComponent> {
+            loot = lootDrop
+        }
+    }
+    box2dBody.userData = entity
 }
 
 fun enemy(at: Vector2) {
@@ -215,7 +234,7 @@ fun enemy(at: Vector2) {
         with<AnimatedCharacterComponent> {
             anims = Assets.characters["enemy"]!!
         }
-        with<LootComponent> {
+        with<LootDropComponent> {
             lootTable.contents.add(
                 AmmoLoot(AmmoType.nineMilliMeters, 6..17, 30f)
             )
