@@ -2,7 +2,7 @@ package features.pickups
 
 interface ILoot {
     var probability: Float
-    val unique: Boolean
+    val isUnique: Boolean
     val always: Boolean
     val enabled: Boolean
     val preResultEvaluation: (ILoot) -> Unit

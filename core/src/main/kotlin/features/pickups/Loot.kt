@@ -2,7 +2,7 @@ package features.pickups
 
 class Loot(
     override var probability: Float,
-    override val unique: Boolean,
+    override val isUnique: Boolean,
     override val always: Boolean,
     override val enabled: Boolean,
     override val preResultEvaluation: (ILoot) -> Unit,
