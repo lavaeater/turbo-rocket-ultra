@@ -1,8 +1,10 @@
 package map.grid
 
+import box2dLight.DirectionalLight
 import box2dLight.Light
 import box2dLight.RayHandler
 import com.badlogic.ashley.core.Engine
+import com.badlogic.gdx.graphics.Color
 import com.badlogic.gdx.math.Rectangle
 import ecs.components.enemy.EnemySpawnerComponent
 import factories.Box2dCategories
@@ -35,7 +37,16 @@ class GridMapGenerator {
             rayHandler.setAmbientLight(.1f)
             rayHandler.setBlurNum(3)
 
-            
+            val directionalLight = DirectionalLight(
+                rayHandler,
+                128,
+                Color.WHITE,
+                45f
+            ).apply {
+                isStaticLight = true
+                isSoft = true
+                isActive = true
+            }
 
             val width = length
             val height = length
