@@ -154,7 +154,8 @@ fun player(player: Player, mapper: ControlMapper, at: Vector2) {
         }
         with<WeaponComponent>()
         with<FiredShotsComponent>()
-        with<FlashlightComponent>()
+//        with<FlashlightComponent>()
+        with<WeaponLaserComponent>()
     }
     //TODO: Fix this hot mess
     entity.add(mapper)

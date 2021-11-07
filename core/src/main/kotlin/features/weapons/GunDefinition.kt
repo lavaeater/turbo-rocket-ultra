@@ -22,7 +22,7 @@ class GunDefinition(
                 120f,
                 5f,
                 1,
-                0f,
+                .125f,
                 GunFrames.handGun,
                 AmmoType.nineMilliMeters
             ),
@@ -32,7 +32,7 @@ class GunDefinition(
                 60f,
                 5f,
                 8,
-                30f,
+                15f,
                 GunFrames.spas12,
                 AmmoType.twelveGaugeShotgun
             )

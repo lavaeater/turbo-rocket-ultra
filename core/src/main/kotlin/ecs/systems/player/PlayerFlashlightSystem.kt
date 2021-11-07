@@ -8,12 +8,6 @@ import ecs.components.player.PlayerControlComponent
 import ktx.ashley.allOf
 import physics.getComponent
 
-/**
- * We need a cool-down system, which determines the rate of fire.
- *
- * This means you can always shoot if the weapon is cool.
- */
-
 class PlayerFlashlightSystem : IteratingSystem(
     allOf(
         FlashlightComponent::class,

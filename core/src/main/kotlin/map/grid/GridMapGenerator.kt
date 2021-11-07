@@ -34,19 +34,8 @@ class GridMapGenerator {
                 Box2dCategories.light,
                 0, Box2dCategories.allButSensors
             )
-            rayHandler.setAmbientLight(.1f)
+            rayHandler.setAmbientLight(.7f)
             rayHandler.setBlurNum(3)
-
-            val directionalLight = DirectionalLight(
-                rayHandler,
-                128,
-                Color.WHITE,
-                45f
-            ).apply {
-                isStaticLight = true
-                isSoft = true
-                isActive = true
-            }
 
             val width = length
             val height = length

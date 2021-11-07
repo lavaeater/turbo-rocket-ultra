@@ -100,6 +100,7 @@ object Context {
             addSystem(RenderUserInterfaceSystem(inject<PolygonSpriteBatch>() as Batch))
             addSystem(RenderMiniMapSystem())
             addSystem(PlayerFlashlightSystem())
+            addSystem(WeaponLaserSystem())
             addSystem(RenderBox2dLightSystem(inject(), inject()))
             addSystem(BloodSplatterEffectRenderSystem(inject<PolygonSpriteBatch>() as Batch))
             addSystem(LootDropSystem())
