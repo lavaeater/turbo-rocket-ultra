@@ -42,7 +42,9 @@ class GamepadInputSystem() : IteratingSystem(allOf(GamepadControl::class).get())
                     actualController.needToChangeGun = true
                 }
                 Button.Red -> {}
-                Button.Blue -> {}
+                Button.Blue -> {
+                    actualController.needsReload = true
+                }
                 Button.Yellow -> {}
                 Button.Unknown -> {}
             }
