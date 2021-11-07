@@ -19,12 +19,12 @@ To make the graphics and environment easy I am currently working with the concep
 
 ### MVP
 
-* Weapons 2 <- doing
 * Interactable Components in-the-game
 * Player graphics made from components / parts etc.
 * Different weapons to shoot with
 * Vehicles <- nice to have
 * Build Towers <- Paused
+* Weapons 2 <- done
 * Objectives for maps <- done
 * Far Off Map Rendering <- done
 * Lights and particles <- done
@@ -534,11 +534,11 @@ Det här gör vi på det gamla vanliga sättet. Vi bygger en box2d-värld, vi kl
 
 Oj oj oj,  vad roligt. Vi kan göra en box2d-kropp med leder, per tutorials etc. Superkul ju.
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbMTc2MTM0NzM1OSwxNzMwOTAyODcyLC0xND
-gxMDI4NjI2LDE5NDI1ODcwMDEsLTcyODU1Nzk5NCwtMjU4OTg2
-OTc5LC0xMzY5MDkwMDIxLDE0MjY2NDk4ODUsLTM3NzE4OTM0My
-wtMTgzNzIyNzA5OCwtMTQzNTg2MzcyMSwyNzk5NDU1NzUsLTM4
-NDk1ODY2MCwxMTE5MTQ4OTkzLC0xOTA2NzUxMzMzLC04NTE0OD
-M1OTAsMTcwMzQ2MzQ5MiwxNDgwODc4ODMxLDEzMzM1NzA3Nzks
-LTM5NTQ1MzgyM119
+eyJoaXN0b3J5IjpbLTEzMDI2NDY2ODIsMTc2MTM0NzM1OSwxNz
+MwOTAyODcyLC0xNDgxMDI4NjI2LDE5NDI1ODcwMDEsLTcyODU1
+Nzk5NCwtMjU4OTg2OTc5LC0xMzY5MDkwMDIxLDE0MjY2NDk4OD
+UsLTM3NzE4OTM0MywtMTgzNzIyNzA5OCwtMTQzNTg2MzcyMSwy
+Nzk5NDU1NzUsLTM4NDk1ODY2MCwxMTE5MTQ4OTkzLC0xOTA2Nz
+UxMzMzLC04NTE0ODM1OTAsMTcwMzQ2MzQ5MiwxNDgwODc4ODMx
+LDEzMzM1NzA3NzldfQ==
 -->
