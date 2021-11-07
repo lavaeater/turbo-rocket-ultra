@@ -21,6 +21,7 @@ To make the graphics and environment easy I am currently working with the concep
 
 - [ ] Player Death 2
 - [ ] Gibs
+- [ ] Pickups 2
 * Interactable Components in-the-game
 * Player graphics made from components / parts etc.
 * Different weapons to shoot with <- done
@@ -50,7 +51,14 @@ To make the graphics and environment easy I am currently working with the concep
 * Blood Splatter <- Done
 * MiniMap <- Done
 
-## Player 
+## Player Death 2
+
+So, what should happen when a player dies?
+- [ ] Not able to move
+- [ ] Indicated by something on screen, perhaps also blinking
+- [ ] Revival by being helped by friends?
+- [ ] Where do we revive a person?
+- [ ] Clear all hunting by enemies when dead, as well
 
 ## Weapons 2
 
@@ -540,7 +548,7 @@ Det här gör vi på det gamla vanliga sättet. Vi bygger en box2d-värld, vi kl
 
 Oj oj oj,  vad roligt. Vi kan göra en box2d-kropp med leder, per tutorials etc. Superkul ju.
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbLTg4NDc2NDE5LDE3NjEzNDczNTksMTczMD
+eyJoaXN0b3J5IjpbLTc5OTc1MzgzLDE3NjEzNDczNTksMTczMD
 kwMjg3MiwtMTQ4MTAyODYyNiwxOTQyNTg3MDAxLC03Mjg1NTc5
 OTQsLTI1ODk4Njk3OSwtMTM2OTA5MDAyMSwxNDI2NjQ5ODg1LC
 0zNzcxODkzNDMsLTE4MzcyMjcwOTgsLTE0MzU4NjM3MjEsMjc5
