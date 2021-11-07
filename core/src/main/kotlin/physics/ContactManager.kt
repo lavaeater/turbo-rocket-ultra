@@ -11,6 +11,9 @@ import ecs.components.enemy.EnemySensorComponent
 import ecs.components.gameplay.DestroyComponent
 import ecs.components.gameplay.ObjectiveComponent
 import ecs.components.gameplay.ShotComponent
+import ecs.components.pickups.LootComponent
+import ecs.components.player.InventoryComponent
+import features.pickups.AmmoLoot
 import injection.Context.inject
 
 class ContactManager: ContactListener {
@@ -20,6 +23,20 @@ class ContactManager: ContactListener {
     override fun beginContact(contact: Contact) {
         //Ship colliding with something
         if (contact.isPlayerContact()) {
+            if(contact.hasComponent<LootComponent>()) {
+                val inventory = contact.getPlayerFor().entity.getComponent<InventoryComponent>()
+                val lootEntity = contact.getEntityFor<LootComponent>()
+                val lootComponent = lootEntity.getComponent<LootComponent>()
+                for(loot in lootComponent.loot) {
+                    if(loot is AmmoLoot) {
+                        if(!inventory.ammo.containsKey(loot.ammoType))
+                            inventory.ammo[loot.ammoType] = 0
+
+                        inventory.ammo[loot.ammoType] = inventory.ammo[loot.ammoType]!! + loot.amount
+                    }
+                }
+                lootEntity.addComponent<DestroyComponent>()
+            }
             if (contact.hasComponent<ShotComponent>()) {
                 //A shot does 20 damage
                 contact.getPlayerFor().health -= 20

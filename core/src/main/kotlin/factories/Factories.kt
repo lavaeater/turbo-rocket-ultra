@@ -185,7 +185,7 @@ fun lootBox(at: Vector2, lootDrop: List<ILoot>) {
             density = 1f
             filter {
                 categoryBits = Box2dCategories.loot
-                maskBits = Box2dCategories.player
+                maskBits = Box2dCategories.player or Box2dCategories.light
             }
         }
     }
@@ -241,7 +241,7 @@ fun enemy(at: Vector2) {
             lootTable.contents.add(
                 AmmoLoot(AmmoType.twelveGaugeShotgun, 4..10, 10f)
             )
-            lootTable.contents.add(NullValue(10f))
+            //lootTable.contents.add(NullValue(10f))
         }
         with<TextureComponent> {
             layer = 1
