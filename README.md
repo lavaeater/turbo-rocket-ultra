@@ -21,7 +21,9 @@ To make the graphics and environment easy I am currently working with the concep
 
 - [ ] Player Death 2
 - [ ] Gibs
-- [ ] Pickups 2
+- [ ] Pickups 2 (on-screen blurb indicating what you got)
+- [ ] Reloading 2 (shot-by-shot for shotguns)
+- [ ] Multi-body-bodies for players and enemies (one for collision in game, one for hit detection for damage)
 * Interactable Components in-the-game
 * Player graphics made from components / parts etc.
 * Different weapons to shoot with <- done
@@ -548,11 +550,11 @@ Det här gör vi på det gamla vanliga sättet. Vi bygger en box2d-värld, vi kl
 
 Oj oj oj,  vad roligt. Vi kan göra en box2d-kropp med leder, per tutorials etc. Superkul ju.
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbLTc5OTc1MzgzLDE3NjEzNDczNTksMTczMD
-kwMjg3MiwtMTQ4MTAyODYyNiwxOTQyNTg3MDAxLC03Mjg1NTc5
-OTQsLTI1ODk4Njk3OSwtMTM2OTA5MDAyMSwxNDI2NjQ5ODg1LC
-0zNzcxODkzNDMsLTE4MzcyMjcwOTgsLTE0MzU4NjM3MjEsMjc5
-OTQ1NTc1LC0zODQ5NTg2NjAsMTExOTE0ODk5MywtMTkwNjc1MT
-MzMywtODUxNDgzNTkwLDE3MDM0NjM0OTIsMTQ4MDg3ODgzMSwx
-MzMzNTcwNzc5XX0=
+eyJoaXN0b3J5IjpbLTE4MjYxNTE2NzQsMTc2MTM0NzM1OSwxNz
+MwOTAyODcyLC0xNDgxMDI4NjI2LDE5NDI1ODcwMDEsLTcyODU1
+Nzk5NCwtMjU4OTg2OTc5LC0xMzY5MDkwMDIxLDE0MjY2NDk4OD
+UsLTM3NzE4OTM0MywtMTgzNzIyNzA5OCwtMTQzNTg2MzcyMSwy
+Nzk5NDU1NzUsLTM4NDk1ODY2MCwxMTE5MTQ4OTkzLC0xOTA2Nz
+UxMzMzLC04NTE0ODM1OTAsMTcwMzQ2MzQ5MiwxNDgwODc4ODMx
+LDEzMzM1NzA3NzldfQ==
 -->
