@@ -24,34 +24,34 @@ To make the graphics and environment easy I am currently working with the concep
 - [ ] Pickups 2 (on-screen blurb indicating what you got)
 - [ ] Reloading 2 (shot-by-shot for shotguns)
 - [ ] Multi-body-bodies for players and enemies (one for collision in game, one for hit detection for damage)
-* Interactable Components in-the-game
-* Player graphics made from components / parts etc.
-* Different weapons to shoot with <- done
-* Vehicles <- nice to have
-* Build Towers <- Paused
-* Weapons 2 <- done
-* Objectives for maps <- done
-* Far Off Map Rendering <- done
-* Lights and particles <- done
-* Auto-generated Snake-maps <- done
-* Basic Sprite Editor <- done, kinda?
-* IsoMetric Projection <- done!
-* Towers <- Done
-* Game Over Screen that does *anything* <- DONE!
-* Start Screen that does *anything* <- done
-* Scoring and Objectives <- done
-* Game over man <-Doing
-* Player death <- Done
-* Fix enemy sensors / noticing <- advanced behaviors
-* Fix enemy direction systems <- done?
-* Controller support <- Done
-* Twin Stick shooting <- done
-* Multiplayer <- done
-* Player damage / Enemy attacks <- Done
-* Objectives <- Done!
-* Enemies <- Done
-* Blood Splatter <- Done
-* MiniMap <- Done
+- [ ] Interactable Components in-the-game
+- [ ] Player graphics made from components / parts etc.
+- [ ] Different weapons to shoot with <- done
+- [ ] Vehicles <- nice to have
+- [ ] Build Towers <- Paused
+- [ ] Weapons 2 <- done
+- [ ] Objectives for maps <- done
+- [ ] Far Off Map Rendering <- done
+- [ ] Lights and particles <- done
+- [ ] Auto-generated Snake-maps <- done
+- [ ] Basic Sprite Editor <- done, kinda?
+- [ ] IsoMetric Projection <- done!
+- [ ] Towers <- Done
+- [ ] Game Over Screen that does *anything* <- DONE!
+- [ ] Start Screen that does *anything* <- done
+- [ ] Scoring and Objectives <- done
+- [ ] Game over man <-Doing
+- [x] Player death <- Done
+- [x] Fix enemy sensors / noticing <- advanced behaviors
+- [x] Fix enemy direction systems <- done?
+- [x] Controller support <- Done
+- [x] Twin Stick shooting <- done
+- [x] Multiplayer <- done
+- [x] Player damage / Enemy attacks <- Done
+- [x] Objectives <- Done!
+- [x] Enemies <- Done
+- [x] Blood Splatter <- Done
+- [x] MiniMap <- Done
 
 ## Player Death 2
 
@@ -550,11 +550,11 @@ Det här gör vi på det gamla vanliga sättet. Vi bygger en box2d-värld, vi kl
 
 Oj oj oj,  vad roligt. Vi kan göra en box2d-kropp med leder, per tutorials etc. Superkul ju.
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbLTE4MjYxNTE2NzQsMTc2MTM0NzM1OSwxNz
-MwOTAyODcyLC0xNDgxMDI4NjI2LDE5NDI1ODcwMDEsLTcyODU1
-Nzk5NCwtMjU4OTg2OTc5LC0xMzY5MDkwMDIxLDE0MjY2NDk4OD
-UsLTM3NzE4OTM0MywtMTgzNzIyNzA5OCwtMTQzNTg2MzcyMSwy
-Nzk5NDU1NzUsLTM4NDk1ODY2MCwxMTE5MTQ4OTkzLC0xOTA2Nz
-UxMzMzLC04NTE0ODM1OTAsMTcwMzQ2MzQ5MiwxNDgwODc4ODMx
-LDEzMzM1NzA3NzldfQ==
+eyJoaXN0b3J5IjpbMTI4MjM1MzU3OCwxNzYxMzQ3MzU5LDE3Mz
+A5MDI4NzIsLTE0ODEwMjg2MjYsMTk0MjU4NzAwMSwtNzI4NTU3
+OTk0LC0yNTg5ODY5NzksLTEzNjkwOTAwMjEsMTQyNjY0OTg4NS
+wtMzc3MTg5MzQzLC0xODM3MjI3MDk4LC0xNDM1ODYzNzIxLDI3
+OTk0NTU3NSwtMzg0OTU4NjYwLDExMTkxNDg5OTMsLTE5MDY3NT
+EzMzMsLTg1MTQ4MzU5MCwxNzAzNDYzNDkyLDE0ODA4Nzg4MzEs
+MTMzMzU3MDc3OV19
 -->
