@@ -111,12 +111,12 @@ object Assets : Disposable {
                         when (xTile) {
                             0 -> ts["wall$xTile"] = OffsetTextureRegion(tileTexture, xTile * 16, yTile * 16, 16, 16)
                             1 -> ts["wall$xTile"] = OffsetTextureRegion(tileTexture, xTile * 16, yTile * 16, 16, 16)
-                            2 -> ts["wall_end"] = OffsetTextureRegion(tileTexture, xTile * 16, yTile * 16, 16, 16)
+                            2 -> {} //ts["wall_end"] = OffsetTextureRegion(tileTexture, xTile * 16, yTile * 16, 16, 16)
                         }
                     }
                     2 -> {
-                        if (xTile in 0..1)
-                            ts["wall_shadow$xTile"] = OffsetTextureRegion(tileTexture, xTile * 16, yTile * 16, 16, 16)
+                        if (xTile in 0 until 1)
+                            ts["wall_end"] = OffsetTextureRegion(tileTexture, xTile * 16, yTile * 16, 16, 16)
                     }
                 }
             }

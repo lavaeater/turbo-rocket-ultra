@@ -56,6 +56,7 @@ fun enemy(x: Float = 0f, y: Float = 0f) {
 }
 
 object Box2dCategories {
+    const val none: Short = 0x00
     const val player: Short = 0x01
     const val enemy: Short = 0x02
     const val objective: Short = 0x04
@@ -63,6 +64,7 @@ object Box2dCategories {
     const val sensor: Short = 0x10
     const val light: Short = 0x20
     const val loot: Short = 0x40
+    const val indicator: Short = 0x80
     val all = player or enemy or objective or obstacle or sensor or light or loot
     val allButSensors = player or enemy or objective or obstacle or light or loot
     val allButLights = player or enemy or objective or obstacle or sensor or loot
