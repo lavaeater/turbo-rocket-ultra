@@ -35,6 +35,8 @@ class GridMapGenerator {
             rayHandler.setAmbientLight(.1f)
             rayHandler.setBlurNum(3)
 
+            
+
             val width = length
             val height = length
             var map = Array(width) {
