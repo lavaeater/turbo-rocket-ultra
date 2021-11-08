@@ -6,7 +6,9 @@ import com.badlogic.gdx.physics.box2d.ContactImpulse
 import com.badlogic.gdx.physics.box2d.ContactListener
 import com.badlogic.gdx.physics.box2d.Manifold
 import ecs.components.ai.TrackingPlayerComponent
+import ecs.components.enemy.EnemyComponent
 import ecs.components.enemy.EnemySensorComponent
+import ecs.components.gameplay.BulletComponent
 import ecs.components.gameplay.DestroyComponent
 import ecs.components.gameplay.ObjectiveComponent
 import ecs.components.gameplay.ShotComponent
@@ -110,8 +112,15 @@ class ContactManager: ContactListener {
             }
         }
 
-        if (contact.hasComponent<ShotComponent>()) {
-            val entity = contact.getEntityFor<ShotComponent>()
+        if(contact.hasComponent<EnemyComponent>() && contact.hasComponent<BulletComponent>()) {
+            val enemy = contact.getEntityFor<EnemyComponent>()
+            val enemyComponent = enemy.getComponent<EnemyComponent>()
+            enemyComponent.takeDamage(contact.getEntityFor<BulletComponent>().getComponent<BulletComponent>().damage)
+
+        }
+
+        if (contact.hasComponent<BulletComponent>()) {
+            val entity = contact.getEntityFor<BulletComponent>()
             entity.add(DestroyComponent())
         }
     }

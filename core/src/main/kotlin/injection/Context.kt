@@ -75,7 +75,8 @@ object Context {
             addSystem(GamepadInputSystem())
             addSystem(BodyDestroyerSystem(inject())) //world
             addSystem(CharacterWalkAndShootDirectionSystem())
-            addSystem(PlayerShootingSystem(inject()))
+            addSystem(NewPlayerShootingSystem(inject()))
+            addSystem(BulletSpeedSystem())
             addSystem(EnemyDeathSystem())
             addSystem(EnemyMovementSystem())
             addSystem(AmblingSystem())
@@ -106,6 +107,7 @@ object Context {
             addSystem(RenderBox2dLightSystem(inject(), inject()))
             addSystem(BloodSplatterEffectRenderSystem(inject<PolygonSpriteBatch>() as Batch))
             addSystem(LootDropSystem())
+            addSystem(ShootDebugRenderSystem(true, true))
         }
     }
 }

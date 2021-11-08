@@ -158,6 +158,9 @@ object Assets : Disposable {
             "circle" to OffsetTextureRegion(texture, 32, 96, 16,16),
         )
     }
+    val bullet by lazy {
+        OffsetTextureRegion(Texture(Gdx.files.internal("sprites/bullets/bullet.png")))
+    }
 
     val playerCharacters by lazy { characters.filterNot { it.key == "enemy" } }
 

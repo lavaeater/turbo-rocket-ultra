@@ -19,6 +19,9 @@ class EnemyComponent : Component, Pool.Poolable {
     var timeRemaining = 0f
     private set
 
+    fun takeDamage(damage: Int) {
+        health -= damage
+    }
     fun takeDamage(range: IntRange) {
         health -= range.random()
     }

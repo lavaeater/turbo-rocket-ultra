@@ -20,7 +20,7 @@ class ShootDebugRenderSystem(private val debug: Boolean = true, private val rend
         allOf(
             TransformComponent::class,
             PlayerControlComponent::class
-        ).get()
+        ).get(), 10
     ) {
 
     private val controlMapper = mapperFor<PlayerControlComponent>()
@@ -42,27 +42,29 @@ class ShootDebugRenderSystem(private val debug: Boolean = true, private val rend
         val transform = transformMapper[entity]
         aimVector.set(controlComponent.aimVector)
 
+        if (debug) {
+            shapeDrawer.filledCircle(transform.position.x + aimVector.x, transform.position.y + aimVector.y, .2f)
+            shapeDrawer.filledCircle(transform.position.x + aimVector.x * 2, transform.position.y + aimVector.y * .5f, .2f, Color.RED)
+        }
 //        if (controlComponent.drawShot) {
 //            batch.begin()
 //                shapeDrawer.line(transform.position, controlComponent.latestHitPoint, Color.GREEN, 0.1f)
 //            batch.end()
 //        }
-        if (renderRedDot) {
-                shapeDrawer.line(transform.position, aimVector.setLength(50f).add(transform.position), Color.RED, .1f)
-        }
-
-            endPoint.set(controlComponent.mousePosition)
-//            .add(controlComponent.aimVector)
-//            .sub(transform.position)
-//            .scl(50f)
-//            .add(transform.position)
-//            .add(controlComponent.aimVector)
-//            .toIsometric()
-
-        if (debug) {
-            shapeDrawer.line(transform.position, endPoint, Color.BLUE, 0.2f)
-//            shapeDrawer.line(transform.position.toIsometric(), controlComponent.mousePosition, Color.GREEN, 0.15f)
-        }
+//        if (renderRedDot) {
+//                shapeDrawer.line(transform.position, aimVector.setLength(50f).add(transform.position), Color.RED, .1f)
+//        }
+//
+//            endPoint.set(controlComponent.mousePosition)
+////            .add(controlComponent.aimVector)
+////            .sub(transform.position)
+////            .scl(50f)
+////            .add(transform.position)
+////            .add(controlComponent.aimVector)
+////            .toIsometric()
+//
+//        if (debug) {
+//            shapeDrawer.line(transform.position, endPoint, Color.BLUE, 0.2f)
+////            shapeDrawer.line(transform.position.toIsometric(), controlComponent.mousePosition, Color.GREEN, 0.15f)
     }
-
 }
