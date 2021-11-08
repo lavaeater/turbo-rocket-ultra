@@ -20,14 +20,13 @@ To make the graphics and environment easy I am currently working with the concep
 ### MVP
 
 - [ ] Player Death 2
-- [ ] Gibs
+- [ ] Gibs and body parts
 - [ ] Pickups 2 (on-screen blurb indicating what you got)
 - [ ] Reloading 2 (shot-by-shot for shotguns)
 - [ ] Multi-body-bodies for players and enemies (one for collision in game, one for hit detection for damage)
 - [ ] Interactable Components in-the-game
 - [ ] Player graphics made from components / parts etc.
 - [ ] Perma-gibs
-- [ ] Gibs and body parts - som partiklar
 - [ ] Fixa mini-map
 - [ ] Smarta vektorer (eller nåt) - byt utspridd vektormattekod mot små, lokala, scengrafer. 
 
@@ -555,11 +554,11 @@ Det här gör vi på det gamla vanliga sättet. Vi bygger en box2d-värld, vi kl
 
 Oj oj oj,  vad roligt. Vi kan göra en box2d-kropp med leder, per tutorials etc. Superkul ju.
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbNDE1MTQ3NzczLC0xOTU0MzY0MDc4LDE3Nj
-EzNDczNTksMTczMDkwMjg3MiwtMTQ4MTAyODYyNiwxOTQyNTg3
-MDAxLC03Mjg1NTc5OTQsLTI1ODk4Njk3OSwtMTM2OTA5MDAyMS
-wxNDI2NjQ5ODg1LC0zNzcxODkzNDMsLTE4MzcyMjcwOTgsLTE0
-MzU4NjM3MjEsMjc5OTQ1NTc1LC0zODQ5NTg2NjAsMTExOTE0OD
-k5MywtMTkwNjc1MTMzMywtODUxNDgzNTkwLDE3MDM0NjM0OTIs
-MTQ4MDg3ODgzMV19
+eyJoaXN0b3J5IjpbLTM4Njg3MTc0OSwtMTk1NDM2NDA3OCwxNz
+YxMzQ3MzU5LDE3MzA5MDI4NzIsLTE0ODEwMjg2MjYsMTk0MjU4
+NzAwMSwtNzI4NTU3OTk0LC0yNTg5ODY5NzksLTEzNjkwOTAwMj
+EsMTQyNjY0OTg4NSwtMzc3MTg5MzQzLC0xODM3MjI3MDk4LC0x
+NDM1ODYzNzIxLDI3OTk0NTU3NSwtMzg0OTU4NjYwLDExMTkxND
+g5OTMsLTE5MDY3NTEzMzMsLTg1MTQ4MzU5MCwxNzAzNDYzNDky
+LDE0ODA4Nzg4MzFdfQ==
 -->
