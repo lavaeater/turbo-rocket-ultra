@@ -125,7 +125,7 @@ fun player(player: Player, mapper: ControlMapper, at: Vector2) {
         type = BodyDef.BodyType.DynamicBody
         position.set(at)
         fixedRotation = true
-        box(2f, 1f) {
+        box(1f, 1f) {
             density = GameScreen.PLAYER_DENSITY
             filter {
                 categoryBits = Box2dCategories.player
@@ -212,7 +212,7 @@ fun enemy(at: Vector2) {
         type = BodyDef.BodyType.DynamicBody
         position.set(at)
         fixedRotation = true
-        box(2f, 1f) {
+        box(1f, 1f) {
             density = GameScreen.PLAYER_DENSITY
             filter {
                 categoryBits = Box2dCategories.enemy
