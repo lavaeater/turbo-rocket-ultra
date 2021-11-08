@@ -12,7 +12,8 @@ class GunDefinition(
     val numberOfProjectiles: Int,
     val maxSpread: Float,
     val textureName: String,
-    val ammoType: AmmoType
+    val ammoType: AmmoType,
+    val damageRange: IntRange
 ) {
     companion object {
         val guns = listOf(
@@ -24,7 +25,8 @@ class GunDefinition(
                 1,
                 .125f,
                 GunFrames.handGun,
-                AmmoType.nineMilliMeters
+                AmmoType.nineMilliMeters,
+                8..16
             ),
             GunDefinition(
                 "Franchi Spas 12",
@@ -34,7 +36,8 @@ class GunDefinition(
                 8,
                 15f,
                 GunFrames.spas12,
-                AmmoType.twelveGaugeShotgun
+                AmmoType.twelveGaugeShotgun,
+                12..24
             )
         )
     }

@@ -13,6 +13,7 @@ import ecs.components.gameplay.ObjectiveComponent
 import ecs.components.gameplay.ShotComponent
 import ecs.components.pickups.LootComponent
 import ecs.components.player.InventoryComponent
+import ecs.components.player.PlayerWaitsForRespawn
 import features.pickups.AmmoLoot
 import injection.Context.inject
 
@@ -41,9 +42,14 @@ class ContactManager: ContactListener {
                 //A shot does 20 damage
                 contact.getPlayerFor().health -= 20
             }
-            if(contact.hasComponent<EnemySensorComponent>()) {//this is an enemy noticing the player - no system needed
-                val enemy = contact.getEntityFor<EnemySensorComponent>()
-                enemy.add(engine.createComponent(TrackingPlayerComponent::class.java).apply { player = contact.getPlayerFor() })
+            if(contact.hasComponent<EnemySensorComponent>()) {
+                //this is an enemy noticing the player - no system needed
+                if(!contact.hasComponent<PlayerWaitsForRespawn>()) {
+                    val enemy = contact.getEntityFor<EnemySensorComponent>()
+                    enemy.add(
+                        engine.createComponent(TrackingPlayerComponent::class.java)
+                            .apply { player = contact.getPlayerFor() })
+                }
             }
             if(contact.hasComponent<ObjectiveComponent>()) {
                 val cEntity = contact.getEntityFor<ObjectiveComponent>()
