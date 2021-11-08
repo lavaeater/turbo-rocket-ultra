@@ -6,7 +6,7 @@ class Investigate: TaskComponent() {
         reset()
     }
     override fun toString(): String {
-        return "Investigate"
+        return "check"
     }
 
 }

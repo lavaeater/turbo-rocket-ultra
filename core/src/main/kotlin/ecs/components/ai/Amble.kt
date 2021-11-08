@@ -7,7 +7,7 @@ class Amble: TaskComponent() {
     }
 
     override fun toString(): String {
-        return "Amble"
+        return "amble"
     }
 }
 

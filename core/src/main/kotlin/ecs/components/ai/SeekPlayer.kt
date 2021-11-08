@@ -23,7 +23,7 @@ class SeekPlayer: TaskComponent() {
         super.reset()
     }
     override fun toString(): String {
-        return "Seek Player"
+        return "seek"
     }
 
 }

@@ -12,5 +12,4 @@ class TrackingPlayerComponent : Component, Pool.Poolable {
     override fun toString(): String {
         return "Tracking Player"
     }
-
 }

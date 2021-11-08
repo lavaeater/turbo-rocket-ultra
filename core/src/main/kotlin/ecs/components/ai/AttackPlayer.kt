@@ -6,7 +6,7 @@ class AttackPlayer: TaskComponent() {
         coolDown = 0f
     }
     override fun toString(): String {
-        return "Attack Player>"
+        return "attack"
     }
 
 }

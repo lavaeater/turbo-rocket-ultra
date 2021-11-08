@@ -137,6 +137,16 @@ object Assets : Disposable {
         tiles.filterKeys { it == "wall_end" }.values.first()
     }
 
+    val aiDebugBadges by lazy {
+        val texture = Texture(Gdx.files.internal("sprites/bt_labels/bt_labels.png"))
+        mapOf(
+            "amble" to OffsetTextureRegion(texture, 0,0, 64, 12, 0f,0f),
+            "attack" to OffsetTextureRegion(texture, 0,12, 64, 12, 0f,0f),
+            "chase" to OffsetTextureRegion(texture, 0,24, 64, 12, 0f,0f),
+            "check" to OffsetTextureRegion(texture, 0,36, 64, 12, 0f,0f),
+            "seek" to OffsetTextureRegion(texture, 0,48, 64, 12, 0f,0f))
+    }
+
     val playerCharacters by lazy { characters.filterNot { it.key == "enemy" } }
 
     val splashTexture: Texture by lazy {
@@ -202,6 +212,9 @@ object Assets : Disposable {
 
     private fun fixFlip() {
         for (t in towers.values)
+            t.flip(true, false)
+
+        for(t in aiDebugBadges.values)
             t.flip(true, false)
     }
 
