@@ -26,6 +26,11 @@ To make the graphics and environment easy I am currently working with the concep
 - [ ] Multi-body-bodies for players and enemies (one for collision in game, one for hit detection for damage)
 - [ ] Interactable Components in-the-game
 - [ ] Player graphics made from components / parts etc.
+- [ ] Perma-gibs
+- [ ] Gibs and body parts - som partiklar
+- [ ] Fixa mini-map
+- [ ] Smarta vektorer (eller nåt) - byt utspridd vektormattekod mot små, lokala, scengrafer. 
+
 - [x] Different weapons to shoot with <- done
 - [x] Vehicles <- nice to have
 - [x] Build Towers <- Paused
@@ -550,11 +555,11 @@ Det här gör vi på det gamla vanliga sättet. Vi bygger en box2d-värld, vi kl
 
 Oj oj oj,  vad roligt. Vi kan göra en box2d-kropp med leder, per tutorials etc. Superkul ju.
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbLTE5NTQzNjQwNzgsMTc2MTM0NzM1OSwxNz
-MwOTAyODcyLC0xNDgxMDI4NjI2LDE5NDI1ODcwMDEsLTcyODU1
-Nzk5NCwtMjU4OTg2OTc5LC0xMzY5MDkwMDIxLDE0MjY2NDk4OD
-UsLTM3NzE4OTM0MywtMTgzNzIyNzA5OCwtMTQzNTg2MzcyMSwy
-Nzk5NDU1NzUsLTM4NDk1ODY2MCwxMTE5MTQ4OTkzLC0xOTA2Nz
-UxMzMzLC04NTE0ODM1OTAsMTcwMzQ2MzQ5MiwxNDgwODc4ODMx
-LDEzMzM1NzA3NzldfQ==
+eyJoaXN0b3J5IjpbNDE1MTQ3NzczLC0xOTU0MzY0MDc4LDE3Nj
+EzNDczNTksMTczMDkwMjg3MiwtMTQ4MTAyODYyNiwxOTQyNTg3
+MDAxLC03Mjg1NTc5OTQsLTI1ODk4Njk3OSwtMTM2OTA5MDAyMS
+wxNDI2NjQ5ODg1LC0zNzcxODkzNDMsLTE4MzcyMjcwOTgsLTE0
+MzU4NjM3MjEsMjc5OTQ1NTc1LC0zODQ5NTg2NjAsMTExOTE0OD
+k5MywtMTkwNjc1MTMzMywtODUxNDgzNTkwLDE3MDM0NjM0OTIs
+MTQ4MDg3ODgzMV19
 -->
