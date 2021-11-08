@@ -8,7 +8,7 @@ import ecs.components.gameplay.TransformComponent
 import ecs.components.ai.AttackPlayer
 import ecs.components.ai.PlayerIsInRange
 import ecs.components.ai.TrackingPlayerComponent
-import ecs.components.player.PlayerRespawning
+import ecs.components.player.PlayerIsRespawning
 import ecs.components.player.PlayerWaitsForRespawn
 import ktx.ashley.allOf
 import ktx.ashley.mapperFor
@@ -42,7 +42,7 @@ class AttackPlayerSystem : IteratingSystem(allOf(
 
             if(attackPlayer.coolDown <= 0f) {
                 attackPlayer.coolDown = attackPlayer.coolDownRange.random()//This guy needs to wait a little before attacking again.
-                if((1..3).random() == 1 && !player.entity.hasComponent<PlayerRespawning>()) {
+                if((1..3).random() == 1 && !player.entity.hasComponent<PlayerIsRespawning>()) {
                     player.health -= (5..15).random()
                 }
             } else {

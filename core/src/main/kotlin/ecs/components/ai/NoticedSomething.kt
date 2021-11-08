@@ -10,4 +10,9 @@ class NoticedSomething:Component, Pool.Poolable {
     override fun reset() {
         noticedWhere.set(Vector2.Zero)
     }
+
+    override fun toString(): String {
+        return "Noticed Something"
+    }
+
 }

@@ -7,4 +7,9 @@ class PlayerIsInRange : Component, Pool.Poolable {
     override fun reset() {
 
     }
+
+    override fun toString(): String {
+        return "Player Is In Range"
+    }
+
 }

@@ -53,7 +53,7 @@ object SpriteLoader {
                         (it)  * animDef.itemWidth,
                         (animDef.row + row)  * animDef.itemHeight,
                             animDef.itemWidth,
-                            animDef.itemHeight, 0f, -20f) }.toGdxArray(), Animation.PlayMode.LOOP)
+                            animDef.itemHeight, 0f, -20f) }.toGdxArray(), animDef.playMode)
                 }.toMap())
             }
         }

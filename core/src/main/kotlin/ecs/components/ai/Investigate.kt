@@ -5,4 +5,8 @@ class Investigate: TaskComponent() {
         coolDownRange = (5f..10f)
         reset()
     }
+    override fun toString(): String {
+        return "check"
+    }
+
 }
