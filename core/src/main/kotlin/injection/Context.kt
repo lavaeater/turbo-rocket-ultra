@@ -101,7 +101,7 @@ object Context {
             addSystem(RenderMiniMapSystem())
             addSystem(PlayerFlashlightSystem())
             addSystem(WeaponLaserSystem())
-            addSystem(AiDebugSystem())
+//            addSystem(AiDebugSystem())
             addSystem(RenderBox2dLightSystem(inject(), inject()))
             addSystem(BloodSplatterEffectRenderSystem(inject<PolygonSpriteBatch>() as Batch))
             addSystem(LootDropSystem())

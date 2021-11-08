@@ -1,5 +1,6 @@
 package ecs.systems.ai
 
+import com.badlogic.ashley.core.Component
 import com.badlogic.ashley.core.Entity
 import com.badlogic.ashley.systems.IteratingSystem
 import com.badlogic.gdx.ai.btree.Task
@@ -17,13 +18,14 @@ class AmblingSystem : IteratingSystem(allOf(Amble::class, EnemyComponent::class)
 
     override fun processEntity(entity: Entity, deltaTime: Float) {
         val component = mapper.get(entity)
+        if(component.needsInit) {
+            component.needsInit = false
+            val directionRange = -1f..1f
+            eMapper[entity].directionVector.set(directionRange.random(), directionRange.random()).nor()
+        }
         if (component.status == Task.Status.RUNNING) {
-            if(eMapper[entity].directionVector == Vector2.Zero) {
-                val directionRange = -1f..1f
-                eMapper[entity].directionVector.set(directionRange.random(), directionRange.random()).nor()
-            }
-            component.coolDown-= deltaTime
-            if(component.coolDown <= 0f)
+            component.coolDown -= deltaTime
+            if (component.coolDown <= 0f)
                 component.status = Task.Status.FAILED
         }
     }
