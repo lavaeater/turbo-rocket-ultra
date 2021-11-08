@@ -6,11 +6,7 @@ import ecs.components.ai.AttackPlayer
 import ecs.components.ai.ChasePlayer
 import ecs.components.ai.TrackingPlayerComponent
 import ecs.components.enemy.EnemyComponent
-import ecs.components.graphics.RenderLayerComponent
-import ecs.components.player.PlayerComponent
-import ecs.components.player.PlayerIsDead
-import ecs.components.player.PlayerRespawning
-import ecs.components.player.PlayerWaitsForRespawn
+import ecs.components.player.*
 import ktx.ashley.allOf
 import ktx.ashley.mapperFor
 import ktx.ashley.remove
@@ -30,7 +26,9 @@ class PlayerDeathSystem: IteratingSystem(allOf(PlayerComponent::class).get()) {
         }
 
         if(entity.hasComponent<PlayerIsDead>() || entity.hasComponent<PlayerWaitsForRespawn>()) {
-            entity.remove<RenderLayerComponent>()
+            val controlComponent = entity.getComponent<PlayerControlComponent>()
+            controlComponent.waitsForRespawn = true
+//            entity.getComponent<AnimatedCharacterComponent>().currentAnim =
             for(enemy in engine.getEntitiesFor(allOf(EnemyComponent::class).get())) {
                 if(enemy.hasComponent<TrackingPlayerComponent>() && enemy.getComponent<TrackingPlayerComponent>().player == pc.player) {
                     enemy.remove<ChasePlayer>()
@@ -50,15 +48,11 @@ class PlayerDeathSystem: IteratingSystem(allOf(PlayerComponent::class).get()) {
             }
         }
         if(entity.hasComponent<PlayerRespawning>()) {
-            if(!entity.hasComponent<RenderLayerComponent>()) {
-                entity.add(engine.createComponent(RenderLayerComponent::class.java).apply {
-                    layer = 1
-                })
-            }
             val rc = entity.getComponent<PlayerRespawning>()
             rc.coolDown-= deltaTime
             if(rc.coolDown < 0f) {
                 entity.remove(PlayerRespawning::class.java)
+                entity.getComponent<PlayerControlComponent>().waitsForRespawn = false
             }
         }
 
