@@ -1,10 +1,10 @@
 package input
 
 sealed class Button(val playstationButtonName: String) {
-    object Green : Button("cross")
-    object Red : Button("ring")
-    object Blue : Button("square")
-    object Yellow : Button("triangle")
+    object Cross : Button("cross")
+    object Ring : Button("ring")
+    object Square : Button("square")
+    object Triangle : Button("triangle")
     object DPadLeft : Button("dpadleft")
     object DPadUp : Button("dpadup")
     object DPadDown : Button("dpaddown")
@@ -27,10 +27,10 @@ sealed class Button(val playstationButtonName: String) {
         }
 
         private val buttonMap = mapOf(
-            0 to Green,
-            1 to Red,
-            2 to Blue,
-            3 to Yellow,
+            0 to Cross,
+            1 to Ring,
+            2 to Square,
+            3 to Triangle,
             4 to Share,
             5 to PsButton,
             6 to Options,

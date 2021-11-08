@@ -11,6 +11,7 @@ import ktx.ashley.remove
 import physics.getComponent
 import physics.hasComponent
 
+
 class PlayerDeathSystem: IteratingSystem(allOf(PlayerComponent::class).get()) {
     val mapper = mapperFor<PlayerComponent>()
     @ExperimentalStdlibApi

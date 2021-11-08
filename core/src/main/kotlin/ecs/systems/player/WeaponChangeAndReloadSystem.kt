@@ -7,6 +7,7 @@ import ecs.components.player.PlayerComponent
 import ecs.components.player.PlayerControlComponent
 import ecs.components.player.WeaponComponent
 import features.weapons.ReloadType
+import input.InputIndicator
 import ktx.ashley.allOf
 import physics.getComponent
 
@@ -33,12 +34,12 @@ class WeaponChangeAndReloadSystem : IteratingSystem(
     @OptIn(ExperimentalStdlibApi::class)
     override fun processEntity(entity: Entity, deltaTime: Float) {
         val controlComponent = entity.getComponent<PlayerControlComponent>()
-        if (controlComponent.needToChangeGun) {
-            controlComponent.needToChangeGun = false
+        if (controlComponent.needToChangeGun != InputIndicator.Neutral) {
             val inventoryComponent = entity.getComponent<InventoryComponent>()
             val weaponComponent = entity.getComponent<WeaponComponent>()
-            weaponComponent.currentGun = inventoryComponent.guns.nextItem()
+            weaponComponent.currentGun = if(controlComponent.needToChangeGun == InputIndicator.Next) inventoryComponent.guns.nextItem() else inventoryComponent.guns.previousItem()
             controlComponent.setNewGun(weaponComponent.currentGun.rof / 60f)
+            controlComponent.needToChangeGun = InputIndicator.Neutral
         }
         if (controlComponent.reloadStarted) {
             //This means we have initiated a reload, now we can check weaponcomponenet etc.
