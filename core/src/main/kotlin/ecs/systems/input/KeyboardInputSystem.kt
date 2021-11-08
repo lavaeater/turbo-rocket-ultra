@@ -33,8 +33,16 @@ class KeyboardInputSystem :
             Input.Keys.S -> keyboardControl.thrust = -1f
             Input.Keys.A -> keyboardControl.turning = -1f
             Input.Keys.D -> keyboardControl.turning = 1f
-            Input.Keys.SPACE -> keyboardControl.firing = true
             else -> return false
+        }
+        return true
+    }
+
+    override fun scrolled(amountX: Float, amountY: Float): Boolean {
+        if(amountY > 0f) {
+            keyboardControl.needToChangeGun = InputIndicator.Next
+        } else if(amountY < 0f) {
+            keyboardControl.needToChangeGun = InputIndicator.Previous
         }
         return true
     }
@@ -45,7 +53,7 @@ class KeyboardInputSystem :
             Input.Keys.S -> keyboardControl.thrust = 0f
             Input.Keys.A -> keyboardControl.turning = 0f
             Input.Keys.D -> keyboardControl.turning = 0f
-            Input.Keys.SPACE -> keyboardControl.firing = false
+            Input.Keys.SPACE -> keyboardControl.doContextAction = true
             Input.Keys.R -> keyboardControl.needsReload = true
             Input.Keys.B -> toggleBuildMode()
             Input.Keys.LEFT -> keyboardControl.uiControl.left()
@@ -73,9 +81,6 @@ class KeyboardInputSystem :
                 keyboardControl.aiming = true
                 true
             }
-            Input.Buttons.RIGHT -> {
-                true
-            }
             else -> false
         }
     }
@@ -95,18 +100,8 @@ class KeyboardInputSystem :
                 keyboardControl.aiming = false
                 true
             }
-            Input.Buttons.RIGHT -> {
-                keyboardControl.firing = false
-                keyboardControl.aiming = false
-                changeGun()
-                true
-            }
             else -> false
         }
-    }
-
-    private fun changeGun() {
-        keyboardControl.needToChangeGun = true
     }
 
     @OptIn(ExperimentalStdlibApi::class)

@@ -131,6 +131,20 @@ fun player(player: Player, mapper: ControlMapper, at: Vector2) {
                 categoryBits = Box2dCategories.player
             }
         }
+        box(1f, 2f, vec2(0f, -1.5f)) {
+            isSensor = true
+            filter {
+                categoryBits = Box2dCategories.sensor
+                maskBits = Box2dCategories.allButLights
+            }
+        }
+        circle(2f, vec2(0f, -1f)) {
+            isSensor = true
+            filter {
+                categoryBits = Box2dCategories.sensor
+                maskBits = Box2dCategories.allButLights
+            }
+        }
         linearDamping = GameScreen.SHIP_LINEAR_DAMPING
         angularDamping = GameScreen.SHIP_ANGULAR_DAMPING
     }

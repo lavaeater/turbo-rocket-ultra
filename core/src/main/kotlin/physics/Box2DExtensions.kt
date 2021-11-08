@@ -126,11 +126,20 @@ fun Contact.getPlayerFor(): Player {
     return this.getEntityFor<PlayerComponent>().getComponent<PlayerComponent>().player
 }
 
+fun Contact.getOtherEntity(entity:Entity) : Entity {
+    val entityA = this.fixtureA.getEntity()
+    return if(entityA == entity) this.fixtureB.getEntity() else entityA
+}
+
 inline fun <reified T:Component> Contact.getEntityFor(): Entity {
     val mapper = mapperFor<T>()
     val entityA = this.fixtureA.getEntity()
     val entityB = this.fixtureB.getEntity()
     return if(entityA.has(mapper)) entityA else entityB
+}
+
+fun Contact.isPlayerByPlayerContact(): Boolean {
+    return this.isEntityContact() && this.bothHaveComponent<PlayerComponent>()
 }
 
 fun Contact.isPlayerContact(): Boolean {

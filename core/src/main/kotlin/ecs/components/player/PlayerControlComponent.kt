@@ -42,6 +42,13 @@ class PlayerControlComponent(var controlMapper: ControlMapper) : Component, Pool
     var reloadStarted
     get() = controlMapper.needsReload
     set(value) { controlMapper.needsReload = value}
+
+    var doContextAction
+    get() = controlMapper.doContextAction
+    set(value) {
+        controlMapper.doContextAction = value
+    }
+
     val triggerPulled get() = controlMapper.firing
     val firing get() = controlMapper.firing && cooldownRemaining <= 0f
     val aiming get() = controlMapper.aiming

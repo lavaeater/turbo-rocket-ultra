@@ -4,6 +4,12 @@ import com.badlogic.ashley.core.Component
 import com.badlogic.gdx.math.Vector2
 import ecs.components.player.PlayerMode
 
+sealed class InputIndicator {
+    object Neutral: InputIndicator()
+    object Previous: InputIndicator()
+    object Next: InputIndicator()
+}
+
 interface ControlMapper: Component {
 
     var needsReload: Boolean
@@ -15,7 +21,8 @@ interface ControlMapper: Component {
     var firing: Boolean
     var turning: Float
     var thrust: Float
-    var needToChangeGun: Boolean
+    var needToChangeGun: InputIndicator
+    var doContextAction: Boolean
 
     val walkVector: Vector2
     val controllerId: String

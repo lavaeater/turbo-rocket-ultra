@@ -147,6 +147,18 @@ object Assets : Disposable {
             "seek" to OffsetTextureRegion(texture, 0,48, 64, 12, 0f,0f))
     }
 
+    val ps4Buttons by lazy {
+        val texture = Texture(Gdx.files.internal("controllers/PS4.png"))
+        val y=  48
+        val x = 32
+        mapOf(
+            "cross" to OffsetTextureRegion(texture, 32, 48, 16,16),
+            "square" to OffsetTextureRegion(texture, 32, 64, 16,16),
+            "triangle" to OffsetTextureRegion(texture, 32, 80, 16,16),
+            "circle" to OffsetTextureRegion(texture, 32, 96, 16,16),
+        )
+    }
+
     val playerCharacters by lazy { characters.filterNot { it.key == "enemy" } }
 
     val splashTexture: Texture by lazy {
@@ -217,7 +229,6 @@ object Assets : Disposable {
         for(t in aiDebugBadges.values)
             t.flip(true, false)
     }
-
 
     private fun fixScene2dSkin() {
         Scene2DSkin.defaultSkin = Skin(Gdx.files.internal("ui/uiskin.json"))
