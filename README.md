@@ -59,11 +59,12 @@ To make the graphics and environment easy I am currently working with the concep
 ## Player Death 2
 
 So, what should happen when a player dies?
-- [ ] Not able to move
+- [ ] Restart Amble Task for enemies so that they go about in random directions
 - [ ] Indicated by something on screen, perhaps also blinking
 - [ ] Revival by being helped by friends?
 - [ ] Where do we revive a person?
-- [ ] Clear all hunting by enemies when dead, as well
+- [x] Not able to move
+- [x] Clear all hunting by enemies when dead, as well
 
 ## Weapons 2
 
@@ -553,7 +554,7 @@ Det här gör vi på det gamla vanliga sättet. Vi bygger en box2d-värld, vi kl
 
 Oj oj oj,  vad roligt. Vi kan göra en box2d-kropp med leder, per tutorials etc. Superkul ju.
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbLTE5Mjg5MTQ3MTEsLTE5NTQzNjQwNzgsMT
+eyJoaXN0b3J5IjpbLTE0Mjk1MzA5NDAsLTE5NTQzNjQwNzgsMT
 c2MTM0NzM1OSwxNzMwOTAyODcyLC0xNDgxMDI4NjI2LDE5NDI1
 ODcwMDEsLTcyODU1Nzk5NCwtMjU4OTg2OTc5LC0xMzY5MDkwMD
 IxLDE0MjY2NDk4ODUsLTM3NzE4OTM0MywtMTgzNzIyNzA5OCwt
