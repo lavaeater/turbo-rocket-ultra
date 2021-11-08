@@ -19,16 +19,16 @@ To make the graphics and environment easy I am currently working with the concep
 
 ### MVP
 
-- [ ] Player Death 2
 - [ ] Gibs and body parts
 - [ ] Pickups 2 (on-screen blurb indicating what you got)
-- [ ] Reloading 2 (shot-by-shot for shotguns)
+- [x] Reloading 2 (shot-by-shot for shotguns)
 - [ ] Multi-body-bodies for players and enemies (one for collision in game, one for hit detection for damage)
 - [ ] Interactable Components in-the-game
 - [ ] Player graphics made from components / parts etc.
 - [ ] Perma-gibs
 - [ ] Fixa mini-map
 - [ ] Smarta vektorer (eller nåt) - byt utspridd vektormattekod mot små, lokala, scengrafer. 
+- [x] Player Death 2
 - [x] Different weapons to shoot with <- done
 - [x] Vehicles <- nice to have
 - [x] Build Towers <- Paused
@@ -60,9 +60,9 @@ To make the graphics and environment easy I am currently working with the concep
 
 So, what should happen when a player dies?
 - [x] Restart Amble Task for enemies so that they go about in random directions
-- [ ] Indicated by something on screen, perhaps also blinking
-- [ ] Revival by being helped by friends?
-- [ ] Where do we revive a person?
+- [x] Indicated by something on screen, perhaps also blinking
+- [x] Revival by being helped by friends?
+- [x] Where do we revive a person?
 - [x] Not able to move
 - [x] Clear all hunting by enemies when dead, as well
 
@@ -554,11 +554,11 @@ Det här gör vi på det gamla vanliga sättet. Vi bygger en box2d-värld, vi kl
 
 Oj oj oj,  vad roligt. Vi kan göra en box2d-kropp med leder, per tutorials etc. Superkul ju.
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbLTE1MjgzMTE0NDQsLTE0Mjk1MzA5NDAsLT
-E5NTQzNjQwNzgsMTc2MTM0NzM1OSwxNzMwOTAyODcyLC0xNDgx
-MDI4NjI2LDE5NDI1ODcwMDEsLTcyODU1Nzk5NCwtMjU4OTg2OT
-c5LC0xMzY5MDkwMDIxLDE0MjY2NDk4ODUsLTM3NzE4OTM0Mywt
-MTgzNzIyNzA5OCwtMTQzNTg2MzcyMSwyNzk5NDU1NzUsLTM4ND
-k1ODY2MCwxMTE5MTQ4OTkzLC0xOTA2NzUxMzMzLC04NTE0ODM1
-OTAsMTcwMzQ2MzQ5Ml19
+eyJoaXN0b3J5IjpbLTIzODc2MjA0LC0xNTI4MzExNDQ0LC0xND
+I5NTMwOTQwLC0xOTU0MzY0MDc4LDE3NjEzNDczNTksMTczMDkw
+Mjg3MiwtMTQ4MTAyODYyNiwxOTQyNTg3MDAxLC03Mjg1NTc5OT
+QsLTI1ODk4Njk3OSwtMTM2OTA5MDAyMSwxNDI2NjQ5ODg1LC0z
+NzcxODkzNDMsLTE4MzcyMjcwOTgsLTE0MzU4NjM3MjEsMjc5OT
+Q1NTc1LC0zODQ5NTg2NjAsMTExOTE0ODk5MywtMTkwNjc1MTMz
+MywtODUxNDgzNTkwXX0=
 -->
