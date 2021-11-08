@@ -59,7 +59,7 @@ To make the graphics and environment easy I am currently working with the concep
 ## Player Death 2
 
 So, what should happen when a player dies?
-- [ ] Restart Amble Task for enemies so that they go about in random directions
+- [x] Restart Amble Task for enemies so that they go about in random directions
 - [ ] Indicated by something on screen, perhaps also blinking
 - [ ] Revival by being helped by friends?
 - [ ] Where do we revive a person?
@@ -554,11 +554,11 @@ Det här gör vi på det gamla vanliga sättet. Vi bygger en box2d-värld, vi kl
 
 Oj oj oj,  vad roligt. Vi kan göra en box2d-kropp med leder, per tutorials etc. Superkul ju.
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbLTE0Mjk1MzA5NDAsLTE5NTQzNjQwNzgsMT
-c2MTM0NzM1OSwxNzMwOTAyODcyLC0xNDgxMDI4NjI2LDE5NDI1
-ODcwMDEsLTcyODU1Nzk5NCwtMjU4OTg2OTc5LC0xMzY5MDkwMD
-IxLDE0MjY2NDk4ODUsLTM3NzE4OTM0MywtMTgzNzIyNzA5OCwt
-MTQzNTg2MzcyMSwyNzk5NDU1NzUsLTM4NDk1ODY2MCwxMTE5MT
-Q4OTkzLC0xOTA2NzUxMzMzLC04NTE0ODM1OTAsMTcwMzQ2MzQ5
-MiwxNDgwODc4ODMxXX0=
+eyJoaXN0b3J5IjpbLTE1MjgzMTE0NDQsLTE0Mjk1MzA5NDAsLT
+E5NTQzNjQwNzgsMTc2MTM0NzM1OSwxNzMwOTAyODcyLC0xNDgx
+MDI4NjI2LDE5NDI1ODcwMDEsLTcyODU1Nzk5NCwtMjU4OTg2OT
+c5LC0xMzY5MDkwMDIxLDE0MjY2NDk4ODUsLTM3NzE4OTM0Mywt
+MTgzNzIyNzA5OCwtMTQzNTg2MzcyMSwyNzk5NDU1NzUsLTM4ND
+k1ODY2MCwxMTE5MTQ4OTkzLC0xOTA2NzUxMzMzLC04NTE0ODM1
+OTAsMTcwMzQ2MzQ5Ml19
 -->
