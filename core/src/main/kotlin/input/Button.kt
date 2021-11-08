@@ -1,12 +1,21 @@
 package input
 
 sealed class Button(val playstationButtonName: String) {
-    object Green : Button("X")
-    object Red : Button("Dont know")
-    object Blue : Button("SQUARE")
-    object Yellow : Button("Dont know")
-    object DPadLeft : Button("Dpadleft - maybe not, it might be an axis?")
-    object DPadRight : Button("DpadRight")
+    object Green : Button("cross")
+    object Red : Button("ring")
+    object Blue : Button("square")
+    object Yellow : Button("triangle")
+    object DPadLeft : Button("dpadleft")
+    object DPadUp : Button("dpadup")
+    object DPadDown : Button("dpaddown")
+    object DPadRight : Button("dpadright")
+    object Share : Button("share")
+    object Options : Button("options")
+    object PsButton : Button("psbutton")
+    object L3 : Button("l3")
+    object R3 : Button("r3")
+    object L1 : Button("l1")
+    object R1 : Button("r1")
     object Unknown : Button("Unknown")
 
     companion object {
@@ -22,6 +31,16 @@ sealed class Button(val playstationButtonName: String) {
             1 to Red,
             2 to Blue,
             3 to Yellow,
+            4 to Share,
+            5 to PsButton,
+            6 to Options,
+            7 to L3,
+            8 to R3,
+            9 to L1,
+            10 to R1,
+
+            11 to DPadUp,
+            12 to DPadDown,
             13 to DPadLeft,
             14 to DPadRight
         )
