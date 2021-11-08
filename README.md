@@ -29,7 +29,6 @@ To make the graphics and environment easy I am currently working with the concep
 - [ ] Perma-gibs
 - [ ] Fixa mini-map
 - [ ] Smarta vektorer (eller nåt) - byt utspridd vektormattekod mot små, lokala, scengrafer. 
-
 - [x] Different weapons to shoot with <- done
 - [x] Vehicles <- nice to have
 - [x] Build Towers <- Paused
@@ -554,11 +553,11 @@ Det här gör vi på det gamla vanliga sättet. Vi bygger en box2d-värld, vi kl
 
 Oj oj oj,  vad roligt. Vi kan göra en box2d-kropp med leder, per tutorials etc. Superkul ju.
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbLTM4Njg3MTc0OSwtMTk1NDM2NDA3OCwxNz
-YxMzQ3MzU5LDE3MzA5MDI4NzIsLTE0ODEwMjg2MjYsMTk0MjU4
-NzAwMSwtNzI4NTU3OTk0LC0yNTg5ODY5NzksLTEzNjkwOTAwMj
-EsMTQyNjY0OTg4NSwtMzc3MTg5MzQzLC0xODM3MjI3MDk4LC0x
-NDM1ODYzNzIxLDI3OTk0NTU3NSwtMzg0OTU4NjYwLDExMTkxND
-g5OTMsLTE5MDY3NTEzMzMsLTg1MTQ4MzU5MCwxNzAzNDYzNDky
-LDE0ODA4Nzg4MzFdfQ==
+eyJoaXN0b3J5IjpbLTE5Mjg5MTQ3MTEsLTE5NTQzNjQwNzgsMT
+c2MTM0NzM1OSwxNzMwOTAyODcyLC0xNDgxMDI4NjI2LDE5NDI1
+ODcwMDEsLTcyODU1Nzk5NCwtMjU4OTg2OTc5LC0xMzY5MDkwMD
+IxLDE0MjY2NDk4ODUsLTM3NzE4OTM0MywtMTgzNzIyNzA5OCwt
+MTQzNTg2MzcyMSwyNzk5NDU1NzUsLTM4NDk1ODY2MCwxMTE5MT
+Q4OTkzLC0xOTA2NzUxMzMzLC04NTE0ODM1OTAsMTcwMzQ2MzQ5
+MiwxNDgwODc4ODMxXX0=
 -->
