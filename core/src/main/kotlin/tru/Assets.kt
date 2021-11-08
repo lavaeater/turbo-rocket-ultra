@@ -7,11 +7,14 @@ import com.badlogic.gdx.graphics.Color
 import com.badlogic.gdx.graphics.Pixmap
 import com.badlogic.gdx.graphics.Texture
 import com.badlogic.gdx.graphics.g2d.*
+import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator
+import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator.FreeTypeFontParameter
 import com.badlogic.gdx.scenes.scene2d.ui.Skin
 import com.badlogic.gdx.utils.Disposable
 import ecs.components.graphics.OffsetTextureRegion
 import features.weapons.GunFrames
 import injection.Context.inject
+import ktx.freetype.registerFreeTypeFontLoaders
 import ktx.scene2d.Scene2DSkin
 import map.snake.MapDirection
 import space.earlygrey.shapedrawer.ShapeDrawer
@@ -175,8 +178,23 @@ object Assets : Disposable {
         BitmapFont(Gdx.files.internal("font/arial-15.fnt"))
     }
 
+    val debugFont by lazy {
+        val generator = FreeTypeFontGenerator(Gdx.files.internal("font/a-goblin-appears.ttf"))
+        val parameter = FreeTypeFontParameter()
+        parameter.size = 12
+        parameter.magFilter = Texture.TextureFilter.Linear
+        parameter.minFilter = Texture.TextureFilter.Linear
+        parameter.flip = true
+        val font32 = generator.generateFont(parameter) // font size 32 pixels
+
+        font32.data.setScale(0.1f)
+        generator.dispose()
+        font32
+    }
+
     fun load(): AssetManager {
         am = AssetManager()
+//        am.registerFreeTypeFontLoaders()
         fixScene2dSkin()
         fixFlip()
         return am

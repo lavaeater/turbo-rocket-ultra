@@ -1,5 +1,6 @@
 package ecs.components.ai
 
+import ai.tasks.EntityComponentTask
 import com.badlogic.ashley.core.Component
 import com.badlogic.ashley.core.Entity
 import com.badlogic.gdx.ai.btree.BehaviorTree
@@ -17,8 +18,10 @@ class BehaviorComponent : Component,Pool.Poolable {
     var currentStatus = ""
     private fun addListeners() {
         tree.addListener(object: BehaviorTree.Listener<Entity> {
-            override fun statusUpdated(task: Task<Entity>?, previousStatus: Task.Status?) {
-                currentStatus = "$task: $previousStatus"
+            override fun statusUpdated(task: Task<Entity>, previousStatus: Task.Status) {
+                if(task is EntityComponentTask<*> && task.toString() != currentStatus) {
+                    currentStatus = task.toString()
+                }
             }
 
             override fun childAdded(task: Task<Entity>?, index: Int) {

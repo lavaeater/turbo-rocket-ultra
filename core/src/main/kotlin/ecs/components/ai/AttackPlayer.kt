@@ -5,4 +5,8 @@ class AttackPlayer: TaskComponent() {
         coolDownRange = (.1f..0.5f)
         coolDown = 0f
     }
+    override fun toString(): String {
+        return "Attack Player>"
+    }
+
 }

@@ -4,13 +4,11 @@ import com.badlogic.ashley.core.ComponentMapper
 import com.badlogic.ashley.core.Entity
 import com.badlogic.gdx.ai.btree.Task
 import ecs.components.ai.TaskComponent
-
-
+import ktx.ashley.get
 
 
 class EntityComponentTask<T: TaskComponent>(private val componentClass: Class<T>) : EntityTask() {
     private val mapper by lazy { ComponentMapper.getFor(componentClass) }
-    private val classInfo = componentClass.toString()
 
     override fun start() {
         entity.add(engine.createComponent(componentClass))
@@ -41,6 +39,6 @@ class EntityComponentTask<T: TaskComponent>(private val componentClass: Class<T>
     }
 
     override fun toString(): String {
-        return classInfo
+        return if(mapper.has(entity)) mapper.get(entity).toString() else ""
     }
 }

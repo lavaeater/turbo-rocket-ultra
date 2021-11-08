@@ -10,6 +10,7 @@ import ktx.ashley.allOf
 import ktx.graphics.use
 import ktx.math.vec2
 import physics.getComponent
+import tru.Assets
 import ui.simple.BoundTextActor
 import ui.simple.SimpleContainer
 
@@ -27,14 +28,12 @@ class AiDebugSystem : IteratingSystem(allOf(BehaviorComponent::class, TransformC
     override fun processEntity(entity: Entity, deltaTime: Float) {
         val position = entity.getComponent<TransformComponent>().position
         val behaviorComponent = entity.getComponent<BehaviorComponent>()
-//        littleSimpleUi.position.set(position)
         textToPrint = behaviorComponent.toString()
-        littleSimpleUi.render(batch, position)
-    }
-
-    val littleSimpleUi by lazy {
-        SimpleContainer(vec2()).apply {
-            children.add(BoundTextActor({ "AI: $textToPrint }" }))
-        }
+        Assets.debugFont.draw(
+            batch,
+            textToPrint,
+            position.x,
+            position.y
+        )
     }
 }

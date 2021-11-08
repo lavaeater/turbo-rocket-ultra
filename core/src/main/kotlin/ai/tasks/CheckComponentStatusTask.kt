@@ -7,7 +7,6 @@ import ecs.components.ai.TaskComponent
 
 class CheckComponentStatusTask<T:TaskComponent>(componentClass: Class<T>) : EntityTask() {
     private val mapper by lazy { ComponentMapper.getFor(componentClass)}
-    private val classInfo = componentClass.toString()
     override fun copyTo(task: Task<Entity>?): Task<Entity> {
         TODO("Not yet implemented")
     }
@@ -17,7 +16,7 @@ class CheckComponentStatusTask<T:TaskComponent>(componentClass: Class<T>) : Enti
     }
 
     override fun toString(): String {
-        return classInfo
+        return mapper.get(entity).toString()
     }
 
 }

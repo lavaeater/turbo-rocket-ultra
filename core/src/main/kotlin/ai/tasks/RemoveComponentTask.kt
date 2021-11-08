@@ -14,8 +14,7 @@ class RemoveComponentTask<T: Component>(private val componentClass: Class<T>) : 
         return Status.SUCCEEDED
     }
 
-    private val classInfo = componentClass.toString()
     override fun toString(): String {
-        return classInfo
+        return "RemoveComponent"
     }
 }

@@ -22,5 +22,8 @@ class SeekPlayer: TaskComponent() {
         scanVectorEnd.set(Vector2.Zero)
         super.reset()
     }
+    override fun toString(): String {
+        return "Seek Player"
+    }
 
 }
