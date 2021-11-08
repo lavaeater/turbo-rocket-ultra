@@ -39,7 +39,7 @@ class PlayerControlComponent(var controlMapper: ControlMapper) : Component, Pool
         set(value) {
             controlMapper.needToChangeGun = value
         }
-    var needsReload
+    var reloadStarted
     get() = controlMapper.needsReload
     set(value) { controlMapper.needsReload = value}
     val triggerPulled get() = controlMapper.firing

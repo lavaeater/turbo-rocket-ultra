@@ -11,4 +11,6 @@ class Gun(private val gunDefinition: GunDefinition) {
     val textureName = gunDefinition.textureName
     val ammoType = gunDefinition.ammoType
     val damageRange = gunDefinition.damageRange
+    val reloadDelay = gunDefinition.reloadDelay
+    val reloadType = gunDefinition.reloadType
 }

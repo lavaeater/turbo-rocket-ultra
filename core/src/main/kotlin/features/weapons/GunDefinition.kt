@@ -13,7 +13,9 @@ class GunDefinition(
     val maxSpread: Float,
     val textureName: String,
     val ammoType: AmmoType,
-    val damageRange: IntRange
+    val damageRange: IntRange,
+    val reloadDelay: Float,
+    val reloadType: ReloadType
 ) {
     companion object {
         val guns = listOf(
@@ -26,7 +28,9 @@ class GunDefinition(
                 .125f,
                 GunFrames.handGun,
                 AmmoType.nineMilliMeters,
-                8..16
+                8..16,
+                2f,
+                ReloadType.EntireMag
             ),
             GunDefinition(
                 "Franchi Spas 12",
@@ -37,11 +41,18 @@ class GunDefinition(
                 15f,
                 GunFrames.spas12,
                 AmmoType.twelveGaugeShotgun,
-                12..24
+                12..24,
+                1f,
+                ReloadType.SingleShot
             )
         )
     }
     fun getGun(): Gun {
         return Gun(this)
     }
+}
+
+sealed class ReloadType {
+    object EntireMag : ReloadType()
+    object SingleShot: ReloadType()
 }
