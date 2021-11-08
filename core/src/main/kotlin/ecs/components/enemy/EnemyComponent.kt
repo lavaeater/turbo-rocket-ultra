@@ -14,6 +14,8 @@ class EnemyComponent : Component, Pool.Poolable {
     var health = 25
     private set
 
+    val isDead get() = health <= 0
+
     var timeRemaining = 0f
     private set
 

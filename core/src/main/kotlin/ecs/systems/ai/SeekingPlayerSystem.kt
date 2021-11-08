@@ -11,6 +11,7 @@ import ecs.components.enemy.EnemyComponent
 import ecs.components.ai.ChasePlayer
 import ecs.components.ai.NoticedSomething
 import ecs.components.ai.TrackingPlayerComponent
+import ecs.components.player.PlayerWaitsForRespawn
 import factories.world
 import ktx.ashley.allOf
 import ktx.ashley.has
@@ -92,7 +93,7 @@ class SeekingPlayerSystem : IteratingSystem(allOf(SeekPlayer::class).get()) {
                 RayCast.CONTINUE
             }
             if (lowestFraction < 1f) {
-                if (closestFixture.isEntity() && closestFixture.body.isPlayer()) {
+                if (closestFixture.isEntity() && closestFixture.body.isPlayer() && !closestFixture.getEntity().hasComponent<PlayerWaitsForRespawn>()) {
                     seekComponent.keepScanning = false
                     entity.add(
                         engine.createComponent(TrackingPlayerComponent::class.java)

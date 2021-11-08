@@ -1,7 +1,6 @@
 package physics
 
 import com.badlogic.ashley.core.Engine
-import com.badlogic.gdx.graphics.Color
 import com.badlogic.gdx.physics.box2d.Contact
 import com.badlogic.gdx.physics.box2d.ContactImpulse
 import com.badlogic.gdx.physics.box2d.ContactListener
@@ -13,6 +12,7 @@ import ecs.components.gameplay.ObjectiveComponent
 import ecs.components.gameplay.ShotComponent
 import ecs.components.pickups.LootComponent
 import ecs.components.player.InventoryComponent
+import ecs.components.player.PlayerIsRespawning
 import ecs.components.player.PlayerWaitsForRespawn
 import features.pickups.AmmoLoot
 import injection.Context.inject
@@ -44,7 +44,7 @@ class ContactManager: ContactListener {
             }
             if(contact.hasComponent<EnemySensorComponent>()) {
                 //this is an enemy noticing the player - no system needed
-                if(!contact.hasComponent<PlayerWaitsForRespawn>()) {
+                if(!contact.hasComponent<PlayerWaitsForRespawn>() && !contact.hasComponent<PlayerIsRespawning>() ) {
                     val enemy = contact.getEntityFor<EnemySensorComponent>()
                     enemy.add(
                         engine.createComponent(TrackingPlayerComponent::class.java)

@@ -17,7 +17,6 @@ import ktx.box2d.rayCast
 import ktx.math.random
 import ktx.math.vec2
 import physics.*
-import tru.Assets
 
 
 class PlayerShootingSystem(private val audioPlayer: AudioPlayer) : IteratingSystem(
@@ -43,7 +42,7 @@ class PlayerShootingSystem(private val audioPlayer: AudioPlayer) : IteratingSyst
         if (
             controlComponent.firing &&
             weapon.ammoRemaining > 0 &&
-            !(entity.hasComponent<PlayerRespawning>() || entity.hasComponent<PlayerWaitsForRespawn>())) {
+            !(entity.hasComponent<PlayerIsRespawning>() || entity.hasComponent<PlayerWaitsForRespawn>())) {
             val transform = transformMapper[entity]
             shotsFiredMapper[entity].queue.addFirst(transform.position)
             /*
