@@ -67,7 +67,7 @@ Lets try to prioritize these into what would make the game seem "done" the faste
 I will take the low road for this. Take the sprite, split it up into parts, put them in a particle emitter, spray them about with blood or something. That should do it, right?
 - [x] Split sprite
 - [x] Fiddle with particle editor
-- [ ] Emit body parts when enemy dies
+- [x] Emit body parts when enemy dies
 - [ ] Also blood
 - [ ] How about some gruesome audio effects?
 
@@ -573,11 +573,11 @@ Det här gör vi på det gamla vanliga sättet. Vi bygger en box2d-värld, vi kl
 
 Oj oj oj,  vad roligt. Vi kan göra en box2d-kropp med leder, per tutorials etc. Superkul ju.
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbLTM2OTIzODUyOSwzMzExNTA2NzEsMjA5Nj
-YxMjg1MSwtMTA4NDY5MDg2MywtMjM4NzYyMDQsLTE1MjgzMTE0
-NDQsLTE0Mjk1MzA5NDAsLTE5NTQzNjQwNzgsMTc2MTM0NzM1OS
-wxNzMwOTAyODcyLC0xNDgxMDI4NjI2LDE5NDI1ODcwMDEsLTcy
-ODU1Nzk5NCwtMjU4OTg2OTc5LC0xMzY5MDkwMDIxLDE0MjY2ND
-k4ODUsLTM3NzE4OTM0MywtMTgzNzIyNzA5OCwtMTQzNTg2Mzcy
-MSwyNzk5NDU1NzVdfQ==
+eyJoaXN0b3J5IjpbLTI3MTU0MTU5MywtMzY5MjM4NTI5LDMzMT
+E1MDY3MSwyMDk2NjEyODUxLC0xMDg0NjkwODYzLC0yMzg3NjIw
+NCwtMTUyODMxMTQ0NCwtMTQyOTUzMDk0MCwtMTk1NDM2NDA3OC
+wxNzYxMzQ3MzU5LDE3MzA5MDI4NzIsLTE0ODEwMjg2MjYsMTk0
+MjU4NzAwMSwtNzI4NTU3OTk0LC0yNTg5ODY5NzksLTEzNjkwOT
+AwMjEsMTQyNjY0OTg4NSwtMzc3MTg5MzQzLC0xODM3MjI3MDk4
+LC0xNDM1ODYzNzIxXX0=
 -->
