@@ -34,8 +34,8 @@ Lets try to prioritize these into what would make the game seem "done" the faste
 - [x] Reloading 2 (shot-by-shot for shotguns)
 - [x] Multi-body-bodies for players and enemies (one for collision in game, one for hit detection for damage)
 - [x] Player Death 2
-- [x] Different weapons to shoot with <- done
-- [x] Vehicles <- nice to have
+- [x] Different weapons to shoot with
+- [x] Vehicles
 - [x] Build Towers <- Paused
 - [x] Weapons 2 <- done
 - [x] Objectives for maps <- done
@@ -563,7 +563,7 @@ Det här gör vi på det gamla vanliga sättet. Vi bygger en box2d-värld, vi kl
 
 Oj oj oj,  vad roligt. Vi kan göra en box2d-kropp med leder, per tutorials etc. Superkul ju.
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbMjYyMjMyMTQxLDIwOTY2MTI4NTEsLTEwOD
+eyJoaXN0b3J5IjpbNzQ4NTc4ODgzLDIwOTY2MTI4NTEsLTEwOD
 Q2OTA4NjMsLTIzODc2MjA0LC0xNTI4MzExNDQ0LC0xNDI5NTMw
 OTQwLC0xOTU0MzY0MDc4LDE3NjEzNDczNTksMTczMDkwMjg3Mi
 wtMTQ4MTAyODYyNiwxOTQyNTg3MDAxLC03Mjg1NTc5OTQsLTI1
