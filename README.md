@@ -21,7 +21,6 @@ To make the graphics and environment easy I am currently working with the concep
 
 Lets try to prioritize these into what would make the game seem "done" the fastest.
 
-- [ ] **More character sprites**
 - [ ] Enemy attack animation
 - [ ] Lightmaps for sprites
 - [ ] Perma-gibs
@@ -36,6 +35,7 @@ Lets try to prioritize these into what would make the game seem "done" the faste
 - [ ] Vehicles would be cool
 - [ ] Build Towers
 - [ ] Gibs and Body Parts II - blood trails and audio
+- [x] More character sprites
 - [x] Gibs and body parts
 - [x] Reloading 2 (shot-by-shot for shotguns)
 - [x] Multi-body-bodies for players and enemies (one for collision in game, one for hit detection for damage)
@@ -575,11 +575,11 @@ Det här gör vi på det gamla vanliga sättet. Vi bygger en box2d-värld, vi kl
 
 Oj oj oj,  vad roligt. Vi kan göra en box2d-kropp med leder, per tutorials etc. Superkul ju.
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbMTI4MDQ5MjE1MiwtMzY5MjM4NTI5LDMzMT
-E1MDY3MSwyMDk2NjEyODUxLC0xMDg0NjkwODYzLC0yMzg3NjIw
-NCwtMTUyODMxMTQ0NCwtMTQyOTUzMDk0MCwtMTk1NDM2NDA3OC
-wxNzYxMzQ3MzU5LDE3MzA5MDI4NzIsLTE0ODEwMjg2MjYsMTk0
-MjU4NzAwMSwtNzI4NTU3OTk0LC0yNTg5ODY5NzksLTEzNjkwOT
-AwMjEsMTQyNjY0OTg4NSwtMzc3MTg5MzQzLC0xODM3MjI3MDk4
-LC0xNDM1ODYzNzIxXX0=
+eyJoaXN0b3J5IjpbMTI1MjI5NjQxNiwxMjgwNDkyMTUyLC0zNj
+kyMzg1MjksMzMxMTUwNjcxLDIwOTY2MTI4NTEsLTEwODQ2OTA4
+NjMsLTIzODc2MjA0LC0xNTI4MzExNDQ0LC0xNDI5NTMwOTQwLC
+0xOTU0MzY0MDc4LDE3NjEzNDczNTksMTczMDkwMjg3MiwtMTQ4
+MTAyODYyNiwxOTQyNTg3MDAxLC03Mjg1NTc5OTQsLTI1ODk4Nj
+k3OSwtMTM2OTA5MDAyMSwxNDI2NjQ5ODg1LC0zNzcxODkzNDMs
+LTE4MzcyMjcwOThdfQ==
 -->
