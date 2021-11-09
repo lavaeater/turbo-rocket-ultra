@@ -63,13 +63,13 @@ class GridMapSection(val coordinate: Coordinate, val connections: Set<MapDirecti
             }
             ConeLight(
                 rayHandler,
-                64,
+                128,
                 directionColorMap[lightDirection]!!,//Color(.05f, .05f, .05f, 1f),
-                15f,
+                30f,
                 lightPosition.x,
                 lightPosition.y,
                 MapDirection.directionDegrees[lightDirection]!!,
-                45f
+                90f
             ).apply {
                 isStaticLight = false
                 isSoft = true
@@ -91,7 +91,7 @@ class GridMapSection(val coordinate: Coordinate, val connections: Set<MapDirecti
                 MapDirection.South to listOf(TileAlignment.Bottom)
             )
         }
-        val directionColorMap = mapOf(MapDirection.North to Color.RED, MapDirection.East to Color.GREEN, MapDirection.South to Color.BLUE, MapDirection.West to Color.YELLOW)
+        val directionColorMap = mapOf(MapDirection.North to Color(.5f,.5f,0f,.5f), MapDirection.East to Color(.5f,.5f,0f,.5f), MapDirection.South to Color(.5f,.5f,0f,.5f), MapDirection.West to Color(.5f,.5f,0f,.5f))
     }
 
     val connectionAlignments by lazy { connections.map { directionAlignment[it]!! }.flatten() }
