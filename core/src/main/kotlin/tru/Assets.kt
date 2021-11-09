@@ -31,6 +31,22 @@ object Assets : Disposable {
         SpriteLoader.initCharachterAnims()
     }
 
+    val enemyGibs by lazy {
+        val texture = Texture(Gdx.files.internal("sprites/enemy/enemy_gibs.png"))
+        listOf(
+            OffsetTextureRegion(texture,0,0,24,24),
+            OffsetTextureRegion(texture,24,0,24,24),
+            OffsetTextureRegion(texture,48,0,24,24),
+            OffsetTextureRegion(texture,72,0,24,24),
+            OffsetTextureRegion(texture,96,0,24,24),
+            OffsetTextureRegion(texture,0,24,24,24),
+            OffsetTextureRegion(texture,24,24,24,24),
+            OffsetTextureRegion(texture,48,24,24,24),
+            OffsetTextureRegion(texture,72,24,24,24),
+            OffsetTextureRegion(texture,96,24,24,24)
+        )
+    }
+
     val handgunTexture by lazy {
         Texture(Gdx.files.internal("sprites/guns/handgun.png"))
     }

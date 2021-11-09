@@ -56,11 +56,13 @@ class SimpleRenderSystem(
         val transform = transformMapper.get(entity)
         val textureComponent = textureMapper.get(entity)
 
+
         batch.drawScaled(
             textureComponent.texture,
             transform.position.x + (textureComponent.texture.regionWidth / 2 * scale) + (textureComponent.offsetX + textureComponent.texture.offsetX * scale * textureComponent.scale),
             transform.position.y + (textureComponent.texture.regionHeight / 2 * scale) - (textureComponent.offsetY - textureComponent.texture.offsetY) * scale * textureComponent.scale,
-            scale * textureComponent.scale)
+            scale * textureComponent.scale,
+            if(textureComponent.rotateWithTransform) transform.rotation else 180f)
         for(texture in textureComponent.extraTextures.values) {
             batch.drawScaled(
                 texture,

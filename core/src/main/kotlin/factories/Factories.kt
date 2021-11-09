@@ -12,6 +12,7 @@ import com.badlogic.gdx.physics.box2d.BodyDef
 import com.badlogic.gdx.physics.box2d.World
 import ecs.components.*
 import ecs.components.ai.BehaviorComponent
+import ecs.components.ai.GibComponent
 import ecs.components.enemy.EnemyComponent
 import ecs.components.enemy.EnemySensorComponent
 import ecs.components.fx.SplatterComponent
@@ -68,11 +69,51 @@ object Box2dCategories {
     const val indicator: Short = 0x0080
     const val bullet: Short = 0x0100
     const val wall: Short = 0x0200
-    val all = player or enemy or objective or obstacle or sensor or light or loot or bullet or wall
-    val allButSensors = player or enemy or objective or obstacle or light or loot or bullet or wall
-    val allButLights = player or enemy or objective or obstacle or sensor or loot or bullet or wall
-    val allButLoot = player or enemy or objective or obstacle or sensor or wall
-    val allButLootAndPlayer = enemy or objective or obstacle or wall
+    const val gib: Short = 0x0400
+    val all = player or enemy or objective or obstacle or sensor or light or loot or bullet or wall or gib
+    val allButSensors = player or enemy or objective or obstacle or light or loot or bullet or wall or gib
+    val allButLights = player or enemy or objective or obstacle or sensor or loot or bullet or wall or gib
+    val allButLightsOrLoot = player or enemy or objective or obstacle or sensor or bullet or wall or gib
+    val allButLoot = player or enemy or objective or obstacle or sensor or wall or gib
+    val allButLootAndPlayer = enemy or objective or obstacle or wall or gib
+    val environmentOnly = objective or obstacle or wall
+}
+
+fun gibs(at: Vector2, angle:Float) {
+    for(i in Assets.enemyGibs) {
+        val angle = (1f..359f).random()
+        val velocity = vec2(4f,4f).setAngleDeg(angle)
+        val gibBody = world().body {
+            type = BodyDef.BodyType.DynamicBody
+            position.set(at)
+            linearVelocity.set(velocity)
+            box( .3f,.3f) {
+                friction = 50f //Tune
+                density = 10f //tune
+                filter {
+                    categoryBits = Box2dCategories.gib
+                    maskBits = Box2dCategories.allButLightsOrLoot
+                }
+            }
+        }
+        val gibEntity = engine().entity {
+            with<TextureComponent> {
+                rotateWithTransform = true
+                texture = i
+            }
+            with<TransformComponent> {
+                position.set(at)
+            }
+            with<BodyComponent> {
+                body = gibBody
+            }
+            with<GibComponent> {
+                coolDownRange = .5f..1f
+                coolDown = (.5f..1f).random()
+            }
+        }
+        gibBody.userData = gibEntity
+    }
 }
 
 fun splatterEntity(at: Vector2, angle: Float) {
