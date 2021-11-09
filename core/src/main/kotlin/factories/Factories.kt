@@ -330,7 +330,7 @@ fun enemy(at: Vector2) {
         with<EnemySensorComponent>()
         with<EnemyComponent>()
         with<AnimatedCharacterComponent> {
-            anims = Assets.characters["enemy"]!!
+            anims = Assets.enemies.values.random()
         }
         with<LootDropComponent> {
             lootTable.contents.add(

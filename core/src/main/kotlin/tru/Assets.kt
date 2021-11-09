@@ -31,8 +31,12 @@ object Assets : Disposable {
         SpriteLoader.initCharachterAnims()
     }
 
+    val enemies by lazy {
+        SpriteLoader.initEnemyAnims()
+    }
+
     val enemyGibs by lazy {
-        val texture = Texture(Gdx.files.internal("sprites/enemy/enemy_gibs.png"))
+        val texture = Texture(Gdx.files.internal("sprites/enemies/enemy_gibs.png"))
         listOf(
             OffsetTextureRegion(texture,0,0,24,24),
             OffsetTextureRegion(texture,24,0,24,24),
@@ -178,7 +182,7 @@ object Assets : Disposable {
         OffsetTextureRegion(Texture(Gdx.files.internal("sprites/bullets/bullet.png")))
     }
 
-    val playerCharacters by lazy { characters.filterNot { it.key == "enemy" } }
+    val playerCharacters by lazy { characters }
 
     val splashTexture: Texture by lazy {
         Texture(Gdx.files.internal("splash/splash_1.png"))

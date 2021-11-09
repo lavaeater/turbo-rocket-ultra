@@ -26,6 +26,9 @@ class LpcSpriteSheetHelper(val basePath: String = "localfiles/lpc/") {
 							LpcSpriteSheetCategoryDefinition("ears", setOf("ears"), 1),
 							LpcSpriteSheetCategoryDefinition("eyes",setOf("eyes"),1))),
 			LpcSpriteSheetCategoryDefinition("tops", setOf("tops"),2),
+			LpcSpriteSheetCategoryDefinition("eyes", setOf("eyes"),2),
+			LpcSpriteSheetCategoryDefinition("ears", setOf("ears"),2),
+			LpcSpriteSheetCategoryDefinition("noses", setOf("noses"),2),
 //			LpcSpriteSheetCategoryDefinition("back", setOf("torso", "back"), 0),
 //			LpcSpriteSheetCategoryDefinition("clothes", setOf("torso", "chain"),2),
 

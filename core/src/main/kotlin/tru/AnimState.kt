@@ -35,6 +35,7 @@ sealed class AnimState() {
     object StartAim : AnimState()
 //    @Serializable
     object Aiming : AnimState()
+    object Slash : AnimState()
 //    @Serializable
     object Death : AnimState()
 }
