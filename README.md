@@ -21,7 +21,7 @@ To make the graphics and environment easy I am currently working with the concep
 
 Lets try to prioritize these into what would make the game seem "done" the fastest.
 
-- [ ] Gibs and body parts
+- [ ] **Gibs and body parts**
 - [ ] Lightmaps for sprites
 - [ ] Perma-gibs
 - [ ] Fix the MiniMap
@@ -35,31 +35,30 @@ Lets try to prioritize these into what would make the game seem "done" the faste
 - [x] Multi-body-bodies for players and enemies (one for collision in game, one for hit detection for damage)
 - [x] Player Death 2
 - [x] Different weapons to shoot with
-- [x] Vehicles
-- [x] Build Towers <- Paused
-- [x] Weapons 2 <- done
-- [x] Objectives for maps <- done
-- [x] Far Off Map Rendering <- done
-- [x] Lights and particles <- done
-- [x] Auto-generated Snake-maps <- done
-- [x] Basic Sprite Editor <- done, kinda?
-- [x] IsoMetric Projection <- done!
-- [x] Towers <- Done
-- [x] Game Over Screen that does *anything* <- DONE!
-- [x] Start Screen that does *anything* <- done
-- [x] Scoring and Objectives <- done
-- [x] Game over man <-Doing
-- [x] Player death <- Done
-- [x] Fix enemy sensors / noticing <- advanced behaviors
-- [x] Fix enemy direction systems <- done?
-- [x] Controller support <- Done
-- [x] Twin Stick shooting <- done
-- [x] Multiplayer <- done
-- [x] Player damage / Enemy attacks <- Done
-- [x] Objectives <- Done!
-- [x] Enemies <- Done
-- [x] Blood Splatter <- Done
-- [x] MiniMap <- Done
+- [ ] Vehicles would be cool
+- [ ] Build Towers
+- [x] Weapons 2
+- [x] Objectives for maps
+- [x] Far Off Map Rendering
+- [x] Lights and particles
+- [x] Auto-generated Snake-maps
+- [x] Basic Sprite Editor
+- [x] IsoMetric Projection
+- [x] Towers
+- [x] Game Over Screen that does *anything*
+- [x] Start Screen that does *anything*
+- [x] Scoring and Objectives
+- [x] Game over man
+- [x] Player death
+- [x] Fix enemy direction systems
+- [x] Controller support
+- [x] Twin Stick shooting
+- [x] Multiplayer
+- [x] Player damage / Enemy attacks
+- [x] Objectives
+- [x] Enemies
+- [x] Blood Splatter
+- [x] MiniMap
 
 ## Multi-body for players and enemies
 
@@ -563,7 +562,7 @@ Det här gör vi på det gamla vanliga sättet. Vi bygger en box2d-värld, vi kl
 
 Oj oj oj,  vad roligt. Vi kan göra en box2d-kropp med leder, per tutorials etc. Superkul ju.
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbNzQ4NTc4ODgzLDIwOTY2MTI4NTEsLTEwOD
+eyJoaXN0b3J5IjpbNTc5NjA3MDg5LDIwOTY2MTI4NTEsLTEwOD
 Q2OTA4NjMsLTIzODc2MjA0LC0xNTI4MzExNDQ0LC0xNDI5NTMw
 OTQwLC0xOTU0MzY0MDc4LDE3NjEzNDczNTksMTczMDkwMjg3Mi
 wtMTQ4MTAyODYyNiwxOTQyNTg3MDAxLC03Mjg1NTc5OTQsLTI1
