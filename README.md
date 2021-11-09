@@ -25,8 +25,6 @@ Lets try to prioritize these into what would make the game seem "done" the faste
 - [ ] Boss fight
 - [ ] More Enemy Sprites (generate them)
 - [ ] Lightmaps for sprites
-- [ ] Blood trails from gibs
-- [ ] Gibs shouldn't bounce too much
 - [ ] Fix the MiniMap
 - [ ] HUD II, Header Upper Displayer
 - [ ] Enemy AI II, with avoiding walls
@@ -578,7 +576,7 @@ Det här gör vi på det gamla vanliga sättet. Vi bygger en box2d-värld, vi kl
 
 Oj oj oj,  vad roligt. Vi kan göra en box2d-kropp med leder, per tutorials etc. Superkul ju.
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbLTEyNzE1MDgxMzQsMzQwOTc5NTIsMTAzMj
+eyJoaXN0b3J5IjpbLTExMDAxNzY0NTYsMzQwOTc5NTIsMTAzMj
 IzMjU3NCwxMjgwNDkyMTUyLC0zNjkyMzg1MjksMzMxMTUwNjcx
 LDIwOTY2MTI4NTEsLTEwODQ2OTA4NjMsLTIzODc2MjA0LC0xNT
 I4MzExNDQ0LC0xNDI5NTMwOTQwLC0xOTU0MzY0MDc4LDE3NjEz
