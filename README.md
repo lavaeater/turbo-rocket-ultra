@@ -22,9 +22,11 @@ To make the graphics and environment easy I am currently working with the concep
 Lets try to prioritize these into what would make the game seem "done" the fastest.
 
 - [ ] **Gibs and body parts**
+- [ ] Enemy attack animation
 - [ ] Lightmaps for sprites
 - [ ] Perma-gibs
 - [ ] Fix the MiniMap
+- [ ] 
 - [ ] Enemy AI II, with avoiding walls
 - [ ] Objectives II, the sequel
 - [ ] Pickups 2 (on-screen blurb indicating what you got)
@@ -59,6 +61,15 @@ Lets try to prioritize these into what would make the game seem "done" the faste
 - [x] Enemies
 - [x] Blood Splatter
 - [x] MiniMap
+
+## Gibs and body parts
+
+I will take the low road for this. Take the sprite, split it up into parts, put them in a particle emitter, spray them about with blood or something. That should do it, right?
+- [ ] Split sprite
+- [ ] Fiddle with particle editor
+- [ ] Emit body parts when enemy dies
+- [ ] Also blood
+- [ ] How about some gruesome audio effects?
 
 ## Multi-body for players and enemies
 
@@ -562,7 +573,7 @@ Det här gör vi på det gamla vanliga sättet. Vi bygger en box2d-värld, vi kl
 
 Oj oj oj,  vad roligt. Vi kan göra en box2d-kropp med leder, per tutorials etc. Superkul ju.
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbNTc5NjA3MDg5LDIwOTY2MTI4NTEsLTEwOD
+eyJoaXN0b3J5IjpbMjEzODUzNjkwLDIwOTY2MTI4NTEsLTEwOD
 Q2OTA4NjMsLTIzODc2MjA0LC0xNTI4MzExNDQ0LC0xNDI5NTMw
 OTQwLC0xOTU0MzY0MDc4LDE3NjEzNDczNTksMTczMDkwMjg3Mi
 wtMTQ4MTAyODYyNiwxOTQyNTg3MDAxLC03Mjg1NTc5OTQsLTI1
