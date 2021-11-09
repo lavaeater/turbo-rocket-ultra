@@ -22,6 +22,7 @@ To make the graphics and environment easy I am currently working with the concep
 Lets try to prioritize these into what would make the game seem "done" the fastest.
 
 - [ ] Enemy attack animation
+- [ ] Boss fight
 - [ ] More Enemy Sprites (generate them)
 - [ ] Lightmaps for sprites
 - [ ] Perma-gibs
@@ -578,11 +579,11 @@ Det här gör vi på det gamla vanliga sättet. Vi bygger en box2d-värld, vi kl
 
 Oj oj oj,  vad roligt. Vi kan göra en box2d-kropp med leder, per tutorials etc. Superkul ju.
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbMzQwOTc5NTIsMTAzMjIzMjU3NCwxMjgwND
-kyMTUyLC0zNjkyMzg1MjksMzMxMTUwNjcxLDIwOTY2MTI4NTEs
-LTEwODQ2OTA4NjMsLTIzODc2MjA0LC0xNTI4MzExNDQ0LC0xND
-I5NTMwOTQwLC0xOTU0MzY0MDc4LDE3NjEzNDczNTksMTczMDkw
-Mjg3MiwtMTQ4MTAyODYyNiwxOTQyNTg3MDAxLC03Mjg1NTc5OT
-QsLTI1ODk4Njk3OSwtMTM2OTA5MDAyMSwxNDI2NjQ5ODg1LC0z
-NzcxODkzNDNdfQ==
+eyJoaXN0b3J5IjpbLTE5MTk3ODgyNiwzNDA5Nzk1MiwxMDMyMj
+MyNTc0LDEyODA0OTIxNTIsLTM2OTIzODUyOSwzMzExNTA2NzEs
+MjA5NjYxMjg1MSwtMTA4NDY5MDg2MywtMjM4NzYyMDQsLTE1Mj
+gzMTE0NDQsLTE0Mjk1MzA5NDAsLTE5NTQzNjQwNzgsMTc2MTM0
+NzM1OSwxNzMwOTAyODcyLC0xNDgxMDI4NjI2LDE5NDI1ODcwMD
+EsLTcyODU1Nzk5NCwtMjU4OTg2OTc5LC0xMzY5MDkwMDIxLDE0
+MjY2NDk4ODVdfQ==
 -->
