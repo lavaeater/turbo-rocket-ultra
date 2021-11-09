@@ -58,8 +58,31 @@ object SpriteLoader {
             }
         }
 
-        val newCharacters = listOf("blonde", "green_hair", "pigtails", "teal", "tomahawk")
-        val file = Gdx.files.internal("sprites/sheets/sheet.json")
+        val createdFiles = Gdx.files.local("localfiles/created").list("png")
+        for(file in createdFiles) {
+            val key = file.nameWithoutExtension()
+            anims[key] = mutableMapOf()
+            val texture = Texture(Gdx.files.local(file.path()))
+            for (animDef in LpcCharacterAnimDefinition.definitions) {
+                anims[key]!![animDef.state] = LpcCharacterAnim<OffsetTextureRegion>(animDef.state,
+                    animDef.directions.mapIndexed
+                    { row, r ->
+                        r to
+                                Animation(0.1f, (animDef.frames).map {
+                                    OffsetTextureRegion(
+                                        texture,
+                                        (it) * animDef.itemWidth,
+                                        (animDef.row + row) * animDef.itemHeight,
+                                        animDef.itemWidth,
+                                        animDef.itemHeight, 0f, -20f
+                                    )
+                                }.toGdxArray(), animDef.playMode)
+                    }.toMap()
+                )
+            }
+        }
+
+
 //        val json = file.readString()
 //        val animDefs = Json.decodeFromString<List<AnimDef>>(json)
 

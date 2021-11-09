@@ -126,7 +126,7 @@ class RenderableThing(private val spriteSheetDef: SheetDef, spriteSheets: List<S
 			pixMap.dispose()
 		}
 
-		PixmapIO.writePNG(Gdx.files.local("${UUID.randomUUID()}.png"), targetPixmap)
+		PixmapIO.writePNG(Gdx.files.local("localfiles/created/${UUID.randomUUID()}.png"), targetPixmap)
 		targetPixmap.dispose()
 	}
 }
