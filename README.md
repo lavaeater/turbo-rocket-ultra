@@ -21,7 +21,6 @@ To make the graphics and environment easy I am currently working with the concep
 
 Lets try to prioritize these into what would make the game seem "done" the fastest.
 
-- [ ] **Gibs and body parts**
 - [ ] Enemy attack animation
 - [ ] Lightmaps for sprites
 - [ ] Perma-gibs
@@ -35,6 +34,8 @@ Lets try to prioritize these into what would make the game seem "done" the faste
 - [ ] Smarta vektorer (eller nåt) - byt utspridd vektormattekod mot små, lokala, scengrafer. 
 - [ ] Vehicles would be cool
 - [ ] Build Towers
+- [ ] Gibs and Body Parts II - blood trails and audio
+- [x] Gibs and body parts
 - [x] Reloading 2 (shot-by-shot for shotguns)
 - [x] Multi-body-bodies for players and enemies (one for collision in game, one for hit detection for damage)
 - [x] Player Death 2
@@ -573,7 +574,7 @@ Det här gör vi på det gamla vanliga sättet. Vi bygger en box2d-värld, vi kl
 
 Oj oj oj,  vad roligt. Vi kan göra en box2d-kropp med leder, per tutorials etc. Superkul ju.
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbLTI3MTU0MTU5MywtMzY5MjM4NTI5LDMzMT
+eyJoaXN0b3J5IjpbMjA5ODU5NzA1NSwtMzY5MjM4NTI5LDMzMT
 E1MDY3MSwyMDk2NjEyODUxLC0xMDg0NjkwODYzLC0yMzg3NjIw
 NCwtMTUyODMxMTQ0NCwtMTQyOTUzMDk0MCwtMTk1NDM2NDA3OC
 wxNzYxMzQ3MzU5LDE3MzA5MDI4NzIsLTE0ODEwMjg2MjYsMTk0
