@@ -24,7 +24,8 @@ Lets try to prioritize these into what would make the game seem "done" the faste
 - [ ] Gibs and body parts
 - [ ] Lightmaps for sprites
 - [ ] Perma-gibs
-- [ ] Fixa mini-map
+- [ ] Fix the MiniMap
+- [ ] Enemy AI II, with avoiding walls
 - [ ] Objectives II, the sequel
 - [ ] Pickups 2 (on-screen blurb indicating what you got)
 - [ ] Interactable Components in-the-game
@@ -562,11 +563,11 @@ Det här gör vi på det gamla vanliga sättet. Vi bygger en box2d-värld, vi kl
 
 Oj oj oj,  vad roligt. Vi kan göra en box2d-kropp med leder, per tutorials etc. Superkul ju.
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbMjA5NjYxMjg1MSwtMTA4NDY5MDg2MywtMj
-M4NzYyMDQsLTE1MjgzMTE0NDQsLTE0Mjk1MzA5NDAsLTE5NTQz
-NjQwNzgsMTc2MTM0NzM1OSwxNzMwOTAyODcyLC0xNDgxMDI4Nj
-I2LDE5NDI1ODcwMDEsLTcyODU1Nzk5NCwtMjU4OTg2OTc5LC0x
-MzY5MDkwMDIxLDE0MjY2NDk4ODUsLTM3NzE4OTM0MywtMTgzNz
-IyNzA5OCwtMTQzNTg2MzcyMSwyNzk5NDU1NzUsLTM4NDk1ODY2
-MCwxMTE5MTQ4OTkzXX0=
+eyJoaXN0b3J5IjpbMjYyMjMyMTQxLDIwOTY2MTI4NTEsLTEwOD
+Q2OTA4NjMsLTIzODc2MjA0LC0xNTI4MzExNDQ0LC0xNDI5NTMw
+OTQwLC0xOTU0MzY0MDc4LDE3NjEzNDczNTksMTczMDkwMjg3Mi
+wtMTQ4MTAyODYyNiwxOTQyNTg3MDAxLC03Mjg1NTc5OTQsLTI1
+ODk4Njk3OSwtMTM2OTA5MDAyMSwxNDI2NjQ5ODg1LC0zNzcxOD
+kzNDMsLTE4MzcyMjcwOTgsLTE0MzU4NjM3MjEsMjc5OTQ1NTc1
+LC0zODQ5NTg2NjBdfQ==
 -->
