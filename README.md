@@ -22,7 +22,7 @@ To make the graphics and environment easy I am currently working with the concep
 - [ ] Gibs and body parts
 - [ ] Pickups 2 (on-screen blurb indicating what you got)
 - [x] Reloading 2 (shot-by-shot for shotguns)
-- [ ] Multi-body-bodies for players and enemies (one for collision in game, one for hit detection for damage)
+- [x] Multi-body-bodies for players and enemies (one for collision in game, one for hit detection for damage)
 - [ ] Interactable Components in-the-game
 - [ ] Player graphics made from components / parts etc.
 - [ ] Perma-gibs
@@ -55,6 +55,10 @@ To make the graphics and environment easy I am currently working with the concep
 - [x] Enemies <- Done
 - [x] Blood Splatter <- Done
 - [x] MiniMap <- Done
+
+## Multi-body for players and enemies
+
+Since the game uses not an isometric projection, but a flat projection, our enemies and players have a box2d body corresponding to the area on the ground they occ
 
 ## Player Death 2
 
@@ -554,11 +558,11 @@ Det här gör vi på det gamla vanliga sättet. Vi bygger en box2d-värld, vi kl
 
 Oj oj oj,  vad roligt. Vi kan göra en box2d-kropp med leder, per tutorials etc. Superkul ju.
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbLTIzODc2MjA0LC0xNTI4MzExNDQ0LC0xND
-I5NTMwOTQwLC0xOTU0MzY0MDc4LDE3NjEzNDczNTksMTczMDkw
-Mjg3MiwtMTQ4MTAyODYyNiwxOTQyNTg3MDAxLC03Mjg1NTc5OT
-QsLTI1ODk4Njk3OSwtMTM2OTA5MDAyMSwxNDI2NjQ5ODg1LC0z
-NzcxODkzNDMsLTE4MzcyMjcwOTgsLTE0MzU4NjM3MjEsMjc5OT
-Q1NTc1LC0zODQ5NTg2NjAsMTExOTE0ODk5MywtMTkwNjc1MTMz
-MywtODUxNDgzNTkwXX0=
+eyJoaXN0b3J5IjpbOTA0NTg3OTE0LC0yMzg3NjIwNCwtMTUyOD
+MxMTQ0NCwtMTQyOTUzMDk0MCwtMTk1NDM2NDA3OCwxNzYxMzQ3
+MzU5LDE3MzA5MDI4NzIsLTE0ODEwMjg2MjYsMTk0MjU4NzAwMS
+wtNzI4NTU3OTk0LC0yNTg5ODY5NzksLTEzNjkwOTAwMjEsMTQy
+NjY0OTg4NSwtMzc3MTg5MzQzLC0xODM3MjI3MDk4LC0xNDM1OD
+YzNzIxLDI3OTk0NTU3NSwtMzg0OTU4NjYwLDExMTkxNDg5OTMs
+LTE5MDY3NTEzMzNdfQ==
 -->
