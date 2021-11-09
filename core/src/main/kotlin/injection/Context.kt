@@ -108,6 +108,7 @@ object Context {
             addSystem(BloodSplatterEffectRenderSystem(inject<PolygonSpriteBatch>() as Batch))
             addSystem(LootDropSystem())
             addSystem(AimingAidSystem(true, true))
+            addSystem(GibSystem())
         }
     }
 }
