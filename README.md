@@ -26,7 +26,7 @@ Lets try to prioritize these into what would make the game seem "done" the faste
 - [ ] More Enemy Sprites (generate them)
 - [ ] Lightmaps for sprites
 - [ ] Fix the MiniMap
-- [ ] HUD II, Header Upper Displayer
+- [ ] HUD II, Header Upper Displayer <- rediscover MVVM pattern
 - [ ] Enemy AI II, with avoiding walls
 - [ ] Objectives II, the sequel
 - [ ] Pickups 2 (on-screen blurb indicating what you got)
@@ -576,11 +576,11 @@ Det här gör vi på det gamla vanliga sättet. Vi bygger en box2d-värld, vi kl
 
 Oj oj oj,  vad roligt. Vi kan göra en box2d-kropp med leder, per tutorials etc. Superkul ju.
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbLTExMDAxNzY0NTYsMzQwOTc5NTIsMTAzMj
-IzMjU3NCwxMjgwNDkyMTUyLC0zNjkyMzg1MjksMzMxMTUwNjcx
-LDIwOTY2MTI4NTEsLTEwODQ2OTA4NjMsLTIzODc2MjA0LC0xNT
-I4MzExNDQ0LC0xNDI5NTMwOTQwLC0xOTU0MzY0MDc4LDE3NjEz
-NDczNTksMTczMDkwMjg3MiwtMTQ4MTAyODYyNiwxOTQyNTg3MD
-AxLC03Mjg1NTc5OTQsLTI1ODk4Njk3OSwtMTM2OTA5MDAyMSwx
-NDI2NjQ5ODg1XX0=
+eyJoaXN0b3J5IjpbLTIyNTU4OTE2NSwtMTEwMDE3NjQ1NiwzND
+A5Nzk1MiwxMDMyMjMyNTc0LDEyODA0OTIxNTIsLTM2OTIzODUy
+OSwzMzExNTA2NzEsMjA5NjYxMjg1MSwtMTA4NDY5MDg2MywtMj
+M4NzYyMDQsLTE1MjgzMTE0NDQsLTE0Mjk1MzA5NDAsLTE5NTQz
+NjQwNzgsMTc2MTM0NzM1OSwxNzMwOTAyODcyLC0xNDgxMDI4Nj
+I2LDE5NDI1ODcwMDEsLTcyODU1Nzk5NCwtMjU4OTg2OTc5LC0x
+MzY5MDkwMDIxXX0=
 -->
