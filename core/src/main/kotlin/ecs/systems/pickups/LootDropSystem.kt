@@ -5,12 +5,12 @@ import com.badlogic.ashley.systems.IteratingSystem
 import ecs.components.pickups.LootDropComponent
 import factories.lootBox
 import ktx.ashley.allOf
-import ktx.ashley.mapperFor
+import physics.getComponent
 
 class LootDropSystem : IteratingSystem(allOf(LootDropComponent::class).get()) {
-    private val lootMapper = mapperFor<LootDropComponent>()
+    @OptIn(ExperimentalStdlibApi::class)
     override fun processEntity(entity: Entity, deltaTime: Float) {
-        val lootComponent = lootMapper.get(entity)
+        val lootComponent = entity.getComponent<LootDropComponent>()
         if(lootComponent.activated) {
             lootComponent.activated = false
             val result = lootComponent.lootTable.result

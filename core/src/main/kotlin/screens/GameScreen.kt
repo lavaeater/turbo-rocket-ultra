@@ -65,7 +65,6 @@ class GameScreen(private val gameState: StateMachine<GameState, GameEvent>) : Kt
     private val batch: PolygonSpriteBatch by lazy { inject() }
     private val ui: IUserInterface by lazy { inject() }
     private val audioPlayer: AudioPlayer by lazy { inject() }
-    private val transformMapper = mapperFor<TransformComponent>()
 
     override fun show() {
         initializeIfNeeded()
@@ -99,7 +98,6 @@ class GameScreen(private val gameState: StateMachine<GameState, GameEvent>) : Kt
     }
 
     private fun addTower() {
-        //tower(vec2(-2f,2f))
     }
     /*
     4E4048

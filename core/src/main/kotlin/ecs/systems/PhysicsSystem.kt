@@ -3,18 +3,16 @@ package ecs.systems
 import com.badlogic.ashley.core.Entity
 import com.badlogic.ashley.systems.IteratingSystem
 import com.badlogic.gdx.physics.box2d.World
-import ecs.components.*
+import ecs.components.BodyComponent
 import ecs.components.gameplay.TransformComponent
 import ktx.ashley.allOf
-import physics.AshleyMappers
+import physics.getComponent
 
 class PhysicsSystem(private val world: World, private val timeStep : Float = 1/60f) :
     IteratingSystem(allOf(BodyComponent::class, TransformComponent::class).get()) {
 
     private val velIters = 2
     private val posIters = 2
-    private val tMapper = AshleyMappers.transformMapper
-    private val bMapper = AshleyMappers.bodyMapper
 
     var accumulator = 0f
 
@@ -28,13 +26,12 @@ class PhysicsSystem(private val world: World, private val timeStep : Float = 1/6
         super.update(deltaTime)
     }
 
+    @OptIn(ExperimentalStdlibApi::class)
     override fun processEntity(entity: Entity, deltaTime: Float) {
-        //supposed to be empty - is never called because we don't call super.update in update override
-//        for(entity in entities) {
-            val bodyComponent = bMapper.get(entity)!!
+            val bodyComponent = entity.getComponent<BodyComponent>()
             val bodyPosition = bodyComponent.body.position
             val bodyRotation = bodyComponent.body.angle
-            val transformComponent = tMapper.get(entity)!!
+            val transformComponent = entity.getComponent<TransformComponent>()
             transformComponent.position.set(bodyPosition)
             transformComponent.rotation = bodyRotation
 

@@ -8,18 +8,18 @@ import ecs.components.enemy.EnemyComponent
 import ecs.components.gameplay.TransformComponent
 import ecs.components.player.FiredShotsComponent
 import ktx.ashley.allOf
-import ktx.ashley.mapperFor
+import physics.addComponent
+import physics.getComponent
+import physics.has
 
 class EnemyHearsShotsSystem : IteratingSystem(allOf(FiredShotsComponent::class).get()) {
 
     private val enemies get() = engine.getEntitiesFor(allOf(EnemyComponent::class).get())
-    private val transformMapper = mapperFor<TransformComponent>()
-    private val shotsFiredMapper = mapperFor<FiredShotsComponent>()
-    private val noticedMapper = mapperFor<NoticedSomething>()
     private val circle = Circle()
 
+    @OptIn(ExperimentalStdlibApi::class)
     override fun processEntity(entity: Entity, deltaTime: Float) {
-        val firedShotsComponent = shotsFiredMapper[entity]
+        val firedShotsComponent = entity.getComponent<FiredShotsComponent>()
         if(firedShotsComponent.queue.isEmpty)
             return
 
@@ -29,12 +29,14 @@ class EnemyHearsShotsSystem : IteratingSystem(allOf(FiredShotsComponent::class).
             val fc = firedShotsComponent.queue.removeLast()
             circle.set(fc.x, fc.y, 50f)
             for (enemy in enemies) {
-                val enemyPosition = transformMapper[enemy].position
+                val enemyPosition = enemy.getComponent<TransformComponent>().position
                 if(circle.contains(enemyPosition) && (0..2).random()==0) {
-                    if(noticedMapper.has(enemy)) {
-                        noticedMapper[enemy].noticedWhere.set(fc)
+                    if(enemy.has<NoticedSomething>()) {
+                        enemy.getComponent<NoticedSomething>().noticedWhere.set(fc)
                     } else {
-                        enemy.add(engine.createComponent(NoticedSomething::class.java).apply { noticedWhere.set(fc) })
+                        enemy.addComponent<NoticedSomething> {
+                            noticedWhere.set(fc)
+                        }
                     }
                 }
             }

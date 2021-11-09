@@ -6,17 +6,15 @@ import ecs.components.ai.*
 import ecs.components.enemy.EnemyComponent
 import ecs.components.player.*
 import ktx.ashley.allOf
-import ktx.ashley.mapperFor
 import ktx.ashley.remove
 import physics.getComponent
 import physics.hasComponent
 
 
 class PlayerDeathSystem: IteratingSystem(allOf(PlayerComponent::class).get()) {
-    val mapper = mapperFor<PlayerComponent>()
     @ExperimentalStdlibApi
     override fun processEntity(entity: Entity, deltaTime: Float) {
-        val pc = mapper[entity]
+        val pc = entity.getComponent<PlayerComponent>()
         if(pc.player.isDead && pc.player.lives > 0 && !entity.hasComponent<PlayerWaitsForRespawn>() && !entity.hasComponent<PlayerIsRespawning>()) {
             pc.player.lives -= 1
             entity.add(engine.createComponent(PlayerWaitsForRespawn::class.java))

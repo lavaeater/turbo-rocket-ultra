@@ -3,7 +3,6 @@ package physics
 import com.badlogic.ashley.core.Component
 import com.badlogic.ashley.core.Engine
 import com.badlogic.ashley.core.Entity
-import com.badlogic.gdx.graphics.Texture
 import com.badlogic.gdx.graphics.g2d.Batch
 import com.badlogic.gdx.graphics.g2d.TextureRegion
 import com.badlogic.gdx.math.MathUtils
@@ -18,7 +17,6 @@ import ecs.components.player.PlayerControlComponent
 import factories.engine
 import gamestate.Player
 import ktx.ashley.has
-import ktx.ashley.mapperFor
 import ktx.math.times
 
 
@@ -40,20 +38,24 @@ fun Body.forwardVelocity() : Vector2 {
     return forwardNormal * this.linearVelocity.dot(forwardNormal)
 }
 
+@OptIn(ExperimentalStdlibApi::class)
 fun Entity.body() : Body {
-    return AshleyMappers.bodyMapper.get(this).body
+    return getComponent<BodyComponent>().body
 }
 
+@OptIn(ExperimentalStdlibApi::class)
 fun Entity.vehicleControlComponent() : VehicleControlComponent {
-    return AshleyMappers.vehicleControlMapper.get(this)
+    return this.getComponent()
 }
 
+@OptIn(ExperimentalStdlibApi::class)
 fun Entity.playerControlComponent() : PlayerControlComponent {
-    return AshleyMappers.playerControlMapper.get(this)
+    return this.getComponent()
 }
 
+@OptIn(ExperimentalStdlibApi::class)
 fun Entity.vehicle() : VehicleComponent {
-    return AshleyMappers.vehicleMapper.get(this)
+    return this.getComponent()
 }
 
 fun Contact.isEntityContact(): Boolean {
@@ -99,22 +101,29 @@ inline fun <reified T: Component>Entity.hasComponent() : Boolean {
 }
 
 @ExperimentalStdlibApi
+inline fun <reified T: Component>Entity.has() : Boolean {
+    return this.hasComponent<T>()
+}
+
+@ExperimentalStdlibApi
 inline fun <reified T: Component>Entity.getComponent() : T {
     return AshleyMappers.getMapper<T>().get(this)
 }
 
+@OptIn(ExperimentalStdlibApi::class)
 inline fun <reified T: Component>Contact.hasComponent():Boolean {
     if(this.isEntityContact()) {
-        val mapper = mapperFor<T>()
+        val mapper = AshleyMappers.getMapper<T>()
         return this.fixtureA.getEntity().has(mapper) ||
                 this.fixtureB.getEntity().has(mapper)
     }
     return false
 }
 
+@OptIn(ExperimentalStdlibApi::class)
 inline fun <reified T: Component>Contact.bothHaveComponent(): Boolean {
     if(this.isEntityContact()) {
-        val mapper = mapperFor<T>()
+        val mapper = AshleyMappers.getMapper<T>()
         return this.fixtureA.getEntity().has(mapper) &&
                 this.fixtureB.getEntity().has(mapper)
     }
@@ -131,8 +140,9 @@ fun Contact.getOtherEntity(entity:Entity) : Entity {
     return if(entityA == entity) this.fixtureB.getEntity() else entityA
 }
 
+@OptIn(ExperimentalStdlibApi::class)
 inline fun <reified T:Component> Contact.getEntityFor(): Entity {
-    val mapper = mapperFor<T>()
+    val mapper = AshleyMappers.getMapper<T>()
     val entityA = this.fixtureA.getEntity()
     val entityB = this.fixtureB.getEntity()
     return if(entityA.has(mapper)) entityA else entityB

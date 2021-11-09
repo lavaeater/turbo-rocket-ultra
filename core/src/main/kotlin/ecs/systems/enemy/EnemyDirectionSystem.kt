@@ -4,10 +4,8 @@ import com.badlogic.ashley.core.Entity
 import com.badlogic.ashley.systems.IteratingSystem
 import ecs.components.ai.SeekPlayer
 import ecs.components.enemy.EnemyComponent
-import ecs.components.graphics.renderables.AnimatedCharacterSprite
 import ecs.components.graphics.renderables.AnimatedCharacterComponent
 import ktx.ashley.allOf
-import ktx.ashley.mapperFor
 import physics.getComponent
 import physics.hasComponent
 import tru.AnimState
@@ -17,13 +15,10 @@ class EnemyDirectionSystem : IteratingSystem(
     allOf(
         AnimatedCharacterComponent::class, EnemyComponent::class).get()) {
     var characterAngle = 0f
-    private val enemyMapper = mapperFor<EnemyComponent>()
-    private val aniMapper = mapperFor<AnimatedCharacterComponent>()
     @ExperimentalStdlibApi
     override fun processEntity(entity: Entity, deltaTime: Float) {
-
-        val characterSpriteComponent = aniMapper.get(entity)
-        val enemyComponent = enemyMapper.get(entity)
+        val characterSpriteComponent = entity.getComponent<AnimatedCharacterComponent>()
+        val enemyComponent = entity.getComponent<EnemyComponent>()
         characterAngle = if(entity.hasComponent<SeekPlayer>()) entity.getComponent<SeekPlayer>().scanVector.angleDeg() else enemyComponent.directionVector.angleDeg()
 
         characterSpriteComponent.currentAnimState = if(enemyComponent.isDead) AnimState.Death else if(entity.hasComponent<SeekPlayer>()) AnimState.Idle else AnimState.Walk

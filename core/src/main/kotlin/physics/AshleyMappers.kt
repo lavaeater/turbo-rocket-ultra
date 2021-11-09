@@ -20,10 +20,4 @@ object AshleyMappers {
         return mappers[type] as ComponentMapper<T>
     }
     val mappers = mutableMapOf<KType, ComponentMapper<*>>()
-
-    val transformMapper = mapperFor<TransformComponent>()
-    val playerControlMapper = mapperFor<PlayerControlComponent>()
-    val bodyMapper = mapperFor<BodyComponent>()
-    val vehicleMapper = mapperFor<VehicleComponent>()
-    val vehicleControlMapper = mapperFor<VehicleControlComponent>()
 }

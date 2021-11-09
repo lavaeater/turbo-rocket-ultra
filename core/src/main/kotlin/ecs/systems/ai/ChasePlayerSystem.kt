@@ -3,38 +3,35 @@ package ecs.systems.ai
 import com.badlogic.ashley.core.Entity
 import com.badlogic.ashley.systems.IteratingSystem
 import com.badlogic.gdx.ai.btree.Task
-import ecs.components.enemy.EnemyComponent
-import ecs.components.gameplay.TransformComponent
 import ecs.components.ai.ChasePlayer
 import ecs.components.ai.PlayerIsInRange
 import ecs.components.ai.TrackingPlayerComponent
+import ecs.components.enemy.EnemyComponent
+import ecs.components.gameplay.TransformComponent
 import ktx.ashley.allOf
-import ktx.ashley.mapperFor
 import ktx.math.vec2
+import physics.addComponent
+import physics.getComponent
 
 class ChasePlayerSystem: IteratingSystem(allOf(
     ChasePlayer::class,
     EnemyComponent::class,
     TransformComponent::class,
     TrackingPlayerComponent::class).get()) {
-    private val mapper = mapperFor<ChasePlayer>()
-    private val eMapper = mapperFor<EnemyComponent>()
-    private val tMapper = mapperFor<TransformComponent>()
-    private val trackerMapper = mapperFor<TrackingPlayerComponent>()
-
+    @OptIn(ExperimentalStdlibApi::class)
     override fun processEntity(entity: Entity, deltaTime: Float) {
-        val chasePlayer = mapper[entity]
+        val chasePlayer = entity.getComponent<ChasePlayer>()
         if(chasePlayer.status == Task.Status.RUNNING) {
             chasePlayer.coolDown -= deltaTime
 
 
-            val enemyComponent = eMapper[entity]
-            val transformComponent = tMapper[entity]
-            val playerPosition = tMapper.get(trackerMapper[entity].player!!.entity).position
+            val enemyComponent = entity.getComponent<EnemyComponent>()
+            val transformComponent = entity.getComponent<TransformComponent>()
+            val playerPosition = entity.getComponent<TrackingPlayerComponent>().player!!.entity.getComponent<TransformComponent>().position
             val distance = vec2().set(transformComponent.position).sub(playerPosition).len2()
             when {
                 distance < 5f -> {
-                    entity.add(engine.createComponent(PlayerIsInRange::class.java))
+                    entity.addComponent<PlayerIsInRange>()
                     chasePlayer.status = Task.Status.SUCCEEDED
                 }
                 chasePlayer.coolDown > 0f -> {

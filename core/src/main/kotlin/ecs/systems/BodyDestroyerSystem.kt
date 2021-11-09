@@ -6,8 +6,8 @@ import com.badlogic.gdx.physics.box2d.World
 import ecs.components.BodyComponent
 import ecs.components.gameplay.DestroyComponent
 import ktx.ashley.allOf
-import ktx.ashley.mapperFor
 import ktx.ashley.remove
+import physics.getComponent
 
 class BodyDestroyerSystem(private val world: World) : IteratingSystem(
     allOf(
@@ -15,9 +15,9 @@ class BodyDestroyerSystem(private val world: World) : IteratingSystem(
         DestroyComponent::class
     ).get(), 10) {
 
-    private val bodyMapper = mapperFor<BodyComponent>()
+    @OptIn(ExperimentalStdlibApi::class)
     override fun processEntity(entity: Entity, deltaTime: Float) {
-        val bodyComponent = bodyMapper.get(entity)!!
+        val bodyComponent = entity.getComponent<BodyComponent>()
         world.destroyBody(bodyComponent.body)
         entity.remove<DestroyComponent>()
         engine.removeEntity(entity)

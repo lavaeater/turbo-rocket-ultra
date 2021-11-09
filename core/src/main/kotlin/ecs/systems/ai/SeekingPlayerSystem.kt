@@ -1,21 +1,20 @@
 package ecs.systems.ai
 
-import ecs.components.ai.SeekPlayer
 import com.badlogic.ashley.core.Entity
 import com.badlogic.ashley.systems.IteratingSystem
 import com.badlogic.gdx.ai.btree.Task
 import com.badlogic.gdx.math.Vector2
 import com.badlogic.gdx.physics.box2d.Fixture
 import ecs.components.BodyComponent
-import ecs.components.enemy.EnemyComponent
 import ecs.components.ai.ChasePlayer
 import ecs.components.ai.NoticedSomething
+import ecs.components.ai.SeekPlayer
 import ecs.components.ai.TrackingPlayerComponent
+import ecs.components.enemy.EnemyComponent
 import ecs.components.player.PlayerWaitsForRespawn
 import factories.world
 import ktx.ashley.allOf
-import ktx.ashley.has
-import ktx.ashley.mapperFor
+import ktx.ashley.remove
 import ktx.box2d.RayCast
 import ktx.box2d.rayCast
 import ktx.math.random
@@ -23,16 +22,12 @@ import ktx.math.vec2
 import physics.*
 
 class SeekingPlayerSystem : IteratingSystem(allOf(SeekPlayer::class).get()) {
-    private val mapper = mapperFor<SeekPlayer>()
-    private val bodyMapper = mapperFor<BodyComponent>()
-    private val eMapper = mapperFor<EnemyComponent>()
-
     @ExperimentalStdlibApi
     override fun processEntity(entity: Entity, deltaTime: Float) {
-        val component = mapper.get(entity)
+        val component = entity.getComponent<SeekPlayer>()
         if (component.status == Task.Status.RUNNING) {
-            eMapper[entity].directionVector.set(Vector2.Zero)
-            seek(entity, component, bodyMapper[entity])
+            entity.getComponent<EnemyComponent>().directionVector.set(Vector2.Zero)
+            seek(entity, component, entity.getComponent())
         }
     }
 
@@ -108,9 +103,9 @@ class SeekingPlayerSystem : IteratingSystem(allOf(SeekPlayer::class).get()) {
                     closestFixture.getEntity().hasComponent<TrackingPlayerComponent>()
                 ) {
 
-                    entity.add(engine.createComponent(TrackingPlayerComponent::class.java).apply {
+                    entity.addComponent<TrackingPlayerComponent> {
                         player = closestFixture.getEntity().getComponent<TrackingPlayerComponent>().player
-                    })
+                    }
                     seekComponent.keepScanning = false
                     foundPlayer = true
                     seekComponent.status = Task.Status.SUCCEEDED
@@ -119,7 +114,7 @@ class SeekingPlayerSystem : IteratingSystem(allOf(SeekPlayer::class).get()) {
             seekComponent.scanVector.setAngleDeg(seekComponent.scanVector.angleDeg() + seekComponent.scanResolution)
         }
         if (!foundPlayer && !seekComponent.keepScanning) {
-            entity.remove(TrackingPlayerComponent::class.java)
+            entity.remove<TrackingPlayerComponent>()
             seekComponent.status = Task.Status.FAILED
         }
     }

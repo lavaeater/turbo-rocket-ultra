@@ -10,8 +10,7 @@ import com.badlogic.gdx.math.Vector2
 import com.badlogic.gdx.physics.box2d.Body
 import com.badlogic.gdx.physics.box2d.BodyDef
 import com.badlogic.gdx.physics.box2d.World
-import com.badlogic.gdx.utils.Null
-import ecs.components.*
+import ecs.components.BodyComponent
 import ecs.components.ai.BehaviorComponent
 import ecs.components.ai.GibComponent
 import ecs.components.enemy.EnemyComponent
@@ -38,12 +37,15 @@ import injection.Context.inject
 import input.ControlMapper
 import ktx.ashley.entity
 import ktx.ashley.with
-import ktx.box2d.*
+import ktx.box2d.body
+import ktx.box2d.box
+import ktx.box2d.circle
+import ktx.box2d.filter
 import ktx.math.random
 import ktx.math.vec2
 import physics.addComponent
-import tru.Assets
 import screens.GameScreen
+import tru.Assets
 import kotlin.experimental.or
 
 fun world(): World {
@@ -78,6 +80,11 @@ object Box2dCategories {
     val allButLoot = player or enemy or objective or obstacle or sensor or wall or gib
     val allButLootAndPlayer = enemy or objective or obstacle or wall or gib
     val environmentOnly = objective or obstacle or wall
+
+    /**
+     * Will this show up when hovering?
+     */
+    val thingsBulletsHit = objective or obstacle or wall or enemy
 }
 
 fun gibs(at: Vector2, angle:Float) {
@@ -279,7 +286,7 @@ fun bullet(at: Vector2, towards: Vector2, speed:Float, damage: Int) {
             density = .1f
             filter {
                 categoryBits = Box2dCategories.bullet
-                maskBits = Box2dCategories.allButLootAndPlayer
+                maskBits = Box2dCategories.thingsBulletsHit
             }
         }
     }

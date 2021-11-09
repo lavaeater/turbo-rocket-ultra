@@ -3,23 +3,14 @@ package ecs.systems.player
 import audio.AudioPlayer
 import com.badlogic.ashley.core.Entity
 import com.badlogic.ashley.systems.IteratingSystem
-import com.badlogic.gdx.physics.box2d.Fixture
-import com.badlogic.gdx.physics.box2d.World
-import ecs.components.BodyComponent
-import ecs.components.enemy.EnemyComponent
-import ecs.components.gameplay.BulletComponent
 import ecs.components.gameplay.TransformComponent
 import ecs.components.player.*
 import factories.bullet
-import factories.splatterEntity
-import injection.Context.inject
 import ktx.ashley.allOf
-import ktx.ashley.mapperFor
-import ktx.box2d.RayCast
-import ktx.box2d.rayCast
 import ktx.math.random
 import ktx.math.vec2
-import physics.*
+import physics.getComponent
+import physics.hasComponent
 import tru.Assets
 
 
@@ -87,11 +78,3 @@ class NewPlayerShootingSystem(private val audioPlayer: AudioPlayer) : IteratingS
     }
 }
 
-class BulletSpeedSystem: IteratingSystem(allOf(BulletComponent::class).get()) {
-    @OptIn(ExperimentalStdlibApi::class)
-    override fun processEntity(entity: Entity, deltaTime: Float) {
-        val body = entity.getComponent<BodyComponent>()
-        val linearVelocity = body.body.linearVelocity
-        //body.body.linearVelocity = linearVelocity.setLength(100f)
-    }
-}

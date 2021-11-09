@@ -11,10 +11,10 @@ import ecs.components.ai.TrackingPlayerComponent
 import ecs.components.player.PlayerIsRespawning
 import ecs.components.player.PlayerWaitsForRespawn
 import ktx.ashley.allOf
-import ktx.ashley.mapperFor
 import ktx.ashley.remove
 import ktx.math.random
 import ktx.math.vec2
+import physics.getComponent
 import physics.hasComponent
 
 class AttackPlayerSystem : IteratingSystem(allOf(
@@ -22,15 +22,12 @@ class AttackPlayerSystem : IteratingSystem(allOf(
     EnemyComponent::class,
     TransformComponent::class,
     TrackingPlayerComponent::class).get()) {
-    private val mapper = mapperFor<AttackPlayer>()
-    private val tMapper = mapperFor<TransformComponent>()
-    private val trackerMapper = mapperFor<TrackingPlayerComponent>()
 
     @ExperimentalStdlibApi
     override fun processEntity(entity: Entity, deltaTime: Float) {
-        val attackPlayer = mapper[entity]
-        val transformComponent = tMapper[entity]
-        val player = trackerMapper[entity].player!!
+        val attackPlayer = entity.getComponent<AttackPlayer>()
+        val transformComponent = entity.getComponent<TransformComponent>()
+        val player = entity.getComponent<TrackingPlayerComponent>().player!!
 
         if(attackPlayer.status == Task.Status.RUNNING) {
             if(player.entity.hasComponent<PlayerWaitsForRespawn>()) {
@@ -47,7 +44,7 @@ class AttackPlayerSystem : IteratingSystem(allOf(
                 }
             } else {
                 attackPlayer.coolDown -= deltaTime
-                val playerPosition = tMapper.get(player.entity).position
+                val playerPosition = player.entity.getComponent<TransformComponent>().position
                 val distance = vec2().set(transformComponent.position).sub(playerPosition).len2()
                 if (distance > 5f) {
                     entity.remove<PlayerIsInRange>()

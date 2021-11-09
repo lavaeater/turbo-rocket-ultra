@@ -5,22 +5,21 @@ import com.badlogic.ashley.systems.IteratingSystem
 import ecs.components.graphics.TextureComponent
 import ecs.components.graphics.renderables.AnimatedCharacterComponent
 import ktx.ashley.allOf
-import ktx.ashley.mapperFor
+import physics.getComponent
 
 class AnimationSystem: IteratingSystem(allOf(TextureComponent::class, AnimatedCharacterComponent::class).get(),2) {
     private var animationStateTime = 0f
-    private val textureMapper = mapperFor<TextureComponent>()
-    private val aniMapper = mapperFor<AnimatedCharacterComponent>()
 
     override fun update(deltaTime: Float) {
         animationStateTime += deltaTime
         super.update(deltaTime)
     }
 
+    @OptIn(ExperimentalStdlibApi::class)
     override fun processEntity(entity: Entity, deltaTime: Float) {
-        val animationComponent = aniMapper.get(entity)
+        val animationComponent = entity.getComponent<AnimatedCharacterComponent>()
         animationComponent.currentAnim = animationComponent.anims[animationComponent.currentAnimState]!!.animations[animationComponent.currentDirection]!!
-        val textureComponent = textureMapper.get(entity)
+        val textureComponent = entity.getComponent<TextureComponent>()
         textureComponent.texture = animationComponent.currentAnim.getKeyFrame(animationStateTime)
     }
 }

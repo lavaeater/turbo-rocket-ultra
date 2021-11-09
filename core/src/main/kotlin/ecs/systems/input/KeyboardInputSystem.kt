@@ -6,13 +6,11 @@ import com.badlogic.gdx.Gdx
 import com.badlogic.gdx.Input
 import com.badlogic.gdx.math.Vector2
 import ecs.components.gameplay.TransformComponent
-import features.weapons.GunFrames
 import ecs.components.player.PlayerMode
-import ecs.components.player.WeaponComponent
-import input.*
+import input.InputIndicator
+import input.KeyboardControl
 import ktx.app.KtxInputAdapter
 import ktx.ashley.allOf
-import ktx.ashley.mapperFor
 import physics.getComponent
 
 class KeyboardInputSystem :
@@ -24,8 +22,6 @@ class KeyboardInputSystem :
 ) {
 
     lateinit var keyboardControl: KeyboardControl
-    private val pccMapper = mapperFor<KeyboardControl>()
-    private val tcMapper = mapperFor<TransformComponent>()
 
     override fun keyDown(keycode: Int): Boolean {
         when (keycode) {
@@ -106,8 +102,8 @@ class KeyboardInputSystem :
 
     @OptIn(ExperimentalStdlibApi::class)
     override fun processEntity(entity: Entity, deltaTime: Float) {
-        keyboardControl = pccMapper[entity]
-        updateMouseInput(tcMapper[entity].position)
+        keyboardControl = entity.getComponent()
+        updateMouseInput(entity.getComponent<TransformComponent>().position)
     }
 
     private fun updateMouseInput(position: Vector2) {
