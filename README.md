@@ -25,7 +25,6 @@ Lets try to prioritize these into what would make the game seem "done" the faste
 - [ ] Boss fight
 - [ ] More Enemy Sprites (generate them)
 - [ ] Lightmaps for sprites
-- [ ] Perma-gibs
 - [ ] Blood trails from gibs
 - [ ] Gibs shouldn't bounce too much
 - [ ] Fix the MiniMap
@@ -579,11 +578,11 @@ Det här gör vi på det gamla vanliga sättet. Vi bygger en box2d-värld, vi kl
 
 Oj oj oj,  vad roligt. Vi kan göra en box2d-kropp med leder, per tutorials etc. Superkul ju.
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbLTE5MTk3ODgyNiwzNDA5Nzk1MiwxMDMyMj
-MyNTc0LDEyODA0OTIxNTIsLTM2OTIzODUyOSwzMzExNTA2NzEs
-MjA5NjYxMjg1MSwtMTA4NDY5MDg2MywtMjM4NzYyMDQsLTE1Mj
-gzMTE0NDQsLTE0Mjk1MzA5NDAsLTE5NTQzNjQwNzgsMTc2MTM0
-NzM1OSwxNzMwOTAyODcyLC0xNDgxMDI4NjI2LDE5NDI1ODcwMD
-EsLTcyODU1Nzk5NCwtMjU4OTg2OTc5LC0xMzY5MDkwMDIxLDE0
-MjY2NDk4ODVdfQ==
+eyJoaXN0b3J5IjpbLTEyNzE1MDgxMzQsMzQwOTc5NTIsMTAzMj
+IzMjU3NCwxMjgwNDkyMTUyLC0zNjkyMzg1MjksMzMxMTUwNjcx
+LDIwOTY2MTI4NTEsLTEwODQ2OTA4NjMsLTIzODc2MjA0LC0xNT
+I4MzExNDQ0LC0xNDI5NTMwOTQwLC0xOTU0MzY0MDc4LDE3NjEz
+NDczNTksMTczMDkwMjg3MiwtMTQ4MTAyODYyNiwxOTQyNTg3MD
+AxLC03Mjg1NTc5OTQsLTI1ODk4Njk3OSwtMTM2OTA5MDAyMSwx
+NDI2NjQ5ODg1XX0=
 -->
