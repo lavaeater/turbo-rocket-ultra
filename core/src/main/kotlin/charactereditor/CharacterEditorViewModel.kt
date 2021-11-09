@@ -1,6 +1,7 @@
 package charactereditor
 
 import mvvm.ViewModelBase
+import mvvm.notifyChanged
 import spritesheet.*
 import kotlin.properties.Delegates.observable
 

@@ -3,7 +3,7 @@ package charactereditor
 import com.badlogic.gdx.graphics.g2d.Batch
 import com.badlogic.gdx.scenes.scene2d.utils.UIUtils.middle
 import com.badlogic.gdx.utils.Align
-import lavagames.towers.mvvm.ViewBase
+import mvvm.ViewBase
 import mvvm.bindableLabel
 import mvvm.commandTextButton
 import spritesheet.RenderableThing

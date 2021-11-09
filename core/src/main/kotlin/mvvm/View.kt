@@ -1,4 +1,4 @@
-package lavagames.towers.mvvm
+package mvvm
 
 import com.badlogic.gdx.utils.Disposable
 

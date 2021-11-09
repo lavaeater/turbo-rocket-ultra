@@ -1,4 +1,4 @@
-package lavagames.towers.mvvm
+package mvvm
 
 import com.badlogic.gdx.Gdx
 import com.badlogic.gdx.graphics.OrthographicCamera
@@ -7,11 +7,9 @@ import com.badlogic.gdx.scenes.scene2d.Actor
 import com.badlogic.gdx.scenes.scene2d.Group
 import com.badlogic.gdx.scenes.scene2d.Stage
 import com.badlogic.gdx.utils.viewport.ExtendViewport
-import mvvm.BindableWidget
-import mvvm.CommandWidget
-import mvvm.ViewModelBase
 
-abstract class ViewBase<VM: ViewModelBase>(private val batch: Batch, val viewModel:VM, private val handleInput: Boolean = true): View {
+abstract class ViewBase<VM: ViewModelBase>(private val batch: Batch, val viewModel:VM, private val handleInput: Boolean = true):
+	View {
 	private var needsLayout = true
 	private var needsDataBinding = true
 	private val bindingMap = mutableMapOf<kotlin.String, (kotlin.Any) -> kotlin.Unit>()

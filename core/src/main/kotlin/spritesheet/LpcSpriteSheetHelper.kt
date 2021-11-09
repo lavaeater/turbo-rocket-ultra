@@ -1,6 +1,7 @@
 package spritesheet
 
 import com.badlogic.gdx.Gdx
+import com.badlogic.gdx.Gdx.files
 import java.io.FileFilter
 
 class LpcSpriteSheetHelper(val basePath: String = "localfiles/lpc/") {
@@ -60,11 +61,11 @@ class LpcSpriteSheetHelper(val basePath: String = "localfiles/lpc/") {
 	}
 
 	private fun findSpriteSheetsRecursive(spriteSheets: MutableCollection<LpcSpriteSheetDefinition>, path:String) {
-		val dirs = Gdx.files.local(path).list(FileFilter { it.isDirectory }).map { it.path() }
+		val dirs = files.local(path).list(FileFilter { it.isDirectory }).map { it.path() }
 		for (dir in dirs) {
 			findSpriteSheetsRecursive(spriteSheets, dir)
 		}
-		val files = Gdx.files.local(path).list("png")
+		val files = files.local(path).list("png")
 		spriteSheets.addAll(files.map { LpcSpriteSheetDefinition(it.path()) })
 	}
 }
