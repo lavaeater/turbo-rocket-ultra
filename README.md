@@ -22,6 +22,7 @@ To make the graphics and environment easy I am currently working with the concep
 Lets try to prioritize these into what would make the game seem "done" the fastest.
 
 - [ ] Enemy attack animation
+- [ ] More Enemy Sprites (generate them)
 - [ ] Lightmaps for sprites
 - [ ] Perma-gibs
 - [ ] Fix the MiniMap
@@ -575,7 +576,7 @@ Det här gör vi på det gamla vanliga sättet. Vi bygger en box2d-värld, vi kl
 
 Oj oj oj,  vad roligt. Vi kan göra en box2d-kropp med leder, per tutorials etc. Superkul ju.
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbMTI1MjI5NjQxNiwxMjgwNDkyMTUyLC0zNj
+eyJoaXN0b3J5IjpbMTAzMjIzMjU3NCwxMjgwNDkyMTUyLC0zNj
 kyMzg1MjksMzMxMTUwNjcxLDIwOTY2MTI4NTEsLTEwODQ2OTA4
 NjMsLTIzODc2MjA0LC0xNTI4MzExNDQ0LC0xNDI5NTMwOTQwLC
 0xOTU0MzY0MDc4LDE3NjEzNDczNTksMTczMDkwMjg3MiwtMTQ4
