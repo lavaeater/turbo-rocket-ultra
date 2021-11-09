@@ -7,12 +7,14 @@ import com.badlogic.gdx.controllers.Controllers
 import com.badlogic.gdx.graphics.GL20
 import com.badlogic.gdx.graphics.OrthographicCamera
 import com.badlogic.gdx.graphics.g2d.PolygonSpriteBatch
+import com.badlogic.gdx.physics.box2d.Body
 import com.badlogic.gdx.physics.box2d.World
 import com.badlogic.gdx.utils.viewport.ExtendViewport
 import ecs.components.BodyComponent
 import ecs.components.enemy.EnemyComponent
 import ecs.components.enemy.EnemySpawnerComponent
 import ecs.components.gameplay.ObjectiveComponent
+import ecs.components.gameplay.ObstacleComponent
 import ecs.components.gameplay.TransformComponent
 import ecs.components.player.PlayerComponent
 import ecs.systems.graphics.CameraUpdateSystem
@@ -74,7 +76,7 @@ class GameScreen(private val gameState: StateMachine<GameState, GameEvent>) : Kt
 
         engine.getSystem<CameraUpdateSystem>().reset()
         engine.removeAllEntities()
-        currentLevel = 1
+        CounterObject.currentLevel = 1
 
         for (system in engine.systems) {
             system.setProcessing(true)
@@ -122,7 +124,7 @@ D1B67A
         engine.update(delta)
         ui.update(delta)
         audioPlayer.update(delta)
-        if (Players.players.values.sumOf { it.touchedObjectives.count() } == numberOfObjectives) //Add check if we killed all enemies
+        if (Players.players.values.sumOf { it.touchedObjectives.count() } == CounterObject.numberOfObjectives) //Add check if we killed all enemies
             nextLevel()
     }
 
@@ -181,22 +183,16 @@ D1B67A
         }
     }
 
-    var currentLevel = 1
-    var numberOfObjectives = 1
-    var numberOfEnemies = 1
-    val randomFactor = -500f..500f
-    val enemyRandomFactor = -15f..15f
-
     fun nextLevel() {
         for (player in Players.players.values) {
             player.touchedObjectives.clear()
         }
-        currentLevel++
+        CounterObject.currentLevel++
         generateMap()
     }
 
-    private val bodyMapper = mapperFor<BodyComponent>()
     private val mapManager by lazy { inject<GridMapManager>() }
+    @OptIn(ExperimentalStdlibApi::class)
     private fun generateMap() {
         /*
         We start the game with a map already generated. But when, how, will we create
@@ -214,46 +210,45 @@ D1B67A
          */
 
         for (enemy in engine.getEntitiesFor(allOf(EnemyComponent::class).get())) {
-            val bodyComponent = bodyMapper.get(enemy)
+            val bodyComponent = enemy.getComponent<BodyComponent>()
             world.destroyBody(bodyComponent.body)
             enemy.remove<BodyComponent>()
         }
 
         engine.removeAllEntities(allOf(EnemyComponent::class).get())
+        CounterObject.enemyCount = 0
 
         for (objective in engine.getEntitiesFor(allOf(ObjectiveComponent::class).get())) {
-            val bodyComponent = bodyMapper.get(objective)
+            val bodyComponent = objective.getComponent<BodyComponent>()
             world.destroyBody(bodyComponent.body)
             objective.remove<BodyComponent>()
         }
         engine.removeAllEntities(allOf(ObjectiveComponent::class).get())
 
-        numberOfEnemies = (2f.pow(currentLevel).roundToInt() * 2).coerceAtMost(MAX_ENEMIES)
-        numberOfObjectives = 2f.pow(currentLevel).roundToInt()
+        for(obstacle in engine.getEntitiesFor(allOf(ObstacleComponent::class).get())) {
+            val bodyComponent = obstacle.getComponent<BodyComponent>()
+            world.destroyBody(bodyComponent.body)
+            obstacle.remove<BodyComponent>()
+        }
+        engine.removeAllEntities(allOf(ObstacleComponent::class).get())
 
-        mapManager.gridMap = GridMapGenerator.generate(currentLevel * 16)
+        CounterObject.numberOfEnemies = (4f.pow(CounterObject.currentLevel).roundToInt() * 2).coerceAtMost(MAX_ENEMIES)
+
+        mapManager.gridMap = GridMapGenerator.generate(CounterObject.currentLength)
+        CounterObject.numberOfObjectives = engine.getEntitiesFor(allOf(ObjectiveComponent::class).get()).count()
         movePlayersToStart()
-
-
-//        var randomAngle = (0f..360f)
-//        val startVector = Vector2.X.cpy().scl(100f).setAngleDeg(randomAngle.random())
-//
-
-//
-//
-//
-//        for (x in 1..25)
-//            for (y in 1..25) {
-//                obstacle(x * randomFactor.random(), y * randomFactor.random())
-//            }
-//
-//        val position = transformMapper.get(Players.players.values.first().entity).position.cpy()
-//
-//
-
     }
 
     override fun dispose() {
         // Destroy screen's assets here.
     }
+}
+
+object CounterObject {
+    var enemyCount = 0
+    var bulletCount = 0
+    var currentLevel = 1
+    val currentLength get() = currentLevel * 16
+    var numberOfObjectives = 1
+    var numberOfEnemies = 1
 }

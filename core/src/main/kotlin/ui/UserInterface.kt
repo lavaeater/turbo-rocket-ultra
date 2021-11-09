@@ -4,9 +4,6 @@ import com.badlogic.gdx.Gdx
 import com.badlogic.gdx.graphics.OrthographicCamera
 import com.badlogic.gdx.graphics.g2d.Batch
 import com.badlogic.gdx.utils.viewport.ExtendViewport
-import ecs.components.graphics.renderables.AnimatedCharacterSprite
-import ecs.components.graphics.RenderableComponent
-import ecs.components.graphics.TextureComponent
 import ecs.components.graphics.renderables.AnimatedCharacterComponent
 import gamestate.Players
 import ktx.graphics.use
@@ -59,7 +56,17 @@ class UserInterface(
 
     @ExperimentalStdlibApi
     private val newUi by lazy {
-        SpacedContainer(vec2(100f, 0f), vec2(20f, hudViewPort.worldHeight / 4), true).apply {
+        SpacedContainer(vec2(150f, 0f), vec2(20f, hudViewPort.worldHeight / 4), true).apply {
+            children.add(
+                SpacedContainer(vec2(0f, 25f), vec2()).apply {
+                    children.add(BoundTextActor({"Bullets: ${screens.CounterObject.bulletCount}"}))
+                    children.add(BoundTextActor({"Enemies: ${screens.CounterObject.enemyCount}"}))
+                    children.add(BoundTextActor({"Max Enemies: ${screens.CounterObject.numberOfEnemies}"}))
+                    children.add(BoundTextActor({"Objectives: ${screens.CounterObject.numberOfObjectives}"}))
+                    children.add(BoundTextActor({"MapLength: ${screens.CounterObject.currentLength}"}))
+                    children.add(BoundTextActor({"Current Level: ${screens.CounterObject.currentLevel}"}))
+                }
+            )
             for ((i, p) in players.values.withIndex()) {
                 children.add(
                     SpacedContainer(vec2(0f, 25f), vec2()).apply {

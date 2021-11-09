@@ -8,26 +8,26 @@ import ecs.components.player.*
 import ktx.ashley.allOf
 import ktx.ashley.remove
 import physics.getComponent
-import physics.hasComponent
+import physics.has
 
 
 class PlayerDeathSystem: IteratingSystem(allOf(PlayerComponent::class).get()) {
     @ExperimentalStdlibApi
     override fun processEntity(entity: Entity, deltaTime: Float) {
         val pc = entity.getComponent<PlayerComponent>()
-        if(pc.player.isDead && pc.player.lives > 0 && !entity.hasComponent<PlayerWaitsForRespawn>() && !entity.hasComponent<PlayerIsRespawning>()) {
+        if(pc.player.isDead && pc.player.lives > 0 && !entity.has<PlayerWaitsForRespawn>() && !entity.has<PlayerIsRespawning>()) {
             pc.player.lives -= 1
             entity.add(engine.createComponent(PlayerWaitsForRespawn::class.java))
         } else if(pc.player.isDead && pc.player.lives <= 0){
             entity.add(engine.createComponent(PlayerIsDead::class.java))
         }
 
-        if(entity.hasComponent<PlayerIsDead>() || entity.hasComponent<PlayerWaitsForRespawn>()) {
+        if(entity.has<PlayerIsDead>() || entity.has<PlayerWaitsForRespawn>()) {
             val controlComponent = entity.getComponent<PlayerControlComponent>()
             controlComponent.waitsForRespawn = true
 //            entity.getComponent<AnimatedCharacterComponent>().currentAnim =
             for(enemy in engine.getEntitiesFor(allOf(EnemyComponent::class).get())) {
-                if(enemy.hasComponent<TrackingPlayerComponent>() && enemy.getComponent<TrackingPlayerComponent>().player == pc.player) {
+                if(enemy.has<TrackingPlayerComponent>() && enemy.getComponent<TrackingPlayerComponent>().player == pc.player) {
                     enemy.remove<ChasePlayer>()
                     enemy.remove<AttackPlayer>()
                     enemy.remove<TrackingPlayerComponent>()
@@ -38,7 +38,7 @@ class PlayerDeathSystem: IteratingSystem(allOf(PlayerComponent::class).get()) {
             }
         }
 
-        if(entity.hasComponent<PlayerWaitsForRespawn>()) {
+        if(entity.has<PlayerWaitsForRespawn>()) {
             val dc = entity.getComponent<PlayerWaitsForRespawn>()
             dc.coolDown-= deltaTime
             if(dc.coolDown < 0f) {
@@ -47,7 +47,7 @@ class PlayerDeathSystem: IteratingSystem(allOf(PlayerComponent::class).get()) {
                 pc.player.health = 100
             }
         }
-        if(entity.hasComponent<PlayerIsRespawning>()) {
+        if(entity.has<PlayerIsRespawning>()) {
             val rc = entity.getComponent<PlayerIsRespawning>()
             rc.coolDown-= deltaTime
             if(rc.coolDown < 0f) {

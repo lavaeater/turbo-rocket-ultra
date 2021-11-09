@@ -20,11 +20,11 @@ import ktx.ashley.has
 import ktx.math.times
 
 
-fun Body.rightNormal() : Vector2 {
+fun Body.rightNormal(): Vector2 {
     return this.getWorldVector(Vector2.X)
 }
 
-fun Body.lateralVelocity() : Vector2 {
+fun Body.lateralVelocity(): Vector2 {
     val rightNormal = this.rightNormal()
     return rightNormal * this.linearVelocity.dot(rightNormal)
 }
@@ -33,96 +33,95 @@ fun Body.forwardNormal(): Vector2 {
     return this.getWorldVector(Vector2.Y)
 }
 
-fun Body.forwardVelocity() : Vector2 {
+fun Body.forwardVelocity(): Vector2 {
     val forwardNormal = this.forwardNormal()
     return forwardNormal * this.linearVelocity.dot(forwardNormal)
 }
 
 @OptIn(ExperimentalStdlibApi::class)
-fun Entity.body() : Body {
+fun Entity.body(): Body {
     return getComponent<BodyComponent>().body
 }
 
 @OptIn(ExperimentalStdlibApi::class)
-fun Entity.vehicleControlComponent() : VehicleControlComponent {
+fun Entity.vehicleControlComponent(): VehicleControlComponent {
     return this.getComponent()
 }
 
 @OptIn(ExperimentalStdlibApi::class)
-fun Entity.playerControlComponent() : PlayerControlComponent {
+fun Entity.playerControlComponent(): PlayerControlComponent {
     return this.getComponent()
 }
 
 @OptIn(ExperimentalStdlibApi::class)
-fun Entity.vehicle() : VehicleComponent {
+fun Entity.vehicle(): VehicleComponent {
     return this.getComponent()
 }
 
-fun Contact.isEntityContact(): Boolean {
+fun Contact.eitherIsEntity(): Boolean {
+    return this.fixtureA.body.userData is Entity || this.fixtureB.body.userData is Entity
+}
+
+fun Contact.bothAreEntities(): Boolean {
     return this.fixtureA.body.userData is Entity && this.fixtureB.body.userData is Entity
 }
 
 @ExperimentalStdlibApi
-fun Body.isEnemy() : Boolean {
-    return (userData as Entity).hasComponent<EnemyComponent>()
+fun Body.isEnemy(): Boolean {
+    return (userData as Entity).has<EnemyComponent>()
 }
 
 @ExperimentalStdlibApi
-fun Body.isPlayer() : Boolean {
-    return (userData as Entity).hasComponent<PlayerComponent>()
+fun Body.isPlayer(): Boolean {
+    return (userData as Entity).has<PlayerComponent>()
 }
 
 @ExperimentalStdlibApi
-fun Body.playerComponent() : PlayerComponent {
+fun Body.playerComponent(): PlayerComponent {
     return (userData as Entity).getComponent()
 }
 
 @ExperimentalStdlibApi
-fun Body.player() : Player {
+fun Body.player(): Player {
     return (userData as Entity).getComponent<PlayerComponent>().player
 }
 
 @OptIn(ExperimentalStdlibApi::class)
-fun Fixture.isPlayer() : Boolean {
+fun Fixture.isPlayer(): Boolean {
     return this.body.userData is Entity && (this.body.isPlayer())
 }
 
-fun Fixture.isEntity() : Boolean {
+fun Fixture.isEntity(): Boolean {
     return this.body.userData is Entity
 }
 
-fun Fixture.getEntity() : Entity {
+fun Fixture.getEntity(): Entity {
     return this.body.userData as Entity
 }
 
 @ExperimentalStdlibApi
-inline fun <reified T: Component>Entity.hasComponent() : Boolean {
+inline fun <reified T : Component> Entity.has(): Boolean {
     return AshleyMappers.getMapper<T>().has(this)
 }
 
 @ExperimentalStdlibApi
-inline fun <reified T: Component>Entity.has() : Boolean {
-    return this.hasComponent<T>()
-}
-
-@ExperimentalStdlibApi
-inline fun <reified T: Component>Entity.getComponent() : T {
+inline fun <reified T : Component> Entity.getComponent(): T {
     return AshleyMappers.getMapper<T>().get(this)
 }
 
 @OptIn(ExperimentalStdlibApi::class)
-inline fun <reified T: Component>Contact.hasComponent():Boolean {
-    if(this.isEntityContact()) {
-        val mapper = AshleyMappers.getMapper<T>()
-        return this.fixtureA.getEntity().has(mapper) ||
-                this.fixtureB.getEntity().has(mapper)
+inline fun <reified T : Component> Contact.atLeastOneHas(): Boolean {
+    if (this.eitherIsEntity()) {
+        return if (this.fixtureA.isEntity() && this.fixtureA.getEntity()
+                .has<T>()
+        ) true else this.fixtureB.isEntity() && this.fixtureB.getEntity().has<T>()
     }
     return false
 }
 
 @OptIn(ExperimentalStdlibApi::class)
-inline fun <reified T: Component>Contact.bothHaveComponent(): Boolean {
-    if(this.isEntityContact()) {
+inline fun <reified T : Component> Contact.bothHaveComponent(): Boolean {
+    if (this.bothAreEntities()) {
         val mapper = AshleyMappers.getMapper<T>()
         return this.fixtureA.getEntity().has(mapper) &&
                 this.fixtureB.getEntity().has(mapper)
@@ -135,39 +134,36 @@ fun Contact.getPlayerFor(): Player {
     return this.getEntityFor<PlayerComponent>().getComponent<PlayerComponent>().player
 }
 
-fun Contact.getOtherEntity(entity:Entity) : Entity {
+fun Contact.getOtherEntity(entity: Entity): Entity {
     val entityA = this.fixtureA.getEntity()
-    return if(entityA == entity) this.fixtureB.getEntity() else entityA
+    return if (entityA == entity) this.fixtureB.getEntity() else entityA
 }
 
 @OptIn(ExperimentalStdlibApi::class)
-inline fun <reified T:Component> Contact.getEntityFor(): Entity {
-    val mapper = AshleyMappers.getMapper<T>()
-    val entityA = this.fixtureA.getEntity()
-    val entityB = this.fixtureB.getEntity()
-    return if(entityA.has(mapper)) entityA else entityB
+inline fun <reified T : Component> Contact.getEntityFor(): Entity {
+    return if(this.fixtureA.isEntity() && this.fixtureA.getEntity().has<T>()) this.fixtureA.getEntity() else this.fixtureB.getEntity()
 }
 
 fun Contact.isPlayerByPlayerContact(): Boolean {
-    return this.isEntityContact() && this.bothHaveComponent<PlayerComponent>()
+    return this.bothAreEntities() && this.bothHaveComponent<PlayerComponent>()
 }
 
 fun Contact.isPlayerContact(): Boolean {
-    if(this.isEntityContact()) {
-        return this.hasComponent<PlayerComponent>()
+    if (this.bothAreEntities()) {
+        return this.atLeastOneHas<PlayerComponent>()
     }
     return false
 }
 
-fun Float.toDegrees() : Float {
+fun Float.toDegrees(): Float {
     return this * MathUtils.radiansToDegrees
 }
 
-fun Float.to360Degrees() : Float {
+fun Float.to360Degrees(): Float {
     var rotation = this.toDegrees() % 360
-    if(rotation < 0f)
+    if (rotation < 0f)
         rotation += 360f
-    if(rotation > 360f)
+    if (rotation > 360f)
         rotation -= 360f
     return rotation
 }
@@ -178,7 +174,8 @@ fun Batch.drawScaled(
     y: Float,
     scaleX: Float = 1f,
     scaleY: Float = 1f,
-    rotation: Float = 180f) {
+    rotation: Float = 180f
+) {
     draw(
         textureRegion,
         x,
@@ -189,7 +186,8 @@ fun Batch.drawScaled(
         textureRegion.regionHeight.toFloat(),
         scaleX,
         scaleY,
-        rotation)
+        rotation
+    )
 }
 
 fun Batch.drawScaled(
@@ -197,22 +195,23 @@ fun Batch.drawScaled(
     x: Float,
     y: Float,
     scale: Float = 1f,
-    rotation: Float = 180f) {
+    rotation: Float = 180f
+) {
 
     drawScaled(textureRegion, x, y, scale, scale, rotation)
 
 }
 
-inline fun<reified T: Component>Entity.addComponent(block: T.() -> Unit = {}) :T {
+inline fun <reified T : Component> Entity.addComponent(block: T.() -> Unit = {}): T {
     val c = component(block)
     this.add(c)
     return c
 }
 
-inline fun<reified T: Component>component(block: T.()-> Unit = {}) :T {
+inline fun <reified T : Component> component(block: T.() -> Unit = {}): T {
     return engine().createComponent(block)
 }
 
-inline fun<reified T: Component> Engine.createComponent(block: T.() -> Unit = {}): T {
+inline fun <reified T : Component> Engine.createComponent(block: T.() -> Unit = {}): T {
     return this.createComponent(T::class.java).apply(block)
 }

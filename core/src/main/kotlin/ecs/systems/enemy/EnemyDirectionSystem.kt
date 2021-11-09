@@ -7,7 +7,7 @@ import ecs.components.enemy.EnemyComponent
 import ecs.components.graphics.renderables.AnimatedCharacterComponent
 import ktx.ashley.allOf
 import physics.getComponent
-import physics.hasComponent
+import physics.has
 import tru.AnimState
 import tru.SpriteDirection
 
@@ -19,9 +19,9 @@ class EnemyDirectionSystem : IteratingSystem(
     override fun processEntity(entity: Entity, deltaTime: Float) {
         val characterSpriteComponent = entity.getComponent<AnimatedCharacterComponent>()
         val enemyComponent = entity.getComponent<EnemyComponent>()
-        characterAngle = if(entity.hasComponent<SeekPlayer>()) entity.getComponent<SeekPlayer>().scanVector.angleDeg() else enemyComponent.directionVector.angleDeg()
+        characterAngle = if(entity.has<SeekPlayer>()) entity.getComponent<SeekPlayer>().scanVector.angleDeg() else enemyComponent.directionVector.angleDeg()
 
-        characterSpriteComponent.currentAnimState = if(enemyComponent.isDead) AnimState.Death else if(entity.hasComponent<SeekPlayer>()) AnimState.Idle else AnimState.Walk
+        characterSpriteComponent.currentAnimState = if(enemyComponent.isDead) AnimState.Death else if(entity.has<SeekPlayer>()) AnimState.Idle else AnimState.Walk
         if(enemyComponent.isDead)
             characterSpriteComponent.currentDirection = SpriteDirection.South
         else

@@ -10,7 +10,7 @@ import ktx.ashley.allOf
 import ktx.math.random
 import ktx.math.vec2
 import physics.getComponent
-import physics.hasComponent
+import physics.has
 import tru.Assets
 
 
@@ -34,7 +34,7 @@ class NewPlayerShootingSystem(private val audioPlayer: AudioPlayer) : IteratingS
         if (
             controlComponent.firing &&
             weapon.ammoRemaining > 0 &&
-            !(entity.hasComponent<PlayerIsRespawning>() || entity.hasComponent<PlayerWaitsForRespawn>())
+            !(entity.has<PlayerIsRespawning>() || entity.has<PlayerWaitsForRespawn>())
         ) {
             val transformComponent = entity.getComponent<TransformComponent>()
             entity.getComponent<FiredShotsComponent>().queue.addFirst(transformComponent.position)

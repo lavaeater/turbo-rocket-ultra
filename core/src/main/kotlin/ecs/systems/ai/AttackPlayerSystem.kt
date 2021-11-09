@@ -15,7 +15,7 @@ import ktx.ashley.remove
 import ktx.math.random
 import ktx.math.vec2
 import physics.getComponent
-import physics.hasComponent
+import physics.has
 
 class AttackPlayerSystem : IteratingSystem(allOf(
     AttackPlayer::class,
@@ -30,7 +30,7 @@ class AttackPlayerSystem : IteratingSystem(allOf(
         val player = entity.getComponent<TrackingPlayerComponent>().player!!
 
         if(attackPlayer.status == Task.Status.RUNNING) {
-            if(player.entity.hasComponent<PlayerWaitsForRespawn>()) {
+            if(player.entity.has<PlayerWaitsForRespawn>()) {
                 //Can't attack invisible / dead player
                 attackPlayer.status = Task.Status.FAILED
                 entity.remove<TrackingPlayerComponent>()
@@ -39,7 +39,7 @@ class AttackPlayerSystem : IteratingSystem(allOf(
 
             if(attackPlayer.coolDown <= 0f) {
                 attackPlayer.coolDown = attackPlayer.coolDownRange.random()//This guy needs to wait a little before attacking again.
-                if((1..3).random() == 1 && !player.entity.hasComponent<PlayerIsRespawning>()) {
+                if((1..3).random() == 1 && !player.entity.has<PlayerIsRespawning>()) {
                     player.health -= (5..15).random()
                 }
             } else {

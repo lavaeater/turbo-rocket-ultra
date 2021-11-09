@@ -43,7 +43,9 @@ import ktx.box2d.circle
 import ktx.box2d.filter
 import ktx.math.random
 import ktx.math.vec2
+import org.w3c.dom.css.Counter
 import physics.addComponent
+import screens.CounterObject
 import screens.GameScreen
 import tru.Assets
 import kotlin.experimental.or
@@ -302,6 +304,7 @@ fun bullet(at: Vector2, towards: Vector2, speed:Float, damage: Int) {
         }
     }
     box2dBody.userData = entity
+    CounterObject.bulletCount++
 }
 
 fun enemy(at: Vector2) {
@@ -365,6 +368,7 @@ fun enemy(at: Vector2) {
     }
     entity.addComponent<BehaviorComponent> { tree = Tree.getEnemyBehaviorTree().apply { `object` = entity } }
     box2dBody.userData = entity
+    CounterObject.enemyCount++
 }
 
 fun obstacle(

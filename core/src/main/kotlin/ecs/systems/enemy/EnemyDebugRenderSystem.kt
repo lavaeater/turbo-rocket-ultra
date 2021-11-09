@@ -12,7 +12,7 @@ import injection.Context.inject
 import ktx.ashley.allOf
 import ktx.graphics.use
 import physics.getComponent
-import physics.hasComponent
+import physics.has
 import tru.Assets
 
 //TODO: Combine this with the new debugrendersystem to render sprites instead of stupid balls
@@ -40,15 +40,15 @@ class EnemyDebugRenderSystem(
         if (renderStates) {
             var color = Color.GREEN
             when {
-                entity.hasComponent<Investigate>() -> color = Color.PURPLE
-                entity.hasComponent<Amble>() -> color = Color.GREEN
-                entity.hasComponent<SeekPlayer>() -> color = Color.CYAN
-                entity.hasComponent<ChasePlayer>() -> color = Color.YELLOW
-                entity.hasComponent<AttackPlayer>() -> color = Color.RED
+                entity.has<Investigate>() -> color = Color.PURPLE
+                entity.has<Amble>() -> color = Color.GREEN
+                entity.has<SeekPlayer>() -> color = Color.CYAN
+                entity.has<ChasePlayer>() -> color = Color.YELLOW
+                entity.has<AttackPlayer>() -> color = Color.RED
             }
             shapeDrawer.filledCircle(entity.getComponent<TransformComponent>().position, 1.5f, color)
         }
-        if (renderScans && entity.hasComponent<SeekPlayer>()) {
+        if (renderScans && entity.has<SeekPlayer>()) {
             val seekComponent = entity.getComponent<SeekPlayer>()
             shapeDrawer.line(seekComponent.scanVectorStart, seekComponent.scanVectorEnd, Color.RED, .1f)
         }

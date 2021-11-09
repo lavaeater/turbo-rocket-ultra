@@ -37,7 +37,7 @@ class SeekingPlayerSystem : IteratingSystem(allOf(SeekPlayer::class).get()) {
         seekComponent.scanVectorStart.set(bodyComponent.body.position)
         if (seekComponent.needsScanVector) {
 
-            if(entity.hasComponent<NoticedSomething>()) {
+            if(entity.has<NoticedSomething>()) {
                 val noticeVector = entity.getComponent<NoticedSomething>().noticedWhere
                 seekComponent.scanVector.set(noticeVector).sub(seekComponent.scanVectorStart).nor()
             } else {
@@ -88,7 +88,7 @@ class SeekingPlayerSystem : IteratingSystem(allOf(SeekPlayer::class).get()) {
                 RayCast.CONTINUE
             }
             if (lowestFraction < 1f) {
-                if (closestFixture.isEntity() && closestFixture.body.isPlayer() && !closestFixture.getEntity().hasComponent<PlayerWaitsForRespawn>()) {
+                if (closestFixture.isEntity() && closestFixture.body.isPlayer() && !closestFixture.getEntity().has<PlayerWaitsForRespawn>()) {
                     seekComponent.keepScanning = false
                     entity.add(
                         engine.createComponent(TrackingPlayerComponent::class.java)
@@ -99,8 +99,8 @@ class SeekingPlayerSystem : IteratingSystem(allOf(SeekPlayer::class).get()) {
                 } else if (
                     closestFixture.isEntity() &&
                     closestFixture.body.isEnemy() &&
-                    closestFixture.getEntity().hasComponent<ChasePlayer>() &&
-                    closestFixture.getEntity().hasComponent<TrackingPlayerComponent>()
+                    closestFixture.getEntity().has<ChasePlayer>() &&
+                    closestFixture.getEntity().has<TrackingPlayerComponent>()
                 ) {
 
                     entity.addComponent<TrackingPlayerComponent> {
