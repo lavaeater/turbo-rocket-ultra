@@ -11,7 +11,7 @@ class EnemyComponent : Component, Pool.Poolable {
     var speed = 1f
 
     val directionVector = vec2()
-    var health = 25
+    var health = 100
     private set
 
     val isDead get() = health <= 0

@@ -13,4 +13,5 @@ class Gun(private val gunDefinition: GunDefinition) {
     val damageRange = gunDefinition.damageRange
     val reloadDelay = gunDefinition.reloadDelay
     val reloadType = gunDefinition.reloadType
+    val audio = gunDefinition.audio
 }

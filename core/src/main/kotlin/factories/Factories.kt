@@ -10,6 +10,7 @@ import com.badlogic.gdx.math.Vector2
 import com.badlogic.gdx.physics.box2d.Body
 import com.badlogic.gdx.physics.box2d.BodyDef
 import com.badlogic.gdx.physics.box2d.World
+import com.badlogic.gdx.utils.Null
 import ecs.components.*
 import ecs.components.ai.BehaviorComponent
 import ecs.components.ai.GibComponent
@@ -213,6 +214,7 @@ fun player(player: Player, mapper: ControlMapper, at: Vector2) {
             GunDefinition.guns.forEach { guns.add(it.getGun()) }
             ammo[AmmoType.nineMilliMeters] = 51
             ammo[AmmoType.twelveGaugeShotgun] = 40
+            ammo[AmmoType.fnP90Ammo] = 200
         }
         with<WeaponComponent>()
         with<FiredShotsComponent>()
@@ -337,7 +339,13 @@ fun enemy(at: Vector2) {
                 AmmoLoot(AmmoType.nineMilliMeters, 6..17, 30f)
             )
             lootTable.contents.add(
-                AmmoLoot(AmmoType.twelveGaugeShotgun, 4..10, 10f)
+                AmmoLoot(AmmoType.twelveGaugeShotgun, 4..10, 20f)
+            )
+            lootTable.contents.add(
+                AmmoLoot(AmmoType.fnP90Ammo, 50..150, 10f)
+            )
+            lootTable.contents.add(
+                NullValue(40f)
             )
             //lootTable.contents.add(NullValue(10f))
         }

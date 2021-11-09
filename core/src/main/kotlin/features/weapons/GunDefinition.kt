@@ -1,5 +1,8 @@
 package features.weapons
 
+import com.badlogic.gdx.audio.Sound
+import tru.Assets
+
 /**
  *
  * @param ROF is in shots per minute
@@ -15,7 +18,8 @@ class GunDefinition(
     val ammoType: AmmoType,
     val damageRange: IntRange,
     val reloadDelay: Float,
-    val reloadType: ReloadType
+    val reloadType: ReloadType,
+    val audio: Map<String, Sound>
 ) {
     companion object {
         val guns = listOf(
@@ -30,20 +34,36 @@ class GunDefinition(
                 AmmoType.nineMilliMeters,
                 8..16,
                 2f,
-                ReloadType.EntireMag
+                ReloadType.EntireMag,
+                Assets.gunAudio["glock17"]!!
             ),
             GunDefinition(
                 "Franchi Spas 12",
                 8,
                 60f,
                 5f,
-                8,
+                16,
                 15f,
                 GunFrames.spas12,
                 AmmoType.twelveGaugeShotgun,
                 12..24,
                 1f,
-                ReloadType.SingleShot
+                ReloadType.SingleShot,
+                Assets.gunAudio["spas12"]!!
+            ),
+            GunDefinition(
+                "FN P90",
+                50,
+                900f,
+                5f,
+                1,
+                1f,
+                GunFrames.spas12,
+                AmmoType.fnP90Ammo,
+                6..14,
+                2f,
+                ReloadType.EntireMag,
+                Assets.gunAudio["fnp90"]!!
             )
         )
     }

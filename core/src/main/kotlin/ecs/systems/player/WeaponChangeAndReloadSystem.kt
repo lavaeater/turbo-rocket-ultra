@@ -1,5 +1,6 @@
 package ecs.systems.player
 
+import audio.AudioPlayer
 import com.badlogic.ashley.core.Entity
 import com.badlogic.ashley.systems.IteratingSystem
 import ecs.components.player.InventoryComponent
@@ -7,6 +8,7 @@ import ecs.components.player.PlayerComponent
 import ecs.components.player.PlayerControlComponent
 import ecs.components.player.WeaponComponent
 import features.weapons.ReloadType
+import injection.Context.inject
 import input.InputIndicator
 import ktx.ashley.allOf
 import physics.getComponent
@@ -31,6 +33,9 @@ class WeaponChangeAndReloadSystem : IteratingSystem(
         PlayerControlComponent::class
     ).get()
 ) {
+
+    private val audioPlayer by lazy { inject<AudioPlayer>()}
+
     @OptIn(ExperimentalStdlibApi::class)
     override fun processEntity(entity: Entity, deltaTime: Float) {
         val controlComponent = entity.getComponent<PlayerControlComponent>()
@@ -48,12 +53,15 @@ class WeaponChangeAndReloadSystem : IteratingSystem(
             val inventoryComponent = entity.getComponent<InventoryComponent>()
             val weaponComponent = entity.getComponent<WeaponComponent>()
             val gun = weaponComponent.currentGun
+
             val ammoType = gun.ammoType
+            val reloadSound = gun.audio["reload"]!!
             if (inventoryComponent.ammo.containsKey(ammoType) && inventoryComponent.ammo[ammoType]!! > 0) {
                 weaponComponent.reloadCoolDown -= deltaTime
                 if (weaponComponent.reloadCoolDown <= 0f) {
                     when (gun.reloadType) {
                         ReloadType.SingleShot -> {
+                            audioPlayer.playSound(reloadSound)
                             gun.ammoRemaining += 1
                             inventoryComponent.ammo[ammoType] = inventoryComponent.ammo[ammoType]!! - 1
                             if (gun.ammoRemaining == gun.ammoCap || inventoryComponent.ammo[ammoType]!! <= 0) {
@@ -61,6 +69,7 @@ class WeaponChangeAndReloadSystem : IteratingSystem(
                             }
                         }
                         ReloadType.EntireMag -> {
+                            audioPlayer.playSound(reloadSound)
                             var ammoLeft = inventoryComponent.ammo[ammoType]!!
                             if (ammoLeft > gun.ammoCap) {
                                 gun.ammoRemaining = gun.ammoCap

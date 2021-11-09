@@ -35,6 +35,23 @@ object Assets : Disposable {
         SpriteLoader.initEnemyAnims()
     }
 
+    val gunAudio by lazy {
+        mapOf(
+            "fnp90" to mapOf(
+                "shot" to Gdx.audio.newSound(Gdx.files.internal("audio/fnp90-shot.ogg")),
+                "reload" to Gdx.audio.newSound(Gdx.files.internal("audio/fnp90-reload.ogg"))
+            ),
+            "spas12" to mapOf(
+                "shot" to Gdx.audio.newSound(Gdx.files.internal("audio/spas12-shot.ogg")),
+                "reload" to Gdx.audio.newSound(Gdx.files.internal("audio/spas12-reload.ogg"))
+            ),
+            "glock17" to mapOf(
+                "shot" to Gdx.audio.newSound(Gdx.files.internal("audio/glock17-shot.ogg")),
+                "reload" to Gdx.audio.newSound(Gdx.files.internal("audio/glock17-reload.ogg"))
+            )
+        )
+    }
+
     val enemyGibs by lazy {
         val texture = Texture(Gdx.files.internal("sprites/enemies/enemy_gibs.png"))
         listOf(
