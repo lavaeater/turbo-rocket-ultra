@@ -20,14 +20,15 @@ To make the graphics and environment easy I am currently working with the concep
 ### MVP
 
 - [ ] Gibs and body parts
+- [ ] Objectives II, the sequel
 - [ ] Pickups 2 (on-screen blurb indicating what you got)
-- [x] Reloading 2 (shot-by-shot for shotguns)
-- [x] Multi-body-bodies for players and enemies (one for collision in game, one for hit detection for damage)
 - [ ] Interactable Components in-the-game
 - [ ] Player graphics made from components / parts etc.
 - [ ] Perma-gibs
 - [ ] Fixa mini-map
 - [ ] Smarta vektorer (eller nåt) - byt utspridd vektormattekod mot små, lokala, scengrafer. 
+- [x] Reloading 2 (shot-by-shot for shotguns)
+- [x] Multi-body-bodies for players and enemies (one for collision in game, one for hit detection for damage)
 - [x] Player Death 2
 - [x] Different weapons to shoot with <- done
 - [x] Vehicles <- nice to have
@@ -58,7 +59,7 @@ To make the graphics and environment easy I am currently working with the concep
 
 ## Multi-body for players and enemies
 
-Since the game uses not an isometric projection, but a flat projection, our enemies and players have a box2d body corresponding to the area on the ground they occ
+Since the game uses not an isometric projection, but a flat projection, our enemies and players have a box2d body corresponding to the area on the ground they occupy, but to make shooting seem more realistic, we need to have additional physics bodies for everything else.
 
 ## Player Death 2
 
@@ -558,11 +559,11 @@ Det här gör vi på det gamla vanliga sättet. Vi bygger en box2d-värld, vi kl
 
 Oj oj oj,  vad roligt. Vi kan göra en box2d-kropp med leder, per tutorials etc. Superkul ju.
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbOTA0NTg3OTE0LC0yMzg3NjIwNCwtMTUyOD
-MxMTQ0NCwtMTQyOTUzMDk0MCwtMTk1NDM2NDA3OCwxNzYxMzQ3
-MzU5LDE3MzA5MDI4NzIsLTE0ODEwMjg2MjYsMTk0MjU4NzAwMS
-wtNzI4NTU3OTk0LC0yNTg5ODY5NzksLTEzNjkwOTAwMjEsMTQy
-NjY0OTg4NSwtMzc3MTg5MzQzLC0xODM3MjI3MDk4LC0xNDM1OD
-YzNzIxLDI3OTk0NTU3NSwtMzg0OTU4NjYwLDExMTkxNDg5OTMs
-LTE5MDY3NTEzMzNdfQ==
+eyJoaXN0b3J5IjpbLTEwODQ2OTA4NjMsLTIzODc2MjA0LC0xNT
+I4MzExNDQ0LC0xNDI5NTMwOTQwLC0xOTU0MzY0MDc4LDE3NjEz
+NDczNTksMTczMDkwMjg3MiwtMTQ4MTAyODYyNiwxOTQyNTg3MD
+AxLC03Mjg1NTc5OTQsLTI1ODk4Njk3OSwtMTM2OTA5MDAyMSwx
+NDI2NjQ5ODg1LC0zNzcxODkzNDMsLTE4MzcyMjcwOTgsLTE0Mz
+U4NjM3MjEsMjc5OTQ1NTc1LC0zODQ5NTg2NjAsMTExOTE0ODk5
+MywtMTkwNjc1MTMzM119
 -->
