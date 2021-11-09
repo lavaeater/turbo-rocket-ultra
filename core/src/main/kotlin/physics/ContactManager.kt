@@ -119,11 +119,11 @@ class ContactManager: ContactListener {
             val bulletEntity = contact.getEntityFor<BulletComponent>()
             enemyComponent.takeDamage(bulletEntity.getComponent<BulletComponent>().damage)
 
-            val enemyPos = enemy.getComponent<TransformComponent>().position
-            val splatterAngle = bulletEntity.getComponent<BodyComponent>().body.linearVelocity.cpy().angleDeg()
+            val bulletBody = bulletEntity.getComponent<BodyComponent>().body
+            val splatterAngle = bulletBody.linearVelocity.cpy().angleDeg()
 
             splatterEntity(
-                enemyPos,
+                bulletBody.worldCenter,
                 splatterAngle
             )
 

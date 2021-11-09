@@ -67,11 +67,12 @@ object Box2dCategories {
     const val loot: Short = 0x0040
     const val indicator: Short = 0x0080
     const val bullet: Short = 0x0100
-    val all = player or enemy or objective or obstacle or sensor or light or loot or bullet
-    val allButSensors = player or enemy or objective or obstacle or light or loot or bullet
-    val allButLights = player or enemy or objective or obstacle or sensor or loot or bullet
-    val allButLoot = player or enemy or objective or obstacle or sensor
-    val allButLootAndPlayer = enemy or objective or obstacle
+    const val wall: Short = 0x0200
+    val all = player or enemy or objective or obstacle or sensor or light or loot or bullet or wall
+    val allButSensors = player or enemy or objective or obstacle or light or loot or bullet or wall
+    val allButLights = player or enemy or objective or obstacle or sensor or loot or bullet or wall
+    val allButLoot = player or enemy or objective or obstacle or sensor or wall
+    val allButLootAndPlayer = enemy or objective or obstacle or wall
 }
 
 fun splatterEntity(at: Vector2, angle: Float) {
@@ -267,10 +268,9 @@ fun enemy(at: Vector2) {
             }
         }
         box(1f, 2f, vec2(0f, -1.5f)) {
-            isSensor = true
             filter {
-                categoryBits = Box2dCategories.sensor
-                maskBits = Box2dCategories.allButLights
+                categoryBits = Box2dCategories.enemy
+                maskBits = Box2dCategories.bullet
             }
         }
         circle(10f) {

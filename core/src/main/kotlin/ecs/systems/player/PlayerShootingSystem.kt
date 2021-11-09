@@ -78,7 +78,7 @@ class NewPlayerShootingSystem(private val audioPlayer: AudioPlayer) : IteratingS
                 /**
                  * Create a bullet entity at aimVector that travels very fast
                  */
-                bullet(vec2(transformComponent.position.x + aimVector.x, transformComponent.position.y + aimVector.y), aimVector, (75f..150f).random(), weapon.damageRange.random())
+                bullet(vec2(transformComponent.position.x + aimVector.x, transformComponent.position.y - 1 + aimVector.y), aimVector, (75f..150f).random(), weapon.damageRange.random())
             }
         }
     }
