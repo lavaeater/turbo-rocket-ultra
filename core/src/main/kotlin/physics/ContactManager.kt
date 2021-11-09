@@ -5,16 +5,19 @@ import com.badlogic.gdx.physics.box2d.Contact
 import com.badlogic.gdx.physics.box2d.ContactImpulse
 import com.badlogic.gdx.physics.box2d.ContactListener
 import com.badlogic.gdx.physics.box2d.Manifold
+import ecs.components.BodyComponent
 import ecs.components.ai.TrackingPlayerComponent
+import ecs.components.enemy.EnemyComponent
 import ecs.components.enemy.EnemySensorComponent
-import ecs.components.gameplay.DestroyComponent
-import ecs.components.gameplay.ObjectiveComponent
-import ecs.components.gameplay.ShotComponent
+import ecs.components.gameplay.*
 import ecs.components.pickups.LootComponent
 import ecs.components.player.*
+import factories.bullet
+import factories.splatterEntity
 import features.pickups.AmmoLoot
 import gamestate.Player
 import injection.Context.inject
+import ktx.ashley.get
 import ktx.ashley.remove
 import tru.Assets
 
@@ -110,8 +113,24 @@ class ContactManager: ContactListener {
             }
         }
 
-        if (contact.hasComponent<ShotComponent>()) {
-            val entity = contact.getEntityFor<ShotComponent>()
+        if(contact.hasComponent<EnemyComponent>() && contact.hasComponent<BulletComponent>()) {
+            val enemy = contact.getEntityFor<EnemyComponent>()
+            val enemyComponent = enemy.getComponent<EnemyComponent>()
+            val bulletEntity = contact.getEntityFor<BulletComponent>()
+            enemyComponent.takeDamage(bulletEntity.getComponent<BulletComponent>().damage)
+
+            val bulletBody = bulletEntity.getComponent<BodyComponent>().body
+            val splatterAngle = bulletBody.linearVelocity.cpy().angleDeg()
+
+            splatterEntity(
+                bulletBody.worldCenter,
+                splatterAngle
+            )
+
+        }
+
+        if (contact.hasComponent<BulletComponent>()) {
+            val entity = contact.getEntityFor<BulletComponent>()
             entity.add(DestroyComponent())
         }
     }

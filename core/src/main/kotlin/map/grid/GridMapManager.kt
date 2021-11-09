@@ -1,11 +1,17 @@
 package map.grid
 
+import box2dLight.DirectionalLight
+import box2dLight.RayHandler
+import com.badlogic.gdx.graphics.Color
 import com.badlogic.gdx.graphics.g2d.Batch
 import com.badlogic.gdx.physics.box2d.Body
 import com.badlogic.gdx.physics.box2d.BodyDef
+import factories.Box2dCategories
 import factories.world
+import injection.Context.inject
 import ktx.box2d.body
 import ktx.box2d.box
+import ktx.box2d.filter
 import map.grid.GridMapSection.Companion.tileHeight
 import map.grid.GridMapSection.Companion.tileScale
 import map.grid.GridMapSection.Companion.tileWidth
@@ -22,7 +28,11 @@ class GridMapManager {
     val bodies = mutableListOf<Body>()
 
     fun fixBodies() {
+        for(body in bodies)
+            world().destroyBody(body)
+
         bodies.clear()
+
         for(section in gridMap.values) {
             for ((x, column) in section.tiles.withIndex()) {
                 for ((y, tile) in column.withIndex()) {
@@ -33,7 +43,12 @@ class GridMapManager {
                                 x * tileWidth * tileScale - tileWidth * tileScale / 2 + section.x * tileWidth * tileScale * GridMapSection.width,
                                 y * tileHeight * tileScale - tileHeight * tileScale / 2 + section.y * tileHeight * tileScale * GridMapSection.height
                             )
-                            box(tileWidth * tileScale, tileHeight * tileScale) {}
+                            box(tileWidth * tileScale, tileHeight * tileScale) {
+                                filter {
+                                    categoryBits = Box2dCategories.wall
+                                    maskBits = Box2dCategories.allButLights
+                                }
+                            }
                         }
                         bodies.add(body)
                     }
@@ -42,8 +57,16 @@ class GridMapManager {
         }
     }
 
+    var needsDirectionalLight = true
+
     var animationStateTime = 0f
     fun render(batch: Batch, shapeDrawer: ShapeDrawer, delta: Float, scale: Float = 1f) {
+//        if(needsDirectionalLight) {
+//            needsDirectionalLight = false
+//            val light = DirectionalLight(inject<RayHandler>(), 128, Color(.05f,.05f,.05f,.5f), 45f).apply {
+//
+//            }
+//        }
         animationStateTime += delta
         for (section in gridMap.values) {
             val sectionOffsetX = section.x * section.sectionWidth * scale

@@ -67,7 +67,7 @@ object Context {
     private fun getEngine(): Engine {
         return PooledEngine().apply {
             addSystem(PhysicsSystem(inject()))
-//            addSystem(PhysicsDebugRendererSystem(inject(), inject()))
+            //addSystem(PhysicsDebugRendererSystem(inject(), inject()))
             addSystem(CameraUpdateSystem())
             addSystem(PlayerMoveSystem())
             addSystem(PlayerBuildModeSystem())
@@ -75,7 +75,8 @@ object Context {
             addSystem(GamepadInputSystem())
             addSystem(BodyDestroyerSystem(inject())) //world
             addSystem(CharacterWalkAndShootDirectionSystem())
-            addSystem(PlayerShootingSystem(inject()))
+            addSystem(NewPlayerShootingSystem(inject()))
+            addSystem(BulletSpeedSystem())
             addSystem(EnemyDeathSystem())
             addSystem(EnemyMovementSystem())
             addSystem(AmblingSystem())
@@ -100,12 +101,13 @@ object Context {
             addSystem(RenderUserInterfaceSystem(inject<PolygonSpriteBatch>() as Batch))
             addSystem(RenderMiniMapSystem())
             addSystem(PlayerFlashlightSystem())
-            addSystem(WeaponLaserSystem())
+            //addSystem(WeaponLaserSystem())
             addSystem(AiDebugSystem())
             addSystem(PlayerContextActionSystem())
             addSystem(RenderBox2dLightSystem(inject(), inject()))
             addSystem(BloodSplatterEffectRenderSystem(inject<PolygonSpriteBatch>() as Batch))
             addSystem(LootDropSystem())
+            addSystem(AimingAidSystem(true, true))
         }
     }
 }

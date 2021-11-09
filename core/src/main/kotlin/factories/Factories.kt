@@ -15,6 +15,7 @@ import ecs.components.ai.BehaviorComponent
 import ecs.components.enemy.EnemyComponent
 import ecs.components.enemy.EnemySensorComponent
 import ecs.components.fx.SplatterComponent
+import ecs.components.gameplay.BulletComponent
 import ecs.components.gameplay.ObjectiveComponent
 import ecs.components.gameplay.ObstacleComponent
 import ecs.components.gameplay.TransformComponent
@@ -56,18 +57,22 @@ fun enemy(x: Float = 0f, y: Float = 0f) {
 }
 
 object Box2dCategories {
-    const val none: Short = 0x00
-    const val player: Short = 0x01
-    const val enemy: Short = 0x02
-    const val objective: Short = 0x04
-    const val obstacle: Short = 0x08
-    const val sensor: Short = 0x10
-    const val light: Short = 0x20
-    const val loot: Short = 0x40
-    const val indicator: Short = 0x80
-    val all = player or enemy or objective or obstacle or sensor or light or loot
-    val allButSensors = player or enemy or objective or obstacle or light or loot
-    val allButLights = player or enemy or objective or obstacle or sensor or loot
+    const val none: Short = 0x0000
+    const val player: Short = 0x0001
+    const val enemy: Short = 0x0002
+    const val objective: Short = 0x0004
+    const val obstacle: Short = 0x0008
+    const val sensor: Short = 0x0010
+    const val light: Short = 0x0020
+    const val loot: Short = 0x0040
+    const val indicator: Short = 0x0080
+    const val bullet: Short = 0x0100
+    const val wall: Short = 0x0200
+    val all = player or enemy or objective or obstacle or sensor or light or loot or bullet or wall
+    val allButSensors = player or enemy or objective or obstacle or light or loot or bullet or wall
+    val allButLights = player or enemy or objective or obstacle or sensor or loot or bullet or wall
+    val allButLoot = player or enemy or objective or obstacle or sensor or wall
+    val allButLootAndPlayer = enemy or objective or obstacle or wall
 }
 
 fun splatterEntity(at: Vector2, angle: Float) {
@@ -220,6 +225,35 @@ fun lootBox(at: Vector2, lootDrop: List<ILoot>) {
     box2dBody.userData = entity
 }
 
+
+fun bullet(at: Vector2, towards: Vector2, speed:Float, damage: Int) {
+    val box2dBody = world().body {
+        type = BodyDef.BodyType.DynamicBody
+        position.set(at)
+        linearVelocity.set(towards.cpy().setLength(speed))
+        fixedRotation = true
+        circle(.2f) {
+            density = .1f
+            filter {
+                categoryBits = Box2dCategories.bullet
+                maskBits = Box2dCategories.allButLootAndPlayer
+            }
+        }
+    }
+    val entity = engine().entity {
+        with<BodyComponent> { body = box2dBody }
+        with<BulletComponent> {
+            this.damage = damage
+        }
+        with<TransformComponent> { position.set(box2dBody.position) }
+        with<TextureComponent> {
+            layer = 1
+            texture = Assets.bullet
+        }
+    }
+    box2dBody.userData = entity
+}
+
 fun enemy(at: Vector2) {
 
     val box2dBody = world().body {
@@ -231,6 +265,12 @@ fun enemy(at: Vector2) {
             filter {
                 categoryBits = Box2dCategories.enemy
                 maskBits = Box2dCategories.all
+            }
+        }
+        box(1f, 2f, vec2(0f, -1.5f)) {
+            filter {
+                categoryBits = Box2dCategories.enemy
+                maskBits = Box2dCategories.bullet
             }
         }
         circle(10f) {
@@ -270,49 +310,6 @@ fun enemy(at: Vector2) {
     entity.addComponent<BehaviorComponent> { tree = Tree.getEnemyBehaviorTree().apply { `object` = entity } }
     box2dBody.userData = entity
 }
-
-
-//fun vehicle(at: Vector2): Body {
-//    /*
-//    Make stuff up and then we change it all later...
-//     */
-//    val body = world().body {
-//        type = BodyDef.BodyType.DynamicBody
-//        position.set(at)
-//        box(2f, 4f) {
-//            density = GameScreen.CAR_DENSITY
-//        }
-//    }
-//
-//    val entity = engine().createEntity().apply {
-//        add(BodyComponent(body))
-//        add(TransformComponent(body.position))
-//        add(VehicleControlComponent(inject()))
-//        add(VehicleComponent())
-//    }
-//    body.userData = entity
-//    engine().addEntity(entity)
-//    return body
-//}
-
-//fun shot(from: Vector2, towards: Vector2): Body {
-//    val shot = world().body {
-//        type = BodyDef.BodyType.DynamicBody
-//        position.set(from)
-//        circle(radius = .2f) {
-//            density = GameScreen.SHOT_DENSITY
-//        }
-//    }
-//    val entity = engine().createEntity().apply {
-//        add(BodyComponent(shot))
-//        add(TransformComponent(shot.position))
-//        add(ShotComponent())
-//    }
-//    shot.userData = entity
-//    shot.linearVelocity = towards.scl(10000f)
-//    engine().addEntity(entity)
-//    return shot
-//}
 
 fun obstacle(
     x: Float = 0f,
