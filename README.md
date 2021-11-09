@@ -69,8 +69,6 @@ I will take the low road for this. Take the sprite, split it up into parts, put 
 - [x] Split sprite
 - [x] Fiddle with particle editor
 - [x] Emit body parts when enemy dies
-- [ ] Also blood
-- [ ] How about some gruesome audio effects?
 
 ## Multi-body for players and enemies
 
@@ -574,7 +572,7 @@ Det här gör vi på det gamla vanliga sättet. Vi bygger en box2d-värld, vi kl
 
 Oj oj oj,  vad roligt. Vi kan göra en box2d-kropp med leder, per tutorials etc. Superkul ju.
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbMjA5ODU5NzA1NSwtMzY5MjM4NTI5LDMzMT
+eyJoaXN0b3J5IjpbLTM4MTY5ODk4NywtMzY5MjM4NTI5LDMzMT
 E1MDY3MSwyMDk2NjEyODUxLC0xMDg0NjkwODYzLC0yMzg3NjIw
 NCwtMTUyODMxMTQ0NCwtMTQyOTUzMDk0MCwtMTk1NDM2NDA3OC
 wxNzYxMzQ3MzU5LDE3MzA5MDI4NzIsLTE0ODEwMjg2MjYsMTk0
