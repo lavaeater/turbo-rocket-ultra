@@ -26,19 +26,19 @@ Lets try to prioritize these into what would make the game seem "done" the faste
 - [ ] Lightmaps for sprites
 - [ ] Perma-gibs
 - [ ] Fix the MiniMap
-- [ ] 
+- [ ] HUD II, Header Upper Displayer
 - [ ] Enemy AI II, with avoiding walls
 - [ ] Objectives II, the sequel
 - [ ] Pickups 2 (on-screen blurb indicating what you got)
 - [ ] Interactable Components in-the-game
 - [ ] Player graphics made from components / parts etc.
 - [ ] Smarta vektorer (eller nåt) - byt utspridd vektormattekod mot små, lokala, scengrafer. 
+- [ ] Vehicles would be cool
+- [ ] Build Towers
 - [x] Reloading 2 (shot-by-shot for shotguns)
 - [x] Multi-body-bodies for players and enemies (one for collision in game, one for hit detection for damage)
 - [x] Player Death 2
 - [x] Different weapons to shoot with
-- [ ] Vehicles would be cool
-- [ ] Build Towers
 - [x] Weapons 2
 - [x] Objectives for maps
 - [x] Far Off Map Rendering
@@ -573,7 +573,7 @@ Det här gör vi på det gamla vanliga sättet. Vi bygger en box2d-värld, vi kl
 
 Oj oj oj,  vad roligt. Vi kan göra en box2d-kropp med leder, per tutorials etc. Superkul ju.
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbMjEzODUzNjkwLDIwOTY2MTI4NTEsLTEwOD
+eyJoaXN0b3J5IjpbMzMxMTUwNjcxLDIwOTY2MTI4NTEsLTEwOD
 Q2OTA4NjMsLTIzODc2MjA0LC0xNTI4MzExNDQ0LC0xNDI5NTMw
 OTQwLC0xOTU0MzY0MDc4LDE3NjEzNDczNTksMTczMDkwMjg3Mi
 wtMTQ4MTAyODYyNiwxOTQyNTg3MDAxLC03Mjg1NTc5OTQsLTI1
