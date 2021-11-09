@@ -20,12 +20,13 @@ To make the graphics and environment easy I am currently working with the concep
 ### MVP
 
 - [ ] Gibs and body parts
+- [ ] Lightmaps for sprites
+- [ ] Perma-gibs
+- [ ] Fixa mini-map
 - [ ] Objectives II, the sequel
 - [ ] Pickups 2 (on-screen blurb indicating what you got)
 - [ ] Interactable Components in-the-game
 - [ ] Player graphics made from components / parts etc.
-- [ ] Perma-gibs
-- [ ] Fixa mini-map
 - [ ] Smarta vektorer (eller nåt) - byt utspridd vektormattekod mot små, lokala, scengrafer. 
 - [x] Reloading 2 (shot-by-shot for shotguns)
 - [x] Multi-body-bodies for players and enemies (one for collision in game, one for hit detection for damage)
@@ -559,11 +560,11 @@ Det här gör vi på det gamla vanliga sättet. Vi bygger en box2d-värld, vi kl
 
 Oj oj oj,  vad roligt. Vi kan göra en box2d-kropp med leder, per tutorials etc. Superkul ju.
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbLTEwODQ2OTA4NjMsLTIzODc2MjA0LC0xNT
-I4MzExNDQ0LC0xNDI5NTMwOTQwLC0xOTU0MzY0MDc4LDE3NjEz
-NDczNTksMTczMDkwMjg3MiwtMTQ4MTAyODYyNiwxOTQyNTg3MD
-AxLC03Mjg1NTc5OTQsLTI1ODk4Njk3OSwtMTM2OTA5MDAyMSwx
-NDI2NjQ5ODg1LC0zNzcxODkzNDMsLTE4MzcyMjcwOTgsLTE0Mz
-U4NjM3MjEsMjc5OTQ1NTc1LC0zODQ5NTg2NjAsMTExOTE0ODk5
-MywtMTkwNjc1MTMzM119
+eyJoaXN0b3J5IjpbLTE3MTc2MDQ4MzAsLTEwODQ2OTA4NjMsLT
+IzODc2MjA0LC0xNTI4MzExNDQ0LC0xNDI5NTMwOTQwLC0xOTU0
+MzY0MDc4LDE3NjEzNDczNTksMTczMDkwMjg3MiwtMTQ4MTAyOD
+YyNiwxOTQyNTg3MDAxLC03Mjg1NTc5OTQsLTI1ODk4Njk3OSwt
+MTM2OTA5MDAyMSwxNDI2NjQ5ODg1LC0zNzcxODkzNDMsLTE4Mz
+cyMjcwOTgsLTE0MzU4NjM3MjEsMjc5OTQ1NTc1LC0zODQ5NTg2
+NjAsMTExOTE0ODk5M119
 -->
