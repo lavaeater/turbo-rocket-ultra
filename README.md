@@ -67,7 +67,7 @@ Lets try to prioritize these into what would make the game seem "done" the faste
 ## Boss Fight
 
 What is a boss fight? In the simplest form, a boss fight is simply a fight against an enemy that has more health and more abilities than the normal enemies. Fighting it would take time and effort and is dangerous. So, our boss fight needs a special graphic and a special behavior tree. Very cool. We can also scale the boss up a bit.
-- [ ] Boss sprite
+- [x] Boss sprite
 - [ ] Behavior tree
 
 ## Gibs and body parts
@@ -579,11 +579,11 @@ Det här gör vi på det gamla vanliga sättet. Vi bygger en box2d-värld, vi kl
 
 Oj oj oj,  vad roligt. Vi kan göra en box2d-kropp med leder, per tutorials etc. Superkul ju.
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbLTUzOTQ2MDE5MCw2NTYzMzI1MjcsLTExMD
-AxNzY0NTYsMzQwOTc5NTIsMTAzMjIzMjU3NCwxMjgwNDkyMTUy
-LC0zNjkyMzg1MjksMzMxMTUwNjcxLDIwOTY2MTI4NTEsLTEwOD
-Q2OTA4NjMsLTIzODc2MjA0LC0xNTI4MzExNDQ0LC0xNDI5NTMw
-OTQwLC0xOTU0MzY0MDc4LDE3NjEzNDczNTksMTczMDkwMjg3Mi
-wtMTQ4MTAyODYyNiwxOTQyNTg3MDAxLC03Mjg1NTc5OTQsLTI1
-ODk4Njk3OV19
+eyJoaXN0b3J5IjpbMTg5NTExMjI2NiwtNTM5NDYwMTkwLDY1Nj
+MzMjUyNywtMTEwMDE3NjQ1NiwzNDA5Nzk1MiwxMDMyMjMyNTc0
+LDEyODA0OTIxNTIsLTM2OTIzODUyOSwzMzExNTA2NzEsMjA5Nj
+YxMjg1MSwtMTA4NDY5MDg2MywtMjM4NzYyMDQsLTE1MjgzMTE0
+NDQsLTE0Mjk1MzA5NDAsLTE5NTQzNjQwNzgsMTc2MTM0NzM1OS
+wxNzMwOTAyODcyLC0xNDgxMDI4NjI2LDE5NDI1ODcwMDEsLTcy
+ODU1Nzk5NF19
 -->
