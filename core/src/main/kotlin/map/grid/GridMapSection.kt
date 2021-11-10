@@ -29,10 +29,10 @@ class GridMapSection(val coordinate: Coordinate, val connections: Set<MapDirecti
     }
     val innerBounds by lazy {
         Rectangle(
-            bounds.left() + tileWidth * tileScale,
-            bounds.bottom() + tileHeight * tileScale,
-            bounds.width - tileWidth * tileScale * 2,
-            bounds.height - tileHeight * tileScale * 2
+            bounds.left() + tileWidth * tileScale + 10 * tileScale ,
+            bounds.bottom() + tileHeight * tileScale + 10 * tileScale,
+            bounds.width - tileWidth * tileScale * 2 - 20 * tileScale,
+            bounds.height - tileHeight * tileScale * 2 - 20 * tileScale
         )
     }
 
