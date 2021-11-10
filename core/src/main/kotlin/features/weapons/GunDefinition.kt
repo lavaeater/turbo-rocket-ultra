@@ -53,7 +53,7 @@ class GunDefinition(
             ),
             GunDefinition(
                 "FN P90",
-                50,
+                50000,
                 900f,
                 5f,
                 1,

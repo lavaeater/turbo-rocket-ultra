@@ -29,14 +29,14 @@ class GridMapGenerator {
 
         fun generate(length: Int, level: Int): Map<Coordinate, GridMapSection> {
             Light.setGlobalContactFilter(
-                Box2dCategories.light,
+                Box2dCategories.lights,
                 0, Box2dCategories.allButSensors
             )
             rayHandler.setAmbientLight(.5f)
             rayHandler.setBlurNum(3)
 
-            val width = length
-            val height = length
+            val width = length * 3
+            val height = length * 3
             var map = Array(width) {
                 Array(height) {
                     false

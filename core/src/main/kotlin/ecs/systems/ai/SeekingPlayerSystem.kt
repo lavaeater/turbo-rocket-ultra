@@ -3,6 +3,7 @@ package ecs.systems.ai
 import com.badlogic.ashley.core.Entity
 import com.badlogic.ashley.systems.IteratingSystem
 import com.badlogic.gdx.ai.btree.Task
+import com.badlogic.gdx.ai.steer.behaviors.Seek
 import com.badlogic.gdx.graphics.Color
 import com.badlogic.gdx.math.Vector2
 import com.badlogic.gdx.physics.box2d.Fixture
@@ -12,9 +13,13 @@ import ecs.components.ai.NoticedSomething
 import ecs.components.ai.SeekPlayer
 import ecs.components.ai.TrackingPlayerComponent
 import ecs.components.enemy.EnemyComponent
+import ecs.components.gameplay.TransformComponent
+import ecs.components.player.PlayerComponent
 import ecs.components.player.PlayerWaitsForRespawn
 import factories.enemy
+import factories.player
 import factories.world
+import gamestate.Players
 import injection.Context.inject
 import ktx.ashley.allOf
 import ktx.ashley.remove
@@ -26,10 +31,80 @@ import ktx.math.vec2
 import physics.*
 import space.earlygrey.shapedrawer.ShapeDrawer
 import tru.Assets
+import kotlin.math.acos
+
+class SeekingPlayerDotProductSystem : IteratingSystem(allOf(SeekPlayer::class).get()) {
+    val players by lazy { Players.players.values.map { it.entity } }
+
+    @OptIn(ExperimentalStdlibApi::class)
+    override fun processEntity(entity: Entity, deltaTime: Float) {
+        val seekComponent = entity.getComponent<SeekPlayer>()
+        val enemyComponent = entity.getComponent<EnemyComponent>()
+        val enemyPosition = entity.getComponent<TransformComponent>().position
+        enemyComponent.directionVector.set(Vector2.Zero)
+        val playersInRange =
+            players.filter { it.getComponent<TransformComponent>().position.dst(enemyPosition) < enemyComponent.viewDistance }
+        if (!playersInRange.any()) {
+            seekComponent.status = Task.Status.FAILED
+            return
+        }
+        if (seekComponent.needsScanVector) {
+            if (entity.has<NoticedSomething>()) {
+                val noticeVector = entity.getComponent<NoticedSomething>().noticedWhere
+                seekComponent.scanVector.set(noticeVector).sub(seekComponent.scanVectorStart).nor()
+            } else {
+                val unitVectorRange = -1f..1f
+                seekComponent.scanVector.set(unitVectorRange.random(), unitVectorRange.random()).nor()
+            }
+            //set the scanvector angle to itself minus half the field of view
+            seekComponent.scanVector.setAngleDeg(seekComponent.scanVector.angleDeg() - seekComponent.fieldOfView / 2)
+            seekComponent.needsScanVector = false
+        }
+
+        var lowestFraction = 1f
+        lateinit var closestFixture: Fixture
+        val pointOfHit = vec2()
+        val hitNormal = vec2()
+
+        seekComponent.scanCount++
+        for (player in playersInRange) {
+            if (!seekComponent.foundAPlayer) {
+                val playerPosition = player.getComponent<TransformComponent>().position
+                val relativePosNormalized = playerPosition.cpy().sub(enemyPosition).nor()
+                val dotProduct = seekComponent.scanVector.dot(relativePosNormalized)
+                if (acos(dotProduct) < seekComponent.fieldOfView / 2) {
+
+                    world().rayCast(
+                        enemyPosition,
+                        playerPosition
+                    ) { fixture, point, normal, fraction ->
+                        if (fraction < lowestFraction && !fixture.isSensor) {
+                            lowestFraction = fraction
+                            closestFixture = fixture
+                            pointOfHit.set(point)
+                            hitNormal.set(normal)
+                        }
+                        RayCast.CONTINUE
+                    }
+                    if (closestFixture.isPlayer()) {
+                        seekComponent.foundAPlayer = true
+                        entity.add(
+                            engine.createComponent(TrackingPlayerComponent::class.java)
+                                .apply { this.player = player.getComponent<PlayerComponent>().player })
+                    }
+                }
+            }
+        }
+
+        seekComponent.status = if (seekComponent.foundAPlayer) Task.Status.SUCCEEDED else Task.Status.FAILED
+    }
+
+}
 
 class SeekingPlayerSystem : IteratingSystem(allOf(SeekPlayer::class).get()) {
-
+    val debug = false
     val shapeDrawer by lazy { Assets.shapeDrawer }
+
     @ExperimentalStdlibApi
     override fun processEntity(entity: Entity, deltaTime: Float) {
         val seekComponent = entity.getComponent<SeekPlayer>()
@@ -125,9 +200,11 @@ class SeekingPlayerSystem : IteratingSystem(allOf(SeekPlayer::class).get()) {
                     seekComponent.status = Task.Status.SUCCEEDED
                 }
             }
-            shapeDrawer.batch.use {
-                shapeDrawer.line(seekComponent.scanVectorStart, seekComponent.scanVectorEnd, Color.RED)
-                shapeDrawer.line(seekComponent.scanVectorStart, pointOfHit, Color.GREEN)
+            if (debug) {
+                shapeDrawer.batch.use {
+                    shapeDrawer.line(seekComponent.scanVectorStart, seekComponent.scanVectorEnd, Color.RED)
+                    shapeDrawer.line(seekComponent.scanVectorStart, pointOfHit, Color.GREEN)
+                }
             }
             seekComponent.scanVector.setAngleDeg(seekComponent.scanVector.angleDeg() + seekComponent.scanResolution)
         }
