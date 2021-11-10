@@ -21,7 +21,7 @@ To make the graphics and environment easy I am currently working with the concep
 
 Lets try to prioritize these into what would make the game seem "done" the fastest.
 
-- [ ] Boss fight
+- [ ] **Boss fight**
 - [ ] More Enemy Sprites (generate them)
 - [ ] Lightmaps for sprites
 - [ ] Fix the MiniMap
@@ -64,7 +64,11 @@ Lets try to prioritize these into what would make the game seem "done" the faste
 - [x] Blood Splatter
 - [x] MiniMap
 
+## Boss Fight
 
+What is a boss fight? In the simplest form, a boss fight is simply a fight against an enemy that has more health and more abilities than the normal enemies. Fighting it would take time and effort and is dangerous. So, our boss fight needs a special graphic and a special behavior tree. Very cool. We can also scale the boss up a bit.
+- [x] Boss sprite
+- [ ] Behavior tree
 
 ## Gibs and body parts
 
@@ -575,11 +579,11 @@ Det här gör vi på det gamla vanliga sättet. Vi bygger en box2d-värld, vi kl
 
 Oj oj oj,  vad roligt. Vi kan göra en box2d-kropp med leder, per tutorials etc. Superkul ju.
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbNjU2MzMyNTI3LC0xMTAwMTc2NDU2LDM0MD
-k3OTUyLDEwMzIyMzI1NzQsMTI4MDQ5MjE1MiwtMzY5MjM4NTI5
-LDMzMTE1MDY3MSwyMDk2NjEyODUxLC0xMDg0NjkwODYzLC0yMz
-g3NjIwNCwtMTUyODMxMTQ0NCwtMTQyOTUzMDk0MCwtMTk1NDM2
-NDA3OCwxNzYxMzQ3MzU5LDE3MzA5MDI4NzIsLTE0ODEwMjg2Mj
-YsMTk0MjU4NzAwMSwtNzI4NTU3OTk0LC0yNTg5ODY5NzksLTEz
-NjkwOTAwMjFdfQ==
+eyJoaXN0b3J5IjpbMTg5NTExMjI2NiwtNTM5NDYwMTkwLDY1Nj
+MzMjUyNywtMTEwMDE3NjQ1NiwzNDA5Nzk1MiwxMDMyMjMyNTc0
+LDEyODA0OTIxNTIsLTM2OTIzODUyOSwzMzExNTA2NzEsMjA5Nj
+YxMjg1MSwtMTA4NDY5MDg2MywtMjM4NzYyMDQsLTE1MjgzMTE0
+NDQsLTE0Mjk1MzA5NDAsLTE5NTQzNjQwNzgsMTc2MTM0NzM1OS
+wxNzMwOTAyODcyLC0xNDgxMDI4NjI2LDE5NDI1ODcwMDEsLTcy
+ODU1Nzk5NF19
 -->
