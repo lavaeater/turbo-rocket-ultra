@@ -15,21 +15,23 @@ import screens.CounterObject
 
 class BodyDestroyerSystem(private val world: World) : IteratingSystem(
     allOf(
-        BodyComponent::class,
         DestroyComponent::class
     ).get(), 10) {
 
     @OptIn(ExperimentalStdlibApi::class)
     override fun processEntity(entity: Entity, deltaTime: Float) {
-        val bodyComponent = entity.getComponent<BodyComponent>()
+        if(entity.has<BodyComponent>()) {
+            val bodyComponent = entity.getComponent<BodyComponent>()
+            world.destroyBody(bodyComponent.body)
+            entity.remove<BodyComponent>()
+        }
         if(entity.has<BulletComponent>()) {
             CounterObject.bulletCount--
         }
         if(entity.has<EnemyComponent>())
             CounterObject.enemyCount--
 
-        world.destroyBody(bodyComponent.body)
-        entity.remove<DestroyComponent>()
+        entity.removeAll()
         engine.removeEntity(entity)
     }
 

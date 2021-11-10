@@ -102,7 +102,7 @@ class ContactManager: ContactListener {
                 val player = contact.getOtherEntity(enemy)
                 val playerBody = player.body()
                 playerBody.applyLinearImpulse(enemy.getComponent<EnemyComponent>().directionVector.cpy().scl(100f), player.getComponent<TransformComponent>().position, true)
-                player.getComponent<PlayerComponent>().player.health -= (40..80).random()
+                //player.getComponent<PlayerComponent>().player.health -= (40..80).random()
             }
         }
 
@@ -125,7 +125,7 @@ class ContactManager: ContactListener {
             val bulletEntity = contact.getEntityFor<BulletComponent>()
             enemyComponent.takeDamage(bulletEntity.getComponent<BulletComponent>().damage)
 
-            val bulletBody = bulletEntity.getComponent<BodyComponent>().body
+            val bulletBody = bulletEntity.getComponent<BodyComponent>().body!!
             val splatterAngle = bulletBody.linearVelocity.cpy().angleDeg()
 
             splatterEntity(

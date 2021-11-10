@@ -1,25 +1,8 @@
 package ecs.components.graphics
 
 import com.badlogic.ashley.core.Component
-import com.badlogic.gdx.graphics.Color
 import com.badlogic.gdx.utils.Pool
 import tru.Assets
-
-sealed class Shape {
-    object Rectangle: Shape()
-    object Dot: Shape()
-}
-
-class MiniMapComponent: Component, Pool.Poolable {
-    var color: Color = Color.GREEN
-    var miniMapShape: Shape = Shape.Dot
-
-    override fun reset() {
-        color = Color.GREEN
-        miniMapShape = Shape.Dot
-    }
-
-}
 
 class TextureComponent: Component, Pool.Poolable {
     var layer: Int = 0

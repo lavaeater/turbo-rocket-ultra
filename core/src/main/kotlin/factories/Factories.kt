@@ -83,6 +83,7 @@ object Box2dCategories {
     val allButLoot = player or enemy or objective or obstacle or sensor or wall or gib
     val allButLootAndPlayer = enemy or objective or obstacle or wall or gib
     val environmentOnly = objective or obstacle or wall
+    val whatGibsHit = player or enemy or wall
 
     /**
      * Will this show up when hovering?
@@ -103,7 +104,7 @@ fun gibs(at: Vector2, angle:Float) {
                 density = 10f //tune
                 filter {
                     categoryBits = Box2dCategories.gib
-                    maskBits = Box2dCategories.allButLightsOrLoot
+                    maskBits = Box2dCategories.whatGibsHit
                 }
             }
         }
@@ -119,8 +120,8 @@ fun gibs(at: Vector2, angle:Float) {
                 body = gibBody
             }
             with<GibComponent> {
-                coolDownRange = .5f..1f
-                coolDown = (.5f..1f).random()
+                coolDownRange = 1f..3f
+                coolDown = coolDownRange.random()
             }
         }
         gibBody.userData = gibEntity

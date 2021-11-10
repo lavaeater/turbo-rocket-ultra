@@ -33,7 +33,7 @@ class PlayerMoveSystem(
 
         val vX = playerControlComponent.walkVector.x * speed * speedFactor
         val vY = playerControlComponent.walkVector.y * speed * speedFactor
-        bodyComponent.body.setLinearVelocity(vX, vY)
+        bodyComponent.body!!.setLinearVelocity(vX, vY)
 
         animatedCharacterComponent.currentAnimState = playerControlComponent.playerAnimState
     }

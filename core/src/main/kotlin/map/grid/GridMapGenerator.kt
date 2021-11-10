@@ -32,7 +32,7 @@ class GridMapGenerator {
                 Box2dCategories.light,
                 0, Box2dCategories.allButSensors
             )
-            rayHandler.setAmbientLight(.1f)
+            rayHandler.setAmbientLight(.5f)
             rayHandler.setBlurNum(3)
 
             val width = length

@@ -10,8 +10,8 @@ import physics.getComponent
 class BulletSpeedSystem: IteratingSystem(allOf(BulletComponent::class).get()) {
     @OptIn(ExperimentalStdlibApi::class)
     override fun processEntity(entity: Entity, deltaTime: Float) {
-        val body = entity.getComponent<BodyComponent>()
-        val linearVelocity = body.body.linearVelocity
+        val bodyComponent = entity.getComponent<BodyComponent>()
+        val linearVelocity = bodyComponent.body!!.linearVelocity
         //body.body.linearVelocity = linearVelocity.setLength(100f)
     }
 }

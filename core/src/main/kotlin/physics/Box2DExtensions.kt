@@ -40,7 +40,7 @@ fun Body.forwardVelocity(): Vector2 {
 
 @OptIn(ExperimentalStdlibApi::class)
 fun Entity.body(): Body {
-    return getComponent<BodyComponent>().body
+    return getComponent<BodyComponent>().body!!
 }
 
 @OptIn(ExperimentalStdlibApi::class)

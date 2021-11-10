@@ -61,7 +61,7 @@ object Context {
             })
             bindSingleton(AudioPlayer())
             bindSingleton(GridMapManager())
-            bindSingleton(RayHandler(inject()))
+            bindSingleton(RayHandler(inject(), 500, 500))
             bindSingleton(getEngine())
         }
     }
@@ -78,7 +78,7 @@ object Context {
             addSystem(BodyDestroyerSystem(inject())) //world
             addSystem(CharacterWalkAndShootDirectionSystem())
             addSystem(NewPlayerShootingSystem(inject()))
-            addSystem(BulletSpeedSystem())
+            //addSystem(BulletSpeedSystem())
             addSystem(EnemyDeathSystem())
             addSystem(EnemyMovementSystem())
             // Ai Systems Start

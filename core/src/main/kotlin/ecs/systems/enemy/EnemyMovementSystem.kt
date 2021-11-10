@@ -24,7 +24,7 @@ class EnemyMovementSystem : IteratingSystem(
     }
 
     private fun moveEnemy(enemyComponent: EnemyComponent, bodyComponent: BodyComponent) {
-        bodyComponent.body.setLinearVelocity(
+        bodyComponent.body!!.setLinearVelocity(
             enemyComponent.directionVector.x * enemyComponent.speed,
             enemyComponent.directionVector.y * enemyComponent.speed
         )

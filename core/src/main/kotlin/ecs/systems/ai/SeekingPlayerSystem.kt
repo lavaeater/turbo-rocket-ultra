@@ -46,7 +46,7 @@ class SeekingPlayerSystem : IteratingSystem(allOf(SeekPlayer::class).get()) {
     @ExperimentalStdlibApi
     private fun seek(entity: Entity, seekComponent: SeekPlayer, bodyComponent: BodyComponent) {
         //Pick a random direction
-        seekComponent.scanVectorStart.set(bodyComponent.body.position)
+        seekComponent.scanVectorStart.set(bodyComponent.body!!.position)
         if (seekComponent.needsScanVector) {
 
             if (entity.has<NoticedSomething>()) {

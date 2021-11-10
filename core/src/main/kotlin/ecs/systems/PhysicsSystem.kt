@@ -29,8 +29,8 @@ class PhysicsSystem(private val world: World, private val timeStep : Float = 1/6
     @OptIn(ExperimentalStdlibApi::class)
     override fun processEntity(entity: Entity, deltaTime: Float) {
             val bodyComponent = entity.getComponent<BodyComponent>()
-            val bodyPosition = bodyComponent.body.position
-            val bodyRotation = bodyComponent.body.angle
+            val bodyPosition = bodyComponent.body!!.position
+            val bodyRotation = bodyComponent.body!!.angle
             val transformComponent = entity.getComponent<TransformComponent>()
             transformComponent.position.set(bodyPosition)
             transformComponent.rotation = bodyRotation

@@ -40,7 +40,8 @@ class AttackPlayerSystem : IteratingSystem(allOf(
             if(attackPlayer.coolDown <= 0f) {
                 attackPlayer.coolDown = attackPlayer.coolDownRange.random()//This guy needs to wait a little before attacking again.
                 if((1..3).random() == 1 && !player.entity.has<PlayerIsRespawning>()) {
-                    player.health -= (5..15).random()
+                //TODO ADD BACK DAMANGE
+                //player.health -= (5..15).random()
                 }
             } else {
                 attackPlayer.coolDown -= deltaTime

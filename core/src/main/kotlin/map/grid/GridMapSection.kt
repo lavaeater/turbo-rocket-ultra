@@ -63,7 +63,7 @@ class GridMapSection(val coordinate: Coordinate, val connections: Set<MapDirecti
             }
             ConeLight(
                 rayHandler,
-                128,
+                32,
                 directionColorMap[lightDirection]!!,//Color(.05f, .05f, .05f, 1f),
                 30f,
                 lightPosition.x,
