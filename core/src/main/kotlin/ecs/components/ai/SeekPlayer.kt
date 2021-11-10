@@ -4,6 +4,7 @@ import com.badlogic.gdx.math.Vector2
 import ktx.math.vec2
 
 class SeekPlayer: TaskComponent() {
+    var viewDistance = 30f
     var fieldOfView = 180f
     var scanResolution = 1
     val maxNumberOfScans get() = fieldOfView / scanResolution

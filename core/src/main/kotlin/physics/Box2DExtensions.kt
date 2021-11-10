@@ -109,6 +109,10 @@ inline fun <reified T : Component> Entity.getComponent(): T {
     return AshleyMappers.getMapper<T>().get(this)
 }
 
+fun Contact.noSensors() : Boolean {
+    return !this.fixtureA.isSensor && !this.fixtureB.isSensor()
+}
+
 @OptIn(ExperimentalStdlibApi::class)
 inline fun <reified T : Component> Contact.atLeastOneHas(): Boolean {
     if (this.eitherIsEntity()) {

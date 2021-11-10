@@ -81,7 +81,7 @@ class GameScreen(private val gameState: StateMachine<GameState, GameEvent>) : Kt
         for (system in engine.systems) {
             system.setProcessing(true)
         }
-        generateMap()
+        generateMap(1)
         addPlayers()
         addEnemies()
 
@@ -188,12 +188,12 @@ D1B67A
             player.touchedObjectives.clear()
         }
         CounterObject.currentLevel++
-        generateMap()
+        generateMap(CounterObject.currentLevel)
     }
 
     private val mapManager by lazy { inject<GridMapManager>() }
     @OptIn(ExperimentalStdlibApi::class)
-    private fun generateMap() {
+    private fun generateMap(level: Int) {
         /*
         We start the game with a map already generated. But when, how, will we create
         all the entities and stuff? The map should and must be generated HERE, not
@@ -234,7 +234,7 @@ D1B67A
 
         CounterObject.numberOfEnemies = (4f.pow(CounterObject.currentLevel).roundToInt() * 2).coerceAtMost(MAX_ENEMIES)
 
-        mapManager.gridMap = GridMapGenerator.generate(CounterObject.currentLength)
+        mapManager.gridMap = GridMapGenerator.generate(CounterObject.currentLength, level)
         CounterObject.numberOfObjectives = engine.getEntitiesFor(allOf(ObjectiveComponent::class).get()).count()
         movePlayersToStart()
     }

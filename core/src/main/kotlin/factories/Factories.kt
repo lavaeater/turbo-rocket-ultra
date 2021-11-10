@@ -15,6 +15,7 @@ import ecs.components.ai.BehaviorComponent
 import ecs.components.ai.GibComponent
 import ecs.components.enemy.EnemyComponent
 import ecs.components.enemy.EnemySensorComponent
+import ecs.components.enemy.TackleComponent
 import ecs.components.fx.SplatterComponent
 import ecs.components.gameplay.BulletComponent
 import ecs.components.gameplay.ObjectiveComponent
@@ -371,7 +372,7 @@ fun enemy(at: Vector2) {
     CounterObject.enemyCount++
 }
 
-fun boss(at: Vector2) {
+fun boss(at: Vector2, level: Int) {
 
     val box2dBody = world().body {
         type = BodyDef.BodyType.DynamicBody
@@ -404,9 +405,12 @@ fun boss(at: Vector2) {
         with<BodyComponent> { body = box2dBody }
         with<TransformComponent> { position.set(box2dBody.position) }
         with<EnemySensorComponent>()
+        with<TackleComponent>()
         with<EnemyComponent> {
-            fieldOfView = 360f
-            health = 1000
+            fieldOfView = 180f
+            rushSpeed = 15f + level * 1.5f
+            viewDistance = 80f
+            health = 1000 * level
         }
         with<AnimatedCharacterComponent> {
             anims = Assets.bosses.values.random()

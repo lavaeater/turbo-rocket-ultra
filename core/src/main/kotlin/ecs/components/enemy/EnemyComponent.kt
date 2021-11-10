@@ -8,7 +8,9 @@ import ecs.components.gameplay.TransformComponent
 import ktx.math.vec2
 
 class EnemyComponent : Component, Pool.Poolable {
+    var rushSpeed = 15f
     var fieldOfView = 180f
+    var viewDistance = 30f
     var speed = 1f
 
     val directionVector = vec2()

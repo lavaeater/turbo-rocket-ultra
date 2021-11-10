@@ -3,6 +3,7 @@ package ecs.systems.ai
 import com.badlogic.ashley.core.Entity
 import com.badlogic.ashley.systems.IteratingSystem
 import com.badlogic.gdx.ai.btree.Task
+import com.badlogic.gdx.graphics.Color
 import com.badlogic.gdx.math.Vector2
 import com.badlogic.gdx.physics.box2d.Fixture
 import ecs.components.BodyComponent
@@ -14,21 +15,29 @@ import ecs.components.enemy.EnemyComponent
 import ecs.components.player.PlayerWaitsForRespawn
 import factories.enemy
 import factories.world
+import injection.Context.inject
 import ktx.ashley.allOf
 import ktx.ashley.remove
 import ktx.box2d.RayCast
 import ktx.box2d.rayCast
+import ktx.graphics.use
 import ktx.math.random
 import ktx.math.vec2
 import physics.*
+import space.earlygrey.shapedrawer.ShapeDrawer
+import tru.Assets
 
 class SeekingPlayerSystem : IteratingSystem(allOf(SeekPlayer::class).get()) {
+
+    val shapeDrawer by lazy { Assets.shapeDrawer }
     @ExperimentalStdlibApi
     override fun processEntity(entity: Entity, deltaTime: Float) {
         val seekComponent = entity.getComponent<SeekPlayer>()
         if (seekComponent.status == Task.Status.RUNNING) {
             val enemyComponent = entity.getComponent<EnemyComponent>()
+
             seekComponent.fieldOfView = enemyComponent.fieldOfView
+            seekComponent.viewDistance = enemyComponent.viewDistance
             enemyComponent.directionVector.set(Vector2.Zero)
             seek(entity, seekComponent, entity.getComponent())
         }
@@ -74,7 +83,7 @@ class SeekingPlayerSystem : IteratingSystem(allOf(SeekPlayer::class).get()) {
             seekComponent.scanVectorEnd.set(seekComponent.scanVectorStart)
                 .add(seekComponent.scanVector)
                 .sub(seekComponent.scanVectorStart)
-                .scl(30f)
+                .scl(seekComponent.viewDistance)
                 .add(seekComponent.scanVectorStart)
                 .add(seekComponent.scanVector)
 
@@ -115,6 +124,10 @@ class SeekingPlayerSystem : IteratingSystem(allOf(SeekPlayer::class).get()) {
                     foundPlayer = true
                     seekComponent.status = Task.Status.SUCCEEDED
                 }
+            }
+            shapeDrawer.batch.use {
+                shapeDrawer.line(seekComponent.scanVectorStart, seekComponent.scanVectorEnd, Color.RED)
+                shapeDrawer.line(seekComponent.scanVectorStart, pointOfHit, Color.GREEN)
             }
             seekComponent.scanVector.setAngleDeg(seekComponent.scanVector.angleDeg() + seekComponent.scanResolution)
         }

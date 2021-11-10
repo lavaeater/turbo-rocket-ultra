@@ -25,19 +25,15 @@ class GridMapGenerator {
             position = bounds.randomPoint()
             val emitter = obstacle(position.x, position.y)
             emitter.add(engine.createComponent(EnemySpawnerComponent::class.java))
-
-            boss(bounds.randomPoint())
         }
 
-        fun generate(length: Int, objectiveDensity: Int = 4): Map<Coordinate, GridMapSection> {
+        fun generate(length: Int, level: Int): Map<Coordinate, GridMapSection> {
             Light.setGlobalContactFilter(
                 Box2dCategories.light,
                 0, Box2dCategories.allButSensors
             )
             rayHandler.setAmbientLight(.1f)
             rayHandler.setBlurNum(3)
-
-
 
             val width = length
             val height = length
@@ -57,6 +53,10 @@ class GridMapGenerator {
             val maxY = y
             map[x][y] = true
             val startCoord = Coordinate(x, y)
+
+            var numberOfObjectivesLeftToDealOut = level * 2 - 1
+            val objectives = mutableListOf<Coordinate>()
+            lateinit var bossCoordinate: Coordinate
 
             for (index in 0 until length) {
                 /*
@@ -94,6 +94,15 @@ class GridMapGenerator {
                 if (y > maxY)
                     y = maxY
 
+                if(numberOfObjectivesLeftToDealOut > 1 && index < (length - 4) && (0..9).random() == 0) {
+                    numberOfObjectivesLeftToDealOut--
+                    objectives.add(Coordinate(x,y))
+                } else if(index > (length - 4 ) && numberOfObjectivesLeftToDealOut > 0) {
+                    numberOfObjectivesLeftToDealOut--
+                    objectives.add(Coordinate(x,y))
+                    bossCoordinate = Coordinate(x,y)
+                }
+
                 map[x][y] = true
 
             }
@@ -109,6 +118,7 @@ class GridMapGenerator {
             val tileMap = mutableMapOf<Coordinate, GridMapSection>()
 
             var index = 0
+            val numberOfObjectivs = level * 2 - 1
             for ((x, column) in map.withIndex()) {
                 for ((y, tile) in column.withIndex())
                     if (tile) {
@@ -118,8 +128,12 @@ class GridMapGenerator {
                         val section = GridMapSection(coordinate, getConnections(x, y, map), coordinate == startCoord)
 
                         tileMap[coordinate] = section
-                        if (index % objectiveDensity == 0)
+                        if(objectives.contains(coordinate)) {
                             addObjective(section.innerBounds)
+                        }
+                        if(coordinate == bossCoordinate) {
+                            boss(section.innerBounds.randomPoint(), level)
+                        }
                     }
             }
             return tileMap

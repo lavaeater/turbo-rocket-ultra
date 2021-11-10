@@ -13,11 +13,7 @@ import physics.has
 
 class RushPlayerSystem : IteratingSystem(
     allOf(
-        RushPlayer::class,
-        EnemyComponent::class,
-        TransformComponent::class,
-        TrackingPlayerComponent::class
-    ).get()
+        RushPlayer::class).get()
 ) {
     @OptIn(ExperimentalStdlibApi::class)
     override fun processEntity(entity: Entity, deltaTime: Float) {
@@ -56,11 +52,11 @@ class RushPlayerSystem : IteratingSystem(
             rushPlayer.firstRun = false
         }
         val currentDistance = rushPlayer.rushPoint.dst(transformComponent.position)
-        rushPlayer.status = if (currentDistance < rushPlayer.previousDistance) {
+        rushPlayer.status = if (currentDistance <= rushPlayer.previousDistance) {
             rushPlayer.previousDistance = currentDistance
             val direction = rushPlayer.rushPoint.cpy().sub(transformComponent.position).nor()
             enemyComponent.directionVector.set(direction)
-            enemyComponent.speed = 20f
+            enemyComponent.speed = enemyComponent.rushSpeed
             Task.Status.RUNNING
         } else {
             enemyComponent.directionVector.setZero()

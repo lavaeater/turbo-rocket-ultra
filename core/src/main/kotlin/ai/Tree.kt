@@ -20,13 +20,13 @@ object Tree {
                     first(entityDo<SeekPlayer>())
                     then(entityDo<Investigate>())
                     then(entityDo<SeekPlayer>())
-            })
+                })
             last(
-            selector<Entity> {
-                first(entityDo<Amble>())
-                then(invert(entityDo<SeekPlayer>()))
-                last(invert(entityDo<ChasePlayer>()))
-            })
+                selector<Entity> {
+                    first(entityDo<Amble>())
+                    then(invert(entityDo<SeekPlayer>()))
+                    last(invert(entityDo<ChasePlayer>()))
+                })
         }
     }
 
@@ -44,16 +44,19 @@ object Tree {
      */
     fun bossOne() = tree<Entity> {
         dynamicGuardSelector {
-//            first(entityDo<GrabAndThrowPlayer> { ifEntityHas<PlayerIsInGrabRange>() })
-            first(
-                selector<Entity> {
-                    first(entityDo<Amble>())
-                    then(invert(entityDo<SeekPlayer>()))
-                    last(invert(entityDo<RushPlayer>()))
-                }
-            )
+            first(entityDo<RushPlayer> { ifEntityHas<TrackingPlayerComponent>() })
+            ifThen(
+                entityHas<NoticedSomething>(),
+                selector {
+                    first(entityDo<SeekPlayer>())
+                })
+            last(selector<Entity> {
+                first(entityDo<Amble>())
+                then(invert(entityDo<SeekPlayer>()))
+            })
         }
     }
+
 
     fun getTowerBehaviorTree() = tree<Entity> {
         sequence {

@@ -9,6 +9,7 @@ import ecs.components.BodyComponent
 import ecs.components.ai.TrackingPlayerComponent
 import ecs.components.enemy.EnemyComponent
 import ecs.components.enemy.EnemySensorComponent
+import ecs.components.enemy.TackleComponent
 import ecs.components.gameplay.*
 import ecs.components.pickups.LootComponent
 import ecs.components.player.*
@@ -16,6 +17,7 @@ import factories.splatterEntity
 import features.pickups.AmmoLoot
 import injection.Context.inject
 import ktx.ashley.remove
+import ktx.math.vec2
 import tru.Assets
 
 class ContactManager: ContactListener {
@@ -94,6 +96,13 @@ class ContactManager: ContactListener {
                 //Switch texture, mate!
                 //(cEntity.getComponent<RenderableComponent>()?.renderable as RenderableBox)?.color = Color.PURPLE
                 objectiveComponent.touched = true
+            }
+            if(contact.noSensors() && contact.atLeastOneHas<TackleComponent>() ) {
+                val enemy = contact.getEntityFor<TackleComponent>()
+                val player = contact.getOtherEntity(enemy)
+                val playerBody = player.body()
+                playerBody.applyLinearImpulse(enemy.getComponent<EnemyComponent>().directionVector.cpy().scl(100f), player.getComponent<TransformComponent>().position, true)
+                player.getComponent<PlayerComponent>().player.health -= (40..80).random()
             }
         }
 
