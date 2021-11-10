@@ -34,7 +34,7 @@ Lets try to prioritize these into what would make the game seem "done" the faste
 - [ ] Vehicles would be cool
 - [ ] Build Towers
 - [ ] Gibs and Body Parts II - blood trails and audio
-- [x] **Boss fight**
+- [x] Boss fight
 - [x] More character sprites
 - [x] Gibs and body parts
 - [x] Reloading 2 (shot-by-shot for shotguns)
@@ -579,7 +579,7 @@ Det här gör vi på det gamla vanliga sättet. Vi bygger en box2d-värld, vi kl
 
 Oj oj oj,  vad roligt. Vi kan göra en box2d-kropp med leder, per tutorials etc. Superkul ju.
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbLTg5MDk2NTg3OCwxODk1MTEyMjY2LC01Mz
+eyJoaXN0b3J5IjpbLTUxODMyMDE4MiwxODk1MTEyMjY2LC01Mz
 k0NjAxOTAsNjU2MzMyNTI3LC0xMTAwMTc2NDU2LDM0MDk3OTUy
 LDEwMzIyMzI1NzQsMTI4MDQ5MjE1MiwtMzY5MjM4NTI5LDMzMT
 E1MDY3MSwyMDk2NjEyODUxLC0xMDg0NjkwODYzLC0yMzg3NjIw
