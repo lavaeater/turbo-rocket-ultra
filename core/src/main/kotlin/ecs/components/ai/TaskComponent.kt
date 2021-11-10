@@ -4,10 +4,12 @@ import com.badlogic.gdx.ai.btree.Task
 
 abstract class TaskComponent : CoolDownComponent() {
     var status : Task.Status = Task.Status.RUNNING
-    var needsInit = true
+    val isRunning get() = status == Task.Status.RUNNING
+    var firstRun = true
+
     override fun reset() {
         super.reset()
-        needsInit = true
+        firstRun = true
         status = Task.Status.RUNNING
     }
 }

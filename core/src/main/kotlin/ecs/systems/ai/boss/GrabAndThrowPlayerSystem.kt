@@ -1,13 +1,13 @@
-package ecs.systems.ai
+package ecs.systems.ai.boss
 
 import com.badlogic.ashley.core.Entity
 import com.badlogic.ashley.systems.IteratingSystem
 import com.badlogic.gdx.ai.btree.Task
-import ecs.components.ai.AttackPlayer
 import ecs.components.enemy.EnemyComponent
 import ecs.components.gameplay.TransformComponent
 import ecs.components.ai.PlayerIsInRange
 import ecs.components.ai.TrackingPlayerComponent
+import ecs.components.ai.boss.GrabAndThrowPlayer
 import ecs.components.player.PlayerIsRespawning
 import ecs.components.player.PlayerWaitsForRespawn
 import ktx.ashley.allOf
@@ -17,15 +17,15 @@ import ktx.math.vec2
 import physics.getComponent
 import physics.has
 
-class AttackPlayerSystem : IteratingSystem(allOf(
-    AttackPlayer::class,
+class GrabAndThrowPlayerSystem : IteratingSystem(allOf(
+    GrabAndThrowPlayer::class,
     EnemyComponent::class,
     TransformComponent::class,
     TrackingPlayerComponent::class).get()) {
 
     @ExperimentalStdlibApi
     override fun processEntity(entity: Entity, deltaTime: Float) {
-        val attackPlayer = entity.getComponent<AttackPlayer>()
+        val attackPlayer = entity.getComponent<GrabAndThrowPlayer>()
         val transformComponent = entity.getComponent<TransformComponent>()
         val player = entity.getComponent<TrackingPlayerComponent>().player!!
 

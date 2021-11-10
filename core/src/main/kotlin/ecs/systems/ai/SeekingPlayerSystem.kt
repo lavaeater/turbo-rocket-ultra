@@ -12,6 +12,7 @@ import ecs.components.ai.SeekPlayer
 import ecs.components.ai.TrackingPlayerComponent
 import ecs.components.enemy.EnemyComponent
 import ecs.components.player.PlayerWaitsForRespawn
+import factories.enemy
 import factories.world
 import ktx.ashley.allOf
 import ktx.ashley.remove
@@ -24,10 +25,12 @@ import physics.*
 class SeekingPlayerSystem : IteratingSystem(allOf(SeekPlayer::class).get()) {
     @ExperimentalStdlibApi
     override fun processEntity(entity: Entity, deltaTime: Float) {
-        val component = entity.getComponent<SeekPlayer>()
-        if (component.status == Task.Status.RUNNING) {
-            entity.getComponent<EnemyComponent>().directionVector.set(Vector2.Zero)
-            seek(entity, component, entity.getComponent())
+        val seekComponent = entity.getComponent<SeekPlayer>()
+        if (seekComponent.status == Task.Status.RUNNING) {
+            val enemyComponent = entity.getComponent<EnemyComponent>()
+            seekComponent.fieldOfView = enemyComponent.fieldOfView
+            enemyComponent.directionVector.set(Vector2.Zero)
+            seek(entity, seekComponent, entity.getComponent())
         }
     }
 
@@ -37,7 +40,7 @@ class SeekingPlayerSystem : IteratingSystem(allOf(SeekPlayer::class).get()) {
         seekComponent.scanVectorStart.set(bodyComponent.body.position)
         if (seekComponent.needsScanVector) {
 
-            if(entity.has<NoticedSomething>()) {
+            if (entity.has<NoticedSomething>()) {
                 val noticeVector = entity.getComponent<NoticedSomething>().noticedWhere
                 seekComponent.scanVector.set(noticeVector).sub(seekComponent.scanVectorStart).nor()
             } else {
@@ -88,7 +91,9 @@ class SeekingPlayerSystem : IteratingSystem(allOf(SeekPlayer::class).get()) {
                 RayCast.CONTINUE
             }
             if (lowestFraction < 1f) {
-                if (closestFixture.isEntity() && closestFixture.body.isPlayer() && !closestFixture.getEntity().has<PlayerWaitsForRespawn>()) {
+                if (closestFixture.isEntity() && closestFixture.body.isPlayer() && !closestFixture.getEntity()
+                        .has<PlayerWaitsForRespawn>()
+                ) {
                     seekComponent.keepScanning = false
                     entity.add(
                         engine.createComponent(TrackingPlayerComponent::class.java)

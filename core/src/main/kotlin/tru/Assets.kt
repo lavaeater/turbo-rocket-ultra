@@ -35,6 +35,10 @@ object Assets : Disposable {
         SpriteLoader.initEnemyAnims()
     }
 
+    val bosses by lazy {
+        SpriteLoader.initBossAnims()
+    }
+
     val gunAudio by lazy {
         mapOf(
             "fnp90" to mapOf(
@@ -117,7 +121,6 @@ object Assets : Disposable {
     val lootBox by lazy {
         OffsetTextureRegion(Texture(Gdx.files.internal("sprites/loot/lootbox.png")))
     }
-
     val arrowTexture by lazy {
         Texture(Gdx.files.internal("sprites/arrows.png"))
     }

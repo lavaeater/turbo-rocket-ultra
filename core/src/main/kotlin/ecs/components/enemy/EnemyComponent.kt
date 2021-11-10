@@ -8,11 +8,11 @@ import ecs.components.gameplay.TransformComponent
 import ktx.math.vec2
 
 class EnemyComponent : Component, Pool.Poolable {
+    var fieldOfView = 180f
     var speed = 1f
 
     val directionVector = vec2()
     var health = 100
-    private set
 
     val isDead get() = health <= 0
 
@@ -32,9 +32,10 @@ class EnemyComponent : Component, Pool.Poolable {
     }
 
     override fun reset() {
+        fieldOfView = 180f
         speed = 2.5f
         directionVector.set(Vector2.Zero)
-        health = 25
+        health = 100
         timeRemaining = 0f
     }
 }

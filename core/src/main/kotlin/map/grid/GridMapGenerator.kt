@@ -1,16 +1,14 @@
 package map.grid
 
-import box2dLight.DirectionalLight
 import box2dLight.Light
 import box2dLight.RayHandler
 import com.badlogic.ashley.core.Engine
-import com.badlogic.gdx.graphics.Color
 import com.badlogic.gdx.math.Rectangle
 import ecs.components.enemy.EnemySpawnerComponent
 import factories.Box2dCategories
+import factories.boss
 import factories.objective
 import factories.obstacle
-import injection.Context
 import injection.Context.inject
 import map.snake.MapDirection
 import map.snake.random
@@ -27,6 +25,8 @@ class GridMapGenerator {
             position = bounds.randomPoint()
             val emitter = obstacle(position.x, position.y)
             emitter.add(engine.createComponent(EnemySpawnerComponent::class.java))
+
+            boss(bounds.randomPoint())
         }
 
         fun generate(length: Int, objectiveDensity: Int = 4): Map<Coordinate, GridMapSection> {

@@ -1,4 +1,4 @@
-package ecs.systems.ai
+package ecs.systems.ai.boss
 
 import com.badlogic.ashley.core.Entity
 import com.badlogic.ashley.systems.IteratingSystem
@@ -9,7 +9,7 @@ import ktx.ashley.allOf
 import ktx.math.random
 import physics.getComponent
 
-class AmblingSystem : IteratingSystem(allOf(Amble::class, EnemyComponent::class).get()) {
+class BossAmblingSystem : IteratingSystem(allOf(Amble::class, EnemyComponent::class).get()) {
 
     @OptIn(ExperimentalStdlibApi::class)
     override fun processEntity(entity: Entity, deltaTime: Float) {

@@ -69,6 +69,43 @@ object SpriteLoader {
         return anims
     }
 
+    fun initBossAnims(): Map<String, Map<AnimState, LpcCharacterAnim<OffsetTextureRegion>>> {
+        /*
+        For now, we will simply load the sheets and assign anims etc using
+        some hardcoded stuff.
+
+        Amazingly, the LPC spritesheets have all anims in all directions.
+
+        So we should have anim and direction as two different things.
+         */
+        val anims = mutableMapOf<String, MutableMap<AnimState, LpcCharacterAnim<OffsetTextureRegion>>>()
+        val bosses = listOf("boss_one")
+        for (c in bosses) {
+            anims[c] = mutableMapOf()
+            val texture = Texture(Gdx.files.internal("sprites/bosses/$c.png"))
+            for (animDef in LpcCharacterAnimDefinition.enemyDefinitions) {
+                anims[c]!![animDef.state] = LpcCharacterAnim<OffsetTextureRegion>(
+                    animDef.state,
+                    animDef.directions.mapIndexed
+                    { row, r ->
+                        r to
+                                Animation(0.1f, (animDef.frames).map {
+                                    OffsetTextureRegion(
+                                        texture,
+                                        (it) * animDef.itemWidth,
+                                        (animDef.row + row) * animDef.itemHeight,
+                                        animDef.itemWidth,
+                                        animDef.itemHeight, 20f, 0f
+                                    )
+                                }.toGdxArray(), animDef.playMode)
+                    }.toMap()
+                )
+            }
+        }
+
+        return anims
+    }
+
     fun initCharachterAnims(): Map<String, Map<AnimState, LpcCharacterAnim<OffsetTextureRegion>>> {
         /*
         For now, we will simply load the sheets and assign anims etc using
