@@ -131,6 +131,14 @@ class GridMapGenerator {
                         if(objectives.contains(coordinate)) {
                             addObjective(section.innerBounds)
                         }
+
+                        if((1..20).random() <= level) {
+                            val position = section.innerBounds.randomPoint()
+                            val emitter = obstacle(position.x, position.y)
+                            emitter.add(engine.createComponent(EnemySpawnerComponent::class.java))
+                        }
+
+
                         if(coordinate == bossCoordinate) {
                             boss(section.innerBounds.randomPoint(), level)
                         }

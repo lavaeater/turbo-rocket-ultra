@@ -232,7 +232,7 @@ D1B67A
         }
         engine.removeAllEntities(allOf(ObstacleComponent::class).get())
 
-        CounterObject.numberOfEnemies = (4f.pow(CounterObject.currentLevel).roundToInt() * 2).coerceAtMost(MAX_ENEMIES)
+        CounterObject.numberOfEnemies = (8f.pow(CounterObject.currentLevel).roundToInt() * 2).coerceAtMost(MAX_ENEMIES)
 
         mapManager.gridMap = GridMapGenerator.generate(CounterObject.currentLength, level)
         CounterObject.numberOfObjectives = engine.getEntitiesFor(allOf(ObjectiveComponent::class).get()).count()
