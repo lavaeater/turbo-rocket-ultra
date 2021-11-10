@@ -22,8 +22,7 @@ import ecs.components.gameplay.ObjectiveComponent
 import ecs.components.gameplay.ObstacleComponent
 import ecs.components.gameplay.TransformComponent
 import ecs.components.graphics.*
-import ecs.components.graphics.renderables.AnimatedCharacterComponent
-import ecs.components.graphics.renderables.RenderableTextureRegion
+import ecs.components.graphics.AnimatedCharacterComponent
 import ecs.components.pickups.LootComponent
 import ecs.components.pickups.LootDropComponent
 import ecs.components.player.*
@@ -156,8 +155,6 @@ fun tower(at: Vector2 = vec2(), towerType: String = "machinegun") {
             body = towerBody
         }
         with<TransformComponent>()
-        with<RenderableComponent> { renderable = RenderableTextureRegion(Assets.towers[towerType]!!, 4f, 0f, -5f) }
-        with<RenderLayerComponent>()
         with<TextureComponent> {
             texture = Assets.towers["obstacle"]!!
             scale = 4f
