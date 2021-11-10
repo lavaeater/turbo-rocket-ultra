@@ -3,7 +3,6 @@ package ecs.systems.ai
 import com.badlogic.ashley.core.Entity
 import com.badlogic.ashley.systems.IteratingSystem
 import com.badlogic.gdx.ai.btree.Task
-import com.badlogic.gdx.ai.steer.behaviors.Seek
 import com.badlogic.gdx.graphics.Color
 import com.badlogic.gdx.math.Vector2
 import com.badlogic.gdx.physics.box2d.Fixture
@@ -11,16 +10,13 @@ import ecs.components.BodyComponent
 import ecs.components.ai.ChasePlayer
 import ecs.components.ai.NoticedSomething
 import ecs.components.ai.SeekPlayer
-import ecs.components.ai.TrackingPlayerComponent
+import ecs.components.ai.TrackingPlayer
 import ecs.components.enemy.EnemyComponent
 import ecs.components.gameplay.TransformComponent
 import ecs.components.player.PlayerComponent
 import ecs.components.player.PlayerWaitsForRespawn
-import factories.enemy
-import factories.player
 import factories.world
 import gamestate.Players
-import injection.Context.inject
 import ktx.ashley.allOf
 import ktx.ashley.remove
 import ktx.box2d.RayCast
@@ -29,7 +25,6 @@ import ktx.graphics.use
 import ktx.math.random
 import ktx.math.vec2
 import physics.*
-import space.earlygrey.shapedrawer.ShapeDrawer
 import tru.Assets
 import kotlin.math.acos
 
@@ -89,7 +84,7 @@ class SeekingPlayerDotProductSystem : IteratingSystem(allOf(SeekPlayer::class).g
                     if (closestFixture.isPlayer()) {
                         seekComponent.foundAPlayer = true
                         entity.add(
-                            engine.createComponent(TrackingPlayerComponent::class.java)
+                            engine.createComponent(TrackingPlayer::class.java)
                                 .apply { this.player = player.getComponent<PlayerComponent>().player })
                     }
                 }
@@ -180,7 +175,7 @@ class SeekingPlayerSystem : IteratingSystem(allOf(SeekPlayer::class).get()) {
                 ) {
                     seekComponent.keepScanning = false
                     entity.add(
-                        engine.createComponent(TrackingPlayerComponent::class.java)
+                        engine.createComponent(TrackingPlayer::class.java)
                             .apply { player = closestFixture.body.player() })
                     foundPlayer = true
                     seekComponent.status = Task.Status.SUCCEEDED
@@ -189,11 +184,11 @@ class SeekingPlayerSystem : IteratingSystem(allOf(SeekPlayer::class).get()) {
                     closestFixture.isEntity() &&
                     closestFixture.body.isEnemy() &&
                     closestFixture.getEntity().has<ChasePlayer>() &&
-                    closestFixture.getEntity().has<TrackingPlayerComponent>()
+                    closestFixture.getEntity().has<TrackingPlayer>()
                 ) {
 
-                    entity.addComponent<TrackingPlayerComponent> {
-                        player = closestFixture.getEntity().getComponent<TrackingPlayerComponent>().player
+                    entity.addComponent<TrackingPlayer> {
+                        player = closestFixture.getEntity().getComponent<TrackingPlayer>().player
                     }
                     seekComponent.keepScanning = false
                     foundPlayer = true
@@ -209,7 +204,7 @@ class SeekingPlayerSystem : IteratingSystem(allOf(SeekPlayer::class).get()) {
             seekComponent.scanVector.setAngleDeg(seekComponent.scanVector.angleDeg() + seekComponent.scanResolution)
         }
         if (!foundPlayer && !seekComponent.keepScanning) {
-            entity.remove<TrackingPlayerComponent>()
+            entity.remove<TrackingPlayer>()
             seekComponent.status = Task.Status.FAILED
         }
     }

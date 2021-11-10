@@ -65,6 +65,7 @@ class UserInterface(
                     children.add(BoundTextActor({"Objectives: ${screens.CounterObject.numberOfObjectives}"}))
                     children.add(BoundTextActor({"MapLength: ${screens.CounterObject.currentLength}"}))
                     children.add(BoundTextActor({"Current Level: ${screens.CounterObject.currentLevel}"}))
+                    children.add(BoundTextActor({"Fps: ${Gdx.graphics.framesPerSecond}"}))
                 }
             )
             for ((i, p) in players.values.withIndex()) {

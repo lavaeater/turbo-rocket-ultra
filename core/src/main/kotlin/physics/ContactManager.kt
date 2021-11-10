@@ -6,7 +6,7 @@ import com.badlogic.gdx.physics.box2d.ContactImpulse
 import com.badlogic.gdx.physics.box2d.ContactListener
 import com.badlogic.gdx.physics.box2d.Manifold
 import ecs.components.BodyComponent
-import ecs.components.ai.TrackingPlayerComponent
+import ecs.components.ai.TrackingPlayer
 import ecs.components.enemy.EnemyComponent
 import ecs.components.enemy.EnemySensorComponent
 import ecs.components.enemy.TackleComponent
@@ -17,7 +17,6 @@ import factories.splatterEntity
 import features.pickups.AmmoLoot
 import injection.Context.inject
 import ktx.ashley.remove
-import ktx.math.vec2
 import tru.Assets
 
 class ContactManager: ContactListener {
@@ -83,7 +82,7 @@ class ContactManager: ContactListener {
                 if(!contact.atLeastOneHas<PlayerWaitsForRespawn>() && !contact.atLeastOneHas<PlayerIsRespawning>() ) {
                     val enemy = contact.getEntityFor<EnemySensorComponent>()
                     enemy.add(
-                        engine.createComponent(TrackingPlayerComponent::class.java)
+                        engine.createComponent(TrackingPlayer::class.java)
                             .apply { player = contact.getPlayerFor() })
                 }
             }
@@ -112,10 +111,10 @@ class ContactManager: ContactListener {
              */
             val enemyAEntity = contact.fixtureA.getEntity()
             val enemyBEntity = contact.fixtureB.getEntity()
-            if(enemyAEntity.has<TrackingPlayerComponent>() && !enemyBEntity.has<TrackingPlayerComponent>()) {
-                enemyBEntity.addComponent<TrackingPlayerComponent> { player = enemyAEntity.getComponent<TrackingPlayerComponent>().player }
-            } else if(enemyBEntity.has<TrackingPlayerComponent>() && !enemyAEntity.has<TrackingPlayerComponent>()) {
-                enemyAEntity.addComponent<TrackingPlayerComponent> { player = enemyBEntity.getComponent<TrackingPlayerComponent>().player }
+            if(enemyAEntity.has<TrackingPlayer>() && !enemyBEntity.has<TrackingPlayer>()) {
+                enemyBEntity.addComponent<TrackingPlayer> { player = enemyAEntity.getComponent<TrackingPlayer>().player }
+            } else if(enemyBEntity.has<TrackingPlayer>() && !enemyAEntity.has<TrackingPlayer>()) {
+                enemyAEntity.addComponent<TrackingPlayer> { player = enemyBEntity.getComponent<TrackingPlayer>().player }
             }
         }
 

@@ -53,7 +53,7 @@ class GameScreen(private val gameState: StateMachine<GameState, GameEvent>) : Kt
         const val CAR_DENSITY = .3f
         const val SHIP_LINEAR_DAMPING = 20f
         const val SHIP_ANGULAR_DAMPING = 20f
-        const val MAX_ENEMIES = 200
+        const val MAX_ENEMIES = 600
 
         const val GAMEWIDTH = 64f
         const val GAMEHEIGHT = 48f
@@ -249,7 +249,7 @@ object CounterObject {
     var enemyCount = 0
     var bulletCount = 0
     var currentLevel = 1
-    val currentLength get() = currentLevel * 16
+    val currentLength get() = currentLevel * 8
     var numberOfObjectives = 1
     var numberOfEnemies = 1
 }
