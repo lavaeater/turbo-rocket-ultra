@@ -11,11 +11,14 @@ import ktx.ashley.allOf
 import physics.getComponent
 import physics.has
 
-class RushPlayerSystem: IteratingSystem(allOf(
-    RushPlayer::class,
-    EnemyComponent::class,
-    TransformComponent::class,
-    TrackingPlayerComponent::class).get()) {
+class RushPlayerSystem : IteratingSystem(
+    allOf(
+        RushPlayer::class,
+        EnemyComponent::class,
+        TransformComponent::class,
+        TrackingPlayerComponent::class
+    ).get()
+) {
     @OptIn(ExperimentalStdlibApi::class)
     override fun processEntity(entity: Entity, deltaTime: Float) {
         /**
@@ -33,41 +36,40 @@ class RushPlayerSystem: IteratingSystem(allOf(
          */
 
         val rushPlayer = entity.getComponent<RushPlayer>()
-        if(rushPlayer.isRunning) {
-            /*
-            What does this particular system want to do?
+        /*
+        What does this particular system want to do?
 
-            The boss has their sights set on a particular player.
-            They will now try to bumrush the player, performing a
-            hard tackle
+        The boss has their sights set on a particular player.
+        They will now try to bumrush the player, performing a
+        hard tackle
 
-             */
-            val transformComponent = entity.getComponent<TransformComponent>()
-            val enemyComponent = entity.getComponent<EnemyComponent>()
-            if(rushPlayer.firstRun) {
-                if(entity.has<TrackingPlayerComponent>()) {
-                    rushPlayer.rushPoint.set(entity.getComponent<TrackingPlayerComponent>().player!!.entity.getComponent<TransformComponent>().position)
-                    rushPlayer.previousDistance = rushPlayer.rushPoint.dst(transformComponent.position)
-                } else {
-                    rushPlayer.status = Task.Status.FAILED
-                }
-                rushPlayer.firstRun = false
-            }
-            val currentDistance = rushPlayer.rushPoint.dst(transformComponent.position)
-            rushPlayer.status = if(currentDistance < rushPlayer.previousDistance) {
-                rushPlayer.previousDistance = currentDistance
-                val direction = rushPlayer.rushPoint.cpy().sub(transformComponent.position).nor()
-                enemyComponent.directionVector.set(direction)
-                enemyComponent.speed = 20f
-                Task.Status.RUNNING
+         */
+        val transformComponent = entity.getComponent<TransformComponent>()
+        val enemyComponent = entity.getComponent<EnemyComponent>()
+        if (rushPlayer.firstRun) {
+            if (entity.has<TrackingPlayerComponent>()) {
+                rushPlayer.rushPoint.set(entity.getComponent<TrackingPlayerComponent>().player!!.entity.getComponent<TransformComponent>().position)
+                rushPlayer.previousDistance = rushPlayer.rushPoint.dst(transformComponent.position)
             } else {
-                enemyComponent.directionVector.setZero()
-                enemyComponent.speed = 2.5f
-                Task.Status.SUCCEEDED
+                rushPlayer.status = Task.Status.FAILED
             }
-            //Scenario 1: the boss does not have a trackingplayer component - so the task fails immediately
-            //Scenario 2: the distance is shrinking between boss and target point (where the player used to be), task is running
-            //Scenario 3: the distance is no longer shrinking, the task has succeeded and the boss stops
+            rushPlayer.firstRun = false
         }
+        val currentDistance = rushPlayer.rushPoint.dst(transformComponent.position)
+        rushPlayer.status = if (currentDistance < rushPlayer.previousDistance) {
+            rushPlayer.previousDistance = currentDistance
+            val direction = rushPlayer.rushPoint.cpy().sub(transformComponent.position).nor()
+            enemyComponent.directionVector.set(direction)
+            enemyComponent.speed = 20f
+            Task.Status.RUNNING
+        } else {
+            enemyComponent.directionVector.setZero()
+            enemyComponent.speed = 2.5f
+            Task.Status.SUCCEEDED
+        }
+        //Scenario 1: the boss does not have a trackingplayer component - so the task fails immediately
+        //Scenario 2: the distance is shrinking between boss and target point (where the player used to be), task is running
+        //Scenario 3: the distance is no longer shrinking, the task has succeeded and the boss stops
     }
+
 }

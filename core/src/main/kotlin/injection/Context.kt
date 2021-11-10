@@ -9,8 +9,10 @@ import com.badlogic.gdx.graphics.OrthographicCamera
 import com.badlogic.gdx.graphics.g2d.Batch
 import com.badlogic.gdx.graphics.g2d.PolygonSpriteBatch
 import com.badlogic.gdx.utils.viewport.ExtendViewport
+import ecs.components.ai.boss.RushPlayer
 import ecs.systems.*
 import ecs.systems.ai.*
+import ecs.systems.ai.boss.RushPlayerSystem
 import ecs.systems.ai.towers.TowerShootSystem
 import ecs.systems.ai.towers.TowerTargetFinderSystem
 import ecs.systems.enemy.*
@@ -79,6 +81,7 @@ object Context {
             addSystem(BulletSpeedSystem())
             addSystem(EnemyDeathSystem())
             addSystem(EnemyMovementSystem())
+            // Ai Systems Start
             addSystem(AmblingSystem())
             addSystem(BehaviorTreeSystem())
             addSystem(ChasePlayerSystem())
@@ -87,6 +90,8 @@ object Context {
             addSystem(EnemyDirectionSystem())
             addSystem(EnemyHearsShotsSystem())
             addSystem(InvestigateSystem())
+            addSystem(RushPlayerSystem())
+            // Ai Systems End
             addSystem(PlayerDeathSystem())
             addSystem(EnemySpawnSystem())
             addSystem(EnemyOptimizerSystem())
