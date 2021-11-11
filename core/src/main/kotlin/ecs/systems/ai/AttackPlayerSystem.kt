@@ -7,7 +7,7 @@ import ecs.components.ai.AttackPlayer
 import ecs.components.enemy.EnemyComponent
 import ecs.components.gameplay.TransformComponent
 import ecs.components.ai.PlayerIsInRange
-import ecs.components.ai.TrackingPlayerComponent
+import ecs.components.ai.TrackingPlayer
 import ecs.components.player.PlayerIsRespawning
 import ecs.components.player.PlayerWaitsForRespawn
 import ktx.ashley.allOf
@@ -21,26 +21,26 @@ class AttackPlayerSystem : IteratingSystem(allOf(
     AttackPlayer::class,
     EnemyComponent::class,
     TransformComponent::class,
-    TrackingPlayerComponent::class).get()) {
+    TrackingPlayer::class).get()) {
 
     @ExperimentalStdlibApi
     override fun processEntity(entity: Entity, deltaTime: Float) {
         val attackPlayer = entity.getComponent<AttackPlayer>()
         val transformComponent = entity.getComponent<TransformComponent>()
-        val player = entity.getComponent<TrackingPlayerComponent>().player!!
+        val player = entity.getComponent<TrackingPlayer>().player!!
 
         if(attackPlayer.status == Task.Status.RUNNING) {
             if(player.entity.has<PlayerWaitsForRespawn>()) {
                 //Can't attack invisible / dead player
                 attackPlayer.status = Task.Status.FAILED
-                entity.remove<TrackingPlayerComponent>()
+                entity.remove<TrackingPlayer>()
                 return
             }
 
             if(attackPlayer.coolDown <= 0f) {
                 attackPlayer.coolDown = attackPlayer.coolDownRange.random()//This guy needs to wait a little before attacking again.
                 if((1..3).random() == 1 && !player.entity.has<PlayerIsRespawning>()) {
-                    player.health -= (5..15).random()
+                player.health -= (5..15).random()
                 }
             } else {
                 attackPlayer.coolDown -= deltaTime

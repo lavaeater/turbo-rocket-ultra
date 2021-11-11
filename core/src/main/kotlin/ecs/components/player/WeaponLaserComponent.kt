@@ -13,7 +13,7 @@ class WeaponLaserComponent: Component, Pool.Poolable {
     // To make them not collide with lights, simply make sure they are not lights.
     val weaponlaser = ConeLight(rayHandler, 12, Color(1f, 0f, 0f, .2f), 60f, 0f, 0f, 30f, 15f).apply {
         setContactFilter(
-            Box2dCategories.indicator,
+            Box2dCategories.indicators,
             0x00,
             Box2dCategories.none
         )

@@ -4,7 +4,7 @@ import com.badlogic.gdx.Gdx
 import com.badlogic.gdx.graphics.OrthographicCamera
 import com.badlogic.gdx.graphics.g2d.Batch
 import com.badlogic.gdx.utils.viewport.ExtendViewport
-import ecs.components.graphics.renderables.AnimatedCharacterComponent
+import ecs.components.graphics.AnimatedCharacterComponent
 import gamestate.Players
 import ktx.graphics.use
 import ktx.math.vec2
@@ -65,6 +65,7 @@ class UserInterface(
                     children.add(BoundTextActor({"Objectives: ${screens.CounterObject.numberOfObjectives}"}))
                     children.add(BoundTextActor({"MapLength: ${screens.CounterObject.currentLength}"}))
                     children.add(BoundTextActor({"Current Level: ${screens.CounterObject.currentLevel}"}))
+                    children.add(BoundTextActor({"Fps: ${Gdx.graphics.framesPerSecond}"}))
                 }
             )
             for ((i, p) in players.values.withIndex()) {

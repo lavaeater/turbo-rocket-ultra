@@ -6,7 +6,7 @@ import com.badlogic.gdx.ai.btree.Task
 import ecs.components.enemy.EnemyComponent
 import ecs.components.gameplay.TransformComponent
 import ecs.components.ai.PlayerIsInRange
-import ecs.components.ai.TrackingPlayerComponent
+import ecs.components.ai.TrackingPlayer
 import ecs.components.ai.boss.GrabAndThrowPlayer
 import ecs.components.player.PlayerIsRespawning
 import ecs.components.player.PlayerWaitsForRespawn
@@ -21,19 +21,19 @@ class GrabAndThrowPlayerSystem : IteratingSystem(allOf(
     GrabAndThrowPlayer::class,
     EnemyComponent::class,
     TransformComponent::class,
-    TrackingPlayerComponent::class).get()) {
+    TrackingPlayer::class).get()) {
 
     @ExperimentalStdlibApi
     override fun processEntity(entity: Entity, deltaTime: Float) {
         val attackPlayer = entity.getComponent<GrabAndThrowPlayer>()
         val transformComponent = entity.getComponent<TransformComponent>()
-        val player = entity.getComponent<TrackingPlayerComponent>().player!!
+        val player = entity.getComponent<TrackingPlayer>().player!!
 
         if(attackPlayer.status == Task.Status.RUNNING) {
             if(player.entity.has<PlayerWaitsForRespawn>()) {
                 //Can't attack invisible / dead player
                 attackPlayer.status = Task.Status.FAILED
-                entity.remove<TrackingPlayerComponent>()
+                entity.remove<TrackingPlayer>()
                 return
             }
 

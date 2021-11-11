@@ -9,7 +9,6 @@ import com.badlogic.gdx.graphics.OrthographicCamera
 import com.badlogic.gdx.graphics.g2d.Batch
 import com.badlogic.gdx.graphics.g2d.PolygonSpriteBatch
 import com.badlogic.gdx.utils.viewport.ExtendViewport
-import ecs.components.ai.boss.RushPlayer
 import ecs.systems.*
 import ecs.systems.ai.*
 import ecs.systems.ai.boss.RushPlayerSystem
@@ -61,7 +60,7 @@ object Context {
             })
             bindSingleton(AudioPlayer())
             bindSingleton(GridMapManager())
-            bindSingleton(RayHandler(inject()))
+            bindSingleton(RayHandler(inject(), 500, 500))
             bindSingleton(getEngine())
         }
     }
@@ -69,7 +68,7 @@ object Context {
     private fun getEngine(): Engine {
         return PooledEngine().apply {
             addSystem(PhysicsSystem(inject()))
-//            addSystem(PhysicsDebugRendererSystem(inject(), inject()))
+    //        addSystem(PhysicsDebugRendererSystem(inject(), inject()))
             addSystem(CameraUpdateSystem())
             addSystem(PlayerMoveSystem())
             addSystem(PlayerBuildModeSystem())
@@ -77,15 +76,15 @@ object Context {
             addSystem(GamepadInputSystem())
             addSystem(BodyDestroyerSystem(inject())) //world
             addSystem(CharacterWalkAndShootDirectionSystem())
-            addSystem(NewPlayerShootingSystem(inject()))
-            addSystem(BulletSpeedSystem())
+            addSystem(PlayerShootingSystem(inject()))
+            //addSystem(BulletSpeedSystem())
             addSystem(EnemyDeathSystem())
             addSystem(EnemyMovementSystem())
             // Ai Systems Start
             addSystem(AmblingSystem())
             addSystem(BehaviorTreeSystem())
             addSystem(ChasePlayerSystem())
-            addSystem(SeekingPlayerSystem())
+            addSystem(SeekPlayerSystem())
             addSystem(AttackPlayerSystem())
             addSystem(EnemyDirectionSystem())
             addSystem(EnemyHearsShotsSystem())

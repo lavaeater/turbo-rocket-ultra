@@ -9,7 +9,7 @@ class SnakeMapGenerator {
     companion object {
         val rayHandler by lazy { inject<RayHandler>() }
         fun generate(minMax: IntRange = 16..32): SnakeMapSection {
-            Light.setGlobalContactFilter(Box2dCategories.light,
+            Light.setGlobalContactFilter(Box2dCategories.lights,
                 0, Box2dCategories.allButSensors)
             rayHandler.setAmbientLight(.7f)
             rayHandler.setBlurNum(3)

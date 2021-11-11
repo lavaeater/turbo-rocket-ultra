@@ -2,7 +2,7 @@ package ecs.systems
 
 import com.badlogic.ashley.core.Entity
 import com.badlogic.ashley.systems.IteratingSystem
-import ecs.components.graphics.renderables.AnimatedCharacterComponent
+import ecs.components.graphics.AnimatedCharacterComponent
 import ecs.components.player.PlayerControlComponent
 import ktx.ashley.allOf
 import physics.getComponent

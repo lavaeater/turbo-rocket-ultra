@@ -2,9 +2,10 @@ package ecs.systems.enemy
 
 import com.badlogic.ashley.core.Entity
 import com.badlogic.ashley.systems.IteratingSystem
+import ecs.components.ai.AttackPlayer
 import ecs.components.ai.SeekPlayer
 import ecs.components.enemy.EnemyComponent
-import ecs.components.graphics.renderables.AnimatedCharacterComponent
+import ecs.components.graphics.AnimatedCharacterComponent
 import ktx.ashley.allOf
 import physics.getComponent
 import physics.has
@@ -21,7 +22,7 @@ class EnemyDirectionSystem : IteratingSystem(
         val enemyComponent = entity.getComponent<EnemyComponent>()
         characterAngle = if(entity.has<SeekPlayer>()) entity.getComponent<SeekPlayer>().scanVector.angleDeg() else enemyComponent.directionVector.angleDeg()
 
-        characterSpriteComponent.currentAnimState = if(enemyComponent.isDead) AnimState.Death else if(entity.has<SeekPlayer>()) AnimState.Idle else AnimState.Walk
+        characterSpriteComponent.currentAnimState = if(enemyComponent.isDead) AnimState.Death else if(entity.has<SeekPlayer>()) AnimState.Idle else if(entity.has<AttackPlayer>()) AnimState.Slash else AnimState.Walk
         if(enemyComponent.isDead)
             characterSpriteComponent.currentDirection = SpriteDirection.South
         else

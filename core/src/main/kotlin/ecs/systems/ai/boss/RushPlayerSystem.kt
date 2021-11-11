@@ -3,7 +3,7 @@ package ecs.systems.ai.boss
 import com.badlogic.ashley.core.Entity
 import com.badlogic.ashley.systems.IteratingSystem
 import com.badlogic.gdx.ai.btree.Task
-import ecs.components.ai.TrackingPlayerComponent
+import ecs.components.ai.TrackingPlayer
 import ecs.components.ai.boss.RushPlayer
 import ecs.components.enemy.EnemyComponent
 import ecs.components.gameplay.TransformComponent
@@ -43,8 +43,8 @@ class RushPlayerSystem : IteratingSystem(
         val transformComponent = entity.getComponent<TransformComponent>()
         val enemyComponent = entity.getComponent<EnemyComponent>()
         if (rushPlayer.firstRun) {
-            if (entity.has<TrackingPlayerComponent>()) {
-                rushPlayer.rushPoint.set(entity.getComponent<TrackingPlayerComponent>().player!!.entity.getComponent<TransformComponent>().position)
+            if (entity.has<TrackingPlayer>()) {
+                rushPlayer.rushPoint.set(entity.getComponent<TrackingPlayer>().player!!.entity.getComponent<TransformComponent>().position)
                 rushPlayer.previousDistance = rushPlayer.rushPoint.dst(transformComponent.position)
             } else {
                 rushPlayer.status = Task.Status.FAILED

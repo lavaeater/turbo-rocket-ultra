@@ -4,7 +4,7 @@ import com.badlogic.ashley.core.Component
 import com.badlogic.gdx.utils.Pool
 import gamestate.Player
 
-class TrackingPlayerComponent : Component, Pool.Poolable {
+class TrackingPlayer : Component, Pool.Poolable {
     var player: Player? = null
     override fun reset() {
         player = null

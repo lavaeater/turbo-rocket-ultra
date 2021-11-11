@@ -3,7 +3,7 @@ package ecs.systems.player
 import com.badlogic.ashley.core.Entity
 import com.badlogic.ashley.systems.IteratingSystem
 import ecs.components.BodyComponent
-import ecs.components.graphics.renderables.AnimatedCharacterComponent
+import ecs.components.graphics.AnimatedCharacterComponent
 import ecs.components.player.PlayerControlComponent
 import ktx.ashley.allOf
 import physics.getComponent
@@ -33,7 +33,7 @@ class PlayerMoveSystem(
 
         val vX = playerControlComponent.walkVector.x * speed * speedFactor
         val vY = playerControlComponent.walkVector.y * speed * speedFactor
-        bodyComponent.body.setLinearVelocity(vX, vY)
+        bodyComponent.body!!.setLinearVelocity(vX, vY)
 
         animatedCharacterComponent.currentAnimState = playerControlComponent.playerAnimState
     }

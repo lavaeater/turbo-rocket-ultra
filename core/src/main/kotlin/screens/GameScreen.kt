@@ -53,7 +53,7 @@ class GameScreen(private val gameState: StateMachine<GameState, GameEvent>) : Kt
         const val CAR_DENSITY = .3f
         const val SHIP_LINEAR_DAMPING = 20f
         const val SHIP_ANGULAR_DAMPING = 20f
-        const val MAX_ENEMIES = 1000
+        const val MAX_ENEMIES = 512
 
         const val GAMEWIDTH = 64f
         const val GAMEHEIGHT = 48f
@@ -178,7 +178,7 @@ D1B67A
         val startBounds = mapManager.gridMap.values.first { it.startSection }.innerBounds
         val players = engine.getEntitiesFor(allOf(PlayerComponent::class).get())
         for(player in players) {
-            val body = player.getComponent<BodyComponent>().body
+            val body = player.getComponent<BodyComponent>().body!!
             body.setTransform(startBounds.randomPoint(), body.angle)
         }
     }
@@ -232,6 +232,7 @@ D1B67A
         }
         engine.removeAllEntities(allOf(ObstacleComponent::class).get())
 
+        //For debuggin we will swarm with enemies
         CounterObject.numberOfEnemies = (8f.pow(CounterObject.currentLevel).roundToInt() * 2).coerceAtMost(MAX_ENEMIES)
 
         mapManager.gridMap = GridMapGenerator.generate(CounterObject.currentLength, level)
@@ -248,7 +249,7 @@ object CounterObject {
     var enemyCount = 0
     var bulletCount = 0
     var currentLevel = 1
-    val currentLength get() = currentLevel * 16
+    val currentLength get() = currentLevel * 8
     var numberOfObjectives = 1
     var numberOfEnemies = 1
 }

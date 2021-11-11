@@ -14,7 +14,7 @@ import physics.has
 import tru.Assets
 
 
-class NewPlayerShootingSystem(private val audioPlayer: AudioPlayer) : IteratingSystem(
+class PlayerShootingSystem(private val audioPlayer: AudioPlayer) : IteratingSystem(
     allOf(
         PlayerControlComponent::class,
         WeaponComponent::class,
