@@ -16,6 +16,9 @@ Oooh, and fucking voice acting. Hows about that!?
 
 So, what we are talking about is the most important MVP feature of them all: **STORY MODE!!** 
 
+## STORY MODE - the story continues
+
+Random thoughts: Story mode should be able to design a room or level entirely - or provide more input for the generator. 
 
 ## What's up with the name, anyways?
 
@@ -598,11 +601,11 @@ Det här gör vi på det gamla vanliga sättet. Vi bygger en box2d-värld, vi kl
 
 Oj oj oj,  vad roligt. Vi kan göra en box2d-kropp med leder, per tutorials etc. Superkul ju.
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbMTQ4NjAzMDY0OSwxMTQwNjM4MzU3LDE4OT
-UxMTIyNjYsLTUzOTQ2MDE5MCw2NTYzMzI1MjcsLTExMDAxNzY0
-NTYsMzQwOTc5NTIsMTAzMjIzMjU3NCwxMjgwNDkyMTUyLC0zNj
-kyMzg1MjksMzMxMTUwNjcxLDIwOTY2MTI4NTEsLTEwODQ2OTA4
-NjMsLTIzODc2MjA0LC0xNTI4MzExNDQ0LC0xNDI5NTMwOTQwLC
-0xOTU0MzY0MDc4LDE3NjEzNDczNTksMTczMDkwMjg3MiwtMTQ4
-MTAyODYyNl19
+eyJoaXN0b3J5IjpbMzM1OTU3NDU2LDExNDA2MzgzNTcsMTg5NT
+ExMjI2NiwtNTM5NDYwMTkwLDY1NjMzMjUyNywtMTEwMDE3NjQ1
+NiwzNDA5Nzk1MiwxMDMyMjMyNTc0LDEyODA0OTIxNTIsLTM2OT
+IzODUyOSwzMzExNTA2NzEsMjA5NjYxMjg1MSwtMTA4NDY5MDg2
+MywtMjM4NzYyMDQsLTE1MjgzMTE0NDQsLTE0Mjk1MzA5NDAsLT
+E5NTQzNjQwNzgsMTc2MTM0NzM1OSwxNzMwOTAyODcyLC0xNDgx
+MDI4NjI2XX0=
 -->
