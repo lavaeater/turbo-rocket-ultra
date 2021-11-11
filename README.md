@@ -6,7 +6,13 @@ The next feature in the game must be more robust, more additive to the concept a
 
 Yes, what does that actually mean? What should be added from here on out? Well, it's obvious, ain't it? We need **story beats**. Story beats are "scripted events", "quests", shit to get done to move to the next level.
 
-It could be killing the boss, finding the orbs, getting to a certain spot on the map, anything. Yes, this is it. This is the big one. And I know exactly the thing to get it done: Stories and quests from Kids From The Wasteland, of course. What on earth do I mean by that? Well, I simply mean that we need to keep track of *Facts* in this game world of ours. These facts could be anything, like, have player A been to room 18, or how many zombies of type 1A have we actually killed, etc
+It could be killing the boss, finding the orbs, getting to a certain spot on the map, anything. Yes, this is it. This is the big one. And I know exactly the thing to get it done: Stories and quests from Kids From The Wasteland, of course. What on earth do I mean by that? Well, I simply mean that we need to keep track of *Facts* in this game world of ours. These facts could be anything, like, have player A been to room 18, or how many zombies of type 1A have we actually killed, etc.
+
+These *facts* can then be used to trigger any number of things to happen. 
+
+And we have it all done, ready to go out of the box. Sort of. We just need to dust it off and understand it again. 
+
+Oooh, and fucking voice acting. Hows about that!? 
 
 
 ## What's up with the name, anyways?
@@ -589,7 +595,7 @@ Det här gör vi på det gamla vanliga sättet. Vi bygger en box2d-värld, vi kl
 
 Oj oj oj,  vad roligt. Vi kan göra en box2d-kropp med leder, per tutorials etc. Superkul ju.
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbMTAyMzM5ODQwNCwxMTQwNjM4MzU3LDE4OT
+eyJoaXN0b3J5IjpbLTI4Nzg2OTQ2NCwxMTQwNjM4MzU3LDE4OT
 UxMTIyNjYsLTUzOTQ2MDE5MCw2NTYzMzI1MjcsLTExMDAxNzY0
 NTYsMzQwOTc5NTIsMTAzMjIzMjU3NCwxMjgwNDkyMTUyLC0zNj
 kyMzg1MjksMzMxMTUwNjcxLDIwOTY2MTI4NTEsLTEwODQ2OTA4
