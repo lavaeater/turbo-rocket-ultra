@@ -6,7 +6,7 @@ The next feature in the game must be more robust, more additive to the concept a
 
 Yes, what does that actually mean? What should be added from here on out? Well, it's obvious, ain't it? We need **story beats**. Story beats are "scripted events", "quests", shit to get done to move to the next level.
 
-It could be killing the boss, finding the orbs, getting to a certain spot on the map, anything. 
+It could be killing the boss, finding the orbs, getting to a certain spot on the map, anything. Yes, this is it. This is the big one. And I know exactly the thing to get it done: Stories and quests from Kids From The Wasteland, of course. What on earth do I mean by that? Well, I simply mean that we need to keep track of *Facts* in this game world of ours. These facts could be anything, like, have player A been to room 18, or how many zombies of type 1A have we actually killed, etc
 
 
 ## What's up with the name, anyways?
@@ -589,11 +589,11 @@ Det här gör vi på det gamla vanliga sättet. Vi bygger en box2d-värld, vi kl
 
 Oj oj oj,  vad roligt. Vi kan göra en box2d-kropp med leder, per tutorials etc. Superkul ju.
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbLTIwNjA5ODIzNjcsMTE0MDYzODM1NywxOD
-k1MTEyMjY2LC01Mzk0NjAxOTAsNjU2MzMyNTI3LC0xMTAwMTc2
-NDU2LDM0MDk3OTUyLDEwMzIyMzI1NzQsMTI4MDQ5MjE1MiwtMz
-Y5MjM4NTI5LDMzMTE1MDY3MSwyMDk2NjEyODUxLC0xMDg0Njkw
-ODYzLC0yMzg3NjIwNCwtMTUyODMxMTQ0NCwtMTQyOTUzMDk0MC
-wtMTk1NDM2NDA3OCwxNzYxMzQ3MzU5LDE3MzA5MDI4NzIsLTE0
-ODEwMjg2MjZdfQ==
+eyJoaXN0b3J5IjpbMTAyMzM5ODQwNCwxMTQwNjM4MzU3LDE4OT
+UxMTIyNjYsLTUzOTQ2MDE5MCw2NTYzMzI1MjcsLTExMDAxNzY0
+NTYsMzQwOTc5NTIsMTAzMjIzMjU3NCwxMjgwNDkyMTUyLC0zNj
+kyMzg1MjksMzMxMTUwNjcxLDIwOTY2MTI4NTEsLTEwODQ2OTA4
+NjMsLTIzODc2MjA0LC0xNTI4MzExNDQ0LC0xNDI5NTMwOTQwLC
+0xOTU0MzY0MDc4LDE3NjEzNDczNTksMTczMDkwMjg3MiwtMTQ4
+MTAyODYyNl19
 -->
