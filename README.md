@@ -1,5 +1,12 @@
 # turbo-rocket-ultra
 
+## NEWEST THOUGHTS
+
+The next feature in the game must be more robust, more additive to the concept and gameplay. No more diddly-daddling of adding bits and pieces, what we need next is that thing that makes it feel like a *story* or *proper game*, whatever that means.
+
+Yes, what does that actually m
+
+
 ## What's up with the name, anyways?
 
 The name of this repository is an homage to the first game I made with libgdx / kotlin and that game was an homage to the classic Amiga game Turbo Raketti (https://en.wikipedia.org/wiki/Turboraketti) that me and some friends played back in the 90s on our Amigas. It's a simple enough Thrust-clone with racing modes and fantastic dog fights. Endless replayability. It represents the holy grail, a fun game that should be *doable*, you know, for a person with no knowledge of how to code or do games. However, the game that I am currently working on in this repository is absolutely not a Turbo Raketti clone. It's just a name.
@@ -580,11 +587,11 @@ Det här gör vi på det gamla vanliga sättet. Vi bygger en box2d-värld, vi kl
 
 Oj oj oj,  vad roligt. Vi kan göra en box2d-kropp med leder, per tutorials etc. Superkul ju.
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbMTE0MDYzODM1NywxODk1MTEyMjY2LC01Mz
-k0NjAxOTAsNjU2MzMyNTI3LC0xMTAwMTc2NDU2LDM0MDk3OTUy
-LDEwMzIyMzI1NzQsMTI4MDQ5MjE1MiwtMzY5MjM4NTI5LDMzMT
-E1MDY3MSwyMDk2NjEyODUxLC0xMDg0NjkwODYzLC0yMzg3NjIw
-NCwtMTUyODMxMTQ0NCwtMTQyOTUzMDk0MCwtMTk1NDM2NDA3OC
-wxNzYxMzQ3MzU5LDE3MzA5MDI4NzIsLTE0ODEwMjg2MjYsMTk0
-MjU4NzAwMV19
+eyJoaXN0b3J5IjpbNDYzOTI4MjYyLDExNDA2MzgzNTcsMTg5NT
+ExMjI2NiwtNTM5NDYwMTkwLDY1NjMzMjUyNywtMTEwMDE3NjQ1
+NiwzNDA5Nzk1MiwxMDMyMjMyNTc0LDEyODA0OTIxNTIsLTM2OT
+IzODUyOSwzMzExNTA2NzEsMjA5NjYxMjg1MSwtMTA4NDY5MDg2
+MywtMjM4NzYyMDQsLTE1MjgzMTE0NDQsLTE0Mjk1MzA5NDAsLT
+E5NTQzNjQwNzgsMTc2MTM0NzM1OSwxNzMwOTAyODcyLC0xNDgx
+MDI4NjI2XX0=
 -->
