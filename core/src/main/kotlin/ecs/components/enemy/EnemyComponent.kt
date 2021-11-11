@@ -34,8 +34,9 @@ class EnemyComponent : Component, Pool.Poolable {
     }
 
     override fun reset() {
-        fieldOfView = 180f
+        fieldOfView = 90f
         speed = 2.5f
+        viewDistance = 30f
         directionVector.set(Vector2.Zero)
         health = 100
         timeRemaining = 0f

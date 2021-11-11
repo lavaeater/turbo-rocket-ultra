@@ -52,7 +52,19 @@ class SeekPlayerSystem : IteratingSystem(allOf(SeekPlayer::class).get(), 100) {
                 val unitVectorRange = -1f..1f
                 seekComponent.scanVector.set(unitVectorRange.random(), unitVectorRange.random()).nor()
             }
+
+            seekComponent.scanPolygon = createScanPolygon(
+                enemyPosition,
+                seekComponent.scanVector,
+                seekComponent.viewDistance,
+                seekComponent.fieldOfView,
+                seekComponent.scanResolution
+            )
             seekComponent.needsScanVector = false
+
+            // We shall now build a SCAN POLYGON
+            //And to be honest, the easiest way is to make like five smaller triangles, because
+
         }
 
         if (!seekComponent.foundAPlayer && seekComponent.coolDown > 0f) {
@@ -67,38 +79,38 @@ class SeekPlayerSystem : IteratingSystem(allOf(SeekPlayer::class).get(), 100) {
                 if (!seekComponent.foundAPlayer) {
                     val playerPosition = player.getComponent<TransformComponent>().position
 
-                    seekComponent.scanVectorStart.set(enemyPosition)
+//                    seekComponent.scanVectorStart.set(enemyPosition)
+//
+//                    val scanVectorRotated = seekComponent.scanVector.cpy()
+//                        .setAngleDeg(seekComponent.scanVector.angleDeg() - seekComponent.fieldOfView / 2)
+//
+//                    seekComponent.scanVectorEnd.set(seekComponent.scanVectorStart)
+//                        .add(scanVectorRotated)
+//                        .sub(seekComponent.scanVectorStart)
+//                        .scl(seekComponent.viewDistance)
+//                        .add(seekComponent.scanVectorStart)
+//                        .add(scanVectorRotated)
+//
+//                    scanVectorRotated.setAngleDeg(scanVectorRotated.angleDeg() + seekComponent.fieldOfView)
+//
+//                    val end2 = vec2().set(seekComponent.scanVectorStart)
+//                        .add(scanVectorRotated)
+//                        .sub(seekComponent.scanVectorStart)
+//                        .scl(seekComponent.viewDistance)
+//                        .add(seekComponent.scanVectorStart)
+//                        .add(scanVectorRotated)
 
-                    val scanVectorRotated = seekComponent.scanVector.cpy()
-                        .setAngleDeg(seekComponent.scanVector.angleDeg() - seekComponent.fieldOfView / 2)
 
-                    seekComponent.scanVectorEnd.set(seekComponent.scanVectorStart)
-                        .add(scanVectorRotated)
-                        .sub(seekComponent.scanVectorStart)
-                        .scl(seekComponent.viewDistance)
-                        .add(seekComponent.scanVectorStart)
-                        .add(scanVectorRotated)
-
-                    scanVectorRotated.setAngleDeg(scanVectorRotated.angleDeg() + seekComponent.fieldOfView)
-
-                    val end2 = vec2().set(seekComponent.scanVectorStart)
-                        .add(scanVectorRotated)
-                        .sub(seekComponent.scanVectorStart)
-                        .scl(seekComponent.viewDistance)
-                        .add(seekComponent.scanVectorStart)
-                        .add(scanVectorRotated)
-
-
-                    val triangle = Polygon(
-                        arrayOf(
-                            seekComponent.scanVectorStart.x,
-                            seekComponent.scanVectorStart.y,
-                            seekComponent.scanVectorEnd.x,
-                            seekComponent.scanVectorEnd.y,
-                            end2.x,
-                            end2.y
-                        ).toFloatArray()
-                    )
+//                    val triangle = Polygon(
+//                        arrayOf(
+//                            seekComponent.scanVectorStart.x,
+//                            seekComponent.scanVectorStart.y,
+//                            seekComponent.scanVectorEnd.x,
+//                            seekComponent.scanVectorEnd.y,
+//                            end2.x,
+//                            end2.y
+//                        ).toFloatArray()
+//                    )
 
 //                    shapeDrawer.batch.use {
 //                        shapeDrawer.filledTriangle(
@@ -109,8 +121,7 @@ class SeekPlayerSystem : IteratingSystem(allOf(SeekPlayer::class).get(), 100) {
 //                        )
 //                    }
 
-                    if (triangle.contains(playerPosition)) {
-
+                    if (seekComponent.scanPolygon.contains(playerPosition)) {
                         world().rayCast(
                             enemyPosition,
                             playerPosition
@@ -123,10 +134,12 @@ class SeekPlayerSystem : IteratingSystem(allOf(SeekPlayer::class).get(), 100) {
                             }
                             RayCast.CONTINUE
                         }
-//
-//                        shapeDrawer.batch.use {
-//                            shapeDrawer.line(enemyPosition, pointOfHit, Color.RED, .5f)
-//                        }
+
+                        shapeDrawer.batch.use {
+                            shapeDrawer.setColor(Color(0f, 1f, 0f, 0.5f))
+                            shapeDrawer.filledPolygon(seekComponent.scanPolygon.vertices)
+                            shapeDrawer.line(enemyPosition, pointOfHit, Color.RED, .5f)
+                        }
                         if (closestFixture.isPlayer()) {
                             seekComponent.foundAPlayer = true
 //                            seekComponent.foundPlayer = player
@@ -154,6 +167,33 @@ class SeekPlayerSystem : IteratingSystem(allOf(SeekPlayer::class).get(), 100) {
             Task.Status.SUCCEEDED
         else
             Task.Status.FAILED
+    }
+
+    fun createScanPolygon(
+        start: Vector2,
+        viewDirection: Vector2,
+        viewDistance: Float,
+        fov: Float,
+        step: Float
+    ): Polygon {
+        val numberOfSteps = (fov / step).toInt()
+
+        val direction = viewDirection.cpy().setAngleDeg(viewDirection.angleDeg() - (fov / 2) - step)
+        val points = mutableListOf<Vector2>()
+        points.add(start)
+        for (i in 0..numberOfSteps) {
+            direction.setAngleDeg(direction.angleDeg() + step)
+            val pointToAdd = vec2(start.x, start.y)
+                .add(direction)
+                .sub(start)
+                .scl(viewDistance)
+                .add(start)
+                .add(direction)
+            points.add(pointToAdd)
+        }
+        val floatArray = points.map { listOf(it.x, it.y) }.flatten().toFloatArray()
+        val returnPolygon = Polygon(floatArray)
+        return returnPolygon
     }
 
 }

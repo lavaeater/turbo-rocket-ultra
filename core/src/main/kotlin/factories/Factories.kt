@@ -416,9 +416,9 @@ fun boss(at: Vector2, level: Int) {
         with<EnemySensorComponent>()
         with<TackleComponent>()
         with<EnemyComponent> {
-            fieldOfView = 180f
+            fieldOfView = 270f
             rushSpeed = 15f + level * 1.5f
-            viewDistance = 80f
+            viewDistance = 40f + 5f* level
             health = 1000 * level
         }
         with<AnimatedCharacterComponent> {
