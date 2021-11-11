@@ -12,7 +12,9 @@ These *facts* can then be used to trigger any number of things to happen.
 
 And we have it all done, ready to go out of the box. Sort of. We just need to dust it off and understand it again. 
 
-Oooh, and fucking voice acting. Hows about that!? 
+Oooh, and fucking voice acting. Hows about that!?
+
+So, what we are talking about is the most important MVP feature of them all: **STORY MODE!!** 
 
 
 ## What's up with the name, anyways?
@@ -36,6 +38,7 @@ To make the graphics and environment easy I am currently working with the concep
 
 Lets try to prioritize these into what would make the game seem "done" the fastest.
 
+- [ ] **STORY MODE**
 - [ ] More Enemy Sprites (generate them)
 - [ ] Lightmaps for sprites
 - [ ] Soundscape II - the Moaning
@@ -595,7 +598,7 @@ Det här gör vi på det gamla vanliga sättet. Vi bygger en box2d-värld, vi kl
 
 Oj oj oj,  vad roligt. Vi kan göra en box2d-kropp med leder, per tutorials etc. Superkul ju.
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbLTI4Nzg2OTQ2NCwxMTQwNjM4MzU3LDE4OT
+eyJoaXN0b3J5IjpbMTQ4NjAzMDY0OSwxMTQwNjM4MzU3LDE4OT
 UxMTIyNjYsLTUzOTQ2MDE5MCw2NTYzMzI1MjcsLTExMDAxNzY0
 NTYsMzQwOTc5NTIsMTAzMjIzMjU3NCwxMjgwNDkyMTUyLC0zNj
 kyMzg1MjksMzMxMTUwNjcxLDIwOTY2MTI4NTEsLTEwODQ2OTA4
