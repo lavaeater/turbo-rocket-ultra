@@ -4,7 +4,9 @@
 
 The next feature in the game must be more robust, more additive to the concept and gameplay. No more diddly-daddling of adding bits and pieces, what we need next is that thing that makes it feel like a *story* or *proper game*, whatever that means.
 
-Yes, what does that actually m
+Yes, what does that actually mean? What should be added from here on out? Well, it's obvious, ain't it? We need **story beats**. Story beats are "scripted events", "quests", shit to get done to move to the next level.
+
+It could be killing the boss, finding the orbs, getting to a certain spot on the map, anything. 
 
 
 ## What's up with the name, anyways?
@@ -587,11 +589,11 @@ Det här gör vi på det gamla vanliga sättet. Vi bygger en box2d-värld, vi kl
 
 Oj oj oj,  vad roligt. Vi kan göra en box2d-kropp med leder, per tutorials etc. Superkul ju.
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbNDYzOTI4MjYyLDExNDA2MzgzNTcsMTg5NT
-ExMjI2NiwtNTM5NDYwMTkwLDY1NjMzMjUyNywtMTEwMDE3NjQ1
-NiwzNDA5Nzk1MiwxMDMyMjMyNTc0LDEyODA0OTIxNTIsLTM2OT
-IzODUyOSwzMzExNTA2NzEsMjA5NjYxMjg1MSwtMTA4NDY5MDg2
-MywtMjM4NzYyMDQsLTE1MjgzMTE0NDQsLTE0Mjk1MzA5NDAsLT
-E5NTQzNjQwNzgsMTc2MTM0NzM1OSwxNzMwOTAyODcyLC0xNDgx
-MDI4NjI2XX0=
+eyJoaXN0b3J5IjpbLTIwNjA5ODIzNjcsMTE0MDYzODM1NywxOD
+k1MTEyMjY2LC01Mzk0NjAxOTAsNjU2MzMyNTI3LC0xMTAwMTc2
+NDU2LDM0MDk3OTUyLDEwMzIyMzI1NzQsMTI4MDQ5MjE1MiwtMz
+Y5MjM4NTI5LDMzMTE1MDY3MSwyMDk2NjEyODUxLC0xMDg0Njkw
+ODYzLC0yMzg3NjIwNCwtMTUyODMxMTQ0NCwtMTQyOTUzMDk0MC
+wtMTk1NDM2NDA3OCwxNzYxMzQ3MzU5LDE3MzA5MDI4NzIsLTE0
+ODEwMjg2MjZdfQ==
 -->
