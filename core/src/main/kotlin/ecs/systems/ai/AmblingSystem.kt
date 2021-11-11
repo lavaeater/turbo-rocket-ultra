@@ -22,7 +22,7 @@ class AmblingSystem : IteratingSystem(allOf(Amble::class, EnemyComponent::class)
         if (component.status == Task.Status.RUNNING) {
             component.coolDown -= deltaTime
             if (component.coolDown <= 0f)
-                component.status = Task.Status.FAILED
+                component.status = Task.Status.SUCCEEDED
         }
     }
 }

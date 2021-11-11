@@ -2,13 +2,20 @@ package ecs.systems.graphics
 
 import com.badlogic.ashley.core.Entity
 import com.badlogic.ashley.systems.SortedIteratingSystem
+import com.badlogic.gdx.ai.steer.behaviors.Seek
+import com.badlogic.gdx.graphics.Color
 import com.badlogic.gdx.graphics.g2d.Batch
+import ecs.components.ai.SeekPlayer
 import ecs.components.gameplay.TransformComponent
 import ecs.components.graphics.TextureComponent
 import ktx.ashley.allOf
+import ktx.collections.toGdxArray
 import ktx.graphics.use
+import ktx.math.vec2
 import physics.drawScaled
 import physics.getComponent
+import physics.has
+import tru.Assets
 
 @OptIn(ExperimentalStdlibApi::class)
 class SimpleRenderSystem(
@@ -41,6 +48,8 @@ class SimpleRenderSystem(
 ) {
     private val pixelsPerMeter = 16f
     private val scale = 1 / pixelsPerMeter
+    private val debug = true
+    private val shapeDrawer by lazy { Assets.shapeDrawer }
 
     override fun update(deltaTime: Float) {
         forceSort()

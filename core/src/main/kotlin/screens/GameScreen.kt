@@ -53,7 +53,7 @@ class GameScreen(private val gameState: StateMachine<GameState, GameEvent>) : Kt
         const val CAR_DENSITY = .3f
         const val SHIP_LINEAR_DAMPING = 20f
         const val SHIP_ANGULAR_DAMPING = 20f
-        const val MAX_ENEMIES = 600
+        const val MAX_ENEMIES = 512
 
         const val GAMEWIDTH = 64f
         const val GAMEHEIGHT = 48f
@@ -233,7 +233,7 @@ D1B67A
         engine.removeAllEntities(allOf(ObstacleComponent::class).get())
 
         //For debuggin we will swarm with enemies
-        CounterObject.numberOfEnemies = MAX_ENEMIES //(8f.pow(CounterObject.currentLevel).roundToInt() * 2).coerceAtMost(MAX_ENEMIES)
+        CounterObject.numberOfEnemies = (8f.pow(CounterObject.currentLevel).roundToInt() * 2).coerceAtMost(MAX_ENEMIES)
 
         mapManager.gridMap = GridMapGenerator.generate(CounterObject.currentLength, level)
         CounterObject.numberOfObjectives = engine.getEntitiesFor(allOf(ObjectiveComponent::class).get()).count()

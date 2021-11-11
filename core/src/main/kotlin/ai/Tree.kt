@@ -23,7 +23,7 @@ object Tree {
                 })
             last(
                 selector<Entity> {
-                    first(entityDo<Amble>())
+                    first(invert(entityDo<Amble>()))
                     then(invert(entityDo<SeekPlayer>()))
                     last(invert(entityDo<ChasePlayer>()))
                 })

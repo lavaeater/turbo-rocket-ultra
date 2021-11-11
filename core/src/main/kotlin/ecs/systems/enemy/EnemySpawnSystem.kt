@@ -7,10 +7,8 @@ import ecs.components.enemy.EnemySpawnerComponent
 import ecs.components.gameplay.TransformComponent
 import factories.enemy
 import ktx.ashley.allOf
-import org.w3c.dom.css.Counter
 import physics.getComponent
 import screens.CounterObject
-import screens.GameScreen
 
 class EnemySpawnSystem : IteratingSystem(allOf(EnemySpawnerComponent::class, TransformComponent::class).get()) {
     val enemyCount get() = engine.getEntitiesFor(allOf(EnemyComponent::class).get()).count()

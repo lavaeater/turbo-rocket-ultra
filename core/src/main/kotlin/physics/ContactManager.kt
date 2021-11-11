@@ -91,17 +91,15 @@ class ContactManager: ContactListener {
                 val objectiveComponent = cEntity.getComponent<ObjectiveComponent>()
                 if(!objectiveComponent.touched)
                     contact.getPlayerFor().touchObjective(objectiveComponent)
-
-                //Switch texture, mate!
-                //(cEntity.getComponent<RenderableComponent>()?.renderable as RenderableBox)?.color = Color.PURPLE
                 objectiveComponent.touched = true
+                cEntity.getComponent<LightComponent>().light.isActive = true
             }
             if(contact.noSensors() && contact.atLeastOneHas<TackleComponent>() ) {
                 val enemy = contact.getEntityFor<TackleComponent>()
                 val player = contact.getOtherEntity(enemy)
                 val playerBody = player.body()
                 playerBody.applyLinearImpulse(enemy.getComponent<EnemyComponent>().directionVector.cpy().scl(100f), player.getComponent<TransformComponent>().position, true)
-                //player.getComponent<PlayerComponent>().player.health -= (40..80).random()
+                player.getComponent<PlayerComponent>().player.health -= (5..40).random()
             }
         }
 

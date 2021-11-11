@@ -17,10 +17,7 @@ import ecs.components.enemy.EnemyComponent
 import ecs.components.enemy.EnemySensorComponent
 import ecs.components.enemy.TackleComponent
 import ecs.components.fx.SplatterComponent
-import ecs.components.gameplay.BulletComponent
-import ecs.components.gameplay.ObjectiveComponent
-import ecs.components.gameplay.ObstacleComponent
-import ecs.components.gameplay.TransformComponent
+import ecs.components.gameplay.*
 import ecs.components.graphics.*
 import ecs.components.graphics.AnimatedCharacterComponent
 import ecs.components.pickups.LootComponent
@@ -260,6 +257,12 @@ fun lootBox(at: Vector2, lootDrop: List<ILoot>) {
             filter {
                 categoryBits = Box2dCategories.loot
                 maskBits = Box2dCategories.players or Box2dCategories.lights
+            }
+        }
+        circle(2f) {
+            filter {
+                categoryBits = Box2dCategories.loot
+                maskBits = Box2dCategories.players
             }
         }
     }
@@ -511,6 +514,10 @@ fun objective(
             color = Color.GREEN
         }
         with<ObjectiveComponent>()
+        with<LightComponent> {
+            light.position = box2dBody.position
+            light.isStaticLight = true
+        }
     }
     box2dBody.userData = entity
     return box2dBody

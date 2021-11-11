@@ -9,7 +9,6 @@ import com.badlogic.gdx.graphics.OrthographicCamera
 import com.badlogic.gdx.graphics.g2d.Batch
 import com.badlogic.gdx.graphics.g2d.PolygonSpriteBatch
 import com.badlogic.gdx.utils.viewport.ExtendViewport
-import ecs.components.ai.boss.RushPlayer
 import ecs.systems.*
 import ecs.systems.ai.*
 import ecs.systems.ai.boss.RushPlayerSystem
@@ -77,7 +76,7 @@ object Context {
             addSystem(GamepadInputSystem())
             addSystem(BodyDestroyerSystem(inject())) //world
             addSystem(CharacterWalkAndShootDirectionSystem())
-            addSystem(NewPlayerShootingSystem(inject()))
+            addSystem(PlayerShootingSystem(inject()))
             //addSystem(BulletSpeedSystem())
             addSystem(EnemyDeathSystem())
             addSystem(EnemyMovementSystem())
@@ -85,8 +84,7 @@ object Context {
             addSystem(AmblingSystem())
             addSystem(BehaviorTreeSystem())
             addSystem(ChasePlayerSystem())
-//            addSystem(SeekingPlayerSystem())
-            addSystem(SeekingPlayerDotProductSystem())
+            addSystem(SeekPlayerSystem())
             addSystem(AttackPlayerSystem())
             addSystem(EnemyDirectionSystem())
             addSystem(EnemyHearsShotsSystem())
