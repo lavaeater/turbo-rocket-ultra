@@ -136,9 +136,9 @@ class SeekPlayerSystem : IteratingSystem(allOf(SeekPlayer::class).get(), 100) {
                         }
 
                         shapeDrawer.batch.use {
-                            shapeDrawer.setColor(Color(0f, 1f, 0f, 0.5f))
+                            shapeDrawer.setColor(Color(0f, 1f, 0f, 0.1f))
                             shapeDrawer.filledPolygon(seekComponent.scanPolygon.vertices)
-                            shapeDrawer.line(enemyPosition, pointOfHit, Color.RED, .5f)
+                            shapeDrawer.line(enemyPosition, pointOfHit, Color(1f, 0f, 0f, 0.1f), .2f)
                         }
                         if (closestFixture.isPlayer()) {
                             seekComponent.foundAPlayer = true
