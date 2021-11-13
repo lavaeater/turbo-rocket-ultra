@@ -20,6 +20,14 @@ So, what we are talking about is the most important MVP feature of them all: **S
 
 Random thoughts: Story mode should be able to design a room or level entirely - or provide more input for the generator. 
 
+### MVP for now
+
+- [ ] Show a splash from the story system
+- [ ] Put boss kill requirement in story
+- [ ] Put level end requirements in story (like special pickups, touching objectives etc)
+
+
+
 ## What's up with the name, anyways?
 
 The name of this repository is an homage to the first game I made with libgdx / kotlin and that game was an homage to the classic Amiga game Turbo Raketti (https://en.wikipedia.org/wiki/Turboraketti) that me and some friends played back in the 90s on our Amigas. It's a simple enough Thrust-clone with racing modes and fantastic dog fights. Endless replayability. It represents the holy grail, a fun game that should be *doable*, you know, for a person with no knowledge of how to code or do games. However, the game that I am currently working on in this repository is absolutely not a Turbo Raketti clone. It's just a name.
@@ -601,11 +609,11 @@ Det här gör vi på det gamla vanliga sättet. Vi bygger en box2d-värld, vi kl
 
 Oj oj oj,  vad roligt. Vi kan göra en box2d-kropp med leder, per tutorials etc. Superkul ju.
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbMzM1OTU3NDU2LDExNDA2MzgzNTcsMTg5NT
-ExMjI2NiwtNTM5NDYwMTkwLDY1NjMzMjUyNywtMTEwMDE3NjQ1
-NiwzNDA5Nzk1MiwxMDMyMjMyNTc0LDEyODA0OTIxNTIsLTM2OT
-IzODUyOSwzMzExNTA2NzEsMjA5NjYxMjg1MSwtMTA4NDY5MDg2
-MywtMjM4NzYyMDQsLTE1MjgzMTE0NDQsLTE0Mjk1MzA5NDAsLT
-E5NTQzNjQwNzgsMTc2MTM0NzM1OSwxNzMwOTAyODcyLC0xNDgx
-MDI4NjI2XX0=
+eyJoaXN0b3J5IjpbLTEyMTEyNzAzNzAsLTIxMTkxNTk0NzEsMz
+M1OTU3NDU2LDExNDA2MzgzNTcsMTg5NTExMjI2NiwtNTM5NDYw
+MTkwLDY1NjMzMjUyNywtMTEwMDE3NjQ1NiwzNDA5Nzk1MiwxMD
+MyMjMyNTc0LDEyODA0OTIxNTIsLTM2OTIzODUyOSwzMzExNTA2
+NzEsMjA5NjYxMjg1MSwtMTA4NDY5MDg2MywtMjM4NzYyMDQsLT
+E1MjgzMTE0NDQsLTE0Mjk1MzA5NDAsLTE5NTQzNjQwNzgsMTc2
+MTM0NzM1OV19
 -->
