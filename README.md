@@ -22,6 +22,9 @@ Random thoughts: Story mode should be able to design a room or level entirely - 
 
 ### MVP for now
 
+- [ ] Show a splash from the story system
+- [ ] Put boss kill requirement in story
+- [ ] Put level end requirements in story (like special pickups, touching objectives etc)
 
 
 
@@ -606,11 +609,11 @@ Det här gör vi på det gamla vanliga sättet. Vi bygger en box2d-värld, vi kl
 
 Oj oj oj,  vad roligt. Vi kan göra en box2d-kropp med leder, per tutorials etc. Superkul ju.
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbLTIxMTkxNTk0NzEsMzM1OTU3NDU2LDExND
-A2MzgzNTcsMTg5NTExMjI2NiwtNTM5NDYwMTkwLDY1NjMzMjUy
-NywtMTEwMDE3NjQ1NiwzNDA5Nzk1MiwxMDMyMjMyNTc0LDEyOD
-A0OTIxNTIsLTM2OTIzODUyOSwzMzExNTA2NzEsMjA5NjYxMjg1
-MSwtMTA4NDY5MDg2MywtMjM4NzYyMDQsLTE1MjgzMTE0NDQsLT
-E0Mjk1MzA5NDAsLTE5NTQzNjQwNzgsMTc2MTM0NzM1OSwxNzMw
-OTAyODcyXX0=
+eyJoaXN0b3J5IjpbLTEyMTEyNzAzNzAsLTIxMTkxNTk0NzEsMz
+M1OTU3NDU2LDExNDA2MzgzNTcsMTg5NTExMjI2NiwtNTM5NDYw
+MTkwLDY1NjMzMjUyNywtMTEwMDE3NjQ1NiwzNDA5Nzk1MiwxMD
+MyMjMyNTc0LDEyODA0OTIxNTIsLTM2OTIzODUyOSwzMzExNTA2
+NzEsMjA5NjYxMjg1MSwtMTA4NDY5MDg2MywtMjM4NzYyMDQsLT
+E1MjgzMTE0NDQsLTE0Mjk1MzA5NDAsLTE5NTQzNjQwNzgsMTc2
+MTM0NzM1OV19
 -->
