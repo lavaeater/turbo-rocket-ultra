@@ -1,4 +1,4 @@
-package gamestate
+package data
 
 import com.badlogic.ashley.core.Entity
 import com.badlogic.gdx.physics.box2d.Body

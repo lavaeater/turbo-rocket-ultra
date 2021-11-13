@@ -29,7 +29,7 @@ import features.pickups.ILoot
 import features.pickups.NullValue
 import features.weapons.AmmoType
 import features.weapons.GunDefinition
-import gamestate.Player
+import data.Player
 import injection.Context.inject
 import input.ControlMapper
 import ktx.ashley.entity

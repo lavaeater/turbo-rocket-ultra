@@ -4,6 +4,7 @@ import audio.AudioPlayer
 import box2dLight.RayHandler
 import com.badlogic.ashley.core.Engine
 import com.badlogic.ashley.core.PooledEngine
+import com.badlogic.gdx.Gdx
 import com.badlogic.gdx.graphics.Camera
 import com.badlogic.gdx.graphics.OrthographicCamera
 import com.badlogic.gdx.graphics.g2d.Batch
@@ -22,12 +23,16 @@ import ecs.systems.graphics.*
 import ecs.systems.input.GamepadInputSystem
 import ecs.systems.pickups.LootDropSystem
 import ecs.systems.player.*
+import gamestate.GameEvent
+import gamestate.GameState
 import ktx.box2d.createWorld
 import ktx.inject.Context
 import ktx.inject.register
 import map.grid.GridMapManager
 import physics.ContactManager
-import screens.GameScreen
+import screens.*
+import statemachine.StateMachine
+import story.FactsOfTheWorld
 import ui.IUserInterface
 import ui.UserInterface
 
@@ -61,6 +66,8 @@ object Context {
             bindSingleton(AudioPlayer())
             bindSingleton(GridMapManager())
             bindSingleton(RayHandler(inject(), 500, 500))
+
+            bindSingleton(FactsOfTheWorld(Gdx.app.getPreferences("TurboRocket")))
             bindSingleton(getEngine())
         }
     }

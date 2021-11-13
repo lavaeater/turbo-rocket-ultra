@@ -1,15 +1,18 @@
 package gamestate
 
-import com.badlogic.gdx.Screen
+import data.Players
+import injection.Context
 import ktx.app.KtxGame
 import ktx.app.KtxScreen
+import ktx.inject.register
 import screens.*
 import statemachine.StateMachine
 import tru.Assets
 
 class MainGame : KtxGame<KtxScreen>() {
 
-    val gameState = StateMachine.buildStateMachine<GameState, GameEvent>(GameState.Splash, ::stateChanged) {
+    val gameState by lazy {
+        val stateMachine = StateMachine.buildStateMachine<GameState, GameEvent>(GameState.Splash, ::stateChanged) {
             state(GameState.Splash) {
                 action { setScreen<SplashScreen>() }
                 edge(GameEvent.LeftSplash, GameState.Setup) {}
@@ -40,15 +43,20 @@ class MainGame : KtxGame<KtxScreen>() {
                 edge(GameEvent.ResumedGame, GameState.Running) {}
                 edge(GameEvent.ExitedGame, GameState.Setup) {}
             }
-        state(GameState.Editor) {
-            action { setScreen<CharacterEditorScreen>() }
-            edge(GameEvent.StopEditor, GameState.Setup ) {}
+            state(GameState.Editor) {
+                action { setScreen<CharacterEditorScreen>() }
+                edge(GameEvent.StopEditor, GameState.Setup) {}
+            }
+            state(GameState.Concept) {
+                action { setScreen<ConceptScreen>() }
+                edge(GameEvent.StopConcept, GameState.Setup) {}
+            }
         }
-        state(GameState.Concept) {
-            action { setScreen<ConceptScreen>() }
-            edge(GameEvent.StopConcept, GameState.Setup ) {}
+        Context.context.register {
+            bindSingleton(stateMachine)
         }
-        }
+        stateMachine
+    }
 
     private fun resetPlayers() {
         for (player in Players.players.values) {

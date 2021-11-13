@@ -12,4 +12,5 @@ sealed class GameEvent {
     object StopEditor : GameEvent()
     object StartConcept : GameEvent()
     object StopConcept : GameEvent()
+    object DialogEvent : GameEvent()
 }

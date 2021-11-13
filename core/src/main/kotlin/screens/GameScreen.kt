@@ -7,7 +7,6 @@ import com.badlogic.gdx.controllers.Controllers
 import com.badlogic.gdx.graphics.GL20
 import com.badlogic.gdx.graphics.OrthographicCamera
 import com.badlogic.gdx.graphics.g2d.PolygonSpriteBatch
-import com.badlogic.gdx.physics.box2d.Body
 import com.badlogic.gdx.physics.box2d.World
 import com.badlogic.gdx.utils.viewport.ExtendViewport
 import ecs.components.BodyComponent
@@ -15,7 +14,6 @@ import ecs.components.enemy.EnemyComponent
 import ecs.components.enemy.EnemySpawnerComponent
 import ecs.components.gameplay.ObjectiveComponent
 import ecs.components.gameplay.ObstacleComponent
-import ecs.components.gameplay.TransformComponent
 import ecs.components.player.PlayerComponent
 import ecs.systems.graphics.CameraUpdateSystem
 import ecs.systems.graphics.RenderMiniMapSystem
@@ -27,11 +25,10 @@ import ecs.systems.player.GameOverSystem
 import factories.*
 import gamestate.GameEvent
 import gamestate.GameState
-import gamestate.Players
+import data.Players
 import ktx.app.KtxScreen
 import ktx.ashley.allOf
 import ktx.ashley.getSystem
-import ktx.ashley.mapperFor
 import ktx.ashley.remove
 import map.grid.GridMapGenerator
 import map.grid.GridMapManager
