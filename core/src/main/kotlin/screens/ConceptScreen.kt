@@ -47,11 +47,11 @@ class ConceptScreen(gameState: StateMachine<GameState, GameEvent>) : BasicScreen
             var rotationDetected = false
             for (t in detectables) {
                 if (player.dst(t) < viewDistance) {
-                    rotationDetected = (acos(player.forward.dot(t.position.cpy().sub(player.position).nor())) * radiansToDegrees) < 45f
+                    rotationDetected = player.angleTo (t) < 45f //acos(player.forward.dot(t.position.cpy().sub(player.position).nor())) * radiansToDegrees)
                 }
                 rotationSectorColor = if (rotationDetected) detectedColor else notDetectedColor
                 renderPosition(t, Color.RED, Color.GREEN)
-                Assets.font.draw(batch, "rot: $rotationDetected. Rot: ${"%.2f".format(acos(player.forward.dot(player.position.cpy().sub(t.position).nor())) * radiansToDegrees) }",50f,50f)
+                Assets.font.draw(batch, "rot: $rotationDetected. Rot: ${"%.2f".format(player.angleTo(t)) }",50f,50f)
             }
             rotationSectorColor = notDetectedColor
             rotationSectorColor = if (rotationDetected) detectedColor else notDetectedColor
@@ -118,6 +118,11 @@ class ConceptScreen(gameState: StateMachine<GameState, GameEvent>) : BasicScreen
         batch.projectionMatrix = camera.combined
     }
 }
+
+fun Transform.angleTo(other: Transform) : Float {
+    return acos(this.forward.dot(other.position.cpy().sub(this.position).nor())) * radiansToDegrees
+}
+
 /***
  * Returns angle in degrees to @param positionVector
  */
