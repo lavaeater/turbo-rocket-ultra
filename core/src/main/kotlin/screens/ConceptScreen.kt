@@ -27,7 +27,6 @@ class ConceptScreen(gameState: StateMachine<GameState, GameEvent>) : BasicScreen
     val notDetectedColor = Color(0f, 0f, 1f, 0.2f)
     val fieldOfView = 90f
 
-    var aimSectorColor = notDetectedColor
     var rotationSectorColor = notDetectedColor
 
     var rotation = 45f
@@ -45,35 +44,17 @@ class ConceptScreen(gameState: StateMachine<GameState, GameEvent>) : BasicScreen
             renderPosition(player, Color.RED, Color.GREEN)
             renderAimAndMouse(player)
 
-            var aimDetected = false
             var rotationDetected = false
             for (t in detectables) {
-                aimSectorColor = notDetectedColor
-                rotationSectorColor = notDetectedColor
-                var thisIsDetectedByAim = false
-                var thisIsDetectedByRotation = false
                 if (player.dst(t) < viewDistance) {
-                    thisIsDetectedByAim = player.aimVector.angleTo(t.position) < fieldOfView / 2
-                    thisIsDetectedByRotation = player.forward.angleTo(t.position) < fieldOfView / 2
+                    rotationDetected = (acos(player.forward.dot(t.position.cpy().sub(player.position).nor())) * radiansToDegrees) < 45f
                 }
-                aimSectorColor = if (thisIsDetectedByAim) detectedColor else notDetectedColor
-                rotationSectorColor = if (thisIsDetectedByRotation) detectedColor else notDetectedColor
-                renderPosition(t, aimSectorColor, rotationSectorColor)
-                aimDetected = aimDetected || thisIsDetectedByAim
-                rotationDetected = rotationDetected || thisIsDetectedByRotation
-                Assets.font.draw(batch, "Aim: ${"%.2".format(player.aimVector.angleTo(t.position))}, Rot: ${"%.2".format(player.forward.angleTo(t.position))}",50f,50f)
+                rotationSectorColor = if (rotationDetected) detectedColor else notDetectedColor
+                renderPosition(t, Color.RED, Color.GREEN)
+                Assets.font.draw(batch, "rot: $rotationDetected. Rot: ${"%.2f".format(acos(player.forward.dot(player.position.cpy().sub(t.position).nor())) * radiansToDegrees) }",50f,50f)
             }
-            aimSectorColor = notDetectedColor
             rotationSectorColor = notDetectedColor
-            aimSectorColor = if (aimDetected) detectedColor else notDetectedColor
             rotationSectorColor = if (rotationDetected) detectedColor else notDetectedColor
-            shapeDrawer.sector(
-                player.position.x,
-                player.position.y,
-                viewDistance,
-                player.aimVector.angleRad() - 45f * degreesToRadians,
-                degreesToRadians * 90f, aimSectorColor, aimSectorColor
-            )
 
             shapeDrawer.sector(
                 player.position.x,
@@ -137,15 +118,9 @@ class ConceptScreen(gameState: StateMachine<GameState, GameEvent>) : BasicScreen
         batch.projectionMatrix = camera.combined
     }
 }
-
-
-fun Vector2.dotTowards(positionVector: Vector2): Float {
-    return this.dot(positionVector.cpy().sub(this).nor())
-}
-
 /***
  * Returns angle in degrees to @param positionVector
  */
 fun Vector2.angleTo(positionVector: Vector2): Float {
-    return (acos(this.dotTowards(positionVector)) * radiansToDegrees)
+    return (acos(this.dot(this.cpy().sub(positionVector).nor()))) * radiansToDegrees
 }
