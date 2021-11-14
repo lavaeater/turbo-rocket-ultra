@@ -2,9 +2,10 @@ package story.consequence
 
 import com.bladecoder.ink.runtime.Story
 import data.Player
-import injection.Ctx
-import managers.GameEvents
-import managers.GameState
+import gamestate.GameEvent
+import gamestate.GameState
+import injection.Context.inject
+import statemachine.StateMachine
 import story.FactsOfTheWorld
 import story.conversation.ConversationManager
 import story.conversation.InkConversation
@@ -17,24 +18,23 @@ class ConversationConsequence (
     private var beforeConversation: (story: Story)-> Unit = {}
     ): Consequence {
 
-  private val gameState by lazy { Ctx.context.inject<GameState>() }
-  private val conversationManager by lazy { Ctx.context.inject<ConversationManager>()}
-  private val factsOfTheWorld by lazy { Ctx.context.inject<FactsOfTheWorld>() }
-  private val player by lazy { Ctx.context.inject<Player>() }
+  private val gameState by lazy { inject<StateMachine<GameState, GameEvent>>() }
+  private val conversationManager by lazy { inject<ConversationManager>()}
+  private val factsOfTheWorld by lazy { inject<FactsOfTheWorld>() }
 
   override fun apply() {
 
-    val npc = factsOfTheWorld.getCurrentNpc()
-    if (npc != null) {//If null something is weird
-      gameState.handleEvent(GameEvents.DialogStarted)
-
-      beforeConversation(story)
-
-      conversationManager.startConversation(InkConversation(story, player, npc), {
-        afterConversation(story)
-        story.resetState()
-      })
-    }
+//    val npc = factsOfTheWorld.getCurrentNpc()
+//    if (npc != null) {//If null something is weird
+//      gameState.handleEvent(GameEvents.DialogStarted)
+//
+//      beforeConversation(story)
+//
+//      conversationManager.startConversation(InkConversation(story, player, npc), {
+//        afterConversation(story)
+//        story.resetState()
+//      })
+//    }
   }
   /*
 
@@ -48,8 +48,6 @@ class ConversationConsequence (
   I would like to be able to load more facts, not hardcode them, but we will see what we
   need. First some testing of my actual job, though.
    */
-
-
 
   override lateinit var rule: Rule
   override lateinit var facts: Set<IFact<*>>

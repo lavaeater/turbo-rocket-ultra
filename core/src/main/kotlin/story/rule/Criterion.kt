@@ -1,6 +1,6 @@
 package story.rule
 
-import injection.Ctx
+import injection.Context.inject
 import story.FactsOfTheWorld
 import story.fact.Facts
 import story.fact.IFact
@@ -11,7 +11,7 @@ class Criterion(val key: String, private val matcher: (IFact<*>) -> Boolean) {
   }
 
   companion object {
-    private val factsOfTheWorld by lazy { Ctx.context.inject<FactsOfTheWorld>() }
+    private val factsOfTheWorld by lazy { inject<FactsOfTheWorld>() }
 
     fun booleanCriterion(key: String, checkFor: Boolean) : Criterion {
       return Criterion(key, { it.value == checkFor })

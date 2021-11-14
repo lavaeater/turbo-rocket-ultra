@@ -23,15 +23,12 @@ import ecs.systems.graphics.*
 import ecs.systems.input.GamepadInputSystem
 import ecs.systems.pickups.LootDropSystem
 import ecs.systems.player.*
-import gamestate.GameEvent
-import gamestate.GameState
 import ktx.box2d.createWorld
 import ktx.inject.Context
 import ktx.inject.register
 import map.grid.GridMapManager
 import physics.ContactManager
 import screens.*
-import statemachine.StateMachine
 import story.FactsOfTheWorld
 import ui.IUserInterface
 import ui.UserInterface
@@ -52,7 +49,7 @@ object Context {
         context.register {
             bindSingleton(PolygonSpriteBatch())
             bindSingleton(OrthographicCamera())
-            bind<IUserInterface> { UserInterface(inject<PolygonSpriteBatch>() as Batch)}
+            bind<IUserInterface> { UserInterface(inject<PolygonSpriteBatch>() as Batch) }
             bindSingleton(
                 ExtendViewport(
                     GameScreen.GAMEWIDTH,

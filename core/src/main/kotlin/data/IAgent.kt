@@ -15,9 +15,9 @@ interface IAgent {
   var currentY: Int
 }
 
-fun IAgent.rollAgainstAgent(antagonist: IAgent, skill:String) : Boolean {
-  val resistance = if(antagonist.skills[SkillMap.resistingSkills[skill]!!] != null) antagonist.skills[SkillMap.resistingSkills[skill]!!]!! else 0
-  val skillValue = this.skills[skill]!! - resistance
-
-  return MathUtils.random(1,99) + 1 < skillValue
-}
+//fun IAgent.rollAgainstAgent(antagonist: IAgent, skill:String) : Boolean {
+//  val resistance = if(antagonist.skills[SkillMap.resistingSkills[skill]!!] != null) antagonist.skills[SkillMap.resistingSkills[skill]!!]!! else 0
+//  val skillValue = this.skills[skill]!! - resistance
+//
+//  return MathUtils.random(1,99) + 1 < skillValue
+//}

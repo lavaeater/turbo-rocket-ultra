@@ -27,6 +27,15 @@ object Assets : Disposable {
 
     lateinit var am: AssetManager
 
+
+    val speechBTexture by lazy { Texture(Gdx.files.internal("ui/graphics/speechbubble.png")) }
+    val speechBubble by lazy { NinePatch(speechBTexture, 14, 8,12,12) }
+
+    val tableNinePatch by lazy { Texture(Gdx.files.internal("ui/graphics/convobackground.png"))}
+    val tableBackGround by lazy { NinePatch(tableNinePatch, 4, 4, 4, 4 ) }
+
+    val portrait by lazy { Texture(Gdx.files.internal("portraits/portrait.png"))}
+
     val characters: Map<String, Map<AnimState, LpcCharacterAnim<OffsetTextureRegion>>> by lazy {
         SpriteLoader.initCharachterAnims()
     }

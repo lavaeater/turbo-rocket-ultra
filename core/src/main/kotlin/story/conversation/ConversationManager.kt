@@ -4,7 +4,7 @@ import gamestate.GameEvent
 import gamestate.GameState
 import injection.Context.inject
 import statemachine.StateMachine
-import ui.IUserInterface
+import wastelandui.IUserInterface
 
 class ConversationManager(
     private val ui: IUserInterface

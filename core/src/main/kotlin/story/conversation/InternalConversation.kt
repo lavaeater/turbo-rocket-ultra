@@ -1,15 +1,13 @@
 package story.conversation
 
-import data.EmptyAgent
 import data.IAgent
-import data.Player
-import injection.Ctx
+import injection.Context.inject
 
 class InternalConversation(private val startingStepKey:String, private val conversationSteps: Map<String, ConversationStep>, override val antagonist: IAgent = EmptyAgent()) : IConversation {
 
   var currentStep: ConversationStep = conversationSteps[startingStepKey]!!
 
-  override val protagonist: IAgent by lazy { Ctx.context.inject<Player>() }
+  override val protagonist: IAgent by lazy { inject<EmptyAgent>() }
   override val antagonistCanSpeak: Boolean
     get() = currentStep.antagonistLines.any()
   override val protagonistCanChoose: Boolean
