@@ -3,12 +3,14 @@ package screens
 import com.badlogic.gdx.Input
 import com.badlogic.gdx.graphics.Color
 import com.badlogic.gdx.graphics.OrthographicCamera
-import com.badlogic.gdx.math.MathUtils.degreesToRadians
+import com.badlogic.gdx.math.MathUtils.*
+import com.badlogic.gdx.math.Vector2
 import com.badlogic.gdx.utils.viewport.ExtendViewport
 import input.Transform
 import gamestate.GameEvent
 import gamestate.GameState
 import ktx.graphics.use
+import ktx.math.minus
 import ktx.math.vec2
 import ktx.math.vec3
 import statemachine.StateMachine
@@ -18,40 +20,68 @@ class ConceptScreen(gameState: StateMachine<GameState, GameEvent>) : BasicScreen
     override val camera = OrthographicCamera()
     override val viewport = ExtendViewport(200f, 200f, camera)
     val shapeDrawer by lazy { Assets.shapeDrawer }
-    val transform: Transform = Transform(vec2(50f,50f))
-    val detectables = listOf(Transform(vec2(72f,75f)))
-    val aimSectorColor = Color(0f,0f,1f,0.2f)
-    val rotationSectorColor = Color(0f,1f,0f,0.2f)
+    val player: Transform = Transform(vec2(100f, 100f))
+    val mouseTransform = Transform(vec2())
+    val detectables = listOf(mouseTransform)
+    val detectedColor = Color(0f, 1f, 0f, 0.2f)
+    val notDetectedColor = Color(0f, 0f, 1f, 0.2f)
+    val fieldOfView = 90f
+
+    var aimSectorColor = notDetectedColor
+    var rotationSectorColor = notDetectedColor
+
     var rotation = 45f
+    val viewDistance = 100f
 
 
     override fun render(delta: Float) {
         super.render(delta)
 
-        transform.rotate(rotation * delta)
-4
+        player.rotate(rotation * delta)
+        4
         batch.use {
             shapeDrawer.pixelSize = 1f
             shapeDrawer.setColor(Color.RED)
-            renderPosition(transform, Color.RED, Color.GREEN)
-            renderAimAndMouse(transform)
-            shapeDrawer.sector(
-                transform.position.x,
-                transform.position.y,
-                100f,
-                transform.aimVector.angleRad() - 45f * degreesToRadians,
-                degreesToRadians * 90f, aimSectorColor, aimSectorColor)
+            renderPosition(player, Color.RED, Color.GREEN)
+            renderAimAndMouse(player)
 
-            shapeDrawer.sector(
-                transform.position.x,
-                transform.position.y,
-                100f,
-                transform.forward.angleRad() - 45f * degreesToRadians,
-                degreesToRadians * 90f, rotationSectorColor, rotationSectorColor)
-
-            for(t in detectables) {
-                renderPosition(t, Color.PURPLE, Color.CORAL)
+            var aimDetected = false
+            var rotationDetected = false
+            for (t in detectables) {
+                aimSectorColor = notDetectedColor
+                rotationSectorColor = notDetectedColor
+                var thisIsDetectedByAim = false
+                var thisIsDetectedByRotation = false
+                if (player.dst(t) < viewDistance) {
+                    thisIsDetectedByAim = player.aimVector.angleTo(t.position) < fieldOfView / 2
+                    thisIsDetectedByRotation = player.forward.angleTo(t.position) < fieldOfView / 2
+                }
+                aimSectorColor = if (thisIsDetectedByAim) detectedColor else notDetectedColor
+                rotationSectorColor = if (thisIsDetectedByRotation) detectedColor else notDetectedColor
+                renderPosition(t, aimSectorColor, rotationSectorColor)
+                aimDetected = aimDetected || thisIsDetectedByAim
+                rotationDetected = rotationDetected || thisIsDetectedByRotation
+                Assets.font.draw(batch, "Aim: ${"%.2".format(player.aimVector.angleTo(t.position))}, Rot: ${"%.2".format(player.forward.angleTo(t.position))}",50f,50f)
             }
+            aimSectorColor = notDetectedColor
+            rotationSectorColor = notDetectedColor
+            aimSectorColor = if (aimDetected) detectedColor else notDetectedColor
+            rotationSectorColor = if (rotationDetected) detectedColor else notDetectedColor
+            shapeDrawer.sector(
+                player.position.x,
+                player.position.y,
+                viewDistance,
+                player.aimVector.angleRad() - 45f * degreesToRadians,
+                degreesToRadians * 90f, aimSectorColor, aimSectorColor
+            )
+
+            shapeDrawer.sector(
+                player.position.x,
+                player.position.y,
+                viewDistance,
+                player.forward.angleRad() - 45f * degreesToRadians,
+                degreesToRadians * 90f, rotationSectorColor, rotationSectorColor
+            )
         }
     }
 
@@ -64,7 +94,7 @@ class ConceptScreen(gameState: StateMachine<GameState, GameEvent>) : BasicScreen
     }
 
     fun renderPosition(transform: Transform, positionColor: Color, indicatorColor: Color) {
-        shapeDrawer.filledCircle(transform.position,1f, positionColor)
+        shapeDrawer.filledCircle(transform.position, 2f, positionColor)
         shapeDrawer.setColor(indicatorColor)
         shapeDrawer.circle(transform.position.x, transform.position.y, 10f, 1f)
         shapeDrawer.line(transform.position, transform.forwardPoint)
@@ -77,7 +107,8 @@ class ConceptScreen(gameState: StateMachine<GameState, GameEvent>) : BasicScreen
         mousePosition3D.set(screenX.toFloat(), screenY.toFloat(), 0f)
         camera.unproject(mousePosition3D)
         mousePosition.set(mousePosition3D.x, mousePosition3D.y)
-        transform.setAimVector(mousePosition)
+        player.setAimVector(mousePosition)
+        mouseTransform.set(mousePosition)
         return true
     }
 
@@ -92,7 +123,7 @@ class ConceptScreen(gameState: StateMachine<GameState, GameEvent>) : BasicScreen
     }
 
     override fun keyUp(keycode: Int): Boolean {
-        when(keycode) {
+        when (keycode) {
             Input.Keys.A -> rotation = 0f
             Input.Keys.D -> rotation = 0f
         }
@@ -105,4 +136,16 @@ class ConceptScreen(gameState: StateMachine<GameState, GameEvent>) : BasicScreen
         camera.update()
         batch.projectionMatrix = camera.combined
     }
+}
+
+
+fun Vector2.dotTowards(positionVector: Vector2): Float {
+    return this.dot(positionVector.cpy().sub(this).nor())
+}
+
+/***
+ * Returns angle in degrees to @param positionVector
+ */
+fun Vector2.angleTo(positionVector: Vector2): Float {
+    return (acos(this.dotTowards(positionVector)) * radiansToDegrees)
 }

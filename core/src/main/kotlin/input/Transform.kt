@@ -17,6 +17,18 @@ class Transform(val position: Vector2 = vec2()) {
         _forwardPosition
     }
 
+    fun set(newPos: Vector2) {
+        position.set(newPos)
+    }
+
+    fun dst2(transform: Transform): Float {
+        return position.dst2(transform.position)
+    }
+
+    fun dst(transform: Transform): Float {
+        return position.dst(transform.position)
+    }
+
     fun setAimVector(mousePosition: Vector2) {
         aimVector.set(mousePosition).sub(position).nor()
     }
