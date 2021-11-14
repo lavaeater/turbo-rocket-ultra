@@ -9,9 +9,19 @@ class Transform(val position: Vector2 = vec2()) {
      */
     val forward: Vector2 = Vector2.X.cpy()
     val magnitude = 10f
+    val aimVector = vec2()
+
+    private val _normal = vec2()
+    val normal: Vector2 get() = run {
+        _normal.set(-forward.y, forward.x)
+        _normal
+    }
+    private val _normalPoint = vec2()
+    val normalPoint get() = run {
+        _normalPoint.set(position).add(normal.cpy().scl(magnitude))
+    }
 
     private val _forwardPosition = vec2()
-    val aimVector = vec2()
     val forwardPoint get() = run {
         _forwardPosition.set(position).add(forward.cpy().scl(magnitude))
         _forwardPosition

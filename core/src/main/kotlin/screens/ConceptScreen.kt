@@ -25,7 +25,7 @@ class ConceptScreen(gameState: StateMachine<GameState, GameEvent>) : BasicScreen
     val detectables = listOf(mouseTransform)
     val detectedColor = Color(0f, 1f, 0f, 0.2f)
     val notDetectedColor = Color(0f, 0f, 1f, 0.2f)
-    val fieldOfView = 90f
+    val fieldOfView = 270f
 
     var rotationSectorColor = notDetectedColor
 
@@ -47,11 +47,10 @@ class ConceptScreen(gameState: StateMachine<GameState, GameEvent>) : BasicScreen
             var rotationDetected = false
             for (t in detectables) {
                 if (player.dst(t) < viewDistance) {
-                    rotationDetected = player.angleTo (t) < 45f //acos(player.forward.dot(t.position.cpy().sub(player.position).nor())) * radiansToDegrees)
+                    rotationDetected = player.angleTo (t) < fieldOfView / 2
                 }
                 rotationSectorColor = if (rotationDetected) detectedColor else notDetectedColor
                 renderPosition(t, Color.RED, Color.GREEN)
-                Assets.font.draw(batch, "rot: $rotationDetected. Rot: ${"%.2f".format(player.angleTo(t)) }",50f,50f)
             }
             rotationSectorColor = notDetectedColor
             rotationSectorColor = if (rotationDetected) detectedColor else notDetectedColor
@@ -60,8 +59,8 @@ class ConceptScreen(gameState: StateMachine<GameState, GameEvent>) : BasicScreen
                 player.position.x,
                 player.position.y,
                 viewDistance,
-                player.forward.angleRad() - 45f * degreesToRadians,
-                degreesToRadians * 90f, rotationSectorColor, rotationSectorColor
+                player.forward.angleRad() - fieldOfView / 2  * degreesToRadians,
+                degreesToRadians * fieldOfView, rotationSectorColor, rotationSectorColor
             )
         }
     }
@@ -79,6 +78,7 @@ class ConceptScreen(gameState: StateMachine<GameState, GameEvent>) : BasicScreen
         shapeDrawer.setColor(indicatorColor)
         shapeDrawer.circle(transform.position.x, transform.position.y, 10f, 1f)
         shapeDrawer.line(transform.position, transform.forwardPoint)
+        shapeDrawer.line(transform.position, transform.normalPoint, Color.BLUE, 1f)
     }
 
     val mousePosition3D = vec3()
