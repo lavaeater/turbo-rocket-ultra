@@ -20,11 +20,16 @@ So, what we are talking about is the most important MVP feature of them all: **S
 
 Random thoughts: Story mode should be able to design a room or level entirely - or provide more input for the generator. 
 
+So, what are we actually going to do? 
+
+I want to use Scene2D for the UI, rolling my own is just to confusing, even for me. And too much work. 
+
 ### MVP for now
 
+- [ ] *Put level end requirements in a Story*
+	- [ ] Put boss kill requirement in story
+	- [ ] Put level end requirements in story (like special pickups, touching objectives etc)
 - [ ] Show a splash from the story system
-- [ ] Put boss kill requirement in story
-- [ ] Put level end requirements in story (like special pickups, touching objectives etc)
 
 
 
@@ -609,11 +614,11 @@ Det här gör vi på det gamla vanliga sättet. Vi bygger en box2d-värld, vi kl
 
 Oj oj oj,  vad roligt. Vi kan göra en box2d-kropp med leder, per tutorials etc. Superkul ju.
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbLTEyMTEyNzAzNzAsLTIxMTkxNTk0NzEsMz
-M1OTU3NDU2LDExNDA2MzgzNTcsMTg5NTExMjI2NiwtNTM5NDYw
-MTkwLDY1NjMzMjUyNywtMTEwMDE3NjQ1NiwzNDA5Nzk1MiwxMD
-MyMjMyNTc0LDEyODA0OTIxNTIsLTM2OTIzODUyOSwzMzExNTA2
-NzEsMjA5NjYxMjg1MSwtMTA4NDY5MDg2MywtMjM4NzYyMDQsLT
-E1MjgzMTE0NDQsLTE0Mjk1MzA5NDAsLTE5NTQzNjQwNzgsMTc2
-MTM0NzM1OV19
+eyJoaXN0b3J5IjpbLTU1MDA0MzYzMSwtMTIxMTI3MDM3MCwtMj
+ExOTE1OTQ3MSwzMzU5NTc0NTYsMTE0MDYzODM1NywxODk1MTEy
+MjY2LC01Mzk0NjAxOTAsNjU2MzMyNTI3LC0xMTAwMTc2NDU2LD
+M0MDk3OTUyLDEwMzIyMzI1NzQsMTI4MDQ5MjE1MiwtMzY5MjM4
+NTI5LDMzMTE1MDY3MSwyMDk2NjEyODUxLC0xMDg0NjkwODYzLC
+0yMzg3NjIwNCwtMTUyODMxMTQ0NCwtMTQyOTUzMDk0MCwtMTk1
+NDM2NDA3OF19
 -->
