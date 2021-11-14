@@ -30,6 +30,7 @@ import features.pickups.NullValue
 import features.weapons.AmmoType
 import features.weapons.GunDefinition
 import data.Player
+import ecs.components.enemy.BossComponent
 import injection.Context.inject
 import input.ControlMapper
 import ktx.ashley.entity
@@ -442,6 +443,7 @@ fun boss(at: Vector2, level: Int) {
         with<MiniMapComponent> {
             color = Color.RED
         }
+        with<BossComponent>() {}
     }
     entity.addComponent<BehaviorComponent> { tree = Tree.bossOne().apply { `object` = entity } }
     box2dBody.userData = entity
@@ -513,7 +515,9 @@ fun objective(
         with<MiniMapComponent> {
             color = Color.GREEN
         }
-        with<ObjectiveComponent>()
+        with<ObjectiveComponent> {
+            id = "I did this"
+        }
         with<LightComponent> {
             light.position = box2dBody.position
             light.isStaticLight = true

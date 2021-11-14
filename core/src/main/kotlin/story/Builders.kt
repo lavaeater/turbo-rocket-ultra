@@ -43,9 +43,10 @@ class StoryBuilder: Builder<Story> {
 	private val rules = mutableListOf<Rule>()
 	private var consequence: Consequence = EmptyConsequence()
 
-	fun rule(block: RuleBuilder.() -> Unit) {
+	fun storyBeat(block: RuleBuilder.() -> Unit) {
 		rules.add(RuleBuilder().apply(block).build())
 	}
+
 
 	fun consequence(block: ConsequenceBuilder.() -> Unit) {
 		consequence = ConsequenceBuilder().apply(block).build()

@@ -16,6 +16,7 @@ import ecs.systems.ai.boss.RushPlayerSystem
 import ecs.systems.ai.towers.TowerShootSystem
 import ecs.systems.ai.towers.TowerTargetFinderSystem
 import ecs.systems.enemy.*
+import ecs.systems.facts.FactSystem
 import ecs.systems.fx.BloodSplatterEffectRenderSystem
 import ecs.systems.input.KeyboardInputSystem
 import ecs.systems.fx.RenderBox2dLightSystem
@@ -30,6 +31,7 @@ import map.grid.GridMapManager
 import physics.ContactManager
 import screens.*
 import story.FactsOfTheWorld
+import story.StoryManager
 import ui.IUserInterface
 import ui.UserInterface
 
@@ -65,6 +67,7 @@ object Context {
             bindSingleton(RayHandler(inject(), 500, 500))
 
             bindSingleton(FactsOfTheWorld(Gdx.app.getPreferences("TurboRocket")))
+            bindSingleton(StoryManager())
             bindSingleton(getEngine())
         }
     }
@@ -117,6 +120,7 @@ object Context {
             addSystem(LootDropSystem())
             addSystem(AimingAidSystem(true, true))
             addSystem(GibSystem())
+            addSystem(FactSystem())
         }
     }
 }

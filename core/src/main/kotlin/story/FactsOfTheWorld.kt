@@ -43,12 +43,12 @@ class FactsOfTheWorld(private val preferences: com.badlogic.gdx.Preferences, cle
     throw IllegalArgumentException("BLAGH")
   }
 
-  fun factsForKeys(keys: Set<String>) : Sequence<IFact<*>> {
-    //A key can be "VisitedCities" or "VisitedCities.Europe" or something...
+    fun factsForKeys(keys: Set<String>): Sequence<IFact<*>> {
+        //A key can be "VisitedCities" or "VisitedCities.Europe" or something...
 
-    val facts = preferences.get().filterKeys { keys.contains(it) }.map { factForKey(it.key, it.value!! as String) }.asSequence()
-    return facts
-  }
+        return preferences.get().filterKeys { keys.contains(it) }.map { factForKey(it.key, it.value!! as String) }
+            .asSequence()
+    }
 
     /**
      *     Checks the rule, with supplied Context.

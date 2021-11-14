@@ -13,4 +13,5 @@ sealed class GameEvent {
     object StartConcept : GameEvent()
     object StopConcept : GameEvent()
     object DialogEvent : GameEvent()
+    object LevelComplete : GameEvent()
 }

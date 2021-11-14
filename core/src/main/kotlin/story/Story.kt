@@ -45,6 +45,6 @@ import story.rule.Rule
 class Story(val name:String, val rules: List<Rule>, val consequence: Consequence, val activate: () -> Unit, var active: Boolean = true) {
 	val finishedRules = mutableSetOf<String>()
 
-	var storyFinished = false//get() = finishedRules.containsAll(rules.map { it.name })
+	val storyFinished get() = finishedRules.containsAll(rules.map { it.name })
 	var matchingRule: Rule? = null
 }

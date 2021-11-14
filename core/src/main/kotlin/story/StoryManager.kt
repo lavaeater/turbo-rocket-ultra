@@ -38,7 +38,6 @@ class StoryManager {
 			}
 			if (story.storyFinished) {
 				//A story sets its own finished state when it's done
-				//A STORY NEEDS A CONSEQUENCE! <- Mind blown!
 				stories.remove(story)
 				finishedStories.add(story)
 				story.consequence.apply()
@@ -52,7 +51,6 @@ class StoryManager {
 	}
 
 	init {
-//		addStory(StoryHelper.simpleEncounters)
-//		addStory(StoryHelper.mainStory)
+		addStory(StoryHelper.levelCompleteStory)
 	}
 }

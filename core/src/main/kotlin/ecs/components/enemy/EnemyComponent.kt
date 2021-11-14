@@ -7,6 +7,11 @@ import com.badlogic.gdx.utils.Pool
 import ecs.components.gameplay.TransformComponent
 import ktx.math.vec2
 
+class BossComponent : Component, Pool.Poolable {
+    override fun reset() {
+    }
+}
+
 class EnemyComponent : Component, Pool.Poolable {
     var rushSpeed = 15f
     var fieldOfView = 180f

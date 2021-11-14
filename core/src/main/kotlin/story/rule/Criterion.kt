@@ -1,9 +1,15 @@
 package story.rule
 
+import com.badlogic.ashley.core.Entity
 import injection.Context.inject
 import story.FactsOfTheWorld
 import story.fact.Facts
 import story.fact.IFact
+
+
+class EntityFact(override val key: String, override var value: Entity) : IFact<Entity> {
+}
+
 
 class Criterion(val key: String, private val matcher: (IFact<*>) -> Boolean) {
   fun isMatch(fact: IFact<*>):Boolean {
@@ -55,10 +61,10 @@ class Criterion(val key: String, private val matcher: (IFact<*>) -> Boolean) {
     }
 
     fun listContainsFact(key:String, contextKey:String): Criterion {
-      return Criterion(key, {
+      return Criterion(key) {
         val contextValue = factsOfTheWorld.stringForKey(contextKey)
         factsOfTheWorld.getFactList(key).contains(contextValue)
-      })
+      }
     }
 
     fun listDoesNotContainFact(key:String, contextKey:String): Criterion {
