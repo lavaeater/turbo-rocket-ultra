@@ -26,9 +26,10 @@ I want to use Scene2D for the UI, rolling my own is just to confusing, even for 
 
 ### MVP for now
 
-- [ ] *Put level end requirements in a Story*
-	- [ ] Put level end requirements in story (like special pickups, touching objectives etc)
-	- [ ] Put boss kill requirement in story
+- [x] *Put level end requirements in a Story*
+	- [x] Put level end requirements in story (like special pickups, touching objectives etc)
+	- [x] Put boss kill requirement in story
+- [ ] Use Scene2D stuff to show ui Stuff perhaps?
 - [ ] Show a splash from the story system
 
 
@@ -614,11 +615,11 @@ Det här gör vi på det gamla vanliga sättet. Vi bygger en box2d-värld, vi kl
 
 Oj oj oj,  vad roligt. Vi kan göra en box2d-kropp med leder, per tutorials etc. Superkul ju.
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbNTYyNDMwMzMsLTEyMTEyNzAzNzAsLTIxMT
-kxNTk0NzEsMzM1OTU3NDU2LDExNDA2MzgzNTcsMTg5NTExMjI2
-NiwtNTM5NDYwMTkwLDY1NjMzMjUyNywtMTEwMDE3NjQ1NiwzND
-A5Nzk1MiwxMDMyMjMyNTc0LDEyODA0OTIxNTIsLTM2OTIzODUy
-OSwzMzExNTA2NzEsMjA5NjYxMjg1MSwtMTA4NDY5MDg2MywtMj
-M4NzYyMDQsLTE1MjgzMTE0NDQsLTE0Mjk1MzA5NDAsLTE5NTQz
-NjQwNzhdfQ==
+eyJoaXN0b3J5IjpbMjM5NDQwMDg3LDU2MjQzMDMzLC0xMjExMj
+cwMzcwLC0yMTE5MTU5NDcxLDMzNTk1NzQ1NiwxMTQwNjM4MzU3
+LDE4OTUxMTIyNjYsLTUzOTQ2MDE5MCw2NTYzMzI1MjcsLTExMD
+AxNzY0NTYsMzQwOTc5NTIsMTAzMjIzMjU3NCwxMjgwNDkyMTUy
+LC0zNjkyMzg1MjksMzMxMTUwNjcxLDIwOTY2MTI4NTEsLTEwOD
+Q2OTA4NjMsLTIzODc2MjA0LC0xNTI4MzExNDQ0LC0xNDI5NTMw
+OTQwXX0=
 -->
