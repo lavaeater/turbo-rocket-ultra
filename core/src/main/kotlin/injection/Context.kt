@@ -91,7 +91,7 @@ object Context {
             addSystem(AmblingSystem())
             addSystem(BehaviorTreeSystem())
             addSystem(ChasePlayerSystem())
-            addSystem(SeekPlayerSystem())
+            addSystem(SeekPlayerSystem(true))
             addSystem(AttackPlayerSystem())
             addSystem(EnemyDirectionSystem())
             addSystem(EnemyHearsShotsSystem())
