@@ -46,7 +46,7 @@ class ConceptScreen(gameState: StateMachine<GameState, GameEvent>) : BasicScreen
             var rotationDetected = false
             for (t in detectables) {
                 if (player.dst(t) < viewDistance) {
-                    rotationDetected = player.angleTo (t) < fieldOfView / 2
+                    rotationDetected = player.forwardAngleTo (t) < fieldOfView / 2
                 }
                 rotationSectorColor = if (rotationDetected) detectedColor else notDetectedColor
                 renderPosition(t, Color.RED, Color.GREEN)

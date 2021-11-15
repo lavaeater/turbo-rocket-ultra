@@ -6,7 +6,6 @@ import com.badlogic.gdx.controllers.Controller
 import com.badlogic.gdx.controllers.ControllerListener
 import com.badlogic.gdx.math.MathUtils
 import data.Players
-import ecs.components.gameplay.NewTransformComponent
 import input.Axis
 import input.Axis.Companion.valueOK
 import input.Button
@@ -91,8 +90,6 @@ class GamepadInputSystem() : IteratingSystem(allOf(GamepadControl::class).get())
         for (axis in Axis.axisMap.keys) {
             axisMoved(controlComponent, axis, controller.getAxis(axis))
         }
-        val newTransform = entity.getComponent<NewTransformComponent>()
-        newTransform.setAimVectorTo(controlComponent.aimVector)
     }
 
 }

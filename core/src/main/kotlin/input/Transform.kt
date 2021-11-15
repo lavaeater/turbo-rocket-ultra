@@ -7,6 +7,18 @@ import injection.Context.inject
 import ktx.math.vec2
 import ktx.math.vec3
 
+/**
+ * This transform class i pretty great for thrusting games, which this
+ * obviously isn't. So what can we use it for then, eh?
+ *
+ * Aiming and stuff, of course. On the other hand, if I made
+ * the methods for checking fields of View into functions just
+ * available wherever, then the need for this class might be
+ * diminished.
+ *
+ * I know I have a working implementation of dot product for field of
+ * view, so let's use that for now.
+ */
 open class Transform(val position: Vector2 = vec2()) {
     /*
     A class to keep track of an objects position in 2D space
@@ -76,10 +88,31 @@ open class Transform(val position: Vector2 = vec2()) {
         forward.rotateDeg(angleDeg)
     }
 
-    fun angleTo(other: Transform): Float {
+    fun forwardAngleTo(other: Transform): Float {
         return MathUtils.acos(
             forward.dot(other.position.cpy().sub(position).nor())) * MathUtils.radiansToDegrees
     }
 
+    fun aimVectorAngleTo(other: Transform): Float {
+        return MathUtils.acos(
+            aimVector.dot(other.position.cpy().sub(position).nor())) * MathUtils.radiansToDegrees
+    }
 
+    /**
+     * Checks if you are inside the field of view,
+     * supplied in degrees, from the perspective of the
+     * AimVector, which is where the entity most likely is looking.
+     */
+    fun canISeeYou(you: Transform, fovDeg: Float): Boolean {
+        return aimVectorAngleTo(you) < fovDeg / 2
+    }
+}
+
+fun canISeeYouFromHere(from: Vector2, aimVector: Vector2, to:Vector2, fovDeg: Float): Boolean {
+    return angleToDeg(from, aimVector, to) < fovDeg / 2
+}
+
+fun angleToDeg(from: Vector2, aimVector: Vector2, to: Vector2) : Float {
+    return MathUtils.acos(
+        aimVector.dot(to.cpy().sub(from).nor())) * MathUtils.radiansToDegrees
 }

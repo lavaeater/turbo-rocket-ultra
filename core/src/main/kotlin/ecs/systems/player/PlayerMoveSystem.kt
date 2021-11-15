@@ -8,6 +8,17 @@ import ecs.components.player.PlayerControlComponent
 import ktx.ashley.allOf
 import physics.getComponent
 
+/**
+ * But how do I want all of this to work, reallly?
+ *
+ * Do I want to work with linearvelocities, which is very easy - perhaps
+ * it should be a configurable thing?
+ *
+ *
+ */
+
+
+
 class PlayerMoveSystem(
     private var speed: Float = 25f): IteratingSystem(
     allOf(

@@ -5,7 +5,6 @@ import com.badlogic.ashley.systems.IteratingSystem
 import com.badlogic.gdx.Gdx
 import com.badlogic.gdx.Input
 import com.badlogic.gdx.math.Vector2
-import ecs.components.gameplay.NewTransformComponent
 import ecs.components.gameplay.TransformComponent
 import ecs.components.player.PlayerMode
 import input.InputIndicator
@@ -105,21 +104,6 @@ class KeyboardInputSystem :
     override fun processEntity(entity: Entity, deltaTime: Float) {
         keyboardControl = entity.getComponent()
         updateMouseInput(entity.getComponent<TransformComponent>().position)
-        updateNewTransform(entity)
-    }
-
-    @OptIn(ExperimentalStdlibApi::class)
-    private fun updateNewTransform(entity: Entity) {
-        val newTransform = entity.getComponent<NewTransformComponent>()
-        newTransform.pointAimVectorAtScreeCoords(Gdx.input.x, Gdx.input.y)
-        /**
-         * No. This is a change to make the BODY
-         * move with forces, so the transform rotates with the body, not like this.
-         * Aimvector is free, forward is not.
-         *
-         * That shall be done in the walk system
-         *
-         */
     }
 
     private fun updateMouseInput(position: Vector2) {
