@@ -4,10 +4,21 @@ import com.badlogic.ashley.core.Entity
 import com.badlogic.ashley.systems.IteratingSystem
 import com.badlogic.gdx.physics.box2d.World
 import ecs.components.BodyComponent
+import ecs.components.gameplay.NewTransformComponent
 import ecs.components.gameplay.TransformComponent
 import ktx.ashley.allOf
 import map.grid.GridMapSection
 import physics.getComponent
+
+class NewTransformSystem: IteratingSystem(allOf(BodyComponent::class, NewTransformComponent::class).get()) {
+    @OptIn(ExperimentalStdlibApi::class)
+    override fun processEntity(entity: Entity, deltaTime: Float) {
+        val tc = entity.getComponent<NewTransformComponent>()
+        val body = entity.getComponent<BodyComponent>().body!!
+        tc.position.set(body.position)
+        tc.setRotationRad(body.angle)
+    }
+}
 
 class PhysicsSystem(private val world: World, private val timeStep: Float = 1 / 60f) :
     IteratingSystem(allOf(BodyComponent::class, TransformComponent::class).get()) {

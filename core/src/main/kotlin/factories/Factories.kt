@@ -206,6 +206,7 @@ fun player(player: Player, mapper: ControlMapper, at: Vector2) {
     val entity = engine().entity() {
         with<CameraFollowComponent>()
         with<BodyComponent> { body = box2dBody }
+        with<NewTransformComponent>()
         with<TransformComponent>()
         with<AnimatedCharacterComponent> {
             anims = Assets.characters[player.selectedCharacterSpriteName]!!

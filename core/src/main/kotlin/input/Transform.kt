@@ -1,17 +1,22 @@
 package input
 
+import com.badlogic.gdx.graphics.OrthographicCamera
 import com.badlogic.gdx.math.MathUtils
 import com.badlogic.gdx.math.Vector2
+import injection.Context.inject
 import ktx.math.vec2
-import screens.angleTo
+import ktx.math.vec3
 
-class Transform(val position: Vector2 = vec2()) {
+open class Transform(val position: Vector2 = vec2()) {
     /*
     A class to keep track of an objects position in 2D space
      */
     val forward: Vector2 = Vector2.X.cpy()
     private val magnitude = 10f
     val aimVector = vec2()
+    private val mousePosition3D = vec3()
+    private val camera by lazy { inject<OrthographicCamera>() }
+    private val mousePosition = vec2()
 
     private val _normal = vec2()
     val normal: Vector2
@@ -44,11 +49,22 @@ class Transform(val position: Vector2 = vec2()) {
         return position.dst(transform.position)
     }
 
-    fun setAimVector(mousePosition: Vector2) {
-        aimVector.set(mousePosition).sub(position).nor()
+    fun setAimVector(worldAimPoint: Vector2) {
+        aimVector.set(worldAimPoint).sub(position).nor()
     }
 
-    fun setRotation(angleDeg: Float) {
+    fun setAimVectorWithMouse(screenX: Int, screenY: Int) {
+        mousePosition3D.set(screenX.toFloat(), screenY.toFloat(), 0f)
+        camera.unproject(mousePosition3D)
+        mousePosition.set(mousePosition3D.x, mousePosition3D.y)
+        setAimVector(mousePosition)
+    }
+
+    fun setRotationRad(angleRad: Float) {
+        forward.setAngleRad(angleRad)
+    }
+
+    fun setRotationDeg(angleDeg: Float) {
         forward.setAngleDeg(angleDeg)
     }
 

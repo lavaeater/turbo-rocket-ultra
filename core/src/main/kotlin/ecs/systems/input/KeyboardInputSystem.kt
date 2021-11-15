@@ -5,6 +5,7 @@ import com.badlogic.ashley.systems.IteratingSystem
 import com.badlogic.gdx.Gdx
 import com.badlogic.gdx.Input
 import com.badlogic.gdx.math.Vector2
+import ecs.components.gameplay.NewTransformComponent
 import ecs.components.gameplay.TransformComponent
 import ecs.components.player.PlayerMode
 import input.InputIndicator
@@ -104,6 +105,14 @@ class KeyboardInputSystem :
     override fun processEntity(entity: Entity, deltaTime: Float) {
         keyboardControl = entity.getComponent()
         updateMouseInput(entity.getComponent<TransformComponent>().position)
+        updateNewAimVector(entity)
+
+
+    }
+
+    @OptIn(ExperimentalStdlibApi::class)
+    private fun updateNewAimVector(entity: Entity) {
+        entity.getComponent<NewTransformComponent>().setAimVectorWithMouse(Gdx.input.x, Gdx.input.y)
     }
 
     private fun updateMouseInput(position: Vector2) {
