@@ -49,15 +49,19 @@ open class Transform(val position: Vector2 = vec2()) {
         return position.dst(transform.position)
     }
 
-    fun setAimVector(worldAimPoint: Vector2) {
+    fun setAimVectorTo(aimVector: Vector2) {
+        aimVector.set(aimVector)
+    }
+
+    fun pointAimVectorAt(worldAimPoint: Vector2) {
         aimVector.set(worldAimPoint).sub(position).nor()
     }
 
-    fun setAimVectorWithMouse(screenX: Int, screenY: Int) {
+    fun pointAimVectorAtScreeCoords(screenX: Int, screenY: Int) {
         mousePosition3D.set(screenX.toFloat(), screenY.toFloat(), 0f)
         camera.unproject(mousePosition3D)
         mousePosition.set(mousePosition3D.x, mousePosition3D.y)
-        setAimVector(mousePosition)
+        pointAimVectorAt(mousePosition)
     }
 
     fun setRotationRad(angleRad: Float) {

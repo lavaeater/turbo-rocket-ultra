@@ -10,7 +10,6 @@ import input.Transform
 import gamestate.GameEvent
 import gamestate.GameState
 import ktx.graphics.use
-import ktx.math.minus
 import ktx.math.vec2
 import ktx.math.vec3
 import statemachine.StateMachine
@@ -88,7 +87,7 @@ class ConceptScreen(gameState: StateMachine<GameState, GameEvent>) : BasicScreen
         mousePosition3D.set(screenX.toFloat(), screenY.toFloat(), 0f)
         camera.unproject(mousePosition3D)
         mousePosition.set(mousePosition3D.x, mousePosition3D.y)
-        player.setAimVector(mousePosition)
+        player.pointAimVectorAt(mousePosition)
         mouseTransform.set(mousePosition)
         return true
     }
