@@ -118,7 +118,6 @@ class GridMapGenerator {
             val tileMap = mutableMapOf<Coordinate, GridMapSection>()
 
             var index = 0
-            val numberOfObjectivs = level * 2 - 1
             for ((x, column) in map.withIndex()) {
                 for ((y, tile) in column.withIndex())
                     if (tile) {

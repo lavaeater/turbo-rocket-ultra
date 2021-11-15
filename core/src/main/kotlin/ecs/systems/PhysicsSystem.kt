@@ -6,9 +6,10 @@ import com.badlogic.gdx.physics.box2d.World
 import ecs.components.BodyComponent
 import ecs.components.gameplay.TransformComponent
 import ktx.ashley.allOf
+import map.grid.GridMapSection
 import physics.getComponent
 
-class PhysicsSystem(private val world: World, private val timeStep : Float = 1/60f) :
+class PhysicsSystem(private val world: World, private val timeStep: Float = 1 / 60f) :
     IteratingSystem(allOf(BodyComponent::class, TransformComponent::class).get()) {
 
     private val velIters = 2
@@ -19,7 +20,7 @@ class PhysicsSystem(private val world: World, private val timeStep : Float = 1/6
     override fun update(deltaTime: Float) {
         val ourTime = deltaTime.coerceAtMost(timeStep * 2)
         accumulator += ourTime
-        while(accumulator > timeStep) {
+        while (accumulator > timeStep) {
             world.step(timeStep, velIters, posIters)
             accumulator -= ourTime
         }
@@ -28,13 +29,22 @@ class PhysicsSystem(private val world: World, private val timeStep : Float = 1/6
 
     @OptIn(ExperimentalStdlibApi::class)
     override fun processEntity(entity: Entity, deltaTime: Float) {
-            val bodyComponent = entity.getComponent<BodyComponent>()
-            val bodyPosition = bodyComponent.body!!.position
-            val bodyRotation = bodyComponent.body!!.angle
-            val transformComponent = entity.getComponent<TransformComponent>()
-            transformComponent.position.set(bodyPosition)
-            transformComponent.rotation = bodyRotation
+        val bodyComponent = entity.getComponent<BodyComponent>()
+        val bodyPosition = bodyComponent.body!!.position
+        val bodyRotation = bodyComponent.body!!.angle
+        val transformComponent = entity.getComponent<TransformComponent>()
+        transformComponent.position.set(bodyPosition)
+        transformComponent.rotation = bodyRotation
+        setTilePosition(transformComponent)
 
     }
 
+    /**
+     * Sets the tileX and tileY properties to the position
+     * divided by tile Width and tile Height respectively.
+     */
+    fun setTilePosition(transformComponent: TransformComponent) {
+        transformComponent.tileX = (transformComponent.position.x / GridMapSection.tileWidth).toInt()
+        transformComponent.tileY = (transformComponent.position.y / GridMapSection.tileHeight).toInt()
+    }
 }

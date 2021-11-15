@@ -14,7 +14,7 @@ import ecs.components.enemy.EnemyComponent
 import ecs.components.gameplay.TransformComponent
 import ecs.components.player.PlayerComponent
 import factories.world
-import gamestate.Players
+import data.Players
 import ktx.ashley.allOf
 import ktx.box2d.RayCast
 import ktx.box2d.rayCast

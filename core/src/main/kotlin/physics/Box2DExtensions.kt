@@ -15,7 +15,7 @@ import ecs.components.enemy.EnemyComponent
 import ecs.components.player.PlayerComponent
 import ecs.components.player.PlayerControlComponent
 import factories.engine
-import gamestate.Player
+import data.Player
 import ktx.ashley.has
 import ktx.math.times
 

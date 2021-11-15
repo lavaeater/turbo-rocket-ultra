@@ -5,7 +5,7 @@ import com.badlogic.gdx.graphics.OrthographicCamera
 import com.badlogic.gdx.graphics.g2d.Batch
 import com.badlogic.gdx.utils.viewport.ExtendViewport
 import ecs.components.graphics.AnimatedCharacterComponent
-import gamestate.Players
+import data.Players
 import ktx.graphics.use
 import ktx.math.vec2
 import physics.getComponent

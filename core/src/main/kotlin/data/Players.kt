@@ -1,6 +1,5 @@
-package gamestate
+package data
 
-import gamestate.Player
 import input.ControlMapper
 
 object Players {
