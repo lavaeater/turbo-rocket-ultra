@@ -26,7 +26,9 @@ I want to use Scene2D for the UI, rolling my own is just to confusing, even for 
 
 ### Use Scene2D again
 
-My god I hate scene 2d - unfairly. What I want to do is build a simple system AROUND scene2d, making it much easier for me to use scene2d for what I think is important and cool. So what is that, really
+My god I hate scene 2d - unfairly. What I want to do is build a simple system AROUND scene2d, making it much easier for me to use scene2d for what I think is important and cool. So what is that, really?
+
+Scene2D has so many things
 
 ### MVP for now
 
@@ -619,11 +621,11 @@ Det här gör vi på det gamla vanliga sättet. Vi bygger en box2d-värld, vi kl
 
 Oj oj oj,  vad roligt. Vi kan göra en box2d-kropp med leder, per tutorials etc. Superkul ju.
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbLTEwMzU4MDQwODYsLTE5OTE0MDQ2ODUsMj
-M5NDQwMDg3LDU2MjQzMDMzLC0xMjExMjcwMzcwLC0yMTE5MTU5
-NDcxLDMzNTk1NzQ1NiwxMTQwNjM4MzU3LDE4OTUxMTIyNjYsLT
-UzOTQ2MDE5MCw2NTYzMzI1MjcsLTExMDAxNzY0NTYsMzQwOTc5
-NTIsMTAzMjIzMjU3NCwxMjgwNDkyMTUyLC0zNjkyMzg1MjksMz
-MxMTUwNjcxLDIwOTY2MTI4NTEsLTEwODQ2OTA4NjMsLTIzODc2
-MjA0XX0=
+eyJoaXN0b3J5IjpbMTc4ODUzOTExMywtMTk5MTQwNDY4NSwyMz
+k0NDAwODcsNTYyNDMwMzMsLTEyMTEyNzAzNzAsLTIxMTkxNTk0
+NzEsMzM1OTU3NDU2LDExNDA2MzgzNTcsMTg5NTExMjI2NiwtNT
+M5NDYwMTkwLDY1NjMzMjUyNywtMTEwMDE3NjQ1NiwzNDA5Nzk1
+MiwxMDMyMjMyNTc0LDEyODA0OTIxNTIsLTM2OTIzODUyOSwzMz
+ExNTA2NzEsMjA5NjYxMjg1MSwtMTA4NDY5MDg2MywtMjM4NzYy
+MDRdfQ==
 -->
