@@ -13,6 +13,7 @@ object StoryHelper {
     val levelCompleteStory by lazy {
         story {
             name = "Touch All Objectives and Kill the Boss"
+            neverEnding = true
             initializer = {
                 factsOfTheWorld.stateBoolFact(Facts.LevelComplete, false)
                 factsOfTheWorld.stateBoolFact(Facts.BossIsDead, false)
@@ -30,9 +31,4 @@ object StoryHelper {
             }
         }
     }
-}
-
-
-infix fun Story.add(story: Story) {
-
 }

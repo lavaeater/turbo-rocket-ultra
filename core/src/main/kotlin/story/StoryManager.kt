@@ -38,9 +38,12 @@ class StoryManager {
 			}
 			if (story.storyFinished) {
 				//A story sets its own finished state when it's done
-				stories.remove(story)
 				finishedStories.add(story)
 				story.consequence.apply()
+				if(!story.neverEnding)
+					stories.remove(story)
+				else
+					story.reset()
 			}
 		}
 	}
