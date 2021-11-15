@@ -1,31 +1,36 @@
 package input
 
+import com.badlogic.gdx.math.MathUtils
 import com.badlogic.gdx.math.Vector2
 import ktx.math.vec2
+import screens.angleTo
 
 class Transform(val position: Vector2 = vec2()) {
     /*
     A class to keep track of an objects position in 2D space
      */
     val forward: Vector2 = Vector2.X.cpy()
-    val magnitude = 10f
+    private val magnitude = 10f
     val aimVector = vec2()
 
     private val _normal = vec2()
-    val normal: Vector2 get() = run {
-        _normal.set(-forward.y, forward.x)
-        _normal
-    }
+    val normal: Vector2
+        get() = run {
+            _normal.set(-forward.y, forward.x)
+            _normal
+        }
     private val _normalPoint = vec2()
-    val normalPoint get() = run {
-        _normalPoint.set(position).add(normal.cpy().scl(magnitude))
-    }
+    val normalPoint
+        get() = run {
+            _normalPoint.set(position).add(normal.cpy().scl(magnitude))
+        }
 
     private val _forwardPosition = vec2()
-    val forwardPoint get() = run {
-        _forwardPosition.set(position).add(forward.cpy().scl(magnitude))
-        _forwardPosition
-    }
+    val forwardPoint
+        get() = run {
+            _forwardPosition.set(position).add(forward.cpy().scl(magnitude))
+            _forwardPosition
+        }
 
     fun set(newPos: Vector2) {
         position.set(newPos)
@@ -50,5 +55,11 @@ class Transform(val position: Vector2 = vec2()) {
     fun rotate(angleDeg: Float) {
         forward.rotateDeg(angleDeg)
     }
+
+    fun angleTo(other: Transform): Float {
+        return MathUtils.acos(
+            forward.dot(other.position.cpy().sub(position).nor())) * MathUtils.radiansToDegrees
+    }
+
 
 }

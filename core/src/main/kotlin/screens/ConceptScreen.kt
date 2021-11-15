@@ -119,9 +119,6 @@ class ConceptScreen(gameState: StateMachine<GameState, GameEvent>) : BasicScreen
     }
 }
 
-fun Transform.angleTo(other: Transform) : Float {
-    return acos(this.forward.dot(other.position.cpy().sub(this.position).nor())) * radiansToDegrees
-}
 
 /***
  * Returns angle in degrees to @param positionVector
