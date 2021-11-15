@@ -55,7 +55,6 @@ To make the graphics and environment easy I am currently working with the concep
 
 Lets try to prioritize these into what would make the game seem "done" the fastest.
 
-- [ ] **STORY MODE**
 - [ ] More Enemy Sprites (generate them)
 - [ ] Lightmaps for sprites
 - [ ] Soundscape II - the Moaning
@@ -70,6 +69,7 @@ Lets try to prioritize these into what would make the game seem "done" the faste
 - [ ] Vehicles would be cool
 - [ ] Build Towers
 - [ ] Gibs and Body Parts II - blood trails and audio
+- [x] Story Mode
 - [x] Boss fight
 - [x] More character sprites
 - [x] Gibs and body parts
@@ -615,11 +615,11 @@ Det här gör vi på det gamla vanliga sättet. Vi bygger en box2d-värld, vi kl
 
 Oj oj oj,  vad roligt. Vi kan göra en box2d-kropp med leder, per tutorials etc. Superkul ju.
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbMjM5NDQwMDg3LDU2MjQzMDMzLC0xMjExMj
-cwMzcwLC0yMTE5MTU5NDcxLDMzNTk1NzQ1NiwxMTQwNjM4MzU3
-LDE4OTUxMTIyNjYsLTUzOTQ2MDE5MCw2NTYzMzI1MjcsLTExMD
-AxNzY0NTYsMzQwOTc5NTIsMTAzMjIzMjU3NCwxMjgwNDkyMTUy
-LC0zNjkyMzg1MjksMzMxMTUwNjcxLDIwOTY2MTI4NTEsLTEwOD
-Q2OTA4NjMsLTIzODc2MjA0LC0xNTI4MzExNDQ0LC0xNDI5NTMw
-OTQwXX0=
+eyJoaXN0b3J5IjpbLTMwNTYyMTk0MywyMzk0NDAwODcsNTYyND
+MwMzMsLTEyMTEyNzAzNzAsLTIxMTkxNTk0NzEsMzM1OTU3NDU2
+LDExNDA2MzgzNTcsMTg5NTExMjI2NiwtNTM5NDYwMTkwLDY1Nj
+MzMjUyNywtMTEwMDE3NjQ1NiwzNDA5Nzk1MiwxMDMyMjMyNTc0
+LDEyODA0OTIxNTIsLTM2OTIzODUyOSwzMzExNTA2NzEsMjA5Nj
+YxMjg1MSwtMTA4NDY5MDg2MywtMjM4NzYyMDQsLTE1MjgzMTE0
+NDRdfQ==
 -->
