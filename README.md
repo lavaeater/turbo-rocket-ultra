@@ -55,21 +55,21 @@ To make the graphics and environment easy I am currently working with the concep
 
 Lets try to prioritize these into what would make the game seem "done" the fastest.
 
-- [ ] **STORY MODE**
+- [ ] Smart Transforms - collect all vector stuff pertaining to position, rotation, direction, into one collected class 
+- [ ] HUD II, Header Upper Displayer <- rediscover MVVM pattern, two-way binding
 - [ ] More Enemy Sprites (generate them)
 - [ ] Lightmaps for sprites
 - [ ] Soundscape II - the Moaning
 - [ ] Fix the MiniMap
-- [ ] HUD II, Header Upper Displayer <- rediscover MVVM pattern, two-way binding
 - [ ] Enemy AI II, with avoiding walls
 - [ ] Objectives II, the sequel
 - [ ] Pickups 2 (on-screen blurb indicating what you got)
 - [ ] Interactable Components in-the-game
 - [ ] Player graphics made from components / parts etc.
-- [ ] Smarta vektorer (eller nåt) - byt utspridd vektormattekod mot små, lokala, scengrafer. 
 - [ ] Vehicles would be cool
 - [ ] Build Towers
 - [ ] Gibs and Body Parts II - blood trails and audio
+- [x] Story Mode
 - [x] Boss fight
 - [x] More character sprites
 - [x] Gibs and body parts
@@ -615,11 +615,11 @@ Det här gör vi på det gamla vanliga sättet. Vi bygger en box2d-värld, vi kl
 
 Oj oj oj,  vad roligt. Vi kan göra en box2d-kropp med leder, per tutorials etc. Superkul ju.
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbMjM5NDQwMDg3LDU2MjQzMDMzLC0xMjExMj
-cwMzcwLC0yMTE5MTU5NDcxLDMzNTk1NzQ1NiwxMTQwNjM4MzU3
-LDE4OTUxMTIyNjYsLTUzOTQ2MDE5MCw2NTYzMzI1MjcsLTExMD
-AxNzY0NTYsMzQwOTc5NTIsMTAzMjIzMjU3NCwxMjgwNDkyMTUy
-LC0zNjkyMzg1MjksMzMxMTUwNjcxLDIwOTY2MTI4NTEsLTEwOD
-Q2OTA4NjMsLTIzODc2MjA0LC0xNTI4MzExNDQ0LC0xNDI5NTMw
-OTQwXX0=
+eyJoaXN0b3J5IjpbLTE5OTE0MDQ2ODUsMjM5NDQwMDg3LDU2Mj
+QzMDMzLC0xMjExMjcwMzcwLC0yMTE5MTU5NDcxLDMzNTk1NzQ1
+NiwxMTQwNjM4MzU3LDE4OTUxMTIyNjYsLTUzOTQ2MDE5MCw2NT
+YzMzI1MjcsLTExMDAxNzY0NTYsMzQwOTc5NTIsMTAzMjIzMjU3
+NCwxMjgwNDkyMTUyLC0zNjkyMzg1MjksMzMxMTUwNjcxLDIwOT
+Y2MTI4NTEsLTEwODQ2OTA4NjMsLTIzODc2MjA0LC0xNTI4MzEx
+NDQ0XX0=
 -->
