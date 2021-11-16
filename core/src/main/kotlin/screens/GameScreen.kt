@@ -32,6 +32,7 @@ import ktx.ashley.getSystem
 import ktx.ashley.remove
 import map.grid.GridMapGenerator
 import map.grid.GridMapManager
+import map.grid.SimpleGridMapDef
 import map.snake.*
 import physics.getComponent
 import statemachine.StateMachine
@@ -84,12 +85,21 @@ class GameScreen(private val gameState: StateMachine<GameState, GameEvent>) : Kt
         for (system in engine.systems) {
             system.setProcessing(true)
         }
-        generateMap(1)
+        loadMap()
         addPlayers()
 
         addTower()
         ui.reset()
         ui.show()
+    }
+
+    private fun loadMap() {
+        //For debuggin we will swarm with enemies
+        CounterObject.numberOfEnemies = 15
+
+        mapManager.gridMap = GridMapGenerator.generateFromDefintion(SimpleGridMapDef.levelOne)
+        CounterObject.numberOfObjectives = engine.getEntitiesFor(allOf(ObjectiveComponent::class).get()).count()
+        movePlayersToStart()
     }
 
     private fun addTower() {

@@ -15,7 +15,7 @@ class LootDropSystem : IteratingSystem(allOf(LootDropComponent::class).get()) {
             lootComponent.activated = false
             val result = lootComponent.lootTable.result
             if(result.any())
-                lootBox(lootComponent.at, lootComponent.lootTable.result)
+                lootBox(lootComponent.at, result)
         }
     }
 }

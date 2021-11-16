@@ -218,12 +218,12 @@ fun player(player: Player, mapper: ControlMapper, at: Vector2) {
         }
         with<PlayerComponent> { this.player = player }
         with<InventoryComponent> {
-            GunDefinition.guns.forEach { guns.add(it.getGun()) }
-            ammo[AmmoType.nineMilliMeters] = 51
-            ammo[AmmoType.twelveGaugeShotgun] = 40
-            ammo[AmmoType.fnP90Ammo] = 200
+//            GunDefinition.guns.forEach { guns.add(it.getGun()) }
+//            ammo[AmmoType.nineMilliMeters] = 51
+//            ammo[AmmoType.twelveGaugeShotgun] = 40
+//            ammo[AmmoType.fnP90Ammo] = 200
         }
-        with<WeaponComponent>()
+//        with<WeaponComponent>()
         with<FiredShotsComponent>()
         with<FlashlightComponent>()
         with<WeaponLaserComponent>()
