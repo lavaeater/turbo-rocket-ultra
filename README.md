@@ -43,7 +43,7 @@ x
 x
 xxxxs
 
-The x markers are simply sections of map, the s is for spawn-section, l is for loot-section and then g is for goal / end, whatever. So a map definition could consist of that information, which can be easily translated into instructions for making a map, I think. The map itself is in fact an a 
+The x markers are simply sections of map, the s is for spawn-section, l is for loot-section and then g is for goal / end, whatever. So a map definition could consist of that information, which can be easily translated into instructions for making a map, I think. The map itself is in fact an array of arrays. Or a one-dimensional array, I don't remember right now. No, when we construct it all, we do array of array of booleans, where true is "this is a section". So, we need to translate that into an array of arrays of boolean, easily done, I think.  
 
 
 
@@ -668,11 +668,11 @@ Det här gör vi på det gamla vanliga sättet. Vi bygger en box2d-värld, vi kl
 
 Oj oj oj,  vad roligt. Vi kan göra en box2d-kropp med leder, per tutorials etc. Superkul ju.
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbLTI3MzE5OTA0LC05Mzg4NTE3MDAsLTg3Mj
-czMTg2OCwyMDA3MzM1MTY0LDE3ODg1MzkxMTMsLTE5OTE0MDQ2
-ODUsMjM5NDQwMDg3LDU2MjQzMDMzLC0xMjExMjcwMzcwLC0yMT
-E5MTU5NDcxLDMzNTk1NzQ1NiwxMTQwNjM4MzU3LDE4OTUxMTIy
-NjYsLTUzOTQ2MDE5MCw2NTYzMzI1MjcsLTExMDAxNzY0NTYsMz
-QwOTc5NTIsMTAzMjIzMjU3NCwxMjgwNDkyMTUyLC0zNjkyMzg1
-MjldfQ==
+eyJoaXN0b3J5IjpbLTcwMTA1MzI3MSwtOTM4ODUxNzAwLC04Nz
+I3MzE4NjgsMjAwNzMzNTE2NCwxNzg4NTM5MTEzLC0xOTkxNDA0
+Njg1LDIzOTQ0MDA4Nyw1NjI0MzAzMywtMTIxMTI3MDM3MCwtMj
+ExOTE1OTQ3MSwzMzU5NTc0NTYsMTE0MDYzODM1NywxODk1MTEy
+MjY2LC01Mzk0NjAxOTAsNjU2MzMyNTI3LC0xMTAwMTc2NDU2LD
+M0MDk3OTUyLDEwMzIyMzI1NzQsMTI4MDQ5MjE1MiwtMzY5MjM4
+NTI5XX0=
 -->
