@@ -24,6 +24,7 @@ import ecs.systems.graphics.*
 import ecs.systems.input.GamepadInputSystem
 import ecs.systems.pickups.LootDropSystem
 import ecs.systems.player.*
+import ktx.ashley.add
 import ktx.box2d.createWorld
 import ktx.inject.Context
 import ktx.inject.register
@@ -107,7 +108,7 @@ object Context {
             addSystem(WeaponChangeAndReloadSystem())
             addSystem(UpdatePlayerStatsSystem())
             addSystem(RenderMapSystem(inject<PolygonSpriteBatch>() as Batch, inject<OrthographicCamera>() as Camera, inject()))
-            addSystem(SimpleRenderSystem(inject<PolygonSpriteBatch>() as Batch))
+            addSystem(RenderSystem(inject<PolygonSpriteBatch>() as Batch))
             addSystem(RenderUserInterfaceSystem(inject<PolygonSpriteBatch>() as Batch))
             addSystem(RenderMiniMapSystem())
             addSystem(PlayerFlashlightSystem())
@@ -120,6 +121,8 @@ object Context {
             addSystem(AimingAidSystem(true, true))
             addSystem(GibSystem())
             addSystem(FactSystem())
+            addSystem(FrustumCullingSystem())
+            addSystem(LineOfSightCullingSystem())
         }
     }
 }
