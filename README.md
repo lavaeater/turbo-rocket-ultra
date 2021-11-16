@@ -33,7 +33,18 @@ So, what do we need for act one? Well, tons of fun stuff to implement:
 - [ ] New player sprites inspired by Death Road to Canada - I never do this, just hire an artist already
 
 ##### Our first level
-What we want to do is design a level. The first one. It should represent learning the game by playing it. The player(s) start in one end of the level and need to... kill all enemies, collect particularily important loot (a gun) and get to the van. 
+What we want to do is design a level. The first one. It should represent learning the game by playing it. The player(s) start in one end of the level and need to... kill all enemies, collect particularily important loot (a gun) and get to the van. The map could look something like this:
+
+xxxxxxg
+x
+x
+xxxxxl
+x
+x
+xxxxs
+
+The x markers are simpl
+
 
 
 ### Act two - in the thick of it
@@ -657,11 +668,11 @@ Det här gör vi på det gamla vanliga sättet. Vi bygger en box2d-värld, vi kl
 
 Oj oj oj,  vad roligt. Vi kan göra en box2d-kropp med leder, per tutorials etc. Superkul ju.
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbMTA0MDI3NjgxNCwtOTM4ODUxNzAwLC04Nz
-I3MzE4NjgsMjAwNzMzNTE2NCwxNzg4NTM5MTEzLC0xOTkxNDA0
-Njg1LDIzOTQ0MDA4Nyw1NjI0MzAzMywtMTIxMTI3MDM3MCwtMj
-ExOTE1OTQ3MSwzMzU5NTc0NTYsMTE0MDYzODM1NywxODk1MTEy
-MjY2LC01Mzk0NjAxOTAsNjU2MzMyNTI3LC0xMTAwMTc2NDU2LD
-M0MDk3OTUyLDEwMzIyMzI1NzQsMTI4MDQ5MjE1MiwtMzY5MjM4
-NTI5XX0=
+eyJoaXN0b3J5IjpbLTExNzk5OTg0NTksLTkzODg1MTcwMCwtOD
+cyNzMxODY4LDIwMDczMzUxNjQsMTc4ODUzOTExMywtMTk5MTQw
+NDY4NSwyMzk0NDAwODcsNTYyNDMwMzMsLTEyMTEyNzAzNzAsLT
+IxMTkxNTk0NzEsMzM1OTU3NDU2LDExNDA2MzgzNTcsMTg5NTEx
+MjI2NiwtNTM5NDYwMTkwLDY1NjMzMjUyNywtMTEwMDE3NjQ1Ni
+wzNDA5Nzk1MiwxMDMyMjMyNTc0LDEyODA0OTIxNTIsLTM2OTIz
+ODUyOV19
 -->
