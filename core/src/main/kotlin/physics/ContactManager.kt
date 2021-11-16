@@ -15,6 +15,7 @@ import ecs.components.pickups.LootComponent
 import ecs.components.player.*
 import factories.splatterEntity
 import features.pickups.AmmoLoot
+import features.pickups.WeaponLoot
 import injection.Context.inject
 import ktx.ashley.remove
 import tru.Assets
@@ -60,15 +61,28 @@ class ContactManager: ContactListener {
         }
         if (contact.isPlayerContact()) {
             if(contact.atLeastOneHas<LootComponent>()) {
-                val inventory = contact.getPlayerFor().entity.getComponent<InventoryComponent>()
+                val playerEntity = contact.getPlayerFor().entity
+                val inventory = playerEntity.getComponent<InventoryComponent>()
                 val lootEntity = contact.getEntityFor<LootComponent>()
                 val lootComponent = lootEntity.getComponent<LootComponent>()
                 for(loot in lootComponent.loot) {
-                    if(loot is AmmoLoot) {
-                        if(!inventory.ammo.containsKey(loot.ammoType))
-                            inventory.ammo[loot.ammoType] = 0
+                    when (loot) {
+                        is AmmoLoot -> {
+                            if(!inventory.ammo.containsKey(loot.ammoType))
+                                inventory.ammo[loot.ammoType] = 0
 
-                        inventory.ammo[loot.ammoType] = inventory.ammo[loot.ammoType]!! + loot.amount
+                            inventory.ammo[loot.ammoType] = inventory.ammo[loot.ammoType]!! + loot.amount
+                        }
+                        is WeaponLoot -> {
+                            val gun = loot.gunDefinition.getGun()
+                            if(!inventory.guns.any { it.name == gun.name }) {
+                                inventory.guns.add(gun)
+                            }
+                            if(!playerEntity.has<WeaponComponent>())
+                                playerEntity.addComponent<WeaponComponent> {
+                                    currentGun = gun
+                                }
+                        }
                     }
                 }
                 lootEntity.addComponent<DestroyComponent>()

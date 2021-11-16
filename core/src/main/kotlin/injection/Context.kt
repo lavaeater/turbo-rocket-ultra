@@ -65,7 +65,6 @@ object Context {
             bindSingleton(AudioPlayer())
             bindSingleton(GridMapManager())
             bindSingleton(RayHandler(inject(), 500, 500))
-
             bindSingleton(FactsOfTheWorld(Gdx.app.getPreferences("TurboRocket")))
             bindSingleton(StoryManager())
             bindSingleton(getEngine())
