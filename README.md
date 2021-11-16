@@ -13,7 +13,11 @@ What the game needs is polish in the long run, but to keep me going I must not g
 ### Three acts of terror
 
 #### Act one - a small beginning
-The game I have built so far is a very basic zombie survival top-down twin-stick shooter. To make it more game-like, I think we need to make the beginning smaller. Perhaps we could start with the players only having close-combat weapons? That would mean implementing melee combat, which could be cool. So, the gameplay would progress over the ten first levels with small-ish levels (the physical size of the level might be large, just not epic numbers of zombies etc) where the players get to test all their skills and tools, in preparation for the second act, where they are prepared but the hordes are larger. Also, Zombies? They are stand-ins for something properly funny to have as enemies. But that can be changed later. And also, we don't need to plan for the entirety of the three acts, because we can simply work on them as we progress. But the start of the game should be (perhaps) hand-to-hand combat, handguns
+The game I have built so far is a very basic zombie survival top-down twin-stick shooter. To make it more game-like, I think we need to make the beginning smaller. Perhaps we could start with the players only having close-combat weapons? That would mean implementing melee combat, which could be cool. So, the gameplay would progress over the ten first levels with small-ish levels (the physical size of the level might be large, just not epic numbers of zombies etc) where the players get to test all their skills and tools, in preparation for the second act, where they are prepared but the hordes are larger. Also, Zombies? They are stand-ins for something properly funny to have as enemies. But that can be changed later. And also, we don't need to plan for the entirety of the three acts, because we can simply work on them as we progress. But the start of the game should be (perhaps) hand-to-hand combat, handguns, molotovs and building barricades if there is a horde coming. We could put some actual level-design to use as well, using some kind of simple format for that. 
+
+So, what do we need for act one? Well, tons of fun stuff to implement:
+- [ ] Weapons as pickups
+- [ ] Hand-to-hand com
 
 ### Act two - in the thick of it
 
@@ -636,7 +640,7 @@ Det här gör vi på det gamla vanliga sättet. Vi bygger en box2d-värld, vi kl
 
 Oj oj oj,  vad roligt. Vi kan göra en box2d-kropp med leder, per tutorials etc. Superkul ju.
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbLTk1ODI5MDM2LC04NzI3MzE4NjgsMjAwNz
+eyJoaXN0b3J5IjpbMjU5NjUyMTYxLC04NzI3MzE4NjgsMjAwNz
 MzNTE2NCwxNzg4NTM5MTEzLC0xOTkxNDA0Njg1LDIzOTQ0MDA4
 Nyw1NjI0MzAzMywtMTIxMTI3MDM3MCwtMjExOTE1OTQ3MSwzMz
 U5NTc0NTYsMTE0MDYzODM1NywxODk1MTEyMjY2LC01Mzk0NjAx
