@@ -17,7 +17,10 @@ The game I have built so far is a very basic zombie survival top-down twin-stick
 
 So, what do we need for act one? Well, tons of fun stuff to implement:
 - [ ] Weapons as pickups
-- [ ] Hand-to-hand com
+- [ ] Hand-to-hand combat
+- [ ] Molotov cocktails (grenades and area effect weapons)
+- [ ] Designed levels - how about a fudging overworld, mate? A larger map, like in Overcooked, perhaps?
+- [ ] 
 
 ### Act two - in the thick of it
 
@@ -640,11 +643,11 @@ Det här gör vi på det gamla vanliga sättet. Vi bygger en box2d-värld, vi kl
 
 Oj oj oj,  vad roligt. Vi kan göra en box2d-kropp med leder, per tutorials etc. Superkul ju.
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbMjU5NjUyMTYxLC04NzI3MzE4NjgsMjAwNz
-MzNTE2NCwxNzg4NTM5MTEzLC0xOTkxNDA0Njg1LDIzOTQ0MDA4
-Nyw1NjI0MzAzMywtMTIxMTI3MDM3MCwtMjExOTE1OTQ3MSwzMz
-U5NTc0NTYsMTE0MDYzODM1NywxODk1MTEyMjY2LC01Mzk0NjAx
-OTAsNjU2MzMyNTI3LC0xMTAwMTc2NDU2LDM0MDk3OTUyLDEwMz
-IyMzI1NzQsMTI4MDQ5MjE1MiwtMzY5MjM4NTI5LDMzMTE1MDY3
-MV19
+eyJoaXN0b3J5IjpbLTkzODg1MTcwMCwtODcyNzMxODY4LDIwMD
+czMzUxNjQsMTc4ODUzOTExMywtMTk5MTQwNDY4NSwyMzk0NDAw
+ODcsNTYyNDMwMzMsLTEyMTEyNzAzNzAsLTIxMTkxNTk0NzEsMz
+M1OTU3NDU2LDExNDA2MzgzNTcsMTg5NTExMjI2NiwtNTM5NDYw
+MTkwLDY1NjMzMjUyNywtMTEwMDE3NjQ1NiwzNDA5Nzk1MiwxMD
+MyMjMyNTc0LDEyODA0OTIxNTIsLTM2OTIzODUyOSwzMzExNTA2
+NzFdfQ==
 -->
