@@ -20,10 +20,7 @@ Ah! We can have the first level just be like ten zombies, everyone has one gun w
 Nice little todo you got there. Would be a shame if anyone actually did something with it? 
 
 So, what do we need for act one? Well, tons of fun stuff to implement:
-- [x] Designed levels - how about a fudging overworld, mate? A larger map, like in Overcooked, perhaps?
-- [x] Weapons as pickups
 - [ ] Zoom in, slightly, and perhaps implement line-of-sight for players?
-- [ ] Culling. Only draw stuff that is actually on-screen and visible? The visible part might have to wait
 - [ ] Build blockades
 - [ ] Hand-to-hand combat
 - [ ] Molotov cocktails (grenades and area effect weapons)
@@ -31,6 +28,9 @@ So, what do we need for act one? Well, tons of fun stuff to implement:
 - [ ] Slower zombies at start of game
 - [ ] Enemies sprinkled out over the map from the start
 - [ ] New player sprites inspired by Death Road to Canada - I never do this, just hire an artist already
+- [x] Culling. Only draw stuff that is actually on-screen and visible? The visible part might have to wait
+- [x] Designed levels - how about a fudging overworld, mate? A larger map, like in Overcooked, perhaps?
+- [x] Weapons as pickups
 
 ##### Line of sight for players
 To make it scarier, perhaps the player shouldn't be able to see what's behind him? This goes hand in hand with culling. So for the render system, we should only draw enemies... hmm. Only draw entities which the player can actually see. We won't raycast to each and everyone, dot product is fine enough for this.
@@ -672,11 +672,11 @@ Det här gör vi på det gamla vanliga sättet. Vi bygger en box2d-värld, vi kl
 
 Oj oj oj,  vad roligt. Vi kan göra en box2d-kropp med leder, per tutorials etc. Superkul ju.
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbMTY4MzExMzE4MiwtNzAxMDUzMjcxLC05Mz
-g4NTE3MDAsLTg3MjczMTg2OCwyMDA3MzM1MTY0LDE3ODg1Mzkx
-MTMsLTE5OTE0MDQ2ODUsMjM5NDQwMDg3LDU2MjQzMDMzLC0xMj
-ExMjcwMzcwLC0yMTE5MTU5NDcxLDMzNTk1NzQ1NiwxMTQwNjM4
-MzU3LDE4OTUxMTIyNjYsLTUzOTQ2MDE5MCw2NTYzMzI1MjcsLT
-ExMDAxNzY0NTYsMzQwOTc5NTIsMTAzMjIzMjU3NCwxMjgwNDky
-MTUyXX0=
+eyJoaXN0b3J5IjpbLTY0NTI0NzI0NiwxNjgzMTEzMTgyLC03MD
+EwNTMyNzEsLTkzODg1MTcwMCwtODcyNzMxODY4LDIwMDczMzUx
+NjQsMTc4ODUzOTExMywtMTk5MTQwNDY4NSwyMzk0NDAwODcsNT
+YyNDMwMzMsLTEyMTEyNzAzNzAsLTIxMTkxNTk0NzEsMzM1OTU3
+NDU2LDExNDA2MzgzNTcsMTg5NTExMjI2NiwtNTM5NDYwMTkwLD
+Y1NjMzMjUyNywtMTEwMDE3NjQ1NiwzNDA5Nzk1MiwxMDMyMjMy
+NTc0XX0=
 -->
