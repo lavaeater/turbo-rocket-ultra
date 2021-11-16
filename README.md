@@ -4,7 +4,9 @@
 
 Aah, the slog. It's great when the fire burns bright and you just *get things done* because there is a clarity in what you want to do. But I almost fell into the trap of "make vectors work better in the engine" and other things that drive me towards coding and doing things that have no benefit to the game. The game that isn't a game, is it? What makes a game a game? 
 
-What would make this game a game? What would make it a game that I, and or the rest of the family 
+What would make this game a game? What would make it a game that I, and or the rest of the family or some of my friends would want to play?
+
+
 
 ## NEWEST THOUGHTS
 
@@ -623,7 +625,7 @@ Det här gör vi på det gamla vanliga sättet. Vi bygger en box2d-värld, vi kl
 
 Oj oj oj,  vad roligt. Vi kan göra en box2d-kropp med leder, per tutorials etc. Superkul ju.
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbMTIzNzgyOTQ3MiwxNzg4NTM5MTEzLC0xOT
+eyJoaXN0b3J5IjpbMjAwNzMzNTE2NCwxNzg4NTM5MTEzLC0xOT
 kxNDA0Njg1LDIzOTQ0MDA4Nyw1NjI0MzAzMywtMTIxMTI3MDM3
 MCwtMjExOTE1OTQ3MSwzMzU5NTc0NTYsMTE0MDYzODM1NywxOD
 k1MTEyMjY2LC01Mzk0NjAxOTAsNjU2MzMyNTI3LC0xMTAwMTc2
