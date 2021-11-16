@@ -28,16 +28,12 @@ I want to use Scene2D for the UI, rolling my own is just to confusing, even for 
 
 My god I hate scene 2d - unfairly. What I want to do is build a simple system AROUND scene2d, making it much easier for me to use scene2d for what I think is important and cool. So what is that, really?
 
-Scene2D has so many things
 
 ### MVP for now
 
 - [x] *Put level end requirements in a Story*
 	- [x] Put level end requirements in story (like special pickups, touching objectives etc)
 	- [x] Put boss kill requirement in story
-- [ ] Use Scene2D stuff to show ui Stuff perhaps?
-- [ ] Show a splash from the story system
-
 
 
 ## What's up with the name, anyways?
@@ -621,11 +617,11 @@ Det här gör vi på det gamla vanliga sättet. Vi bygger en box2d-värld, vi kl
 
 Oj oj oj,  vad roligt. Vi kan göra en box2d-kropp med leder, per tutorials etc. Superkul ju.
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbMTc4ODUzOTExMywtMTk5MTQwNDY4NSwyMz
-k0NDAwODcsNTYyNDMwMzMsLTEyMTEyNzAzNzAsLTIxMTkxNTk0
-NzEsMzM1OTU3NDU2LDExNDA2MzgzNTcsMTg5NTExMjI2NiwtNT
-M5NDYwMTkwLDY1NjMzMjUyNywtMTEwMDE3NjQ1NiwzNDA5Nzk1
-MiwxMDMyMjMyNTc0LDEyODA0OTIxNTIsLTM2OTIzODUyOSwzMz
-ExNTA2NzEsMjA5NjYxMjg1MSwtMTA4NDY5MDg2MywtMjM4NzYy
-MDRdfQ==
+eyJoaXN0b3J5IjpbNjkxOTg4MTc0LDE3ODg1MzkxMTMsLTE5OT
+E0MDQ2ODUsMjM5NDQwMDg3LDU2MjQzMDMzLC0xMjExMjcwMzcw
+LC0yMTE5MTU5NDcxLDMzNTk1NzQ1NiwxMTQwNjM4MzU3LDE4OT
+UxMTIyNjYsLTUzOTQ2MDE5MCw2NTYzMzI1MjcsLTExMDAxNzY0
+NTYsMzQwOTc5NTIsMTAzMjIzMjU3NCwxMjgwNDkyMTUyLC0zNj
+kyMzg1MjksMzMxMTUwNjcxLDIwOTY2MTI4NTEsLTEwODQ2OTA4
+NjNdfQ==
 -->
