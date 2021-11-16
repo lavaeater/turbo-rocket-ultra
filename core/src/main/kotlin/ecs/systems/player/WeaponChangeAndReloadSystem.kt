@@ -28,8 +28,8 @@ class WeaponChangeAndReloadSystem : IteratingSystem(
         if (controlComponent.needToChangeGun != InputIndicator.Neutral) {
             val inventoryComponent = entity.getComponent<InventoryComponent>()
             val weaponComponent = entity.getComponent<WeaponComponent>()
-            weaponComponent.currentGun = if(controlComponent.needToChangeGun == InputIndicator.Next) inventoryComponent.guns.nextItem() else inventoryComponent.guns.previousItem()
-            controlComponent.setNewGun(weaponComponent.currentGun.rof / 60f)
+            weaponComponent.currentWeapon = if(controlComponent.needToChangeGun == InputIndicator.Next) inventoryComponent.weapons.nextItem() else inventoryComponent.weapons.previousItem()
+            controlComponent.setNewGun(weaponComponent.currentWeapon.rof / 60f)
             controlComponent.needToChangeGun = InputIndicator.Neutral
         }
         if (controlComponent.reloadStarted) {
@@ -38,7 +38,7 @@ class WeaponChangeAndReloadSystem : IteratingSystem(
             // depending on type of weapon
             val inventoryComponent = entity.getComponent<InventoryComponent>()
             val weaponComponent = entity.getComponent<WeaponComponent>()
-            val gun = weaponComponent.currentGun
+            val gun = weaponComponent.currentWeapon
 
             val ammoType = gun.ammoType
             val reloadSound = gun.audio["reload"]!!
@@ -66,6 +66,9 @@ class WeaponChangeAndReloadSystem : IteratingSystem(
                             }
                             inventoryComponent.ammo[ammoType] = ammoLeft
                             controlComponent.reloadStarted = false
+                        }
+                        ReloadType.MeleeWeapon -> {
+                            //This is no-op because melee weapons don't need reloading
                         }
                     }
                     weaponComponent.reloadCoolDown = gun.reloadDelay

@@ -3,9 +3,17 @@ package ecs.systems.player
 import audio.AudioPlayer
 import com.badlogic.ashley.core.Entity
 import com.badlogic.ashley.systems.IteratingSystem
+import com.badlogic.gdx.math.Polygon
+import com.badlogic.gdx.math.Vector2
+import ecs.components.enemy.EnemyComponent
 import ecs.components.gameplay.TransformComponent
+import ecs.components.graphics.InLineOfSightComponent
 import ecs.components.player.*
 import factories.bullet
+import factories.player
+import features.weapons.Weapon
+import features.weapons.WeaponType
+import input.canISeeYouFromHere
 import ktx.ashley.allOf
 import ktx.math.random
 import ktx.math.vec2
@@ -30,20 +38,88 @@ class PlayerShootingSystem(private val audioPlayer: AudioPlayer) : IteratingSyst
          */
         val controlComponent = entity.getComponent<PlayerControlComponent>()
         controlComponent.coolDown(deltaTime)
-        val weapon = entity.getComponent<WeaponComponent>().currentGun
+        val weapon = entity.getComponent<WeaponComponent>().currentWeapon
+        when (weapon.weaponType) {
+            WeaponType.Melee -> swingMeleeWeapon(controlComponent, weapon, entity)
+            WeaponType.Projectile -> fireProjectileWeapon(controlComponent, weapon, entity)
+
+        }
+    }
+
+    @OptIn(ExperimentalStdlibApi::class)
+    private fun swingMeleeWeapon(controlComponent: PlayerControlComponent, weapon: Weapon, playerEntity: Entity) {
+        if (
+            controlComponent.firing &&
+            !(playerEntity.has<PlayerIsRespawning>() || playerEntity.has<PlayerWaitsForRespawn>())
+        ) {
+            //1. Check if enemies are within distance (is this faster than the sector first?
+            val playerPosition = playerEntity.getComponent<TransformComponent>().position
+            val enemiesICanSee =
+                engine.getEntitiesFor(allOf(EnemyComponent::class, InLineOfSightComponent::class).get())
+            val enemiesInRangeAndInHitArc = enemiesICanSee.filter {
+                val enemyPosition = it.getComponent<TransformComponent>().position
+                enemyPosition.dst(playerPosition) < weapon.spreadOrMeleeRange && canISeeYouFromHere(
+                    playerPosition,
+                    controlComponent.aimVector,
+                    enemyPosition,
+                    weapon.accuracyOrHitArcForMelee
+                )
+            }
+            enemiesInRangeAndInHitArc.map { it.getComponent<EnemyComponent>().takeDamage(weapon.damageRange) }
+        }
+    }
+
+    fun createScanPolygon(
+        start: Vector2,
+        viewDirection: Vector2,
+        viewDistance: Float,
+        fov: Float,
+        step: Float
+    ): Polygon {
+        val numberOfSteps = (fov / step).toInt()
+
+        val direction = viewDirection.cpy().setAngleDeg(viewDirection.angleDeg() - (fov / 2) - step)
+        val points = mutableListOf<Vector2>()
+        points.add(start)
+        for (i in 0..numberOfSteps) {
+            direction.setAngleDeg(direction.angleDeg() + step)
+            val pointToAdd = vec2(start.x, start.y)
+                .add(direction)
+                .sub(start)
+                .scl(viewDistance)
+                .add(start)
+                .add(direction)
+            points.add(pointToAdd)
+        }
+        val floatArray = points.map { listOf(it.x, it.y) }.flatten().toFloatArray()
+        val returnPolygon = Polygon(floatArray)
+        return returnPolygon
+    }
+
+    @OptIn(ExperimentalStdlibApi::class)
+    private fun fireProjectileWeapon(
+        controlComponent: PlayerControlComponent,
+        weapon: Weapon,
+        playerEntity: Entity
+    ) {
         if (
             controlComponent.firing &&
             weapon.ammoRemaining > 0 &&
-            !(entity.has<PlayerIsRespawning>() || entity.has<PlayerWaitsForRespawn>())
+            !(playerEntity.has<PlayerIsRespawning>() || playerEntity.has<PlayerWaitsForRespawn>())
         ) {
-            val transformComponent = entity.getComponent<TransformComponent>()
-            entity.getComponent<FiredShotsComponent>().queue.addFirst(transformComponent.position)
+            val transformComponent = playerEntity.getComponent<TransformComponent>()
+            playerEntity.getComponent<FiredShotsComponent>().queue.addFirst(transformComponent.position)
             controlComponent.shoot()
 
             val shotsound = weapon.audio["shot"]!!
 
             if ((1..5).random() == 1)
-                audioPlayer.playSounds(mapOf(shotsound to 0f, Assets.soundEffects["shellcasing"]!! to (0.1f..1f).random()))
+                audioPlayer.playSounds(
+                    mapOf(
+                        shotsound to 0f,
+                        Assets.soundEffects["shellcasing"]!! to (0.1f..1f).random()
+                    )
+                )
             else
                 audioPlayer.playSound(shotsound)
 
@@ -51,7 +127,7 @@ class PlayerShootingSystem(private val audioPlayer: AudioPlayer) : IteratingSyst
             weapon.ammoRemaining--
             val aimVector = controlComponent.aimVector.cpy()
             val angle = aimVector.angleDeg()
-            val angleVariation = (-weapon.accuracy..weapon.accuracy).random()
+            val angleVariation = (-weapon.accuracyOrHitArcForMelee..weapon.accuracyOrHitArcForMelee).random()
             aimVector.setAngleDeg(angle + angleVariation)
             for (projectile in 0..weapon.numberOfProjectiles) {
                 // If only one projectile, it is simple, else, there is trouble
@@ -64,15 +140,20 @@ class PlayerShootingSystem(private val audioPlayer: AudioPlayer) : IteratingSyst
                  */
                 if (weapon.numberOfProjectiles != 1) {
                     if (projectile == 0) {
-                        aimVector.setAngleDeg(aimVector.angleDeg() - weapon.maxSpread / 2)
+                        aimVector.setAngleDeg(aimVector.angleDeg() - weapon.spreadOrMeleeRange / 2)
                     } else {
-                        aimVector.setAngleDeg(aimVector.angleDeg() + weapon.maxSpread / weapon.numberOfProjectiles)
+                        aimVector.setAngleDeg(aimVector.angleDeg() + weapon.spreadOrMeleeRange / weapon.numberOfProjectiles)
                     }
                 }
                 /**
                  * Create a bullet entity at aimVector that travels very fast
                  */
-                bullet(vec2(transformComponent.position.x + aimVector.x, transformComponent.position.y - 1 + aimVector.y), aimVector, (75f..150f).random(), weapon.damageRange.random())
+                bullet(
+                    vec2(
+                        transformComponent.position.x + aimVector.x,
+                        transformComponent.position.y - 1 + aimVector.y
+                    ), aimVector, (75f..150f).random(), weapon.damageRange.random()
+                )
             }
         }
     }

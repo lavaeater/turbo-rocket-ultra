@@ -74,13 +74,13 @@ class ContactManager: ContactListener {
                             inventory.ammo[loot.ammoType] = inventory.ammo[loot.ammoType]!! + loot.amount
                         }
                         is WeaponLoot -> {
-                            val gun = loot.gunDefinition.getGun()
-                            if(!inventory.guns.any { it.name == gun.name }) {
-                                inventory.guns.add(gun)
+                            val gun = loot.weaponDefinition.getWeapon()
+                            if(!inventory.weapons.any { it.name == gun.name }) {
+                                inventory.weapons.add(gun)
                             }
                             if(!playerEntity.has<WeaponComponent>())
                                 playerEntity.addComponent<WeaponComponent> {
-                                    currentGun = gun
+                                    currentWeapon = gun
                                 }
                         }
                     }

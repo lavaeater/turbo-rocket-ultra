@@ -129,31 +129,6 @@ class SeekPlayerSystem(val debug: Boolean) : IteratingSystem(allOf(SeekPlayer::c
      * but probably less efficient than doing the cross or dot product thing that I just
      * dont understand currently - I will need to set up a small test for that one.
      */
-    fun createScanPolygon(
-        start: Vector2,
-        viewDirection: Vector2,
-        viewDistance: Float,
-        fov: Float,
-        step: Float
-    ): Polygon {
-        val numberOfSteps = (fov / step).toInt()
 
-        val direction = viewDirection.cpy().setAngleDeg(viewDirection.angleDeg() - (fov / 2) - step)
-        val points = mutableListOf<Vector2>()
-        points.add(start)
-        for (i in 0..numberOfSteps) {
-            direction.setAngleDeg(direction.angleDeg() + step)
-            val pointToAdd = vec2(start.x, start.y)
-                .add(direction)
-                .sub(start)
-                .scl(viewDistance)
-                .add(start)
-                .add(direction)
-            points.add(pointToAdd)
-        }
-        val floatArray = points.map { listOf(it.x, it.y) }.flatten().toFloatArray()
-        val returnPolygon = Polygon(floatArray)
-        return returnPolygon
-    }
 
 }
