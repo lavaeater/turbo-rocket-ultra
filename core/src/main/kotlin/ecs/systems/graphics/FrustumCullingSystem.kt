@@ -16,6 +16,9 @@ import ktx.ashley.remove
 import physics.addComponent
 import physics.getComponent
 
+/**
+ * Checks if entity is within 270 degrees of any players field of view. If so, it shall be rendered
+ */
 class LineOfSightCullingSystem : IteratingSystem(allOf(InFrustumComponent::class, TransformComponent::class).get()) {
     @OptIn(ExperimentalStdlibApi::class)
     private val players by lazy { Players.players.values.map { it.entity }}
