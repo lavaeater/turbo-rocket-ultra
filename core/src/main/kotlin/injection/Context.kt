@@ -24,7 +24,6 @@ import ecs.systems.graphics.*
 import ecs.systems.input.GamepadInputSystem
 import ecs.systems.pickups.LootDropSystem
 import ecs.systems.player.*
-import ktx.ashley.add
 import ktx.box2d.createWorld
 import ktx.inject.Context
 import ktx.inject.register

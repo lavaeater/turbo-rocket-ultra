@@ -7,10 +7,9 @@ import com.badlogic.gdx.math.Rectangle
 import ecs.components.enemy.EnemySpawnerComponent
 import factories.*
 import features.pickups.AmmoLoot
-import features.pickups.Loot
 import features.pickups.WeaponLoot
 import features.weapons.AmmoType
-import features.weapons.GunDefinition
+import features.weapons.WeaponDefinition
 import injection.Context.inject
 import map.snake.MapDirection
 import map.snake.random
@@ -60,8 +59,8 @@ class GridMapGenerator {
                         if (def.hasLoot(coordinate)) {
                             lootBox(
                                 section.innerBounds.randomPoint(), listOf(
-                                    WeaponLoot(GunDefinition.guns.first { it.name == "Glock 17" }, 1f),
-                                    AmmoLoot(AmmoType.nineMilliMeters, 17..51, 1f)
+                                    WeaponLoot(WeaponDefinition.weapons.first { it.name == "Glock 17" }, 1f),
+                                    AmmoLoot(AmmoType.NineMilliMeters, 17..51, 1f)
                                 )
                             )
                         }

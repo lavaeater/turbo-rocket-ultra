@@ -28,9 +28,9 @@ import features.pickups.AmmoLoot
 import features.pickups.ILoot
 import features.pickups.NullValue
 import features.weapons.AmmoType
-import features.weapons.GunDefinition
 import data.Player
 import ecs.components.enemy.BossComponent
+import features.weapons.WeaponDefinition
 import injection.Context.inject
 import input.ControlMapper
 import ktx.ashley.entity
@@ -217,13 +217,14 @@ fun player(player: Player, mapper: ControlMapper, at: Vector2) {
             color = Color.GREEN
         }
         with<PlayerComponent> { this.player = player }
+        val weapon = WeaponDefinition.weapons.first().getWeapon()
         with<InventoryComponent> {
-//            GunDefinition.guns.forEach { guns.add(it.getGun()) }
-//            ammo[AmmoType.nineMilliMeters] = 51
-//            ammo[AmmoType.twelveGaugeShotgun] = 40
-//            ammo[AmmoType.fnP90Ammo] = 200
+            weapons.add(weapon)
         }
-//        with<WeaponComponent>()
+        with<WeaponComponent> {
+            currentWeapon = weapon
+
+        }
         with<FiredShotsComponent>()
         with<FlashlightComponent>()
         with<WeaponLaserComponent>()
@@ -357,13 +358,13 @@ fun enemy(at: Vector2) {
         }
         with<LootDropComponent> {
             lootTable.contents.add(
-                AmmoLoot(AmmoType.nineMilliMeters, 6..17, 30f)
+                AmmoLoot(AmmoType.NineMilliMeters, 6..17, 30f)
             )
             lootTable.contents.add(
-                AmmoLoot(AmmoType.twelveGaugeShotgun, 4..10, 20f)
+                AmmoLoot(AmmoType.TwelveGaugeShotgun, 4..10, 20f)
             )
             lootTable.contents.add(
-                AmmoLoot(AmmoType.fnP90Ammo, 50..150, 10f)
+                AmmoLoot(AmmoType.FnP90Ammo, 50..150, 10f)
             )
             lootTable.contents.add(
                 NullValue(40f)
@@ -427,13 +428,13 @@ fun boss(at: Vector2, level: Int) {
         }
         with<LootDropComponent> {
             lootTable.contents.add(
-                AmmoLoot(AmmoType.nineMilliMeters, 6..17, 30f)
+                AmmoLoot(AmmoType.NineMilliMeters, 6..17, 30f)
             )
             lootTable.contents.add(
-                AmmoLoot(AmmoType.twelveGaugeShotgun, 4..10, 20f)
+                AmmoLoot(AmmoType.TwelveGaugeShotgun, 4..10, 20f)
             )
             lootTable.contents.add(
-                AmmoLoot(AmmoType.fnP90Ammo, 50..150, 10f)
+                AmmoLoot(AmmoType.FnP90Ammo, 50..150, 10f)
             )
         }
         with<TextureComponent> {

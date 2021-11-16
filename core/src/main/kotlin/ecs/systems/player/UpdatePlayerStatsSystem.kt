@@ -18,8 +18,8 @@ class UpdatePlayerStatsSystem : IteratingSystem(
         val inventoryComponent = entity.getComponent<InventoryComponent>()
         if(entity.has<WeaponComponent>()) {
             val weaponComponent = entity.getComponent<WeaponComponent>()
-            player.ammoLeft = weaponComponent.currentGun.ammoRemaining
-            player.totalAmmo = inventoryComponent.ammo[weaponComponent.currentGun.ammoType]!!
+            player.ammoLeft = weaponComponent.currentWeapon.ammoRemaining
+            player.totalAmmo = if(inventoryComponent.ammo.containsKey(weaponComponent.currentWeapon.ammoType)) inventoryComponent.ammo[weaponComponent.currentWeapon.ammoType]!! else 0
         }
     }
 }

@@ -30,7 +30,7 @@ class WeaponLaserSystem : IteratingSystem(
         val playerControlComponent = entity.getComponent<PlayerControlComponent>()
         val weaponComponent = entity.getComponent<WeaponComponent>()
 
-        val weaponAcc = weaponComponent.currentGun.maxSpread
+        val weaponAcc = weaponComponent.currentWeapon.spreadOrMeleeRange
         val playerPosition = transformComponent.position
         val aimVector = playerControlComponent.aimVector
         if(playerControlComponent.aiming) {
