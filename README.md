@@ -34,6 +34,7 @@ So, what do we need for act one? Well, tons of fun stuff to implement:
 
 ##### Line of sight for players
 To make it scarier, perhaps the player shouldn't be able to see what's behind him? This goes hand in hand with culling. So for the render system, we should only draw enemies... hmm. Only draw entities which the player can actually see. We won't raycast to each and everyone, dot product is fine enough for this.
+We need to project camera bounds to world coordinates, then 
 
 ##### Our first level
 What we want to do is design a level. The first one. It should represent learning the game by playing it. The player(s) start in one end of the level and need to... kill all enemies, collect particularily important loot (a gun) and get to the van. The map could look something like this:
@@ -671,7 +672,7 @@ Det här gör vi på det gamla vanliga sättet. Vi bygger en box2d-värld, vi kl
 
 Oj oj oj,  vad roligt. Vi kan göra en box2d-kropp med leder, per tutorials etc. Superkul ju.
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbMTcyMTEyMjAwMywtNzAxMDUzMjcxLC05Mz
+eyJoaXN0b3J5IjpbMTY4MzExMzE4MiwtNzAxMDUzMjcxLC05Mz
 g4NTE3MDAsLTg3MjczMTg2OCwyMDA3MzM1MTY0LDE3ODg1Mzkx
 MTMsLTE5OTE0MDQ2ODUsMjM5NDQwMDg3LDU2MjQzMDMzLC0xMj
 ExMjcwMzcwLC0yMTE5MTU5NDcxLDMzNTk1NzQ1NiwxMTQwNjM4
