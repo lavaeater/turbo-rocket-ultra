@@ -6,7 +6,9 @@ Aah, the slog. It's great when the fire burns bright and you just *get things do
 
 What would make this game a game? What would make it a game that I, and or the rest of the family or some of my friends would want to play?
 
-This is already a repetition of what I wrote under "newest thougts" below, but I kind of lost the spark after implementing the working dot product fov algorithm, now I need to find what it is I want to add to the game next. Perhaps it is like this: having the ability to add something in the game, like a mini-story, does not mean that it automatically exists a bunch of stories or that 
+This is already a repetition of what I wrote under "newest thougts" below, but I kind of lost the spark after implementing the working dot product fov algorithm, now I need to find what it is I want to add to the game next. Perhaps it is like this: having the ability to add something in the game, like a mini-story, does not mean that it automatically exists a bunch of stories or that it becomes easy to do it. 
+
+What the game needs is polish in the long run, but to keep me going I must not get caught up in doing too much polish right now. It also needs fun things to do. So, perhaps we should try to make some cool new way of having a 
 
 ## NEWEST THOUGHTS
 
@@ -625,11 +627,11 @@ Det här gör vi på det gamla vanliga sättet. Vi bygger en box2d-värld, vi kl
 
 Oj oj oj,  vad roligt. Vi kan göra en box2d-kropp med leder, per tutorials etc. Superkul ju.
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbLTE0Nzk5NzUzNSwyMDA3MzM1MTY0LDE3OD
-g1MzkxMTMsLTE5OTE0MDQ2ODUsMjM5NDQwMDg3LDU2MjQzMDMz
-LC0xMjExMjcwMzcwLC0yMTE5MTU5NDcxLDMzNTk1NzQ1NiwxMT
-QwNjM4MzU3LDE4OTUxMTIyNjYsLTUzOTQ2MDE5MCw2NTYzMzI1
-MjcsLTExMDAxNzY0NTYsMzQwOTc5NTIsMTAzMjIzMjU3NCwxMj
-gwNDkyMTUyLC0zNjkyMzg1MjksMzMxMTUwNjcxLDIwOTY2MTI4
-NTFdfQ==
+eyJoaXN0b3J5IjpbLTExMzAzNjUwNzQsMjAwNzMzNTE2NCwxNz
+g4NTM5MTEzLC0xOTkxNDA0Njg1LDIzOTQ0MDA4Nyw1NjI0MzAz
+MywtMTIxMTI3MDM3MCwtMjExOTE1OTQ3MSwzMzU5NTc0NTYsMT
+E0MDYzODM1NywxODk1MTEyMjY2LC01Mzk0NjAxOTAsNjU2MzMy
+NTI3LC0xMTAwMTc2NDU2LDM0MDk3OTUyLDEwMzIyMzI1NzQsMT
+I4MDQ5MjE1MiwtMzY5MjM4NTI5LDMzMTE1MDY3MSwyMDk2NjEy
+ODUxXX0=
 -->
