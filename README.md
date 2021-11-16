@@ -20,8 +20,8 @@ Ah! We can have the first level just be like ten zombies, everyone has one gun w
 Nice little todo you got there. Would be a shame if anyone actually did something with it? 
 
 So, what do we need for act one? Well, tons of fun stuff to implement:
-- [ ] Designed levels - how about a fudging overworld, mate? A larger map, like in Overcooked, perhaps?
-- [ ] Weapons as pickups
+- [x] Designed levels - how about a fudging overworld, mate? A larger map, like in Overcooked, perhaps?
+- [x] Weapons as pickups
 - [ ] Zoom in, slightly, and perhaps implement line-of-sight for players?
 - [ ] Culling. Only draw stuff that is actually on-screen and visible? The visible part might have to wait
 - [ ] Build blockades
@@ -31,6 +31,9 @@ So, what do we need for act one? Well, tons of fun stuff to implement:
 - [ ] Slower zombies at start of game
 - [ ] Enemies sprinkled out over the map from the start
 - [ ] New player sprites inspired by Death Road to Canada - I never do this, just hire an artist already
+
+##### Line of sight for players
+To make it scarier, perhaps the player shouldn't be able to see what's behind him? This goes hand in hand with culling. So for the render system, we should only draw enemies... hmm. Only draw entities which the player can actually see. We won't rayc
 
 ##### Our first level
 What we want to do is design a level. The first one. It should represent learning the game by playing it. The player(s) start in one end of the level and need to... kill all enemies, collect particularily important loot (a gun) and get to the van. The map could look something like this:
@@ -668,11 +671,11 @@ Det här gör vi på det gamla vanliga sättet. Vi bygger en box2d-värld, vi kl
 
 Oj oj oj,  vad roligt. Vi kan göra en box2d-kropp med leder, per tutorials etc. Superkul ju.
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbLTcwMTA1MzI3MSwtOTM4ODUxNzAwLC04Nz
-I3MzE4NjgsMjAwNzMzNTE2NCwxNzg4NTM5MTEzLC0xOTkxNDA0
-Njg1LDIzOTQ0MDA4Nyw1NjI0MzAzMywtMTIxMTI3MDM3MCwtMj
-ExOTE1OTQ3MSwzMzU5NTc0NTYsMTE0MDYzODM1NywxODk1MTEy
-MjY2LC01Mzk0NjAxOTAsNjU2MzMyNTI3LC0xMTAwMTc2NDU2LD
-M0MDk3OTUyLDEwMzIyMzI1NzQsMTI4MDQ5MjE1MiwtMzY5MjM4
-NTI5XX0=
+eyJoaXN0b3J5IjpbOTkyOTIxNDgsLTcwMTA1MzI3MSwtOTM4OD
+UxNzAwLC04NzI3MzE4NjgsMjAwNzMzNTE2NCwxNzg4NTM5MTEz
+LC0xOTkxNDA0Njg1LDIzOTQ0MDA4Nyw1NjI0MzAzMywtMTIxMT
+I3MDM3MCwtMjExOTE1OTQ3MSwzMzU5NTc0NTYsMTE0MDYzODM1
+NywxODk1MTEyMjY2LC01Mzk0NjAxOTAsNjU2MzMyNTI3LC0xMT
+AwMTc2NDU2LDM0MDk3OTUyLDEwMzIyMzI1NzQsMTI4MDQ5MjE1
+Ml19
 -->
