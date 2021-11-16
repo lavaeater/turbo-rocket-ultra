@@ -78,11 +78,11 @@ class GridMapSection(val coordinate: Coordinate, val connections: Set<MapDirecti
     }
 
     companion object {
-        val width = 5
-        val height = 5
+        val width = 8
+        val height = 8
         val tileWidth = 16f
         val tileHeight = 16f
-        val tileScale = 1/2f
+        val tileScale = 1/4f
         val directionAlignment by lazy {
             mapOf(
                 MapDirection.West to listOf(TileAlignment.Left, TileAlignment.TopLeft),
