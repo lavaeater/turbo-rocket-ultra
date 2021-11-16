@@ -1,5 +1,38 @@
 # turbo-rocket-ultra
 
+## Sixteenth of November 2021
+
+Aah, the slog. It's great when the fire burns bright and you just *get things done* because there is a clarity in what you want to do. But I almost fell into the trap of "make vectors work better in the engine" and other things that drive me towards coding and doing things that have no benefit to the game. The game that isn't a game, is it? What makes a game a game? 
+
+What would make this game a game? What would make it a game that I, and or the rest of the family or some of my friends would want to play?
+
+This is already a repetition of what I wrote under "newest thougts" below, but I kind of lost the spark after implementing the working dot product fov algorithm, now I need to find what it is I want to add to the game next. Perhaps it is like this: having the ability to add something in the game, like a mini-story, does not mean that it automatically exists a bunch of stories or that it becomes easy to do it. 
+
+What the game needs is polish in the long run, but to keep me going I must not get caught up in doing too much polish right now. It also needs fun things to do. So, perhaps we should try to make some cool new way of having a level? Perhaps we need to do the three act structure and six questions about the game?
+
+### Three acts of terror
+
+#### Act one - a small beginning
+The game I have built so far is a very basic zombie survival top-down twin-stick shooter. To make it more game-like, I think we need to make the beginning smaller. Perhaps we could start with the players only having close-combat weapons? That would mean implementing melee combat, which could be cool. So, the gameplay would progress over the ten first levels with small-ish levels (the physical size of the level might be large, just not epic numbers of zombies etc) where the players get to test all their skills and tools, in preparation for the second act, where they are prepared but the hordes are larger. Also, Zombies? They are stand-ins for something properly funny to have as enemies. But that can be changed later. And also, we don't need to plan for the entirety of the three acts, because we can simply work on them as we progress. But the start of the game should be (perhaps) hand-to-hand combat, handguns, molotovs and building barricades if there is a horde coming. We could put some actual level-design to use as well, using some kind of simple format for that. Also, we need UI blurs and speech bubbles to signal stuff in a cool way. Zombies need to be waay slower in the beginning, as well, and we need to add more AI-debug stuff in a nicer way. A nice little nine-patcher would be cool.
+
+Ah! We can have the first level just be like ten zombies, everyone has one gun with 17 bullets in, that's it. 
+
+Nice little todo you got there. Would be a shame if anyone actually did something with it? 
+
+So, what do we need for act one? Well, tons of fun stuff to implement:
+- [ ] Weapons as pickups
+- [ ] Hand-to-hand combat
+- [ ] Molotov cocktails (grenades and area effect weapons)
+- [ ] Designed levels - how about a fudging overworld, mate? A larger map, like in Overcooked, perhaps?
+- [ ] More AI-mode-badges
+- [ ] Slower zombies at start of game
+- [ ] Enemies sprinkled out over the map from the start
+- [ ] New player sprites inspired by Death Road to Canada - I never do this, just hire an artist already
+
+### Act two - in the thick of it
+
+### Act three - for all the marbles
+
 ## NEWEST THOUGHTS
 
 The next feature in the game must be more robust, more additive to the concept and gameplay. No more diddly-daddling of adding bits and pieces, what we need next is that thing that makes it feel like a *story* or *proper game*, whatever that means.
@@ -24,14 +57,16 @@ So, what are we actually going to do?
 
 I want to use Scene2D for the UI, rolling my own is just to confusing, even for me. And too much work. 
 
+### Use Scene2D again
+
+My god I hate scene 2d - unfairly. What I want to do is build a simple system AROUND scene2d, making it much easier for me to use scene2d for what I think is important and cool. So what is that, really?
+
+
 ### MVP for now
 
 - [x] *Put level end requirements in a Story*
 	- [x] Put level end requirements in story (like special pickups, touching objectives etc)
 	- [x] Put boss kill requirement in story
-- [ ] Use Scene2D stuff to show ui Stuff perhaps?
-- [ ] Show a splash from the story system
-
 
 
 ## What's up with the name, anyways?
@@ -55,7 +90,6 @@ To make the graphics and environment easy I am currently working with the concep
 
 Lets try to prioritize these into what would make the game seem "done" the fastest.
 
-- [ ] Smart Transforms - collect all vector stuff pertaining to position, rotation, direction, into one collected class 
 - [ ] HUD II, Header Upper Displayer <- rediscover MVVM pattern, two-way binding
 - [ ] More Enemy Sprites (generate them)
 - [ ] Lightmaps for sprites
@@ -69,6 +103,7 @@ Lets try to prioritize these into what would make the game seem "done" the faste
 - [ ] Vehicles would be cool
 - [ ] Build Towers
 - [ ] Gibs and Body Parts II - blood trails and audio
+- [x] Smart Transforms - collect all vector stuff pertaining to position, rotation, direction, into one collected class 
 - [x] Story Mode
 - [x] Boss fight
 - [x] More character sprites
@@ -615,11 +650,11 @@ Det här gör vi på det gamla vanliga sättet. Vi bygger en box2d-värld, vi kl
 
 Oj oj oj,  vad roligt. Vi kan göra en box2d-kropp med leder, per tutorials etc. Superkul ju.
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbLTE5OTE0MDQ2ODUsMjM5NDQwMDg3LDU2Mj
-QzMDMzLC0xMjExMjcwMzcwLC0yMTE5MTU5NDcxLDMzNTk1NzQ1
-NiwxMTQwNjM4MzU3LDE4OTUxMTIyNjYsLTUzOTQ2MDE5MCw2NT
-YzMzI1MjcsLTExMDAxNzY0NTYsMzQwOTc5NTIsMTAzMjIzMjU3
-NCwxMjgwNDkyMTUyLC0zNjkyMzg1MjksMzMxMTUwNjcxLDIwOT
-Y2MTI4NTEsLTEwODQ2OTA4NjMsLTIzODc2MjA0LC0xNTI4MzEx
-NDQ0XX0=
+eyJoaXN0b3J5IjpbMTExMDE1NDAxOSwtOTM4ODUxNzAwLC04Nz
+I3MzE4NjgsMjAwNzMzNTE2NCwxNzg4NTM5MTEzLC0xOTkxNDA0
+Njg1LDIzOTQ0MDA4Nyw1NjI0MzAzMywtMTIxMTI3MDM3MCwtMj
+ExOTE1OTQ3MSwzMzU5NTc0NTYsMTE0MDYzODM1NywxODk1MTEy
+MjY2LC01Mzk0NjAxOTAsNjU2MzMyNTI3LC0xMTAwMTc2NDU2LD
+M0MDk3OTUyLDEwMzIyMzI1NzQsMTI4MDQ5MjE1MiwtMzY5MjM4
+NTI5XX0=
 -->
