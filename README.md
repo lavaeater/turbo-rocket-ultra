@@ -6,7 +6,7 @@ Aah, the slog. It's great when the fire burns bright and you just *get things do
 
 What would make this game a game? What would make it a game that I, and or the rest of the family or some of my friends would want to play?
 
-This is alr
+This is already a repetition of what I wrote under "newest thougts" below, but I kind of lost the spark after implementing the working dot product fov algorithm, now I need to find what it is I want to add to the game next. Perhaps it is like this: having the ability to add something in the game, like a mini-story, does not mean that it automatically exists a bunch of stories or that 
 
 ## NEWEST THOUGHTS
 
@@ -625,7 +625,7 @@ Det här gör vi på det gamla vanliga sättet. Vi bygger en box2d-värld, vi kl
 
 Oj oj oj,  vad roligt. Vi kan göra en box2d-kropp med leder, per tutorials etc. Superkul ju.
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbMTkzMzY1MTAzMSwyMDA3MzM1MTY0LDE3OD
+eyJoaXN0b3J5IjpbLTE0Nzk5NzUzNSwyMDA3MzM1MTY0LDE3OD
 g1MzkxMTMsLTE5OTE0MDQ2ODUsMjM5NDQwMDg3LDU2MjQzMDMz
 LC0xMjExMjcwMzcwLC0yMTE5MTU5NDcxLDMzNTk1NzQ1NiwxMT
 QwNjM4MzU3LDE4OTUxMTIyNjYsLTUzOTQ2MDE5MCw2NTYzMzI1
