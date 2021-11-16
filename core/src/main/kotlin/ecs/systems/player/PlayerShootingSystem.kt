@@ -48,20 +48,25 @@ class PlayerShootingSystem(private val audioPlayer: AudioPlayer) : IteratingSyst
 
     @OptIn(ExperimentalStdlibApi::class)
     private fun swingMeleeWeapon(controlComponent: PlayerControlComponent, weapon: Weapon, playerEntity: Entity) {
-
-        //1. Check if enemies are within distance (is this faster than the sector first?
-        val playerPosition = playerEntity.getComponent<TransformComponent>().position
-        val enemiesICanSee = engine.getEntitiesFor(allOf(EnemyComponent::class, InLineOfSightComponent::class).get())
-        val enemiesInRangeAndInHitArc = enemiesICanSee.filter {
-            val enemyPosition = it.getComponent<TransformComponent>().position
-            enemyPosition.dst(playerPosition) < weapon.spreadOrMeleeRange && canISeeYouFromHere(
-                playerPosition,
-                controlComponent.aimVector,
-                enemyPosition,
-                weapon.accuracyOrHitArcForMelee
-            )
+        if (
+            controlComponent.firing &&
+            !(playerEntity.has<PlayerIsRespawning>() || playerEntity.has<PlayerWaitsForRespawn>())
+        ) {
+            //1. Check if enemies are within distance (is this faster than the sector first?
+            val playerPosition = playerEntity.getComponent<TransformComponent>().position
+            val enemiesICanSee =
+                engine.getEntitiesFor(allOf(EnemyComponent::class, InLineOfSightComponent::class).get())
+            val enemiesInRangeAndInHitArc = enemiesICanSee.filter {
+                val enemyPosition = it.getComponent<TransformComponent>().position
+                enemyPosition.dst(playerPosition) < weapon.spreadOrMeleeRange && canISeeYouFromHere(
+                    playerPosition,
+                    controlComponent.aimVector,
+                    enemyPosition,
+                    weapon.accuracyOrHitArcForMelee
+                )
+            }
+            enemiesInRangeAndInHitArc.map { it.getComponent<EnemyComponent>().takeDamage(weapon.damageRange) }
         }
-        enemiesInRangeAndInHitArc.map { it.getComponent<EnemyComponent>().takeDamage(weapon.damageRange) }
     }
 
     fun createScanPolygon(
