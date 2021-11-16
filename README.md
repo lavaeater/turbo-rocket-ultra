@@ -21,14 +21,20 @@ Nice little todo you got there. Would be a shame if anyone actually did somethin
 
 So, what do we need for act one? Well, tons of fun stuff to implement:
 - [ ] Designed levels - how about a fudging overworld, mate? A larger map, like in Overcooked, perhaps?
-- [ ] Zoom in, slightly, and perhaps implement line-of-sight for players?
 - [ ] Weapons as pickups
+- [ ] Zoom in, slightly, and perhaps implement line-of-sight for players?
+- [ ] Culling. Only draw stuff that is actually on-screen and visible? The visible part might have to wait
+- [ ] Build blockades
 - [ ] Hand-to-hand combat
 - [ ] Molotov cocktails (grenades and area effect weapons)
 - [ ] More AI-mode-badges
 - [ ] Slower zombies at start of game
 - [ ] Enemies sprinkled out over the map from the start
 - [ ] New player sprites inspired by Death Road to Canada - I never do this, just hire an artist already
+
+##### Our first level
+What we 
+
 
 ### Act two - in the thick of it
 
@@ -651,11 +657,11 @@ Det här gör vi på det gamla vanliga sättet. Vi bygger en box2d-värld, vi kl
 
 Oj oj oj,  vad roligt. Vi kan göra en box2d-kropp med leder, per tutorials etc. Superkul ju.
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbMjAzMzExMjEzLC05Mzg4NTE3MDAsLTg3Mj
-czMTg2OCwyMDA3MzM1MTY0LDE3ODg1MzkxMTMsLTE5OTE0MDQ2
-ODUsMjM5NDQwMDg3LDU2MjQzMDMzLC0xMjExMjcwMzcwLC0yMT
-E5MTU5NDcxLDMzNTk1NzQ1NiwxMTQwNjM4MzU3LDE4OTUxMTIy
-NjYsLTUzOTQ2MDE5MCw2NTYzMzI1MjcsLTExMDAxNzY0NTYsMz
-QwOTc5NTIsMTAzMjIzMjU3NCwxMjgwNDkyMTUyLC0zNjkyMzg1
-MjldfQ==
+eyJoaXN0b3J5IjpbMTExNDYyOTE4OSwtOTM4ODUxNzAwLC04Nz
+I3MzE4NjgsMjAwNzMzNTE2NCwxNzg4NTM5MTEzLC0xOTkxNDA0
+Njg1LDIzOTQ0MDA4Nyw1NjI0MzAzMywtMTIxMTI3MDM3MCwtMj
+ExOTE1OTQ3MSwzMzU5NTc0NTYsMTE0MDYzODM1NywxODk1MTEy
+MjY2LC01Mzk0NjAxOTAsNjU2MzMyNTI3LC0xMTAwMTc2NDU2LD
+M0MDk3OTUyLDEwMzIyMzI1NzQsMTI4MDQ5MjE1MiwtMzY5MjM4
+NTI5XX0=
 -->
