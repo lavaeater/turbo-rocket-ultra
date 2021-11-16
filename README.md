@@ -20,8 +20,8 @@ Ah! We can have the first level just be like ten zombies, everyone has one gun w
 Nice little todo you got there. Would be a shame if anyone actually did something with it? 
 
 So, what do we need for act one? Well, tons of fun stuff to implement:
-- [ ] Build blockades
 - [ ] Hand-to-hand combat
+- [ ] Build blockades
 - [ ] Molotov cocktails (grenades and area effect weapons)
 - [ ] Zoom in, slightly, and perhaps implement line-of-sight for players?
 - [ ] More AI-mode-badges
@@ -34,7 +34,7 @@ So, what do we need for act one? Well, tons of fun stuff to implement:
 - [x] Weapons as pickups
 
 ##### Blockades, swinging and area-effect-weapons
-Lets start with hand-to-hand combat. How will that work? Well, the player aims in some direction and if an enemy is within range for strikes and within a fov for the strike (a 120 degree arc), the enemy can get hit. The enemy will signal this by blinking, I think would be cool.
+Lets start with hand-to-hand combat. How will that work? Well, the player aims in some direction and if an enemy is within range for strikes and within a fov for the strike (a 120 degree arc), the enemy can get hit. The enemy will signal this by blinking, I think would be cool. This could strike multiple enemies,
 
 ##### Line of sight for players
 To make it scarier, perhaps the player shouldn't be able to see what's behind him? This goes hand in hand with culling. So for the render system, we should only draw enemies... hmm. Only draw entities which the player can actually see. We won't raycast to each and everyone, dot product is fine enough for this.
@@ -676,11 +676,11 @@ Det här gör vi på det gamla vanliga sättet. Vi bygger en box2d-värld, vi kl
 
 Oj oj oj,  vad roligt. Vi kan göra en box2d-kropp med leder, per tutorials etc. Superkul ju.
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbLTE1MTUwNTY3NDYsMTY4MzExMzE4MiwtNz
-AxMDUzMjcxLC05Mzg4NTE3MDAsLTg3MjczMTg2OCwyMDA3MzM1
-MTY0LDE3ODg1MzkxMTMsLTE5OTE0MDQ2ODUsMjM5NDQwMDg3LD
-U2MjQzMDMzLC0xMjExMjcwMzcwLC0yMTE5MTU5NDcxLDMzNTk1
-NzQ1NiwxMTQwNjM4MzU3LDE4OTUxMTIyNjYsLTUzOTQ2MDE5MC
-w2NTYzMzI1MjcsLTExMDAxNzY0NTYsMzQwOTc5NTIsMTAzMjIz
-MjU3NF19
+eyJoaXN0b3J5IjpbMTAxNDIxMDQwMywxNjgzMTEzMTgyLC03MD
+EwNTMyNzEsLTkzODg1MTcwMCwtODcyNzMxODY4LDIwMDczMzUx
+NjQsMTc4ODUzOTExMywtMTk5MTQwNDY4NSwyMzk0NDAwODcsNT
+YyNDMwMzMsLTEyMTEyNzAzNzAsLTIxMTkxNTk0NzEsMzM1OTU3
+NDU2LDExNDA2MzgzNTcsMTg5NTExMjI2NiwtNTM5NDYwMTkwLD
+Y1NjMzMjUyNywtMTEwMDE3NjQ1NiwzNDA5Nzk1MiwxMDMyMjMy
+NTc0XX0=
 -->
