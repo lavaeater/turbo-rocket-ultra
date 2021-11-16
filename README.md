@@ -43,7 +43,7 @@ x
 x
 xxxxs
 
-The x markers are simpl
+The x markers are simply sections of map, the s is for spawn-section, l is for loot-section and then g is for goal / end, whatever. So a map definition could consist of that information, which can be easily translated into instructions for making a map, I think. The map itself is in fact an a 
 
 
 
@@ -668,11 +668,11 @@ Det här gör vi på det gamla vanliga sättet. Vi bygger en box2d-värld, vi kl
 
 Oj oj oj,  vad roligt. Vi kan göra en box2d-kropp med leder, per tutorials etc. Superkul ju.
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbLTExNzk5OTg0NTksLTkzODg1MTcwMCwtOD
-cyNzMxODY4LDIwMDczMzUxNjQsMTc4ODUzOTExMywtMTk5MTQw
-NDY4NSwyMzk0NDAwODcsNTYyNDMwMzMsLTEyMTEyNzAzNzAsLT
-IxMTkxNTk0NzEsMzM1OTU3NDU2LDExNDA2MzgzNTcsMTg5NTEx
-MjI2NiwtNTM5NDYwMTkwLDY1NjMzMjUyNywtMTEwMDE3NjQ1Ni
-wzNDA5Nzk1MiwxMDMyMjMyNTc0LDEyODA0OTIxNTIsLTM2OTIz
-ODUyOV19
+eyJoaXN0b3J5IjpbLTI3MzE5OTA0LC05Mzg4NTE3MDAsLTg3Mj
+czMTg2OCwyMDA3MzM1MTY0LDE3ODg1MzkxMTMsLTE5OTE0MDQ2
+ODUsMjM5NDQwMDg3LDU2MjQzMDMzLC0xMjExMjcwMzcwLC0yMT
+E5MTU5NDcxLDMzNTk1NzQ1NiwxMTQwNjM4MzU3LDE4OTUxMTIy
+NjYsLTUzOTQ2MDE5MCw2NTYzMzI1MjcsLTExMDAxNzY0NTYsMz
+QwOTc5NTIsMTAzMjIzMjU3NCwxMjgwNDkyMTUyLC0zNjkyMzg1
+MjldfQ==
 -->
