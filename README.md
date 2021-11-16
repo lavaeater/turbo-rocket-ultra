@@ -13,10 +13,11 @@ What the game needs is polish in the long run, but to keep me going I must not g
 ### Three acts of terror
 
 #### Act one - a small beginning
+The game I have built so far is a very basic zombie survival top-down twin-stick shooter. To make it more game-like, I think we need to make the beginning 
 
 ### Act two - in the thick of it
 
-### Act three -
+### Act three - for all the marbles
 
 ## NEWEST THOUGHTS
 
@@ -635,11 +636,11 @@ Det här gör vi på det gamla vanliga sättet. Vi bygger en box2d-värld, vi kl
 
 Oj oj oj,  vad roligt. Vi kan göra en box2d-kropp med leder, per tutorials etc. Superkul ju.
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbLTU0MTQzMzU3NSwyMDA3MzM1MTY0LDE3OD
-g1MzkxMTMsLTE5OTE0MDQ2ODUsMjM5NDQwMDg3LDU2MjQzMDMz
-LC0xMjExMjcwMzcwLC0yMTE5MTU5NDcxLDMzNTk1NzQ1NiwxMT
-QwNjM4MzU3LDE4OTUxMTIyNjYsLTUzOTQ2MDE5MCw2NTYzMzI1
-MjcsLTExMDAxNzY0NTYsMzQwOTc5NTIsMTAzMjIzMjU3NCwxMj
-gwNDkyMTUyLC0zNjkyMzg1MjksMzMxMTUwNjcxLDIwOTY2MTI4
-NTFdfQ==
+eyJoaXN0b3J5IjpbNzMyMzc3ODQ0LDIwMDczMzUxNjQsMTc4OD
+UzOTExMywtMTk5MTQwNDY4NSwyMzk0NDAwODcsNTYyNDMwMzMs
+LTEyMTEyNzAzNzAsLTIxMTkxNTk0NzEsMzM1OTU3NDU2LDExND
+A2MzgzNTcsMTg5NTExMjI2NiwtNTM5NDYwMTkwLDY1NjMzMjUy
+NywtMTEwMDE3NjQ1NiwzNDA5Nzk1MiwxMDMyMjMyNTc0LDEyOD
+A0OTIxNTIsLTM2OTIzODUyOSwzMzExNTA2NzEsMjA5NjYxMjg1
+MV19
 -->
