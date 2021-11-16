@@ -11,13 +11,12 @@ import com.badlogic.gdx.physics.box2d.World
 import com.badlogic.gdx.utils.viewport.ExtendViewport
 import ecs.components.BodyComponent
 import ecs.components.enemy.EnemyComponent
-import ecs.components.enemy.EnemySpawnerComponent
 import ecs.components.gameplay.ObjectiveComponent
 import ecs.components.gameplay.ObstacleComponent
 import ecs.components.player.PlayerComponent
 import ecs.systems.graphics.CameraUpdateSystem
 import ecs.systems.graphics.RenderMiniMapSystem
-import ecs.systems.graphics.SimpleRenderSystem
+import ecs.systems.graphics.RenderSystem
 import ecs.systems.input.GamepadInputSystem
 import injection.Context.inject
 import ecs.systems.input.KeyboardInputSystem
@@ -37,7 +36,6 @@ import map.snake.*
 import physics.getComponent
 import statemachine.StateMachine
 import story.FactsOfTheWorld
-import story.StoryHelper
 import story.StoryManager
 import story.fact.Facts
 import ui.IUserInterface
@@ -143,7 +141,7 @@ D1B67A
             system.setProcessing(false)
 
         //Continue to render, though
-        engine.getSystem<SimpleRenderSystem>().setProcessing(true)
+        engine.getSystem<RenderSystem>().setProcessing(true)
         engine.getSystem<RenderMiniMapSystem>().setProcessing(true)
     }
 

@@ -2,28 +2,26 @@ package ecs.systems.graphics
 
 import com.badlogic.ashley.core.Entity
 import com.badlogic.ashley.systems.SortedIteratingSystem
-import com.badlogic.gdx.ai.steer.behaviors.Seek
-import com.badlogic.gdx.graphics.Color
 import com.badlogic.gdx.graphics.g2d.Batch
-import ecs.components.ai.SeekPlayer
 import ecs.components.gameplay.TransformComponent
 import ecs.components.graphics.TextureComponent
+import ecs.components.graphics.InFrustumComponent
+import ecs.components.graphics.InLineOfSightComponent
 import ktx.ashley.allOf
-import ktx.collections.toGdxArray
 import ktx.graphics.use
-import ktx.math.vec2
 import physics.drawScaled
 import physics.getComponent
-import physics.has
 import tru.Assets
 
 @OptIn(ExperimentalStdlibApi::class)
-class SimpleRenderSystem(
+class RenderSystem(
     private val batch: Batch
 ) : SortedIteratingSystem(
     allOf(
         TransformComponent::class,
-        TextureComponent::class
+        TextureComponent::class,
+        InFrustumComponent::class,
+        InLineOfSightComponent::class
     ).get(),
     object : Comparator<Entity> {
         override fun compare(p0: Entity, p1: Entity): Int {
