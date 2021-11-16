@@ -33,6 +33,9 @@ So, what do we need for act one? Well, tons of fun stuff to implement:
 - [x] Designed levels - how about a fudging overworld, mate? A larger map, like in Overcooked, perhaps?
 - [x] Weapons as pickups
 
+##### Blockades, swinging and area-effect-weapons
+
+
 ##### Line of sight for players
 To make it scarier, perhaps the player shouldn't be able to see what's behind him? This goes hand in hand with culling. So for the render system, we should only draw enemies... hmm. Only draw entities which the player can actually see. We won't raycast to each and everyone, dot product is fine enough for this.
 We need to project camera bounds to world coordinates, then 
@@ -673,7 +676,7 @@ Det här gör vi på det gamla vanliga sättet. Vi bygger en box2d-värld, vi kl
 
 Oj oj oj,  vad roligt. Vi kan göra en box2d-kropp med leder, per tutorials etc. Superkul ju.
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbMTQ0NzIxNzI3MywxNjgzMTEzMTgyLC03MD
+eyJoaXN0b3J5IjpbLTkyODkwNzk0NCwxNjgzMTEzMTgyLC03MD
 EwNTMyNzEsLTkzODg1MTcwMCwtODcyNzMxODY4LDIwMDczMzUx
 NjQsMTc4ODUzOTExMywtMTk5MTQwNDY4NSwyMzk0NDAwODcsNT
 YyNDMwMzMsLTEyMTEyNzAzNzAsLTIxMTkxNTk0NzEsMzM1OTU3
