@@ -1,5 +1,9 @@
 # turbo-rocket-ultra
 
+## Sixteenth of November 2021
+
+Aah, the slog. It's great when the fire burns bright and you just *get things done* because there is a clarity in what you want to do. But I almost fell into the trap of "make 
+
 ## NEWEST THOUGHTS
 
 The next feature in the game must be more robust, more additive to the concept and gameplay. No more diddly-daddling of adding bits and pieces, what we need next is that thing that makes it feel like a *story* or *proper game*, whatever that means.
@@ -57,7 +61,6 @@ To make the graphics and environment easy I am currently working with the concep
 
 Lets try to prioritize these into what would make the game seem "done" the fastest.
 
-- [ ] Smart Transforms - collect all vector stuff pertaining to position, rotation, direction, into one collected class 
 - [ ] HUD II, Header Upper Displayer <- rediscover MVVM pattern, two-way binding
 - [ ] More Enemy Sprites (generate them)
 - [ ] Lightmaps for sprites
@@ -71,6 +74,7 @@ Lets try to prioritize these into what would make the game seem "done" the faste
 - [ ] Vehicles would be cool
 - [ ] Build Towers
 - [ ] Gibs and Body Parts II - blood trails and audio
+- [x] Smart Transforms - collect all vector stuff pertaining to position, rotation, direction, into one collected class 
 - [x] Story Mode
 - [x] Boss fight
 - [x] More character sprites
@@ -617,11 +621,11 @@ Det här gör vi på det gamla vanliga sättet. Vi bygger en box2d-värld, vi kl
 
 Oj oj oj,  vad roligt. Vi kan göra en box2d-kropp med leder, per tutorials etc. Superkul ju.
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbNjkxOTg4MTc0LDE3ODg1MzkxMTMsLTE5OT
-E0MDQ2ODUsMjM5NDQwMDg3LDU2MjQzMDMzLC0xMjExMjcwMzcw
-LC0yMTE5MTU5NDcxLDMzNTk1NzQ1NiwxMTQwNjM4MzU3LDE4OT
-UxMTIyNjYsLTUzOTQ2MDE5MCw2NTYzMzI1MjcsLTExMDAxNzY0
-NTYsMzQwOTc5NTIsMTAzMjIzMjU3NCwxMjgwNDkyMTUyLC0zNj
-kyMzg1MjksMzMxMTUwNjcxLDIwOTY2MTI4NTEsLTEwODQ2OTA4
-NjNdfQ==
+eyJoaXN0b3J5IjpbMTI3OTEzMTc0MywxNzg4NTM5MTEzLC0xOT
+kxNDA0Njg1LDIzOTQ0MDA4Nyw1NjI0MzAzMywtMTIxMTI3MDM3
+MCwtMjExOTE1OTQ3MSwzMzU5NTc0NTYsMTE0MDYzODM1NywxOD
+k1MTEyMjY2LC01Mzk0NjAxOTAsNjU2MzMyNTI3LC0xMTAwMTc2
+NDU2LDM0MDk3OTUyLDEwMzIyMzI1NzQsMTI4MDQ5MjE1MiwtMz
+Y5MjM4NTI5LDMzMTE1MDY3MSwyMDk2NjEyODUxLC0xMDg0Njkw
+ODYzXX0=
 -->
