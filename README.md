@@ -46,6 +46,7 @@ We will try to do this on the regular game screen instead, because I can't handl
 
 
 
+
 ##### Line of sight for players
 To make it scarier, perhaps the player shouldn't be able to see what's behind him? This goes hand in hand with culling. So for the render system, we should only draw enemies... hmm. Only draw entities which the player can actually see. We won't raycast to each and everyone, dot product is fine enough for this.
 We need to project camera bounds to world coordinates, then 
@@ -686,11 +687,11 @@ Det här gör vi på det gamla vanliga sättet. Vi bygger en box2d-värld, vi kl
 
 Oj oj oj,  vad roligt. Vi kan göra en box2d-kropp med leder, per tutorials etc. Superkul ju.
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbLTEwMjQ2NTM1MzksMjA1MTEwMjE5OSwtNz
-QyNDEyMzUwLC02NjUwOTUyNzIsMTY4MzExMzE4MiwtNzAxMDUz
-MjcxLC05Mzg4NTE3MDAsLTg3MjczMTg2OCwyMDA3MzM1MTY0LD
-E3ODg1MzkxMTMsLTE5OTE0MDQ2ODUsMjM5NDQwMDg3LDU2MjQz
-MDMzLC0xMjExMjcwMzcwLC0yMTE5MTU5NDcxLDMzNTk1NzQ1Ni
-wxMTQwNjM4MzU3LDE4OTUxMTIyNjYsLTUzOTQ2MDE5MCw2NTYz
-MzI1MjddfQ==
+eyJoaXN0b3J5IjpbLTc3MTk5NDE2NSwyMDUxMTAyMTk5LC03ND
+I0MTIzNTAsLTY2NTA5NTI3MiwxNjgzMTEzMTgyLC03MDEwNTMy
+NzEsLTkzODg1MTcwMCwtODcyNzMxODY4LDIwMDczMzUxNjQsMT
+c4ODUzOTExMywtMTk5MTQwNDY4NSwyMzk0NDAwODcsNTYyNDMw
+MzMsLTEyMTEyNzAzNzAsLTIxMTkxNTk0NzEsMzM1OTU3NDU2LD
+ExNDA2MzgzNTcsMTg5NTExMjI2NiwtNTM5NDYwMTkwLDY1NjMz
+MjUyN119
 -->
