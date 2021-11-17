@@ -36,7 +36,9 @@ So, what do we need for act one? Well, tons of fun stuff to implement:
 ##### Blockades, swinging and area-effect-weapons
 Lets start with hand-to-hand combat. How will that work? Well, the player aims in some direction and if an enemy is within range for strikes and within a fov for the strike (a 120 degree arc), the enemy can get hit. The enemy will signal this by blinking, I think would be cool. This could strike multiple enemies, perhaps.
 
-How will building work? Well, to effectively build blockades the player should be able to direct his building marker to a specific tile, which will be marked in transparent green and then just push build, then walk and there s
+How will building work? Well, to effectively build blockades the player should be able to direct his building marker to a specific tile, which will be marked in transparent green and then just push build, then walk and there should be blockades built in the correct place while walking. 
+
+This comes back to control for the aiming, actually. I think I just realized something and that is that the players aim should not be changing unless touching the controls. I think they basically reset, which is wrong. They
 
 ##### Line of sight for players
 To make it scarier, perhaps the player shouldn't be able to see what's behind him? This goes hand in hand with culling. So for the render system, we should only draw enemies... hmm. Only draw entities which the player can actually see. We won't raycast to each and everyone, dot product is fine enough for this.
@@ -678,7 +680,7 @@ Det här gör vi på det gamla vanliga sättet. Vi bygger en box2d-värld, vi kl
 
 Oj oj oj,  vad roligt. Vi kan göra en box2d-kropp med leder, per tutorials etc. Superkul ju.
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbMjA5MTI0NjAzNSwtNzQyNDEyMzUwLC02Nj
+eyJoaXN0b3J5IjpbLTYzMjE0MzU0NiwtNzQyNDEyMzUwLC02Nj
 UwOTUyNzIsMTY4MzExMzE4MiwtNzAxMDUzMjcxLC05Mzg4NTE3
 MDAsLTg3MjczMTg2OCwyMDA3MzM1MTY0LDE3ODg1MzkxMTMsLT
 E5OTE0MDQ2ODUsMjM5NDQwMDg3LDU2MjQzMDMzLC0xMjExMjcw
