@@ -20,7 +20,6 @@ class KeyboardInputSystem :
         TransformComponent::class
     ).get()
 ) {
-
     lateinit var keyboardControl: KeyboardControl
 
     override fun keyDown(keycode: Int): Boolean {

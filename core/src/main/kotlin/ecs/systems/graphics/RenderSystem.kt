@@ -1,37 +1,17 @@
 package ecs.systems.graphics
 
 import com.badlogic.ashley.core.Entity
-import com.badlogic.ashley.systems.IteratingSystem
 import com.badlogic.ashley.systems.SortedIteratingSystem
 import com.badlogic.gdx.graphics.g2d.Batch
 import ecs.components.gameplay.TransformComponent
-import ecs.components.graphics.TextureComponent
 import ecs.components.graphics.InFrustumComponent
 import ecs.components.graphics.InLineOfSightComponent
-import ecs.components.player.PlayerControlComponent
-import ecs.components.player.PlayerMode
-import ecs.systems.player.PlayerBuildModeSystem
+import ecs.components.graphics.TextureComponent
 import ktx.ashley.allOf
 import ktx.graphics.use
 import physics.drawScaled
 import physics.getComponent
-import physics.has
 import tru.Assets
-
-//Should render after map, before entities, that's the best...
-class RenderCursorSystem: IteratingSystem(allOf(
-    TransformComponent::class,
-    PlayerControlComponent::class,).get(), 1) {
-    override fun processEntity(entity: Entity, deltaTime: Float) {
-        /*
-        Draw a cursor at tile that is in the direction the player is facing, ie, where
-        the aimvector is pointing. And the aimvector should ALWAYS be pointing somewhere,
-        which we shall fix NOW.
-         */
-
-    }
-
-}
 
 @OptIn(ExperimentalStdlibApi::class)
 class RenderSystem(
