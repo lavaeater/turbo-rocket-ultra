@@ -90,7 +90,7 @@ class ConceptScreen(gameState: StateMachine<GameState, GameEvent>) : BasicScreen
          * How do we interpret the control input and the
          */
 
-        player.aimVector.lerp(controllerVector.cpy().nor(), 0.5f).nor()
+        player.aimVector.set(controllerVector).nor()
         Assets.font.draw(batch, "C: ${controllerVector.angleDeg()}", 10f,100f)
         Assets.font.draw(batch, "A: ${player.aimVector.angleDeg()}", 10f,80f)
 

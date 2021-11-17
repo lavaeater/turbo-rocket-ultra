@@ -24,6 +24,7 @@ class KeyboardInputSystem :
     lateinit var keyboardControl: KeyboardControl
 
     override fun keyDown(keycode: Int): Boolean {
+        keyboardControl.aiming = false
         when (keycode) {
             Input.Keys.W -> keyboardControl.thrust = 1f
             Input.Keys.S -> keyboardControl.thrust = -1f
@@ -44,6 +45,7 @@ class KeyboardInputSystem :
     }
 
     override fun keyUp(keycode: Int): Boolean {
+        keyboardControl.aiming = true
         when (keycode) {
             Input.Keys.W -> keyboardControl.thrust = 0f
             Input.Keys.S -> keyboardControl.thrust = 0f

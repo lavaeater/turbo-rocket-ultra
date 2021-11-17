@@ -31,7 +31,7 @@ class CharacterWalkAndShootDirectionSystem :
          */
         val characterComponent = entity.getComponent<AnimatedCharacterComponent>()
         val controlComponet = entity.getComponent<PlayerControlComponent>()
-        characterAngle = controlComponet.aimVector.angleDeg() //if(controlComponet.aiming) controlComponet.aimVector.angleDeg() else controlComponet.walkVector.angleDeg()
+        characterAngle = if(controlComponet.aiming) controlComponet.aimVector.angleDeg() else controlComponet.walkVector.angleDeg()
         if(controlComponet.waitsForRespawn) {
             characterComponent.currentDirection = SpriteDirection.South
         } else {

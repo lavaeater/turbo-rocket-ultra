@@ -28,6 +28,7 @@ class RenderCursorSystem: IteratingSystem(allOf(
         the aimvector is pointing. And the aimvector should ALWAYS be pointing somewhere,
         which we shall fix NOW.
          */
+
     }
 
 }

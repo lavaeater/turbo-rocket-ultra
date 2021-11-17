@@ -101,7 +101,7 @@ class GamepadInputSystem() : IteratingSystem(allOf(GamepadControl::class).get())
 //        if (deadZone.contains(rightY))
 //            rightY = 0f
 
-        controlComponent.aimVector.set(vec2(rightX, rightY).nor())
+        controlComponent.aimVector.set(vec2(rightX, rightY)).nor()
 
         /*
         it should obviously work on axeses in PAIRS, like leftx + lefty and rightx and righty in  tandem, because then
