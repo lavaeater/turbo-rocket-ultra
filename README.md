@@ -42,6 +42,10 @@ This comes back to control for the aiming, actually. I think I just realized som
 
 How are the systems activated in the game screen, really? I think all systems are there, but we add no entities, so that's why nothing happens in the concept screen. 
 
+We will try to do this on the regular game screen instead, because I can't handle hassles right now.
+
+
+
 ##### Line of sight for players
 To make it scarier, perhaps the player shouldn't be able to see what's behind him? This goes hand in hand with culling. So for the render system, we should only draw enemies... hmm. Only draw entities which the player can actually see. We won't raycast to each and everyone, dot product is fine enough for this.
 We need to project camera bounds to world coordinates, then 
@@ -682,11 +686,11 @@ Det här gör vi på det gamla vanliga sättet. Vi bygger en box2d-värld, vi kl
 
 Oj oj oj,  vad roligt. Vi kan göra en box2d-kropp med leder, per tutorials etc. Superkul ju.
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbMjA1MTEwMjE5OSwtNzQyNDEyMzUwLC02Nj
-UwOTUyNzIsMTY4MzExMzE4MiwtNzAxMDUzMjcxLC05Mzg4NTE3
-MDAsLTg3MjczMTg2OCwyMDA3MzM1MTY0LDE3ODg1MzkxMTMsLT
-E5OTE0MDQ2ODUsMjM5NDQwMDg3LDU2MjQzMDMzLC0xMjExMjcw
-MzcwLC0yMTE5MTU5NDcxLDMzNTk1NzQ1NiwxMTQwNjM4MzU3LD
-E4OTUxMTIyNjYsLTUzOTQ2MDE5MCw2NTYzMzI1MjcsLTExMDAx
-NzY0NTZdfQ==
+eyJoaXN0b3J5IjpbLTEwMjQ2NTM1MzksMjA1MTEwMjE5OSwtNz
+QyNDEyMzUwLC02NjUwOTUyNzIsMTY4MzExMzE4MiwtNzAxMDUz
+MjcxLC05Mzg4NTE3MDAsLTg3MjczMTg2OCwyMDA3MzM1MTY0LD
+E3ODg1MzkxMTMsLTE5OTE0MDQ2ODUsMjM5NDQwMDg3LDU2MjQz
+MDMzLC0xMjExMjcwMzcwLC0yMTE5MTU5NDcxLDMzNTk1NzQ1Ni
+wxMTQwNjM4MzU3LDE4OTUxMTIyNjYsLTUzOTQ2MDE5MCw2NTYz
+MzI1MjddfQ==
 -->
