@@ -40,7 +40,7 @@ How will building work? Well, to effectively build blockades the player should b
 
 This comes back to control for the aiming, actually. I think I just realized something and that is that the players aim should not be changing unless touching the controls. I think they basically reset, which is wrong. They should be modified by the movement of the controls, not exactly move them otherwise, and this is a good opportunity to test that out. We could use the concept screen to work on this, actually. The concept screen could then consist of the player and then just some useful markers. We could set it up to just use the systems I want it to.
 
-How are the syst
+How are the systems activated in the game screen, really? I think all systems are there, but we add no entities, so that's why nothing happens in the concept screen. 
 
 ##### Line of sight for players
 To make it scarier, perhaps the player shouldn't be able to see what's behind him? This goes hand in hand with culling. So for the render system, we should only draw enemies... hmm. Only draw entities which the player can actually see. We won't raycast to each and everyone, dot product is fine enough for this.
@@ -682,11 +682,11 @@ Det här gör vi på det gamla vanliga sättet. Vi bygger en box2d-värld, vi kl
 
 Oj oj oj,  vad roligt. Vi kan göra en box2d-kropp med leder, per tutorials etc. Superkul ju.
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbOTM5NTU0Mzk0LC03NDI0MTIzNTAsLTY2NT
-A5NTI3MiwxNjgzMTEzMTgyLC03MDEwNTMyNzEsLTkzODg1MTcw
-MCwtODcyNzMxODY4LDIwMDczMzUxNjQsMTc4ODUzOTExMywtMT
-k5MTQwNDY4NSwyMzk0NDAwODcsNTYyNDMwMzMsLTEyMTEyNzAz
-NzAsLTIxMTkxNTk0NzEsMzM1OTU3NDU2LDExNDA2MzgzNTcsMT
-g5NTExMjI2NiwtNTM5NDYwMTkwLDY1NjMzMjUyNywtMTEwMDE3
-NjQ1Nl19
+eyJoaXN0b3J5IjpbMjA1MTEwMjE5OSwtNzQyNDEyMzUwLC02Nj
+UwOTUyNzIsMTY4MzExMzE4MiwtNzAxMDUzMjcxLC05Mzg4NTE3
+MDAsLTg3MjczMTg2OCwyMDA3MzM1MTY0LDE3ODg1MzkxMTMsLT
+E5OTE0MDQ2ODUsMjM5NDQwMDg3LDU2MjQzMDMzLC0xMjExMjcw
+MzcwLC0yMTE5MTU5NDcxLDMzNTk1NzQ1NiwxMTQwNjM4MzU3LD
+E4OTUxMTIyNjYsLTUzOTQ2MDE5MCw2NTYzMzI1MjcsLTExMDAx
+NzY0NTZdfQ==
 -->
