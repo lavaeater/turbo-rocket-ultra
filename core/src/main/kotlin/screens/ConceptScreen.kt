@@ -72,20 +72,33 @@ class ConceptScreen(gameState: StateMachine<GameState, GameEvent>) : BasicScreen
         }
     }
 
+    val steeringMap = mapOf(
+        2 to Axis.RightX,
+        3 to Axis.RightY
+    )
+    val deadzone = -0.05f..0.05f
+    val axisMap = steeringMap.map { it.value to it.key }.toMap()
     private val controllerVector = vec2()
     private fun renderControllerAim(player: Transform, gamepadControl: GamepadControl, deltaTime: Float) {
-        val rightX = gamepadControl.controller.getAxis(Axis.axisToKeys[Axis.RightX]!!)
-        val rightY = gamepadControl.controller.getAxis(Axis.axisToKeys[Axis.RightY]!!)
-        controllerVector.set(rightX, -rightY)
-        controllerVector.nor()
+        val rightX = gamepadControl.controller.getAxis(axisMap[Axis.RightX]!!)
+        val rightY = gamepadControl.controller.getAxis(axisMap[Axis.RightY]!!)
+        controllerVector.x = if(deadzone.contains(rightX)) controllerVector.x else rightX
+        controllerVector.y = if(deadzone.contains(rightY)) controllerVector.y else -rightY
+
         /**
          * Shit, this is fudging tricky.
          * How do we interpret the control input and the
          */
 
-        player.aimVector.setAngleRad(MathUtils.lerpAngle(player.aimVector.angleRad(), controllerVector.angleRad(), 0.5f))
+        player.aimVector.lerp(controllerVector.cpy().nor(), 0.5f).nor()
+        Assets.font.draw(batch, "C: ${controllerVector.angleDeg()}", 10f,100f)
+        Assets.font.draw(batch, "A: ${player.aimVector.angleDeg()}", 10f,80f)
+
         shapeDrawer.setColor(Color.RED)
         shapeDrawer.line(player.position, player.position.cpy().add(player.aimVector.cpy().scl(10f)))
+
+        shapeDrawer.setColor(Color.BLUE)
+        shapeDrawer.line(player.position, player.position.cpy().add(controllerVector.cpy().scl(10f)))
     }
 
     fun renderAimAndMouse(transform: Transform) {
