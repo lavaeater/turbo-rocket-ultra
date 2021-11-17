@@ -34,7 +34,9 @@ So, what do we need for act one? Well, tons of fun stuff to implement:
 - [x] Weapons as pickups
 
 ##### Blockades, swinging and area-effect-weapons
-Lets start with hand-to-hand combat. How will that work? Well, the player aims in some direction and if an enemy is within range for strikes and within a fov for the strike (a 120 degree arc), the enemy can get hit. The enemy will signal this by blinking, I think would be cool. This could strike multiple enemies, perhaps. 
+Lets start with hand-to-hand combat. How will that work? Well, the player aims in some direction and if an enemy is within range for strikes and within a fov for the strike (a 120 degree arc), the enemy can get hit. The enemy will signal this by blinking, I think would be cool. This could strike multiple enemies, perhaps.
+
+How will building work? Well, to effectively build blockades the player should be able to direct his building marker to a specific tile, which will be marked in transparent green and then just push build, then walk and there s
 
 ##### Line of sight for players
 To make it scarier, perhaps the player shouldn't be able to see what's behind him? This goes hand in hand with culling. So for the render system, we should only draw enemies... hmm. Only draw entities which the player can actually see. We won't raycast to each and everyone, dot product is fine enough for this.
@@ -676,11 +678,11 @@ Det här gör vi på det gamla vanliga sättet. Vi bygger en box2d-värld, vi kl
 
 Oj oj oj,  vad roligt. Vi kan göra en box2d-kropp med leder, per tutorials etc. Superkul ju.
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbLTc0MjQxMjM1MCwtNjY1MDk1MjcyLDE2OD
-MxMTMxODIsLTcwMTA1MzI3MSwtOTM4ODUxNzAwLC04NzI3MzE4
-NjgsMjAwNzMzNTE2NCwxNzg4NTM5MTEzLC0xOTkxNDA0Njg1LD
-IzOTQ0MDA4Nyw1NjI0MzAzMywtMTIxMTI3MDM3MCwtMjExOTE1
-OTQ3MSwzMzU5NTc0NTYsMTE0MDYzODM1NywxODk1MTEyMjY2LC
-01Mzk0NjAxOTAsNjU2MzMyNTI3LC0xMTAwMTc2NDU2LDM0MDk3
-OTUyXX0=
+eyJoaXN0b3J5IjpbMjA5MTI0NjAzNSwtNzQyNDEyMzUwLC02Nj
+UwOTUyNzIsMTY4MzExMzE4MiwtNzAxMDUzMjcxLC05Mzg4NTE3
+MDAsLTg3MjczMTg2OCwyMDA3MzM1MTY0LDE3ODg1MzkxMTMsLT
+E5OTE0MDQ2ODUsMjM5NDQwMDg3LDU2MjQzMDMzLC0xMjExMjcw
+MzcwLC0yMTE5MTU5NDcxLDMzNTk1NzQ1NiwxMTQwNjM4MzU3LD
+E4OTUxMTIyNjYsLTUzOTQ2MDE5MCw2NTYzMzI1MjcsLTExMDAx
+NzY0NTZdfQ==
 -->
