@@ -12,7 +12,7 @@ import physics.addComponent
 import physics.getComponent
 import physics.has
 
-class PlayerBuildModeSystem(): IteratingSystem(
+class PlayerBuildModeSystem: IteratingSystem(
     allOf(PlayerControlComponent::class).get()) {
     @OptIn(ExperimentalStdlibApi::class)
     override fun processEntity(entity: Entity, deltaTime: Float) {

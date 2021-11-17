@@ -9,7 +9,7 @@ import ktx.math.vec2
 class GamepadControl(val controller: Controller): ControlMapper, Component {
     override var needsReload = false
     override var doContextAction = false
-    override val aimVector = vec2()
+    override val aimVector = vec2(1f,0f)
     override var aiming: Boolean get() = aimVector.len2() > .3f
         set(value) {}
     override val mousePosition = vec2()

@@ -1,26 +1,20 @@
 package screens
 
 import com.badlogic.gdx.Input
-import com.badlogic.gdx.controllers.Controllers
 import com.badlogic.gdx.graphics.Color
 import com.badlogic.gdx.graphics.OrthographicCamera
 import com.badlogic.gdx.math.MathUtils
-import com.badlogic.gdx.math.MathUtils.*
-import com.badlogic.gdx.math.Vector2
 import com.badlogic.gdx.utils.viewport.ExtendViewport
 import gamestate.GameEvent
 import gamestate.GameState
-import input.Axis
-import input.GamepadControl
 import input.Transform
 import ktx.graphics.use
 import ktx.math.vec2
 import ktx.math.vec3
 import statemachine.StateMachine
 import tru.Assets
-import kotlin.math.pow
 
-class ConceptScreen(gameState: StateMachine<GameState, GameEvent>) : BasicScreen(gameState) {
+class ConceptScreenDetection(gameState: StateMachine<GameState, GameEvent>) : BasicScreen(gameState) {
     override val camera = OrthographicCamera()
     override val viewport = ExtendViewport(200f, 200f, camera)
     val shapeDrawer by lazy { Assets.shapeDrawer }
@@ -36,20 +30,17 @@ class ConceptScreen(gameState: StateMachine<GameState, GameEvent>) : BasicScreen
     var rotation = 45f
     val viewDistance = 100f
 
-    val gamepadControl = GamepadControl(Controllers.getCurrent())
-
 
     override fun render(delta: Float) {
         super.render(delta)
 
-        //player.rotate(rotation * delta)
-
+        player.rotate(rotation * delta)
+        4
         batch.use {
             shapeDrawer.pixelSize = 1f
             shapeDrawer.setColor(Color.RED)
             renderPosition(player, Color.RED, Color.GREEN)
-            renderControllerAim(player, gamepadControl, delta)
-//            renderAimAndMouse(player)
+            renderAimAndMouse(player)
 
             var rotationDetected = false
             for (t in detectables) {
@@ -66,26 +57,10 @@ class ConceptScreen(gameState: StateMachine<GameState, GameEvent>) : BasicScreen
                 player.position.x,
                 player.position.y,
                 viewDistance,
-                player.forward.angleRad() - fieldOfView / 2  * degreesToRadians,
-                degreesToRadians * fieldOfView, rotationSectorColor, rotationSectorColor
+                player.forward.angleRad() - fieldOfView / 2  * MathUtils.degreesToRadians,
+                MathUtils.degreesToRadians * fieldOfView, rotationSectorColor, rotationSectorColor
             )
         }
-    }
-
-    private val controllerVector = vec2()
-    private fun renderControllerAim(player: Transform, gamepadControl: GamepadControl, deltaTime: Float) {
-        val rightX = gamepadControl.controller.getAxis(Axis.axisToKeys[Axis.RightX]!!)
-        val rightY = gamepadControl.controller.getAxis(Axis.axisToKeys[Axis.RightY]!!)
-        controllerVector.set(rightX, -rightY)
-        controllerVector.nor()
-        /**
-         * Shit, this is fudging tricky.
-         * How do we interpret the control input and the
-         */
-
-        player.aimVector.setAngleRad(MathUtils.lerpAngle(player.aimVector.angleRad(), controllerVector.angleRad(), 0.5f))
-        shapeDrawer.setColor(Color.RED)
-        shapeDrawer.line(player.position, player.position.cpy().add(player.aimVector.cpy().scl(10f)))
     }
 
     fun renderAimAndMouse(transform: Transform) {
@@ -111,7 +86,7 @@ class ConceptScreen(gameState: StateMachine<GameState, GameEvent>) : BasicScreen
         mousePosition3D.set(screenX.toFloat(), screenY.toFloat(), 0f)
         camera.unproject(mousePosition3D)
         mousePosition.set(mousePosition3D.x, mousePosition3D.y)
-//        player.pointAimVectorAt(mousePosition)
+        player.pointAimVectorAt(mousePosition)
         mouseTransform.set(mousePosition)
         return true
     }
@@ -140,12 +115,4 @@ class ConceptScreen(gameState: StateMachine<GameState, GameEvent>) : BasicScreen
         camera.update()
         batch.projectionMatrix = camera.combined
     }
-}
-
-
-/***
- * Returns angle in degrees to @param positionVector
- */
-fun Vector2.angleTo(positionVector: Vector2): Float {
-    return (acos(this.dot(this.cpy().sub(positionVector).nor()))) * radiansToDegrees
 }
