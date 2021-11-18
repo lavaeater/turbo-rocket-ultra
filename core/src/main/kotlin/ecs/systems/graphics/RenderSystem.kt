@@ -2,11 +2,13 @@ package ecs.systems.graphics
 
 import com.badlogic.ashley.core.Entity
 import com.badlogic.ashley.systems.SortedIteratingSystem
+import com.badlogic.gdx.graphics.Color
 import com.badlogic.gdx.graphics.g2d.Batch
 import ecs.components.gameplay.TransformComponent
 import ecs.components.graphics.InFrustumComponent
 import ecs.components.graphics.InLineOfSightComponent
 import ecs.components.graphics.TextureComponent
+import ecs.systems.graphics.GameConstants.scale
 import ktx.ashley.allOf
 import ktx.graphics.use
 import physics.drawScaled
@@ -44,8 +46,6 @@ class RenderSystem(
         }
     }, 2
 ) {
-    private val pixelsPerMeter = 16f
-    private val scale = 1 / pixelsPerMeter
     private val debug = true
     private val shapeDrawer by lazy { Assets.shapeDrawer }
 
@@ -62,18 +62,22 @@ class RenderSystem(
 
         batch.drawScaled(
             textureComponent.texture,
-            transform.position.x + (textureComponent.texture.regionWidth / 2 * scale) + textureComponent.offsetX * scale * textureComponent.scale,
-            transform.position.y + (textureComponent.texture.regionHeight / 2 * scale) - textureComponent.offsetY * scale * textureComponent.scale,
+            transform.position.x + (textureComponent.texture.regionWidth / 2  + textureComponent.offsetX)* scale * textureComponent.scale,// + textureComponent.offsetX * scale * textureComponent.scale,
+            transform.position.y + (textureComponent.texture.regionHeight / 2 + textureComponent.offsetY) * scale * textureComponent.scale,// -  * scale * textureComponent.scale,
             scale * textureComponent.scale,
             if (textureComponent.rotateWithTransform) transform.rotation else 180f
         )
         for (texture in textureComponent.extraTextures.values) {
             batch.drawScaled(
                 texture,
-                transform.position.x + (textureComponent.texture.regionWidth / 2 * scale) + textureComponent.offsetX * scale * textureComponent.scale,
-                transform.position.y + (textureComponent.texture.regionHeight / 2 * scale) - textureComponent.offsetY * scale * textureComponent.scale,
-                scale * textureComponent.scale
+                transform.position.x + (textureComponent.texture.regionWidth / 2 + textureComponent.offsetX) * scale * textureComponent.scale,// + (textureComponent.texture.regionWidth / 2 * scale) + textureComponent.offsetX * scale * textureComponent.scale,
+                transform.position.y, + (textureComponent.texture.regionHeight / 2 + textureComponent.offsetY) * scale * textureComponent.scale,// - textureComponent.offsetY * scale * textureComponent.scale,
+                scale
             )
+        }
+        if(debug) {
+            shapeDrawer.filledCircle(transform.position, .2f, Color.RED)
         }
     }
 }
+

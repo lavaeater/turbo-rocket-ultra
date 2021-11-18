@@ -24,6 +24,8 @@ import ecs.systems.fx.BloodSplatterEffectRenderSystem
 import ecs.systems.input.KeyboardInputSystem
 import ecs.systems.fx.RenderBox2dLightSystem
 import ecs.systems.graphics.*
+import ecs.systems.graphics.GameConstants.GAMEHEIGHT
+import ecs.systems.graphics.GameConstants.GAMEWIDTH
 import ecs.systems.input.GamepadInputSystem
 import ecs.systems.pickups.LootDropSystem
 import ecs.systems.player.*
@@ -57,8 +59,8 @@ object Context {
             bind<IUserInterface> { UserInterface(inject<PolygonSpriteBatch>() as Batch) }
             bindSingleton(
                 ExtendViewport(
-                    GameScreen.GAMEWIDTH,
-                    GameScreen.GAMEHEIGHT,
+                    GAMEWIDTH,
+                    GAMEHEIGHT,
                     inject<OrthographicCamera>() as Camera
                 )
             )

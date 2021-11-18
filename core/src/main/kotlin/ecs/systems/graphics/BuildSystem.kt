@@ -56,7 +56,7 @@ class BuildSystem(private val debug: Boolean = true) : IteratingSystem(
             val tY = position.tileWorldY() + (offset.y * scaledHeight)// + texture.offsetY * tileScale / 2
 
             val bodyX = position.tileWorldX() + (offset.x * scaledWidth)
-            val bodyY = position.tileWorldY() + (offset.y * scaledHeight)w
+            val bodyY = position.tileWorldY() + (offset.y * scaledHeight)
 
             val pWidth = tileWidth * tileScale
             val pHeight = tileHeight * tileScale
@@ -85,9 +85,9 @@ class BuildSystem(private val debug: Boolean = true) : IteratingSystem(
                         pHeight,
                         otherColor
                     )
-                shapeDrawer.filledCircle(cX,cY,1f, Color.RED)
-                shapeDrawer.filledCircle(tX,tY,1f, Color.GREEN)
-                shapeDrawer.filledCircle(bodyX,bodyY,1f, Color.BLUE)
+                shapeDrawer.filledCircle(cX,cY,.5f, Color.RED)
+                shapeDrawer.filledCircle(tX,tY,.5f, Color.GREEN)
+                shapeDrawer.filledCircle(bodyX,bodyY,.5f, Color.BLUE)
                 }
             }
             if(controlComponent.buildIfPossible) {

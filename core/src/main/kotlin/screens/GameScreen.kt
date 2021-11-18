@@ -3,31 +3,30 @@ package screens
 import audio.AudioPlayer
 import com.badlogic.ashley.core.Engine
 import com.badlogic.gdx.Gdx
-import com.badlogic.gdx.Input
 import com.badlogic.gdx.controllers.Controllers
 import com.badlogic.gdx.graphics.GL20
 import com.badlogic.gdx.graphics.OrthographicCamera
 import com.badlogic.gdx.graphics.g2d.PolygonSpriteBatch
 import com.badlogic.gdx.physics.box2d.World
 import com.badlogic.gdx.utils.viewport.ExtendViewport
-import com.strongjoshua.console.CommandExecutor
 import com.strongjoshua.console.GUIConsole
+import data.Players
 import ecs.components.BodyComponent
 import ecs.components.enemy.EnemyComponent
 import ecs.components.gameplay.ObjectiveComponent
 import ecs.components.gameplay.ObstacleComponent
 import ecs.components.player.PlayerComponent
 import ecs.systems.graphics.CameraUpdateSystem
+import ecs.systems.graphics.GameConstants.MAX_ENEMIES
 import ecs.systems.graphics.RenderMiniMapSystem
 import ecs.systems.graphics.RenderSystem
 import ecs.systems.input.GamepadInputSystem
-import injection.Context.inject
 import ecs.systems.input.KeyboardInputSystem
 import ecs.systems.player.GameOverSystem
-import factories.*
+import factories.player
 import gamestate.GameEvent
 import gamestate.GameState
-import data.Players
+import injection.Context.inject
 import ktx.app.KtxScreen
 import ktx.ashley.allOf
 import ktx.ashley.getSystem
@@ -47,20 +46,6 @@ import kotlin.math.roundToInt
 
 
 class GameScreen(private val gameState: StateMachine<GameState, GameEvent>) : KtxScreen {
-
-    companion object {
-        const val ENEMY_DENSITY = .1f
-        const val SHOT_DENSITY = .01f
-        const val SHIP_DENSITY = .1f
-        const val PLAYER_DENSITY = 1f
-        const val CAR_DENSITY = .3f
-        const val SHIP_LINEAR_DAMPING = 20f
-        const val SHIP_ANGULAR_DAMPING = 20f
-        const val MAX_ENEMIES = 512
-
-        const val GAMEWIDTH = 64f
-        const val GAMEHEIGHT = 48f
-    }
 
     private var firstRun = true
     private val camera: OrthographicCamera by lazy { inject() }
@@ -257,11 +242,3 @@ D1B67A
     }
 }
 
-object CounterObject {
-    var enemyCount = 0
-    var bulletCount = 0
-    var currentLevel = 1
-    val currentLength get() = currentLevel * 8
-    var numberOfObjectives = 1
-    var numberOfEnemies = 1
-}

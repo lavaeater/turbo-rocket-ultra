@@ -6,6 +6,7 @@ import com.badlogic.ashley.core.Entity
 import com.badlogic.gdx.graphics.Color
 import com.badlogic.gdx.math.MathUtils
 import com.badlogic.gdx.math.MathUtils.degreesToRadians
+import com.badlogic.gdx.math.Vector
 import com.badlogic.gdx.math.Vector2
 import com.badlogic.gdx.physics.box2d.Body
 import com.badlogic.gdx.physics.box2d.BodyDef
@@ -30,15 +31,17 @@ import features.pickups.NullValue
 import features.weapons.AmmoType
 import data.Player
 import ecs.components.enemy.BossComponent
+import ecs.systems.graphics.GameConstants.PLAYER_DENSITY
+import ecs.systems.graphics.GameConstants.SHIP_ANGULAR_DAMPING
+import ecs.systems.graphics.GameConstants.SHIP_LINEAR_DAMPING
+import ecs.systems.graphics.GameConstants.pixelsPerMeter
+import ecs.systems.graphics.GameConstants.scale
 import features.weapons.WeaponDefinition
 import injection.Context.inject
 import input.ControlMapper
 import ktx.ashley.entity
 import ktx.ashley.with
-import ktx.box2d.body
-import ktx.box2d.box
-import ktx.box2d.circle
-import ktx.box2d.filter
+import ktx.box2d.*
 import ktx.math.random
 import ktx.math.vec2
 import physics.addComponent
@@ -73,7 +76,8 @@ object Box2dCategories {
     const val walls: Short = 0x0200
     const val gibs: Short = 0x0400
     const val towerSensors: Short = 0x0800
-    val all = players or enemies or objectives or obstacles or enemySensors or lights or loot or bullets or walls or gibs
+    val all =
+        players or enemies or objectives or obstacles or enemySensors or lights or loot or bullets or walls or gibs
     val allButSensors = players or enemies or objectives or obstacles or lights or loot or bullets or walls or gibs
     val allButLights = players or enemies or objectives or obstacles or enemySensors or loot or bullets or walls or gibs
     val allButLightsOrLoot = players or enemies or objectives or obstacles or enemySensors or bullets or walls or gibs
@@ -81,7 +85,8 @@ object Box2dCategories {
     val allButLootAndPlayer = enemies or objectives or obstacles or walls or gibs
     val environmentOnly = objectives or obstacles or walls
     val whatGibsHit = players or enemies or walls
-    val whatEnemiesHit = players or enemies or objectives or obstacles or walls or lights or bullets
+    val whatEnemiesHit = players or enemies or objectives or obstacles or walls or lights or bullets or gibs
+    val whatPlayersHit = players or enemies or objectives or obstacles or walls or lights or gibs
 
     /**
      * Will this show up when hovering?
@@ -89,15 +94,15 @@ object Box2dCategories {
     val thingsBulletsHit = objectives or obstacles or walls or enemies
 }
 
-fun gibs(at: Vector2, angle:Float) {
-    for(i in Assets.enemyGibs) {
+fun gibs(at: Vector2, angle: Float) {
+    for (i in Assets.enemyGibs) {
         val angle = (1f..359f).random()
-        val velocity = vec2(4f,4f).setAngleDeg(angle)
+        val velocity = vec2(4f, 4f).setAngleDeg(angle)
         val gibBody = world().body {
             type = BodyDef.BodyType.DynamicBody
             position.set(at)
             linearVelocity.set(velocity)
-            box( .3f,.3f) {
+            box(.3f, .3f) {
                 friction = 50f //Tune
                 density = 10f //tune
                 filter {
@@ -168,40 +173,81 @@ fun tower(at: Vector2 = vec2(), towerType: String = "machinegun") {
 
 }
 
-fun player(player: Player, mapper: ControlMapper, at: Vector2) {
+/**
+ * I finally figured it out. I need non-integer heights
+ * on all the bodies etc. The sprites are 64 pixels high,
+ * we do 16 pixels per meter in other circumstances, that means
+ * we have to accomodate this.
+ *
+ * 64 / 16 = 4, which is weird.
+ */
+
+fun bodyForSprite(
+    at: Vector2,
+    colliderCategoryBits: Short,
+    colliderMaskBits: Short,
+    detectorBits: Short,
+    detectorMaskBits: Short,
+    sensorBits: Short,
+    sensorMaskBits: Short,
+    pixelWidth: Int = 24,
+    pixelHeight: Int = 48
+): Body {
+    val widthInMeters = pixelWidth / pixelsPerMeter
+    val heightInMeters = pixelHeight / pixelsPerMeter
+
+    val bottomBoxWidth = widthInMeters
+    val bottomBoxHeight = widthInMeters / 2
+    val halfHeight = heightInMeters / 2
+
+    val box2dBody = world().body {
+        type = BodyDef.BodyType.DynamicBody
+        position.set(at)
+        fixedRotation = true
+        //Bottom projection box
+        box(bottomBoxWidth, bottomBoxHeight, vec2(0f, halfHeight - bottomBoxHeight / 2)) {
+            density = PLAYER_DENSITY
+            filter {
+                categoryBits = colliderCategoryBits
+                maskBits = colliderMaskBits
+            }
+        }
+        box(widthInMeters, heightInMeters, vec2(0f, 0f)) {
+            isSensor = true
+            filter {
+                categoryBits = detectorBits
+                maskBits = detectorMaskBits
+            }
+        }
+        circle(2f, vec2(0f, 0f)) {
+            isSensor = true
+            filter {
+                categoryBits = sensorBits
+                maskBits = sensorMaskBits
+            }
+        }
+        linearDamping = SHIP_LINEAR_DAMPING
+        angularDamping = SHIP_ANGULAR_DAMPING
+    }
+    return box2dBody
+}
+
+fun player(player: Player, mapper: ControlMapper, at: Vector2, pixelWidth: Int = 24, pixelHeight: Int = 48) {
     /*
     The player should be two bodies, one for collision detection for
     movement, like a projection of the characters body on "the floor"
     whereas the other one symbolizes the characters actual body and is for hit detection
     from shots etc. Nice.
      */
-    val box2dBody = world().body {
-        type = BodyDef.BodyType.DynamicBody
-        position.set(at)
-        fixedRotation = true
-        box(1f, 1f) {
-            density = GameScreen.PLAYER_DENSITY
-            filter {
-                categoryBits = Box2dCategories.players
-            }
-        }
-        box(1f, 2f, vec2(0f, -1.5f)) {
-            isSensor = true
-            filter {
-                categoryBits = Box2dCategories.enemySensors
-                maskBits = Box2dCategories.allButLights
-            }
-        }
-        circle(2f, vec2(0f, -1f)) {
-            isSensor = true
-            filter {
-                categoryBits = Box2dCategories.enemySensors
-                maskBits = Box2dCategories.allButLights
-            }
-        }
-        linearDamping = GameScreen.SHIP_LINEAR_DAMPING
-        angularDamping = GameScreen.SHIP_ANGULAR_DAMPING
-    }
+    val box2dBody = bodyForSprite(
+        at,
+        Box2dCategories.players,
+        Box2dCategories.whatPlayersHit,
+        Box2dCategories.enemySensors,
+        Box2dCategories.allButLights,
+        Box2dCategories.enemySensors,
+        Box2dCategories.allButLights
+    )
 
     val entity = engine().entity() {
         with<CameraFollowComponent>()
@@ -212,6 +258,7 @@ fun player(player: Player, mapper: ControlMapper, at: Vector2) {
         }
         with<TextureComponent> {
             layer = 1
+            offsetY = -7f
         }
         with<MiniMapComponent> {
             color = Color.GREEN
@@ -283,7 +330,7 @@ fun lootBox(at: Vector2, lootDrop: List<ILoot>) {
 }
 
 
-fun bullet(at: Vector2, towards: Vector2, speed:Float, damage: Int) {
+fun bullet(at: Vector2, towards: Vector2, speed: Float, damage: Int) {
     val box2dBody = world().body {
         type = BodyDef.BodyType.DynamicBody
         position.set(at)
@@ -314,39 +361,15 @@ fun bullet(at: Vector2, towards: Vector2, speed:Float, damage: Int) {
 
 fun enemy(at: Vector2) {
 
-    val box2dBody = world().body {
-        type = BodyDef.BodyType.DynamicBody
-        position.set(at)
-        fixedRotation = true
-        box(1f, 1f) {
-            density = GameScreen.PLAYER_DENSITY
-            filter {
-                categoryBits = Box2dCategories.enemies
-                maskBits = Box2dCategories.whatEnemiesHit
-            }
-        }
-        box(1f, 2f, vec2(0f, -1.5f)) {
-            filter {
-                categoryBits = Box2dCategories.enemies
-                maskBits = Box2dCategories.bullets
-            }
-        }
-        circle(1f, vec2(0f, -2f)) {
-            filter {
-                categoryBits = Box2dCategories.enemies
-                maskBits = Box2dCategories.enemies
-            }
-
-        }
-        circle(10f) {
-            density = .1f
-            isSensor = true
-            filter {
-                categoryBits = Box2dCategories.enemySensors
-                maskBits = Box2dCategories.players
-            }
-        }
-    }
+    val box2dBody = bodyForSprite(
+        at,
+        Box2dCategories.enemies,
+        Box2dCategories.whatEnemiesHit,
+        Box2dCategories.enemies,
+        Box2dCategories.bullets,
+        Box2dCategories.enemies,
+        Box2dCategories.enemies
+    )
 
     val entity = engine().entity {
         with<BodyComponent> { body = box2dBody }
@@ -390,7 +413,7 @@ fun boss(at: Vector2, level: Int) {
         position.set(at)
         fixedRotation = true
         box(3f, 3f) {
-            density = GameScreen.PLAYER_DENSITY
+            density = PLAYER_DENSITY
             filter {
                 categoryBits = Box2dCategories.enemies
                 maskBits = Box2dCategories.all
@@ -420,7 +443,7 @@ fun boss(at: Vector2, level: Int) {
         with<EnemyComponent> {
             fieldOfView = 270f
             rushSpeed = 15f + level * 1.5f
-            viewDistance = 40f + 5f* level
+            viewDistance = 40f + 5f * level
             health = 1000 * level
         }
         with<AnimatedCharacterComponent> {

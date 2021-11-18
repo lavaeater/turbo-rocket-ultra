@@ -17,8 +17,6 @@ class RenderMapSystem(
 ) : EntitySystem(0) {
 
     private val shapeDrawer by lazy { Assets.shapeDrawer }
-    private val pixelsPerMeter = 16f
-    private val scale = 1 / pixelsPerMeter
     private var animationStateTime = 0f
 
     private val cameraCenter = vec2()

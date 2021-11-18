@@ -31,6 +31,7 @@ import tru.Assets
 class SeekPlayerSystem(val debug: Boolean) : IteratingSystem(allOf(SeekPlayer::class).get(), 100) {
     val players by lazy { Players.players.values.map { it.entity } }
     val shapeDrawer by lazy { Assets.shapeDrawer }
+    lateinit var closestFixture: Fixture
 
     @OptIn(ExperimentalStdlibApi::class)
     override fun processEntity(entity: Entity, deltaTime: Float) {
@@ -61,7 +62,6 @@ class SeekPlayerSystem(val debug: Boolean) : IteratingSystem(allOf(SeekPlayer::c
         if (!seekComponent.foundAPlayer && seekComponent.coolDown > 0f) {
 
             var lowestFraction = 1f
-            lateinit var closestFixture: Fixture
             val pointOfHit = vec2()
             val hitNormal = vec2()
 
@@ -100,7 +100,7 @@ class SeekPlayerSystem(val debug: Boolean) : IteratingSystem(allOf(SeekPlayer::c
                                 shapeDrawer.line(enemyPosition, pointOfHit, Color(1f, 0f, 0f, 0.1f), .2f)
                             }
                         }
-                        if (closestFixture.isPlayer()) {
+                        if (::closestFixture.isInitialized && closestFixture.isPlayer()) {
                             seekComponent.foundAPlayer = true
                             entity.add(
                                 engine.createComponent(TrackingPlayer::class.java)
