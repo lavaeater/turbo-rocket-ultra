@@ -36,7 +36,8 @@ class ConceptScreen(gameState: StateMachine<GameState, GameEvent>) : BasicScreen
     var rotation = 45f
     val viewDistance = 100f
 
-    val gamepadControl = GamepadControl(Controllers.getCurrent())
+    val controller = Controllers.getCurrent()
+    val gamepadControl by lazy { GamepadControl(controller) }
 
 
     override fun render(delta: Float) {

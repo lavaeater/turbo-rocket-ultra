@@ -19,6 +19,7 @@ import map.grid.GridMapSection.Companion.scaledWidth
 import map.grid.GridMapSection.Companion.tileHeight
 import map.grid.GridMapSection.Companion.tileScale
 import map.grid.GridMapSection.Companion.tileWidth
+import physics.drawScaled
 import physics.getComponent
 import tru.Assets
 import tru.SpriteDirection
@@ -32,31 +33,32 @@ class RenderCursorSystem : IteratingSystem(
 ) {
     val batch by lazy { inject<PolygonSpriteBatch>() }
     val shapeDrawer by lazy { Assets.shapeDrawer }
-    val coordinateToPaint = Coordinate(0, 0)
     val cursorColor = Color(0f, 1f, 0f, 0.1f)
-    val playerColor = Color(1f, 0f, 0f, 0.1f)
-    val tBlue = Color(0f, 0f, 1f, 0.1f)
-    private val pixelsPerMeter = 16f //TODO: Move scale concept to one place
-    private val scale = 1 / pixelsPerMeter
-    val console by lazy { inject<GUIConsole>() }
+
+    val buildables by lazy { Assets.buildables }
 
     @OptIn(ExperimentalStdlibApi::class)
     override fun processEntity(entity: Entity, deltaTime: Float) {
-        /*
-        Draw a cursor at tile that is in the direction the player is facing, ie, where
-        the aimvector is pointing. And the aimvector should ALWAYS be pointing somewhere,
-        which we shall fix NOW.
-         */
         val controlComponent = entity.getComponent<PlayerControlComponent>()
         if (controlComponent.isBuilding) {
             val position = entity.getComponent<TransformComponent>().position
             val offset = CompassDirection.directionOffsets[controlComponent.compassDirection]!!
 
-            val cX = position.tileWorldX() + (offset.x * scaledWidth)
-            val cY = position.tileWorldY() + (offset.y * scaledHeight)
+            val texture = buildables.first()
+            val cX = position.tileWorldX() + (offset.x * scaledWidth) + texture.offsetX * tileScale / 2
+            val cY = position.tileWorldY() + (offset.y * scaledHeight) + texture.offsetY * tileScale / 2
 
             val pWidth = tileWidth * tileScale
             val pHeight = tileHeight * tileScale
+
+            batch.use {
+                batch.drawScaled(
+                    texture,
+                    cX,
+                    cY,
+                    tileScale
+                )
+            }
 
             shapeDrawer.batch.use {
                 shapeDrawer.filledRectangle(
