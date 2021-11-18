@@ -62,13 +62,7 @@ class KeyboardInputSystem :
     }
 
     private fun toggleBuildMode() {
-        when (keyboardControl.playerMode) {
-            PlayerMode.Control -> keyboardControl.playerMode = PlayerMode.Building
-            PlayerMode.Building -> {
-                keyboardControl.uiControl.cancel()
-                keyboardControl.playerMode = PlayerMode.Control
-            }
-        }
+        keyboardControl.isBuilding = !keyboardControl.isBuilding
     }
 
     override fun touchDown(screenX: Int, screenY: Int, pointer: Int, button: Int): Boolean {

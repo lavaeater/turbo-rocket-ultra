@@ -38,20 +38,13 @@ class GamepadInputSystem() : IteratingSystem(allOf(GamepadControl::class).get())
         val actualController = controllers.firstOrNull { it.controller == controller }
         if (actualController != null) {
             when (Button.getButton(buttonCode)) {
-                Button.Cross -> {
-                    actualController.doContextAction = true
-                }
-                Button.Ring -> {
-                }
-                Button.Square -> {
-                    actualController.needsReload = true
-                }
+                Button.Cross -> actualController.doContextAction = true
+                Button.Ring -> {}
+                Button.Square -> actualController.needsReload = true
                 Button.DPadLeft -> actualController.needToChangeGun = InputIndicator.Previous
                 Button.DPadRight -> actualController.needToChangeGun = InputIndicator.Next
-                Button.Triangle -> {
-                }
-                Button.Unknown -> {
-                }
+                Button.Triangle -> actualController.isBuilding = !actualController.isBuilding
+                Button.Unknown -> {}
             }
         }
         return true

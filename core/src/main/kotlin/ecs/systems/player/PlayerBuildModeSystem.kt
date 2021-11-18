@@ -16,20 +16,6 @@ class PlayerBuildModeSystem: IteratingSystem(
     allOf(PlayerControlComponent::class).get()) {
     @OptIn(ExperimentalStdlibApi::class)
     override fun processEntity(entity: Entity, deltaTime: Float) {
-        val playerControlComponent = entity.getComponent<PlayerControlComponent>()
-        if(playerControlComponent.playerMode == PlayerMode.Building && !entity.has<TowerBuildingUiComponent>()) {
-            entity.getComponent<PlayerControlComponent>().controlMapper.uiControl = entity.addComponent<TowerBuildingUiComponent> {  }
-        }
-        if(playerControlComponent.playerMode == PlayerMode.Building && entity.has<TowerBuildingUiComponent>()) {
-            if(entity.getComponent<TowerBuildingUiComponent>().cancel) {
-                entity.remove<TowerBuildingUiComponent>()
-                playerControlComponent.controlMapper.uiControl = NoOpUserInterfaceControl.control
-                playerControlComponent.playerMode = PlayerMode.Control
-            }
-        }
-        if(playerControlComponent.playerMode == PlayerMode.Control && entity.has<TowerBuildingUiComponent>()) {
-            entity.remove<TowerBuildingUiComponent>()
-            playerControlComponent.controlMapper.uiControl = NoOpUserInterfaceControl.control
-        }
+
     }
 }

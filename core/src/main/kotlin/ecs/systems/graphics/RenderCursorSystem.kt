@@ -5,6 +5,7 @@ import com.badlogic.ashley.systems.IteratingSystem
 import com.badlogic.gdx.graphics.Color
 import com.badlogic.gdx.graphics.g2d.PolygonSpriteBatch
 import com.badlogic.gdx.math.Vector2
+import com.strongjoshua.console.GUIConsole
 import ecs.components.gameplay.TransformComponent
 import ecs.components.player.PlayerControlComponent
 import ecs.systems.tileWorldX
@@ -13,7 +14,11 @@ import injection.Context.inject
 import ktx.ashley.allOf
 import ktx.graphics.use
 import map.grid.Coordinate
-import map.grid.GridMapSection
+import map.grid.GridMapSection.Companion.scaledHeight
+import map.grid.GridMapSection.Companion.scaledWidth
+import map.grid.GridMapSection.Companion.tileHeight
+import map.grid.GridMapSection.Companion.tileScale
+import map.grid.GridMapSection.Companion.tileWidth
 import physics.getComponent
 import tru.Assets
 import tru.SpriteDirection
@@ -28,7 +33,12 @@ class RenderCursorSystem : IteratingSystem(
     val batch by lazy { inject<PolygonSpriteBatch>() }
     val shapeDrawer by lazy { Assets.shapeDrawer }
     val coordinateToPaint = Coordinate(0, 0)
-    val cursorColor = Color(0f, 1f, 0f, 0.5f)
+    val cursorColor = Color(0f, 1f, 0f, 0.1f)
+    val playerColor = Color(1f, 0f, 0f, 0.1f)
+    val tBlue = Color(0f, 0f, 1f, 0.1f)
+    private val pixelsPerMeter = 16f //TODO: Move scale concept to one place
+    private val scale = 1 / pixelsPerMeter
+    val console by lazy { inject<GUIConsole>() }
 
     @OptIn(ExperimentalStdlibApi::class)
     override fun processEntity(entity: Entity, deltaTime: Float) {
@@ -37,39 +47,27 @@ class RenderCursorSystem : IteratingSystem(
         the aimvector is pointing. And the aimvector should ALWAYS be pointing somewhere,
         which we shall fix NOW.
          */
-        val position = entity.getComponent<TransformComponent>()
         val controlComponent = entity.getComponent<PlayerControlComponent>()
-        val offset = CompassDirection.directionOffsets[controlComponent.aimVector.compassDirection()]!!
-        coordinateToPaint.x = position.tileX + offset.x
-        coordinateToPaint.y = position.tileY + offset.y
+        if (controlComponent.isBuilding) {
+            val position = entity.getComponent<TransformComponent>().position
+            val offset = CompassDirection.directionOffsets[controlComponent.compassDirection]!!
 
-        /*
-        Now, let's just draw a green square right there on that spot, to begin with.
-         */
-        shapeDrawer.batch.use {
-            shapeDrawer.filledRectangle(
-                coordinateToPaint.x.tileWorldX(),
-                coordinateToPaint.y.tileWorldY(),
-                GridMapSection.tileWidth,
-                GridMapSection.tileHeight,
-                cursorColor
-            )
+            val cX = position.tileWorldX() + (offset.x * scaledWidth)
+            val cY = position.tileWorldY() + (offset.y * scaledHeight)
+
+            val pWidth = tileWidth * tileScale
+            val pHeight = tileHeight * tileScale
+
+            shapeDrawer.batch.use {
+                shapeDrawer.filledRectangle(
+                    cX,
+                    cY,
+                    pWidth,
+                    pHeight,
+                    cursorColor
+                )
+            }
         }
-    }
-}
-
-fun Vector2.compassDirection(): CompassDirection {
-    return when (this.angleDeg()) {
-        in 248f..293f -> CompassDirection.North
-        in 293f..338f -> CompassDirection.NorthWest
-        in 338f..360f -> CompassDirection.West
-        in 0f..23f -> CompassDirection.West
-        in 23f..68f -> CompassDirection.SouthWest
-        in 68f..113f -> CompassDirection.South
-        in 113f..158f -> CompassDirection.SouthEast
-        in 158f..203f -> CompassDirection.East
-        in 203f..248f -> CompassDirection.NorthEast
-        else -> CompassDirection.South
     }
 }
 

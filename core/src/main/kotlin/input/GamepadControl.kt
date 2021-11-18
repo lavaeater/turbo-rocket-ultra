@@ -22,7 +22,7 @@ class GamepadControl(val controller: Controller): ControlMapper, Component {
     override val walkVector: Vector2 = vec2(turning, thrust)
         get() = field.set(turning, -thrust)
     override val controllerId: String get() = controller.toString()
-    override var playerMode: PlayerMode = PlayerMode.Control
+    override var isBuilding: Boolean = false
 
     override fun setAimVector(screenX: Int, screenY: Int, position: Vector2) {
         //no-op because this is a gamepad, mate.

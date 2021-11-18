@@ -17,10 +17,10 @@ interface ControlMapper: Component {
     var thrust: Float
     var needToChangeGun: InputIndicator
     var doContextAction: Boolean
+    var isBuilding: Boolean
 
     val walkVector: Vector2
     val controllerId: String
-    var playerMode: PlayerMode
 
     fun setAimVector(screenX: Int, screenY: Int, position: Vector2)
     var uiControl: UserInterfaceControl
