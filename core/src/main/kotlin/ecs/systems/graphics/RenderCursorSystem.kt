@@ -10,6 +10,7 @@ import ecs.components.gameplay.TransformComponent
 import ecs.components.player.PlayerControlComponent
 import ecs.systems.tileWorldX
 import ecs.systems.tileWorldY
+import factories.player
 import injection.Context.inject
 import ktx.ashley.allOf
 import ktx.graphics.use
@@ -25,7 +26,7 @@ import tru.Assets
 import tru.SpriteDirection
 
 //Should render after map, before entities, that's the best...
-class RenderCursorSystem : IteratingSystem(
+class RenderCursorSystem(private val debug: Boolean = true) : IteratingSystem(
     allOf(
         TransformComponent::class,
         PlayerControlComponent::class
@@ -33,7 +34,8 @@ class RenderCursorSystem : IteratingSystem(
 ) {
     val batch by lazy { inject<PolygonSpriteBatch>() }
     val shapeDrawer by lazy { Assets.shapeDrawer }
-    val cursorColor = Color(0f, 1f, 0f, 0.1f)
+    val cursorColor = Color(0f, 1f, 0f, 0.3f)
+    val otherColor = Color(1f, 0f, 0f, 0.3f)
 
     val buildables by lazy { Assets.buildables }
 
@@ -45,12 +47,14 @@ class RenderCursorSystem : IteratingSystem(
             val offset = CompassDirection.directionOffsets[controlComponent.compassDirection]!!
 
             val texture = buildables.first()
-            val cX = position.tileWorldX() + (offset.x * scaledWidth) + texture.offsetX * tileScale / 2
-            val cY = position.tileWorldY() + (offset.y * scaledHeight) + texture.offsetY * tileScale / 2
+            val cX = position.tileWorldX() + (offset.x * scaledWidth) + texture.offsetX * tileScale
+            val cY = position.tileWorldY() + (offset.y * scaledHeight) + texture.offsetY * tileScale
+
+            val tX = position.tileWorldX() + (offset.x * scaledWidth)// + texture.offsetX * tileScale / 2
+            val tY = position.tileWorldY() + (offset.y * scaledHeight)// + texture.offsetY * tileScale / 2
 
             val pWidth = tileWidth * tileScale
             val pHeight = tileHeight * tileScale
-
             batch.use {
                 batch.drawScaled(
                     texture,
@@ -59,15 +63,24 @@ class RenderCursorSystem : IteratingSystem(
                     tileScale
                 )
             }
-
             shapeDrawer.batch.use {
                 shapeDrawer.filledRectangle(
-                    cX,
-                    cY,
+                    tX,
+                    tY,
                     pWidth,
                     pHeight,
                     cursorColor
                 )
+
+            if (debug) {
+               shapeDrawer.filledRectangle(
+                        position.tileWorldX(),
+                        position.tileWorldY(),
+                        pWidth,
+                        pHeight,
+                        otherColor
+                    )
+                }
             }
         }
     }
