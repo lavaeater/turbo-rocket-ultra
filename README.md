@@ -44,7 +44,7 @@ How are the systems activated in the game screen, really? I think all systems ar
 
 We will try to do this on the regular game screen instead, because I can't handle hassles right now.
 
-
+So, the issue right now is the one of alignment. Above all else, alignment between physical bodies and textures and so on. I have "willfully" ignored the issue and have solved it using offsets and whatnot, but finally, it broke down. We have to modify the code so that a world coordinate IS in the center of a tile, and then a world coordinate IS in the center of a physical box
 
 ##### Line of sight for players
 To make it scarier, perhaps the player shouldn't be able to see what's behind him? This goes hand in hand with culling. So for the render system, we should only draw enemies... hmm. Only draw entities which the player can actually see. We won't raycast to each and everyone, dot product is fine enough for this.
@@ -686,11 +686,11 @@ Det här gör vi på det gamla vanliga sättet. Vi bygger en box2d-värld, vi kl
 
 Oj oj oj,  vad roligt. Vi kan göra en box2d-kropp med leder, per tutorials etc. Superkul ju.
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbLTEwMjQ2NTM1MzksMjA1MTEwMjE5OSwtNz
-QyNDEyMzUwLC02NjUwOTUyNzIsMTY4MzExMzE4MiwtNzAxMDUz
-MjcxLC05Mzg4NTE3MDAsLTg3MjczMTg2OCwyMDA3MzM1MTY0LD
-E3ODg1MzkxMTMsLTE5OTE0MDQ2ODUsMjM5NDQwMDg3LDU2MjQz
-MDMzLC0xMjExMjcwMzcwLC0yMTE5MTU5NDcxLDMzNTk1NzQ1Ni
-wxMTQwNjM4MzU3LDE4OTUxMTIyNjYsLTUzOTQ2MDE5MCw2NTYz
-MzI1MjddfQ==
+eyJoaXN0b3J5IjpbMTAxODgwOTUyMiwtMTAyNDY1MzUzOSwyMD
+UxMTAyMTk5LC03NDI0MTIzNTAsLTY2NTA5NTI3MiwxNjgzMTEz
+MTgyLC03MDEwNTMyNzEsLTkzODg1MTcwMCwtODcyNzMxODY4LD
+IwMDczMzUxNjQsMTc4ODUzOTExMywtMTk5MTQwNDY4NSwyMzk0
+NDAwODcsNTYyNDMwMzMsLTEyMTEyNzAzNzAsLTIxMTkxNTk0Nz
+EsMzM1OTU3NDU2LDExNDA2MzgzNTcsMTg5NTExMjI2NiwtNTM5
+NDYwMTkwXX0=
 -->
