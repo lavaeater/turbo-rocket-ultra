@@ -7,13 +7,9 @@ import ktx.math.vec2
 
 class TransformComponent() : Component, Pool.Poolable {
     val position: Vector2 = vec2()
-    var tileX = 0
-    var tileY = 0
     var rotation = 0f
 
     override fun reset() {
-        tileX = 0
-        tileY = 0
         position.set(Vector2.Zero)
         rotation = 0f
     }

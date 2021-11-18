@@ -3,6 +3,7 @@ package story
 import ecs.components.gameplay.TransformComponent
 import data.Player
 import injection.Context.inject
+import map.grid.GridMapSection
 import physics.getComponent
 import story.fact.*
 import story.rule.Rule
@@ -217,8 +218,8 @@ class FactsOfTheWorld(private val preferences: com.badlogic.gdx.Preferences, cle
          */
 		val player = inject<Player>()
 
-		stateIntFact(Facts.PlayerTileX, player.entity.getComponent<TransformComponent>().tileX)
-		stateIntFact(Facts.PlayerTileY, player.entity.getComponent<TransformComponent>().tileY)
+		stateIntFact(Facts.PlayerTileX, (player.entity.getComponent<TransformComponent>().position.x / GridMapSection.tileWidth).toInt())
+		stateIntFact(Facts.PlayerTileY, (player.entity.getComponent<TransformComponent>().position.y / GridMapSection.tileHeight).toInt())
 
 		preferences.flush()
 	}

@@ -169,6 +169,8 @@ object Assets : Disposable {
                     2 -> {
                         if (xTile in 0 until 1)
                             ts["wall_end"] = OffsetTextureRegion(tileTexture, xTile * 16, yTile * 16, 16, 16)
+                        if (xTile == 2)
+                            ts["build_crate"] = OffsetTextureRegion(tileTexture, xTile * 16, yTile * 16, 16, 16,16f,16f)
                     }
                 }
             }
@@ -184,6 +186,9 @@ object Assets : Disposable {
     }
     val wallEndTile by lazy {
         tiles.filterKeys { it == "wall_end" }.values.first()
+    }
+    val buildables by lazy {
+        tiles.filterKeys { it.contains("build")}.values.toList()
     }
 
     val aiDebugBadges by lazy {

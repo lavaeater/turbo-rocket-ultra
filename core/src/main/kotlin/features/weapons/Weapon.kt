@@ -1,6 +1,6 @@
 package features.weapons
 
-class Weapon(private val weaponDefinition: WeaponDefinition) {
+class Weapon(weaponDefinition: WeaponDefinition) {
     val name = weaponDefinition.name
     val weaponType = weaponDefinition.weaponType
     val ammoCap = weaponDefinition.ammoCap

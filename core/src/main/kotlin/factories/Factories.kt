@@ -451,6 +451,37 @@ fun boss(at: Vector2, level: Int) {
     CounterObject.enemyCount++
 }
 
+fun blockade(
+    x: Float,
+    y: Float,
+    width: Float = 4f,
+    height: Float = 4f
+) {
+    val box2dBody = world().body {
+        type = BodyDef.BodyType.StaticBody
+        position.set(x, y)
+        box(width, height) {
+            restitution = 0f
+            filter {
+                categoryBits = Box2dCategories.obstacles
+            }
+        }
+    }
+    val entity = engine().entity() {
+        with<BodyComponent> { body = box2dBody }
+        with<TransformComponent> { position.set(box2dBody.position) }
+        with<BlockadeComponent>()
+        with<TextureComponent> {
+            texture = Assets.buildables.first()
+            scale = 4f
+            offsetX = 1.5f
+            offsetY = -1f
+            layer = 1
+        }
+    }
+    box2dBody.userData = entity
+}
+
 fun obstacle(
     x: Float = 0f,
     y: Float = 0f,

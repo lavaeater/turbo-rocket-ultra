@@ -3,12 +3,15 @@ package screens
 import audio.AudioPlayer
 import com.badlogic.ashley.core.Engine
 import com.badlogic.gdx.Gdx
+import com.badlogic.gdx.Input
 import com.badlogic.gdx.controllers.Controllers
 import com.badlogic.gdx.graphics.GL20
 import com.badlogic.gdx.graphics.OrthographicCamera
 import com.badlogic.gdx.graphics.g2d.PolygonSpriteBatch
 import com.badlogic.gdx.physics.box2d.World
 import com.badlogic.gdx.utils.viewport.ExtendViewport
+import com.strongjoshua.console.CommandExecutor
+import com.strongjoshua.console.GUIConsole
 import ecs.components.BodyComponent
 import ecs.components.enemy.EnemyComponent
 import ecs.components.gameplay.ObjectiveComponent
@@ -69,6 +72,7 @@ class GameScreen(private val gameState: StateMachine<GameState, GameEvent>) : Kt
     private val audioPlayer: AudioPlayer by lazy { inject() }
     private val storyManager: StoryManager by lazy { inject() }
     private val factsOfTheWorld: FactsOfTheWorld by lazy { inject() }
+    private val console by lazy { inject<GUIConsole>() }
 
     override fun show() {
         initializeIfNeeded()
@@ -124,6 +128,7 @@ D1B67A
         batch.projectionMatrix = camera.combined
         engine.update(delta)
         ui.update(delta)
+        console.draw()
         audioPlayer.update(delta)
         storyManager.checkStories()
 

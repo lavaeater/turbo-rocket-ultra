@@ -4,6 +4,7 @@ import com.badlogic.ashley.core.Entity
 import com.badlogic.ashley.systems.IteratingSystem
 import ecs.components.graphics.AnimatedCharacterComponent
 import ecs.components.player.PlayerControlComponent
+import ecs.systems.graphics.spriteDirection
 import ktx.ashley.allOf
 import physics.getComponent
 import tru.SpriteDirection
@@ -31,18 +32,10 @@ class CharacterWalkAndShootDirectionSystem :
          */
         val characterComponent = entity.getComponent<AnimatedCharacterComponent>()
         val controlComponet = entity.getComponent<PlayerControlComponent>()
-        characterAngle = if(controlComponet.aiming) controlComponet.aimVector.angleDeg() else controlComponet.walkVector.angleDeg()
         if(controlComponet.waitsForRespawn) {
             characterComponent.currentDirection = SpriteDirection.South
         } else {
-            when (characterAngle) {
-                in 150f..209f -> characterComponent.currentDirection = SpriteDirection.East
-                in 210f..329f -> characterComponent.currentDirection = SpriteDirection.North
-                in 330f..360f -> characterComponent.currentDirection = SpriteDirection.West
-                in 0f..29f -> characterComponent.currentDirection = SpriteDirection.West
-                in 30f..149f -> characterComponent.currentDirection = SpriteDirection.South
-                else -> characterComponent.currentDirection = SpriteDirection.South
-            }
+            characterComponent.currentDirection = if(controlComponet.aiming) controlComponet.aimVector.spriteDirection() else controlComponet.walkVector.spriteDirection()
         }
     }
 }

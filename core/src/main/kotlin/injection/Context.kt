@@ -5,11 +5,14 @@ import box2dLight.RayHandler
 import com.badlogic.ashley.core.Engine
 import com.badlogic.ashley.core.PooledEngine
 import com.badlogic.gdx.Gdx
+import com.badlogic.gdx.Input
 import com.badlogic.gdx.graphics.Camera
 import com.badlogic.gdx.graphics.OrthographicCamera
 import com.badlogic.gdx.graphics.g2d.Batch
 import com.badlogic.gdx.graphics.g2d.PolygonSpriteBatch
 import com.badlogic.gdx.utils.viewport.ExtendViewport
+import com.strongjoshua.console.CommandExecutor
+import com.strongjoshua.console.GUIConsole
 import ecs.systems.*
 import ecs.systems.ai.*
 import ecs.systems.ai.boss.RushPlayerSystem
@@ -59,6 +62,10 @@ object Context {
                     inject<OrthographicCamera>() as Camera
                 )
             )
+            bindSingleton(GUIConsole().apply {
+                setCommandExecutor(CommandExecutor())
+                displayKeyID = Input.Keys.U
+            })
             bindSingleton(createWorld().apply {
                 setContactListener(ContactManager())
             })
@@ -74,10 +81,9 @@ object Context {
     private fun getEngine(): Engine {
         return PooledEngine().apply {
             addSystem(PhysicsSystem(inject()))
-    //        addSystem(PhysicsDebugRendererSystem(inject(), inject()))
+            addSystem(PhysicsDebugRendererSystem(inject(), inject()))
             addSystem(CameraUpdateSystem())
             addSystem(PlayerMoveSystem())
-            addSystem(PlayerBuildModeSystem())
             addSystem(KeyboardInputSystem())
             addSystem(GamepadInputSystem())
             addSystem(BodyDestroyerSystem(inject())) //world
@@ -122,6 +128,7 @@ object Context {
             addSystem(FactSystem())
             addSystem(FrustumCullingSystem())
             addSystem(LineOfSightCullingSystem())
+            addSystem(BuildSystem())
         }
     }
 }

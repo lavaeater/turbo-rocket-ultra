@@ -6,7 +6,6 @@ import com.badlogic.gdx.Gdx
 import com.badlogic.gdx.Input
 import com.badlogic.gdx.math.Vector2
 import ecs.components.gameplay.TransformComponent
-import ecs.components.player.PlayerMode
 import input.InputIndicator
 import input.KeyboardControl
 import ktx.app.KtxInputAdapter
@@ -20,15 +19,16 @@ class KeyboardInputSystem :
         TransformComponent::class
     ).get()
 ) {
-
     lateinit var keyboardControl: KeyboardControl
 
     override fun keyDown(keycode: Int): Boolean {
+        keyboardControl.aiming = false
         when (keycode) {
             Input.Keys.W -> keyboardControl.thrust = 1f
             Input.Keys.S -> keyboardControl.thrust = -1f
             Input.Keys.A -> keyboardControl.turning = -1f
             Input.Keys.D -> keyboardControl.turning = 1f
+            Input.Keys.SPACE -> if(keyboardControl.isInBuildMode) keyboardControl.buildIfPossible = true else keyboardControl.doContextAction = true
             else -> return false
         }
         return true
@@ -44,12 +44,13 @@ class KeyboardInputSystem :
     }
 
     override fun keyUp(keycode: Int): Boolean {
+        keyboardControl.aiming = true
         when (keycode) {
             Input.Keys.W -> keyboardControl.thrust = 0f
             Input.Keys.S -> keyboardControl.thrust = 0f
             Input.Keys.A -> keyboardControl.turning = 0f
             Input.Keys.D -> keyboardControl.turning = 0f
-            Input.Keys.SPACE -> keyboardControl.doContextAction = true
+            Input.Keys.SPACE -> if(keyboardControl.isInBuildMode) keyboardControl.buildIfPossible = false else keyboardControl.doContextAction = false
             Input.Keys.R -> keyboardControl.needsReload = true
             Input.Keys.B -> toggleBuildMode()
             Input.Keys.LEFT -> keyboardControl.uiControl.left()
@@ -61,13 +62,7 @@ class KeyboardInputSystem :
     }
 
     private fun toggleBuildMode() {
-        when (keyboardControl.playerMode) {
-            PlayerMode.Control -> keyboardControl.playerMode = PlayerMode.Building
-            PlayerMode.Building -> {
-                keyboardControl.uiControl.cancel()
-                keyboardControl.playerMode = PlayerMode.Control
-            }
-        }
+        keyboardControl.isInBuildMode = !keyboardControl.isInBuildMode
     }
 
     override fun touchDown(screenX: Int, screenY: Int, pointer: Int, button: Int): Boolean {

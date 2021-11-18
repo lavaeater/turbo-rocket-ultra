@@ -4,9 +4,9 @@ import com.badlogic.ashley.core.Entity
 import com.badlogic.ashley.systems.SortedIteratingSystem
 import com.badlogic.gdx.graphics.g2d.Batch
 import ecs.components.gameplay.TransformComponent
-import ecs.components.graphics.TextureComponent
 import ecs.components.graphics.InFrustumComponent
 import ecs.components.graphics.InLineOfSightComponent
+import ecs.components.graphics.TextureComponent
 import ktx.ashley.allOf
 import ktx.graphics.use
 import physics.drawScaled
@@ -42,7 +42,7 @@ class RenderSystem(
                 layer0.compareTo(layer1)
             }
         }
-    }, 0
+    }, 2
 ) {
     private val pixelsPerMeter = 16f
     private val scale = 1 / pixelsPerMeter
