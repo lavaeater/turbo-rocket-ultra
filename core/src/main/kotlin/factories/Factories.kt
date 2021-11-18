@@ -455,7 +455,7 @@ fun blockade(
     x: Float,
     y: Float,
     width: Float = 4f,
-    height: Float = 2f
+    height: Float = 4f
 ) {
     val box2dBody = world().body {
         type = BodyDef.BodyType.StaticBody
