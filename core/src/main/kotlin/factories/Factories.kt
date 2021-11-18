@@ -6,47 +6,49 @@ import com.badlogic.ashley.core.Entity
 import com.badlogic.gdx.graphics.Color
 import com.badlogic.gdx.math.MathUtils
 import com.badlogic.gdx.math.MathUtils.degreesToRadians
-import com.badlogic.gdx.math.Vector
 import com.badlogic.gdx.math.Vector2
 import com.badlogic.gdx.physics.box2d.Body
 import com.badlogic.gdx.physics.box2d.BodyDef
 import com.badlogic.gdx.physics.box2d.World
+import data.Player
 import ecs.components.BodyComponent
 import ecs.components.ai.BehaviorComponent
 import ecs.components.ai.GibComponent
+import ecs.components.enemy.BossComponent
 import ecs.components.enemy.EnemyComponent
 import ecs.components.enemy.EnemySensorComponent
 import ecs.components.enemy.TackleComponent
 import ecs.components.fx.SplatterComponent
 import ecs.components.gameplay.*
-import ecs.components.graphics.*
 import ecs.components.graphics.AnimatedCharacterComponent
+import ecs.components.graphics.CameraFollowComponent
+import ecs.components.graphics.MiniMapComponent
+import ecs.components.graphics.TextureComponent
 import ecs.components.pickups.LootComponent
 import ecs.components.pickups.LootDropComponent
 import ecs.components.player.*
 import ecs.components.towers.TowerComponent
-import features.pickups.AmmoLoot
-import features.pickups.ILoot
-import features.pickups.NullValue
-import features.weapons.AmmoType
-import data.Player
-import ecs.components.enemy.BossComponent
 import ecs.systems.graphics.GameConstants.PLAYER_DENSITY
 import ecs.systems.graphics.GameConstants.SHIP_ANGULAR_DAMPING
 import ecs.systems.graphics.GameConstants.SHIP_LINEAR_DAMPING
 import ecs.systems.graphics.GameConstants.pixelsPerMeter
-import ecs.systems.graphics.GameConstants.scale
+import features.pickups.AmmoLoot
+import features.pickups.ILoot
+import features.pickups.NullValue
+import features.weapons.AmmoType
 import features.weapons.WeaponDefinition
 import injection.Context.inject
 import input.ControlMapper
 import ktx.ashley.entity
 import ktx.ashley.with
-import ktx.box2d.*
+import ktx.box2d.body
+import ktx.box2d.box
+import ktx.box2d.circle
+import ktx.box2d.filter
 import ktx.math.random
 import ktx.math.vec2
 import physics.addComponent
 import screens.CounterObject
-import screens.GameScreen
 import tru.Assets
 import kotlin.experimental.or
 
@@ -86,7 +88,7 @@ object Box2dCategories {
     val environmentOnly = objectives or obstacles or walls
     val whatGibsHit = players or enemies or walls
     val whatEnemiesHit = players or enemies or objectives or obstacles or walls or lights or bullets or gibs
-    val whatPlayersHit = players or enemies or objectives or obstacles or walls or lights or gibs
+    val whatPlayersHit = players or enemies or objectives or obstacles or walls or lights or gibs or enemySensors or indicators
 
     /**
      * Will this show up when hovering?
