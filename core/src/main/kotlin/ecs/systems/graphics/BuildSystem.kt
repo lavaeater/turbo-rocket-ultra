@@ -49,11 +49,14 @@ class BuildSystem(private val debug: Boolean = true) : IteratingSystem(
             val offset = CompassDirection.directionOffsets[controlComponent.compassDirection]!!
 
             val texture = buildables.first()
-            val cX = position.tileWorldX() + (offset.x * scaledWidth) + texture.offsetX * tileScale
-            val cY = position.tileWorldY() + (offset.y * scaledHeight) + texture.offsetY * tileScale
+            val cX = position.tileWorldX() + (offset.x * scaledWidth)
+            val cY = position.tileWorldY() + (offset.y * scaledHeight)
 
             val tX = position.tileWorldX() + (offset.x * scaledWidth)// + texture.offsetX * tileScale / 2
             val tY = position.tileWorldY() + (offset.y * scaledHeight)// + texture.offsetY * tileScale / 2
+
+            val bodyX = position.tileWorldX() + (offset.x * scaledWidth)
+            val bodyY = position.tileWorldY() + (offset.y * scaledHeight)w
 
             val pWidth = tileWidth * tileScale
             val pHeight = tileHeight * tileScale
@@ -82,11 +85,14 @@ class BuildSystem(private val debug: Boolean = true) : IteratingSystem(
                         pHeight,
                         otherColor
                     )
+                shapeDrawer.filledCircle(cX,cY,1f, Color.RED)
+                shapeDrawer.filledCircle(tX,tY,1f, Color.GREEN)
+                shapeDrawer.filledCircle(bodyX,bodyY,1f, Color.BLUE)
                 }
             }
             if(controlComponent.buildIfPossible) {
-                if(mapManager.canWeBuildAt(tX.tileX(), tY.tileY())) {
-                    blockade(tX, tY)
+                if(mapManager.canWeBuildAt(cX.tileX(), cY.tileY())) {
+                    blockade(bodyX, bodyY)
                 }
             }
         }

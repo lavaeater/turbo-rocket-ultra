@@ -474,8 +474,6 @@ fun blockade(
         with<TextureComponent> {
             texture = Assets.buildables.first()
             scale = 4f
-            offsetX = 1.5f
-            offsetY = -1f
             layer = 1
         }
     }

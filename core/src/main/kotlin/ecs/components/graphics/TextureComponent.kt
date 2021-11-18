@@ -1,6 +1,7 @@
 package ecs.components.graphics
 
 import com.badlogic.ashley.core.Component
+import com.badlogic.gdx.graphics.g2d.TextureRegion
 import com.badlogic.gdx.utils.Pool
 import tru.Assets
 
@@ -12,8 +13,8 @@ class InFrustumComponent: Component, Pool.Poolable {
 
 class TextureComponent: Component, Pool.Poolable {
     var layer: Int = 0
-    var texture: OffsetTextureRegion = Assets.dummyRegion
-    val extraTextures = mutableMapOf<String, OffsetTextureRegion>()
+    var texture: TextureRegion = Assets.dummyRegion
+    val extraTextures = mutableMapOf<String, TextureRegion>()
     var offsetX: Float = 0f
     var offsetY: Float = 0f
     var scale: Float = 1f

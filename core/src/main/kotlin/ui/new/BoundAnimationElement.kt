@@ -4,17 +4,16 @@ import com.badlogic.gdx.graphics.g2d.Animation
 import com.badlogic.gdx.graphics.g2d.Batch
 import com.badlogic.gdx.graphics.g2d.TextureRegion
 import com.badlogic.gdx.math.Vector2
-import ecs.components.graphics.OffsetTextureRegion
 import ktx.math.vec2
 import physics.drawScaled
 
-open class BoundAnimationElement<T: Any>(valueFunc: (T) -> Animation<OffsetTextureRegion>,
+open class BoundAnimationElement<T: Any>(valueFunc: (T) -> Animation<TextureRegion>,
                                          val changeAnimation: (T) -> Unit = {},
                                          position: Vector2 = vec2(),
                                          var scale: Float = 1f,
                                          var rotation: Float = 0f,
                                          parent: AbstractElement? = null) :
-    BoundElement<T, Animation<OffsetTextureRegion>>(valueFunc, position, parent) {
+    BoundElement<T, Animation<TextureRegion>>(valueFunc, position, parent) {
 
     private var animationStateTime: Float = 0f
     private var changeAnimCooldown = 5f
