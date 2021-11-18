@@ -6,7 +6,6 @@ import com.badlogic.gdx.Gdx
 import com.badlogic.gdx.Input
 import com.badlogic.gdx.math.Vector2
 import ecs.components.gameplay.TransformComponent
-import ecs.components.player.PlayerMode
 import input.InputIndicator
 import input.KeyboardControl
 import ktx.app.KtxInputAdapter
@@ -29,6 +28,7 @@ class KeyboardInputSystem :
             Input.Keys.S -> keyboardControl.thrust = -1f
             Input.Keys.A -> keyboardControl.turning = -1f
             Input.Keys.D -> keyboardControl.turning = 1f
+            Input.Keys.SPACE -> if(keyboardControl.isInBuildMode) keyboardControl.buildIfPossible = true else keyboardControl.doContextAction = true
             else -> return false
         }
         return true
@@ -50,7 +50,7 @@ class KeyboardInputSystem :
             Input.Keys.S -> keyboardControl.thrust = 0f
             Input.Keys.A -> keyboardControl.turning = 0f
             Input.Keys.D -> keyboardControl.turning = 0f
-            Input.Keys.SPACE -> keyboardControl.doContextAction = true
+            Input.Keys.SPACE -> if(keyboardControl.isInBuildMode) keyboardControl.buildIfPossible = false else keyboardControl.doContextAction = false
             Input.Keys.R -> keyboardControl.needsReload = true
             Input.Keys.B -> toggleBuildMode()
             Input.Keys.LEFT -> keyboardControl.uiControl.left()
@@ -62,7 +62,7 @@ class KeyboardInputSystem :
     }
 
     private fun toggleBuildMode() {
-        keyboardControl.isBuilding = !keyboardControl.isBuilding
+        keyboardControl.isInBuildMode = !keyboardControl.isInBuildMode
     }
 
     override fun touchDown(screenX: Int, screenY: Int, pointer: Int, button: Int): Boolean {

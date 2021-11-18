@@ -64,6 +64,14 @@ fun Vector2.tileY(tileHeight: Float): Int {
     return (this.y / tileHeight).toInt()
 }
 
+fun Float.tileX(tileWidth: Float =GridMapSection.tileWidth): Int {
+    return (this / tileWidth).toInt()
+}
+
+fun Float.tileY(tileHeight: Float = GridMapSection.tileHeight): Int {
+    return (this / tileHeight).toInt()
+}
+
 fun Int.tileWorldX(): Float {
     return this.tileWorldX(GridMapSection.scaledWidth)
 }

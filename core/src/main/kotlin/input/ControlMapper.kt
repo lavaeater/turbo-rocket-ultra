@@ -17,7 +17,8 @@ interface ControlMapper: Component {
     var thrust: Float
     var needToChangeGun: InputIndicator
     var doContextAction: Boolean
-    var isBuilding: Boolean
+    var isInBuildMode: Boolean
+    var buildIfPossible: Boolean
 
     val walkVector: Vector2
     val controllerId: String

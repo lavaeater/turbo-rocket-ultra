@@ -5,16 +5,17 @@ import com.badlogic.ashley.systems.IteratingSystem
 import com.badlogic.gdx.graphics.Color
 import com.badlogic.gdx.graphics.g2d.PolygonSpriteBatch
 import com.badlogic.gdx.math.Vector2
-import com.strongjoshua.console.GUIConsole
 import ecs.components.gameplay.TransformComponent
 import ecs.components.player.PlayerControlComponent
 import ecs.systems.tileWorldX
 import ecs.systems.tileWorldY
-import factories.player
+import ecs.systems.tileX
+import ecs.systems.tileY
+import factories.blockade
 import injection.Context.inject
 import ktx.ashley.allOf
 import ktx.graphics.use
-import map.grid.Coordinate
+import map.grid.GridMapManager
 import map.grid.GridMapSection.Companion.scaledHeight
 import map.grid.GridMapSection.Companion.scaledWidth
 import map.grid.GridMapSection.Companion.tileHeight
@@ -26,7 +27,7 @@ import tru.Assets
 import tru.SpriteDirection
 
 //Should render after map, before entities, that's the best...
-class RenderCursorSystem(private val debug: Boolean = true) : IteratingSystem(
+class BuildSystem(private val debug: Boolean = true) : IteratingSystem(
     allOf(
         TransformComponent::class,
         PlayerControlComponent::class
@@ -38,11 +39,12 @@ class RenderCursorSystem(private val debug: Boolean = true) : IteratingSystem(
     val otherColor = Color(1f, 0f, 0f, 0.3f)
 
     val buildables by lazy { Assets.buildables }
+    val mapManager by lazy { inject<GridMapManager>() }
 
     @OptIn(ExperimentalStdlibApi::class)
     override fun processEntity(entity: Entity, deltaTime: Float) {
         val controlComponent = entity.getComponent<PlayerControlComponent>()
-        if (controlComponent.isBuilding) {
+        if (controlComponent.isInBuildMode) {
             val position = entity.getComponent<TransformComponent>().position
             val offset = CompassDirection.directionOffsets[controlComponent.compassDirection]!!
 
@@ -80,6 +82,11 @@ class RenderCursorSystem(private val debug: Boolean = true) : IteratingSystem(
                         pHeight,
                         otherColor
                     )
+                }
+            }
+            if(controlComponent.buildIfPossible) {
+                if(mapManager.canWeBuildAt(tX.tileX(), tY.tileY())) {
+                    blockade(tX, tY)
                 }
             }
         }

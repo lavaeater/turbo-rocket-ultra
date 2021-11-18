@@ -27,8 +27,8 @@ class KeyboardControl: ControlMapper, Component {
     override val controllerId: String
         get() = "Keyboard and mouse"
 
-    override var isBuilding: Boolean = false
-
+    override var isInBuildMode: Boolean = false
+    override var buildIfPossible: Boolean = false
     override fun setAimVector(screenX: Int, screenY: Int, position: Vector2) {
         mousePosition3D.set(screenX.toFloat(), screenY.toFloat(), 0f)
         camera.unproject(mousePosition3D)

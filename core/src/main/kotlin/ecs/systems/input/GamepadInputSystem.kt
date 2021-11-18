@@ -4,7 +4,6 @@ import com.badlogic.ashley.core.Entity
 import com.badlogic.ashley.systems.IteratingSystem
 import com.badlogic.gdx.controllers.Controller
 import com.badlogic.gdx.controllers.ControllerListener
-import com.badlogic.gdx.math.MathUtils
 import data.Players
 import input.Axis
 import input.Axis.Companion.valueOK
@@ -13,7 +12,6 @@ import input.GamepadControl
 import input.InputIndicator
 import ktx.ashley.allOf
 import ktx.math.vec2
-import net.dermetfan.utils.math.MathUtils.between
 import physics.getComponent
 
 /**
@@ -31,6 +29,18 @@ class GamepadInputSystem() : IteratingSystem(allOf(GamepadControl::class).get())
     }
 
     override fun buttonDown(controller: Controller, buttonCode: Int): Boolean {
+        val actualController = controllers.firstOrNull { it.controller == controller }
+        if (actualController != null) {
+            when (Button.getButton(buttonCode)) {
+                Button.Cross -> if(actualController.isInBuildMode) actualController.buildIfPossible = true else actualController.doContextAction = true
+                Button.Ring -> {}
+                Button.Square -> {}
+                Button.DPadLeft -> {}
+                Button.DPadRight -> {}
+                Button.Triangle -> {}
+                Button.Unknown -> {}
+            }
+        }
         return true
     }
 
@@ -38,12 +48,12 @@ class GamepadInputSystem() : IteratingSystem(allOf(GamepadControl::class).get())
         val actualController = controllers.firstOrNull { it.controller == controller }
         if (actualController != null) {
             when (Button.getButton(buttonCode)) {
-                Button.Cross -> actualController.doContextAction = true
+                Button.Cross -> if(actualController.isInBuildMode) actualController.buildIfPossible = false else actualController.doContextAction = false
                 Button.Ring -> {}
                 Button.Square -> actualController.needsReload = true
                 Button.DPadLeft -> actualController.needToChangeGun = InputIndicator.Previous
                 Button.DPadRight -> actualController.needToChangeGun = InputIndicator.Next
-                Button.Triangle -> actualController.isBuilding = !actualController.isBuilding
+                Button.Triangle -> actualController.isInBuildMode = !actualController.isInBuildMode
                 Button.Unknown -> {}
             }
         }
