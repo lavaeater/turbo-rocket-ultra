@@ -63,8 +63,6 @@ xxxxs
 
 The x markers are simply sections of map, the s is for spawn-section, l is for loot-section and then g is for goal / end, whatever. So a map definition could consist of that information, which can be easily translated into instructions for making a map, I think. The map itself is in fact an array of arrays. Or a one-dimensional array, I don't remember right now. No, when we construct it all, we do array of array of booleans, where true is "this is a section". So, we need to translate that into an array of arrays of boolean, easily done, I think.  
 
-
-
 ### Act two - in the thick of it
 
 ### Act three - for all the marbles
@@ -686,7 +684,7 @@ Det här gör vi på det gamla vanliga sättet. Vi bygger en box2d-värld, vi kl
 
 Oj oj oj,  vad roligt. Vi kan göra en box2d-kropp med leder, per tutorials etc. Superkul ju.
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbMTU4MDUzOTcwNywtMTU0OTg1ODU5NSwtMT
+eyJoaXN0b3J5IjpbMTExODU4ODA1NSwtMTU0OTg1ODU5NSwtMT
 AyNDY1MzUzOSwyMDUxMTAyMTk5LC03NDI0MTIzNTAsLTY2NTA5
 NTI3MiwxNjgzMTEzMTgyLC03MDEwNTMyNzEsLTkzODg1MTcwMC
 wtODcyNzMxODY4LDIwMDczMzUxNjQsMTc4ODUzOTExMywtMTk5
