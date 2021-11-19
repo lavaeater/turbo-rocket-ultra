@@ -33,7 +33,10 @@ So, what do we need for act one? Well, tons of fun stuff to implement:
 - [x] Designed levels - how about a fudging overworld, mate? A larger map, like in Overcooked, perhaps?
 - [x] Weapons as pickups
 
-##### Blockades, swinging and area-effect-weapons
+#### Area Effect Weapons
+This is easy. They are slow projectiles that should, preferrably, wobble or spin through the air somehow. 
+
+##### Blockades, swinging
 Lets start with hand-to-hand combat. How will that work? Well, the player aims in some direction and if an enemy is within range for strikes and within a fov for the strike (a 120 degree arc), the enemy can get hit. The enemy will signal this by blinking, I think would be cool. This could strike multiple enemies, perhaps.
 
 How will building work? Well, to effectively build blockades the player should be able to direct his building marker to a specific tile, which will be marked in transparent green and then just push build, then walk and there should be blockades built in the correct place while walking. 
@@ -684,11 +687,11 @@ Det här gör vi på det gamla vanliga sättet. Vi bygger en box2d-värld, vi kl
 
 Oj oj oj,  vad roligt. Vi kan göra en box2d-kropp med leder, per tutorials etc. Superkul ju.
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbMTExODU4ODA1NSwtMTU0OTg1ODU5NSwtMT
-AyNDY1MzUzOSwyMDUxMTAyMTk5LC03NDI0MTIzNTAsLTY2NTA5
-NTI3MiwxNjgzMTEzMTgyLC03MDEwNTMyNzEsLTkzODg1MTcwMC
-wtODcyNzMxODY4LDIwMDczMzUxNjQsMTc4ODUzOTExMywtMTk5
-MTQwNDY4NSwyMzk0NDAwODcsNTYyNDMwMzMsLTEyMTEyNzAzNz
-AsLTIxMTkxNTk0NzEsMzM1OTU3NDU2LDExNDA2MzgzNTcsMTg5
-NTExMjI2Nl19
+eyJoaXN0b3J5IjpbNTYxMzYyNDksLTE1NDk4NTg1OTUsLTEwMj
+Q2NTM1MzksMjA1MTEwMjE5OSwtNzQyNDEyMzUwLC02NjUwOTUy
+NzIsMTY4MzExMzE4MiwtNzAxMDUzMjcxLC05Mzg4NTE3MDAsLT
+g3MjczMTg2OCwyMDA3MzM1MTY0LDE3ODg1MzkxMTMsLTE5OTE0
+MDQ2ODUsMjM5NDQwMDg3LDU2MjQzMDMzLC0xMjExMjcwMzcwLC
+0yMTE5MTU5NDcxLDMzNTk1NzQ1NiwxMTQwNjM4MzU3LDE4OTUx
+MTIyNjZdfQ==
 -->
