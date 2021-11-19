@@ -32,10 +32,9 @@ import ecs.systems.graphics.GameConstants.PLAYER_DENSITY
 import ecs.systems.graphics.GameConstants.SHIP_ANGULAR_DAMPING
 import ecs.systems.graphics.GameConstants.SHIP_LINEAR_DAMPING
 import ecs.systems.graphics.GameConstants.pixelsPerMeter
-import features.pickups.AmmoLoot
-import features.pickups.ILoot
-import features.pickups.NullValue
+import features.pickups.*
 import features.weapons.AmmoType
+import features.weapons.Weapon
 import features.weapons.WeaponDefinition
 import injection.Context.inject
 import input.ControlMapper
@@ -269,7 +268,9 @@ fun player(player: Player, mapper: ControlMapper, at: Vector2, pixelWidth: Int =
         with<PlayerComponent> { this.player = player }
         val weapon = WeaponDefinition.weapons.first().getWeapon()
         with<InventoryComponent> {
-            weapons.add(weapon)
+            WeaponDefinition.weapons.forEach {
+                weapons.add(it.getWeapon())
+            }
         }
         with<WeaponComponent> {
             currentWeapon = weapon
@@ -297,6 +298,39 @@ fun semicircle(): List<Vector2> {
         vs.add(vec2(radius * MathUtils.cos(angle), radius * MathUtils.sin(angle)))
     }
     return vs
+}
+
+fun randomLoot(at: Vector2, lootTable: LootTable) {
+    val box2dBody = world().body {
+        type = BodyDef.BodyType.StaticBody
+        position.set(at)
+        fixedRotation = true
+        box(1f, 1f) {
+            density = 1f
+            filter {
+                categoryBits = Box2dCategories.loot
+                maskBits = Box2dCategories.players or Box2dCategories.lights
+            }
+        }
+        circle(2f) {
+            filter {
+                categoryBits = Box2dCategories.loot
+                maskBits = Box2dCategories.players
+            }
+        }
+    }
+    val entity = engine().entity {
+        with<BodyComponent> { body = box2dBody }
+        with<TransformComponent> { position.set(box2dBody.position) }
+        with<TextureComponent> {
+            texture = Assets.lootBox
+            layer = 1
+        }
+        with<LootComponent> {
+            this.lootTable = lootTable
+        }
+    }
+    box2dBody.userData = entity
 }
 
 fun lootBox(at: Vector2, lootDrop: List<ILoot>) {
@@ -383,6 +417,9 @@ fun enemy(at: Vector2) {
             anims = Assets.enemies.values.random()
         }
         with<LootDropComponent> {
+            for(weapDef in WeaponDefinition.weapons) {
+                lootTable.contents.add(WeaponLoot(weapDef, 5f))
+            }
             lootTable.contents.add(
                 AmmoLoot(AmmoType.NineMilliMeters, 6..17, 30f)
             )

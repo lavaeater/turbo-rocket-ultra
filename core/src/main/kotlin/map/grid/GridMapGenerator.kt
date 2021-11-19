@@ -9,6 +9,7 @@ import ecs.systems.tileWorldX
 import ecs.systems.tileWorldY
 import factories.*
 import features.pickups.AmmoLoot
+import features.pickups.LootTable
 import features.pickups.WeaponLoot
 import features.weapons.AmmoType
 import features.weapons.WeaponDefinition
@@ -74,11 +75,15 @@ class GridMapGenerator {
                             addBoss(section.innerBounds)
 
                         if (def.hasLoot(coordinate)) {
-                            lootBox(
-                                section.innerBounds.randomPoint(), listOf(
-                                    WeaponLoot(WeaponDefinition.weapons.first { it.name == "Glock 17" }, 1f),
-                                    AmmoLoot(AmmoType.NineMilliMeters, 17..51, 1f)
-                                )
+                            randomLoot(
+                                section.innerBounds.randomPoint(),
+                                LootTable(
+                                    mutableListOf(
+                                        *WeaponDefinition.weapons.map { WeaponLoot(it, 5f) }.toTypedArray(),
+                                         AmmoLoot(AmmoType.NineMilliMeters, 17..51, 10f),
+                                         AmmoLoot(AmmoType.FnP90Ammo, 25..150, 10f),
+                                         AmmoLoot(AmmoType.TwelveGaugeShotgun, 4..18, 10f),
+                                ), (3..5).random())
                             )
                         }
                     }
@@ -266,11 +271,11 @@ class SimpleGridMapDef(val def: List<String>) {
             """
             xxxxgxxxb
             xeeeexeee
-            xeeeexxxx
-            xxleeeeex
-            xxxxxxxxx
-            obeeeeeex
-            sooxxxxxx
+            xeeeexxxl
+            xxlxxxeex
+            xxxeexxxx
+            oeeeeeeex
+            sxxxxxxxx
         """.trimIndent().lines()
         )
     }

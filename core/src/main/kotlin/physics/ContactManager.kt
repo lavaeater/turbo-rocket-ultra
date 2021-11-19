@@ -65,7 +65,8 @@ class ContactManager: ContactListener {
                 val inventory = playerEntity.getComponent<InventoryComponent>()
                 val lootEntity = contact.getEntityFor<LootComponent>()
                 val lootComponent = lootEntity.getComponent<LootComponent>()
-                for(loot in lootComponent.loot) {
+                var looted = if(lootComponent.lootTable != null) lootComponent.lootTable!!.result else lootComponent.loot
+                for(loot in looted) {
                     when (loot) {
                         is AmmoLoot -> {
                             if(!inventory.ammo.containsKey(loot.ammoType))
