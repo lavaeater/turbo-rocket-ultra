@@ -88,7 +88,7 @@ object Box2dCategories {
     val environmentOnly = objectives or obstacles or walls
     val whatGibsHit = players or enemies or walls
     val whatEnemiesHit = players or enemies or objectives or obstacles or walls or lights or bullets or gibs
-    val whatPlayersHit = players or enemies or objectives or obstacles or walls or lights or gibs or enemySensors or indicators
+    val whatPlayersHit = players or enemies or objectives or obstacles or walls or lights or gibs or enemySensors or indicators or loot
 
     /**
      * Will this show up when hovering?
