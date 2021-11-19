@@ -99,11 +99,10 @@ object Box2dCategories {
 fun gibs(at: Vector2, angle: Float) {
     for (i in Assets.enemyGibs) {
         val angle = (1f..359f).random()
-        val velocity = vec2(4f, 4f).setAngleDeg(angle)
+        val force = vec2(40f,0f).setAngleDeg(angle)
         val gibBody = world().body {
             type = BodyDef.BodyType.DynamicBody
             position.set(at)
-            linearVelocity.set(velocity)
             box(.3f, .3f) {
                 friction = 50f //Tune
                 density = 10f //tune
@@ -113,6 +112,8 @@ fun gibs(at: Vector2, angle: Float) {
                 }
             }
         }
+        gibBody.applyLinearImpulse(force, vec2(gibBody.worldCenter.x -0.2f, gibBody.worldCenter.y - 0.2f),true)
+
         val gibEntity = engine().entity {
             with<TextureComponent> {
                 rotateWithTransform = true
