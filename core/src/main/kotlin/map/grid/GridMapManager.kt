@@ -43,7 +43,7 @@ class GridMapManager {
                     val actualY = section.y * GridMapSection.width + y
                     if(!buildableMap.containsKey(actualX))
                         buildableMap[actualX] = mutableMapOf()
-                    buildableMap[actualX]!![actualY] = !tile.passable
+                    buildableMap[actualX]!![actualY] = tile.passable
                     if (!tile.passable) {
                         val body = world().body {
                             type = BodyDef.BodyType.StaticBody

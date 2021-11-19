@@ -5,6 +5,8 @@ import box2dLight.RayHandler
 import com.badlogic.ashley.core.Engine
 import com.badlogic.gdx.math.Rectangle
 import ecs.components.enemy.EnemySpawnerComponent
+import ecs.systems.tileWorldX
+import ecs.systems.tileWorldY
 import factories.*
 import features.pickups.AmmoLoot
 import features.pickups.WeaponLoot
@@ -26,6 +28,16 @@ class GridMapGenerator {
             position = bounds.randomPoint()
             val emitter = obstacle(position.x, position.y)
             emitter.add(engine.createComponent(EnemySpawnerComponent::class.java))
+        }
+
+        fun addObstacle(bounds: Rectangle) {
+            var position = bounds.randomPoint()
+            obstacle(position.tileWorldX(), position.tileWorldY())
+        }
+
+        fun addBoss(bounds: Rectangle) {
+            var position = bounds.randomPoint()
+            boss(position, 1)
         }
 
         fun generateFromDefintion(def: SimpleGridMapDef): Map<Coordinate, GridMapSection> {
@@ -56,6 +68,11 @@ class GridMapGenerator {
                         if (def.hasGoal(coordinate)) {
                             addObjective(section.innerBounds)
                         }
+                        if (def.hasObstacle(coordinate))
+                            addObstacle(section.innerBounds)
+                        if (def.hasBoss(coordinate))
+                            addBoss(section.innerBounds)
+
                         if (def.hasLoot(coordinate)) {
                             lootBox(
                                 section.innerBounds.randomPoint(), listOf(
@@ -220,6 +237,13 @@ class SimpleGridMapDef(val def: List<String>) {
         return sections[coordinate.x][coordinate.y] == 'g'
     }
 
+    fun hasObstacle(coordinate: Coordinate) : Boolean {
+        return sections[coordinate.x][coordinate.y] == 'o'
+    }
+    fun hasBoss(coordinate: Coordinate) : Boolean {
+        return sections[coordinate.x][coordinate.y] == 'b'
+    }
+
     val booleanSections
         get() : Array<Array<Boolean>> {
             return sections.map { column -> column.toCharArray().map { it != 'e' }.toTypedArray() }.toTypedArray()
@@ -240,13 +264,13 @@ class SimpleGridMapDef(val def: List<String>) {
     companion object {
         val levelOne = SimpleGridMapDef(
             """
-            xxxxgxeee
+            xxxxgxxxb
             xeeeexeee
             xeeeexxxx
             xxleeeeex
             xxxxxxxxx
-            xxeeeeeex
-            sxxxxxxxx
+            obeeeeeex
+            sooxxxxxx
         """.trimIndent().lines()
         )
     }

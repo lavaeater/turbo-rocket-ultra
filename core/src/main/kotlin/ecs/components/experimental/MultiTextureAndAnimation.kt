@@ -2,8 +2,8 @@ package ecs.components.experimental
 
 import com.badlogic.ashley.core.Component
 import com.badlogic.gdx.graphics.g2d.Animation
+import com.badlogic.gdx.graphics.g2d.TextureRegion
 import com.badlogic.gdx.utils.Pool
-import ecs.components.graphics.OffsetTextureRegion
 import tru.AnimState
 import tru.LpcCharacterAnim
 import tru.SpriteDirection
@@ -31,7 +31,7 @@ import tru.SpriteDirection
  * Now I remember, I was doing a swing move, oh, back to that.
  */
 class MultiTextureAndAnimation : Component, Pool.Poolable {
-    var anims: Map<AnimState, LpcCharacterAnim<OffsetTextureRegion>> = emptyMap()
+    var anims: Map<AnimState, LpcCharacterAnim<TextureRegion>> = emptyMap()
     var currentDirection: SpriteDirection = SpriteDirection.South
     var currentAnimState: AnimState =
         AnimState.Idle //this is nice because all states give us the same animation - except if we are moving we get walking anim
@@ -39,7 +39,7 @@ class MultiTextureAndAnimation : Component, Pool.Poolable {
 
 
 
-    lateinit var currentAnim : Animation<OffsetTextureRegion>
+    lateinit var currentAnim : Animation<TextureRegion>
     override fun reset() {
         anims = emptyMap()
         currentAnimState = AnimState.Idle

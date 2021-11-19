@@ -6,8 +6,14 @@ import com.badlogic.gdx.graphics.g2d.Batch
 import com.badlogic.gdx.utils.viewport.ExtendViewport
 import ecs.components.graphics.AnimatedCharacterComponent
 import data.Players
+import ecs.components.gameplay.TransformComponent
+import ecs.components.player.PlayerControlComponent
+import ecs.systems.tileX
+import ecs.systems.tileY
+import injection.Context.inject
 import ktx.graphics.use
 import ktx.math.vec2
+import map.grid.GridMapManager
 import physics.getComponent
 import ui.simple.*
 
@@ -19,6 +25,7 @@ class UserInterface(
     private val players get() = Players.players
     private val camera = OrthographicCamera()
     override val hudViewPort = ExtendViewport(uiWidth, uiHeight, camera)
+    private val mapManager by lazy { inject<GridMapManager>() }
 
     @ExperimentalStdlibApi
     override fun show() {
@@ -66,6 +73,16 @@ class UserInterface(
                     children.add(BoundTextActor({"MapLength: ${screens.CounterObject.currentLength}"}))
                     children.add(BoundTextActor({"Current Level: ${screens.CounterObject.currentLevel}"}))
                     children.add(BoundTextActor({"Fps: ${Gdx.graphics.framesPerSecond}"}))
+                }
+            )
+            children.add(
+                SpacedContainer(vec2(0f, 25f), vec2()).apply {
+                    for ((i, p) in players.values.withIndex()) {
+                        val position = p.entity.getComponent<TransformComponent>().position
+                        val control = p.entity.getComponent<PlayerControlComponent>()
+                        children.add(BoundTextActor({"Tile: ${position.tileX()}:${position.tileY()}"}))
+                        children.add(BoundTextActor({"CanBuild: ${mapManager.canWeBuildAt(position.tileX(), position.tileY())}"}))
+                    }
                 }
             )
             for ((i, p) in players.values.withIndex()) {
