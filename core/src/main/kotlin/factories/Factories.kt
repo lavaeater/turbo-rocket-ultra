@@ -269,9 +269,9 @@ fun player(player: Player, mapper: ControlMapper, at: Vector2, pixelWidth: Int =
         with<PlayerComponent> { this.player = player }
         val weapon = WeaponDefinition.weapons.first().getWeapon()
         with<InventoryComponent> {
-            WeaponDefinition.weapons.forEach {
-                weapons.add(it.getWeapon())
-            }
+//            WeaponDefinition.weapons.forEach {
+                weapons.add(WeaponDefinition.molotov.getWeapon())
+//            }
         }
         with<WeaponComponent> {
             currentWeapon = weapon
@@ -367,6 +367,32 @@ fun lootBox(at: Vector2, lootDrop: List<ILoot>) {
     box2dBody.userData = entity
 }
 
+fun thrownProjectile(at: Vector2, towards: Vector2, speed: Float) {
+    val box2dBody = world().body {
+        type = BodyDef.BodyType.DynamicBody
+        position.set(at)
+        linearVelocity.set(towards.cpy().setLength(speed))
+        fixedRotation = true
+        circle(.2f) {
+            density = .1f
+            filter {
+                categoryBits = Box2dCategories.bullets
+                maskBits = Box2dCategories.thingsBulletsHit
+            }
+        }
+    }
+    val entity = engine().entity {
+        with<BodyComponent> { body = box2dBody }
+        with<MolotovComponent> {}
+        with<TransformComponent> { position.set(box2dBody.position) }
+        with<TextureComponent> {
+            layer = 1
+            texture = Assets.bullet //Fix a burning bottle sprite
+        }
+    }
+    box2dBody.userData = entity
+    CounterObject.bulletCount++
+}
 
 fun bullet(at: Vector2, towards: Vector2, speed: Float, damage: Int) {
     val box2dBody = world().body {

@@ -10,7 +10,7 @@ import ecs.components.gameplay.TransformComponent
 import ecs.components.graphics.InLineOfSightComponent
 import ecs.components.player.*
 import factories.bullet
-import factories.player
+import factories.thrownProjectile
 import features.weapons.Weapon
 import features.weapons.WeaponType
 import input.canISeeYouFromHere
@@ -42,7 +42,53 @@ class PlayerShootingSystem(private val audioPlayer: AudioPlayer) : IteratingSyst
         when (weapon.weaponType) {
             WeaponType.Melee -> swingMeleeWeapon(controlComponent, weapon, entity)
             WeaponType.Projectile -> fireProjectileWeapon(controlComponent, weapon, entity)
+            WeaponType.ThrownArea -> throwAreaWeapon(controlComponent, weapon, entity)
+        }
+    }
 
+    @OptIn(ExperimentalStdlibApi::class)
+    private fun throwAreaWeapon(controlComponent: PlayerControlComponent, weapon: Weapon, playerEntity: Entity) {
+        if (
+            controlComponent.firing &&
+            weapon.ammoRemaining > 0 &&
+            !(playerEntity.has<PlayerIsRespawning>() || playerEntity.has<PlayerWaitsForRespawn>())
+        ) {
+            val transformComponent = playerEntity.getComponent<TransformComponent>()
+            playerEntity.getComponent<FiredShotsComponent>().queue.addFirst(transformComponent.position)
+            controlComponent.shoot()
+
+            weapon.ammoRemaining--
+            val aimVector = controlComponent.aimVector.cpy()
+            val angle = aimVector.angleDeg()
+            val angleVariation = (-weapon.accuracyOrHitArcForMelee..weapon.accuracyOrHitArcForMelee).random()
+            aimVector.setAngleDeg(angle + angleVariation)
+
+            for (projectile in 0..weapon.numberOfProjectiles) {
+                // If only one projectile, it is simple, else, there is trouble
+                /*
+                For multi-projectile guns with spread (shotguns)
+                We will calculate a starting aimvector based on spread / 2
+                and then add increments of angle based on spread / numberOf projectiles
+                The accuracy will be done by creating local aimVector varied by the
+                accuracy of the gun, ONCE
+                 */
+                if (weapon.numberOfProjectiles != 1) {
+                    if (projectile == 0) {
+                        aimVector.setAngleDeg(aimVector.angleDeg() - weapon.spreadOrMeleeRangeOrArea / 2)
+                    } else {
+                        aimVector.setAngleDeg(aimVector.angleDeg() + weapon.spreadOrMeleeRangeOrArea / weapon.numberOfProjectiles)
+                    }
+                }
+                /**
+                 * Create a bullet entity at aimVector that travels very fast
+                 */
+                thrownProjectile(
+                    vec2(
+                        transformComponent.position.x + aimVector.x,
+                        transformComponent.position.y - 1 + aimVector.y
+                    ), aimVector, (15f..25f).random()
+                )
+            }
         }
     }
 
@@ -58,7 +104,7 @@ class PlayerShootingSystem(private val audioPlayer: AudioPlayer) : IteratingSyst
                 engine.getEntitiesFor(allOf(EnemyComponent::class, InLineOfSightComponent::class).get())
             val enemiesInRangeAndInHitArc = enemiesICanSee.filter {
                 val enemyPosition = it.getComponent<TransformComponent>().position
-                enemyPosition.dst(playerPosition) < weapon.spreadOrMeleeRange && canISeeYouFromHere(
+                enemyPosition.dst(playerPosition) < weapon.spreadOrMeleeRangeOrArea && canISeeYouFromHere(
                     playerPosition,
                     controlComponent.aimVector,
                     enemyPosition,
@@ -140,9 +186,9 @@ class PlayerShootingSystem(private val audioPlayer: AudioPlayer) : IteratingSyst
                  */
                 if (weapon.numberOfProjectiles != 1) {
                     if (projectile == 0) {
-                        aimVector.setAngleDeg(aimVector.angleDeg() - weapon.spreadOrMeleeRange / 2)
+                        aimVector.setAngleDeg(aimVector.angleDeg() - weapon.spreadOrMeleeRangeOrArea / 2)
                     } else {
-                        aimVector.setAngleDeg(aimVector.angleDeg() + weapon.spreadOrMeleeRange / weapon.numberOfProjectiles)
+                        aimVector.setAngleDeg(aimVector.angleDeg() + weapon.spreadOrMeleeRangeOrArea / weapon.numberOfProjectiles)
                     }
                 }
                 /**
