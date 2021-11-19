@@ -75,6 +75,21 @@ class WeaponDefinition(
                 Assets.gunAudio["glock17"]!!//TODO exhange for bat or something
             ),
             WeaponDefinition(
+                "Baseball Bat",
+                WeaponType.Melee,
+                -1,
+                60f,
+                45f, //
+                -1,
+                5f,
+                GunFrames.handGun, //TODO exhange for bat or something
+                AmmoType.MeleeWeapon,
+                5..15,
+                0f,
+                ReloadType.MeleeWeapon,
+                Assets.gunAudio["glock17"]!!//TODO exhange for bat or something
+            ),
+            WeaponDefinition(
                 "Glock 17",
                 WeaponType.Projectile,
                 17,
