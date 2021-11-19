@@ -5,6 +5,8 @@ import box2dLight.RayHandler
 import com.badlogic.ashley.core.Engine
 import com.badlogic.gdx.math.Rectangle
 import ecs.components.enemy.EnemySpawnerComponent
+import ecs.systems.tileWorldX
+import ecs.systems.tileWorldY
 import factories.*
 import features.pickups.AmmoLoot
 import features.pickups.WeaponLoot
@@ -30,7 +32,12 @@ class GridMapGenerator {
 
         fun addObstacle(bounds: Rectangle) {
             var position = bounds.randomPoint()
-            obstacle(position.x, position.y)
+            obstacle(position.tileWorldX(), position.tileWorldY())
+        }
+
+        fun addBoss(bounds: Rectangle) {
+            var position = bounds.randomPoint()
+            boss(position, 1)
         }
 
         fun generateFromDefintion(def: SimpleGridMapDef): Map<Coordinate, GridMapSection> {
@@ -63,6 +70,8 @@ class GridMapGenerator {
                         }
                         if (def.hasObstacle(coordinate))
                             addObstacle(section.innerBounds)
+                        if (def.hasBoss(coordinate))
+                            addBoss(section.innerBounds)
 
                         if (def.hasLoot(coordinate)) {
                             lootBox(
@@ -231,6 +240,9 @@ class SimpleGridMapDef(val def: List<String>) {
     fun hasObstacle(coordinate: Coordinate) : Boolean {
         return sections[coordinate.x][coordinate.y] == 'o'
     }
+    fun hasBoss(coordinate: Coordinate) : Boolean {
+        return sections[coordinate.x][coordinate.y] == 'b'
+    }
 
     val booleanSections
         get() : Array<Array<Boolean>> {
@@ -252,7 +264,7 @@ class SimpleGridMapDef(val def: List<String>) {
     companion object {
         val levelOne = SimpleGridMapDef(
             """
-            xxxxgxeee
+            xxxxgxxxb
             xeeeexeee
             xeeeexxxx
             xxleeeeex

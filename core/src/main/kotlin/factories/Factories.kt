@@ -506,8 +506,8 @@ fun blockade(
 }
 
 fun obstacle(
-    x: Float = 0f,
-    y: Float = 0f,
+    tileX: Float = 0f,
+    tileY: Float = 0f,
     width: Float = 4f,
     height: Float = 2f
 ): Entity {
@@ -521,8 +521,8 @@ fun obstacle(
 
     val box2dBody = world().body {
         type = BodyDef.BodyType.StaticBody
-        position.set(x, y)
-        box(widthInMeters, projectedHeightInMeters) {
+        position.set(tileX, tileY)
+        box(widthInMeters, projectedHeightInMeters, vec2(widthInMeters / 2, -projectedHeightInMeters / 2)) {
             restitution = 0f
             filter {
                 categoryBits = Box2dCategories.obstacles
@@ -536,8 +536,8 @@ fun obstacle(
         with<TextureComponent> {
             texture = Assets.towers["obstacle"]!!
             scale = 4f
-//            offsetX = 1.5f
-            offsetY = -6f
+            offsetX = widthInMeters * 2
+            offsetY = -(widthInMeters * 2) - projectedHeightInMeters
             layer = 1
         }
         with<MiniMapComponent> {
