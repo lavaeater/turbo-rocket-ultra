@@ -17,7 +17,7 @@ import tru.Assets
 
 @OptIn(ExperimentalStdlibApi::class)
 class RenderSystem(
-    private val batch: Batch
+    private val batch: Batch, private val debug: Boolean = false
 ) : SortedIteratingSystem(
     allOf(
         TransformComponent::class,
@@ -45,7 +45,6 @@ class RenderSystem(
         }
     }, 2
 ) {
-    private val debug = true
     private val shapeDrawer by lazy { Assets.shapeDrawer }
 
     override fun update(deltaTime: Float) {

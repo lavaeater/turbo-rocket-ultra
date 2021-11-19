@@ -33,7 +33,7 @@ import tru.Assets
 import tru.SpriteDirection
 
 //Should render after map, before entities, that's the best...
-class BuildSystem(private val debug: Boolean = true) : IteratingSystem(
+class BuildSystem(private val debug: Boolean = false) : IteratingSystem(
     allOf(
         TransformComponent::class,
         PlayerControlComponent::class
