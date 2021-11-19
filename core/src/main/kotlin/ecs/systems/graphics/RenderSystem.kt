@@ -22,8 +22,7 @@ class RenderSystem(
     allOf(
         TransformComponent::class,
         TextureComponent::class,
-        InFrustumComponent::class,
-        InLineOfSightComponent::class
+        InFrustumComponent::class
     ).get(),
     object : Comparator<Entity> {
         override fun compare(p0: Entity, p1: Entity): Int {

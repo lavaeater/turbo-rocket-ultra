@@ -129,7 +129,6 @@ object Context {
             addSystem(GibSystem())
             addSystem(FactSystem())
             addSystem(FrustumCullingSystem())
-            addSystem(LineOfSightCullingSystem())
             addSystem(BuildSystem())
         }
     }
