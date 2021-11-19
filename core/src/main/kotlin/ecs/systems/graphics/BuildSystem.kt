@@ -41,11 +41,10 @@ class BuildSystem(private val debug: Boolean = true) : IteratingSystem(
 ) {
     val batch by lazy { inject<PolygonSpriteBatch>() }
     val shapeDrawer by lazy { Assets.shapeDrawer }
-    val cursorColor = Color(0f, 1f, 0f, 0.3f)
-    val otherColor = Color(1f, 0f, 0f, 0.3f)
+    private val cursorColor = Color(0f, 1f, 0f, 0.3f)
+    private val otherColor = Color(1f, 0f, 0f, 0.3f)
 
-    val buildables by lazy { Assets.buildables }
-    val mapManager by lazy { inject<GridMapManager>() }
+    private val buildables by lazy { Assets.buildables }
 
     @OptIn(ExperimentalStdlibApi::class)
     override fun processEntity(entity: Entity, deltaTime: Float) {
@@ -100,12 +99,8 @@ class BuildSystem(private val debug: Boolean = true) : IteratingSystem(
                 shapeDrawer.filledCircle(cX,cY,.5f, Color.RED)
                 shapeDrawer.filledCircle(tX,tY,.5f, Color.GREEN)
                 shapeDrawer.filledCircle(bodyX,bodyY,.5f, Color.BLUE)
-                }
-
-
                 shapeDrawer.rectangle(qbX,qbY, pWidth /2, pHeight / 2, Color.BLUE)
-
-
+                }
             }
             if(controlComponent.buildIfPossible) {
                 var checker = true
