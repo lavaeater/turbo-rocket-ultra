@@ -88,7 +88,8 @@ object Box2dCategories {
     val environmentOnly = objectives or obstacles or walls
     val whatGibsHit = players or enemies or walls
     val whatEnemiesHit = players or enemies or objectives or obstacles or walls or lights or bullets or gibs
-    val whatPlayersHit = players or enemies or objectives or obstacles or walls or lights or gibs or enemySensors or indicators or loot
+    val whatPlayersHit =
+        players or enemies or objectives or obstacles or walls or lights or gibs or enemySensors or indicators or loot
 
     /**
      * Will this show up when hovering?
@@ -410,32 +411,44 @@ fun enemy(at: Vector2) {
 
 fun boss(at: Vector2, level: Int) {
 
-    val box2dBody = world().body {
-        type = BodyDef.BodyType.DynamicBody
-        position.set(at)
-        fixedRotation = true
-        box(3f, 3f) {
-            density = PLAYER_DENSITY
-            filter {
-                categoryBits = Box2dCategories.enemies
-                maskBits = Box2dCategories.all
-            }
-        }
-        box(3f, 6f, vec2(0f, -1.5f)) {
-            filter {
-                categoryBits = Box2dCategories.enemies
-                maskBits = Box2dCategories.bullets
-            }
-        }
-        circle(10f) {
-            density = .1f
-            isSensor = true
-            filter {
-                categoryBits = Box2dCategories.enemySensors
-                maskBits = Box2dCategories.allButLights
-            }
-        }
-    }
+    val box2dBody = bodyForSprite(
+        at,
+        Box2dCategories.enemies,
+        Box2dCategories.all,
+        Box2dCategories.enemies,
+        Box2dCategories.bullets,
+        Box2dCategories.enemySensors,
+        Box2dCategories.allButLights,
+        64,
+        144
+    )
+
+//    val box2dBody = world().body {
+//        type = BodyDef.BodyType.DynamicBody
+//        position.set(at)
+//        fixedRotation = true
+//        box(3f, 3f) {
+//            density = PLAYER_DENSITY
+//            filter {
+//                categoryBits = Box2dCategories.enemies
+//                maskBits = Box2dCategories.all
+//            }
+//        }
+//        box(3f, 6f, vec2(0f, -1.5f)) {
+//            filter {
+//                categoryBits = Box2dCategories.enemies
+//                maskBits = Box2dCategories.bullets
+//            }
+//        }
+//        circle(10f) {
+//            density = .1f
+//            isSensor = true
+//            filter {
+//                categoryBits = Box2dCategories.enemySensors
+//                maskBits = Box2dCategories.allButLights
+//            }
+//        }
+//    }
 
     val entity = engine().entity {
         with<BodyComponent> { body = box2dBody }
@@ -465,6 +478,7 @@ fun boss(at: Vector2, level: Int) {
         with<TextureComponent> {
             scale = 3f
             layer = 1
+            offsetY = -7f
         }
         with<MiniMapComponent> {
             color = Color.RED

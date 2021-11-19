@@ -269,7 +269,7 @@ class SimpleGridMapDef(val def: List<String>) {
             xeeeexxxx
             xxleeeeex
             xxxxxxxxx
-            oxeeeeeex
+            obeeeeeex
             sooxxxxxx
         """.trimIndent().lines()
         )
