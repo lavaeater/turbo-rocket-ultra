@@ -511,10 +511,18 @@ fun obstacle(
     width: Float = 4f,
     height: Float = 2f
 ): Entity {
+
+    val pixelWidth = 64
+    val pixelHeight = 64
+    val projectedHeight = 32
+
+    val widthInMeters = pixelWidth / pixelsPerMeter
+    val projectedHeightInMeters = projectedHeight / pixelsPerMeter
+
     val box2dBody = world().body {
         type = BodyDef.BodyType.StaticBody
         position.set(x, y)
-        box(width, height) {
+        box(widthInMeters, projectedHeightInMeters) {
             restitution = 0f
             filter {
                 categoryBits = Box2dCategories.obstacles
@@ -528,8 +536,8 @@ fun obstacle(
         with<TextureComponent> {
             texture = Assets.towers["obstacle"]!!
             scale = 4f
-            offsetX = 1.5f
-            offsetY = -1f
+//            offsetX = 1.5f
+            offsetY = -6f
             layer = 1
         }
         with<MiniMapComponent> {

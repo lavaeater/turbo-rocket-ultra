@@ -28,6 +28,11 @@ class GridMapGenerator {
             emitter.add(engine.createComponent(EnemySpawnerComponent::class.java))
         }
 
+        fun addObstacle(bounds: Rectangle) {
+            var position = bounds.randomPoint()
+            obstacle(position.x, position.y)
+        }
+
         fun generateFromDefintion(def: SimpleGridMapDef): Map<Coordinate, GridMapSection> {
             //TODO: Move this somewhere
             Light.setGlobalContactFilter(
@@ -56,6 +61,9 @@ class GridMapGenerator {
                         if (def.hasGoal(coordinate)) {
                             addObjective(section.innerBounds)
                         }
+                        if (def.hasObstacle(coordinate))
+                            addObstacle(section.innerBounds)
+
                         if (def.hasLoot(coordinate)) {
                             lootBox(
                                 section.innerBounds.randomPoint(), listOf(
@@ -220,6 +228,10 @@ class SimpleGridMapDef(val def: List<String>) {
         return sections[coordinate.x][coordinate.y] == 'g'
     }
 
+    fun hasObstacle(coordinate: Coordinate) : Boolean {
+        return sections[coordinate.x][coordinate.y] == 'o'
+    }
+
     val booleanSections
         get() : Array<Array<Boolean>> {
             return sections.map { column -> column.toCharArray().map { it != 'e' }.toTypedArray() }.toTypedArray()
@@ -245,8 +257,8 @@ class SimpleGridMapDef(val def: List<String>) {
             xeeeexxxx
             xxleeeeex
             xxxxxxxxx
-            xxeeeeeex
-            sxxxxxxxx
+            oxeeeeeex
+            sooxxxxxx
         """.trimIndent().lines()
         )
     }
