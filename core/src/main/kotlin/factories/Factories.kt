@@ -587,12 +587,12 @@ fun obstacle(
     tileX: Float = 0f,
     tileY: Float = 0f,
     width: Float = 4f,
-    height: Float = 2f
+    height: Float = 4f
 ): Entity {
 
     val pixelWidth = 64
     val pixelHeight = 64
-    val projectedHeight = 32
+    val projectedHeight = 64
 
     val widthInMeters = pixelWidth / pixelsPerMeter
     val projectedHeightInMeters = projectedHeight / pixelsPerMeter
@@ -600,7 +600,7 @@ fun obstacle(
     val box2dBody = world().body {
         type = BodyDef.BodyType.StaticBody
         position.set(tileX, tileY)
-        box(widthInMeters, projectedHeightInMeters, vec2(widthInMeters / 2, -projectedHeightInMeters / 2)) {
+        box(4f,4f,) {//widthInMeters, projectedHeightInMeters, vec2(widthInMeters / 2, -projectedHeightInMeters / 2)) {
             restitution = 0f
             filter {
                 categoryBits = Box2dCategories.obstacles
@@ -614,8 +614,8 @@ fun obstacle(
         with<TextureComponent> {
             texture = Assets.towers["obstacle"]!!
             scale = 4f
-            offsetX = widthInMeters * 2
-            offsetY = -(widthInMeters * 2) - projectedHeightInMeters
+//            offsetX = widthInMeters * 2
+            offsetY = -4f//-(widthInMeters * 2) - projectedHeightInMeters
             layer = 1
         }
         with<MiniMapComponent> {
@@ -630,7 +630,7 @@ fun objective(
     x: Float = (-100f..100f).random(),
     y: Float = (-100f..100f).random(),
     width: Float = 4f,
-    height: Float = 2f
+    height: Float = 4f
 ): Body {
     val box2dBody = world().body {
         type = BodyDef.BodyType.StaticBody
@@ -648,9 +648,8 @@ fun objective(
         with<TransformComponent> { position.set(box2dBody.position) }
         with<TextureComponent> {
             texture = Assets.towers["objective"]!!
+            offsetY = -4f
             scale = 4f
-            offsetX = 1.5f
-            offsetY = -1f
             layer = 1
         }
         with<MiniMapComponent> {
