@@ -1,6 +1,7 @@
 package physics
 
 import com.badlogic.ashley.core.Engine
+import com.badlogic.gdx.math.Vector2
 import com.badlogic.gdx.physics.box2d.Contact
 import com.badlogic.gdx.physics.box2d.ContactImpulse
 import com.badlogic.gdx.physics.box2d.ContactListener
@@ -14,6 +15,7 @@ import ecs.components.gameplay.*
 import ecs.components.pickups.LootComponent
 import ecs.components.player.*
 import factories.splatterEntity
+import factories.world
 import features.pickups.AmmoLoot
 import features.pickups.WeaponLoot
 import injection.Context.inject
@@ -146,7 +148,19 @@ class ContactManager: ContactListener {
             )
         }
 
-        if(contact.atLeastOneHas<MolotovComponent>())
+        if(contact.atLeastOneHas<MolotovComponent>()) {
+            /*
+            Lets not add a new entity, let's modify the one we have
+             */
+            val molotov = contact.getEntityFor<MolotovComponent>()
+            val body = molotov.getComponent<BodyComponent>().body!!
+            body.setLinearVelocity(Vector2.Zero)
+            molotov.remove<MolotovComponent>()
+            molotov.addComponent<AreaEffectComponent>()
+            molotov.remove<BodyComponent>()
+            world().destroyBody(body)
+
+        }
 
         if (contact.atLeastOneHas<BulletComponent>()) {
             val entity = contact.getEntityFor<BulletComponent>()
