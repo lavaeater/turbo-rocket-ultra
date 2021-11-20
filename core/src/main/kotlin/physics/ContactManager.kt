@@ -144,8 +144,9 @@ class ContactManager: ContactListener {
                 bulletBody.worldCenter,
                 splatterAngle
             )
-
         }
+
+        if(contact.atLeastOneHas<MolotovComponent>())
 
         if (contact.atLeastOneHas<BulletComponent>()) {
             val entity = contact.getEntityFor<BulletComponent>()
