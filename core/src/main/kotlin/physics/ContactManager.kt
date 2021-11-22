@@ -14,11 +14,14 @@ import ecs.components.enemy.TackleComponent
 import ecs.components.gameplay.*
 import ecs.components.pickups.LootComponent
 import ecs.components.player.*
+import factories.delayedFireEntity
+import factories.fireEntity
 import factories.splatterEntity
 import factories.world
 import features.pickups.AmmoLoot
 import features.pickups.WeaponLoot
 import injection.Context.inject
+import kotlinx.coroutines.delay
 import ktx.ashley.remove
 import tru.Assets
 
@@ -154,12 +157,19 @@ class ContactManager: ContactListener {
              */
             val molotov = contact.getEntityFor<MolotovComponent>()
             val body = molotov.getComponent<BodyComponent>().body!!
-            body.setLinearVelocity(Vector2.Zero)
-            molotov.remove<MolotovComponent>()
-            molotov.addComponent<AreaEffectComponent>()
-            molotov.remove<BodyComponent>()
-            world().destroyBody(body)
+            val linearVelocity = body.linearVelocity.cpy()
+            body.linearVelocity = Vector2.Zero.cpy()
 
+            /*
+            Now, add five-ten entities / bodies that fly out in the direction of the molotov
+            and also spew fire particles.
+             */
+
+            val numOfFireBalls = (5..10).random()
+            for(ballIndex in 0..numOfFireBalls) {
+                delayedFireEntity(body.worldCenter, linearVelocity)
+            }
+            molotov.addComponent<DestroyComponent>() //This entity will die and disappear now.
         }
 
         if (contact.atLeastOneHas<BulletComponent>()) {

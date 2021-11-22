@@ -6,6 +6,7 @@ import com.badlogic.ashley.core.Entity
 import com.badlogic.gdx.graphics.Color
 import com.badlogic.gdx.math.MathUtils
 import com.badlogic.gdx.math.MathUtils.degreesToRadians
+import com.badlogic.gdx.math.Vector
 import com.badlogic.gdx.math.Vector2
 import com.badlogic.gdx.physics.box2d.Body
 import com.badlogic.gdx.physics.box2d.BodyDef
@@ -18,6 +19,8 @@ import ecs.components.enemy.BossComponent
 import ecs.components.enemy.EnemyComponent
 import ecs.components.enemy.EnemySensorComponent
 import ecs.components.enemy.TackleComponent
+import ecs.components.fx.CreateEntityComponent
+import ecs.components.fx.ParticleEffectComponent
 import ecs.components.fx.SplatterComponent
 import ecs.components.gameplay.*
 import ecs.components.graphics.AnimatedCharacterComponent
@@ -139,6 +142,37 @@ fun splatterEntity(at: Vector2, angle: Float) {
         with<SplatterComponent> {
             this.at = at.cpy()
             rotation = angle
+        }
+    }
+}
+
+fun delayedFireEntity(at: Vector2, linearVelocity: Vector2) {
+    engine().entity {
+        with<CreateEntityComponent> {
+            creator = {
+                fireEntity(at, linearVelocity)
+            }
+        }
+    }
+}
+
+fun fireEntity(at: Vector2, linearVelocity: Vector2) {
+    val box2dBody = world().body {
+        type = BodyDef.BodyType.DynamicBody
+        position.set(at)
+        linearVelocity.set(linearVelocity)
+        box(.3f, .3f) {
+            friction = 50f //Tune
+            density = 1f //tune
+        }
+    }
+    box2dBody.userData =  engine().entity {
+        with<TransformComponent>()
+        with<BodyComponent> {
+            body = box2dBody
+        }
+        with<ParticleEffectComponent> {
+            effect = Assets.fireEffectPool.obtain()
         }
     }
 }

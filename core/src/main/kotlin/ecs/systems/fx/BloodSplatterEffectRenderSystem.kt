@@ -33,3 +33,4 @@ class BloodSplatterEffectRenderSystem(private val batch: Batch) : IteratingSyste
         }
     }
 }
+

@@ -1,0 +1,40 @@
+package ecs.components.fx
+
+import com.badlogic.ashley.core.Component
+import com.badlogic.gdx.graphics.g2d.ParticleEffect
+import com.badlogic.gdx.utils.Pool
+import ktx.math.vec2
+
+class CreateEntityComponent: Component, Pool.Poolable {
+    var creator: () -> Unit = {}
+    override fun reset() {
+        creator = {}
+    }
+}
+
+/**
+ * A generic particle effect handler?
+ */
+class ParticleEffectComponent: Component, Pool.Poolable {
+    private lateinit var _effect: ParticleEffect
+    var effect: ParticleEffect
+        get() = _effect
+        set(value) {
+            _effect = value
+            ready = true
+        }
+    var ready = false
+    var started = false
+    var at = vec2()
+    var rotation = 0f
+    override fun reset() {
+        if(ready) {
+            effect.reset()
+            ready = false
+        }
+        started = false
+        at = vec2()
+        rotation = 0f
+    }
+
+}

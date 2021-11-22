@@ -21,6 +21,8 @@ import ecs.systems.ai.towers.TowerTargetFinderSystem
 import ecs.systems.enemy.*
 import ecs.systems.facts.FactSystem
 import ecs.systems.fx.BloodSplatterEffectRenderSystem
+import ecs.systems.fx.DelayedEntityCreationSystem
+import ecs.systems.fx.EffectRenderSystem
 import ecs.systems.input.KeyboardInputSystem
 import ecs.systems.fx.RenderBox2dLightSystem
 import ecs.systems.graphics.*
@@ -124,6 +126,8 @@ object Context {
             addSystem(PlayerContextActionSystem())
             addSystem(RenderBox2dLightSystem(inject(), inject()))
             addSystem(BloodSplatterEffectRenderSystem(inject<PolygonSpriteBatch>() as Batch))
+            addSystem(DelayedEntityCreationSystem())
+            addSystem(EffectRenderSystem(inject<PolygonSpriteBatch>() as Batch))
             addSystem(LootDropSystem())
             addSystem(AimingAidSystem(true, true))
             addSystem(GibSystem())
