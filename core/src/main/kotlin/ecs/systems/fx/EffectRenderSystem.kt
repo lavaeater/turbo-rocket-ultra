@@ -3,7 +3,6 @@ package ecs.systems.fx
 import com.badlogic.ashley.core.Entity
 import com.badlogic.ashley.systems.IteratingSystem
 import com.badlogic.gdx.graphics.g2d.Batch
-import ecs.components.fx.CreateEntityComponent
 import ecs.components.fx.ParticleEffectComponent
 import ecs.components.gameplay.DestroyComponent
 import ecs.components.gameplay.TransformComponent
@@ -12,21 +11,11 @@ import ktx.graphics.use
 import physics.addComponent
 import physics.getComponent
 
-class DelayedEntityCreationSystem(): IteratingSystem(allOf(CreateEntityComponent::class).get()) {
-    @OptIn(ExperimentalStdlibApi::class)
-    override fun processEntity(entity: Entity, deltaTime: Float) {
-        val creator = entity.getComponent<CreateEntityComponent>()
-        creator.creator()
-        engine.removeEntity(entity)
-    }
-
-}
-
 class EffectRenderSystem(private val batch: Batch) : IteratingSystem(
     allOf(
         ParticleEffectComponent::class,
         TransformComponent::class
-    ).get(), 2) {
+    ).get(), 1) {
     @OptIn(ExperimentalStdlibApi::class)
     override fun processEntity(entity: Entity, deltaTime: Float) {
         val effectComponent = entity.getComponent<ParticleEffectComponent>()
@@ -39,6 +28,9 @@ class EffectRenderSystem(private val batch: Batch) : IteratingSystem(
             for(emitter in effect.emitters) {
                 emitter.setPosition(transform.position.x, transform.position.y)
                 if(!effectComponent.started) {
+                    val amplitude: Float = (emitter.angle.getHighMax() - emitter.angle.getHighMin()) / 2f
+                    emitter.angle.setHigh(effectComponent.rotation + amplitude, effectComponent.rotation - amplitude)
+                    emitter.angle.setLow(effectComponent.rotation)
                     emitter.start()
                 }
             }

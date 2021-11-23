@@ -5,13 +5,6 @@ import com.badlogic.gdx.graphics.g2d.ParticleEffect
 import com.badlogic.gdx.utils.Pool
 import ktx.math.vec2
 
-class CreateEntityComponent: Component, Pool.Poolable {
-    var creator: () -> Unit = {}
-    override fun reset() {
-        creator = {}
-    }
-}
-
 /**
  * A generic particle effect handler?
  */

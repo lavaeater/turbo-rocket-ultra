@@ -67,19 +67,20 @@ fun enemy(x: Float = 0f, y: Float = 0f) {
 }
 
 object Box2dCategories {
-    const val none: Short = 0x0000
-    const val players: Short = 0x0001
-    const val enemies: Short = 0x0002
-    const val objectives: Short = 0x0004
-    const val obstacles: Short = 0x0008
-    const val enemySensors: Short = 0x0010
-    const val lights: Short = 0x0020
-    const val loot: Short = 0x0040
-    const val indicators: Short = 0x0080
-    const val bullets: Short = 0x0100
-    const val walls: Short = 0x0200
-    const val gibs: Short = 0x0400
-    const val towerSensors: Short = 0x0800
+    const val none: Short = 0
+    const val players: Short = 1
+    const val enemies: Short = 2
+    const val objectives: Short = 4
+    const val obstacles: Short = 8
+    const val enemySensors: Short = 16
+    const val lights: Short = 32
+    const val loot: Short = 64
+    const val indicators: Short = 128
+    const val bullets: Short = 256
+    const val walls: Short = 512
+    const val gibs: Short = 1024
+    const val towerSensors: Short = 2048
+    const val molotov: Short = 4096
     val all =
         players or enemies or objectives or obstacles or enemySensors or lights or loot or bullets or walls or gibs
     val allButSensors = players or enemies or objectives or obstacles or lights or loot or bullets or walls or gibs
@@ -87,11 +88,11 @@ object Box2dCategories {
     val allButLightsOrLoot = players or enemies or objectives or obstacles or enemySensors or bullets or walls or gibs
     val allButLoot = players or enemies or objectives or obstacles or enemySensors or walls or gibs
     val allButLootAndPlayer = enemies or objectives or obstacles or walls or gibs
-    val environmentOnly = objectives or obstacles or walls
     val whatGibsHit = players or enemies or walls
     val whatEnemiesHit = players or enemies or objectives or obstacles or walls or lights or bullets or gibs
     val whatPlayersHit =
         players or enemies or objectives or obstacles or walls or lights or gibs or enemySensors or indicators or loot
+    val whatMolotovsHit = walls or obstacles or objectives
 
     /**
      * Will this show up when hovering?
@@ -160,12 +161,17 @@ fun fireEntity(at: Vector2, linearVelocity: Vector2) {
     val box2dBody = world().body {
         type = BodyDef.BodyType.DynamicBody
         position.set(at)
-        linearVelocity.set(linearVelocity)
         box(.3f, .3f) {
-            friction = 50f //Tune
-            density = 1f //tune
+            friction = 1f //Tune
+            density = 35f //tune
+            restitution = 0.05f
+            filter {
+                categoryBits = Box2dCategories.molotov
+                maskBits = Box2dCategories.whatMolotovsHit
+            }
         }
     }
+    box2dBody.applyLinearImpulse(linearVelocity.cpy().scl(.5f), at, true)
     box2dBody.userData =  engine().entity {
         with<TransformComponent>()
         with<BodyComponent> {
@@ -173,6 +179,7 @@ fun fireEntity(at: Vector2, linearVelocity: Vector2) {
         }
         with<ParticleEffectComponent> {
             effect = Assets.fireEffectPool.obtain()
+            rotation = 270f
         }
     }
 }
