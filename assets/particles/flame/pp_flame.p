@@ -279,14 +279,14 @@ highMin: 1.0
 highMax: 1.0
 relative: false
 scalingCount: 4
-scaling0: 0.0
-scaling1: 0.80701756
-scaling2: 1.0
+scaling0: 1.0
+scaling1: 0.71929824
+scaling2: 0.14035088
 scaling3: 0.0
 timelineCount: 4
 timeline0: 0.0
-timeline1: 0.15068494
-timeline2: 0.48630136
+timeline1: 0.17123288
+timeline2: 0.31506848
 timeline3: 1.0
 - Options - 
 attached: false

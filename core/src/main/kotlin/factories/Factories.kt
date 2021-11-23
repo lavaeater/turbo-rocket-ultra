@@ -82,12 +82,9 @@ object Box2dCategories {
     const val towerSensors: Short = 2048
     const val molotov: Short = 4096
     val all =
-        players or enemies or objectives or obstacles or enemySensors or lights or loot or bullets or walls or gibs
+        players or enemies or objectives or obstacles or enemySensors or lights or loot or bullets or walls or gibs or molotov
     val allButSensors = players or enemies or objectives or obstacles or lights or loot or bullets or walls or gibs
-    val allButLights = players or enemies or objectives or obstacles or enemySensors or loot or bullets or walls or gibs
-    val allButLightsOrLoot = players or enemies or objectives or obstacles or enemySensors or bullets or walls or gibs
-    val allButLoot = players or enemies or objectives or obstacles or enemySensors or walls or gibs
-    val allButLootAndPlayer = enemies or objectives or obstacles or walls or gibs
+    val allButLights = players or enemies or objectives or obstacles or enemySensors or loot or bullets or walls or gibs or molotov
     val whatGibsHit = players or enemies or walls
     val whatEnemiesHit = players or enemies or objectives or obstacles or walls or lights or bullets or gibs
     val whatPlayersHit =

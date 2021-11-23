@@ -15,7 +15,7 @@ class EffectRenderSystem(private val batch: Batch) : IteratingSystem(
     allOf(
         ParticleEffectComponent::class,
         TransformComponent::class
-    ).get(), 1) {
+    ).get(), 12) {
     @OptIn(ExperimentalStdlibApi::class)
     override fun processEntity(entity: Entity, deltaTime: Float) {
         val effectComponent = entity.getComponent<ParticleEffectComponent>()
@@ -37,6 +37,7 @@ class EffectRenderSystem(private val batch: Batch) : IteratingSystem(
             if(!effectComponent.started) {
                 effectComponent.started = true
             }
+            effect.scaleEffect(0.8f)
             effect.update(deltaTime)
             batch.use {
                 effect.draw(batch)

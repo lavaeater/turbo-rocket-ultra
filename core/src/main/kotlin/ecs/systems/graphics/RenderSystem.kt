@@ -43,8 +43,7 @@ class RenderSystem(
                 layer0.compareTo(layer1)
             }
         }
-    }, 2
-) {
+    }, 8) {
     private val shapeDrawer by lazy { Assets.shapeDrawer }
 
     override fun update(deltaTime: Float) {
