@@ -3,7 +3,7 @@ package ecs.components.gameplay
 import com.badlogic.ashley.core.Component
 import com.badlogic.gdx.utils.Pool
 
-class AreaEffectComponent: Component, Pool.Poolable {
+class DamageEffectComponent: Component, Pool.Poolable {
     /*
     I want the area effect to be... what?
 

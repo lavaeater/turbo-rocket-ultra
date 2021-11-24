@@ -6,7 +6,6 @@ import com.badlogic.ashley.core.Entity
 import com.badlogic.gdx.graphics.Color
 import com.badlogic.gdx.math.MathUtils
 import com.badlogic.gdx.math.MathUtils.degreesToRadians
-import com.badlogic.gdx.math.Vector
 import com.badlogic.gdx.math.Vector2
 import com.badlogic.gdx.physics.box2d.Body
 import com.badlogic.gdx.physics.box2d.BodyDef
@@ -37,7 +36,6 @@ import ecs.systems.graphics.GameConstants.SHIP_LINEAR_DAMPING
 import ecs.systems.graphics.GameConstants.pixelsPerMeter
 import features.pickups.*
 import features.weapons.AmmoType
-import features.weapons.Weapon
 import features.weapons.WeaponDefinition
 import injection.Context.inject
 import input.ControlMapper
@@ -79,18 +77,18 @@ object Box2dCategories {
     const val bullets: Short = 256
     const val walls: Short = 512
     const val gibs: Short = 1024
-    const val towerSensors: Short = 2048
+    const val sensors: Short = 2048
     const val molotov: Short = 4096
     val all =
         players or enemies or objectives or obstacles or enemySensors or lights or loot or bullets or walls or gibs or molotov
     val allButSensors = players or enemies or objectives or obstacles or lights or loot or bullets or walls or gibs
     val allButLights = players or enemies or objectives or obstacles or enemySensors or loot or bullets or walls or gibs or molotov
     val whatGibsHit = players or enemies or walls
-    val whatEnemiesHit = players or enemies or objectives or obstacles or walls or lights or bullets or gibs
+    val whatEnemiesHit = players or enemies or objectives or obstacles or walls or lights or bullets or gibs or sensors
     val whatPlayersHit =
         players or enemies or objectives or obstacles or walls or lights or gibs or enemySensors or indicators or loot
-    val whatMolotovsHit = walls or obstacles or objectives
-
+    val whatMolotovsHit = walls or obstacles or objectives or molotov
+    val whatSensorsSense = players or enemies
     /**
      * Will this show up when hovering?
      */
@@ -158,13 +156,21 @@ fun fireEntity(at: Vector2, linearVelocity: Vector2) {
     val box2dBody = world().body {
         type = BodyDef.BodyType.DynamicBody
         position.set(at)
+        linearDamping = 1f
         box(.3f, .3f) {
             friction = 1f //Tune
             density = 35f //tune
-            restitution = 0.05f
+            restitution = 0.5f
             filter {
                 categoryBits = Box2dCategories.molotov
                 maskBits = Box2dCategories.whatMolotovsHit
+            }
+        }
+        circle(.5f) {
+            isSensor = true
+            filter {
+                categoryBits = Box2dCategories.sensors
+                maskBits = Box2dCategories.whatSensorsSense
             }
         }
     }
@@ -177,6 +183,9 @@ fun fireEntity(at: Vector2, linearVelocity: Vector2) {
         with<ParticleEffectComponent> {
             effect = Assets.fireEffectPool.obtain()
             rotation = 270f
+        }
+        with<DamageEffectComponent> {
+
         }
     }
 }
