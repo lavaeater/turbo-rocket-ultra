@@ -184,9 +184,7 @@ fun fireEntity(at: Vector2, linearVelocity: Vector2) {
             effect = Assets.fireEffectPool.obtain()
             rotation = 270f
         }
-        with<DamageEffectComponent> {
-
-        }
+        with<DamageEffectComponent>()
     }
 }
 
@@ -316,9 +314,9 @@ fun player(player: Player, mapper: ControlMapper, at: Vector2, pixelWidth: Int =
         with<PlayerComponent> { this.player = player }
         val weapon = WeaponDefinition.weapons.first().getWeapon()
         with<InventoryComponent> {
-//            WeaponDefinition.weapons.forEach {
-                weapons.add(WeaponDefinition.molotov.getWeapon())
-//            }
+            WeaponDefinition.weapons.forEach {
+                weapons.add(it.getWeapon())
+            }
         }
         with<WeaponComponent> {
             currentWeapon = weapon
