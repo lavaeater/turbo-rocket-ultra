@@ -20,7 +20,6 @@ Ah! We can have the first level just be like ten zombies, everyone has one gun w
 Nice little todo you got there. Would be a shame if anyone actually did something with it? 
 
 So, what do we need for act one? Well, tons of fun stuff to implement:
-- [ ] Build blockades
 - [ ] Molotov cocktails (grenades and area effect weapons)
 - [ ] Zoom in, slightly, and perhaps implement line-of-sight for players?
 - [ ] More AI-mode-badges
@@ -28,12 +27,22 @@ So, what do we need for act one? Well, tons of fun stuff to implement:
 - [ ] Enemies sprinkled out over the map from the start
 - [ ] No spawn points for enemis from the start
 - [ ] New player sprites inspired by Death Road to Canada - I never do this, just hire an artist already
+- [x] Build blockades
 - [x] Hand-to-hand combat part I
 - [x] Culling. Only draw stuff that is actually on-screen and visible? The visible part might have to wait
 - [x] Designed levels - how about a fudging overworld, mate? A larger map, like in Overcooked, perhaps?
 - [x] Weapons as pickups
 
-##### Blockades, swinging and area-effect-weapons
+#### Area Effect Weapons
+This is easy. They are slow projectiles that should, preferrably, wobble or spin through the air somehow. They should then stop after some time, or when hitting something, and explode into a fire or explosions. If they are exploding, they should deal damage and push everything outwards. 
+
+So, what I am doing now is a fire particle effect and on top of that I will add some "catch fire logic". This will have to wait, though.
+
+- [ ] Catch Fire Logic
+- [ ] Refactor contact logic
+- [ ] Fire particle effect
+
+##### Blockades, swinging
 Lets start with hand-to-hand combat. How will that work? Well, the player aims in some direction and if an enemy is within range for strikes and within a fov for the strike (a 120 degree arc), the enemy can get hit. The enemy will signal this by blinking, I think would be cool. This could strike multiple enemies, perhaps.
 
 How will building work? Well, to effectively build blockades the player should be able to direct his building marker to a specific tile, which will be marked in transparent green and then just push build, then walk and there should be blockades built in the correct place while walking. 
@@ -62,8 +71,6 @@ x
 xxxxs
 
 The x markers are simply sections of map, the s is for spawn-section, l is for loot-section and then g is for goal / end, whatever. So a map definition could consist of that information, which can be easily translated into instructions for making a map, I think. The map itself is in fact an array of arrays. Or a one-dimensional array, I don't remember right now. No, when we construct it all, we do array of array of booleans, where true is "this is a section". So, we need to translate that into an array of arrays of boolean, easily done, I think.  
-
-
 
 ### Act two - in the thick of it
 
@@ -686,11 +693,11 @@ Det här gör vi på det gamla vanliga sättet. Vi bygger en box2d-värld, vi kl
 
 Oj oj oj,  vad roligt. Vi kan göra en box2d-kropp med leder, per tutorials etc. Superkul ju.
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbLTE1NDk4NTg1OTUsLTEwMjQ2NTM1MzksMj
-A1MTEwMjE5OSwtNzQyNDEyMzUwLC02NjUwOTUyNzIsMTY4MzEx
-MzE4MiwtNzAxMDUzMjcxLC05Mzg4NTE3MDAsLTg3MjczMTg2OC
-wyMDA3MzM1MTY0LDE3ODg1MzkxMTMsLTE5OTE0MDQ2ODUsMjM5
-NDQwMDg3LDU2MjQzMDMzLC0xMjExMjcwMzcwLC0yMTE5MTU5ND
-cxLDMzNTk1NzQ1NiwxMTQwNjM4MzU3LDE4OTUxMTIyNjYsLTUz
-OTQ2MDE5MF19
+eyJoaXN0b3J5IjpbMjAxMzI2MTQ2LC02NDIyNDU3LC0xNTQ5OD
+U4NTk1LC0xMDI0NjUzNTM5LDIwNTExMDIxOTksLTc0MjQxMjM1
+MCwtNjY1MDk1MjcyLDE2ODMxMTMxODIsLTcwMTA1MzI3MSwtOT
+M4ODUxNzAwLC04NzI3MzE4NjgsMjAwNzMzNTE2NCwxNzg4NTM5
+MTEzLC0xOTkxNDA0Njg1LDIzOTQ0MDA4Nyw1NjI0MzAzMywtMT
+IxMTI3MDM3MCwtMjExOTE1OTQ3MSwzMzU5NTc0NTYsMTE0MDYz
+ODM1N119
 -->
