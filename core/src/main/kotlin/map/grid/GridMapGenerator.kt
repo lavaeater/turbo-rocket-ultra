@@ -1,5 +1,6 @@
 package map.grid
 
+import ai.pathfinding.TileGraph
 import box2dLight.Light
 import box2dLight.RayHandler
 import com.badlogic.ashley.core.Engine
@@ -41,6 +42,7 @@ class GridMapGenerator {
             boss(position, 1)
         }
 
+        lateinit var graph: TileGraph
         fun generateFromDefintion(def: SimpleGridMapDef): Map<Coordinate, GridMapSection> {
             //TODO: Move this somewhere
             Light.setGlobalContactFilter(
@@ -51,6 +53,7 @@ class GridMapGenerator {
             rayHandler.setBlurNum(3)
 
             val tileMap = mutableMapOf<Coordinate, GridMapSection>()
+            graph = TileGraph()
 
             var index = 0
             for ((x, column) in def.booleanSections.withIndex()) {
@@ -59,9 +62,19 @@ class GridMapGenerator {
                         index++
                         //1. Check neighbours - if they are true, we will add them as connections
                         val coordinate = Coordinate(x, y)
+                        val connections = getConnections(x, y, def.booleanSections)
+                        graph.addCoordinate(coordinate)
+                        for (direction in connections) {
+                            val connectionCoordinate = Coordinate(
+                                coordinate.x + MapDirection.xIndex[direction]!!,
+                                coordinate.y + MapDirection.yIndex[direction]!!
+                            )
+                            graph.connectCoordinates(coordinate, connectionCoordinate)
+                        }
+
                         val section = GridMapSection(
                             coordinate,
-                            getConnections(x, y, def.booleanSections),
+                            connections,
                             def.hasStart(coordinate)
                         )
 
@@ -80,10 +93,11 @@ class GridMapGenerator {
                                 LootTable(
                                     mutableListOf(
                                         *WeaponDefinition.weapons.map { WeaponLoot(it, 5f) }.toTypedArray(),
-                                         AmmoLoot(AmmoType.NineMilliMeters, 17..51, 10f),
-                                         AmmoLoot(AmmoType.FnP90Ammo, 25..150, 10f),
-                                         AmmoLoot(AmmoType.TwelveGaugeShotgun, 4..18, 10f),
-                                ), (3..5).random())
+                                        AmmoLoot(AmmoType.NineMilliMeters, 17..51, 10f),
+                                        AmmoLoot(AmmoType.FnP90Ammo, 25..150, 10f),
+                                        AmmoLoot(AmmoType.TwelveGaugeShotgun, 4..18, 10f),
+                                    ), (3..5).random()
+                                )
                             )
                         }
                     }
@@ -242,10 +256,11 @@ class SimpleGridMapDef(val def: List<String>) {
         return sections[coordinate.x][coordinate.y] == 'g'
     }
 
-    fun hasObstacle(coordinate: Coordinate) : Boolean {
+    fun hasObstacle(coordinate: Coordinate): Boolean {
         return sections[coordinate.x][coordinate.y] == 'o'
     }
-    fun hasBoss(coordinate: Coordinate) : Boolean {
+
+    fun hasBoss(coordinate: Coordinate): Boolean {
         return sections[coordinate.x][coordinate.y] == 'b'
     }
 
