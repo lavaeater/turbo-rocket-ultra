@@ -20,13 +20,13 @@ Ah! We can have the first level just be like ten zombies, everyone has one gun w
 Nice little todo you got there. Would be a shame if anyone actually did something with it? 
 
 So, what do we need for act one? Well, tons of fun stuff to implement:
-- [ ] Molotov cocktails (grenades and area effect weapons)
 - [ ] Zoom in, slightly, and perhaps implement line-of-sight for players?
 - [ ] More AI-mode-badges
 - [ ] Slower zombies at start of game
 - [ ] Enemies sprinkled out over the map from the start
 - [ ] No spawn points for enemis from the start
 - [ ] New player sprites inspired by Death Road to Canada - I never do this, just hire an artist already
+- [x] Molotov cocktails
 - [x] Build blockades
 - [x] Hand-to-hand combat part I
 - [x] Culling. Only draw stuff that is actually on-screen and visible? The visible part might have to wait
@@ -38,9 +38,9 @@ This is easy. They are slow projectiles that should, preferrably, wobble or spin
 
 So, what I am doing now is a fire particle effect and on top of that I will add some "catch fire logic". This will have to wait, though.
 
-- [ ] Catch Fire Logic
-- [ ] Refactor contact logic
-- [ ] Fire particle effect
+- [x] Catch Fire Logic
+- [x] Refactor contact logic
+- [x] Fire particle effect
 
 ##### Blockades, swinging
 Lets start with hand-to-hand combat. How will that work? Well, the player aims in some direction and if an enemy is within range for strikes and within a fov for the strike (a 120 degree arc), the enemy can get hit. The enemy will signal this by blinking, I think would be cool. This could strike multiple enemies, perhaps.
@@ -693,11 +693,11 @@ Det här gör vi på det gamla vanliga sättet. Vi bygger en box2d-värld, vi kl
 
 Oj oj oj,  vad roligt. Vi kan göra en box2d-kropp med leder, per tutorials etc. Superkul ju.
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbMjAxMzI2MTQ2LC02NDIyNDU3LC0xNTQ5OD
-U4NTk1LC0xMDI0NjUzNTM5LDIwNTExMDIxOTksLTc0MjQxMjM1
-MCwtNjY1MDk1MjcyLDE2ODMxMTMxODIsLTcwMTA1MzI3MSwtOT
-M4ODUxNzAwLC04NzI3MzE4NjgsMjAwNzMzNTE2NCwxNzg4NTM5
-MTEzLC0xOTkxNDA0Njg1LDIzOTQ0MDA4Nyw1NjI0MzAzMywtMT
-IxMTI3MDM3MCwtMjExOTE1OTQ3MSwzMzU5NTc0NTYsMTE0MDYz
-ODM1N119
+eyJoaXN0b3J5IjpbLTk3NjQzNTA2MiwyMDEzMjYxNDYsLTY0Mj
+I0NTcsLTE1NDk4NTg1OTUsLTEwMjQ2NTM1MzksMjA1MTEwMjE5
+OSwtNzQyNDEyMzUwLC02NjUwOTUyNzIsMTY4MzExMzE4MiwtNz
+AxMDUzMjcxLC05Mzg4NTE3MDAsLTg3MjczMTg2OCwyMDA3MzM1
+MTY0LDE3ODg1MzkxMTMsLTE5OTE0MDQ2ODUsMjM5NDQwMDg3LD
+U2MjQzMDMzLC0xMjExMjcwMzcwLC0yMTE5MTU5NDcxLDMzNTk1
+NzQ1Nl19
 -->
