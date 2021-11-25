@@ -39,6 +39,7 @@ This is easy. They are slow projectiles that should, preferrably, wobble or spin
 So, what I am doing now is a fire particle effect and on top of that I will add some "catch fire logic". This will have to wait, though.
 
 - [ ] Catch Fire Logic
+- [ ] Refactor contact logic
 - [ ] Fire particle effect
 
 ##### Blockades, swinging
@@ -692,11 +693,11 @@ Det här gör vi på det gamla vanliga sättet. Vi bygger en box2d-värld, vi kl
 
 Oj oj oj,  vad roligt. Vi kan göra en box2d-kropp med leder, per tutorials etc. Superkul ju.
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbLTE3OTkxMjQ0OTcsLTY0MjI0NTcsLTE1ND
-k4NTg1OTUsLTEwMjQ2NTM1MzksMjA1MTEwMjE5OSwtNzQyNDEy
-MzUwLC02NjUwOTUyNzIsMTY4MzExMzE4MiwtNzAxMDUzMjcxLC
-05Mzg4NTE3MDAsLTg3MjczMTg2OCwyMDA3MzM1MTY0LDE3ODg1
-MzkxMTMsLTE5OTE0MDQ2ODUsMjM5NDQwMDg3LDU2MjQzMDMzLC
-0xMjExMjcwMzcwLC0yMTE5MTU5NDcxLDMzNTk1NzQ1NiwxMTQw
-NjM4MzU3XX0=
+eyJoaXN0b3J5IjpbMjAxMzI2MTQ2LC02NDIyNDU3LC0xNTQ5OD
+U4NTk1LC0xMDI0NjUzNTM5LDIwNTExMDIxOTksLTc0MjQxMjM1
+MCwtNjY1MDk1MjcyLDE2ODMxMTMxODIsLTcwMTA1MzI3MSwtOT
+M4ODUxNzAwLC04NzI3MzE4NjgsMjAwNzMzNTE2NCwxNzg4NTM5
+MTEzLC0xOTkxNDA0Njg1LDIzOTQ0MDA4Nyw1NjI0MzAzMywtMT
+IxMTI3MDM3MCwtMjExOTE1OTQ3MSwzMzU5NTc0NTYsMTE0MDYz
+ODM1N119
 -->
