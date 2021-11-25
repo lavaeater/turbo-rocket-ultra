@@ -82,7 +82,7 @@ class GameScreen(private val gameState: StateMachine<GameState, GameEvent>) : Kt
 
     private fun loadMapOne() {
         //For debuggin we will swarm with enemies
-        CounterObject.numberOfEnemies = 2
+        CounterObject.numberOfEnemies = 150
 
         val map = GridMapGenerator.generateFromDefintion(SimpleGridMapDef.levelOne)
         mapManager.gridMap = map.first
@@ -93,7 +93,7 @@ class GameScreen(private val gameState: StateMachine<GameState, GameEvent>) : Kt
 
     private fun loadMapTwo() {
         //For debuggin we will swarm with enemies
-        CounterObject.numberOfEnemies = 2
+        CounterObject.numberOfEnemies = 300
 
         val map = GridMapGenerator.generateFromDefintion(SimpleGridMapDef.levelTwo)
         mapManager.gridMap = map.first

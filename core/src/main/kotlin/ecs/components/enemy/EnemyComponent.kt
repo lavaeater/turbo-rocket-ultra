@@ -17,7 +17,7 @@ class EnemyComponent : Component, Pool.Poolable {
     var rushSpeed = 15f
     var fieldOfView = 180f
     var viewDistance = 30f
-    var speed = 1f
+    var speed = 5f
 
     val directionVector = vec2()
     var health = 100f

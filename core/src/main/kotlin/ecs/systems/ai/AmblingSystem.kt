@@ -11,10 +11,7 @@ import ecs.systems.sectionX
 import ecs.systems.sectionY
 import injection.Context.inject
 import ktx.ashley.allOf
-import ktx.math.random
 import ktx.math.vec2
-import map.grid.Coordinate
-import map.grid.GridMapGenerator
 import map.grid.GridMapManager
 import map.snake.randomPoint
 import physics.getComponent
@@ -31,7 +28,8 @@ class AmblingSystem : IteratingSystem(allOf(Amble::class, EnemyComponent::class,
 
             val currentSection = TileGraph.createCoordinate(currentPosition.sectionX(), currentPosition.sectionY())
             //1. Randomly select a section to move to
-            val randomSection = mapManager.getRandomSection(currentSection)
+            val maxDistance = 2
+            val randomSection = mapManager.getRandomSection(currentSection, maxDistance)
             //2. Pathfind a path to it
 
             val path = mapManager.sectionGraph.findPath(currentSection, TileGraph.createCoordinate(randomSection.x, randomSection.y))
@@ -43,7 +41,7 @@ class AmblingSystem : IteratingSystem(allOf(Amble::class, EnemyComponent::class,
             }
             component.firstRun = false
         }
-        if(component.needsNew) {
+        if(component.needsNew && !component.path.isEmpty) {
             component.nextPosition = component.path.removeFirst()
             component.needsNew = false
         }
@@ -65,23 +63,3 @@ class AmblingSystem : IteratingSystem(allOf(Amble::class, EnemyComponent::class,
     }
 }
 
-class OldAmblingSystem : IteratingSystem(allOf(Amble::class, EnemyComponent::class).get()) {
-
-    @OptIn(ExperimentalStdlibApi::class)
-    override fun processEntity(entity: Entity, deltaTime: Float) {
-        val component = entity.getComponent<Amble>()
-        if(component.firstRun) {
-
-
-
-            component.firstRun = false
-            val directionRange = -1f..1f
-            entity.getComponent<EnemyComponent>().directionVector.set(directionRange.random(), directionRange.random()).nor()
-        }
-        if (component.status == Task.Status.RUNNING) {
-            component.coolDown -= deltaTime
-            if (component.coolDown <= 0f)
-                component.status = Task.Status.SUCCEEDED
-        }
-    }
-}

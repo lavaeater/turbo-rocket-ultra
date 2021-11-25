@@ -28,13 +28,13 @@ class GridMapGenerator {
             objective(position.x, position.y)
 
             position = bounds.randomPoint()
-            val emitter = obstacle(position.x, position.y)
+            val emitter = spawner(position.x, position.y)
             emitter.add(engine.createComponent(EnemySpawnerComponent::class.java))
         }
 
         fun addObstacle(bounds: Rectangle) {
             var position = bounds.randomPoint()
-            obstacle(position.tileWorldX(), position.tileWorldY())
+            spawner(position.tileWorldX(), position.tileWorldY())
         }
 
         fun addBoss(bounds: Rectangle) {
@@ -219,8 +219,8 @@ class GridMapGenerator {
 
                         if ((1..20).random() <= level) {
                             val position = section.innerBounds.randomPoint()
-                            val emitter = obstacle(position.x, position.y)
-                            emitter.add(engine.createComponent(EnemySpawnerComponent::class.java))
+                            val emitter = spawner(position.x, position.y)
+                            //emitter.add(engine.createComponent(EnemySpawnerComponent::class.java))
                         }
 
                         if (coordinate == bossCoordinate) {

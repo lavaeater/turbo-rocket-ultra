@@ -26,8 +26,12 @@ class GridMapManager {
 
     val bodies = mutableListOf<Body>()
 
-    fun getRandomSection(except: Coordinate): Coordinate {
-        return gridMap.keys.filter { it != except } .random()
+    fun getRandomSection(except: Coordinate, maxDistance: Int = 5): Coordinate {
+        val minX = except.x - maxDistance
+        val maxX = except.x + maxDistance
+        val minY = except.y - maxDistance
+        val maxY = except.y + maxDistance
+        return gridMap.keys.filter { it != except && it.x > minX && it.x < maxX && it.y > minY && it.y < maxY } .random()
     }
 
     fun canWeBuildAt(x: Int, y:Int) : Boolean {
