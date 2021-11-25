@@ -42,8 +42,7 @@ class GridMapGenerator {
             boss(position, 1)
         }
 
-        lateinit var graph: TileGraph
-        fun generateFromDefintion(def: SimpleGridMapDef): Map<Coordinate, GridMapSection> {
+        fun generateFromDefintion(def: SimpleGridMapDef): Pair<Map<Coordinate, GridMapSection>, TileGraph> {
             //TODO: Move this somewhere
             Light.setGlobalContactFilter(
                 Box2dCategories.lights,
@@ -53,7 +52,7 @@ class GridMapGenerator {
             rayHandler.setBlurNum(3)
 
             val tileMap = mutableMapOf<Coordinate, GridMapSection>()
-            graph = TileGraph()
+            val graph = TileGraph()
 
             var index = 0
             for ((x, column) in def.booleanSections.withIndex()) {
@@ -102,10 +101,10 @@ class GridMapGenerator {
                         }
                     }
             }
-            return tileMap
+            return Pair(tileMap, graph)
         }
 
-        fun generate(length: Int, level: Int): Map<Coordinate, GridMapSection> {
+        fun generate(length: Int, level: Int): Pair<Map<Coordinate, GridMapSection>, TileGraph> {
             //TODO: Move this somewhere
             Light.setGlobalContactFilter(
                 Box2dCategories.lights,
@@ -195,7 +194,7 @@ class GridMapGenerator {
             we can simply say that certain directions are wall and others not.
              */
             val tileMap = mutableMapOf<Coordinate, GridMapSection>()
-
+            val graph = TileGraph()
             var index = 0
             for ((x, column) in map.withIndex()) {
                 for ((y, tile) in column.withIndex())
@@ -203,8 +202,16 @@ class GridMapGenerator {
                         index++
                         //1. Check neighbours - if they are true, we will add them as connections
                         val coordinate = Coordinate(x, y)
-                        val section = GridMapSection(coordinate, getConnections(x, y, map), coordinate == startCoord)
-
+                        val connections = getConnections(x, y, map)
+                        val section = GridMapSection(coordinate, connections, coordinate == startCoord)
+                        graph.addCoordinate(coordinate)
+                        for (direction in connections) {
+                            val connectionCoordinate = Coordinate(
+                                coordinate.x + MapDirection.xIndex[direction]!!,
+                                coordinate.y + MapDirection.yIndex[direction]!!
+                            )
+                            graph.connectCoordinates(coordinate, connectionCoordinate)
+                        }
                         tileMap[coordinate] = section
                         if (objectives.contains(coordinate)) {
                             addObjective(section.innerBounds)
@@ -222,7 +229,7 @@ class GridMapGenerator {
                         }
                     }
             }
-            return tileMap
+            return Pair(tileMap,graph)
 
         }
 

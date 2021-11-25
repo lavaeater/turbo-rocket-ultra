@@ -1,5 +1,6 @@
 package map.grid
 
+import ai.pathfinding.TileGraph
 import com.badlogic.gdx.graphics.Color
 import com.badlogic.gdx.graphics.g2d.Batch
 import com.badlogic.gdx.physics.box2d.Body
@@ -16,6 +17,7 @@ import physics.drawScaled
 import space.earlygrey.shapedrawer.ShapeDrawer
 
 class GridMapManager {
+    lateinit var sectionGraph: TileGraph
     var gridMap: Map<Coordinate, GridMapSection> = mapOf()
     set(value) {
         field = value
@@ -23,6 +25,10 @@ class GridMapManager {
     }
 
     val bodies = mutableListOf<Body>()
+
+    fun getRandomSection(): Coordinate {
+        return gridMap.keys.random()
+    }
 
     fun canWeBuildAt(x: Int, y:Int) : Boolean {
         return buildableMap.containsKey(x) && buildableMap[x]!!.containsKey(y) && buildableMap[x]!![y]!!
