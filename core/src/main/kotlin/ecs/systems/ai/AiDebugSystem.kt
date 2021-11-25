@@ -28,7 +28,7 @@ class AiDebugSystem : IteratingSystem(allOf(BehaviorComponent::class, TransformC
         val behaviorComponent = entity.getComponent<BehaviorComponent>()
         val textureComponent = entity.getComponent<TextureComponent>()
         if(Assets.aiDebugBadges.containsKey(behaviorComponent.toString()))
-            textureComponent.extraTextures["aidebug"] = Assets.aiDebugBadges[behaviorComponent.toString()]!!
+            textureComponent.extraTextures["aidebug"] = Pair(Assets.aiDebugBadges[behaviorComponent.toString()]!!, 0.2f)
 //
 //        textToPrint = behaviorComponent.toString()
 //        Assets.debugFont.draw(

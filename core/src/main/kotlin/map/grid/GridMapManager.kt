@@ -24,7 +24,7 @@ class GridMapManager {
     val bodies = mutableListOf<Body>()
 
     fun canWeBuildAt(x: Int, y:Int) : Boolean {
-        return buildableMap[x]!![y]!!
+        return buildableMap.containsKey(x) && buildableMap[x]!!.containsKey(y) && buildableMap[x]!![y]!!
     }
 
     private val buildableMap = mutableMapOf<Int, MutableMap<Int, Boolean>>()

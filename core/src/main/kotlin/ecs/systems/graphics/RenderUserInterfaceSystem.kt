@@ -18,7 +18,7 @@ class RenderUserInterfaceSystem(private val batch: Batch) :
     IteratingSystem(
         allOf(
             TowerBuildingUiComponent::class
-        ).get()) {
+        ).get(), 16) {
 
     @OptIn(ExperimentalStdlibApi::class)
     override fun processEntity(entity: Entity, deltaTime: Float) {

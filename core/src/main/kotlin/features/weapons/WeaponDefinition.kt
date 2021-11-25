@@ -4,41 +4,6 @@ import com.badlogic.gdx.audio.Sound
 import tru.Assets
 
 /**
- * In fact, all weapons need to be clumped together.
- *
- * So weapons are weapons with a type, like projectile perhaps?
- * Otherwise we have to keep track of stuff like is gun or bat equipped
- */
-
-class MeleeWeaponDefinition(
-    val name: String,
-    val rof: Float,
-    val arcOfAttackDeg: Float,
-    val range: Float,
-    val damageRange: IntRange,
-    val audio: Sound
-) {
-    companion object {
-        val meleeWeapons = listOf(
-            MeleeWeaponDefinition(
-                "bat",
-                60f,
-                20f,
-                5f,
-                5..15,
-                Assets.gunAudio.values.first().values.first()
-            )
-        )
-    }
-}
-
-
-sealed class WeaponType {
-    object Projectile : WeaponType()
-    object Melee : WeaponType()
-}
-
-/**
  *
  * @param ROF is in shots per minute
  */
@@ -49,15 +14,30 @@ class WeaponDefinition(
     val rof: Float,
     val accuracyOrHitArcForMelee: Float,
     val numberOfProjectiles: Int,
-    val spreadOrMeleeRange: Float,
+    val spreadOrMeleeRangeOrArea: Float,
     val textureName: String,
     val ammoType: AmmoType,
-    val damageRange: IntRange,
+    val damageRange: ClosedFloatingPointRange<Float>,
     val reloadDelay: Float,
     val reloadType: ReloadType,
     val audio: Map<String, Sound>
 ) {
     companion object {
+        val molotov = WeaponDefinition(
+            "Molotov Cocktail",
+            WeaponType.ThrownArea,
+            1000,
+            30f,
+            15f, //
+            1,
+            15f,
+            GunFrames.handGun,
+            AmmoType.Molotov,
+            5f..15f,
+            0f,
+            ReloadType.MeleeWeapon,
+            Assets.gunAudio["glock17"]!!
+        )
         val weapons = listOf(
             WeaponDefinition(
                 "Baseball Bat",
@@ -69,11 +49,12 @@ class WeaponDefinition(
                 5f,
                 GunFrames.handGun, //TODO exhange for bat or something
                 AmmoType.MeleeWeapon,
-                5..15,
+                5f..15f,
                 0f,
                 ReloadType.MeleeWeapon,
                 Assets.gunAudio["glock17"]!!//TODO exhange for bat or something
             ),
+            molotov,
             WeaponDefinition(
                 "Glock 17",
                 WeaponType.Projectile,
@@ -84,7 +65,7 @@ class WeaponDefinition(
                 .125f,
                 GunFrames.handGun,
                 AmmoType.NineMilliMeters,
-                8..16,
+                8f..16f,
                 2f,
                 ReloadType.EntireMag,
                 Assets.gunAudio["glock17"]!!
@@ -99,7 +80,7 @@ class WeaponDefinition(
                 15f,
                 GunFrames.spas12,
                 AmmoType.TwelveGaugeShotgun,
-                12..24,
+                12f..24f,
                 1f,
                 ReloadType.SingleShot,
                 Assets.gunAudio["spas12"]!!
@@ -114,7 +95,7 @@ class WeaponDefinition(
                 .125f,
                 GunFrames.spas12,
                 AmmoType.FnP90Ammo,
-                6..14,
+                6f..14f,
                 2f,
                 ReloadType.EntireMag,
                 Assets.gunAudio["fnp90"]!!
@@ -127,8 +108,3 @@ class WeaponDefinition(
     }
 }
 
-sealed class ReloadType {
-    object EntireMag : ReloadType()
-    object SingleShot : ReloadType()
-    object MeleeWeapon : ReloadType()
-}

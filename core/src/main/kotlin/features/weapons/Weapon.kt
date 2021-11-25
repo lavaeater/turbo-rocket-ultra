@@ -8,7 +8,7 @@ class Weapon(weaponDefinition: WeaponDefinition) {
     val rof = weaponDefinition.rof
     val accuracyOrHitArcForMelee = weaponDefinition.accuracyOrHitArcForMelee
     val numberOfProjectiles = weaponDefinition.numberOfProjectiles
-    val spreadOrMeleeRange = weaponDefinition.spreadOrMeleeRange
+    val spreadOrMeleeRangeOrArea = weaponDefinition.spreadOrMeleeRangeOrArea
     val textureName = weaponDefinition.textureName
     val ammoType = weaponDefinition.ammoType
     val damageRange = weaponDefinition.damageRange

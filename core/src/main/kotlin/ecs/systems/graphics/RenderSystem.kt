@@ -17,7 +17,7 @@ import tru.Assets
 
 @OptIn(ExperimentalStdlibApi::class)
 class RenderSystem(
-    private val batch: Batch
+    private val batch: Batch, private val debug: Boolean = false
 ) : SortedIteratingSystem(
     allOf(
         TransformComponent::class,
@@ -43,9 +43,7 @@ class RenderSystem(
                 layer0.compareTo(layer1)
             }
         }
-    }, 2
-) {
-    private val debug = true
+    }, 8) {
     private val shapeDrawer by lazy { Assets.shapeDrawer }
 
     override fun update(deltaTime: Float) {
@@ -61,17 +59,18 @@ class RenderSystem(
 
         batch.drawScaled(
             textureComponent.texture,
-            transform.position.x + (textureComponent.texture.regionWidth / 2  + textureComponent.offsetX)* scale * textureComponent.scale,// + textureComponent.offsetX * scale * textureComponent.scale,
-            transform.position.y + (textureComponent.texture.regionHeight / 2 + textureComponent.offsetY) * scale * textureComponent.scale,// -  * scale * textureComponent.scale,
+            transform.position.x + (textureComponent.texture.regionWidth / 2  + textureComponent.offsetX)* scale * textureComponent.scale,
+            transform.position.y + (textureComponent.texture.regionHeight / 2 + textureComponent.offsetY) * scale * textureComponent.scale,
             scale * textureComponent.scale,
             if (textureComponent.rotateWithTransform) transform.rotation else 180f
         )
         for (texture in textureComponent.extraTextures.values) {
             batch.drawScaled(
-                texture,
-                transform.position.x + (textureComponent.texture.regionWidth / 2 + textureComponent.offsetX) * scale * textureComponent.scale,// + (textureComponent.texture.regionWidth / 2 * scale) + textureComponent.offsetX * scale * textureComponent.scale,
-                transform.position.y, + (textureComponent.texture.regionHeight / 2 + textureComponent.offsetY) * scale * textureComponent.scale,// - textureComponent.offsetY * scale * textureComponent.scale,
-                scale
+                texture.first,
+                transform.position.x + (textureComponent.texture.regionWidth / 2 + textureComponent.offsetX) * scale * textureComponent.scale,
+                transform.position.y + (textureComponent.texture.regionHeight / 2 + textureComponent.offsetY) * scale * textureComponent.scale,
+                scale * textureComponent.scale * texture.second,
+                if (textureComponent.rotateWithTransform) transform.rotation else 180f
             )
         }
         if(debug) {

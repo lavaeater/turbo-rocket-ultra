@@ -66,7 +66,7 @@ the desired angle
                 if (lowestFraction < 1f) {
                     if (closestFixture.isEntity() && closestFixture.body.isEnemy()) {
                         val enemyEntity = closestFixture.getEntity()
-                        enemyEntity.getComponent<EnemyComponent>().takeDamage(3..8)
+                        enemyEntity.getComponent<EnemyComponent>().takeDamage(3f..8f)
                         splatterEntity(closestFixture.body.worldCenter, targetInRange.aimTarget.cpy().nor().angleDeg())
                     }
                     shootComponent.status = Task.Status.SUCCEEDED

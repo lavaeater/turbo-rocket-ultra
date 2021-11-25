@@ -16,7 +16,7 @@ import tru.Assets
 
 @OptIn(ExperimentalStdlibApi::class)
 class RenderMiniMapSystem : SortedIteratingSystem(allOf(TextureComponent::class, TransformComponent::class, MiniMapComponent::class).get(),
-    Comparator<Entity> { p0, p1 -> p1.getComponent<TextureComponent>().layer.compareTo(p0.getComponent<TextureComponent>().layer) }, 20) {
+    Comparator<Entity> { p0, p1 -> p1.getComponent<TextureComponent>().layer.compareTo(p0.getComponent<TextureComponent>().layer) }, 32) {
     private val shapeDrawer by lazy { Assets.shapeDrawer }
     private val scale = 100f
     private val center = vec2()

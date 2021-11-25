@@ -1,0 +1,11 @@
+Particle Park Flame License
+
+------------------------------------------------------------------------------------------
+
+Copyright © 2019 Raymond Buckley
+
+Particle Park Flame can be used under the Creative Commons Attribution 4.0 International license.
+
+See a human readable version here: https://creativecommons.org/licenses/by/4.0/
+
+------------------------------------------------------------------------------------------

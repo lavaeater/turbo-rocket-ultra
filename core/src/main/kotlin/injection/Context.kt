@@ -13,6 +13,8 @@ import com.badlogic.gdx.graphics.g2d.PolygonSpriteBatch
 import com.badlogic.gdx.utils.viewport.ExtendViewport
 import com.strongjoshua.console.CommandExecutor
 import com.strongjoshua.console.GUIConsole
+import ecs.components.gameplay.DamageEffectComponent
+import ecs.components.gameplay.DestroyAfterCoolDownComponent
 import ecs.systems.*
 import ecs.systems.ai.*
 import ecs.systems.ai.boss.RushPlayerSystem
@@ -21,6 +23,8 @@ import ecs.systems.ai.towers.TowerTargetFinderSystem
 import ecs.systems.enemy.*
 import ecs.systems.facts.FactSystem
 import ecs.systems.fx.BloodSplatterEffectRenderSystem
+import ecs.systems.fx.DelayedEntityCreationSystem
+import ecs.systems.fx.EffectRenderSystem
 import ecs.systems.input.KeyboardInputSystem
 import ecs.systems.fx.RenderBox2dLightSystem
 import ecs.systems.graphics.*
@@ -83,7 +87,7 @@ object Context {
     private fun getEngine(): Engine {
         return PooledEngine().apply {
             addSystem(PhysicsSystem(inject()))
-            addSystem(PhysicsDebugRendererSystem(inject(), inject()))
+            //addSystem(PhysicsDebugRendererSystem(inject(), inject()))
             addSystem(CameraUpdateSystem())
             addSystem(PlayerMoveSystem())
             addSystem(KeyboardInputSystem())
@@ -96,6 +100,7 @@ object Context {
             addSystem(EnemyMovementSystem())
             // Ai Systems Start
             addSystem(AmblingSystem())
+            addSystem(PanicSystem())
             addSystem(BehaviorTreeSystem())
             addSystem(ChasePlayerSystem())
             addSystem(SeekPlayerSystem(true))
@@ -105,6 +110,10 @@ object Context {
             addSystem(InvestigateSystem())
             addSystem(RushPlayerSystem())
             // Ai Systems End
+            //Burning
+            addSystem(BurningSystem())
+            addSystem(DestroyAfterReadingSystem())
+            //Burning End
             addSystem(PlayerDeathSystem())
             addSystem(EnemySpawnSystem())
             addSystem(EnemyOptimizerSystem())
@@ -124,6 +133,8 @@ object Context {
             addSystem(PlayerContextActionSystem())
             addSystem(RenderBox2dLightSystem(inject(), inject()))
             addSystem(BloodSplatterEffectRenderSystem(inject<PolygonSpriteBatch>() as Batch))
+            addSystem(DelayedEntityCreationSystem())
+            addSystem(EffectRenderSystem(inject<PolygonSpriteBatch>() as Batch))
             addSystem(LootDropSystem())
             addSystem(AimingAidSystem(true, true))
             addSystem(GibSystem())
