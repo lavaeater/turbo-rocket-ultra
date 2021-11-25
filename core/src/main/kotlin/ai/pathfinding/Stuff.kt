@@ -9,13 +9,20 @@ import com.badlogic.gdx.ai.pfa.indexed.IndexedGraph
 import com.badlogic.gdx.utils.Array
 import ktx.collections.toGdxArray
 import map.grid.Coordinate
+import kotlin.math.absoluteValue
 import kotlin.math.pow
 import kotlin.math.sqrt
 
 class CoordinateHeuristic : Heuristic<Coordinate> {
     override fun estimate(node: Coordinate, endNode: Coordinate): Float {
-        return node.hypotenuse(endNode)
+        return node.rightAngleDistance(endNode)
     }
+}
+
+fun Coordinate.rightAngleDistance(to:Coordinate): Float {
+    val k1 = to.x - this.x
+    val k2 = to.y - this.y
+    return (k1.absoluteValue + k2.absoluteValue).toFloat()
 }
 
 fun Coordinate.hypotenuse(to: Coordinate): Float {
@@ -28,7 +35,7 @@ fun Coordinate.hypotenuse(to: Coordinate): Float {
 class TileConnection(val from: Coordinate, val to: Coordinate) : Connection<Coordinate> {
 
     override fun getCost(): Float {
-        return from.hypotenuse(to)
+        return from.rightAngleDistance(to)
     }
 
     override fun getFromNode(): Coordinate {
@@ -63,6 +70,7 @@ class TileGraph : IndexedGraph<Coordinate> {
     }
 
     fun findPath(start: Coordinate, goal: Coordinate) :  GraphPath<Coordinate> {
+        start.index = getIndex(start)
         val path = DefaultGraphPath<Coordinate>()
         val pathFinder = IndexedAStarPathFinder<Coordinate>(this)
         pathFinder.searchNodePath(start, goal, heuristic, path)
@@ -78,7 +86,7 @@ class TileGraph : IndexedGraph<Coordinate> {
     }
 
     override fun getIndex(node: Coordinate): Int {
-        return node.index
+        return coordinates.first { it == node }.index
     }
 
     override fun getNodeCount(): Int {

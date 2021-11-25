@@ -291,15 +291,22 @@ class SimpleGridMapDef(val def: List<String>) {
     companion object {
         val levelOne = SimpleGridMapDef(
             """
-            xxxxgxxxb
+                xxxo
+                xxxx
+                xoxx
+                sxxx
+        """.trimIndent().lines()
+        )
+        /*
+                    xxxxgxxxb
             xeeeexeee
             xeeeexxxl
             xxlxxxeex
             xxxeelxxx
             xxeeeeeex
             sxxxxxxxx
-        """.trimIndent().lines()
-        )
+
+         */
         val levelTwo = SimpleGridMapDef(
             """
                 xxxxxxxxxxxxxxxxxxxxxx
