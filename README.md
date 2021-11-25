@@ -40,6 +40,10 @@ So, what do we need for act one? Well, tons of fun stuff to implement:
 - [x] Designed levels - how about a fudging overworld, mate? A larger map, like in Overcooked, perhaps?
 - [x] Weapons as pickups
 
+#### Better Ambling
+So, what should the enemies be doing. Perhaps there should be one more thing the AI could do, something like "explore", where the enemies move about to check the entire map out. We could consider the entire map as a graph of nodes, where the center of each section is the nexus for any node. An 
+
+
 #### Area Effect Weapons
 This is easy. They are slow projectiles that should, preferrably, wobble or spin through the air somehow. They should then stop after some time, or when hitting something, and explode into a fire or explosions. If they are exploding, they should deal damage and push everything outwards. 
 
@@ -700,11 +704,11 @@ Det här gör vi på det gamla vanliga sättet. Vi bygger en box2d-värld, vi kl
 
 Oj oj oj,  vad roligt. Vi kan göra en box2d-kropp med leder, per tutorials etc. Superkul ju.
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbLTQxNzEyMjM3MiwtOTUyNTE2NDc3LC04Mj
-kzNTIyMzYsLTIwODE0NzMwMTcsLTM1NDAzODU0MCwtOTc2NDM1
-MDYyLDIwMTMyNjE0NiwtNjQyMjQ1NywtMTU0OTg1ODU5NSwtMT
-AyNDY1MzUzOSwyMDUxMTAyMTk5LC03NDI0MTIzNTAsLTY2NTA5
-NTI3MiwxNjgzMTEzMTgyLC03MDEwNTMyNzEsLTkzODg1MTcwMC
-wtODcyNzMxODY4LDIwMDczMzUxNjQsMTc4ODUzOTExMywtMTk5
-MTQwNDY4NV19
+eyJoaXN0b3J5IjpbLTc5Nzc1MzExMSwtNDE3MTIyMzcyLC05NT
+I1MTY0NzcsLTgyOTM1MjIzNiwtMjA4MTQ3MzAxNywtMzU0MDM4
+NTQwLC05NzY0MzUwNjIsMjAxMzI2MTQ2LC02NDIyNDU3LC0xNT
+Q5ODU4NTk1LC0xMDI0NjUzNTM5LDIwNTExMDIxOTksLTc0MjQx
+MjM1MCwtNjY1MDk1MjcyLDE2ODMxMTMxODIsLTcwMTA1MzI3MS
+wtOTM4ODUxNzAwLC04NzI3MzE4NjgsMjAwNzMzNTE2NCwxNzg4
+NTM5MTEzXX0=
 -->
