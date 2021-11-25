@@ -11,6 +11,7 @@ import injection.Context.inject
 import ktx.ashley.allOf
 import ktx.graphics.use
 import ktx.math.vec2
+import map.grid.GridMapManager
 import physics.getComponent
 import tru.Assets
 
@@ -18,14 +19,18 @@ import tru.Assets
 class RenderMiniMapSystem : SortedIteratingSystem(allOf(TextureComponent::class, TransformComponent::class, MiniMapComponent::class).get(),
     Comparator<Entity> { p0, p1 -> p1.getComponent<TextureComponent>().layer.compareTo(p0.getComponent<TextureComponent>().layer) }, 32) {
     private val shapeDrawer by lazy { Assets.shapeDrawer }
-    private val scale = 100f
+    private val scale = 1/100f
     private val center = vec2()
     private val camera by lazy { inject<OrthographicCamera>() }
     private val xOffset get() = camera.position.x + camera.viewportWidth / 3
     private val yOffset get() = camera.position.y + camera.viewportHeight / 3
 
+    private val mapManager by lazy { inject<GridMapManager>() }
+
     override fun update(deltaTime: Float) {
         shapeDrawer.batch.use {
+            //Here, first, draw the entire visited map as squares of suitable size.
+            mapManager.renderMiniMap(shapeDrawer, xOffset, yOffset, scale)
             super.update(deltaTime)
         }
     }
@@ -36,10 +41,10 @@ class RenderMiniMapSystem : SortedIteratingSystem(allOf(TextureComponent::class,
         val miniMapComponent = entity.getComponent<MiniMapComponent>()
         if(transform.position.dst2(camera.position.x, camera.position.y) < 200000f) {
             center.set(
-                transform.position.x / scale + xOffset, transform.position.y / scale + yOffset
+                transform.position.x * scale + xOffset, transform.position.y * scale + yOffset
             )
             when(miniMapComponent.miniMapShape) {
-                Shape.Rectangle -> shapeDrawer.filledRectangle((transform.position.x - 2f) / scale + xOffset, (transform.position.y - 3f) / scale + yOffset, 2f / (scale / 10), 3f / (scale / 10), miniMapComponent.color)
+                Shape.Rectangle -> shapeDrawer.filledRectangle((transform.position.x - 2f) * scale + xOffset, (transform.position.y - 3f) * scale + yOffset, 2f * (scale * 10), 3f * (scale * 10), miniMapComponent.color)
                 Shape.Dot -> shapeDrawer.filledCircle(center, .1f, miniMapComponent.color)
             }
         }

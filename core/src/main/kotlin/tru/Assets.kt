@@ -203,7 +203,11 @@ object Assets : Disposable {
             "attack" to TextureRegion(texture, 0,12, 64, 12),
             "chase" to TextureRegion(texture, 0,24, 64, 12),
             "check" to TextureRegion(texture, 0,36, 64, 12),
-            "seek" to TextureRegion(texture, 0,48, 64, 12))
+            "seek" to TextureRegion(texture, 0,48, 64, 12),
+            "grabthrow" to TextureRegion(texture, 0,60, 64, 12),
+            "rush" to TextureRegion(texture, 0,72, 64, 12),
+            "panic" to TextureRegion(texture, 0,84, 64, 12)
+        )
     }
 
     val ps4Buttons by lazy {

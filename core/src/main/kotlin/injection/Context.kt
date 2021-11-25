@@ -90,6 +90,7 @@ object Context {
             //addSystem(PhysicsDebugRendererSystem(inject(), inject()))
             addSystem(CameraUpdateSystem())
             addSystem(PlayerMoveSystem())
+            addSystem(PlayerHasBeenHereSystem())
             addSystem(KeyboardInputSystem())
             addSystem(GamepadInputSystem())
             addSystem(BodyDestroyerSystem(inject())) //world
