@@ -34,7 +34,9 @@ So, what do we need for act one? Well, tons of fun stuff to implement:
 - [x] Weapons as pickups
 
 #### Area Effect Weapons
-This is easy. They are slow projectiles that should, preferrably, wobble or spin through the air somehow. They should then stop after some time, or when hitting something, and explode into a fire or explosions. If they are exploding, they should deal damage and push everything outwards. When being 
+This is easy. They are slow projectiles that should, preferrably, wobble or spin through the air somehow. They should then stop after some time, or when hitting something, and explode into a fire or explosions. If they are exploding, they should deal damage and push everything outwards. 
+
+So, what I am doing now is a fire particle effect and on top of that I will add some "catch fire logic". This will have to wait, though.
 
 ##### Blockades, swinging
 Lets start with hand-to-hand combat. How will that work? Well, the player aims in some direction and if an enemy is within range for strikes and within a fov for the strike (a 120 degree arc), the enemy can get hit. The enemy will signal this by blinking, I think would be cool. This could strike multiple enemies, perhaps.
@@ -687,11 +689,11 @@ Det här gör vi på det gamla vanliga sättet. Vi bygger en box2d-värld, vi kl
 
 Oj oj oj,  vad roligt. Vi kan göra en box2d-kropp med leder, per tutorials etc. Superkul ju.
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbLTY0MjI0NTcsLTE1NDk4NTg1OTUsLTEwMj
-Q2NTM1MzksMjA1MTEwMjE5OSwtNzQyNDEyMzUwLC02NjUwOTUy
-NzIsMTY4MzExMzE4MiwtNzAxMDUzMjcxLC05Mzg4NTE3MDAsLT
-g3MjczMTg2OCwyMDA3MzM1MTY0LDE3ODg1MzkxMTMsLTE5OTE0
-MDQ2ODUsMjM5NDQwMDg3LDU2MjQzMDMzLC0xMjExMjcwMzcwLC
-0yMTE5MTU5NDcxLDMzNTk1NzQ1NiwxMTQwNjM4MzU3LDE4OTUx
-MTIyNjZdfQ==
+eyJoaXN0b3J5IjpbLTE5NzMzNTU5NSwtNjQyMjQ1NywtMTU0OT
+g1ODU5NSwtMTAyNDY1MzUzOSwyMDUxMTAyMTk5LC03NDI0MTIz
+NTAsLTY2NTA5NTI3MiwxNjgzMTEzMTgyLC03MDEwNTMyNzEsLT
+kzODg1MTcwMCwtODcyNzMxODY4LDIwMDczMzUxNjQsMTc4ODUz
+OTExMywtMTk5MTQwNDY4NSwyMzk0NDAwODcsNTYyNDMwMzMsLT
+EyMTEyNzAzNzAsLTIxMTkxNTk0NzEsMzM1OTU3NDU2LDExNDA2
+MzgzNTddfQ==
 -->
