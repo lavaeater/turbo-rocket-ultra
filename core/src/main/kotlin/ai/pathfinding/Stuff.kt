@@ -6,36 +6,30 @@ import com.badlogic.gdx.ai.pfa.GraphPath
 import com.badlogic.gdx.ai.pfa.Heuristic
 import com.badlogic.gdx.ai.pfa.indexed.IndexedAStarPathFinder
 import com.badlogic.gdx.ai.pfa.indexed.IndexedGraph
+import com.badlogic.gdx.math.Vector2
 import com.badlogic.gdx.utils.Array
 import ktx.collections.toGdxArray
+import ktx.math.vec2
 import map.grid.Coordinate
 import kotlin.math.absoluteValue
 import kotlin.math.pow
 import kotlin.math.sqrt
 
 class CoordinateHeuristic : Heuristic<Coordinate> {
+
+    val from = vec2()
+    val to = vec2()
     override fun estimate(node: Coordinate, endNode: Coordinate): Float {
-        return node.rightAngleDistance(endNode)
+        from.set(node.x.toFloat(),node.y.toFloat())
+        to.set(endNode.x.toFloat(), endNode.y.toFloat())
+        return from.dst(to)
     }
-}
-
-fun Coordinate.rightAngleDistance(to:Coordinate): Float {
-    val k1 = to.x - this.x
-    val k2 = to.y - this.y
-    return (k1.absoluteValue + k2.absoluteValue).toFloat()
-}
-
-fun Coordinate.hypotenuse(to: Coordinate): Float {
-    val k1 = to.x - this.x
-    val k2 = to.y - this.y
-    val cost = sqrt(k1.toFloat().pow(2) + k2.toFloat().pow(2))
-    return cost
 }
 
 class TileConnection(val from: Coordinate, val to: Coordinate) : Connection<Coordinate> {
 
     override fun getCost(): Float {
-        return from.rightAngleDistance(to)
+        return Vector2.dst(from.x.toFloat(), from.y.toFloat(), to.x.toFloat(), to.y.toFloat())
     }
 
     override fun getFromNode(): Coordinate {
@@ -49,15 +43,21 @@ class TileConnection(val from: Coordinate, val to: Coordinate) : Connection<Coor
 
 class TileGraph : IndexedGraph<Coordinate> {
     private val heuristic = CoordinateHeuristic()
-    private val coordinates = mutableListOf<Coordinate>()
     private val connections = mutableListOf<TileConnection>()
-    private var lastCoordinateIndex = 0
     private val connectionMap = mutableMapOf<Coordinate, MutableList<Connection<Coordinate>>>()
 
-    fun addCoordinate(coordinate: Coordinate) {
-        coordinate.index = lastCoordinateIndex
-        lastCoordinateIndex++
-        coordinates.add(coordinate)
+    companion object {
+        private val coordinates = mutableSetOf<Coordinate>()
+        private var lastCoordinateIndex = 0
+        fun createCoordinate(x: Int, y: Int): Coordinate {
+            val coord = Coordinate(x, y)
+            val added = coordinates.add(coord)
+            if (added) {
+                coord.index = lastCoordinateIndex
+                lastCoordinateIndex++
+            }
+            return if (added) coord else coordinates.first { it == coord }
+        }
     }
 
     fun connectCoordinates(from: Coordinate, to:Coordinate) {
@@ -70,9 +70,8 @@ class TileGraph : IndexedGraph<Coordinate> {
     }
 
     fun findPath(start: Coordinate, goal: Coordinate) :  GraphPath<Coordinate> {
-        start.index = getIndex(start)
         val path = DefaultGraphPath<Coordinate>()
-        val pathFinder = IndexedAStarPathFinder<Coordinate>(this)
+        val pathFinder = IndexedAStarPathFinder(this)
         pathFinder.searchNodePath(start, goal, heuristic, path)
         return path
     }

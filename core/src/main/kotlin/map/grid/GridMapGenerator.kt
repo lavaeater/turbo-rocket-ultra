@@ -56,18 +56,19 @@ class GridMapGenerator {
 
             var index = 0
             for ((x, column) in def.booleanSections.withIndex()) {
-                for ((y, tile) in column.withIndex())
-                    if (tile) {
+                for ((y, aSectionIsHere) in column.withIndex())
+                    if (aSectionIsHere) {
                         index++
                         //1. Check neighbours - if they are true, we will add them as connections
-                        val coordinate = Coordinate(x, y)
+                        val coordinate = TileGraph.createCoordinate(x, y)
                         val connections = getConnections(x, y, def.booleanSections)
-                        graph.addCoordinate(coordinate)
+                        //graph.addCoordinate(coordinate)
                         for (direction in connections) {
-                            val connectionCoordinate = Coordinate(
+                            val connectionCoordinate = TileGraph.createCoordinate(
                                 coordinate.x + MapDirection.xIndex[direction]!!,
                                 coordinate.y + MapDirection.yIndex[direction]!!
                             )
+
                             graph.connectCoordinates(coordinate, connectionCoordinate)
                         }
 
@@ -201,12 +202,11 @@ class GridMapGenerator {
                     if (tile) {
                         index++
                         //1. Check neighbours - if they are true, we will add them as connections
-                        val coordinate = Coordinate(x, y)
+                        val coordinate = TileGraph.createCoordinate(x, y)
                         val connections = getConnections(x, y, map)
                         val section = GridMapSection(coordinate, connections, coordinate == startCoord)
-                        graph.addCoordinate(coordinate)
                         for (direction in connections) {
-                            val connectionCoordinate = Coordinate(
+                            val connectionCoordinate = TileGraph.createCoordinate(
                                 coordinate.x + MapDirection.xIndex[direction]!!,
                                 coordinate.y + MapDirection.yIndex[direction]!!
                             )
@@ -222,7 +222,6 @@ class GridMapGenerator {
                             val emitter = obstacle(position.x, position.y)
                             emitter.add(engine.createComponent(EnemySpawnerComponent::class.java))
                         }
-
 
                         if (coordinate == bossCoordinate) {
                             boss(section.innerBounds.randomPoint(), level)
@@ -246,91 +245,6 @@ class GridMapGenerator {
             }
             return returnSet
         }
-    }
-}
-
-class SimpleGridMapDef(val def: List<String>) {
-
-    fun hasLoot(coordinate: Coordinate): Boolean {
-        return sections[coordinate.x][coordinate.y] == 'l'
-    }
-
-    fun hasStart(coordinate: Coordinate): Boolean {
-        return sections[coordinate.x][coordinate.y] == 's'
-    }
-
-    fun hasGoal(coordinate: Coordinate): Boolean {
-        return sections[coordinate.x][coordinate.y] == 'g'
-    }
-
-    fun hasObstacle(coordinate: Coordinate): Boolean {
-        return sections[coordinate.x][coordinate.y] == 'o'
-    }
-
-    fun hasBoss(coordinate: Coordinate): Boolean {
-        return sections[coordinate.x][coordinate.y] == 'b'
-    }
-
-    val booleanSections
-        get() : Array<Array<Boolean>> {
-            return sections.map { column -> column.toCharArray().map { it != 'e' }.toTypedArray() }.toTypedArray()
-        }
-
-    val sections
-        get(): Array<Array<Char>> {
-            val mapWidth = def.map { it.length }.maxOf { it }
-            val mapHeight = def.size
-            val s = Array(mapWidth) { x ->
-                Array(mapHeight) { y ->
-                    def[y][x]
-                }
-            }
-            return s
-        }
-
-    companion object {
-        val levelOne = SimpleGridMapDef(
-            """
-                xxxo
-                xxxx
-                xoxx
-                sxxx
-        """.trimIndent().lines()
-        )
-        /*
-                    xxxxgxxxb
-            xeeeexeee
-            xeeeexxxl
-            xxlxxxeex
-            xxxeelxxx
-            xxeeeeeex
-            sxxxxxxxx
-
-         */
-        val levelTwo = SimpleGridMapDef(
-            """
-                xxxxxxxxxxxxxxxxxxxxxx
-                xeeeeeeeeeeeeeeeeeeeex
-                xexxxxxxxxoxxxxxxxxxxx
-                xexeeeeeeeeeeeeeeeeeee
-                xexexxxxxxxxxxxxxxxxxx
-                xexexeeeeeeeeeeeeeeeex
-                xexexexxxxxxxxxxxxxxxx
-                xexexexeeeeeeeeeeeeeee
-                xexexexxexxxxxxxxxxxxe
-                xexxxegbexboxeeeeeeexe
-                xeeeeeeeexooxexxxxoexe
-                xxxxxxxxxxooxeoeexxexe
-                eoeleoelexxxxxxeebgexe
-                eeeeeeeeeeeeeeeeeeeexe
-                eexxxxxxxxxxxxxxxxxxxe
-                exxeeeeeeeeeeeeeeeeeee
-                exeeeeeeeeeeexooeeeeee
-                exxxxxxxxxxxxlooeeeeee
-                exeeeeeeeeeeexxxeeeeee
-                sxeeeeeeeeeeeeeeeeeeee
-            """.trimIndent().lines()
-        )
     }
 }
 

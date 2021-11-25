@@ -1,5 +1,6 @@
 package ecs.systems.ai
 
+import ai.pathfinding.TileGraph
 import com.badlogic.ashley.core.Entity
 import com.badlogic.ashley.systems.IteratingSystem
 import com.badlogic.gdx.ai.btree.Task
@@ -28,12 +29,12 @@ class AmblingSystem : IteratingSystem(allOf(Amble::class, EnemyComponent::class,
         val currentPosition = entity.getComponent<TransformComponent>().position
         if(component.firstRun) {
 
+            val currentSection = TileGraph.createCoordinate(currentPosition.sectionX(), currentPosition.sectionY())
             //1. Randomly select a section to move to
-            val randomSection = mapManager.getRandomSection()
+            val randomSection = mapManager.getRandomSection(currentSection)
             //2. Pathfind a path to it
-            val currentSection = Coordinate(currentPosition.sectionX(), currentPosition.sectionY())
 
-            val path = mapManager.sectionGraph.findPath(currentSection, Coordinate(randomSection.x, randomSection.y))
+            val path = mapManager.sectionGraph.findPath(currentSection, TileGraph.createCoordinate(randomSection.x, randomSection.y))
             for (i in 0 until path.count) {
                 val coord = path.get(i)
                 val section = mapManager.gridMap[coord]!!
