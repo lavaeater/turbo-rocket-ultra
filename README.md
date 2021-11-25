@@ -24,6 +24,8 @@ Ah! We can have the first level just be like ten zombies, everyone has one gun w
 Nice little todo you got there. Would be a shame if anyone actually did something with it? 
 
 So, what do we need for act one? Well, tons of fun stuff to implement:
+- [ ] Better Ambling System - zombies need to scourge the map proper
+- [ ] Also implement minimap that actually only shows parts you have visited, perhaps?
 - [ ] Slower zombies at start of game
 - [ ] Enemies sprinkled out over the map from the start
 - [ ] No spawn points for enemis from the start
@@ -697,7 +699,7 @@ Det här gör vi på det gamla vanliga sättet. Vi bygger en box2d-värld, vi kl
 
 Oj oj oj,  vad roligt. Vi kan göra en box2d-kropp med leder, per tutorials etc. Superkul ju.
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbMTM0MTY5MDE0NiwtODI5MzUyMjM2LC0yMD
+eyJoaXN0b3J5IjpbMTcwMjA3NTQ1OSwtODI5MzUyMjM2LC0yMD
 gxNDczMDE3LC0zNTQwMzg1NDAsLTk3NjQzNTA2MiwyMDEzMjYx
 NDYsLTY0MjI0NTcsLTE1NDk4NTg1OTUsLTEwMjQ2NTM1MzksMj
 A1MTEwMjE5OSwtNzQyNDEyMzUwLC02NjUwOTUyNzIsMTY4MzEx
