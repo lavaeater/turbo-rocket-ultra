@@ -38,6 +38,9 @@ This is easy. They are slow projectiles that should, preferrably, wobble or spin
 
 So, what I am doing now is a fire particle effect and on top of that I will add some "catch fire logic". This will have to wait, though.
 
+- [ ] Catch Fire Logic
+- [ ] Fire particle effect
+
 ##### Blockades, swinging
 Lets start with hand-to-hand combat. How will that work? Well, the player aims in some direction and if an enemy is within range for strikes and within a fov for the strike (a 120 degree arc), the enemy can get hit. The enemy will signal this by blinking, I think would be cool. This could strike multiple enemies, perhaps.
 
@@ -689,11 +692,11 @@ Det här gör vi på det gamla vanliga sättet. Vi bygger en box2d-värld, vi kl
 
 Oj oj oj,  vad roligt. Vi kan göra en box2d-kropp med leder, per tutorials etc. Superkul ju.
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbLTE5NzMzNTU5NSwtNjQyMjQ1NywtMTU0OT
-g1ODU5NSwtMTAyNDY1MzUzOSwyMDUxMTAyMTk5LC03NDI0MTIz
-NTAsLTY2NTA5NTI3MiwxNjgzMTEzMTgyLC03MDEwNTMyNzEsLT
-kzODg1MTcwMCwtODcyNzMxODY4LDIwMDczMzUxNjQsMTc4ODUz
-OTExMywtMTk5MTQwNDY4NSwyMzk0NDAwODcsNTYyNDMwMzMsLT
-EyMTEyNzAzNzAsLTIxMTkxNTk0NzEsMzM1OTU3NDU2LDExNDA2
-MzgzNTddfQ==
+eyJoaXN0b3J5IjpbLTE3OTkxMjQ0OTcsLTY0MjI0NTcsLTE1ND
+k4NTg1OTUsLTEwMjQ2NTM1MzksMjA1MTEwMjE5OSwtNzQyNDEy
+MzUwLC02NjUwOTUyNzIsMTY4MzExMzE4MiwtNzAxMDUzMjcxLC
+05Mzg4NTE3MDAsLTg3MjczMTg2OCwyMDA3MzM1MTY0LDE3ODg1
+MzkxMTMsLTE5OTE0MDQ2ODUsMjM5NDQwMDg3LDU2MjQzMDMzLC
+0xMjExMjcwMzcwLC0yMTE5MTU5NDcxLDMzNTk1NzQ1NiwxMTQw
+NjM4MzU3XX0=
 -->
