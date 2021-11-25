@@ -24,12 +24,13 @@ Ah! We can have the first level just be like ten zombies, everyone has one gun w
 Nice little todo you got there. Would be a shame if anyone actually did something with it? 
 
 So, what do we need for act one? Well, tons of fun stuff to implement:
-- [ ] Also implement minimap that actually only shows parts you have visited, perhaps?
 - [ ] Better Ambling System - zombies need to scourge the map proper
+- [ ] Fix minimap after level one
 - [ ] Slower zombies at start of game
 - [ ] Enemies sprinkled out over the map from the start
 - [ ] No spawn points for enemis from the start
 - [ ] New player sprites inspired by Death Road to Canada - I never do this, just hire an artist already
+- [x] Also implement minimap that actually only shows parts you have visited, perhaps?
 - [x] More AI-mode-badges - why, tho?
 - [x] Zoom in, slightly
 - [x] Molotov cocktails
@@ -38,6 +39,12 @@ So, what do we need for act one? Well, tons of fun stuff to implement:
 - [x] Culling. Only draw stuff that is actually on-screen and visible? The visible part might have to wait
 - [x] Designed levels - how about a fudging overworld, mate? A larger map, like in Overcooked, perhaps?
 - [x] Weapons as pickups
+
+#### Better Ambling
+So, what should the enemies be doing. Perhaps there should be one more thing the AI could do, something like "explore", where the enemies move about to check the entire map out. We could consider the entire map as a graph of nodes, where the center of each section is the nexus for any node. Or we could, indeed, have five nodes per section, just to make it look more dynamic, then we could use A* to find our way in that hot mess. So, like the corners and then the center of the section. Perhaps that would suffice.
+
+The node could in fact contain a RANDOM point, to make it seem even more random, but reducing the number of vertices in the graph.
+
 
 #### Area Effect Weapons
 This is easy. They are slow projectiles that should, preferrably, wobble or spin through the air somehow. They should then stop after some time, or when hitting something, and explode into a fire or explosions. If they are exploding, they should deal damage and push everything outwards. 
@@ -699,11 +706,11 @@ Det här gör vi på det gamla vanliga sättet. Vi bygger en box2d-värld, vi kl
 
 Oj oj oj,  vad roligt. Vi kan göra en box2d-kropp med leder, per tutorials etc. Superkul ju.
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbLTk1MjUxNjQ3NywtODI5MzUyMjM2LC0yMD
-gxNDczMDE3LC0zNTQwMzg1NDAsLTk3NjQzNTA2MiwyMDEzMjYx
-NDYsLTY0MjI0NTcsLTE1NDk4NTg1OTUsLTEwMjQ2NTM1MzksMj
-A1MTEwMjE5OSwtNzQyNDEyMzUwLC02NjUwOTUyNzIsMTY4MzEx
-MzE4MiwtNzAxMDUzMjcxLC05Mzg4NTE3MDAsLTg3MjczMTg2OC
-wyMDA3MzM1MTY0LDE3ODg1MzkxMTMsLTE5OTE0MDQ2ODUsMjM5
-NDQwMDg3XX0=
+eyJoaXN0b3J5IjpbMTEwMTE0MDgxNywtNDE3MTIyMzcyLC05NT
+I1MTY0NzcsLTgyOTM1MjIzNiwtMjA4MTQ3MzAxNywtMzU0MDM4
+NTQwLC05NzY0MzUwNjIsMjAxMzI2MTQ2LC02NDIyNDU3LC0xNT
+Q5ODU4NTk1LC0xMDI0NjUzNTM5LDIwNTExMDIxOTksLTc0MjQx
+MjM1MCwtNjY1MDk1MjcyLDE2ODMxMTMxODIsLTcwMTA1MzI3MS
+wtOTM4ODUxNzAwLC04NzI3MzE4NjgsMjAwNzMzNTE2NCwxNzg4
+NTM5MTEzXX0=
 -->
