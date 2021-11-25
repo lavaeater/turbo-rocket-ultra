@@ -81,11 +81,8 @@ class GridMapManager {
         }
     }
 
-    var needsDirectionalLight = true
-
     var animationStateTime = 0f
-
-    val miniMapColor = Color(0.6f, 0.6f, 0.6f, 1f)
+    private val miniMapColor = Color(0.6f, 0.6f, 0.6f, 1f)
 
     fun renderMiniMap(shapeDrawer: ShapeDrawer, xOffset: Float, yOffset:Float, scale: Float = 1/100f) {
         for (section in gridMap.values) {
@@ -102,23 +99,6 @@ class GridMapManager {
                     miniMapColor
                 )
             }
-//            for ((x, column) in section.tiles.withIndex()) {
-//                for ((y, tile) in column.withIndex()) {
-//                    val tileX = x * tileWidth * tileScale * scale
-//                    val tileY = y * tileHeight * tileScale * scale
-//                    val actualX = tileX + sectionOffsetX
-//                    val actualY = tileY + sectionOffsetY
-//                    for (region in tile.renderables.regions) {
-//                        val textureRegion = region.textureRegion
-//                        batch.drawScaled(
-//                            textureRegion,
-//                            actualX,
-//                            actualY,
-//                            tileScale * scale
-//                        )
-//                    }
-//                }
-//            }
             section.lights.forEach { it.isActive = true }
         }
     }
