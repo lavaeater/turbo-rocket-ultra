@@ -24,11 +24,11 @@ Ah! We can have the first level just be like ten zombies, everyone has one gun w
 Nice little todo you got there. Would be a shame if anyone actually did something with it? 
 
 So, what do we need for act one? Well, tons of fun stuff to implement:
-- [ ] More AI-mode-badges - why, tho?
 - [ ] Slower zombies at start of game
 - [ ] Enemies sprinkled out over the map from the start
 - [ ] No spawn points for enemis from the start
 - [ ] New player sprites inspired by Death Road to Canada - I never do this, just hire an artist already
+- [x] More AI-mode-badges - why, tho?
 - [x] Zoom in, slightly
 - [x] Molotov cocktails
 - [x] Build blockades
@@ -697,11 +697,11 @@ Det här gör vi på det gamla vanliga sättet. Vi bygger en box2d-värld, vi kl
 
 Oj oj oj,  vad roligt. Vi kan göra en box2d-kropp med leder, per tutorials etc. Superkul ju.
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbLTgyOTM1MjIzNiwtMjA4MTQ3MzAxNywtMz
-U0MDM4NTQwLC05NzY0MzUwNjIsMjAxMzI2MTQ2LC02NDIyNDU3
-LC0xNTQ5ODU4NTk1LC0xMDI0NjUzNTM5LDIwNTExMDIxOTksLT
-c0MjQxMjM1MCwtNjY1MDk1MjcyLDE2ODMxMTMxODIsLTcwMTA1
-MzI3MSwtOTM4ODUxNzAwLC04NzI3MzE4NjgsMjAwNzMzNTE2NC
-wxNzg4NTM5MTEzLC0xOTkxNDA0Njg1LDIzOTQ0MDA4Nyw1NjI0
-MzAzM119
+eyJoaXN0b3J5IjpbMTM0MTY5MDE0NiwtODI5MzUyMjM2LC0yMD
+gxNDczMDE3LC0zNTQwMzg1NDAsLTk3NjQzNTA2MiwyMDEzMjYx
+NDYsLTY0MjI0NTcsLTE1NDk4NTg1OTUsLTEwMjQ2NTM1MzksMj
+A1MTEwMjE5OSwtNzQyNDEyMzUwLC02NjUwOTUyNzIsMTY4MzEx
+MzE4MiwtNzAxMDUzMjcxLC05Mzg4NTE3MDAsLTg3MjczMTg2OC
+wyMDA3MzM1MTY0LDE3ODg1MzkxMTMsLTE5OTE0MDQ2ODUsMjM5
+NDQwMDg3XX0=
 -->
