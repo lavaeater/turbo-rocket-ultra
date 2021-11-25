@@ -5,6 +5,7 @@ import com.badlogic.ashley.core.Entity
 import ecs.components.ai.NoticedSomething
 import ecs.components.ai.*
 import ecs.components.ai.boss.*
+import ecs.components.gameplay.BurningComponent
 import ecs.components.towers.FindTarget
 import ecs.components.towers.Shoot
 import ecs.components.towers.TargetInRange
@@ -12,7 +13,8 @@ import ecs.components.towers.TargetInRange
 object Tree {
     fun getEnemyBehaviorTree() = tree<Entity> {
         dynamicGuardSelector {
-            first(entityDo<AttackPlayer> { ifEntityHas<PlayerIsInRange>() })
+            first(entityDo<Panic> { ifEntityHas<BurningComponent>() })
+            then(entityDo<AttackPlayer> { ifEntityHas<PlayerIsInRange>() })
             then(entityDo<ChasePlayer> { ifEntityHas<TrackingPlayer>() })
             ifThen(
                 entityHas<NoticedSomething>(),

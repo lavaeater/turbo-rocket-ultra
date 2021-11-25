@@ -273,10 +273,34 @@ class SimpleGridMapDef(val def: List<String>) {
             xeeeexeee
             xeeeexxxl
             xxlxxxeex
-            xxxeexxxx
-            goeeeeeex
-            sgxxxxxxx
+            xxxeelxxx
+            xxeeeeeex
+            sxxxxxxxx
         """.trimIndent().lines()
+        )
+        val levelTwo = SimpleGridMapDef(
+            """
+                xxxxxxxxxxxxxxxxxxxxxx
+                xeeeeeeeeeeeeeeeeeeeex
+                xexxxxxxxxoxxxxxxxxxxx
+                xexeeeeeeeeeeeeeeeeeee
+                xexexxxxxxxxxxxxxxxxxx
+                xexexeeeeeeeeeeeeeeeex
+                xexexexxxxxxxxxxxxxxxx
+                xexexexeeeeeeeeeeeeeee
+                xexexexxexxxxxxxxxxxxe
+                xexxxegbexboxeeeeeeexe
+                xeeeeeeeexooxexxxxoexe
+                xxxxxxxxxxooxeoeexxexe
+                eoeleoelexxxxxxeebgexe
+                eeeeeeeeeeeeeeeeeeeexe
+                eexxxxxxxxxxxxxxxxxxxe
+                exxeeeeeeeeeeeeeeeeeee
+                exeeeeeeeeeeexooeeeeee
+                exxxxxxxxxxxxlooeeeeee
+                exeeeeeeeeeeexxxeeeeee
+                sxeeeeeeeeeeeeeeeeeeee
+            """.trimIndent().lines()
         )
     }
 }

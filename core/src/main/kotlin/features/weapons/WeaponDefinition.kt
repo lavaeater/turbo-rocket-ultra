@@ -17,7 +17,7 @@ class WeaponDefinition(
     val spreadOrMeleeRangeOrArea: Float,
     val textureName: String,
     val ammoType: AmmoType,
-    val damageRange: IntRange,
+    val damageRange: ClosedFloatingPointRange<Float>,
     val reloadDelay: Float,
     val reloadType: ReloadType,
     val audio: Map<String, Sound>
@@ -33,7 +33,7 @@ class WeaponDefinition(
             15f,
             GunFrames.handGun,
             AmmoType.Molotov,
-            5..15,
+            5f..15f,
             0f,
             ReloadType.MeleeWeapon,
             Assets.gunAudio["glock17"]!!
@@ -49,7 +49,7 @@ class WeaponDefinition(
                 5f,
                 GunFrames.handGun, //TODO exhange for bat or something
                 AmmoType.MeleeWeapon,
-                5..15,
+                5f..15f,
                 0f,
                 ReloadType.MeleeWeapon,
                 Assets.gunAudio["glock17"]!!//TODO exhange for bat or something
@@ -65,7 +65,7 @@ class WeaponDefinition(
                 .125f,
                 GunFrames.handGun,
                 AmmoType.NineMilliMeters,
-                8..16,
+                8f..16f,
                 2f,
                 ReloadType.EntireMag,
                 Assets.gunAudio["glock17"]!!
@@ -80,7 +80,7 @@ class WeaponDefinition(
                 15f,
                 GunFrames.spas12,
                 AmmoType.TwelveGaugeShotgun,
-                12..24,
+                12f..24f,
                 1f,
                 ReloadType.SingleShot,
                 Assets.gunAudio["spas12"]!!
@@ -95,7 +95,7 @@ class WeaponDefinition(
                 .125f,
                 GunFrames.spas12,
                 AmmoType.FnP90Ammo,
-                6..14,
+                6f..14f,
                 2f,
                 ReloadType.EntireMag,
                 Assets.gunAudio["fnp90"]!!

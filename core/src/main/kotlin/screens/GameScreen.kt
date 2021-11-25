@@ -72,7 +72,7 @@ class GameScreen(private val gameState: StateMachine<GameState, GameEvent>) : Kt
         for (system in engine.systems) {
             system.setProcessing(true)
         }
-        loadMap()
+        loadMapOne()
         addPlayers()
 
         addTower()
@@ -80,11 +80,20 @@ class GameScreen(private val gameState: StateMachine<GameState, GameEvent>) : Kt
         ui.show()
     }
 
-    private fun loadMap() {
+    private fun loadMapOne() {
         //For debuggin we will swarm with enemies
         CounterObject.numberOfEnemies = 15
 
         mapManager.gridMap = GridMapGenerator.generateFromDefintion(SimpleGridMapDef.levelOne)
+        CounterObject.numberOfObjectives = engine.getEntitiesFor(allOf(ObjectiveComponent::class).get()).count()
+        movePlayersToStart()
+    }
+
+    private fun loadMapTwo() {
+        //For debuggin we will swarm with enemies
+        CounterObject.numberOfEnemies = 30
+
+        mapManager.gridMap = GridMapGenerator.generateFromDefintion(SimpleGridMapDef.levelTwo)
         CounterObject.numberOfObjectives = engine.getEntitiesFor(allOf(ObjectiveComponent::class).get()).count()
         movePlayersToStart()
     }
@@ -185,7 +194,11 @@ D1B67A
         factsOfTheWorld.stateBoolFact(Facts.LevelComplete, false)
 
         CounterObject.currentLevel++
-        generateMap(CounterObject.currentLevel)
+        if(CounterObject.currentLevel == 2) {
+            loadMapTwo()
+        } else {
+            generateMap(CounterObject.currentLevel)
+        }
     }
 
     private val mapManager by lazy { inject<GridMapManager>() }

@@ -8,8 +8,8 @@ import ktx.math.vec2
 /**
  * A generic particle effect handler?
  */
-class ParticleEffectComponent: Component, Pool.Poolable {
-    private lateinit var _effect: ParticleEffect
+open class ParticleEffectComponent: Component, Pool.Poolable {
+    lateinit var _effect: ParticleEffect
     var effect: ParticleEffect
         get() = _effect
         set(value) {
@@ -29,5 +29,8 @@ class ParticleEffectComponent: Component, Pool.Poolable {
         at = vec2()
         rotation = 0f
     }
+}
+
+class FireEffectComponent : ParticleEffectComponent() {
 
 }

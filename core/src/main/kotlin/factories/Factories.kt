@@ -185,6 +185,9 @@ fun fireEntity(at: Vector2, linearVelocity: Vector2) {
             rotation = 270f
         }
         with<DamageEffectComponent>()
+        with<DestroyAfterCoolDownComponent> {
+            coolDown = (5f..25f).random()
+        }
     }
 }
 
@@ -439,7 +442,7 @@ fun thrownProjectile(at: Vector2, towards: Vector2, speed: Float) {
     CounterObject.bulletCount++
 }
 
-fun bullet(at: Vector2, towards: Vector2, speed: Float, damage: Int) {
+fun bullet(at: Vector2, towards: Vector2, speed: Float, damage: Float) {
     val box2dBody = world().body {
         type = BodyDef.BodyType.DynamicBody
         position.set(at)
@@ -568,7 +571,7 @@ fun boss(at: Vector2, level: Int) {
             fieldOfView = 270f
             rushSpeed = 15f + level * 1.5f
             viewDistance = 40f + 5f * level
-            health = 1000 * level
+            health = 1000f * level
         }
         with<AnimatedCharacterComponent> {
             anims = Assets.bosses.values.random()

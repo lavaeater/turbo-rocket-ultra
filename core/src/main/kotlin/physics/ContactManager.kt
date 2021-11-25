@@ -12,6 +12,7 @@ import ecs.components.ai.TrackingPlayer
 import ecs.components.enemy.EnemyComponent
 import ecs.components.enemy.EnemySensorComponent
 import ecs.components.enemy.TackleComponent
+import ecs.components.fx.ParticleEffectComponent
 import ecs.components.gameplay.*
 import ecs.components.pickups.LootComponent
 import ecs.components.player.*
@@ -170,6 +171,14 @@ class ContactManager : ContactListener {
             is ContactType.EnemyAndDamage -> {
                 val enemy = contactType.enemy
                 val damage = contactType.damageEntity
+
+                val damageComponent = damage.getComponent<DamageEffectComponent>()
+                enemy.addComponent<BurningComponent>()
+                enemy.addComponent<ParticleEffectComponent> {
+                    effect = Assets.fireEffectPool.obtain()
+                }
+
+
             }
             is ContactType.EnemySensesPlayer -> {
                 val enemy = contactType.enemy
@@ -302,13 +311,6 @@ class ContactManager : ContactListener {
             }
         }
 
-        if (contact.isPlayerContact()) {
-            if (contact.atLeastOneHas<ShotComponent>()) {
-                //A shot does 20 damage
-
-            }
-
-        }
         if (contact.atLeastOneHas<BulletComponent>()) {
             val entity = contact.getEntityFor<BulletComponent>()
             entity.add(DestroyComponent())

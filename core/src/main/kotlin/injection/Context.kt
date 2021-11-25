@@ -13,6 +13,8 @@ import com.badlogic.gdx.graphics.g2d.PolygonSpriteBatch
 import com.badlogic.gdx.utils.viewport.ExtendViewport
 import com.strongjoshua.console.CommandExecutor
 import com.strongjoshua.console.GUIConsole
+import ecs.components.gameplay.DamageEffectComponent
+import ecs.components.gameplay.DestroyAfterCoolDownComponent
 import ecs.systems.*
 import ecs.systems.ai.*
 import ecs.systems.ai.boss.RushPlayerSystem
@@ -85,7 +87,7 @@ object Context {
     private fun getEngine(): Engine {
         return PooledEngine().apply {
             addSystem(PhysicsSystem(inject()))
-            addSystem(PhysicsDebugRendererSystem(inject(), inject()))
+            //addSystem(PhysicsDebugRendererSystem(inject(), inject()))
             addSystem(CameraUpdateSystem())
             addSystem(PlayerMoveSystem())
             addSystem(KeyboardInputSystem())
@@ -98,6 +100,7 @@ object Context {
             addSystem(EnemyMovementSystem())
             // Ai Systems Start
             addSystem(AmblingSystem())
+            addSystem(PanicSystem())
             addSystem(BehaviorTreeSystem())
             addSystem(ChasePlayerSystem())
             addSystem(SeekPlayerSystem(true))
@@ -107,6 +110,10 @@ object Context {
             addSystem(InvestigateSystem())
             addSystem(RushPlayerSystem())
             // Ai Systems End
+            //Burning
+            addSystem(BurningSystem())
+            addSystem(DestroyAfterReadingSystem())
+            //Burning End
             addSystem(PlayerDeathSystem())
             addSystem(EnemySpawnSystem())
             addSystem(EnemyOptimizerSystem())
