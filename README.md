@@ -31,7 +31,7 @@ So, what do we need for act one? Well, tons of fun stuff to implement:
 - [ ] New player sprites inspired by Death Road to Canada - never do this, just hire an artist already
 - [x] Better Ambling System - using pathfinding
 - [x] Also implement minimap that actually only shows parts you have visited, perhaps?
-- [x] More AI-mode-badges - why, tho?
+- [x] More AI-mode-badges
 - [x] Zoom in, slightly
 - [x] Molotov cocktails
 - [x] Build blockades
@@ -706,11 +706,11 @@ Det här gör vi på det gamla vanliga sättet. Vi bygger en box2d-värld, vi kl
 
 Oj oj oj,  vad roligt. Vi kan göra en box2d-kropp med leder, per tutorials etc. Superkul ju.
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbNzUyNzQ3NDg5LDY4ODQ4NDUwNCwxMTAxMT
-QwODE3LC00MTcxMjIzNzIsLTk1MjUxNjQ3NywtODI5MzUyMjM2
-LC0yMDgxNDczMDE3LC0zNTQwMzg1NDAsLTk3NjQzNTA2MiwyMD
-EzMjYxNDYsLTY0MjI0NTcsLTE1NDk4NTg1OTUsLTEwMjQ2NTM1
-MzksMjA1MTEwMjE5OSwtNzQyNDEyMzUwLC02NjUwOTUyNzIsMT
-Y4MzExMzE4MiwtNzAxMDUzMjcxLC05Mzg4NTE3MDAsLTg3Mjcz
-MTg2OF19
+eyJoaXN0b3J5IjpbLTE5NDY2NTY3NDgsNjg4NDg0NTA0LDExMD
+ExNDA4MTcsLTQxNzEyMjM3MiwtOTUyNTE2NDc3LC04MjkzNTIy
+MzYsLTIwODE0NzMwMTcsLTM1NDAzODU0MCwtOTc2NDM1MDYyLD
+IwMTMyNjE0NiwtNjQyMjQ1NywtMTU0OTg1ODU5NSwtMTAyNDY1
+MzUzOSwyMDUxMTAyMTk5LC03NDI0MTIzNTAsLTY2NTA5NTI3Mi
+wxNjgzMTEzMTgyLC03MDEwNTMyNzEsLTkzODg1MTcwMCwtODcy
+NzMxODY4XX0=
 -->
