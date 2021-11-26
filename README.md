@@ -24,12 +24,12 @@ Ah! We can have the first level just be like ten zombies, everyone has one gun w
 Nice little todo you got there. Would be a shame if anyone actually did something with it? 
 
 So, what do we need for act one? Well, tons of fun stuff to implement:
-- [ ] Fix minimap after level one
-- [ ] Fix the seek system
 - [ ] Slower zombies at start of game
 - [ ] Enemies sprinkled out over the map from the start
-- [ ] No spawn points for enemis from the start
+- [ ] No spawn points for enemies from the start
 - [ ] New player sprites inspired by Death Road to Canada - never do this, just hire an artist already
+- [x] Fix minimap after level one
+- [x] Fix the seek system
 - [x] Better Ambling System - using pathfinding
 - [x] Also implement minimap that actually only shows parts you have visited, perhaps?
 - [x] More AI-mode-badges
@@ -44,7 +44,7 @@ So, what do we need for act one? Well, tons of fun stuff to implement:
 #### Fix the seek system
 So, the seek system is "improved" as in I am using faster methods to do it. But it seems that it could use some improvement, the raycasting seems way off, for instance, and sometimes it appears that the enemies do absolutely nothing. Some good changes would be if they when seeking could simply turn around a little to make stuff creepier, and also, if, for instance, a player enters the sensor range, the enemy doesn't notice immediately, rather it starts turning towards that position and is seeking while doing so.
 - [ ] Turn while seeking
-- [ ] Check raycasting
+- [x] Check raycasting
 
 
 #### Better Ambling
@@ -713,11 +713,11 @@ Det här gör vi på det gamla vanliga sättet. Vi bygger en box2d-värld, vi kl
 
 Oj oj oj,  vad roligt. Vi kan göra en box2d-kropp med leder, per tutorials etc. Superkul ju.
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbLTEzMDQ2MjM5ODAsLTE5NDY2NTY3NDgsNj
-g4NDg0NTA0LDExMDExNDA4MTcsLTQxNzEyMjM3MiwtOTUyNTE2
-NDc3LC04MjkzNTIyMzYsLTIwODE0NzMwMTcsLTM1NDAzODU0MC
-wtOTc2NDM1MDYyLDIwMTMyNjE0NiwtNjQyMjQ1NywtMTU0OTg1
-ODU5NSwtMTAyNDY1MzUzOSwyMDUxMTAyMTk5LC03NDI0MTIzNT
-AsLTY2NTA5NTI3MiwxNjgzMTEzMTgyLC03MDEwNTMyNzEsLTkz
-ODg1MTcwMF19
+eyJoaXN0b3J5IjpbMTIyMzEyOTA1OSwtMTMwNDYyMzk4MCwtMT
+k0NjY1Njc0OCw2ODg0ODQ1MDQsMTEwMTE0MDgxNywtNDE3MTIy
+MzcyLC05NTI1MTY0NzcsLTgyOTM1MjIzNiwtMjA4MTQ3MzAxNy
+wtMzU0MDM4NTQwLC05NzY0MzUwNjIsMjAxMzI2MTQ2LC02NDIy
+NDU3LC0xNTQ5ODU4NTk1LC0xMDI0NjUzNTM5LDIwNTExMDIxOT
+ksLTc0MjQxMjM1MCwtNjY1MDk1MjcyLDE2ODMxMTMxODIsLTcw
+MTA1MzI3MV19
 -->
