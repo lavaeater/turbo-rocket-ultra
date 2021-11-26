@@ -183,7 +183,7 @@ D1B67A
     private fun movePlayersToStart() {
         val startBounds = mapManager.gridMap.values.first { it.startSection }.innerBounds
         val players = engine.getEntitiesFor(allOf(PlayerComponent::class).get())
-        for(player in players) {
+        for (player in players) {
             val body = player.getComponent<BodyComponent>().body!!
             body.setTransform(startBounds.randomPoint(), body.angle)
         }
@@ -198,14 +198,11 @@ D1B67A
         factsOfTheWorld.stateBoolFact(Facts.LevelComplete, false)
 
         CounterObject.currentLevel++
-        if(CounterObject.currentLevel == 2) {
-            loadMapTwo()
-        } else {
-            generateMap(CounterObject.currentLevel)
-        }
+        generateMap(CounterObject.currentLevel)
     }
 
     private val mapManager by lazy { inject<GridMapManager>() }
+
     @OptIn(ExperimentalStdlibApi::class)
     private fun generateMap(level: Int) {
         /*
@@ -239,7 +236,7 @@ D1B67A
         }
         engine.removeAllEntities(allOf(ObjectiveComponent::class).get())
 
-        for(obstacle in engine.getEntitiesFor(allOf(ObstacleComponent::class).get())) {
+        for (obstacle in engine.getEntitiesFor(allOf(ObstacleComponent::class).get())) {
             val bodyComponent = obstacle.getComponent<BodyComponent>()
             world.destroyBody(bodyComponent.body)
             obstacle.remove<BodyComponent>()
@@ -249,7 +246,7 @@ D1B67A
         //For debuggin we will swarm with enemies
         CounterObject.numberOfEnemies = (8f.pow(CounterObject.currentLevel).roundToInt() * 2).coerceAtMost(MAX_ENEMIES)
 
-        val map =  GridMapGenerator.generate(CounterObject.currentLength, level)
+        val map = GridMapGenerator.generate(CounterObject.currentLength, level)
         mapManager.gridMap = map.first
         mapManager.sectionGraph = map.second
         CounterObject.numberOfObjectives = engine.getEntitiesFor(allOf(ObjectiveComponent::class).get()).count()

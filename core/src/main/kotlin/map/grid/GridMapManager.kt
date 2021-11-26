@@ -39,7 +39,8 @@ class GridMapManager {
     }
 
     fun haveWeVisited(x: Int, y:Int) : Boolean {
-        return visitedMap.containsKey(x) && visitedMap[x]!!.containsKey(y) && visitedMap[x]!![y]!!
+        return true
+//        return visitedMap.containsKey(x) && visitedMap[x]!!.containsKey(y) && visitedMap[x]!![y]!!
     }
 
     private val buildableMap = mutableMapOf<Int, MutableMap<Int, Boolean>>()

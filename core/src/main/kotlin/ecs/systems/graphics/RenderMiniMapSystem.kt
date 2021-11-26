@@ -39,7 +39,7 @@ class RenderMiniMapSystem : SortedIteratingSystem(allOf(TextureComponent::class,
     override fun processEntity(entity: Entity, deltaTime: Float) {
         val transform = entity.getComponent<TransformComponent>()
         val miniMapComponent = entity.getComponent<MiniMapComponent>()
-        if(transform.position.dst2(camera.position.x, camera.position.y) < 2000f) {
+        if(transform.position.dst2(camera.position.x, camera.position.y) < 20000f) {
             center.set(
                 transform.position.x * scale + xOffset, transform.position.y * scale + yOffset
             )
