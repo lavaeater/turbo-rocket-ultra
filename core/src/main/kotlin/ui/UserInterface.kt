@@ -19,7 +19,7 @@ import ui.simple.*
 
 class UserInterface(
     private val batch: Batch,
-    debug: Boolean = true
+    debug: Boolean
 ) : IUserInterface {
 
     private val players get() = Players.players

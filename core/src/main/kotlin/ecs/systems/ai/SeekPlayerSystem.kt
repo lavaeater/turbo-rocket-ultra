@@ -59,6 +59,7 @@ class SeekPlayerSystem(val debug: Boolean) : IteratingSystem(allOf(SeekPlayer::c
             seekComponent.needsScanVector = false
         }
 
+        val scanDirection = vec2()
         if (!seekComponent.foundAPlayer && seekComponent.coolDown > 0f) {
 
             var lowestFraction = 1f
@@ -77,11 +78,13 @@ class SeekPlayerSystem(val debug: Boolean) : IteratingSystem(allOf(SeekPlayer::c
                             seekComponent.fieldOfView
                         )
                     ) {
+
+                         scanDirection.set(enemyPosition.cpy().add(playerPosition.cpy().sub(enemyPosition).nor().scl(enemyComponent.viewDistance)))
+
                         world().rayCast(
                             enemyPosition,
-                            playerPosition
-                        ) { fixture, point, normal, fraction ->
-                            if (fraction < lowestFraction && !fixture.isSensor) {
+                            scanDirection) { fixture, point, normal, fraction ->
+                            if (fraction < lowestFraction && fixture.isPlayer()) {
                                 lowestFraction = fraction
                                 closestFixture = fixture
                                 pointOfHit.set(point)
@@ -90,16 +93,7 @@ class SeekPlayerSystem(val debug: Boolean) : IteratingSystem(allOf(SeekPlayer::c
                             RayCast.CONTINUE
                         }
 
-                        if (debug) {
-                            shapeDrawer.batch.use {
-                                shapeDrawer.sector(
-                                    enemyPosition.x,
-                                    enemyPosition.y,
-                                    seekComponent.viewDistance,
-                                    seekComponent.scanVector.angleRad() - seekComponent.fieldOfView / 2 * degreesToRadians, seekComponent.fieldOfView * degreesToRadians, debugColor, debugColor)
-                                shapeDrawer.line(enemyPosition, pointOfHit, Color(1f, 0f, 0f, 0.1f), .2f)
-                            }
-                        }
+
                         if (::closestFixture.isInitialized && closestFixture.isPlayer()) {
                             seekComponent.foundAPlayer = true
                             entity.add(
@@ -107,6 +101,17 @@ class SeekPlayerSystem(val debug: Boolean) : IteratingSystem(allOf(SeekPlayer::c
                                     .apply { this.player = player.getComponent<PlayerComponent>().player })
                             seekComponent.status = Task.Status.SUCCEEDED
                             return
+                        }
+                    }
+                    if (debug) {
+                        shapeDrawer.batch.use {
+                            shapeDrawer.sector(
+                                enemyPosition.x,
+                                enemyPosition.y,
+                                seekComponent.viewDistance,
+                                seekComponent.scanVector.angleRad() - seekComponent.fieldOfView / 2 * degreesToRadians, seekComponent.fieldOfView * degreesToRadians, debugColor, debugColor)
+                            shapeDrawer.line(enemyPosition, scanDirection, Color(0f, 0f, 1f, 0.3f), .2f)
+                            shapeDrawer.line(enemyPosition, pointOfHit, Color(1f, 0f, 0f, 0.3f), .2f)
                         }
                     }
                 }
