@@ -42,7 +42,9 @@ So, what do we need for act one? Well, tons of fun stuff to implement:
 - [x] Weapons as pickups
 
 #### Fix the seek system
-So, the seek system is "improved" as in I am using faster methods to do it. But it seems that it could use some improvement, the raycasting seems way off, for instance, and sometimes it appears that the enemies do absolutely nothing. Better would be if they 
+So, the seek system is "improved" as in I am using faster methods to do it. But it seems that it could use some improvement, the raycasting seems way off, for instance, and sometimes it appears that the enemies do absolutely nothing. Some good changes would be if they when seeking could simply turn around a little to make stuff creepier, and also, if, for instance, a player enters the sensor range, the enemy doesn't notice immediately, rather it starts turning towards that position and is seeking while doing so.
+- [ ] Turn while seeking
+- [ ] Check raycasting
 
 
 #### Better Ambling
@@ -711,11 +713,11 @@ Det här gör vi på det gamla vanliga sättet. Vi bygger en box2d-värld, vi kl
 
 Oj oj oj,  vad roligt. Vi kan göra en box2d-kropp med leder, per tutorials etc. Superkul ju.
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbLTk5NjcxMTcwOCwtMTk0NjY1Njc0OCw2OD
-g0ODQ1MDQsMTEwMTE0MDgxNywtNDE3MTIyMzcyLC05NTI1MTY0
-NzcsLTgyOTM1MjIzNiwtMjA4MTQ3MzAxNywtMzU0MDM4NTQwLC
-05NzY0MzUwNjIsMjAxMzI2MTQ2LC02NDIyNDU3LC0xNTQ5ODU4
-NTk1LC0xMDI0NjUzNTM5LDIwNTExMDIxOTksLTc0MjQxMjM1MC
-wtNjY1MDk1MjcyLDE2ODMxMTMxODIsLTcwMTA1MzI3MSwtOTM4
-ODUxNzAwXX0=
+eyJoaXN0b3J5IjpbLTEzMDQ2MjM5ODAsLTE5NDY2NTY3NDgsNj
+g4NDg0NTA0LDExMDExNDA4MTcsLTQxNzEyMjM3MiwtOTUyNTE2
+NDc3LC04MjkzNTIyMzYsLTIwODE0NzMwMTcsLTM1NDAzODU0MC
+wtOTc2NDM1MDYyLDIwMTMyNjE0NiwtNjQyMjQ1NywtMTU0OTg1
+ODU5NSwtMTAyNDY1MzUzOSwyMDUxMTAyMTk5LC03NDI0MTIzNT
+AsLTY2NTA5NTI3MiwxNjgzMTEzMTgyLC03MDEwNTMyNzEsLTkz
+ODg1MTcwMF19
 -->
