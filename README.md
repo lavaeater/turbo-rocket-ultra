@@ -27,7 +27,6 @@ So, what do we need for act one? Well, tons of fun stuff to implement:
 - [ ] Slower zombies at start of game
 - [ ] Enemies sprinkled out over the map from the start
 - [ ] No spawn points for enemies from the start
-- [ ] New player sprites inspired by Death Road to Canada - never do this, just hire an artist already
 - [x] Fix minimap after level one
 - [x] Fix the seek system
 - [x] Better Ambling System - using pathfinding
@@ -713,11 +712,11 @@ Det här gör vi på det gamla vanliga sättet. Vi bygger en box2d-värld, vi kl
 
 Oj oj oj,  vad roligt. Vi kan göra en box2d-kropp med leder, per tutorials etc. Superkul ju.
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbMTIyMzEyOTA1OSwtMTMwNDYyMzk4MCwtMT
-k0NjY1Njc0OCw2ODg0ODQ1MDQsMTEwMTE0MDgxNywtNDE3MTIy
-MzcyLC05NTI1MTY0NzcsLTgyOTM1MjIzNiwtMjA4MTQ3MzAxNy
-wtMzU0MDM4NTQwLC05NzY0MzUwNjIsMjAxMzI2MTQ2LC02NDIy
-NDU3LC0xNTQ5ODU4NTk1LC0xMDI0NjUzNTM5LDIwNTExMDIxOT
-ksLTc0MjQxMjM1MCwtNjY1MDk1MjcyLDE2ODMxMTMxODIsLTcw
-MTA1MzI3MV19
+eyJoaXN0b3J5IjpbMTI1NTEzMjE5OSwxMjIzMTI5MDU5LC0xMz
+A0NjIzOTgwLC0xOTQ2NjU2NzQ4LDY4ODQ4NDUwNCwxMTAxMTQw
+ODE3LC00MTcxMjIzNzIsLTk1MjUxNjQ3NywtODI5MzUyMjM2LC
+0yMDgxNDczMDE3LC0zNTQwMzg1NDAsLTk3NjQzNTA2MiwyMDEz
+MjYxNDYsLTY0MjI0NTcsLTE1NDk4NTg1OTUsLTEwMjQ2NTM1Mz
+ksMjA1MTEwMjE5OSwtNzQyNDEyMzUwLC02NjUwOTUyNzIsMTY4
+MzExMzE4Ml19
 -->
