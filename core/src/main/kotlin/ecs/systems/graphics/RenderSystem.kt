@@ -17,7 +17,7 @@ import tru.Assets
 
 @OptIn(ExperimentalStdlibApi::class)
 class RenderSystem(
-    private val batch: Batch, private val debug: Boolean = false
+    private val batch: Batch, private val debug: Boolean
 ) : SortedIteratingSystem(
     allOf(
         TransformComponent::class,

@@ -8,7 +8,7 @@ import ktx.math.vec2
 
 class SeekPlayer: TaskComponent() {
     init {
-        coolDownRange = 3f..7f
+        coolDownRange = 2f..2f
         coolDown = coolDownRange.random()
     }
     var foundAPlayer = false

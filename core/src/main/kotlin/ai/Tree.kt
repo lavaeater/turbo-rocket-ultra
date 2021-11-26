@@ -25,9 +25,9 @@ object Tree {
                 })
             last(
                 selector<Entity> {
-                    first(invert(entityDo<Amble>()))
-                    then(invert(entityDo<SeekPlayer>()))
-                    last(invert(entityDo<ChasePlayer>()))
+//                    first(invert(entityDo<Amble>()))
+                    first(invert(entityDo<SeekPlayer>()))
+//                    last(invert(entityDo<ChasePlayer>()))
                 })
         }
     }

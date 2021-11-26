@@ -40,6 +40,13 @@ class SimpleGridMapDef(val def: List<String>) {
         }
 
     companion object {
+        val levelThree = SimpleGridMapDef(
+            """
+            xgo
+            xxx
+            sxx
+        """.trimIndent().lines()
+        )
         val levelOne = SimpleGridMapDef(
             """
             xxxxgoxxb

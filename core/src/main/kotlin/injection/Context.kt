@@ -60,7 +60,7 @@ object Context {
         context.register {
             bindSingleton(PolygonSpriteBatch())
             bindSingleton(OrthographicCamera())
-            bind<IUserInterface> { UserInterface(inject<PolygonSpriteBatch>() as Batch) }
+            bind<IUserInterface> { UserInterface(inject<PolygonSpriteBatch>() as Batch, false) }
             bindSingleton(
                 ExtendViewport(
                     GAMEWIDTH,
@@ -104,7 +104,7 @@ object Context {
             addSystem(PanicSystem())
             addSystem(BehaviorTreeSystem())
             addSystem(ChasePlayerSystem())
-            addSystem(SeekPlayerSystem(true))
+            addSystem(SeekPlayerSystem(false))
             addSystem(AttackPlayerSystem())
             addSystem(EnemyDirectionSystem())
             addSystem(EnemyHearsShotsSystem())
@@ -125,7 +125,7 @@ object Context {
             addSystem(WeaponChangeAndReloadSystem())
             addSystem(UpdatePlayerStatsSystem())
             addSystem(RenderMapSystem(inject<PolygonSpriteBatch>() as Batch, inject<OrthographicCamera>() as Camera, inject()))
-            addSystem(RenderSystem(inject<PolygonSpriteBatch>() as Batch))
+            addSystem(RenderSystem(inject<PolygonSpriteBatch>() as Batch, false))
             addSystem(RenderUserInterfaceSystem(inject<PolygonSpriteBatch>() as Batch))
             addSystem(RenderMiniMapSystem())
             addSystem(PlayerFlashlightSystem())
@@ -141,7 +141,7 @@ object Context {
             addSystem(GibSystem())
             addSystem(FactSystem())
             addSystem(FrustumCullingSystem())
-            addSystem(BuildSystem())
+            addSystem(BuildSystem(false))
         }
     }
 }

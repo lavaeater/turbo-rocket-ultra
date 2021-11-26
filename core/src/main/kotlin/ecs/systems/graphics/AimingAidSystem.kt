@@ -15,7 +15,7 @@ import physics.getComponent
 import tru.Assets
 
 
-class AimingAidSystem(private val debug: Boolean = true, private val renderRedDot: Boolean = true) :
+class AimingAidSystem(private val debug: Boolean, private val renderRedDot: Boolean = true) :
     IteratingSystem(
         allOf(
             TransformComponent::class,
@@ -40,7 +40,7 @@ class AimingAidSystem(private val debug: Boolean = true, private val renderRedDo
         aimVector.set(controlComponent.aimVector)
         if (renderRedDot) {
             shapeDrawer.line(
-                vec2(transform.position.x + aimVector.x, transform.position.y - 1 + aimVector.y),
+                vec2(transform.position.x + aimVector.x, transform.position.y + aimVector.y),
                 aimVector.setLength(50f).add(transform.position),
                 Color(1f, 0f, 0f, .1f),
                 .1f
