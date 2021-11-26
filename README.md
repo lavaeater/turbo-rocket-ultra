@@ -25,6 +25,7 @@ Players can only punch. However, they can find weapons and ammo
 
 But how does weapons and ammo work when playing multiplayer? Communal inventory of course!
 
+- [ ] Communal Inventory
 ##### Level Two
 ##### Level Three
 ##### Level Four
@@ -728,7 +729,7 @@ Det här gör vi på det gamla vanliga sättet. Vi bygger en box2d-värld, vi kl
 
 Oj oj oj,  vad roligt. Vi kan göra en box2d-kropp med leder, per tutorials etc. Superkul ju.
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbMzkyNzkzNTA1LC05NDY5NDM5OSwtOTU3NT
+eyJoaXN0b3J5IjpbMzQyNzQ0MTM2LC05NDY5NDM5OSwtOTU3NT
 g2MzMsMTIyMzEyOTA1OSwtMTMwNDYyMzk4MCwtMTk0NjY1Njc0
 OCw2ODg0ODQ1MDQsMTEwMTE0MDgxNywtNDE3MTIyMzcyLC05NT
 I1MTY0NzcsLTgyOTM1MjIzNiwtMjA4MTQ3MzAxNywtMzU0MDM4
