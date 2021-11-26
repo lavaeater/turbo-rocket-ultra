@@ -16,6 +16,9 @@ What the game needs is polish in the long run, but to keep me going I must not g
 
 ### Three acts of terror
 
+#### There will be three acts
+And three they shall be. Act one will have five levels, act Two will have ten, act three will hav 
+
 #### Act one - a small beginning
 The game I have built so far is a very basic zombie survival top-down twin-stick shooter. To make it more game-like, I think we need to make the beginning smaller. Perhaps we could start with the players only having close-combat weapons? That would mean implementing melee combat, which could be cool. So, the gameplay would progress over the ten first levels with small-ish levels (the physical size of the level might be large, just not epic numbers of zombies etc) where the players get to test all their skills and tools, in preparation for the second act, where they are prepared but the hordes are larger. Also, Zombies? They are stand-ins for something properly funny to have as enemies. But that can be changed later. And also, we don't need to plan for the entirety of the three acts, because we can simply work on them as we progress. But the start of the game should be (perhaps) hand-to-hand combat, handguns, molotovs and building barricades if there is a horde coming. We could put some actual level-design to use as well, using some kind of simple format for that. Also, we need UI blurs and speech bubbles to signal stuff in a cool way. Zombies need to be waay slower in the beginning, as well, and we need to add more AI-debug stuff in a nicer way. A nice little nine-patcher would be cool.
 
@@ -713,11 +716,11 @@ Det här gör vi på det gamla vanliga sättet. Vi bygger en box2d-värld, vi kl
 
 Oj oj oj,  vad roligt. Vi kan göra en box2d-kropp med leder, per tutorials etc. Superkul ju.
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbLTk1NzU4NjMzLDEyMjMxMjkwNTksLTEzMD
-Q2MjM5ODAsLTE5NDY2NTY3NDgsNjg4NDg0NTA0LDExMDExNDA4
-MTcsLTQxNzEyMjM3MiwtOTUyNTE2NDc3LC04MjkzNTIyMzYsLT
-IwODE0NzMwMTcsLTM1NDAzODU0MCwtOTc2NDM1MDYyLDIwMTMy
-NjE0NiwtNjQyMjQ1NywtMTU0OTg1ODU5NSwtMTAyNDY1MzUzOS
-wyMDUxMTAyMTk5LC03NDI0MTIzNTAsLTY2NTA5NTI3MiwxNjgz
-MTEzMTgyXX0=
+eyJoaXN0b3J5IjpbMjEwODA3NTY4LC05NTc1ODYzMywxMjIzMT
+I5MDU5LC0xMzA0NjIzOTgwLC0xOTQ2NjU2NzQ4LDY4ODQ4NDUw
+NCwxMTAxMTQwODE3LC00MTcxMjIzNzIsLTk1MjUxNjQ3NywtOD
+I5MzUyMjM2LC0yMDgxNDczMDE3LC0zNTQwMzg1NDAsLTk3NjQz
+NTA2MiwyMDEzMjYxNDYsLTY0MjI0NTcsLTE1NDk4NTg1OTUsLT
+EwMjQ2NTM1MzksMjA1MTEwMjE5OSwtNzQyNDEyMzUwLC02NjUw
+OTUyNzJdfQ==
 -->
