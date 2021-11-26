@@ -19,7 +19,7 @@ import tru.Assets
 class RenderMiniMapSystem : SortedIteratingSystem(allOf(TextureComponent::class, TransformComponent::class, MiniMapComponent::class).get(),
     Comparator<Entity> { p0, p1 -> p1.getComponent<TextureComponent>().layer.compareTo(p0.getComponent<TextureComponent>().layer) }, 32) {
     private val shapeDrawer by lazy { Assets.shapeDrawer }
-    private val scale = 1/100f
+    private val scale = 1/200f
     private val center = vec2()
     private val camera by lazy { inject<OrthographicCamera>() }
     private val xOffset get() = camera.position.x + camera.viewportWidth / 3
@@ -39,7 +39,7 @@ class RenderMiniMapSystem : SortedIteratingSystem(allOf(TextureComponent::class,
     override fun processEntity(entity: Entity, deltaTime: Float) {
         val transform = entity.getComponent<TransformComponent>()
         val miniMapComponent = entity.getComponent<MiniMapComponent>()
-        if(transform.position.dst2(camera.position.x, camera.position.y) < 200000f) {
+        if(transform.position.dst2(camera.position.x, camera.position.y) < 2000f) {
             center.set(
                 transform.position.x * scale + xOffset, transform.position.y * scale + yOffset
             )
