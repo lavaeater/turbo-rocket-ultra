@@ -21,6 +21,7 @@ And three they shall be. Act one will have five levels, act Two will have ten, a
 
 #### Act One
 ##### Level One
+Players can only punch. 
 ##### Level Two
 ##### Level Three
 ##### Level Four
@@ -724,11 +725,11 @@ Det här gör vi på det gamla vanliga sättet. Vi bygger en box2d-värld, vi kl
 
 Oj oj oj,  vad roligt. Vi kan göra en box2d-kropp med leder, per tutorials etc. Superkul ju.
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbLTk0Njk0Mzk5LC05NTc1ODYzMywxMjIzMT
-I5MDU5LC0xMzA0NjIzOTgwLC0xOTQ2NjU2NzQ4LDY4ODQ4NDUw
-NCwxMTAxMTQwODE3LC00MTcxMjIzNzIsLTk1MjUxNjQ3NywtOD
-I5MzUyMjM2LC0yMDgxNDczMDE3LC0zNTQwMzg1NDAsLTk3NjQz
-NTA2MiwyMDEzMjYxNDYsLTY0MjI0NTcsLTE1NDk4NTg1OTUsLT
-EwMjQ2NTM1MzksMjA1MTEwMjE5OSwtNzQyNDEyMzUwLC02NjUw
-OTUyNzJdfQ==
+eyJoaXN0b3J5IjpbLTEwNDcxMTYyNTEsLTk0Njk0Mzk5LC05NT
+c1ODYzMywxMjIzMTI5MDU5LC0xMzA0NjIzOTgwLC0xOTQ2NjU2
+NzQ4LDY4ODQ4NDUwNCwxMTAxMTQwODE3LC00MTcxMjIzNzIsLT
+k1MjUxNjQ3NywtODI5MzUyMjM2LC0yMDgxNDczMDE3LC0zNTQw
+Mzg1NDAsLTk3NjQzNTA2MiwyMDEzMjYxNDYsLTY0MjI0NTcsLT
+E1NDk4NTg1OTUsLTEwMjQ2NTM1MzksMjA1MTEwMjE5OSwtNzQy
+NDEyMzUwXX0=
 -->
