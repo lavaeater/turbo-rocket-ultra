@@ -21,7 +21,7 @@ And three they shall be. Act one will have five levels, act Two will have ten, a
 
 #### Act One
 ##### Level One
-Players can only punch. 
+Players can only punch. However, they can find weapons!
 ##### Level Two
 ##### Level Three
 ##### Level Four
@@ -725,11 +725,11 @@ Det här gör vi på det gamla vanliga sättet. Vi bygger en box2d-värld, vi kl
 
 Oj oj oj,  vad roligt. Vi kan göra en box2d-kropp med leder, per tutorials etc. Superkul ju.
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbLTEwNDcxMTYyNTEsLTk0Njk0Mzk5LC05NT
-c1ODYzMywxMjIzMTI5MDU5LC0xMzA0NjIzOTgwLC0xOTQ2NjU2
-NzQ4LDY4ODQ4NDUwNCwxMTAxMTQwODE3LC00MTcxMjIzNzIsLT
-k1MjUxNjQ3NywtODI5MzUyMjM2LC0yMDgxNDczMDE3LC0zNTQw
-Mzg1NDAsLTk3NjQzNTA2MiwyMDEzMjYxNDYsLTY0MjI0NTcsLT
-E1NDk4NTg1OTUsLTEwMjQ2NTM1MzksMjA1MTEwMjE5OSwtNzQy
-NDEyMzUwXX0=
+eyJoaXN0b3J5IjpbMTg5ODU1ODY3NiwtOTQ2OTQzOTksLTk1Nz
+U4NjMzLDEyMjMxMjkwNTksLTEzMDQ2MjM5ODAsLTE5NDY2NTY3
+NDgsNjg4NDg0NTA0LDExMDExNDA4MTcsLTQxNzEyMjM3MiwtOT
+UyNTE2NDc3LC04MjkzNTIyMzYsLTIwODE0NzMwMTcsLTM1NDAz
+ODU0MCwtOTc2NDM1MDYyLDIwMTMyNjE0NiwtNjQyMjQ1NywtMT
+U0OTg1ODU5NSwtMTAyNDY1MzUzOSwyMDUxMTAyMTk5LC03NDI0
+MTIzNTBdfQ==
 -->
