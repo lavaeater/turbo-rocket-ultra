@@ -25,11 +25,11 @@ Nice little todo you got there. Would be a shame if anyone actually did somethin
 
 So, what do we need for act one? Well, tons of fun stuff to implement:
 - [ ] Fix minimap after level one
-- [ ] Fix the seek system
 - [ ] Slower zombies at start of game
 - [ ] Enemies sprinkled out over the map from the start
 - [ ] No spawn points for enemis from the start
 - [ ] New player sprites inspired by Death Road to Canada - never do this, just hire an artist already
+- [x] Fix the seek system
 - [x] Better Ambling System - using pathfinding
 - [x] Also implement minimap that actually only shows parts you have visited, perhaps?
 - [x] More AI-mode-badges
@@ -713,11 +713,11 @@ Det här gör vi på det gamla vanliga sättet. Vi bygger en box2d-värld, vi kl
 
 Oj oj oj,  vad roligt. Vi kan göra en box2d-kropp med leder, per tutorials etc. Superkul ju.
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbLTEzMDQ2MjM5ODAsLTE5NDY2NTY3NDgsNj
-g4NDg0NTA0LDExMDExNDA4MTcsLTQxNzEyMjM3MiwtOTUyNTE2
-NDc3LC04MjkzNTIyMzYsLTIwODE0NzMwMTcsLTM1NDAzODU0MC
-wtOTc2NDM1MDYyLDIwMTMyNjE0NiwtNjQyMjQ1NywtMTU0OTg1
-ODU5NSwtMTAyNDY1MzUzOSwyMDUxMTAyMTk5LC03NDI0MTIzNT
-AsLTY2NTA5NTI3MiwxNjgzMTEzMTgyLC03MDEwNTMyNzEsLTkz
-ODg1MTcwMF19
+eyJoaXN0b3J5IjpbNDgyNTIyNzQwLC0xMzA0NjIzOTgwLC0xOT
+Q2NjU2NzQ4LDY4ODQ4NDUwNCwxMTAxMTQwODE3LC00MTcxMjIz
+NzIsLTk1MjUxNjQ3NywtODI5MzUyMjM2LC0yMDgxNDczMDE3LC
+0zNTQwMzg1NDAsLTk3NjQzNTA2MiwyMDEzMjYxNDYsLTY0MjI0
+NTcsLTE1NDk4NTg1OTUsLTEwMjQ2NTM1MzksMjA1MTEwMjE5OS
+wtNzQyNDEyMzUwLC02NjUwOTUyNzIsMTY4MzExMzE4MiwtNzAx
+MDUzMjcxXX0=
 -->
