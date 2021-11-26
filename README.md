@@ -25,6 +25,7 @@ Nice little todo you got there. Would be a shame if anyone actually did somethin
 
 So, what do we need for act one? Well, tons of fun stuff to implement:
 - [ ] Fix minimap after level one
+- [ ] Fix the seek system
 - [ ] Slower zombies at start of game
 - [ ] Enemies sprinkled out over the map from the start
 - [ ] No spawn points for enemis from the start
@@ -39,6 +40,10 @@ So, what do we need for act one? Well, tons of fun stuff to implement:
 - [x] Culling. Only draw stuff that is actually on-screen and visible? The visible part might have to wait
 - [x] Designed levels - how about a fudging overworld, mate? A larger map, like in Overcooked, perhaps?
 - [x] Weapons as pickups
+
+#### Fix the seek system
+So, the seek system is "improved" as in I am using faster methods to do it. But it seems that it could use some improvement, the raycasting seems way off, for instance, and sometimes it appears that the enemies do absolutely nothing. Better would be if they 
+
 
 #### Better Ambling
 So, what should the enemies be doing. Perhaps there should be one more thing the AI could do, something like "explore", where the enemies move about to check the entire map out. We could consider the entire map as a graph of nodes, where the center of each section is the nexus for any node. Or we could, indeed, have five nodes per section, just to make it look more dynamic, then we could use A* to find our way in that hot mess. So, like the corners and then the center of the section. Perhaps that would suffice.
@@ -706,11 +711,11 @@ Det här gör vi på det gamla vanliga sättet. Vi bygger en box2d-värld, vi kl
 
 Oj oj oj,  vad roligt. Vi kan göra en box2d-kropp med leder, per tutorials etc. Superkul ju.
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbLTE5NDY2NTY3NDgsNjg4NDg0NTA0LDExMD
-ExNDA4MTcsLTQxNzEyMjM3MiwtOTUyNTE2NDc3LC04MjkzNTIy
-MzYsLTIwODE0NzMwMTcsLTM1NDAzODU0MCwtOTc2NDM1MDYyLD
-IwMTMyNjE0NiwtNjQyMjQ1NywtMTU0OTg1ODU5NSwtMTAyNDY1
-MzUzOSwyMDUxMTAyMTk5LC03NDI0MTIzNTAsLTY2NTA5NTI3Mi
-wxNjgzMTEzMTgyLC03MDEwNTMyNzEsLTkzODg1MTcwMCwtODcy
-NzMxODY4XX0=
+eyJoaXN0b3J5IjpbLTk5NjcxMTcwOCwtMTk0NjY1Njc0OCw2OD
+g0ODQ1MDQsMTEwMTE0MDgxNywtNDE3MTIyMzcyLC05NTI1MTY0
+NzcsLTgyOTM1MjIzNiwtMjA4MTQ3MzAxNywtMzU0MDM4NTQwLC
+05NzY0MzUwNjIsMjAxMzI2MTQ2LC02NDIyNDU3LC0xNTQ5ODU4
+NTk1LC0xMDI0NjUzNTM5LDIwNTExMDIxOTksLTc0MjQxMjM1MC
+wtNjY1MDk1MjcyLDE2ODMxMTMxODIsLTcwMTA1MzI3MSwtOTM4
+ODUxNzAwXX0=
 -->
