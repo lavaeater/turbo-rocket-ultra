@@ -24,12 +24,12 @@ Ah! We can have the first level just be like ten zombies, everyone has one gun w
 Nice little todo you got there. Would be a shame if anyone actually did something with it? 
 
 So, what do we need for act one? Well, tons of fun stuff to implement:
-- [ ] Better Ambling System - zombies need to scourge the map proper
 - [ ] Fix minimap after level one
 - [ ] Slower zombies at start of game
 - [ ] Enemies sprinkled out over the map from the start
 - [ ] No spawn points for enemis from the start
 - [ ] New player sprites inspired by Death Road to Canada - I never do this, just hire an artist already
+- [x] Better Ambling System - using pathfinding
 - [x] Also implement minimap that actually only shows parts you have visited, perhaps?
 - [x] More AI-mode-badges - why, tho?
 - [x] Zoom in, slightly
@@ -706,11 +706,11 @@ Det här gör vi på det gamla vanliga sättet. Vi bygger en box2d-värld, vi kl
 
 Oj oj oj,  vad roligt. Vi kan göra en box2d-kropp med leder, per tutorials etc. Superkul ju.
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbMTEwMTE0MDgxNywtNDE3MTIyMzcyLC05NT
-I1MTY0NzcsLTgyOTM1MjIzNiwtMjA4MTQ3MzAxNywtMzU0MDM4
-NTQwLC05NzY0MzUwNjIsMjAxMzI2MTQ2LC02NDIyNDU3LC0xNT
-Q5ODU4NTk1LC0xMDI0NjUzNTM5LDIwNTExMDIxOTksLTc0MjQx
-MjM1MCwtNjY1MDk1MjcyLDE2ODMxMTMxODIsLTcwMTA1MzI3MS
-wtOTM4ODUxNzAwLC04NzI3MzE4NjgsMjAwNzMzNTE2NCwxNzg4
-NTM5MTEzXX0=
+eyJoaXN0b3J5IjpbNjg4NDg0NTA0LDExMDExNDA4MTcsLTQxNz
+EyMjM3MiwtOTUyNTE2NDc3LC04MjkzNTIyMzYsLTIwODE0NzMw
+MTcsLTM1NDAzODU0MCwtOTc2NDM1MDYyLDIwMTMyNjE0NiwtNj
+QyMjQ1NywtMTU0OTg1ODU5NSwtMTAyNDY1MzUzOSwyMDUxMTAy
+MTk5LC03NDI0MTIzNTAsLTY2NTA5NTI3MiwxNjgzMTEzMTgyLC
+03MDEwNTMyNzEsLTkzODg1MTcwMCwtODcyNzMxODY4LDIwMDcz
+MzUxNjRdfQ==
 -->
