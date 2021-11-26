@@ -22,6 +22,9 @@ And three they shall be. Act one will have five levels, act Two will have ten, a
 #### Act One
 ##### Level One
 Players can only punch. However, they can find weapons and ammo
+
+But how does weapons and ammo work when playing multiplayer? Communal inventory of course!
+
 ##### Level Two
 ##### Level Three
 ##### Level Four
@@ -725,11 +728,11 @@ Det här gör vi på det gamla vanliga sättet. Vi bygger en box2d-värld, vi kl
 
 Oj oj oj,  vad roligt. Vi kan göra en box2d-kropp med leder, per tutorials etc. Superkul ju.
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbLTY3Mzc1ODA1MCwtOTQ2OTQzOTksLTk1Nz
-U4NjMzLDEyMjMxMjkwNTksLTEzMDQ2MjM5ODAsLTE5NDY2NTY3
-NDgsNjg4NDg0NTA0LDExMDExNDA4MTcsLTQxNzEyMjM3MiwtOT
-UyNTE2NDc3LC04MjkzNTIyMzYsLTIwODE0NzMwMTcsLTM1NDAz
-ODU0MCwtOTc2NDM1MDYyLDIwMTMyNjE0NiwtNjQyMjQ1NywtMT
-U0OTg1ODU5NSwtMTAyNDY1MzUzOSwyMDUxMTAyMTk5LC03NDI0
-MTIzNTBdfQ==
+eyJoaXN0b3J5IjpbMzkyNzkzNTA1LC05NDY5NDM5OSwtOTU3NT
+g2MzMsMTIyMzEyOTA1OSwtMTMwNDYyMzk4MCwtMTk0NjY1Njc0
+OCw2ODg0ODQ1MDQsMTEwMTE0MDgxNywtNDE3MTIyMzcyLC05NT
+I1MTY0NzcsLTgyOTM1MjIzNiwtMjA4MTQ3MzAxNywtMzU0MDM4
+NTQwLC05NzY0MzUwNjIsMjAxMzI2MTQ2LC02NDIyNDU3LC0xNT
+Q5ODU4NTk1LC0xMDI0NjUzNTM5LDIwNTExMDIxOTksLTc0MjQx
+MjM1MF19
 -->
