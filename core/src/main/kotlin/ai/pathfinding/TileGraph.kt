@@ -3,43 +3,11 @@ package ai.pathfinding
 import com.badlogic.gdx.ai.pfa.Connection
 import com.badlogic.gdx.ai.pfa.DefaultGraphPath
 import com.badlogic.gdx.ai.pfa.GraphPath
-import com.badlogic.gdx.ai.pfa.Heuristic
 import com.badlogic.gdx.ai.pfa.indexed.IndexedAStarPathFinder
 import com.badlogic.gdx.ai.pfa.indexed.IndexedGraph
-import com.badlogic.gdx.math.Vector2
 import com.badlogic.gdx.utils.Array
 import ktx.collections.toGdxArray
-import ktx.math.vec2
 import map.grid.Coordinate
-import kotlin.math.absoluteValue
-import kotlin.math.pow
-import kotlin.math.sqrt
-
-class CoordinateHeuristic : Heuristic<Coordinate> {
-
-    val from = vec2()
-    val to = vec2()
-    override fun estimate(node: Coordinate, endNode: Coordinate): Float {
-        from.set(node.x.toFloat(),node.y.toFloat())
-        to.set(endNode.x.toFloat(), endNode.y.toFloat())
-        return from.dst(to)
-    }
-}
-
-class TileConnection(val from: Coordinate, val to: Coordinate) : Connection<Coordinate> {
-
-    override fun getCost(): Float {
-        return Vector2.dst(from.x.toFloat(), from.y.toFloat(), to.x.toFloat(), to.y.toFloat())
-    }
-
-    override fun getFromNode(): Coordinate {
-        return from
-    }
-
-    override fun getToNode(): Coordinate {
-        return to
-    }
-}
 
 class TileGraph : IndexedGraph<Coordinate> {
     private val heuristic = CoordinateHeuristic()
