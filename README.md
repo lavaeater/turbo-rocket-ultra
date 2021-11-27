@@ -43,6 +43,7 @@ Lets just, on the concept screen, or a new Concept Screen, explore controller pa
 - [ ] Identifying controllers?
 - [x] Also the level
 ##### Level Three
+Use amble system's pathfinding to find path for enemy to follow when checking out noises like gun shots, more likely to not get stuck that way.
 - [ ] Pickup Toast
 - [ ] Hotswapping
 - [ ] Also, the level
@@ -749,11 +750,11 @@ Det här gör vi på det gamla vanliga sättet. Vi bygger en box2d-värld, vi kl
 
 Oj oj oj,  vad roligt. Vi kan göra en box2d-kropp med leder, per tutorials etc. Superkul ju.
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbNTg2MTUyNTExLC0xMTc5NzE3OTQ0LC0xNT
-ExNDIxNzAzLC0zNjgzNzQ1NzYsLTc5MTMyMDIxMCwtODUyOTMy
-Mzg2LDg4NTExNjczOSwzNDI3NDQxMzYsLTk0Njk0Mzk5LC05NT
-c1ODYzMywxMjIzMTI5MDU5LC0xMzA0NjIzOTgwLC0xOTQ2NjU2
-NzQ4LDY4ODQ4NDUwNCwxMTAxMTQwODE3LC00MTcxMjIzNzIsLT
-k1MjUxNjQ3NywtODI5MzUyMjM2LC0yMDgxNDczMDE3LC0zNTQw
-Mzg1NDBdfQ==
+eyJoaXN0b3J5IjpbLTE3Mzg2MjIyODYsNTg2MTUyNTExLC0xMT
+c5NzE3OTQ0LC0xNTExNDIxNzAzLC0zNjgzNzQ1NzYsLTc5MTMy
+MDIxMCwtODUyOTMyMzg2LDg4NTExNjczOSwzNDI3NDQxMzYsLT
+k0Njk0Mzk5LC05NTc1ODYzMywxMjIzMTI5MDU5LC0xMzA0NjIz
+OTgwLC0xOTQ2NjU2NzQ4LDY4ODQ4NDUwNCwxMTAxMTQwODE3LC
+00MTcxMjIzNzIsLTk1MjUxNjQ3NywtODI5MzUyMjM2LC0yMDgx
+NDczMDE3XX0=
 -->
