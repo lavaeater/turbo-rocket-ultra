@@ -60,11 +60,11 @@ class GridMapGenerator {
                     if (aSectionIsHere) {
                         index++
                         //1. Check neighbours - if they are true, we will add them as connections
-                        val coordinate = TileGraph.createCoordinate(x, y)
+                        val coordinate = TileGraph.getCoordinateInstance(x, y)
                         val connections = getConnections(x, y, def.booleanSections)
                         //graph.addCoordinate(coordinate)
                         for (direction in connections) {
-                            val connectionCoordinate = TileGraph.createCoordinate(
+                            val connectionCoordinate = TileGraph.getCoordinateInstance(
                                 coordinate.x + MapDirection.xIndex[direction]!!,
                                 coordinate.y + MapDirection.yIndex[direction]!!
                             )
@@ -200,11 +200,11 @@ class GridMapGenerator {
                     if (tile) {
                         index++
                         //1. Check neighbours - if they are true, we will add them as connections
-                        val coordinate = TileGraph.createCoordinate(sectionX, sectionY)
+                        val coordinate = TileGraph.getCoordinateInstance(sectionX, sectionY)
                         val connections = getConnections(sectionX, sectionY, map)
                         val section = GridMapSection(coordinate, connections, coordinate == startCoord)
                         for (direction in connections) {
-                            val connectionCoordinate = TileGraph.createCoordinate(
+                            val connectionCoordinate = TileGraph.getCoordinateInstance(
                                 coordinate.x + MapDirection.xIndex[direction]!!,
                                 coordinate.y + MapDirection.yIndex[direction]!!
                             )
