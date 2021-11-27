@@ -7,7 +7,6 @@ import com.badlogic.gdx.math.Polygon
 import com.badlogic.gdx.math.Vector2
 import ecs.components.enemy.EnemyComponent
 import ecs.components.gameplay.TransformComponent
-import ecs.components.graphics.InLineOfSightComponent
 import ecs.components.player.*
 import factories.bullet
 import factories.thrownProjectile
@@ -100,9 +99,10 @@ class PlayerShootingSystem(private val audioPlayer: AudioPlayer) : IteratingSyst
         ) {
             //1. Check if enemies are within distance (is this faster than the sector first?
             val playerPosition = playerEntity.getComponent<TransformComponent>().position
-            val enemiesICanSee =
-                engine.getEntitiesFor(allOf(EnemyComponent::class, InLineOfSightComponent::class).get())
-            val enemiesInRangeAndInHitArc = enemiesICanSee.filter {
+            val allEnemies =
+                engine.getEntitiesFor(allOf(EnemyComponent::class).get())
+
+            val enemiesInRangeAndInHitArc = allEnemies.filter {
                 val enemyPosition = it.getComponent<TransformComponent>().position
                 enemyPosition.dst(playerPosition) < weapon.spreadOrMeleeRangeOrArea && canISeeYouFromHere(
                     playerPosition,
@@ -111,7 +111,7 @@ class PlayerShootingSystem(private val audioPlayer: AudioPlayer) : IteratingSyst
                     weapon.accuracyOrHitArcForMelee
                 )
             }
-            enemiesInRangeAndInHitArc.map { it.getComponent<EnemyComponent>().takeDamage(weapon.damageRange) }
+            enemiesInRangeAndInHitArc.forEach { it.getComponent<EnemyComponent>().takeDamage(weapon.damageRange) }
         }
     }
 

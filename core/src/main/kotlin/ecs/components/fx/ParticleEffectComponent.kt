@@ -9,7 +9,7 @@ import ktx.math.vec2
  * A generic particle effect handler?
  */
 open class ParticleEffectComponent: Component, Pool.Poolable {
-    lateinit var _effect: ParticleEffect
+    private lateinit var _effect: ParticleEffect
     var effect: ParticleEffect
         get() = _effect
         set(value) {

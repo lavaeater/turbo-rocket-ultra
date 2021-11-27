@@ -1,6 +1,7 @@
 package screens
 
 import com.badlogic.gdx.Input
+import com.badlogic.gdx.controllers.Controller
 import com.badlogic.gdx.controllers.Controllers
 import com.badlogic.gdx.graphics.Color
 import com.badlogic.gdx.graphics.OrthographicCamera
@@ -21,8 +22,8 @@ import tru.Assets
 import kotlin.math.pow
 
 class ConceptScreen(gameState: StateMachine<GameState, GameEvent>) : BasicScreen(gameState) {
-    override val camera = OrthographicCamera()
-    override val viewport = ExtendViewport(200f, 200f, camera)
+//    override val camera = OrthographicCamera()
+//    override val viewport = ExtendViewport(200f, 200f, camera)
     val shapeDrawer by lazy { Assets.shapeDrawer }
     val player: Transform = Transform(vec2(100f, 100f))
     val mouseTransform = Transform(vec2())
@@ -36,7 +37,7 @@ class ConceptScreen(gameState: StateMachine<GameState, GameEvent>) : BasicScreen
     var rotation = 45f
     val viewDistance = 100f
 
-    val controller = Controllers.getCurrent()
+    val controller: Controller by lazy { Controllers.getCurrent() }
     val gamepadControl by lazy { GamepadControl(controller) }
 
 

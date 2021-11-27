@@ -266,7 +266,7 @@ object Assets : Disposable {
         BitmapFont(Gdx.files.internal("font/arial-15.fnt"))
     }
 
-    val debugFont by lazy {
+    val debugFont: BitmapFont by lazy {
         val generator = FreeTypeFontGenerator(Gdx.files.internal("font/a-goblin-appears.ttf"))
         val parameter = FreeTypeFontParameter()
         parameter.size = 12

@@ -37,7 +37,7 @@ open class Transform(val position: Vector2 = vec2()) {
             _normal
         }
     private val _normalPoint = vec2()
-    val normalPoint
+    val normalPoint: Vector2
         get() = run {
             _normalPoint.set(position).add(normal.cpy().scl(magnitude))
         }

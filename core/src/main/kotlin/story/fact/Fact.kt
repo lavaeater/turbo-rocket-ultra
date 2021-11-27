@@ -46,7 +46,7 @@ fun String.parseToBoolean() : Boolean {
 
 fun String.parseToInt() : Int {
   val int = this.replace("Int:", "").toIntOrNull()
-  return if (int == null) 0 else int!!
+  return if (int == null) 0 else int
 }
 
 fun String.parseToString() : String {

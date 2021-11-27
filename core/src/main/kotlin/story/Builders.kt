@@ -154,21 +154,21 @@ class ConversationStepBuilder() : Builder<ConversationStep> {
 	}
 
 	fun positive(key: String, text: String ="Ja") {
-		if(!conversationRoutes.any { it.routeType == RouteType.positive })
-			conversationRoutes.add(ConversationRoute(key, text, RouteType.positive))
+		if(!conversationRoutes.any { it.routeType == RouteType.Positive })
+			conversationRoutes.add(ConversationRoute(key, text, RouteType.Positive))
 	}
 
 	fun negative(key:String, text: String = "Nej") {
-		if(!conversationRoutes.any {it.routeType == RouteType.negative})
-			conversationRoutes.add(ConversationRoute(key, text, RouteType.negative))
+		if(!conversationRoutes.any {it.routeType == RouteType.Negative})
+			conversationRoutes.add(ConversationRoute(key, text, RouteType.Negative))
 	}
 	fun rude(key:String, text: String = "Far åt helvete!") {
-		if(!conversationRoutes.any {it.routeType == RouteType.rude})
-			conversationRoutes.add(ConversationRoute(key, text, RouteType.rude))
+		if(!conversationRoutes.any {it.routeType == RouteType.Rude})
+			conversationRoutes.add(ConversationRoute(key, text, RouteType.Rude))
 	}
 	fun abort(key:String, text: String = "Avsluta") {
-		if(!conversationRoutes.any {it.routeType == RouteType.abort})
-			conversationRoutes.add(ConversationRoute(key, text, RouteType.abort))
+		if(!conversationRoutes.any {it.routeType == RouteType.Abort})
+			conversationRoutes.add(ConversationRoute(key, text, RouteType.Abort))
 	}
 
 	override fun build(): ConversationStep = ConversationStep(key, antagonistLines, conversationRoutes)

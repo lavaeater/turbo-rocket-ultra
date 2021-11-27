@@ -1,8 +1,8 @@
 package story.conversation
 
 enum class RouteType {
-  positive,
-  negative,
-  rude,
-  abort
+  Positive,
+  Negative,
+  Rude,
+  Abort
 }

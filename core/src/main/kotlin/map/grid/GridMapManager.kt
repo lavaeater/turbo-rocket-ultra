@@ -24,7 +24,7 @@ class GridMapManager {
         fixBodies()
     }
 
-    val bodies = mutableListOf<Body>()
+    private val bodies = mutableListOf<Body>()
 
     fun getRandomSection(except: Coordinate, maxDistance: Int = 5): Coordinate {
         val minX = except.x - maxDistance

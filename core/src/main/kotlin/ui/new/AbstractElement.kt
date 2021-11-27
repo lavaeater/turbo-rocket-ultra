@@ -21,7 +21,7 @@ abstract class AbstractElement(
         }
 
     private val _actualPosition = vec2()
-    open val actualPosition: Vector2
+    val actualPosition: Vector2
         get() {
             updatePosition()
             return _actualPosition

@@ -24,6 +24,7 @@ fun convert(imagePath: String): TextGridMapDefinition {
             lines[y] = "${lines[y]}$section"
         }
     }
+    pixMap.dispose()
     return TextGridMapDefinition(lines)
 }
 
@@ -70,22 +71,8 @@ class TextGridMapDefinition(val def: List<String>) : IGridMapDefinition {
 
 
 
-        val levelOne = convert("maps/level-one.png")
-        val levelTwo = TextGridMapDefinition(
-            """
-            xxxxgoxxb
-            xeeeexeee
-            xeeeexxxl
-            xxlxxxeex
-            xxxeeloxx
-            xxeeeeeex
-            sxxxxxxxo
-        """.trimIndent().lines()
-        )
-        /*
-
-
-         */
+        val levelOne by lazy { convert("maps/level-one.png") }
+        val levelTwo by lazy { convert("maps/level-two.png") }
         val levelThree = TextGridMapDefinition(
             """
                 xxxxxxxxxxxxxxxxxxxxxx
