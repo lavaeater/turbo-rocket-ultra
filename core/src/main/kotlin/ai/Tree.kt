@@ -51,9 +51,11 @@ object Tree {
                 entityHas<NoticedSomething>(),
                 selector {
                     first(entityDo<SeekPlayer>())
+                    then(entityDo<Investigate>())
+                    then(entityDo<SeekPlayer>())
                 })
             last(selector<Entity> {
-                first(entityDo<Amble>())
+                first(invert(entityDo<Amble>()))
                 then(invert(entityDo<SeekPlayer>()))
             })
         }
