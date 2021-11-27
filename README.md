@@ -52,7 +52,6 @@ Lets just, on the concept screen, or a new Concept Screen, explore controller pa
 - [ ] Pickup Toast
 
 ##### Level Five
-- [ ] Hot swapping players! <- Needs complete rewrite of control system
 
 
 #### Act one - a small beginning
@@ -752,7 +751,7 @@ Det här gör vi på det gamla vanliga sättet. Vi bygger en box2d-värld, vi kl
 
 Oj oj oj,  vad roligt. Vi kan göra en box2d-kropp med leder, per tutorials etc. Superkul ju.
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbLTEyODA5NDIwMjksLTUxNzk3MTQzNyw1Nz
+eyJoaXN0b3J5IjpbLTE3NzAwNTYwMTEsLTUxNzk3MTQzNyw1Nz
 g0OTUzOSw1ODYxNTI1MTEsLTExNzk3MTc5NDQsLTE1MTE0MjE3
 MDMsLTM2ODM3NDU3NiwtNzkxMzIwMjEwLC04NTI5MzIzODYsOD
 g1MTE2NzM5LDM0Mjc0NDEzNiwtOTQ2OTQzOTksLTk1NzU4NjMz
