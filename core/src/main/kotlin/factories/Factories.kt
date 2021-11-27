@@ -314,15 +314,12 @@ fun player(player: Player, mapper: ControlMapper, at: Vector2) {
             color = Color.GREEN
         }
         with<PlayerComponent> { this.player = player }
-        val weapon = WeaponDefinition.weapons.first().getWeapon()
+        val weapon = WeaponDefinition.baseballBat.getWeapon()
         with<InventoryComponent> {
-            WeaponDefinition.weapons.forEach {
-                weapons.add(it.getWeapon())
-            }
+            weapons.add(weapon)
         }
         with<WeaponComponent> {
             currentWeapon = weapon
-
         }
         with<FiredShotsComponent>()
         with<FlashlightComponent>()
