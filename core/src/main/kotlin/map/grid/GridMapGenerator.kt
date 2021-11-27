@@ -42,7 +42,7 @@ class GridMapGenerator {
             boss(position, 1)
         }
 
-        fun generateFromDefintion(def: SimpleGridMapDef): Pair<Map<Coordinate, GridMapSection>, TileGraph> {
+        fun generateFromDefintion(def: TextGridMapDefinition): Pair<Map<Coordinate, GridMapSection>, TileGraph> {
             //TODO: Move this somewhere
             Light.setGlobalContactFilter(
                 Box2dCategories.lights,

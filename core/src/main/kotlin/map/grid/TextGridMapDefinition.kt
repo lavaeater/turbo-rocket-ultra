@@ -1,33 +1,60 @@
 package map.grid
 
-class SimpleGridMapDef(val def: List<String>) {
+import com.badlogic.gdx.Gdx
+import com.badlogic.gdx.graphics.Pixmap
 
-    fun hasLoot(coordinate: Coordinate): Boolean {
+fun convert(imagePath: String): TextGridMapDefinition {
+    val pixMap = Pixmap(Gdx.files.internal(imagePath))
+    val width = pixMap.width
+    val height = pixMap.height
+    val lines = mutableListOf<String>()
+    for(y in 0 until height) {
+        lines.add(y, "")
+        for (x in 0 until width) {
+            val color = pixMap.getPixel(x, y)
+            val section = when (color) {
+                65535 -> 'b'
+                16711935 -> 'g'
+                -16776961 -> 'o'
+                -65281 -> 'l'
+                255 -> 'x'
+                -1 -> 's'
+                else -> 'e'
+            }
+            lines[y] = "${lines[y]}$section"
+        }
+    }
+    return TextGridMapDefinition(lines)
+}
+
+class TextGridMapDefinition(val def: List<String>) : IGridMapDefinition {
+
+    override fun hasLoot(coordinate: Coordinate): Boolean {
         return sections[coordinate.x][coordinate.y] == 'l'
     }
 
-    fun hasStart(coordinate: Coordinate): Boolean {
+    override fun hasStart(coordinate: Coordinate): Boolean {
         return sections[coordinate.x][coordinate.y] == 's'
     }
 
-    fun hasGoal(coordinate: Coordinate): Boolean {
+    override fun hasGoal(coordinate: Coordinate): Boolean {
         return sections[coordinate.x][coordinate.y] == 'g'
     }
 
-    fun hasObstacle(coordinate: Coordinate): Boolean {
+    override fun hasObstacle(coordinate: Coordinate): Boolean {
         return sections[coordinate.x][coordinate.y] == 'o'
     }
 
-    fun hasBoss(coordinate: Coordinate): Boolean {
+    override fun hasBoss(coordinate: Coordinate): Boolean {
         return sections[coordinate.x][coordinate.y] == 'b'
     }
 
-    val booleanSections
+    override val booleanSections
         get() : Array<Array<Boolean>> {
             return sections.map { column -> column.toCharArray().map { it != 'e' }.toTypedArray() }.toTypedArray()
         }
 
-    val sections
+    private val sections
         get(): Array<Array<Char>> {
             val mapWidth = def.map { it.length }.maxOf { it }
             val mapHeight = def.size
@@ -40,14 +67,11 @@ class SimpleGridMapDef(val def: List<String>) {
         }
 
     companion object {
-        val levelThree = SimpleGridMapDef(
-            """
-            xgo
-            xxx
-            sxx
-        """.trimIndent().lines()
-        )
-        val levelOne = SimpleGridMapDef(
+
+
+
+        val levelOne = convert("maps/level-one.png")
+        val levelTwo = TextGridMapDefinition(
             """
             xxxxgoxxb
             xeeeexeee
@@ -62,7 +86,7 @@ class SimpleGridMapDef(val def: List<String>) {
 
 
          */
-        val levelTwo = SimpleGridMapDef(
+        val levelThree = TextGridMapDefinition(
             """
                 xxxxxxxxxxxxxxxxxxxxxx
                 xeeeeeeeeeeeeeeeeeeeex
