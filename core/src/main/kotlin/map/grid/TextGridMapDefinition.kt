@@ -68,34 +68,8 @@ class TextGridMapDefinition(val def: List<String>) : IGridMapDefinition {
         }
 
     companion object {
-
-
-
-        val levelOne by lazy { convert("maps/level-one.png") }
+        val levelOne by lazy { convert("maps/level-3.png") }
         val levelTwo by lazy { convert("maps/level-two.png") }
-        val levelThree = TextGridMapDefinition(
-            """
-                xxxxxxxxxxxxxxxxxxxxxx
-                xeeeeeeeeeeeeeeeeeeeex
-                xexxxxxxxxoxxxxxxxxxxx
-                xexeeeeeeeeeeeeeeeeeee
-                xexexxxxxxxxxxxxxxxxxx
-                xexexeeeeeeeeeeeeeeeex
-                xexexexxxxxxxxxxxxxxxx
-                xexexexeeeeeeeeeeeeeee
-                xexexexxexxxxxxxxxxxxe
-                xexxxegbexboxeeeeeeexe
-                xeeeeeeeexooxexxxxoexe
-                xxxxxxxxxxooxeoeexxexe
-                eoeleoelexxxxxxeebgexe
-                eeeeeeeeeeeeeeeeeeeexe
-                eexxxxxxxxxxxxxxxxxxxe
-                exxeeeeeeeeeeeeeeeeeee
-                exeeeeeeeeeeexooeeeeee
-                exxxxxxxxxxxxlooeeeeee
-                exeeeeeeeeeeexxxeeeeee
-                sxeeeeeeeeeeeeeeeeeeee
-            """.trimIndent().lines()
-        )
+        val levelThree by lazy { convert("maps/level-one.png") }
     }
 }

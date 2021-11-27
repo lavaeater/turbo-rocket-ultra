@@ -1,5 +1,6 @@
 package screens
 
+import ai.pathfinding.TileGraph
 import audio.AudioPlayer
 import com.badlogic.ashley.core.Engine
 import com.badlogic.gdx.Gdx
@@ -31,10 +32,8 @@ import ktx.app.KtxScreen
 import ktx.ashley.allOf
 import ktx.ashley.getSystem
 import ktx.ashley.remove
-import map.grid.GridMapGenerator
-import map.grid.GridMapManager
-import map.grid.TextGridMapDefinition
-import map.snake.*
+import map.grid.*
+import map.snake.randomPoint
 import physics.getComponent
 import statemachine.StateMachine
 import story.FactsOfTheWorld
@@ -72,37 +71,29 @@ class GameScreen(private val gameState: StateMachine<GameState, GameEvent>) : Kt
         for (system in engine.systems) {
             system.setProcessing(true)
         }
-        loadMapOne()
+        generateMap(CounterObject.currentLevel)
         addPlayers()
 
-        addTower()
         ui.reset()
         ui.show()
     }
 
-    private fun loadMapOne() {
-        //For debuggin we will swarm with enemies
-        CounterObject.numberOfEnemies = 50
+    private fun loadMapOne() : Pair<Map<Coordinate, GridMapSection>, TileGraph> {
+        CounterObject.numberOfEnemies = 512
 
-        val map = GridMapGenerator.generateFromDefintion(TextGridMapDefinition.levelOne)
-        mapManager.gridMap = map.first
-        mapManager.sectionGraph = map.second
-        CounterObject.numberOfObjectives = engine.getEntitiesFor(allOf(ObjectiveComponent::class).get()).count()
-        movePlayersToStart()
+        return GridMapGenerator.generateFromDefintion(TextGridMapDefinition.levelOne)
     }
 
-    private fun loadMapTwo() {
-        //For debuggin we will swarm with enemies
+    private fun loadMapTwo(): Pair<Map<Coordinate, GridMapSection>, TileGraph>  {
         CounterObject.numberOfEnemies = 100
 
-        val map = GridMapGenerator.generateFromDefintion(TextGridMapDefinition.levelTwo)
-        mapManager.gridMap = map.first
-        mapManager.sectionGraph = map.second
-        CounterObject.numberOfObjectives = engine.getEntitiesFor(allOf(ObjectiveComponent::class).get()).count()
-        movePlayersToStart()
+        return GridMapGenerator.generateFromDefintion(TextGridMapDefinition.levelTwo)
     }
 
-    private fun addTower() {
+    private fun loadMapThree(): Pair<Map<Coordinate, GridMapSection>, TileGraph>  {
+        CounterObject.numberOfEnemies = MAX_ENEMIES
+
+        return GridMapGenerator.generateFromDefintion(TextGridMapDefinition.levelThree)
     }
     /*
     4E4048
@@ -244,7 +235,12 @@ D1B67A
         //For debuggin we will swarm with enemies
         CounterObject.numberOfEnemies = (8f.pow(CounterObject.currentLevel).roundToInt() * 2).coerceAtMost(MAX_ENEMIES)
 
-        val map = GridMapGenerator.generate(CounterObject.currentLength, level)
+        val map = when(level) {
+            1 -> loadMapOne()
+            2 -> loadMapTwo()
+            3 -> loadMapThree()
+            else -> GridMapGenerator.generate(CounterObject.currentLength, level)
+        }
         mapManager.gridMap = map.first
         mapManager.sectionGraph = map.second
         CounterObject.numberOfObjectives = engine.getEntitiesFor(allOf(ObjectiveComponent::class).get()).count()
