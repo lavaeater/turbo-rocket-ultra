@@ -26,7 +26,7 @@ class WeaponDefinition(
         val molotov = WeaponDefinition(
             "Molotov Cocktail",
             WeaponType.ThrownArea,
-            1000,
+            1,
             30f,
             15f, //
             1,
