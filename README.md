@@ -25,8 +25,9 @@ Players can only punch. However, they can find weapons and ammo
 
 But how does weapons and ammo work when playing multiplayer? Communal inventory of course!
 
-- [ ] Communal Inventory
-- [ ] Also the level
+- [ ] Update swing / bat mechanic and graphics
+- [x] Communal Inventory
+- [x] Also the level
 ##### Level Two
 - [ ] Hot swapping players!
 - [ ] Identifying controllers?
@@ -734,11 +735,11 @@ Det här gör vi på det gamla vanliga sättet. Vi bygger en box2d-värld, vi kl
 
 Oj oj oj,  vad roligt. Vi kan göra en box2d-kropp med leder, per tutorials etc. Superkul ju.
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbODg1MTE2NzM5LDM0Mjc0NDEzNiwtOTQ2OT
-QzOTksLTk1NzU4NjMzLDEyMjMxMjkwNTksLTEzMDQ2MjM5ODAs
-LTE5NDY2NTY3NDgsNjg4NDg0NTA0LDExMDExNDA4MTcsLTQxNz
-EyMjM3MiwtOTUyNTE2NDc3LC04MjkzNTIyMzYsLTIwODE0NzMw
-MTcsLTM1NDAzODU0MCwtOTc2NDM1MDYyLDIwMTMyNjE0NiwtNj
-QyMjQ1NywtMTU0OTg1ODU5NSwtMTAyNDY1MzUzOSwyMDUxMTAy
-MTk5XX0=
+eyJoaXN0b3J5IjpbODM3ODcyMTU1LDg4NTExNjczOSwzNDI3ND
+QxMzYsLTk0Njk0Mzk5LC05NTc1ODYzMywxMjIzMTI5MDU5LC0x
+MzA0NjIzOTgwLC0xOTQ2NjU2NzQ4LDY4ODQ4NDUwNCwxMTAxMT
+QwODE3LC00MTcxMjIzNzIsLTk1MjUxNjQ3NywtODI5MzUyMjM2
+LC0yMDgxNDczMDE3LC0zNTQwMzg1NDAsLTk3NjQzNTA2MiwyMD
+EzMjYxNDYsLTY0MjI0NTcsLTE1NDk4NTg1OTUsLTEwMjQ2NTM1
+MzldfQ==
 -->
