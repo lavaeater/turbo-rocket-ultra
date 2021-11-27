@@ -8,7 +8,7 @@ fun convert(imagePath: String): TextGridMapDefinition {
     val width = pixMap.width
     val height = pixMap.height
     val lines = mutableListOf<String>()
-    for(y in 0 until height) {
+    for (y in 0 until height) {
         lines.add(y, "")
         for (x in 0 until width) {
             val color = pixMap.getPixel(x, y)
@@ -68,8 +68,8 @@ class TextGridMapDefinition(val def: List<String>) : IGridMapDefinition {
         }
 
     companion object {
-        val levelOne by lazy { convert("maps/level-3.png") }
+        val levelOne by lazy { convert("maps/level-one.png") }
         val levelTwo by lazy { convert("maps/level-two.png") }
-        val levelThree by lazy { convert("maps/level-one.png") }
+        val levelThree by lazy { convert("maps/level-3.png") }
     }
 }

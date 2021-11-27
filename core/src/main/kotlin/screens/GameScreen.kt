@@ -79,7 +79,7 @@ class GameScreen(private val gameState: StateMachine<GameState, GameEvent>) : Kt
     }
 
     private fun loadMapOne() : Pair<Map<Coordinate, GridMapSection>, TileGraph> {
-        CounterObject.numberOfEnemies = 2000
+        CounterObject.numberOfEnemies = 50
 
         return GridMapGenerator.generateFromDefintion(TextGridMapDefinition.levelOne)
     }
@@ -91,7 +91,7 @@ class GameScreen(private val gameState: StateMachine<GameState, GameEvent>) : Kt
     }
 
     private fun loadMapThree(): Pair<Map<Coordinate, GridMapSection>, TileGraph>  {
-        CounterObject.numberOfEnemies = MAX_ENEMIES
+        CounterObject.numberOfEnemies = 1024
 
         return GridMapGenerator.generateFromDefintion(TextGridMapDefinition.levelThree)
     }
