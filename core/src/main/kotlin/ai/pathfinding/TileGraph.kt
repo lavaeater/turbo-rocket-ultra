@@ -17,7 +17,7 @@ class TileGraph : IndexedGraph<Coordinate> {
     companion object {
         private val coordinates = mutableSetOf<Coordinate>()
         private var lastCoordinateIndex = 0
-        fun createCoordinate(x: Int, y: Int): Coordinate {
+        fun getCoordinateInstance(x: Int, y: Int): Coordinate {
             val coord = Coordinate(x, y)
             val added = coordinates.add(coord)
             if (added) {

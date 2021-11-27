@@ -79,7 +79,7 @@ class GameScreen(private val gameState: StateMachine<GameState, GameEvent>) : Kt
     }
 
     private fun loadMapOne() : Pair<Map<Coordinate, GridMapSection>, TileGraph> {
-        CounterObject.numberOfEnemies = 512
+        CounterObject.numberOfEnemies = 2000
 
         return GridMapGenerator.generateFromDefintion(TextGridMapDefinition.levelOne)
     }

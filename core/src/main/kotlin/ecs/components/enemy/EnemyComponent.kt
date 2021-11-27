@@ -4,6 +4,7 @@ import com.badlogic.ashley.core.Component
 import ai.enemy.EnemyState
 import com.badlogic.gdx.math.Vector2
 import com.badlogic.gdx.utils.Pool
+import com.badlogic.gdx.utils.Queue
 import ecs.components.gameplay.TransformComponent
 import ktx.math.random
 import ktx.math.vec2
@@ -14,6 +15,7 @@ class BossComponent : Component, Pool.Poolable {
 }
 
 class EnemyComponent : Component, Pool.Poolable {
+    var lastShotAngle = 0f
     var rushSpeed = 15f
     var fieldOfView = 180f
     var viewDistance = 90f
@@ -26,6 +28,11 @@ class EnemyComponent : Component, Pool.Poolable {
 
     var timeRemaining = 0f
     private set
+
+    //PathFinding, useful everywhere
+    var nextPosition = vec2()
+    val path = Queue<Vector2>()
+    var needsNewNextPosition = true
 
     fun takeDamage(damage: Float) {
         health -= damage
@@ -41,6 +48,9 @@ class EnemyComponent : Component, Pool.Poolable {
     }
 
     override fun reset() {
+        nextPosition.setZero()
+        path.clear()
+        needsNewNextPosition = true
         fieldOfView = 90f
         speed = 2.5f
         viewDistance = 30f

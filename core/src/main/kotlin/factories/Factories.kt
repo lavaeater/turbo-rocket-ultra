@@ -97,7 +97,7 @@ object Box2dCategories {
 fun gibs(at: Vector2, gibAngle: Float = 1000f) {
     for (i in Assets.enemyGibs) {
         val angle = if (gibAngle == 1000f) (1f..359f).random() else gibAngle
-        val force = vec2(40f, 0f).setAngleDeg(angle)
+        val force = vec2(40f, 0f).setAngleDeg(angle + (-25..25).random())
         val gibBody = world().body {
             type = BodyDef.BodyType.DynamicBody
             position.set(at)

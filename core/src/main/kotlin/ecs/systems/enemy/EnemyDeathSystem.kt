@@ -16,15 +16,16 @@ class EnemyDeathSystem : IteratingSystem(allOf(EnemyComponent::class).get()) {
 
     @OptIn(ExperimentalStdlibApi::class)
     override fun processEntity(entity: Entity, deltaTime: Float) {
-        if(entity.getComponent<EnemyComponent>().health < 0) {
+        val enemyComponent = entity.getComponent<EnemyComponent>()
+        if (enemyComponent.health < 0) {
             val transformComponent = entity.getComponent<TransformComponent>()
-            if(entity.has<LootDropComponent>()) {
+            if (entity.has<LootDropComponent>()) {
                 val result = entity.getComponent<LootDropComponent>().lootTable.result
-                if(result.any()) {
+                if (result.any()) {
                     lootBox(transformComponent.position, result)
                 }
             }
-            gibs(transformComponent.position, 0f)
+            gibs(transformComponent.position, enemyComponent.lastShotAngle)
             entity.add(DestroyComponent())
         }
     }

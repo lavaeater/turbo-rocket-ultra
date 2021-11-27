@@ -163,6 +163,8 @@ class ContactManager : ContactListener {
                 val bulletBody = bulletEntity.getComponent<BodyComponent>().body!!
                 val splatterAngle = bulletBody.linearVelocity.cpy().angleDeg()
 
+                enemyComponent.lastShotAngle = splatterAngle
+
                 splatterEntity(
                     bulletBody.worldCenter,
                     splatterAngle
