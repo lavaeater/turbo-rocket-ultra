@@ -19,6 +19,15 @@ What the game needs is polish in the long run, but to keep me going I must not g
 #### There will be three acts
 And three they shall be. Act one will have five levels, act Two will have ten, act three will have twenty, so it is written. Now for ideas for the levels, because I thoroughly like making levels... not...
 
+Level colors:
+BLACK - Normal section
+BLUE - Boss
+GREEN - Objective
+RED - Enemy Spawner
+YELLOW - Loot
+WHITE - Start
+
+
 #### Act One
 ##### Level One
 Players can only punch. However, they can find weapons and ammo
@@ -735,7 +744,7 @@ Det här gör vi på det gamla vanliga sättet. Vi bygger en box2d-värld, vi kl
 
 Oj oj oj,  vad roligt. Vi kan göra en box2d-kropp med leder, per tutorials etc. Superkul ju.
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbLTc2MTIyMTU1NCwtODUyOTMyMzg2LDg4NT
+eyJoaXN0b3J5IjpbLTc5MTMyMDIxMCwtODUyOTMyMzg2LDg4NT
 ExNjczOSwzNDI3NDQxMzYsLTk0Njk0Mzk5LC05NTc1ODYzMywx
 MjIzMTI5MDU5LC0xMzA0NjIzOTgwLC0xOTQ2NjU2NzQ4LDY4OD
 Q4NDUwNCwxMTAxMTQwODE3LC00MTcxMjIzNzIsLTk1MjUxNjQ3
