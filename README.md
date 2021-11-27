@@ -30,6 +30,7 @@ But how does weapons and ammo work when playing multiplayer? Communal inventory 
 ##### Level Two
 - [ ] Hot swapping players!
 - [ ] Identifying controllers?
+- [ ] Also the level
 ##### Level Three
 
 ##### Level Four
@@ -733,11 +734,11 @@ Det här gör vi på det gamla vanliga sättet. Vi bygger en box2d-värld, vi kl
 
 Oj oj oj,  vad roligt. Vi kan göra en box2d-kropp med leder, per tutorials etc. Superkul ju.
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbMTQ1NDgzNDc0NiwzNDI3NDQxMzYsLTk0Nj
-k0Mzk5LC05NTc1ODYzMywxMjIzMTI5MDU5LC0xMzA0NjIzOTgw
-LC0xOTQ2NjU2NzQ4LDY4ODQ4NDUwNCwxMTAxMTQwODE3LC00MT
-cxMjIzNzIsLTk1MjUxNjQ3NywtODI5MzUyMjM2LC0yMDgxNDcz
-MDE3LC0zNTQwMzg1NDAsLTk3NjQzNTA2MiwyMDEzMjYxNDYsLT
-Y0MjI0NTcsLTE1NDk4NTg1OTUsLTEwMjQ2NTM1MzksMjA1MTEw
-MjE5OV19
+eyJoaXN0b3J5IjpbODg1MTE2NzM5LDM0Mjc0NDEzNiwtOTQ2OT
+QzOTksLTk1NzU4NjMzLDEyMjMxMjkwNTksLTEzMDQ2MjM5ODAs
+LTE5NDY2NTY3NDgsNjg4NDg0NTA0LDExMDExNDA4MTcsLTQxNz
+EyMjM3MiwtOTUyNTE2NDc3LC04MjkzNTIyMzYsLTIwODE0NzMw
+MTcsLTM1NDAzODU0MCwtOTc2NDM1MDYyLDIwMTMyNjE0NiwtNj
+QyMjQ1NywtMTU0OTg1ODU5NSwtMTAyNDY1MzUzOSwyMDUxMTAy
+MTk5XX0=
 -->
