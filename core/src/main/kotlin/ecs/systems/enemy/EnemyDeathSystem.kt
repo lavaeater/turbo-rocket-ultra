@@ -14,7 +14,7 @@ import physics.has
 
 class EnemyDeathSystem : IteratingSystem(allOf(EnemyComponent::class).get()) {
 
-    @ExperimentalStdlibApi
+    @OptIn(ExperimentalStdlibApi::class)
     override fun processEntity(entity: Entity, deltaTime: Float) {
         if(entity.getComponent<EnemyComponent>().health < 0) {
             val transformComponent = entity.getComponent<TransformComponent>()

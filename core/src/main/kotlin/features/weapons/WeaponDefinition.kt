@@ -38,22 +38,23 @@ class WeaponDefinition(
             ReloadType.MeleeWeapon,
             Assets.gunAudio["glock17"]!!
         )
+        val baseballBat = WeaponDefinition(
+            "Baseball Bat",
+            WeaponType.Melee,
+            -1,
+            60f,
+            45f, //
+            -1,
+            5f,
+            GunFrames.handGun, //TODO exhange for bat or something
+            AmmoType.MeleeWeapon,
+            5f..15f,
+            0f,
+            ReloadType.MeleeWeapon,
+            Assets.gunAudio["glock17"]!!//TODO exhange for bat or something
+        )
         val weapons = listOf(
-            WeaponDefinition(
-                "Baseball Bat",
-                WeaponType.Melee,
-                -1,
-                60f,
-                45f, //
-                -1,
-                5f,
-                GunFrames.handGun, //TODO exhange for bat or something
-                AmmoType.MeleeWeapon,
-                5f..15f,
-                0f,
-                ReloadType.MeleeWeapon,
-                Assets.gunAudio["glock17"]!!//TODO exhange for bat or something
-            ),
+            baseballBat,
             molotov,
             WeaponDefinition(
                 "Glock 17",
