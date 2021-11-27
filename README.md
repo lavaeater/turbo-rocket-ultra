@@ -42,6 +42,8 @@ But how does weapons and ammo work when playing multiplayer? Communal inventory 
 - [ ] Identifying controllers?
 - [x] Also the level
 ##### Level Three
+- [ ] Pickup Toast
+- [ ] Also, the level
 
 ##### Level Four
 ##### Level Five
@@ -745,11 +747,11 @@ Det här gör vi på det gamla vanliga sättet. Vi bygger en box2d-värld, vi kl
 
 Oj oj oj,  vad roligt. Vi kan göra en box2d-kropp med leder, per tutorials etc. Superkul ju.
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbLTM2ODM3NDU3NiwtNzkxMzIwMjEwLC04NT
-I5MzIzODYsODg1MTE2NzM5LDM0Mjc0NDEzNiwtOTQ2OTQzOTks
-LTk1NzU4NjMzLDEyMjMxMjkwNTksLTEzMDQ2MjM5ODAsLTE5ND
-Y2NTY3NDgsNjg4NDg0NTA0LDExMDExNDA4MTcsLTQxNzEyMjM3
-MiwtOTUyNTE2NDc3LC04MjkzNTIyMzYsLTIwODE0NzMwMTcsLT
-M1NDAzODU0MCwtOTc2NDM1MDYyLDIwMTMyNjE0NiwtNjQyMjQ1
-N119
+eyJoaXN0b3J5IjpbLTE1MTE0MjE3MDMsLTM2ODM3NDU3NiwtNz
+kxMzIwMjEwLC04NTI5MzIzODYsODg1MTE2NzM5LDM0Mjc0NDEz
+NiwtOTQ2OTQzOTksLTk1NzU4NjMzLDEyMjMxMjkwNTksLTEzMD
+Q2MjM5ODAsLTE5NDY2NTY3NDgsNjg4NDg0NTA0LDExMDExNDA4
+MTcsLTQxNzEyMjM3MiwtOTUyNTE2NDc3LC04MjkzNTIyMzYsLT
+IwODE0NzMwMTcsLTM1NDAzODU0MCwtOTc2NDM1MDYyLDIwMTMy
+NjE0Nl19
 -->
