@@ -39,6 +39,7 @@ But how does weapons and ammo work when playing multiplayer? Communal inventory 
 - [x] Communal Inventory
 - [x] Also the level
 ##### Level Two
+Lets just, on the concept screen, or a new Concept Screen, explore controller paradigms. I am thinking that I should move controller stuff into it's completely own type of system, some kind of system that just handles input for EVERYTHING, mouses, controllers, everything, complete with connecting / disconnecting controllers and players. 
 - [ ] Identifying controllers?
 - [x] Also the level
 ##### Level Three
@@ -748,11 +749,11 @@ Det här gör vi på det gamla vanliga sättet. Vi bygger en box2d-värld, vi kl
 
 Oj oj oj,  vad roligt. Vi kan göra en box2d-kropp med leder, per tutorials etc. Superkul ju.
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbLTExNzk3MTc5NDQsLTE1MTE0MjE3MDMsLT
-M2ODM3NDU3NiwtNzkxMzIwMjEwLC04NTI5MzIzODYsODg1MTE2
-NzM5LDM0Mjc0NDEzNiwtOTQ2OTQzOTksLTk1NzU4NjMzLDEyMj
-MxMjkwNTksLTEzMDQ2MjM5ODAsLTE5NDY2NTY3NDgsNjg4NDg0
-NTA0LDExMDExNDA4MTcsLTQxNzEyMjM3MiwtOTUyNTE2NDc3LC
-04MjkzNTIyMzYsLTIwODE0NzMwMTcsLTM1NDAzODU0MCwtOTc2
-NDM1MDYyXX0=
+eyJoaXN0b3J5IjpbNTg2MTUyNTExLC0xMTc5NzE3OTQ0LC0xNT
+ExNDIxNzAzLC0zNjgzNzQ1NzYsLTc5MTMyMDIxMCwtODUyOTMy
+Mzg2LDg4NTExNjczOSwzNDI3NDQxMzYsLTk0Njk0Mzk5LC05NT
+c1ODYzMywxMjIzMTI5MDU5LC0xMzA0NjIzOTgwLC0xOTQ2NjU2
+NzQ4LDY4ODQ4NDUwNCwxMTAxMTQwODE3LC00MTcxMjIzNzIsLT
+k1MjUxNjQ3NywtODI5MzUyMjM2LC0yMDgxNDczMDE3LC0zNTQw
+Mzg1NDBdfQ==
 -->
