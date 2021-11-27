@@ -96,6 +96,7 @@ class GridMapGenerator {
                                         AmmoLoot(AmmoType.NineMilliMeters, 17..51, 10f),
                                         AmmoLoot(AmmoType.FnP90Ammo, 25..150, 10f),
                                         AmmoLoot(AmmoType.TwelveGaugeShotgun, 4..18, 10f),
+                                        AmmoLoot(AmmoType.Molotov, 4..18, 10f),
                                     ), (3..5).random()
                                 )
                             )
@@ -156,9 +157,6 @@ class GridMapGenerator {
                         directionsToFilter.add(MapDirection.South)
 
                     directionsToFilter.add(MapDirection.opposing[currentDirection]!!)
-                    if (directionsToFilter.size == 4) {
-                        val waht = "wwwaaat"
-                    }
 
                     currentDirection = MapDirection.directions.filter { !directionsToFilter.contains(it) }.random()
                 }
@@ -197,13 +195,13 @@ class GridMapGenerator {
             val tileMap = mutableMapOf<Coordinate, GridMapSection>()
             val graph = TileGraph()
             var index = 0
-            for ((x, column) in map.withIndex()) {
-                for ((y, tile) in column.withIndex())
+            for ((sectionX, column) in map.withIndex()) {
+                for ((sectionY, tile) in column.withIndex())
                     if (tile) {
                         index++
                         //1. Check neighbours - if they are true, we will add them as connections
-                        val coordinate = TileGraph.createCoordinate(x, y)
-                        val connections = getConnections(x, y, map)
+                        val coordinate = TileGraph.createCoordinate(sectionX, sectionY)
+                        val connections = getConnections(sectionX, sectionY, map)
                         val section = GridMapSection(coordinate, connections, coordinate == startCoord)
                         for (direction in connections) {
                             val connectionCoordinate = TileGraph.createCoordinate(
@@ -219,8 +217,7 @@ class GridMapGenerator {
 
                         if ((1..20).random() <= level) {
                             val position = section.innerBounds.randomPoint()
-                            val emitter = spawner(position.x, position.y)
-                            //emitter.add(engine.createComponent(EnemySpawnerComponent::class.java))
+                            spawner(position.x, position.y)
                         }
 
                         if (coordinate == bossCoordinate) {

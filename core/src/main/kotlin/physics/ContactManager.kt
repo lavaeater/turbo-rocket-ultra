@@ -150,7 +150,7 @@ fun Contact.thisIsAContactBetween(): ContactType {
 class ContactManager : ContactListener {
     private val engine by lazy { inject<Engine>() }
 
-    @ExperimentalStdlibApi
+    @OptIn(ExperimentalStdlibApi::class)
     override fun beginContact(contact: Contact) {
         val contactType = contact.thisIsAContactBetween()
         when (contactType) {
@@ -170,9 +170,6 @@ class ContactManager : ContactListener {
             }
             is ContactType.EnemyAndDamage -> {
                 val enemy = contactType.enemy
-                val damage = contactType.damageEntity
-
-                val damageComponent = damage.getComponent<DamageEffectComponent>()
                 enemy.addComponent<BurningComponent>()
                 enemy.addComponent<ParticleEffectComponent> {
                     effect = Assets.fireEffectPool.obtain()

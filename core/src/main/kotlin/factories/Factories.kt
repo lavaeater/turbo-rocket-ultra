@@ -79,23 +79,25 @@ object Box2dCategories {
     val all =
         players or enemies or objectives or obstacles or enemySensors or lights or loot or bullets or walls or gibs or molotov
     val allButSensors = players or enemies or objectives or obstacles or lights or loot or bullets or walls or gibs
-    val allButLights = players or enemies or objectives or obstacles or enemySensors or loot or bullets or walls or gibs or molotov
+    val allButLights =
+        players or enemies or objectives or obstacles or enemySensors or loot or bullets or walls or gibs or molotov
     val whatGibsHit = players or enemies or walls
     val whatEnemiesHit = players or enemies or objectives or obstacles or walls or lights or bullets or gibs or sensors
     val whatPlayersHit =
         players or enemies or objectives or obstacles or walls or lights or gibs or enemySensors or indicators or loot
     val whatMolotovsHit = walls or obstacles or objectives or molotov
     val whatSensorsSense = players or enemies
+
     /**
      * Will this show up when hovering?
      */
     val thingsBulletsHit = objectives or obstacles or walls or enemies
 }
 
-fun gibs(at: Vector2, angle: Float) {
+fun gibs(at: Vector2, gibAngle: Float = 1000f) {
     for (i in Assets.enemyGibs) {
-        val angle = (1f..359f).random()
-        val force = vec2(40f,0f).setAngleDeg(angle)
+        val angle = if (gibAngle == 1000f) (1f..359f).random() else gibAngle
+        val force = vec2(40f, 0f).setAngleDeg(angle)
         val gibBody = world().body {
             type = BodyDef.BodyType.DynamicBody
             position.set(at)
@@ -108,7 +110,7 @@ fun gibs(at: Vector2, angle: Float) {
                 }
             }
         }
-        gibBody.applyLinearImpulse(force, vec2(gibBody.worldCenter.x -0.2f, gibBody.worldCenter.y - 0.2f),true)
+        gibBody.applyLinearImpulse(force, vec2(gibBody.worldCenter.x - 0.2f, gibBody.worldCenter.y - 0.2f), true)
 
         val gibEntity = engine().entity {
             with<TextureComponent> {
@@ -172,7 +174,7 @@ fun fireEntity(at: Vector2, linearVelocity: Vector2) {
         }
     }
     box2dBody.applyLinearImpulse(linearVelocity.cpy().scl(.5f), at, true)
-    box2dBody.userData =  engine().entity {
+    box2dBody.userData = engine().entity {
         with<TransformComponent>()
         with<BodyComponent> {
             body = box2dBody
@@ -280,7 +282,7 @@ fun bodyForSprite(
     return box2dBody
 }
 
-fun player(player: Player, mapper: ControlMapper, at: Vector2, pixelWidth: Int = 24, pixelHeight: Int = 48) {
+fun player(player: Player, mapper: ControlMapper, at: Vector2) {
     /*
     The player should be two bodies, one for collision detection for
     movement, like a projection of the characters body on "the floor"
@@ -489,22 +491,15 @@ fun enemy(at: Vector2) {
             anims = Assets.enemies.values.random()
         }
         with<LootDropComponent> {
-            for(weapDef in WeaponDefinition.weapons) {
-                lootTable.contents.add(WeaponLoot(weapDef, 5f))
-            }
-            lootTable.contents.add(
-                AmmoLoot(AmmoType.NineMilliMeters, 6..17, 30f)
-            )
-            lootTable.contents.add(
-                AmmoLoot(AmmoType.TwelveGaugeShotgun, 4..10, 20f)
-            )
-            lootTable.contents.add(
-                AmmoLoot(AmmoType.FnP90Ammo, 50..150, 10f)
-            )
+            WeaponDefinition.weapons.forEach { lootTable.contents.add(WeaponLoot(it, 5f)) }
+            lootTable.contents.add(AmmoLoot(AmmoType.NineMilliMeters, 17..51, 10f))
+            lootTable.contents.add(AmmoLoot(AmmoType.FnP90Ammo, 25..150, 10f))
+            lootTable.contents.add(AmmoLoot(AmmoType.TwelveGaugeShotgun, 4..18, 10f))
+            lootTable.contents.add(AmmoLoot(AmmoType.Molotov, 4..18, 10f))
             lootTable.contents.add(
                 NullValue(40f)
             )
-            //lootTable.contents.add(NullValue(10f))
+            lootTable.count = (1..2).random()
         }
         with<TextureComponent> {
             layer = 1
@@ -631,22 +626,12 @@ fun blockade(
 
 fun spawner(
     tileX: Float = 0f,
-    tileY: Float = 0f,
-    width: Float = 4f,
-    height: Float = 4f
+    tileY: Float = 0f
 ): Entity {
-
-    val pixelWidth = 64
-    val pixelHeight = 64
-    val projectedHeight = 64
-
-    val widthInMeters = pixelWidth / pixelsPerMeter
-    val projectedHeightInMeters = projectedHeight / pixelsPerMeter
-
     val box2dBody = world().body {
         type = BodyDef.BodyType.StaticBody
         position.set(tileX, tileY)
-        box(4f,4f,) {//widthInMeters, projectedHeightInMeters, vec2(widthInMeters / 2, -projectedHeightInMeters / 2)) {
+        box(4f, 4f) {//widthInMeters, projectedHeightInMeters, vec2(widthInMeters / 2, -projectedHeightInMeters / 2)) {
             restitution = 0f
             filter {
                 categoryBits = Box2dCategories.obstacles
@@ -660,11 +645,10 @@ fun spawner(
         with<TextureComponent> {
             texture = Assets.towers["obstacle"]!!
             scale = 4f
-//            offsetX = widthInMeters * 2
-            offsetY = -4f//-(widthInMeters * 2) - projectedHeightInMeters
+            offsetY = -4f
             layer = 1
         }
-        with<EnemySpawnerComponent>{}
+        with<EnemySpawnerComponent> {}
         with<MiniMapComponent> {
             color = Color.PINK
         }
