@@ -142,17 +142,17 @@ fun splatterEntity(at: Vector2, angle: Float) {
     }
 }
 
-fun delayedFireEntity(at: Vector2, linearVelocity: Vector2) {
+fun delayedFireEntity(at: Vector2, linearVelocity: Vector2, player: Player) {
     engine().entity {
         with<CreateEntityComponent> {
             creator = {
-                fireEntity(at, linearVelocity)
+                fireEntity(at, linearVelocity, player)
             }
         }
     }
 }
 
-fun fireEntity(at: Vector2, linearVelocity: Vector2) {
+fun fireEntity(at: Vector2, linearVelocity: Vector2, player: Player) {
     val box2dBody = world().body {
         type = BodyDef.BodyType.DynamicBody
         position.set(at)
@@ -184,7 +184,9 @@ fun fireEntity(at: Vector2, linearVelocity: Vector2) {
             effect = Assets.fireEffectPool.obtain()
             rotation = 270f
         }
-        with<DamageEffectComponent>()
+        with<DamageEffectComponent> {
+            this.player = player
+        }
         with<DestroyAfterCoolDownComponent> {
             coolDown = (5f..25f).random()
         }
@@ -328,7 +330,7 @@ fun player(player: Player, mapper: ControlMapper, at: Vector2) {
     }
     //TODO: Fix this hot mess
     entity.add(mapper)
-    entity.add(PlayerControlComponent(mapper))
+    entity.add(PlayerControlComponent(mapper, player))
     box2dBody.userData = entity
 
     player.body = box2dBody
@@ -412,7 +414,7 @@ fun lootBox(at: Vector2, lootDrop: List<ILoot>) {
     box2dBody.userData = entity
 }
 
-fun thrownProjectile(at: Vector2, towards: Vector2, speed: Float) {
+fun thrownProjectile(at: Vector2, towards: Vector2, speed: Float, player: Player) {
     val box2dBody = world().body {
         type = BodyDef.BodyType.DynamicBody
         position.set(at)
@@ -428,7 +430,9 @@ fun thrownProjectile(at: Vector2, towards: Vector2, speed: Float) {
     }
     val entity = engine().entity {
         with<BodyComponent> { body = box2dBody }
-        with<MolotovComponent> {}
+        with<MolotovComponent> {
+            this.player = player
+        }
         with<TransformComponent> { position.set(box2dBody.position) }
         with<TextureComponent> {
             layer = 1
@@ -439,7 +443,7 @@ fun thrownProjectile(at: Vector2, towards: Vector2, speed: Float) {
     CounterObject.bulletCount++
 }
 
-fun bullet(at: Vector2, towards: Vector2, speed: Float, damage: Float) {
+fun bullet(at: Vector2, towards: Vector2, speed: Float, damage: Float, player: Player) {
     val box2dBody = world().body {
         type = BodyDef.BodyType.DynamicBody
         position.set(at)
@@ -457,6 +461,7 @@ fun bullet(at: Vector2, towards: Vector2, speed: Float, damage: Float) {
         with<BodyComponent> { body = box2dBody }
         with<BulletComponent> {
             this.damage = damage
+            this.player = player
         }
         with<TransformComponent> { position.set(box2dBody.position) }
         with<TextureComponent> {

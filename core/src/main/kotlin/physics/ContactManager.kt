@@ -159,7 +159,8 @@ class ContactManager : ContactListener {
                 val bulletEntity = contactType.bullet
 
                 val enemyComponent = enemy.getComponent<EnemyComponent>()
-                enemyComponent.takeDamage(bulletEntity.getComponent<BulletComponent>().damage)
+                val bulletComponent = bulletEntity.getComponent<BulletComponent>()
+                enemyComponent.takeDamage(bulletComponent.damage, bulletComponent.player)
                 val bulletBody = bulletEntity.getComponent<BodyComponent>().body!!
                 val splatterAngle = bulletBody.linearVelocity.cpy().angleDeg()
 
@@ -172,7 +173,9 @@ class ContactManager : ContactListener {
             }
             is ContactType.EnemyAndDamage -> {
                 val enemy = contactType.enemy
-                enemy.addComponent<BurningComponent>()
+                enemy.addComponent<BurningComponent> {
+                    player = contactType.damageEntity.getComponent<DamageEffectComponent>().player
+                }
                 enemy.addComponent<ParticleEffectComponent> {
                     effect = Assets.fireEffectPool.obtain()
                 }
@@ -191,6 +194,7 @@ class ContactManager : ContactListener {
             }
             is ContactType.MolotovHittingAnything -> {
                 val molotov = contactType.molotov
+                val molotovComponent = molotov.getComponent<MolotovComponent>()
                 val body = molotov.getComponent<BodyComponent>().body!!
                 val linearVelocity = body.linearVelocity.cpy()
                 body.linearVelocity = Vector2.Zero.cpy()
@@ -202,7 +206,7 @@ class ContactManager : ContactListener {
 
                 val numOfFireBalls = (10..25).random()
                 for (ballIndex in 0..numOfFireBalls) {
-                    delayedFireEntity(body.worldCenter, linearVelocity)
+                    delayedFireEntity(body.worldCenter, linearVelocity, molotovComponent.player)
                 }
                 molotov.addComponent<DestroyComponent>() //This entity will die and disappear now.
             }

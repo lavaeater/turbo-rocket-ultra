@@ -20,7 +20,7 @@ class BurningSystem: IteratingSystem(allOf(BurningComponent::class, EnemyCompone
             entity.remove<BurningComponent>()
             entity.remove<ParticleEffectComponent>()
         } else {
-            enemyComponent.takeDamage(burningComponent.damageRange.random() * deltaTime)
+            enemyComponent.takeDamage(burningComponent.damageRange.random() * deltaTime, burningComponent.player)
         }
     }
 }

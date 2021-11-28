@@ -85,7 +85,8 @@ class PlayerShootingSystem(private val audioPlayer: AudioPlayer) : IteratingSyst
                     vec2(
                         transformComponent.position.x + aimVector.x,
                         transformComponent.position.y - 1 + aimVector.y
-                    ), aimVector, (15f..25f).random()
+                    ), aimVector, (15f..25f).random(),
+                    controlComponent.player
                 )
             }
         }
@@ -111,7 +112,9 @@ class PlayerShootingSystem(private val audioPlayer: AudioPlayer) : IteratingSyst
                     weapon.accuracyOrHitArcForMelee
                 )
             }
-            enemiesInRangeAndInHitArc.forEach { it.getComponent<EnemyComponent>().takeDamage(weapon.damageRange) }
+            enemiesInRangeAndInHitArc.forEach {
+                it.getComponent<EnemyComponent>().takeDamage(weapon.damageRange, controlComponent.player)
+            }
         }
     }
 
@@ -197,8 +200,12 @@ class PlayerShootingSystem(private val audioPlayer: AudioPlayer) : IteratingSyst
                 bullet(
                     vec2(
                         transformComponent.position.x + aimVector.x,
-                        transformComponent.position.y - 1 + aimVector.y
-                    ), aimVector, (75f..150f).random(), weapon.damageRange.random()
+                        transformComponent.position.y + aimVector.y
+                    ),
+                    aimVector,
+                    (75f..175f).random(),
+                    weapon.damageRange.random(),
+                    controlComponent.player
                 )
             }
         }

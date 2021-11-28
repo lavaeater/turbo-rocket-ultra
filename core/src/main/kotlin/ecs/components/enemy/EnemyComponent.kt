@@ -5,6 +5,7 @@ import ai.enemy.EnemyState
 import com.badlogic.gdx.math.Vector2
 import com.badlogic.gdx.utils.Pool
 import com.badlogic.gdx.utils.Queue
+import data.Player
 import ecs.components.gameplay.TransformComponent
 import ktx.math.random
 import ktx.math.vec2
@@ -23,6 +24,7 @@ class EnemyComponent : Component, Pool.Poolable {
 
     val directionVector = vec2()
     var health = 100f
+    lateinit var lastHitBy: Player
 
     val isDead get() = health <= 0f
 
@@ -34,12 +36,14 @@ class EnemyComponent : Component, Pool.Poolable {
     val path = Queue<Vector2>()
     var needsNewNextPosition = true
 
-    fun takeDamage(damage: Float) {
+    fun takeDamage(damage: Float, player: Player) {
         health -= damage
+        lastHitBy = player
     }
 
-    fun takeDamage(range: ClosedFloatingPointRange<Float>) {
+    fun takeDamage(range: ClosedFloatingPointRange<Float>, player: Player) {
         health -= range.random()
+        lastHitBy = player
     }
 
     fun coolDown(deltaTime: Float) {
