@@ -3,14 +3,13 @@ package ecs.systems
 import com.badlogic.ashley.core.Entity
 import com.badlogic.ashley.systems.IteratingSystem
 import com.badlogic.gdx.math.Vector2
-import com.badlogic.gdx.physics.box2d.World
 import ecs.components.BodyComponent
 import ecs.components.gameplay.TransformComponent
 import ktx.ashley.allOf
 import map.grid.GridMapSection
 import physics.AshleyMappers
 
-class PhysicsSystem() :
+class PhysicsSystem :
     IteratingSystem(allOf(BodyComponent::class, TransformComponent::class).get()) {
 
     override fun processEntity(entity: Entity, deltaTime: Float) {

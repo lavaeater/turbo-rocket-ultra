@@ -128,8 +128,8 @@ D1B67A
             nextLevel()
     }
 
-    private val velIters = 2
-    private val posIters = 2
+    private val velIters = 8
+    private val posIters = 3
     private val timeStep = 1/60f
 
     var accumulator = 0f
