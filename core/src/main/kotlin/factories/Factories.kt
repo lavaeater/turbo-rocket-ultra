@@ -82,7 +82,7 @@ object Box2dCategories {
     val allButLights =
         players or enemies or objectives or obstacles or enemySensors or loot or bullets or walls or gibs or molotov
     val whatGibsHit = players or enemies or walls or obstacles or loot or objectives
-    val whatEnemiesHit = players or enemies or objectives or obstacles or walls or lights or bullets or gibs or sensors
+    val whatEnemiesHit = players or objectives or obstacles or walls or lights or bullets or gibs or sensors
     val whatPlayersHit =
         players or enemies or objectives or obstacles or walls or lights or gibs or enemySensors or indicators or loot
     val whatMolotovsHit = walls or obstacles or objectives or molotov
@@ -487,7 +487,7 @@ fun enemy(at: Vector2) {
         Box2dCategories.enemies,
         Box2dCategories.bullets,
         Box2dCategories.enemies,
-        Box2dCategories.enemies
+        Box2dCategories.players
     )
 
     val entity = engine().entity {
