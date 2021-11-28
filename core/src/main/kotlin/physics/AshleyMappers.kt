@@ -10,10 +10,7 @@ import ecs.components.enemy.EnemySpawnerComponent
 import ecs.components.enemy.TackleComponent
 import ecs.components.fx.SplatterComponent
 import ecs.components.gameplay.*
-import ecs.components.graphics.AnimatedCharacterComponent
-import ecs.components.graphics.CameraFollowComponent
-import ecs.components.graphics.MiniMapComponent
-import ecs.components.graphics.TextureComponent
+import ecs.components.graphics.*
 import ecs.components.pickups.LootComponent
 import ecs.components.pickups.LootDropComponent
 import ecs.components.player.*
@@ -66,5 +63,6 @@ object AshleyMappers {
     val weapon = mapperFor<WeaponComponent>()
     val respawn = mapperFor<PlayerIsRespawning>()
     val waitsForRespawn = mapperFor<PlayerWaitsForRespawn>()
+    val frustum = mapperFor<InFrustumComponent>()
 
 }

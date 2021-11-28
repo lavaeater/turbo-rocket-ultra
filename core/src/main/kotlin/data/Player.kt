@@ -19,7 +19,7 @@ class Player() {
     val selectedSprite get() = Assets.playerCharacters[selectedCharacterSpriteName]!!
     var currentAnimState: AnimState = AnimState.Idle
     var currentSpriteDirection : SpriteDirection = SpriteDirection.South
-    val startingHealth = 100
+    val startingHealth = 100000
     private val startingLives = 3
 
     var lives = startingLives

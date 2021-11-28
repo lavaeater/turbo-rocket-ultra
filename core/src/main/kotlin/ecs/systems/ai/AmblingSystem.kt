@@ -32,7 +32,7 @@ class AmblingSystem : IteratingSystem(allOf(Amble::class, EnemyComponent::class,
 
             val currentSection = TileGraph.getCoordinateInstance(currentPosition.sectionX(), currentPosition.sectionY())
             //1. Randomly select a section to move to
-            val maxDistance = 2
+            val maxDistance = 10
             val randomSection = mapManager.getRandomSection(currentSection, maxDistance)
             //2. Pathfind a path to it
             findPathFromTo(enemyComponent, currentSection, randomSection)
