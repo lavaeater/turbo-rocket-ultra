@@ -6,6 +6,7 @@ import ecs.components.gameplay.ObjectiveComponent
 import tru.*
 
 class Player() {
+    var currentWeapon = ""
     var kills = 0
     set(value) {
         field = value

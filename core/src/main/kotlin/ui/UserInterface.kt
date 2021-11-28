@@ -101,7 +101,7 @@ class UserInterface(
                             BoundTextActor({ "Score: ${p.score}" })
                         )
                         children.add(
-                            BoundTextActor({ "Ammo: ${p.ammoLeft} / ${p.totalAmmo}"})
+                            BoundTextActor({ "${p.currentWeapon}: ${p.ammoLeft}/${p.totalAmmo}"})
                         )
                         children.add(
                             DataBoundMeter(

@@ -81,7 +81,7 @@ object Box2dCategories {
     val allButSensors = players or enemies or objectives or obstacles or lights or loot or bullets or walls or gibs
     val allButLights =
         players or enemies or objectives or obstacles or enemySensors or loot or bullets or walls or gibs or molotov
-    val whatGibsHit = players or enemies or walls
+    val whatGibsHit = players or enemies or walls or obstacles or loot or objectives
     val whatEnemiesHit = players or enemies or objectives or obstacles or walls or lights or bullets or gibs or sensors
     val whatPlayersHit =
         players or enemies or objectives or obstacles or walls or lights or gibs or enemySensors or indicators or loot
@@ -97,12 +97,13 @@ object Box2dCategories {
 fun gibs(at: Vector2, gibAngle: Float = 1000f) {
     for (i in Assets.enemyGibs) {
         val angle = if (gibAngle == 1000f) (1f..359f).random() else gibAngle
-        val force = vec2(40f, 0f).setAngleDeg(angle + (-25..25).random())
+        val force = vec2(80f, 0f).setAngleDeg(angle + (-25..25).random())
         val gibBody = world().body {
             type = BodyDef.BodyType.DynamicBody
-            position.set(at)
+            position.set(at.x - 2f, at.y - 2f)
+            linearDamping = 5f
             box(.3f, .3f) {
-                friction = 50f //Tune
+                friction = 1f //Tune
                 density = 10f //tune
                 filter {
                     categoryBits = Box2dCategories.gibs
@@ -110,7 +111,7 @@ fun gibs(at: Vector2, gibAngle: Float = 1000f) {
                 }
             }
         }
-        gibBody.applyLinearImpulse(force, vec2(gibBody.worldCenter.x - 0.2f, gibBody.worldCenter.y - 0.2f), true)
+        gibBody.applyLinearImpulse(force, vec2(gibBody.worldCenter.x + (-1f..1f).random(), gibBody.worldCenter.y + (-1f..1f).random()), true)
 
         val gibEntity = engine().entity {
             with<TextureComponent> {

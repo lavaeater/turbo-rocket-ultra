@@ -13,12 +13,14 @@ open class CollectionContainerElement<T:Any>(
 
     override fun render(batch: Batch, delta:Float, scale: Float, debug: Boolean) {
         super.render(batch, delta, scale, debug)
+
+        //Render delta divided by number of items!
         for((xIndex, item) in items.withIndex()) { //Move horizontally
             for((yIndex, element) in elements.withIndex()) { //Move vertically
                 element.position.set(offset.x * xIndex, offset.y * yIndex)
                 element.parent = this
                 element.currentItem = item
-                element.render(batch, delta, scale, debug)
+                element.render(batch, delta / items.count(), scale, debug)
             }
         }
     }

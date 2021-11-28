@@ -16,6 +16,7 @@ import tru.AnimState
  * the systems can be quite small and specific, but it is the data that is truly hard to keep track of. Having it in
  * the same place makes at least some things easier.
  */
+
 class PlayerControlComponent(var controlMapper: ControlMapper) : Component, Pool.Poolable {
     var waitsForRespawn = false
     private var cooldownRemaining = 0f
