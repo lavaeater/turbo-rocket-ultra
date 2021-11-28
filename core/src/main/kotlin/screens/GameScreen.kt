@@ -18,6 +18,7 @@ import ecs.components.gameplay.ObjectiveComponent
 import ecs.components.gameplay.ObstacleComponent
 import ecs.components.player.PlayerComponent
 import ecs.systems.graphics.CameraUpdateSystem
+import ecs.systems.graphics.GameConstants
 import ecs.systems.graphics.GameConstants.MAX_ENEMIES
 import ecs.systems.graphics.RenderMiniMapSystem
 import ecs.systems.graphics.RenderSystem
@@ -79,19 +80,20 @@ class GameScreen(private val gameState: StateMachine<GameState, GameEvent>) : Kt
     }
 
     private fun loadMapOne() : Pair<Map<Coordinate, GridMapSection>, TileGraph> {
-        CounterObject.numberOfEnemies = 50
+        //CounterObject.numberOfEnemies = 50
+        return GridMapGenerator.generateFromDefintion(TextGridMapDefinition.levelThree)
 
-        return GridMapGenerator.generateFromDefintion(TextGridMapDefinition.levelOne)
+//        return GridMapGenerator.generateFromDefintion(TextGridMapDefinition.levelOne)
     }
 
     private fun loadMapTwo(): Pair<Map<Coordinate, GridMapSection>, TileGraph>  {
-        CounterObject.numberOfEnemies = 100
+        //CounterObject.numberOfEnemies = 100
 
         return GridMapGenerator.generateFromDefintion(TextGridMapDefinition.levelTwo)
     }
 
     private fun loadMapThree(): Pair<Map<Coordinate, GridMapSection>, TileGraph>  {
-        CounterObject.numberOfEnemies = 1024
+        //CounterObject.numberOfEnemies = 1024
 
         return GridMapGenerator.generateFromDefintion(TextGridMapDefinition.levelThree)
     }
@@ -233,7 +235,7 @@ D1B67A
         engine.removeAllEntities(allOf(ObstacleComponent::class).get())
 
         //For debuggin we will swarm with enemies
-        CounterObject.numberOfEnemies = (8f.pow(CounterObject.currentLevel).roundToInt() * 2).coerceAtMost(MAX_ENEMIES)
+        CounterObject.numberOfEnemies = MAX_ENEMIES // (8f.pow(CounterObject.currentLevel).roundToInt() * 2).coerceAtMost(MAX_ENEMIES)
 
         val map = when(level) {
             1 -> loadMapOne()
