@@ -285,7 +285,7 @@ fun bodyForSprite(
     return box2dBody
 }
 
-fun player(player: Player, mapper: ControlMapper, at: Vector2) {
+fun player(player: Player, mapper: ControlMapper, at: Vector2, debug: Boolean = true) {
     /*
     The player should be two bodies, one for collision detection for
     movement, like a projection of the characters body on "the floor"
@@ -319,7 +319,12 @@ fun player(player: Player, mapper: ControlMapper, at: Vector2) {
         with<PlayerComponent> { this.player = player }
         val weapon = WeaponDefinition.baseballBat.getWeapon()
         with<InventoryComponent> {
-            weapons.add(weapon)
+            if(debug) {
+                WeaponDefinition.weapons.forEach { weapons.add(it.getWeapon().apply { ammoRemaining = 10000 }) }
+                AmmoType.ammoTypes.forEach { ammo[it] = 1000 }
+            } else {
+                weapons.add(weapon)
+            }
         }
         with<WeaponComponent> {
             currentWeapon = weapon
