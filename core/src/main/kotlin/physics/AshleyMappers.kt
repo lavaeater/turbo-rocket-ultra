@@ -29,6 +29,8 @@ object AshleyMappers {
             mappers[type] = mapperFor<T>()
         return mappers[type] as ComponentMapper<T>
     }
+
+    val body = mapperFor<BodyComponent>()
     val mappers = mutableMapOf<KType, ComponentMapper<*>>()
     val transform = mapperFor<TransformComponent>()
     val amble = mapperFor<Amble>()

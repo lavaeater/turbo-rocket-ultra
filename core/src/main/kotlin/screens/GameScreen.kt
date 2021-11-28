@@ -117,6 +117,7 @@ D1B67A
 
         camera.update(true)
         batch.projectionMatrix = camera.combined
+        updatePhysics(delta)
         engine.update(delta)
         ui.update(delta)
         console.draw()
@@ -125,6 +126,21 @@ D1B67A
 
         if (factsOfTheWorld.getBooleanFact(Facts.LevelComplete).value)
             nextLevel()
+    }
+
+    private val velIters = 2
+    private val posIters = 2
+    private val timeStep = 1/60f
+
+    var accumulator = 0f
+
+    private fun updatePhysics(delta:Float) {
+        val ourTime = delta.coerceAtMost(timeStep * 2)
+        accumulator += ourTime
+        while (accumulator > timeStep) {
+            world.step(timeStep, velIters, posIters)
+            accumulator -= ourTime
+        }
     }
 
     override fun resize(width: Int, height: Int) {

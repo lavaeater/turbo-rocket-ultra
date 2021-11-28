@@ -6,6 +6,7 @@ import ecs.components.BodyComponent
 import ecs.components.enemy.EnemyComponent
 import ecs.components.gameplay.TransformComponent
 import ktx.ashley.allOf
+import physics.AshleyMappers
 import physics.getComponent
 
 class EnemyMovementSystem : IteratingSystem(
@@ -16,10 +17,9 @@ class EnemyMovementSystem : IteratingSystem(
     ).get()
 ) {
 
-    @ExperimentalStdlibApi
     override fun processEntity(entity: Entity, deltaTime: Float) {
-        val enemyComponent = entity.getComponent<EnemyComponent>()
-        val bodyComponent = entity.getComponent<BodyComponent>()
+        val enemyComponent = AshleyMappers.enemy.get(entity)
+        val bodyComponent = AshleyMappers.body.get(entity)
         moveEnemy(enemyComponent, bodyComponent)
     }
 

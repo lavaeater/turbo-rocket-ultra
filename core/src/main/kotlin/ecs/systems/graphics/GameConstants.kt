@@ -12,7 +12,7 @@ object GameConstants {
     const val CAR_DENSITY = .3f
     const val SHIP_LINEAR_DAMPING = 20f
     const val SHIP_ANGULAR_DAMPING = 20f
-    const val MAX_ENEMIES = 1024
+    const val MAX_ENEMIES = 2000
 
     const val GAMEWIDTH = 48f
     const val GAMEHEIGHT = 40f

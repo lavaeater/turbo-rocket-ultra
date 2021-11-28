@@ -11,11 +11,11 @@ import ecs.components.graphics.TextureComponent
 import ecs.systems.graphics.GameConstants.scale
 import ktx.ashley.allOf
 import ktx.graphics.use
+import physics.AshleyMappers
 import physics.drawScaled
 import physics.getComponent
 import tru.Assets
 
-@OptIn(ExperimentalStdlibApi::class)
 class RenderSystem(
     private val batch: Batch, private val debug: Boolean
 ) : SortedIteratingSystem(
@@ -26,17 +26,17 @@ class RenderSystem(
     ).get(),
     object : Comparator<Entity> {
         override fun compare(p0: Entity, p1: Entity): Int {
-            val layer0 = p0.getComponent<TextureComponent>().layer
-            val layer1 = p1.getComponent<TextureComponent>().layer
+            val layer0 = AshleyMappers.texture.get(p0).layer
+            val layer1 = AshleyMappers.texture.get(p1).layer
             return if (layer0 == layer1) {
-                val y0 = (p0.getComponent<TransformComponent>().position.y)
-                val y1 = (p1.getComponent<TransformComponent>().position.y)
+                val y0 = (AshleyMappers.transform.get(p0).position.y)
+                val y1 = (AshleyMappers.transform.get(p1).position.y)
                 val compareVal = y0.compareTo(y1)
                 if (compareVal != 0)
                     return compareVal
                 else {
-                    val x0 = p0.getComponent<TransformComponent>().position.y
-                    val x1 = p1.getComponent<TransformComponent>().position.y
+                    val x0 = AshleyMappers.transform.get(p0).position.y
+                    val x1 = AshleyMappers.transform.get(p1).position.y
                     x1.compareTo(x0)
                 }
             } else {
@@ -54,8 +54,8 @@ class RenderSystem(
     }
 
     override fun processEntity(entity: Entity, deltaTime: Float) {
-        val transform = entity.getComponent<TransformComponent>()
-        val textureComponent = entity.getComponent<TextureComponent>()
+        val transform = AshleyMappers.transform.get(entity)
+        val textureComponent = AshleyMappers.texture.get(entity)
 
         batch.drawScaled(
             textureComponent.texture,

@@ -9,6 +9,7 @@ import ecs.components.graphics.TextureComponent
 import injection.Context
 import ktx.ashley.allOf
 import ktx.ashley.remove
+import physics.AshleyMappers
 import physics.addComponent
 import physics.getComponent
 
@@ -20,9 +21,8 @@ import physics.getComponent
 class FrustumCullingSystem : IteratingSystem(allOf(TransformComponent::class, TextureComponent::class).get()) {
     private val camera by lazy { Context.inject<OrthographicCamera>() }
 
-    @OptIn(ExperimentalStdlibApi::class)
     override fun processEntity(entity: Entity, deltaTime: Float) {
-        val position = entity.getComponent<TransformComponent>().position
+        val position = AshleyMappers.transform.get(entity).position
         if (camera.frustum.pointInFrustum(position.x, position.y, 0f)) {
             entity.addComponent<InFrustumComponent> { }
         } else {

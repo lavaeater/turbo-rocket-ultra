@@ -11,18 +11,18 @@ import ktx.ashley.allOf
 import ktx.ashley.get
 import ktx.ashley.has
 import ktx.ashley.remove
+import physics.AshleyMappers
 import physics.addComponent
 import physics.getComponent
 import physics.has
 
 class GibSystem : IteratingSystem(allOf(GibComponent::class).get()) {
-    @OptIn(ExperimentalStdlibApi::class)
     override fun processEntity(entity: Entity, deltaTime: Float) {
-        val gibComponent = entity.getComponent<GibComponent>()
+        val gibComponent = AshleyMappers.gib.get(entity)
         gibComponent.coolDown -= deltaTime
         if (gibComponent.coolDown <= 0f && !gibComponent.hasStopped) {
-            if (entity.has<BodyComponent>()) {
-                val bodyComponent = entity.getComponent<BodyComponent>()
+            if (AshleyMappers.body.has(entity)) {
+                val bodyComponent = AshleyMappers.body.get(entity)
                 world().destroyBody(bodyComponent.body!!)
                 entity.remove<BodyComponent>()
             }
@@ -31,8 +31,8 @@ class GibSystem : IteratingSystem(allOf(GibComponent::class).get()) {
         } else if (gibComponent.coolDown <= 0f && gibComponent.hasStopped) {
             entity.addComponent<DestroyComponent> { }
         } else {
-            if (entity.has<BodyComponent>()) {
-                val body = entity.getComponent<BodyComponent>().body!!
+            if (AshleyMappers.body.has(entity)) {
+                val body = AshleyMappers.body.get(entity).body!!
                 if (body.linearVelocity.len2() > 4f)
                     body.linearVelocity = body.linearVelocity.cpy().setLength(4f)
             }

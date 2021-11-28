@@ -12,12 +12,12 @@ import ktx.ashley.allOf
 import ktx.graphics.use
 import ktx.math.vec2
 import map.grid.GridMapManager
+import physics.AshleyMappers
 import physics.getComponent
 import tru.Assets
 
-@OptIn(ExperimentalStdlibApi::class)
 class RenderMiniMapSystem : SortedIteratingSystem(allOf(TextureComponent::class, TransformComponent::class, MiniMapComponent::class).get(),
-    Comparator<Entity> { p0, p1 -> p1.getComponent<TextureComponent>().layer.compareTo(p0.getComponent<TextureComponent>().layer) }, 32) {
+    Comparator<Entity> { p0, p1 -> AshleyMappers.texture.get(p1).layer.compareTo(AshleyMappers.texture.get(p0).layer) }, 32) {
     private val shapeDrawer by lazy { Assets.shapeDrawer }
     private val scale = 1/200f
     private val center = vec2()
@@ -35,10 +35,9 @@ class RenderMiniMapSystem : SortedIteratingSystem(allOf(TextureComponent::class,
         }
     }
 
-    @ExperimentalStdlibApi
     override fun processEntity(entity: Entity, deltaTime: Float) {
-        val transform = entity.getComponent<TransformComponent>()
-        val miniMapComponent = entity.getComponent<MiniMapComponent>()
+        val transform = AshleyMappers.transform.get(entity)
+        val miniMapComponent = AshleyMappers.miniMap.get(entity)
         if(transform.position.dst2(camera.position.x, camera.position.y) < 20000f) {
             center.set(
                 transform.position.x * scale + xOffset, transform.position.y * scale + yOffset

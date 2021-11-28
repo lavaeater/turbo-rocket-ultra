@@ -16,17 +16,17 @@ import ktx.math.vec2
 import map.grid.Coordinate
 import map.grid.GridMapManager
 import map.snake.randomPoint
+import physics.AshleyMappers
 import physics.getComponent
 
 class AmblingSystem : IteratingSystem(allOf(Amble::class, EnemyComponent::class, TransformComponent::class).get()) {
 
     private val mapManager by lazy { inject<GridMapManager>() }
 
-    @OptIn(ExperimentalStdlibApi::class)
     override fun processEntity(entity: Entity, deltaTime: Float) {
-        val component = entity.getComponent<Amble>()
-        val enemyComponent = entity.getComponent<EnemyComponent>()
-        val currentPosition = entity.getComponent<TransformComponent>().position
+        val component = AshleyMappers.amble.get(entity)
+        val enemyComponent = AshleyMappers.enemy.get(entity)
+        val currentPosition = AshleyMappers.transform.get(entity).position
 
         if(component.firstRun) {
 
