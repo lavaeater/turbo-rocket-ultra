@@ -6,7 +6,7 @@ import com.badlogic.gdx.utils.Pool
 import com.badlogic.gdx.utils.Queue
 
 class FiredShotsComponent : Component, Pool.Poolable {
-    val queue = Queue<Vector2>()
+    val queue = Queue<Pair<Vector2, Float>>()
     override fun reset() {
         queue.clear()
     }

@@ -16,8 +16,7 @@ import input.canISeeYouFromHere
 import ktx.ashley.allOf
 import ktx.math.random
 import ktx.math.vec2
-import physics.getComponent
-import physics.has
+import physics.AshleyMappers
 import tru.Assets
 
 
@@ -28,16 +27,15 @@ class PlayerShootingSystem(private val audioPlayer: AudioPlayer) : IteratingSyst
         TransformComponent::class
     ).get()
 ) {
-    @OptIn(ExperimentalStdlibApi::class)
     override fun processEntity(entity: Entity, deltaTime: Float) {
         /*
         To make things a looot easier, we will shoot away bullets and pellets
         These will be represented by some simple sprite, perhaps just a pixel wide
         Yes yes, they could even be drawn by the shapedrawer?
          */
-        val controlComponent = entity.getComponent<PlayerControlComponent>()
+        val controlComponent = AshleyMappers.playerControl.get(entity)
         controlComponent.coolDown(deltaTime)
-        val weapon = entity.getComponent<WeaponComponent>().currentWeapon
+        val weapon = AshleyMappers.weapon.get(entity).currentWeapon
         when (weapon.weaponType) {
             WeaponType.Melee -> swingMeleeWeapon(controlComponent, weapon, entity)
             WeaponType.Projectile -> fireProjectileWeapon(controlComponent, weapon, entity)
@@ -45,15 +43,12 @@ class PlayerShootingSystem(private val audioPlayer: AudioPlayer) : IteratingSyst
         }
     }
 
-    @OptIn(ExperimentalStdlibApi::class)
     private fun throwAreaWeapon(controlComponent: PlayerControlComponent, weapon: Weapon, playerEntity: Entity) {
         if (
             controlComponent.firing &&
             weapon.ammoRemaining > 0 &&
-            !(playerEntity.has<PlayerIsRespawning>() || playerEntity.has<PlayerWaitsForRespawn>())
-        ) {
-            val transformComponent = playerEntity.getComponent<TransformComponent>()
-            playerEntity.getComponent<FiredShotsComponent>().queue.addFirst(transformComponent.position)
+            !(AshleyMappers.respawn.has(playerEntity) || AshleyMappers.waitsForRespawn.has(playerEntity))) {
+            val transformComponent = AshleyMappers.transform.get(playerEntity)
             controlComponent.shoot()
 
             weapon.ammoRemaining--
@@ -92,19 +87,18 @@ class PlayerShootingSystem(private val audioPlayer: AudioPlayer) : IteratingSyst
         }
     }
 
-    @OptIn(ExperimentalStdlibApi::class)
     private fun swingMeleeWeapon(controlComponent: PlayerControlComponent, weapon: Weapon, playerEntity: Entity) {
         if (
             controlComponent.firing &&
-            !(playerEntity.has<PlayerIsRespawning>() || playerEntity.has<PlayerWaitsForRespawn>())
+            !(AshleyMappers.respawn.has(playerEntity) || AshleyMappers.waitsForRespawn.has(playerEntity))
         ) {
             //1. Check if enemies are within distance (is this faster than the sector first?
-            val playerPosition = playerEntity.getComponent<TransformComponent>().position
+            val playerPosition = AshleyMappers.transform.get(playerEntity).position
             val allEnemies =
                 engine.getEntitiesFor(allOf(EnemyComponent::class).get())
 
             val enemiesInRangeAndInHitArc = allEnemies.filter {
-                val enemyPosition = it.getComponent<TransformComponent>().position
+                val enemyPosition = AshleyMappers.transform.get(it).position
                 enemyPosition.dst(playerPosition) < weapon.spreadOrMeleeRangeOrArea && canISeeYouFromHere(
                     playerPosition,
                     controlComponent.aimVector,
@@ -113,7 +107,7 @@ class PlayerShootingSystem(private val audioPlayer: AudioPlayer) : IteratingSyst
                 )
             }
             enemiesInRangeAndInHitArc.forEach {
-                it.getComponent<EnemyComponent>().takeDamage(weapon.damageRange, controlComponent.player)
+                AshleyMappers.enemy.get(it).takeDamage(weapon.damageRange, controlComponent.player)
             }
         }
     }
@@ -141,11 +135,9 @@ class PlayerShootingSystem(private val audioPlayer: AudioPlayer) : IteratingSyst
             points.add(pointToAdd)
         }
         val floatArray = points.map { listOf(it.x, it.y) }.flatten().toFloatArray()
-        val returnPolygon = Polygon(floatArray)
-        return returnPolygon
+        return Polygon(floatArray)
     }
 
-    @OptIn(ExperimentalStdlibApi::class)
     private fun fireProjectileWeapon(
         controlComponent: PlayerControlComponent,
         weapon: Weapon,
@@ -154,10 +146,10 @@ class PlayerShootingSystem(private val audioPlayer: AudioPlayer) : IteratingSyst
         if (
             controlComponent.firing &&
             weapon.ammoRemaining > 0 &&
-            !(playerEntity.has<PlayerIsRespawning>() || playerEntity.has<PlayerWaitsForRespawn>())
+            !(AshleyMappers.respawn.has(playerEntity) || AshleyMappers.waitsForRespawn.has(playerEntity))
         ) {
-            val transformComponent = playerEntity.getComponent<TransformComponent>()
-            playerEntity.getComponent<FiredShotsComponent>().queue.addFirst(transformComponent.position)
+            val transformComponent = AshleyMappers.transform.get(playerEntity)
+            AshleyMappers.firedShots.get(playerEntity).queue.addFirst(Pair(transformComponent.position, weapon.soundRadius))
             controlComponent.shoot()
 
             val shotsound = weapon.audio["shot"]!!

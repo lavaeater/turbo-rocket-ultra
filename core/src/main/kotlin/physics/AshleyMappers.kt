@@ -3,9 +3,6 @@ package physics
 import com.badlogic.ashley.core.Component
 import com.badlogic.ashley.core.ComponentMapper
 import ecs.components.BodyComponent
-import ecs.components.player.PlayerControlComponent
-import ecs.components.VehicleComponent
-import ecs.components.VehicleControlComponent
 import ecs.components.ai.*
 import ecs.components.enemy.EnemyComponent
 import ecs.components.enemy.EnemySensorComponent
@@ -13,10 +10,13 @@ import ecs.components.enemy.EnemySpawnerComponent
 import ecs.components.enemy.TackleComponent
 import ecs.components.fx.SplatterComponent
 import ecs.components.gameplay.*
-import ecs.components.graphics.*
+import ecs.components.graphics.AnimatedCharacterComponent
+import ecs.components.graphics.CameraFollowComponent
+import ecs.components.graphics.MiniMapComponent
+import ecs.components.graphics.TextureComponent
 import ecs.components.pickups.LootComponent
 import ecs.components.pickups.LootDropComponent
-import ecs.components.player.ContextActionComponent
+import ecs.components.player.*
 import ktx.ashley.mapperFor
 import kotlin.reflect.KType
 import kotlin.reflect.typeOf
@@ -61,6 +61,10 @@ object AshleyMappers {
     val loot = mapperFor<LootComponent>()
     val lootDrop = mapperFor<LootDropComponent>()
     val contextAction = mapperFor<ContextActionComponent>()
-    
+    val firedShots = mapperFor<FiredShotsComponent>()
+    val playerControl = mapperFor<PlayerControlComponent>()
+    val weapon = mapperFor<WeaponComponent>()
+    val respawn = mapperFor<PlayerIsRespawning>()
+    val waitsForRespawn = mapperFor<PlayerWaitsForRespawn>()
 
 }

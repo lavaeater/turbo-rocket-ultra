@@ -20,7 +20,8 @@ class WeaponDefinition(
     val damageRange: ClosedFloatingPointRange<Float>,
     val reloadDelay: Float,
     val reloadType: ReloadType,
-    val audio: Map<String, Sound>
+    val audio: Map<String, Sound>,
+    val soundRadius: Float
 ) {
     companion object {
         val molotov = WeaponDefinition(
@@ -36,7 +37,8 @@ class WeaponDefinition(
             5f..15f,
             0f,
             ReloadType.MeleeWeapon,
-            Assets.gunAudio["glock17"]!!
+            Assets.gunAudio["glock17"]!!,
+            0f
         )
         val baseballBat = WeaponDefinition(
             "Baseball Bat",
@@ -51,7 +53,8 @@ class WeaponDefinition(
             5f..15f,
             0f,
             ReloadType.MeleeWeapon,
-            Assets.gunAudio["glock17"]!!//TODO exhange for bat or something
+            Assets.gunAudio["glock17"]!!,//TODO exhange for bat or something
+            0f
         )
         val weapons = listOf(
             baseballBat,
@@ -69,7 +72,8 @@ class WeaponDefinition(
                 8f..16f,
                 2f,
                 ReloadType.EntireMag,
-                Assets.gunAudio["glock17"]!!
+                Assets.gunAudio["glock17"]!!,
+                50f
             ),
             WeaponDefinition(
                 "Franchi Spas 12",
@@ -84,7 +88,8 @@ class WeaponDefinition(
                 12f..24f,
                 1f,
                 ReloadType.SingleShot,
-                Assets.gunAudio["spas12"]!!
+                Assets.gunAudio["spas12"]!!,
+                150f
             ),
             WeaponDefinition(
                 "FN P90",
@@ -99,7 +104,8 @@ class WeaponDefinition(
                 6f..14f,
                 2f,
                 ReloadType.EntireMag,
-                Assets.gunAudio["fnp90"]!!
+                Assets.gunAudio["fnp90"]!!,
+                100f
             )
         )
     }
