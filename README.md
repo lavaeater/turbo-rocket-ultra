@@ -34,7 +34,6 @@ Players can only punch. However, they can find weapons and ammo
 
 But how does weapons and ammo work when playing multiplayer? Communal inventory of course!
 
-- [ ] Add actual bat swing
 - [x] Update swing / bat mechanic
 - [x] Communal Inventory
 - [x] Also the level
@@ -48,6 +47,7 @@ Use amble system's pathfinding to find path for enemy to follow when checking ou
 ##### Level Four
 Fuck hotswapping for now. Let's add a pickup toast and work on towers and building again.
 - [ ] Pickup Toast - could be a nice ui element, right?
+- [ ] Add actual bat swing
 - [ ] Re-introduce TOWERS
 - [ ] The actual level
 ###### Pickup Toast
@@ -748,11 +748,11 @@ Det här gör vi på det gamla vanliga sättet. Vi bygger en box2d-värld, vi kl
 
 Oj oj oj,  vad roligt. Vi kan göra en box2d-kropp med leder, per tutorials etc. Superkul ju.
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbMTk5Nzk5MDA4NywtMTk0MzM0MTIwOCwtMT
-c3MDA1NjAxMSwtNTE3OTcxNDM3LDU3ODQ5NTM5LDU4NjE1MjUx
-MSwtMTE3OTcxNzk0NCwtMTUxMTQyMTcwMywtMzY4Mzc0NTc2LC
-03OTEzMjAyMTAsLTg1MjkzMjM4Niw4ODUxMTY3MzksMzQyNzQ0
-MTM2LC05NDY5NDM5OSwtOTU3NTg2MzMsMTIyMzEyOTA1OSwtMT
-MwNDYyMzk4MCwtMTk0NjY1Njc0OCw2ODg0ODQ1MDQsMTEwMTE0
-MDgxN119
+eyJoaXN0b3J5IjpbLTQ0NDEzNjI1LC0xOTQzMzQxMjA4LC0xNz
+cwMDU2MDExLC01MTc5NzE0MzcsNTc4NDk1MzksNTg2MTUyNTEx
+LC0xMTc5NzE3OTQ0LC0xNTExNDIxNzAzLC0zNjgzNzQ1NzYsLT
+c5MTMyMDIxMCwtODUyOTMyMzg2LDg4NTExNjczOSwzNDI3NDQx
+MzYsLTk0Njk0Mzk5LC05NTc1ODYzMywxMjIzMTI5MDU5LC0xMz
+A0NjIzOTgwLC0xOTQ2NjU2NzQ4LDY4ODQ4NDUwNCwxMTAxMTQw
+ODE3XX0=
 -->
