@@ -81,16 +81,16 @@ class EnemyMovementSystem(private val flocking: Boolean = true) : IteratingSyste
     private val circleColor = Color(1f, 0f, 0f, 0.1f)
 
     private fun moveEnemy(enemyComponent: EnemyComponent, bodyComponent: BodyComponent) {
-        actualDirectionVector.set(enemyComponent.directionVector).add(cohesion.scl(.5f)).add(separation.scl(.7f)).add(alignment.scl(.5f))
+        actualDirectionVector.set(enemyComponent.directionVector).add(cohesion.scl(.5f)).add(separation.scl(1.3f)).add(alignment.scl(.5f)).nor()
         bodyComponent.body!!.linearVelocity = actualDirectionVector.scl(enemyComponent.speed)
-        shapeDrawer.batch.use {
-            shapeDrawer.filledCircle(
-                bodyComponent.body!!.worldCenter.x,
-                bodyComponent.body!!.worldCenter.y,
-                separationRange,
-                circleColor
-            )
-        }
+//        shapeDrawer.batch.use {
+//            shapeDrawer.filledCircle(
+//                bodyComponent.body!!.worldCenter.x,
+//                bodyComponent.body!!.worldCenter.y,
+//                separationRange,
+//                circleColor
+//            )
+//        }
     }
 }
 
