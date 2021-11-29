@@ -21,11 +21,12 @@ class EnemySpawnSystem : IteratingSystem(allOf(EnemySpawnerComponent::class, Tra
     override fun processEntity(entity: Entity, deltaTime: Float) {
         val spawnerComponent = entity.getComponent<EnemySpawnerComponent>()
         spawnerComponent.coolDown -= deltaTime
-        if(spawnerComponent.coolDown <= 0f && enemyCount < CounterObject.numberOfEnemies) {
+        if(spawnerComponent.coolDown <= 0f && enemyCount < CounterObject.numberOfEnemies && CounterObject.maxSpawnedEnemies > 0) {
             spawnerComponent.reset()
             spawnPosition.set(entity.getComponent<TransformComponent>().position)
             spawnPosition.set(spawnPosition.x + (-2f..2f).random(), spawnPosition.y + (-2f..2f).random())
             enemy(spawnPosition)
+            CounterObject.maxSpawnedEnemies--
         }
     }
 }

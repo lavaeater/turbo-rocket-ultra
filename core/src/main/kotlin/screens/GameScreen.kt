@@ -252,6 +252,7 @@ D1B67A
 
         //For debuggin we will swarm with enemies
         CounterObject.numberOfEnemies = MAX_ENEMIES // (8f.pow(CounterObject.currentLevel).roundToInt() * 2).coerceAtMost(MAX_ENEMIES)
+        CounterObject.maxSpawnedEnemies = MAX_ENEMIES * 2 // (8f.pow(CounterObject.currentLevel).roundToInt() * 2).coerceAtMost(MAX_ENEMIES)
 
         val map = when(level) {
             1 -> loadMapOne()

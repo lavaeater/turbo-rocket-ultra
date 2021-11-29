@@ -9,7 +9,6 @@ import ecs.components.BodyComponent
 import ecs.components.enemy.EnemyComponent
 import ecs.components.gameplay.TransformComponent
 import ktx.ashley.allOf
-import ktx.graphics.use
 import ktx.math.vec2
 import physics.AshleyMappers
 import tru.Assets
@@ -81,7 +80,7 @@ class EnemyMovementSystem(private val flocking: Boolean = true) : IteratingSyste
     private val circleColor = Color(1f, 0f, 0f, 0.1f)
 
     private fun moveEnemy(enemyComponent: EnemyComponent, bodyComponent: BodyComponent) {
-        actualDirectionVector.set(enemyComponent.directionVector).add(cohesion.scl(.5f)).add(separation.scl(1.3f)).add(alignment.scl(.5f)).nor()
+        actualDirectionVector.set(enemyComponent.directionVector).add(cohesion.scl(.3f)).add(separation.scl(0.7f)).add(alignment.scl(.5f)).nor()
         bodyComponent.body!!.linearVelocity = actualDirectionVector.scl(enemyComponent.speed)
 //        shapeDrawer.batch.use {
 //            shapeDrawer.filledCircle(
