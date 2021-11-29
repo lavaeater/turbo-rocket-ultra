@@ -35,6 +35,7 @@ import ktx.ashley.getSystem
 import ktx.ashley.remove
 import map.grid.*
 import map.snake.randomPoint
+import physics.AshleyMappers
 import physics.getComponent
 import statemachine.StateMachine
 import story.FactsOfTheWorld
@@ -188,17 +189,16 @@ D1B67A
         }
     }
 
-    @OptIn(ExperimentalStdlibApi::class)
     private fun movePlayersToStart() {
         val startBounds = mapManager.gridMap.values.first { it.startSection }.innerBounds
         val players = engine.getEntitiesFor(allOf(PlayerComponent::class).get())
         for (player in players) {
-            val body = player.getComponent<BodyComponent>().body!!
+            val body = AshleyMappers.body.get(player).body!!
             body.setTransform(startBounds.randomPoint(), body.angle)
         }
     }
 
-    fun nextLevel() {
+    private fun nextLevel() {
         for (player in Players.players.values) {
             player.touchedObjectives.clear()
         }
@@ -212,7 +212,6 @@ D1B67A
 
     private val mapManager by lazy { inject<GridMapManager>() }
 
-    @OptIn(ExperimentalStdlibApi::class)
     private fun generateMap(level: Int) {
         /*
         We start the game with a map already generated. But when, how, will we create
@@ -230,7 +229,7 @@ D1B67A
          */
 
         for (enemy in engine.getEntitiesFor(allOf(EnemyComponent::class).get())) {
-            val bodyComponent = enemy.getComponent<BodyComponent>()
+            val bodyComponent = AshleyMappers.body.get(enemy)
             world.destroyBody(bodyComponent.body)
             enemy.remove<BodyComponent>()
         }
@@ -239,14 +238,14 @@ D1B67A
         CounterObject.enemyCount = 0
 
         for (objective in engine.getEntitiesFor(allOf(ObjectiveComponent::class).get())) {
-            val bodyComponent = objective.getComponent<BodyComponent>()
+            val bodyComponent = AshleyMappers.body.get(objective)
             world.destroyBody(bodyComponent.body)
             objective.remove<BodyComponent>()
         }
         engine.removeAllEntities(allOf(ObjectiveComponent::class).get())
 
         for (obstacle in engine.getEntitiesFor(allOf(ObstacleComponent::class).get())) {
-            val bodyComponent = obstacle.getComponent<BodyComponent>()
+            val bodyComponent = AshleyMappers.body.get(obstacle)
             world.destroyBody(bodyComponent.body)
             obstacle.remove<BodyComponent>()
         }
