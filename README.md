@@ -50,6 +50,8 @@ Fuck hotswapping for now. Let's add a pickup toast and work on towers and buildi
 - [ ] Pickup Toast - could be a nice ui element, right?
 - [ ] Re-introduce TOWERS
 - [ ] The actual level
+###### Pickup Toast
+
 
 ##### Level Five
 
@@ -62,10 +64,6 @@ Ah! We can have the first level just be like ten zombies, everyone has one gun w
 Nice little todo you got there. Would be a shame if anyone actually did something with it? 
 
 So, what do we need for act one? Well, tons of fun stuff to implement:
-- [ ] Player only has pistol from start, with 17 bullets
-- [ ] Slower zombies at start of game
-- [ ] Enemies sprinkled out over the map from the start
-- [ ] No spawn points for enemies from the start
 - [x] Fix minimap after level one
 - [x] Fix the seek system
 - [x] Better Ambling System - using pathfinding
@@ -751,7 +749,7 @@ Det här gör vi på det gamla vanliga sättet. Vi bygger en box2d-värld, vi kl
 
 Oj oj oj,  vad roligt. Vi kan göra en box2d-kropp med leder, per tutorials etc. Superkul ju.
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbMTQ0ODY0MjI1NiwtMTk0MzM0MTIwOCwtMT
+eyJoaXN0b3J5IjpbLTM5MDA5NDg2OCwtMTk0MzM0MTIwOCwtMT
 c3MDA1NjAxMSwtNTE3OTcxNDM3LDU3ODQ5NTM5LDU4NjE1MjUx
 MSwtMTE3OTcxNzk0NCwtMTUxMTQyMTcwMywtMzY4Mzc0NTc2LC
 03OTEzMjAyMTAsLTg1MjkzMjM4Niw4ODUxMTY3MzksMzQyNzQ0
