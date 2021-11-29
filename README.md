@@ -46,10 +46,9 @@ Use amble system's pathfinding to find path for enemy to follow when checking ou
 - [x] Also, the level
 
 ##### Level Four
-Lets just, on the concept screen, or a new Concept Screen, explore controller paradigms. I am thinking that I should move controller stuff into it's completely own type of system, some kind of system that just handles input for EVERYTHING, mouses, controllers, everything, complete with connecting / disconnecting controllers and players. 
-- [ ] Identifying controllers?
-- [ ] Hotswapping
+Fuck hotswapping for now. Let's add a pickup toast and work on towers and building again.
 - [ ] Pickup Toast
+- [ ] The actual level
 
 ##### Level Five
 
@@ -751,11 +750,11 @@ Det här gör vi på det gamla vanliga sättet. Vi bygger en box2d-värld, vi kl
 
 Oj oj oj,  vad roligt. Vi kan göra en box2d-kropp med leder, per tutorials etc. Superkul ju.
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbLTE3NzAwNTYwMTEsLTUxNzk3MTQzNyw1Nz
-g0OTUzOSw1ODYxNTI1MTEsLTExNzk3MTc5NDQsLTE1MTE0MjE3
-MDMsLTM2ODM3NDU3NiwtNzkxMzIwMjEwLC04NTI5MzIzODYsOD
-g1MTE2NzM5LDM0Mjc0NDEzNiwtOTQ2OTQzOTksLTk1NzU4NjMz
-LDEyMjMxMjkwNTksLTEzMDQ2MjM5ODAsLTE5NDY2NTY3NDgsNj
-g4NDg0NTA0LDExMDExNDA4MTcsLTQxNzEyMjM3MiwtOTUyNTE2
-NDc3XX0=
+eyJoaXN0b3J5IjpbLTE5NDMzNDEyMDgsLTE3NzAwNTYwMTEsLT
+UxNzk3MTQzNyw1Nzg0OTUzOSw1ODYxNTI1MTEsLTExNzk3MTc5
+NDQsLTE1MTE0MjE3MDMsLTM2ODM3NDU3NiwtNzkxMzIwMjEwLC
+04NTI5MzIzODYsODg1MTE2NzM5LDM0Mjc0NDEzNiwtOTQ2OTQz
+OTksLTk1NzU4NjMzLDEyMjMxMjkwNTksLTEzMDQ2MjM5ODAsLT
+E5NDY2NTY3NDgsNjg4NDg0NTA0LDExMDExNDA4MTcsLTQxNzEy
+MjM3Ml19
 -->
