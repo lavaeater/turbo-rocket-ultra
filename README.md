@@ -79,7 +79,6 @@ So, what do we need for act one? Well, tons of fun stuff to implement:
 
 #### Fix the seek system
 So, the seek system is "improved" as in I am using faster methods to do it. But it seems that it could use some improvement, the raycasting seems way off, for instance, and sometimes it appears that the enemies do absolutely nothing. Some good changes would be if they when seeking could simply turn around a little to make stuff creepier, and also, if, for instance, a player enters the sensor range, the enemy doesn't notice immediately, rather it starts turning towards that position and is seeking while doing so.
-- [ ] Turn while seeking
 - [x] Check raycasting
 
 
@@ -749,7 +748,7 @@ Det här gör vi på det gamla vanliga sättet. Vi bygger en box2d-värld, vi kl
 
 Oj oj oj,  vad roligt. Vi kan göra en box2d-kropp med leder, per tutorials etc. Superkul ju.
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbLTM5MDA5NDg2OCwtMTk0MzM0MTIwOCwtMT
+eyJoaXN0b3J5IjpbMTk5Nzk5MDA4NywtMTk0MzM0MTIwOCwtMT
 c3MDA1NjAxMSwtNTE3OTcxNDM3LDU3ODQ5NTM5LDU4NjE1MjUx
 MSwtMTE3OTcxNzk0NCwtMTUxMTQyMTcwMywtMzY4Mzc0NTc2LC
 03OTEzMjAyMTAsLTg1MjkzMjM4Niw4ODUxMTY3MzksMzQyNzQ0
