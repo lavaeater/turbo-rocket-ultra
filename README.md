@@ -48,6 +48,7 @@ Use amble system's pathfinding to find path for enemy to follow when checking ou
 ##### Level Four
 Fuck hotswapping for now. Let's add a pickup toast and work on towers and building again.
 - [ ] Pickup Toast
+- [ ] Re-introduce TOWERS
 - [ ] The actual level
 
 ##### Level Five
@@ -750,11 +751,11 @@ Det här gör vi på det gamla vanliga sättet. Vi bygger en box2d-värld, vi kl
 
 Oj oj oj,  vad roligt. Vi kan göra en box2d-kropp med leder, per tutorials etc. Superkul ju.
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbLTE5NDMzNDEyMDgsLTE3NzAwNTYwMTEsLT
-UxNzk3MTQzNyw1Nzg0OTUzOSw1ODYxNTI1MTEsLTExNzk3MTc5
-NDQsLTE1MTE0MjE3MDMsLTM2ODM3NDU3NiwtNzkxMzIwMjEwLC
-04NTI5MzIzODYsODg1MTE2NzM5LDM0Mjc0NDEzNiwtOTQ2OTQz
-OTksLTk1NzU4NjMzLDEyMjMxMjkwNTksLTEzMDQ2MjM5ODAsLT
-E5NDY2NTY3NDgsNjg4NDg0NTA0LDExMDExNDA4MTcsLTQxNzEy
-MjM3Ml19
+eyJoaXN0b3J5IjpbODgzOTUyNzQsLTE5NDMzNDEyMDgsLTE3Nz
+AwNTYwMTEsLTUxNzk3MTQzNyw1Nzg0OTUzOSw1ODYxNTI1MTEs
+LTExNzk3MTc5NDQsLTE1MTE0MjE3MDMsLTM2ODM3NDU3NiwtNz
+kxMzIwMjEwLC04NTI5MzIzODYsODg1MTE2NzM5LDM0Mjc0NDEz
+NiwtOTQ2OTQzOTksLTk1NzU4NjMzLDEyMjMxMjkwNTksLTEzMD
+Q2MjM5ODAsLTE5NDY2NTY3NDgsNjg4NDg0NTA0LDExMDExNDA4
+MTddfQ==
 -->
