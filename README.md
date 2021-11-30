@@ -54,7 +54,6 @@ Lets call the branch level-four, for this one.
 - [ ] Pickup Toast - could be a nice ui element, right?
 	- [ ] So, lets do the HUD using Scene2d or VisUI or something reusable
 	- [ ] But with databinding in them, for sure
-	- [ ] 
 - [ ] Add actual bat swing
 - [ ] Re-introduce TOWERS
 - [ ] The actual level
@@ -755,11 +754,11 @@ Det här gör vi på det gamla vanliga sättet. Vi bygger en box2d-värld, vi kl
 
 Oj oj oj,  vad roligt. Vi kan göra en box2d-kropp med leder, per tutorials etc. Superkul ju.
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbLTk4NDY0MjE1NSwxNTA4NTE3Mjg0LC0xOT
-QzMzQxMjA4LC0xNzcwMDU2MDExLC01MTc5NzE0MzcsNTc4NDk1
-MzksNTg2MTUyNTExLC0xMTc5NzE3OTQ0LC0xNTExNDIxNzAzLC
-0zNjgzNzQ1NzYsLTc5MTMyMDIxMCwtODUyOTMyMzg2LDg4NTEx
-NjczOSwzNDI3NDQxMzYsLTk0Njk0Mzk5LC05NTc1ODYzMywxMj
-IzMTI5MDU5LC0xMzA0NjIzOTgwLC0xOTQ2NjU2NzQ4LDY4ODQ4
-NDUwNF19
+eyJoaXN0b3J5IjpbMzg3MTkzMTY4LC05ODQ2NDIxNTUsMTUwOD
+UxNzI4NCwtMTk0MzM0MTIwOCwtMTc3MDA1NjAxMSwtNTE3OTcx
+NDM3LDU3ODQ5NTM5LDU4NjE1MjUxMSwtMTE3OTcxNzk0NCwtMT
+UxMTQyMTcwMywtMzY4Mzc0NTc2LC03OTEzMjAyMTAsLTg1Mjkz
+MjM4Niw4ODUxMTY3MzksMzQyNzQ0MTM2LC05NDY5NDM5OSwtOT
+U3NTg2MzMsMTIyMzEyOTA1OSwtMTMwNDYyMzk4MCwtMTk0NjY1
+Njc0OF19
 -->
