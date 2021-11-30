@@ -52,6 +52,9 @@ Try to make the simplest possible Streets of Rogue-like sprite you can.
 Lets call the branch level-four, for this one.
 
 - [ ] Pickup Toast - could be a nice ui element, right?
+	- [ ] So, lets do the HUD using Scene2d or VisUI or something reusable
+	- [ ] But with databinding in them, for sure
+	- [ ] 
 - [ ] Add actual bat swing
 - [ ] Re-introduce TOWERS
 - [ ] The actual level
@@ -752,11 +755,11 @@ Det här gör vi på det gamla vanliga sättet. Vi bygger en box2d-värld, vi kl
 
 Oj oj oj,  vad roligt. Vi kan göra en box2d-kropp med leder, per tutorials etc. Superkul ju.
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbNDIyMjE5Nzk5LDE1MDg1MTcyODQsLTE5ND
-MzNDEyMDgsLTE3NzAwNTYwMTEsLTUxNzk3MTQzNyw1Nzg0OTUz
-OSw1ODYxNTI1MTEsLTExNzk3MTc5NDQsLTE1MTE0MjE3MDMsLT
-M2ODM3NDU3NiwtNzkxMzIwMjEwLC04NTI5MzIzODYsODg1MTE2
-NzM5LDM0Mjc0NDEzNiwtOTQ2OTQzOTksLTk1NzU4NjMzLDEyMj
-MxMjkwNTksLTEzMDQ2MjM5ODAsLTE5NDY2NTY3NDgsNjg4NDg0
-NTA0XX0=
+eyJoaXN0b3J5IjpbLTk4NDY0MjE1NSwxNTA4NTE3Mjg0LC0xOT
+QzMzQxMjA4LC0xNzcwMDU2MDExLC01MTc5NzE0MzcsNTc4NDk1
+MzksNTg2MTUyNTExLC0xMTc5NzE3OTQ0LC0xNTExNDIxNzAzLC
+0zNjgzNzQ1NzYsLTc5MTMyMDIxMCwtODUyOTMyMzg2LDg4NTEx
+NjczOSwzNDI3NDQxMzYsLTk0Njk0Mzk5LC05NTc1ODYzMywxMj
+IzMTI5MDU5LC0xMzA0NjIzOTgwLC0xOTQ2NjU2NzQ4LDY4ODQ4
+NDUwNF19
 -->
