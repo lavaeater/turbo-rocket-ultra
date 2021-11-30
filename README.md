@@ -34,7 +34,6 @@ Players can only punch. However, they can find weapons and ammo
 
 But how does weapons and ammo work when playing multiplayer? Communal inventory of course!
 
-- [ ] Add actual bat swing
 - [x] Update swing / bat mechanic
 - [x] Communal Inventory
 - [x] Also the level
@@ -47,8 +46,16 @@ Use amble system's pathfinding to find path for enemy to follow when checking ou
 
 ##### Level Four
 Fuck hotswapping for now. Let's add a pickup toast and work on towers and building again.
-- [ ] Pickup Toast
+
+Try to make the simplest possible Streets of Rogue-like sprite you can. 
+
+Lets call the branch level-four, for this one.
+
+- [ ] Pickup Toast - could be a nice ui element, right?
+- [ ] Add actual bat swing
+- [ ] Re-introduce TOWERS
 - [ ] The actual level
+
 
 ##### Level Five
 
@@ -61,10 +68,6 @@ Ah! We can have the first level just be like ten zombies, everyone has one gun w
 Nice little todo you got there. Would be a shame if anyone actually did something with it? 
 
 So, what do we need for act one? Well, tons of fun stuff to implement:
-- [ ] Player only has pistol from start, with 17 bullets
-- [ ] Slower zombies at start of game
-- [ ] Enemies sprinkled out over the map from the start
-- [ ] No spawn points for enemies from the start
 - [x] Fix minimap after level one
 - [x] Fix the seek system
 - [x] Better Ambling System - using pathfinding
@@ -80,7 +83,6 @@ So, what do we need for act one? Well, tons of fun stuff to implement:
 
 #### Fix the seek system
 So, the seek system is "improved" as in I am using faster methods to do it. But it seems that it could use some improvement, the raycasting seems way off, for instance, and sometimes it appears that the enemies do absolutely nothing. Some good changes would be if they when seeking could simply turn around a little to make stuff creepier, and also, if, for instance, a player enters the sensor range, the enemy doesn't notice immediately, rather it starts turning towards that position and is seeking while doing so.
-- [ ] Turn while seeking
 - [x] Check raycasting
 
 
@@ -750,11 +752,11 @@ Det här gör vi på det gamla vanliga sättet. Vi bygger en box2d-värld, vi kl
 
 Oj oj oj,  vad roligt. Vi kan göra en box2d-kropp med leder, per tutorials etc. Superkul ju.
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbLTE5NDMzNDEyMDgsLTE3NzAwNTYwMTEsLT
-UxNzk3MTQzNyw1Nzg0OTUzOSw1ODYxNTI1MTEsLTExNzk3MTc5
-NDQsLTE1MTE0MjE3MDMsLTM2ODM3NDU3NiwtNzkxMzIwMjEwLC
-04NTI5MzIzODYsODg1MTE2NzM5LDM0Mjc0NDEzNiwtOTQ2OTQz
-OTksLTk1NzU4NjMzLDEyMjMxMjkwNTksLTEzMDQ2MjM5ODAsLT
-E5NDY2NTY3NDgsNjg4NDg0NTA0LDExMDExNDA4MTcsLTQxNzEy
-MjM3Ml19
+eyJoaXN0b3J5IjpbNDIyMjE5Nzk5LDE1MDg1MTcyODQsLTE5ND
+MzNDEyMDgsLTE3NzAwNTYwMTEsLTUxNzk3MTQzNyw1Nzg0OTUz
+OSw1ODYxNTI1MTEsLTExNzk3MTc5NDQsLTE1MTE0MjE3MDMsLT
+M2ODM3NDU3NiwtNzkxMzIwMjEwLC04NTI5MzIzODYsODg1MTE2
+NzM5LDM0Mjc0NDEzNiwtOTQ2OTQzOTksLTk1NzU4NjMzLDEyMj
+MxMjkwNTksLTEzMDQ2MjM5ODAsLTE5NDY2NTY3NDgsNjg4NDg0
+NTA0XX0=
 -->
