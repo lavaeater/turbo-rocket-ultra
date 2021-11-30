@@ -112,7 +112,6 @@ class Hud(private val batch: Batch) : IUserInterface {
 
     private val stage by lazy {
         val aStage = Stage(hudViewPort, batch)
-        aStage.isDebugAll = true
         aStage.actors {
             table {
                 setFillParent(true)
@@ -120,8 +119,8 @@ class Hud(private val batch: Batch) : IUserInterface {
                 bottom()
                 for((control, player) in Players.players) {
                     table {
-                        width = aStage.width / 5
-                        label("${control.controllerId}").inCell.align(Align.right).width(aStage.width / 5)
+                        width = aStage.width / 8
+                        label("${control.controllerId}").inCell.align(Align.right).width(aStage.width / 8)
                         row()
                         boundLabel({"Kills: ${player.kills}"}).inCell.align(Align.right)
                         row()
