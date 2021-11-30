@@ -49,6 +49,7 @@ Fuck hotswapping for now. Let's add a pickup toast and work on towers and buildi
 
 Try to make the simplest possible Streets of Rogue-like sprite you can. 
 
+Lets call the branch level-four, for this one.
 
 - [ ] Pickup Toast - could be a nice ui element, right?
 - [ ] Add actual bat swing
@@ -751,11 +752,11 @@ Det här gör vi på det gamla vanliga sättet. Vi bygger en box2d-värld, vi kl
 
 Oj oj oj,  vad roligt. Vi kan göra en box2d-kropp med leder, per tutorials etc. Superkul ju.
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbMTUwODUxNzI4NCwtMTk0MzM0MTIwOCwtMT
-c3MDA1NjAxMSwtNTE3OTcxNDM3LDU3ODQ5NTM5LDU4NjE1MjUx
-MSwtMTE3OTcxNzk0NCwtMTUxMTQyMTcwMywtMzY4Mzc0NTc2LC
-03OTEzMjAyMTAsLTg1MjkzMjM4Niw4ODUxMTY3MzksMzQyNzQ0
-MTM2LC05NDY5NDM5OSwtOTU3NTg2MzMsMTIyMzEyOTA1OSwtMT
-MwNDYyMzk4MCwtMTk0NjY1Njc0OCw2ODg0ODQ1MDQsMTEwMTE0
-MDgxN119
+eyJoaXN0b3J5IjpbNDIyMjE5Nzk5LDE1MDg1MTcyODQsLTE5ND
+MzNDEyMDgsLTE3NzAwNTYwMTEsLTUxNzk3MTQzNyw1Nzg0OTUz
+OSw1ODYxNTI1MTEsLTExNzk3MTc5NDQsLTE1MTE0MjE3MDMsLT
+M2ODM3NDU3NiwtNzkxMzIwMjEwLC04NTI5MzIzODYsODg1MTE2
+NzM5LDM0Mjc0NDEzNiwtOTQ2OTQzOTksLTk1NzU4NjMzLDEyMj
+MxMjkwNTksLTEzMDQ2MjM5ODAsLTE5NDY2NTY3NDgsNjg4NDg0
+NTA0XX0=
 -->
