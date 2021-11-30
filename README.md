@@ -53,6 +53,8 @@ Lets call the branch level-four, for this one.
 
 - [ ] Pickup Toast - could be a nice ui element, right?
 	- [ ] So, lets do the HUD using Scene2d or VisUI or something reusable
+	- [ ] Show some kind of graphical element using vis-ui
+	- [ ] Simplify building a userinterface
 	- [ ] But with databinding in them, for sure
 - [ ] Add actual bat swing
 - [ ] Re-introduce TOWERS
@@ -754,11 +756,11 @@ Det här gör vi på det gamla vanliga sättet. Vi bygger en box2d-värld, vi kl
 
 Oj oj oj,  vad roligt. Vi kan göra en box2d-kropp med leder, per tutorials etc. Superkul ju.
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbMzg3MTkzMTY4LC05ODQ2NDIxNTUsMTUwOD
-UxNzI4NCwtMTk0MzM0MTIwOCwtMTc3MDA1NjAxMSwtNTE3OTcx
-NDM3LDU3ODQ5NTM5LDU4NjE1MjUxMSwtMTE3OTcxNzk0NCwtMT
-UxMTQyMTcwMywtMzY4Mzc0NTc2LC03OTEzMjAyMTAsLTg1Mjkz
-MjM4Niw4ODUxMTY3MzksMzQyNzQ0MTM2LC05NDY5NDM5OSwtOT
-U3NTg2MzMsMTIyMzEyOTA1OSwtMTMwNDYyMzk4MCwtMTk0NjY1
-Njc0OF19
+eyJoaXN0b3J5IjpbMTYwODM3NDU1NiwzODcxOTMxNjgsLTk4ND
+Y0MjE1NSwxNTA4NTE3Mjg0LC0xOTQzMzQxMjA4LC0xNzcwMDU2
+MDExLC01MTc5NzE0MzcsNTc4NDk1MzksNTg2MTUyNTExLC0xMT
+c5NzE3OTQ0LC0xNTExNDIxNzAzLC0zNjgzNzQ1NzYsLTc5MTMy
+MDIxMCwtODUyOTMyMzg2LDg4NTExNjczOSwzNDI3NDQxMzYsLT
+k0Njk0Mzk5LC05NTc1ODYzMywxMjIzMTI5MDU5LC0xMzA0NjIz
+OTgwXX0=
 -->
