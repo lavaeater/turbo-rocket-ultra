@@ -297,7 +297,7 @@ object Assets : Disposable {
     }
 
     private fun fixScene2dSkin() {
-        Scene2DSkin.defaultSkin = Skin(Gdx.files.internal("ui/uiskin.json"))
+        Scene2DSkin.defaultSkin = Skin(Gdx.files.internal("skins/c64/uiskin.json"))
     }
 
     override fun dispose() {

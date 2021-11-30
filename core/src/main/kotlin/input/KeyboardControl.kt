@@ -25,7 +25,7 @@ class KeyboardControl: ControlMapper, Component {
     override val walkVector: Vector2 = vec2(turning, thrust)
         get() = field.set(turning, -thrust)
     override val controllerId: String
-        get() = "Keyboard and mouse"
+        get() = "Key + Mouse"
 
     override var isInBuildMode: Boolean = false
     override var buildIfPossible: Boolean = false

@@ -4,18 +4,20 @@ import com.badlogic.gdx.Gdx
 import com.badlogic.gdx.graphics.OrthographicCamera
 import com.badlogic.gdx.graphics.g2d.Batch
 import com.badlogic.gdx.utils.viewport.ExtendViewport
-import ecs.components.graphics.AnimatedCharacterComponent
 import data.Players
 import ecs.components.gameplay.TransformComponent
+import ecs.components.graphics.AnimatedCharacterComponent
 import ecs.components.player.PlayerControlComponent
 import ecs.systems.tileX
 import ecs.systems.tileY
 import injection.Context.inject
 import ktx.graphics.use
 import ktx.math.vec2
+import ktx.scene2d.scene2d
 import map.grid.GridMapManager
 import physics.getComponent
 import ui.simple.*
+
 
 class UserInterface(
     private val batch: Batch,
@@ -28,6 +30,7 @@ class UserInterface(
     private val mapManager by lazy { inject<GridMapManager>() }
 
     override fun show() {
+        scene2d
         hudViewPort.update(Gdx.graphics.width, Gdx.graphics.height, true)
     }
 
@@ -65,13 +68,13 @@ class UserInterface(
         SpacedContainer(vec2(150f, 0f), vec2(20f, hudViewPort.worldHeight / 4), true).apply {
             children.add(
                 SpacedContainer(vec2(0f, 25f), vec2()).apply {
-                    children.add(BoundTextActor({"Bullets: ${screens.CounterObject.bulletCount}"}))
-                    children.add(BoundTextActor({"Enemies: ${screens.CounterObject.enemyCount}"}))
-                    children.add(BoundTextActor({"Max Enemies: ${screens.CounterObject.numberOfEnemies}"}))
-                    children.add(BoundTextActor({"Objectives: ${screens.CounterObject.numberOfObjectives}"}))
-                    children.add(BoundTextActor({"MapLength: ${screens.CounterObject.currentLength}"}))
-                    children.add(BoundTextActor({"Current Level: ${screens.CounterObject.currentLevel}"}))
-                    children.add(BoundTextActor({"Fps: ${Gdx.graphics.framesPerSecond}"}))
+                    children.add(BoundTextActor({ "Bullets: ${screens.CounterObject.bulletCount}" }))
+                    children.add(BoundTextActor({ "Enemies: ${screens.CounterObject.enemyCount}" }))
+                    children.add(BoundTextActor({ "Max Enemies: ${screens.CounterObject.numberOfEnemies}" }))
+                    children.add(BoundTextActor({ "Objectives: ${screens.CounterObject.numberOfObjectives}" }))
+                    children.add(BoundTextActor({ "MapLength: ${screens.CounterObject.currentLength}" }))
+                    children.add(BoundTextActor({ "Current Level: ${screens.CounterObject.currentLevel}" }))
+                    children.add(BoundTextActor({ "Fps: ${Gdx.graphics.framesPerSecond}" }))
                 }
             )
             children.add(
@@ -79,8 +82,15 @@ class UserInterface(
                     for ((i, p) in players.values.withIndex()) {
                         val position = p.entity.getComponent<TransformComponent>().position
                         val control = p.entity.getComponent<PlayerControlComponent>()
-                        children.add(BoundTextActor({"Tile: ${position.tileX()}:${position.tileY()}"}))
-                        children.add(BoundTextActor({"CanBuild: ${mapManager.canWeBuildAt(position.tileX(), position.tileY())}"}))
+                        children.add(BoundTextActor({ "Tile: ${position.tileX()}:${position.tileY()}" }))
+                        children.add(BoundTextActor({
+                            "CanBuild: ${
+                                mapManager.canWeBuildAt(
+                                    position.tileX(),
+                                    position.tileY()
+                                )
+                            }"
+                        }))
                     }
                 }
             )
@@ -91,16 +101,16 @@ class UserInterface(
                             TextActor("Player ${i + 1}")
                         )
                         children.add(
-                            BoundTextActor( {"Kills: ${p.kills}"} )
+                            BoundTextActor({ "Kills: ${p.kills}" })
                         )
                         children.add(
-                            BoundTextActor( {"Objectives: ${p.touchedObjectives.count()}"} )
+                            BoundTextActor({ "Objectives: ${p.touchedObjectives.count()}" })
                         )
                         children.add(
                             BoundTextActor({ "Score: ${p.score}" })
                         )
                         children.add(
-                            BoundTextActor({ "${p.currentWeapon}: ${p.ammoLeft}/${p.totalAmmo}"})
+                            BoundTextActor({ "${p.currentWeapon}: ${p.ammoLeft}/${p.totalAmmo}" })
                         )
                         children.add(
                             DataBoundMeter(

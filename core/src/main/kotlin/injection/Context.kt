@@ -40,6 +40,7 @@ import map.grid.GridMapManager
 import physics.ContactManager
 import story.FactsOfTheWorld
 import story.StoryManager
+import ui.Hud
 import ui.IUserInterface
 import ui.UserInterface
 
@@ -59,7 +60,8 @@ object Context {
         context.register {
             bindSingleton(PolygonSpriteBatch())
             bindSingleton(OrthographicCamera())
-            bind<IUserInterface> { UserInterface(inject<PolygonSpriteBatch>() as Batch, false) }
+//            bind<IUserInterface> { UserInterface(inject<PolygonSpriteBatch>() as Batch, false) }
+            bind<IUserInterface> { Hud(inject<PolygonSpriteBatch>() as Batch) }
             bindSingleton(
                 ExtendViewport(
                     GAMEWIDTH,
