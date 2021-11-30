@@ -27,7 +27,6 @@ class UserInterface(
     override val hudViewPort = ExtendViewport(uiWidth, uiHeight, camera)
     private val mapManager by lazy { inject<GridMapManager>() }
 
-    @ExperimentalStdlibApi
     override fun show() {
         hudViewPort.update(Gdx.graphics.width, Gdx.graphics.height, true)
     }
