@@ -17,20 +17,8 @@ class AmmoLoot(
 class WeaponLoot(
     val weaponDefinition: WeaponDefinition,
     probability: Float
-) : Loot(probability)
-
-    fun main() {
-        val lootList = mutableListOf<ILoot>()
-        lootList.add(AmmoLoot(AmmoType.NineMilliMeters, 6..32, 30f))
-        //lootList.add(NullValue(60f))
-        lootList.add(AmmoLoot(AmmoType.TwelveGaugeShotgun, 4..16, 10f))
-
-        val lootTable = LootTable(lootList, 1)
-
-        for (i in 0 until 10) {
-            for(loot in lootTable.result) {
-                println(loot)
-            }
-        }
-
+) : Loot(probability) {
+    override fun toString(): String {
+        return weaponDefinition.name
     }
+}

@@ -5,6 +5,7 @@ import com.badlogic.gdx.graphics.g2d.Batch
 import com.badlogic.gdx.math.Vector2
 import com.badlogic.gdx.math.Vector3
 import com.badlogic.gdx.scenes.scene2d.Stage
+import com.badlogic.gdx.scenes.scene2d.actions.Actions.*
 import com.badlogic.gdx.scenes.scene2d.ui.Label
 import com.badlogic.gdx.utils.Align
 import com.badlogic.gdx.utils.Queue
@@ -19,6 +20,7 @@ import ui.customactors.boundLabel
 import ui.customactors.boundProgressBar
 import ui.customactors.repeatingTexture
 import kotlin.reflect.KClass
+import ktx.actors.*
 
 
 class Hud(private val batch: Batch) : IUserInterface, MessageReceiver {
@@ -89,6 +91,7 @@ class Hud(private val batch: Batch) : IUserInterface, MessageReceiver {
     }
 
     override fun update(delta: Float) {
+        showToasts(delta)
         stage.act(delta)
         stage.draw()
     }
@@ -111,13 +114,32 @@ class Hud(private val batch: Batch) : IUserInterface, MessageReceiver {
         return projection2d
     }
 
+    /*
+    Show toasts in order received, for one second each, using a specific style for the
+    label - and also scale it to twice the size or add some kind of anim to it.
+     */
+    private val toastQueue = Queue<Message.ShowToast>()
+    private var toastCooldown = 0.0f
+
+    fun showToasts(delta: Float) {
+        toastCooldown -= delta
+        if(toastQueue.any() && toastCooldown <= 0f) {
+            toastCooldown = 1f
+            val toastToShow = toastQueue.removeFirst()
+            camera.unproject(toastToShow.screenCoordinate)
+            val sequence = delay(1f) + removeActor()
+            stage.actors {
+                label(toastToShow.toast, "title") {
+                    actor -> actor += sequence
+                }.setPosition(toastToShow.screenCoordinate.x, toastToShow.screenCoordinate.y)
+            }
+        }
+    }
+
     override fun recieveMessage(message: Message) {
         when (message) {
             is Message.ShowToast -> {
-                val pos = screenToHud(message.screenCoordinate)
-                stage.actors {
-                    label(message.toast).setPosition(pos.x, pos.y)
-                }
+                toastQueue.addLast(message)
             }
         }
     }
