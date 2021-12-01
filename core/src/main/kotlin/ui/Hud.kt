@@ -2,117 +2,48 @@ package ui
 
 import com.badlogic.gdx.graphics.OrthographicCamera
 import com.badlogic.gdx.graphics.g2d.Batch
-import com.badlogic.gdx.graphics.g2d.TextureRegion
+import com.badlogic.gdx.math.Vector2
+import com.badlogic.gdx.math.Vector3
 import com.badlogic.gdx.scenes.scene2d.Stage
-import com.badlogic.gdx.scenes.scene2d.ui.Image
 import com.badlogic.gdx.scenes.scene2d.ui.Label
-import com.badlogic.gdx.scenes.scene2d.ui.ProgressBar
-import com.badlogic.gdx.scenes.scene2d.ui.Skin
-import com.badlogic.gdx.scenes.scene2d.utils.TransformDrawable
 import com.badlogic.gdx.utils.Align
+import com.badlogic.gdx.utils.Queue
 import com.badlogic.gdx.utils.viewport.ExtendViewport
 import data.Players
-import ktx.actors.txt
+import injection.Context.inject
+import ktx.math.vec2
+import ktx.math.vec3
 import ktx.scene2d.*
 import physics.AshleyMappers
-import kotlin.contracts.ExperimentalContracts
-import kotlin.contracts.InvocationKind
-import kotlin.contracts.contract
-
-open class BoundLabel(private val textFunction: ()-> String, skin: Skin = Scene2DSkin.defaultSkin): Label(textFunction(), skin) {
-    override fun act(delta: Float) {
-        txt = textFunction()
-        super.act(delta)
-    }
-}
-
-open class BoundProgressBar(private val valueFunction: () -> Float, min: Float, max: Float, stepSize: Float, skin: Skin = Scene2DSkin.defaultSkin): ProgressBar(min, max, stepSize, false, skin) {
-    override fun act(delta: Float) {
-        value = valueFunction()
-        super.act(delta)
-    }
-}
-
-@OptIn(ExperimentalContracts::class)
-@ktx.scene2d.Scene2dDsl
-inline fun <S> KWidget<S>.repeatingTexture(noinline countFunction: () -> Int, spacing: Float = 5f, textureRegion: TextureRegion, init: (@ktx.scene2d.Scene2dDsl RepeatingTextureActor).(S) -> Unit): RepeatingTextureActor
-{
-    contract { callsInPlace(init, InvocationKind.EXACTLY_ONCE) }
-    return actor(RepeatingTextureActor(countFunction, spacing, textureRegion), init)
-}
+import ui.customactors.boundLabel
+import ui.customactors.boundProgressBar
+import ui.customactors.repeatingTexture
+import kotlin.reflect.KClass
 
 
-open class RepeatingTextureActor(private val countFunction: () -> Int, private val spacing: Float = 5f, textureRegion: TextureRegion) : Image(textureRegion) {
-        override fun draw(batch: Batch, parentAlpha: Float) {
-        validate()
-        val color = color
-        batch.setColor(color.r, color.g, color.b, color.a * parentAlpha)
-        val x = x
-        val y = y
-        val scaleX = scaleX
-        val scaleY = scaleY
-        if (drawable is TransformDrawable) {
-            val rotation = rotation
-            if (scaleX != 1f || scaleY != 1f || rotation != 0f) {
-                for(index in 0 until countFunction()) {
-                    val actualSpacing = if (index != 0) spacing else 0f
-                    (drawable as TransformDrawable).draw(
-                        batch, x + imageX + index * imageWidth * scaleX + actualSpacing, y + imageY, originX - imageX, originY - imageY,
-                        imageWidth, imageHeight, scaleX, scaleY, rotation
-                    )
-                }
-                return
-            }
-        }
-        if (drawable != null) {
-            for(index in 0 until countFunction()) {
-                val actualSpacing = if (index != 0) spacing else 0f
-                    drawable.draw(batch, x + imageX + index * imageWidth + actualSpacing, y + imageY, imageWidth * scaleX, imageHeight * scaleY)
-            }
-        }
-    }
-}
-
-@Scene2dDsl
-@OptIn(ExperimentalContracts::class)
-inline fun <S> KWidget<S>.boundProgressBar(
-    noinline valueFunction: () -> Float,
-    min: Float = 0f,
-    max: Float = 1f,
-    step: Float = 0.01f,
-    skin: Skin = Scene2DSkin.defaultSkin,
-    init: (@Scene2dDsl BoundProgressBar).(S) -> Unit = {}
-): BoundProgressBar {
-    contract { callsInPlace(init, InvocationKind.EXACTLY_ONCE) }
-    return actor(BoundProgressBar(valueFunction, min, max, step, skin), init)
-}
-
-@Scene2dDsl
-@OptIn(ExperimentalContracts::class)
-inline fun <S> KWidget<S>.boundLabel(
-    noinline textFunction: () -> String,
-    skin: Skin = Scene2DSkin.defaultSkin,
-    init: (@Scene2dDsl BoundLabel).(S) -> Unit = {}
-): Label {
-    contract { callsInPlace(init, InvocationKind.EXACTLY_ONCE) }
-    return actor(BoundLabel(textFunction, skin), init)
-}
-
-
-
-class Hud(private val batch: Batch) : IUserInterface {
-    private val aspectRatio = 14 / 9
+class Hud(private val batch: Batch) : IUserInterface, MessageReceiver {
+    private val aspectRatio = 14f / 9f
     private val hudWidth = 1280f
     private val hudHeight = hudWidth * aspectRatio
     private val camera = OrthographicCamera()
     override val hudViewPort = ExtendViewport(hudWidth, hudHeight, camera)
 
+    private val projectionVector = vec3()
+    private val _projectionVector = vec2()
+    private val projection2d : Vector2 get() {
+        _projectionVector.set(projectionVector.x, projectionVector.y)
+        return _projectionVector
+    }
+
     override fun hide() {
     }
+
+    lateinit var toastLabel: Label
 
     private val stage by lazy {
         val aStage = Stage(hudViewPort, batch)
         aStage.actors {
+//            toastLabel = label()
             table {
                 setFillParent(true)
                 left()
@@ -146,7 +77,14 @@ class Hud(private val batch: Batch) : IUserInterface {
     }
 
     override fun show() {
+        //Set up this as receiver for messages with messagehandler
+        inject<MessageHandler>().apply{
+            this.receivers.add(this@Hud)
+        }
         //I won't use the UI for input at this stage, right?
+        /*
+        To use both the UI and my stuff, we could multiplex it or something.
+         */
 //        Gdx.input.inputProcessor = stage
     }
 
@@ -156,6 +94,7 @@ class Hud(private val batch: Batch) : IUserInterface {
     }
 
     override fun dispose() {
+        stage.dispose()
     }
 
     override fun clear() {
@@ -163,4 +102,47 @@ class Hud(private val batch: Batch) : IUserInterface {
 
     override fun reset() {
     }
+
+    override val messageTypes: Set<KClass<*>> = setOf(Message.ShowToast::class)
+
+    fun screenToHud(screenCoordinate: Vector3): Vector2 {
+        projectionVector.set(screenCoordinate)
+        camera.unproject(projectionVector)
+        return projection2d
+    }
+
+    override fun recieveMessage(message: Message) {
+        when (message) {
+            is Message.ShowToast -> {
+                val pos = screenToHud(message.screenCoordinate)
+                stage.actors {
+                    label(message.toast).setPosition(pos.x, pos.y)
+                }
+            }
+        }
+    }
+}
+
+
+
+
+interface MessageReceiver {
+    val messageTypes: Set<KClass<*>>
+    fun recieveMessage(message: Message)
+}
+
+class MessageHandler {
+    // QUeue not used for now, but perhaps later, much later?
+    val messageQueue = Queue<Message>()
+    val receivers = mutableListOf<MessageReceiver>()
+    fun sendMessage(message: Message) {
+        val validReceivers = receivers.filter { it.messageTypes.contains<KClass<out Any>>(message::class) }
+        for(receiver in validReceivers) {
+            receiver.recieveMessage(message)
+        }
+    }
+}
+
+sealed class Message() {
+    class ShowToast(val toast: String, val screenCoordinate: Vector3): Message()
 }

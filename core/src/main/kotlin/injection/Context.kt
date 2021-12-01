@@ -42,6 +42,7 @@ import story.FactsOfTheWorld
 import story.StoryManager
 import ui.Hud
 import ui.IUserInterface
+import ui.MessageHandler
 import ui.UserInterface
 
 object Context {
@@ -81,6 +82,7 @@ object Context {
             bindSingleton(RayHandler(inject(), 500, 500))
             bindSingleton(FactsOfTheWorld(Gdx.app.getPreferences("TurboRocket")))
             bindSingleton(StoryManager())
+            bindSingleton(MessageHandler())
             bindSingleton(getEngine())
         }
     }

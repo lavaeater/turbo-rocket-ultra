@@ -2,6 +2,7 @@ package physics
 
 import com.badlogic.ashley.core.Engine
 import com.badlogic.ashley.core.Entity
+import com.badlogic.gdx.graphics.OrthographicCamera
 import com.badlogic.gdx.math.Vector2
 import com.badlogic.gdx.physics.box2d.Contact
 import com.badlogic.gdx.physics.box2d.ContactImpulse
@@ -21,7 +22,11 @@ import features.pickups.AmmoLoot
 import features.pickups.WeaponLoot
 import injection.Context.inject
 import ktx.ashley.remove
+import ktx.math.vec3
 import tru.Assets
+import ui.Message
+import ui.MessageHandler
+import wastelandui.toVec2
 
 /*
 How to handle contacts in the absolutely smashingly BEST
@@ -149,6 +154,8 @@ fun Contact.thisIsAContactBetween(): ContactType {
 
 class ContactManager : ContactListener {
     private val engine by lazy { inject<Engine>() }
+    private val messageHandler by lazy { inject<MessageHandler>() }
+    private val camera by lazy { inject<OrthographicCamera>() }
 
     @OptIn(ExperimentalStdlibApi::class)
     override fun beginContact(contact: Contact) {
@@ -221,6 +228,9 @@ class ContactManager : ContactListener {
                 val lootEntity = contactType.lootEntity
                 val inventory = playerEntity.getComponent<InventoryComponent>()
                 val lootComponent = lootEntity.getComponent<LootComponent>()
+                val lootPosition = lootEntity.getComponent<TransformComponent>().position
+                messageHandler.sendMessage(Message.ShowToast("LOOOT", camera.project(vec3(lootPosition))))
+
                 val looted =
                     if (lootComponent.lootTable != null) lootComponent.lootTable!!.result else lootComponent.loot
                 for (loot in looted) {
