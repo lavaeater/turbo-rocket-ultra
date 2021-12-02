@@ -4,15 +4,14 @@ import com.badlogic.ashley.core.Entity
 import com.badlogic.ashley.systems.SortedIteratingSystem
 import com.badlogic.gdx.graphics.Color
 import com.badlogic.gdx.graphics.g2d.Batch
+import com.badlogic.gdx.math.MathUtils
 import ecs.components.gameplay.TransformComponent
 import ecs.components.graphics.OnScreenComponent
 import ecs.components.graphics.SpriteComponent
 import ecs.systems.graphics.GameConstants.scale
 import ktx.ashley.allOf
 import ktx.graphics.use
-import physics.drawScaled
-import physics.sprite
-import physics.transform
+import physics.*
 import tru.Assets
 
 class RenderSystem(
@@ -42,7 +41,8 @@ class RenderSystem(
                 layer0.compareTo(layer1)
             }
         }
-    }, 8) {
+    }, 8
+) {
     private val shapeDrawer by lazy { Assets.shapeDrawer }
 
     override fun update(deltaTime: Float) {
@@ -58,21 +58,35 @@ class RenderSystem(
 
         batch.drawScaled(
             spriteComponent.sprite,
-            transform.position.x + (spriteComponent.sprite.regionWidth / 2  + spriteComponent.offsetX)* scale * spriteComponent.scale,
+            transform.position.x + (spriteComponent.sprite.regionWidth / 2 + spriteComponent.offsetX) * scale * spriteComponent.scale,
             transform.position.y + (spriteComponent.sprite.regionHeight / 2 + spriteComponent.offsetY) * scale * spriteComponent.scale,
             scale * spriteComponent.scale,
             if (spriteComponent.rotateWithTransform) transform.rotation else 180f
         )
-        for (sprite in spriteComponent.extraSprites.values) {
-            batch.drawScaled(
-                sprite,
-                transform.position.x + (spriteComponent.sprite.regionWidth / 2 + spriteComponent.offsetX) * scale * spriteComponent.scale,
-                transform.position.y + (spriteComponent.sprite.regionHeight / 2 + spriteComponent.offsetY) * scale * spriteComponent.scale,
-                scale * spriteComponent.scale,
-                if (spriteComponent.rotateWithTransform) transform.rotation else 180f
-            )
+        for ((key, sprite) in spriteComponent.extraSprites) {
+            if (spriteComponent.extraSpriteAnchors.contains(key)) {
+                val anchors = entity.anchors()
+                val drawPosition = anchors.transformedPoints[spriteComponent.extraSpriteAnchors[key]!!]!!
+
+                batch.drawScaled(
+                    sprite,
+                    drawPosition.x,// * scale * spriteComponent.scale,
+                    drawPosition.y,// * scale * spriteComponent.scale,
+                    scale * spriteComponent.scale,
+                    if (anchors.useDirectionVector) entity.playerControl().directionVector.angleDeg() else transform.rotation * MathUtils.radiansToDegrees
+                )
+            } else {
+                batch.drawScaled(
+                    sprite,
+                    transform.position.x + (spriteComponent.sprite.regionWidth / 2 + spriteComponent.offsetX) * scale * spriteComponent.scale,
+                    transform.position.y + (spriteComponent.sprite.regionHeight / 2 + spriteComponent.offsetY) * scale * spriteComponent.scale,
+                    scale * spriteComponent.scale,
+                    if (spriteComponent.rotateWithTransform) transform.rotation else 180f
+                )
+            }
+
         }
-        if(debug) {
+        if (debug) {
             shapeDrawer.filledCircle(transform.position, .2f, Color.RED)
         }
     }

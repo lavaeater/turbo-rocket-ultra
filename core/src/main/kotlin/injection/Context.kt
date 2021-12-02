@@ -13,6 +13,7 @@ import com.badlogic.gdx.graphics.g2d.PolygonSpriteBatch
 import com.badlogic.gdx.utils.viewport.ExtendViewport
 import com.strongjoshua.console.CommandExecutor
 import com.strongjoshua.console.GUIConsole
+import ecs.systems.AnchorPointTransformationSystem
 import ecs.systems.BodyDestroyerSystem
 import ecs.systems.CharacterWalkAndShootDirectionSystem
 import ecs.systems.PhysicsSystem
@@ -144,6 +145,7 @@ object Context {
             addSystem(FactSystem())
             addSystem(FrustumCullingSystem())
             addSystem(BuildSystem(false))
+            addSystem(AnchorPointTransformationSystem())
         }
     }
 }

@@ -65,6 +65,7 @@ object AshleyMappers {
     val waitsForRespawn = mapperFor<PlayerWaitsForRespawn>()
     val frustum = mapperFor<OnScreenComponent>()
     val sprite = mapperFor<SpriteComponent>()
+    val anchors = mapperFor<AnchorPointsComponent>()
 }
 
 fun Entity.transform(): TransformComponent {
@@ -73,6 +74,14 @@ fun Entity.transform(): TransformComponent {
 
 fun Entity.hasTransform(): Boolean {
     return AshleyMappers.transform.has(this)
+}
+
+fun Entity.anchors(): AnchorPointsComponent {
+    return AshleyMappers.anchors.get(this)
+}
+
+fun Entity.hasAnchors(): Boolean {
+    return AshleyMappers.anchors.has(this)
 }
 
 fun Entity.behavior(): BehaviorComponent {

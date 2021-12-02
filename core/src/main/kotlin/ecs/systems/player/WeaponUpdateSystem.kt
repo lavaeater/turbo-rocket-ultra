@@ -24,8 +24,12 @@ class WeaponUpdateSystem: IteratingSystem(
         val spriteComponent = entity.sprite()
         if(animatedCharacterComponent.currentAnimState == AnimState.Aiming)  {
             spriteComponent.extraSprites["gun"] = Assets.weapons[weapon.textureName]!![animatedCharacterComponent.currentDirection]!!
+            if(weapon.handleKey != "") {
+                spriteComponent.extraSpriteAnchors["gun"] = weapon.handleKey
+            }
         } else {
             spriteComponent.extraSprites.remove("gun")
+            spriteComponent.extraSpriteAnchors.remove("gun")
         }
     }
 }

@@ -58,6 +58,9 @@ class PlayerControlComponent(var controlMapper: ControlMapper, val player: Playe
     val firing get() = controlMapper.firing && cooldownRemaining <= 0f
     val aiming get() = controlMapper.aiming
     val aimVector get() = controlMapper.aimVector
+
+    val directionVector: Vector2 get() { return if(aiming) aimVector else walkVector }
+
     val compassDirection get() = aimVector.compassDirection()
     val mousePosition get() = controlMapper.mousePosition
     var latestHitPoint = vec2(0f, 0f)
