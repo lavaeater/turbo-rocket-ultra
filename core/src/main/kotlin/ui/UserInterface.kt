@@ -81,7 +81,6 @@ class UserInterface(
                 SpacedContainer(vec2(0f, 25f), vec2()).apply {
                     for ((i, p) in players.values.withIndex()) {
                         val position = p.entity.getComponent<TransformComponent>().position
-                        val control = p.entity.getComponent<PlayerControlComponent>()
                         children.add(BoundTextActor({ "Tile: ${position.tileX()}:${position.tileY()}" }))
                         children.add(BoundTextActor({
                             "CanBuild: ${

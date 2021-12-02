@@ -74,7 +74,7 @@ sealed class ContactType {
 fun Contact.thisIsAContactBetween(): ContactType {
     if (this.justOneHas<DamageEffectComponent>()) {
         val damageEffectEntity = this.getEntityFor<DamageEffectComponent>()
-        if(this.bothAreEntities()) {
+        if (this.bothAreEntities()) {
             val otherEntity = this.getOtherEntity(damageEffectEntity)
             return if (otherEntity.has<PlayerComponent>()) {
                 ContactType.PlayerAndDamage(damageEffectEntity, otherEntity)
@@ -254,7 +254,7 @@ class ContactManager : ContactListener {
                         }
                     }
                 }
-                lootEntity.addComponent<DestroyComponent>()
+                lootEntity.safeDestroy()
             }
             is ContactType.PlayerAndObjective -> {
                 val objectiveComponent = contactType.objective.getComponent<ObjectiveComponent>()
@@ -263,7 +263,9 @@ class ContactManager : ContactListener {
                 objectiveComponent.touched = true
                 contactType.objective.getComponent<LightComponent>().light.isActive = true
             }
-            is ContactType.PlayerAndProjectile -> {contactType.player.getComponent<PlayerComponent>().player.health -= 20}
+            is ContactType.PlayerAndProjectile -> {
+                contactType.player.getComponent<PlayerComponent>().player.health -= 20
+            }
             is ContactType.PlayerAndSomeoneWhoTackles -> {
                 val enemy = contactType.tackler
                 val player = contactType.player
@@ -284,9 +286,9 @@ class ContactManager : ContactListener {
                 val playerControlComponent = deadPlayer.getComponent<PlayerControlComponent>()
                 val player = deadPlayer.getComponent<PlayerComponent>().player
 
-                if (livingPlayer.has<ContextActionComponent>()) {
-                    livingPlayer.getComponent<ContextActionComponent>().apply {
-                        texture = Assets.ps4Buttons["cross"]!!
+                if (livingPlayer.hasContextAction()) {
+                    livingPlayer.contextAction().apply {
+                        sprite = Assets.ps4Buttons["cross"]!!
                         contextAction = {
                             player.health += (50..85).random()
                             deadPlayer.remove<PlayerWaitsForRespawn>()
@@ -294,8 +296,8 @@ class ContactManager : ContactListener {
                         }
                     }
                 } else {
-                    livingPlayer.addComponent<ContextActionComponent> {
-                        texture = Assets.ps4Buttons["cross"]!!
+                    livingPlayer.addContextAction {
+                        sprite = Assets.ps4Buttons["cross"]!!
                         contextAction = {
                             player.health += (50..85).random()
                             deadPlayer.remove<PlayerWaitsForRespawn>()
@@ -304,7 +306,7 @@ class ContactManager : ContactListener {
                     }
                 }
             }
-            is ContactType.TwoEnemySensors ->  {
+            is ContactType.TwoEnemySensors -> {
                 val enemyAEntity = contactType.enemyOne
                 val enemyBEntity = contactType.enemyTwo
                 if (enemyAEntity.has<TrackingPlayer>() && !enemyBEntity.has<TrackingPlayer>()) {

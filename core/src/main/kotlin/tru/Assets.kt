@@ -230,13 +230,11 @@ object Assets : Disposable {
 
     val ps4Buttons by lazy {
         val texture = Texture(Gdx.files.internal("controllers/PS4.png"))
-        val y=  48
-        val x = 32
         mapOf(
-            "cross" to TextureRegion(texture, 32, 48, 16,16),
-            "square" to TextureRegion(texture, 32, 64, 16,16),
-            "triangle" to TextureRegion(texture, 32, 80, 16,16),
-            "circle" to TextureRegion(texture, 32, 96, 16,16),
+            "cross" to Sprite(texture, 32, 48, 16,16),
+            "square" to Sprite(texture, 32, 64, 16,16),
+            "triangle" to Sprite(texture, 32, 80, 16,16),
+            "circle" to Sprite(texture, 32, 96, 16,16),
         )
     }
     val bullet by lazy {

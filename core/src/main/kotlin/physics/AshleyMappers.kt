@@ -115,10 +115,18 @@ fun Entity.hasContextAction(): Boolean {
     return AshleyMappers.contextAction.has(this)
 }
 
+inline fun Entity.addContextAction(block: ContextActionComponent.() -> Unit = {}) {
+    this.addComponent(block)
+}
+
 fun Entity.playerControl(): PlayerControlComponent {
     return AshleyMappers.playerControl.get(this)
 }
 
 fun Entity.hasPlayerControl(): Boolean {
     return AshleyMappers.playerControl.has(this)
+}
+
+fun Entity.safeDestroy() {
+    this.addComponent<DestroyComponent>()
 }

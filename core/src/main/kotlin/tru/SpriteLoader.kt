@@ -7,7 +7,6 @@ import com.badlogic.gdx.graphics.g2d.Sprite
 import com.badlogic.gdx.graphics.g2d.TextureRegion
 import ktx.collections.toGdxArray
 
-
 object SpriteLoader {
 
     /* Get it to work or ditch it. Right now it ain't even rendering anything.*/
@@ -30,7 +29,7 @@ object SpriteLoader {
         return map
     }
 
-    fun initEnemyAnims(): Map<String, Map<AnimState, LpcCharacterAnim<TextureRegion>>> {
+    fun initEnemyAnims(): Map<String, Map<AnimState, LpcCharacterAnim<Sprite>>> {
         /*
         For now, we will simply load the sheets and assign anims etc using
         some hardcoded stuff.
@@ -39,19 +38,19 @@ object SpriteLoader {
 
         So we should have anim and direction as two different things.
          */
-        val anims = mutableMapOf<String, MutableMap<AnimState, LpcCharacterAnim<TextureRegion>>>()
+        val anims = mutableMapOf<String, MutableMap<AnimState, LpcCharacterAnim<Sprite>>>()
         val enemies = listOf("enemy", "zombie")
         for (c in enemies) {
             anims[c] = mutableMapOf()
             val texture = Texture(Gdx.files.internal("sprites/enemies/$c.png"))
             for (animDef in LpcCharacterAnimDefinition.enemyDefinitions) {
-                anims[c]!![animDef.state] = LpcCharacterAnim<TextureRegion>(
+                anims[c]!![animDef.state] = LpcCharacterAnim<Sprite>(
                     animDef.state,
                     animDef.directions.mapIndexed
                     { row, r ->
                         r to
                                 Animation(0.1f, (animDef.frames).map {
-                                    TextureRegion(
+                                    Sprite(
                                         texture,
                                         (it) * animDef.itemWidth,
                                         (animDef.row + row) * animDef.itemHeight,
@@ -67,7 +66,7 @@ object SpriteLoader {
         return anims
     }
 
-    fun initBossAnims(): Map<String, Map<AnimState, LpcCharacterAnim<TextureRegion>>> {
+    fun initBossAnims(): Map<String, Map<AnimState, LpcCharacterAnim<Sprite>>> {
         /*
         For now, we will simply load the sheets and assign anims etc using
         some hardcoded stuff.
@@ -76,19 +75,19 @@ object SpriteLoader {
 
         So we should have anim and direction as two different things.
          */
-        val anims = mutableMapOf<String, MutableMap<AnimState, LpcCharacterAnim<TextureRegion>>>()
+        val anims = mutableMapOf<String, MutableMap<AnimState, LpcCharacterAnim<Sprite>>>()
         val bosses = listOf("boss_one")
         for (c in bosses) {
             anims[c] = mutableMapOf()
             val texture = Texture(Gdx.files.internal("sprites/bosses/$c.png"))
             for (animDef in LpcCharacterAnimDefinition.enemyDefinitions) {
-                anims[c]!![animDef.state] = LpcCharacterAnim<TextureRegion>(
+                anims[c]!![animDef.state] = LpcCharacterAnim<Sprite>(
                     animDef.state,
                     animDef.directions.mapIndexed
                     { row, r ->
                         r to
                                 Animation(0.1f, (animDef.frames).map {
-                                    TextureRegion(
+                                    Sprite(
                                         texture,
                                         (it) * animDef.itemWidth,
                                         (animDef.row + row) * animDef.itemHeight,
