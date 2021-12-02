@@ -210,6 +210,8 @@ fun tower(at: Vector2 = vec2(), towerType: String = "machinegun") {
         with<TransformComponent>()
         with<SpriteComponent> {
             sprite = Assets.towers["obstacle"]!!
+            scale = 4f
+
             layer = 1
         }
         with<MiniMapComponent> {
@@ -586,6 +588,8 @@ fun boss(at: Vector2, level: Int) {
         }
         with<SpriteComponent> {
             layer = 1
+            scale = 4f
+
 //            offsetY = -7f
         }
         with<MiniMapComponent> {
@@ -620,6 +624,7 @@ fun blockade(
         with<BlockadeComponent>()
         with<SpriteComponent> {
             sprite = Assets.buildables.first()
+            scale = 4f
             layer = 1
         }
     }
@@ -647,6 +652,7 @@ fun spawner(
         with<SpriteComponent> {
             sprite  = Assets.towers["obstacle"]!!
 //            offsetY = -4f
+            scale = 4f
             layer = 1
         }
         with<EnemySpawnerComponent> {}
@@ -681,6 +687,7 @@ fun objective(
         with<SpriteComponent> {
             sprite = Assets.towers["objective"]!!
 //            offsetY = -4f
+            scale = 4f
             layer = 1
         }
         with<MiniMapComponent> {

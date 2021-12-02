@@ -90,7 +90,7 @@ object Context {
     private fun getEngine(): Engine {
         return PooledEngine().apply {
             addSystem(PhysicsSystem())
-            //addSystem(PhysicsDebugRendererSystem(inject(), inject()))
+            addSystem(PhysicsDebugRendererSystem(inject(), inject()))
             addSystem(CameraUpdateSystem())
             addSystem(PlayerMoveSystem())
             addSystem(PlayerHasBeenHereSystem())
@@ -99,7 +99,6 @@ object Context {
             addSystem(BodyDestroyerSystem(inject())) //world
             addSystem(CharacterWalkAndShootDirectionSystem())
             addSystem(PlayerShootingSystem(inject()))
-            //addSystem(BulletSpeedSystem())
             addSystem(EnemyDeathSystem())
             addSystem(EnemyMovementSystem())
             // Ai Systems Start
@@ -132,7 +131,6 @@ object Context {
             addSystem(RenderUserInterfaceSystem(inject<PolygonSpriteBatch>() as Batch))
             addSystem(RenderMiniMapSystem())
             addSystem(PlayerFlashlightSystem())
-            //addSystem(WeaponLaserSystem())
             //lets NOT write debug badges
 //            addSystem(AiDebugSystem())
             addSystem(PlayerContextActionSystem())
