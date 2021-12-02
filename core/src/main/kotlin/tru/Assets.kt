@@ -88,7 +88,7 @@ object Assets : Disposable {
     }
 
     private val batSprite by lazy {
-        Sprite(Texture(Gdx.files.internal("sprites/weapons/bat.png")), 0, 0,64, 10).apply { this.setOrigin(0f, this.regionHeight / -2f) }
+        Sprite(Texture(Gdx.files.internal("sprites/weapons/bat.png")), 0, 0,64, 10).apply { this.setOrigin(0f, this.regionHeight / 2f) }
     }
 
 

@@ -68,13 +68,11 @@ class RenderSystem(
                 val anchors = entity.anchors()
                 val drawPosition = anchors.transformedPoints[spriteComponent.extraSpriteAnchors[key]!!]!!
 
-                batch.drawScaled(
-                    sprite,
-                    drawPosition.x,// * scale * spriteComponent.scale,
-                    drawPosition.y,// * scale * spriteComponent.scale,
-                    scale * spriteComponent.scale,
-                    if (anchors.useDirectionVector) entity.playerControl().directionVector.angleDeg() else transform.rotation * MathUtils.radiansToDegrees
-                )
+                sprite.setOriginBasedPosition(drawPosition.x, drawPosition.y)
+                sprite.rotation = if (anchors.useDirectionVector) entity.playerControl().directionVector.angleDeg() else transform.rotation * MathUtils.radiansToDegrees
+                sprite.setScale(scale * spriteComponent.scale)
+                sprite.draw(batch)
+
             } else {
                 batch.drawScaled(
                     sprite,
