@@ -3,9 +3,9 @@ package tru
 import com.badlogic.gdx.Gdx
 import com.badlogic.gdx.graphics.Texture
 import com.badlogic.gdx.graphics.g2d.Animation
+import com.badlogic.gdx.graphics.g2d.Sprite
 import com.badlogic.gdx.graphics.g2d.TextureRegion
 import ktx.collections.toGdxArray
-
 
 object SpriteLoader {
 
@@ -29,7 +29,7 @@ object SpriteLoader {
         return map
     }
 
-    fun initEnemyAnims(): Map<String, Map<AnimState, LpcCharacterAnim<TextureRegion>>> {
+    fun initEnemyAnims(): Map<String, Map<AnimState, LpcCharacterAnim<Sprite>>> {
         /*
         For now, we will simply load the sheets and assign anims etc using
         some hardcoded stuff.
@@ -38,19 +38,19 @@ object SpriteLoader {
 
         So we should have anim and direction as two different things.
          */
-        val anims = mutableMapOf<String, MutableMap<AnimState, LpcCharacterAnim<TextureRegion>>>()
+        val anims = mutableMapOf<String, MutableMap<AnimState, LpcCharacterAnim<Sprite>>>()
         val enemies = listOf("enemy", "zombie")
         for (c in enemies) {
             anims[c] = mutableMapOf()
             val texture = Texture(Gdx.files.internal("sprites/enemies/$c.png"))
             for (animDef in LpcCharacterAnimDefinition.enemyDefinitions) {
-                anims[c]!![animDef.state] = LpcCharacterAnim<TextureRegion>(
+                anims[c]!![animDef.state] = LpcCharacterAnim<Sprite>(
                     animDef.state,
                     animDef.directions.mapIndexed
                     { row, r ->
                         r to
                                 Animation(0.1f, (animDef.frames).map {
-                                    TextureRegion(
+                                    Sprite(
                                         texture,
                                         (it) * animDef.itemWidth,
                                         (animDef.row + row) * animDef.itemHeight,
@@ -66,7 +66,7 @@ object SpriteLoader {
         return anims
     }
 
-    fun initBossAnims(): Map<String, Map<AnimState, LpcCharacterAnim<TextureRegion>>> {
+    fun initBossAnims(): Map<String, Map<AnimState, LpcCharacterAnim<Sprite>>> {
         /*
         For now, we will simply load the sheets and assign anims etc using
         some hardcoded stuff.
@@ -75,19 +75,19 @@ object SpriteLoader {
 
         So we should have anim and direction as two different things.
          */
-        val anims = mutableMapOf<String, MutableMap<AnimState, LpcCharacterAnim<TextureRegion>>>()
+        val anims = mutableMapOf<String, MutableMap<AnimState, LpcCharacterAnim<Sprite>>>()
         val bosses = listOf("boss_one")
         for (c in bosses) {
             anims[c] = mutableMapOf()
             val texture = Texture(Gdx.files.internal("sprites/bosses/$c.png"))
             for (animDef in LpcCharacterAnimDefinition.enemyDefinitions) {
-                anims[c]!![animDef.state] = LpcCharacterAnim<TextureRegion>(
+                anims[c]!![animDef.state] = LpcCharacterAnim<Sprite>(
                     animDef.state,
                     animDef.directions.mapIndexed
                     { row, r ->
                         r to
                                 Animation(0.1f, (animDef.frames).map {
-                                    TextureRegion(
+                                    Sprite(
                                         texture,
                                         (it) * animDef.itemWidth,
                                         (animDef.row + row) * animDef.itemHeight,
@@ -103,7 +103,7 @@ object SpriteLoader {
         return anims
     }
 
-    fun initCharachterAnims(): Map<String, Map<AnimState, LpcCharacterAnim<TextureRegion>>> {
+    fun initCharachterAnims(): Map<String, Map<AnimState, LpcCharacterAnim<Sprite>>> {
         /*
         For now, we will simply load the sheets and assign anims etc using
         some hardcoded stuff.
@@ -112,24 +112,24 @@ object SpriteLoader {
 
         So we should have anim and direction as two different things.
          */
-        val anims = mutableMapOf<String, MutableMap<AnimState, LpcCharacterAnim<TextureRegion>>>()
+        val anims = mutableMapOf<String, MutableMap<AnimState, LpcCharacterAnim<Sprite>>>()
         val characters = listOf("boy", "girl")
         for (c in characters) {
             anims[c] = mutableMapOf()
             val texture = Texture(Gdx.files.internal("sprites/$c/$c.png"))
             for (animDef in LpcCharacterAnimDefinition.definitions) {
-                anims[c]!![animDef.state] = LpcCharacterAnim<TextureRegion>(
+                anims[c]!![animDef.state] = LpcCharacterAnim<Sprite>(
                     animDef.state,
                     animDef.directions.mapIndexed
                     { row, r ->
                         r to
                                 Animation(0.1f, (animDef.frames).map {
-                                    TextureRegion(
+                                    Sprite(TextureRegion(
                                         texture,
                                         (it) * animDef.itemWidth,
                                         (animDef.row + row) * animDef.itemHeight,
                                         animDef.itemWidth,
-                                        animDef.itemHeight)
+                                        animDef.itemHeight))
                                 }.toGdxArray(), animDef.playMode)
                     }.toMap()
                 )
@@ -144,19 +144,19 @@ object SpriteLoader {
             anims[key] = mutableMapOf()
             val texture = Texture(Gdx.files.local(file.path()))
             for (animDef in LpcCharacterAnimDefinition.definitions) {
-                anims[key]!![animDef.state] = LpcCharacterAnim<TextureRegion>(
+                anims[key]!![animDef.state] = LpcCharacterAnim<Sprite>(
                     animDef.state,
                     animDef.directions.mapIndexed
                     { row, r ->
                         r to
                                 Animation(0.1f, (animDef.frames).map {
-                                    TextureRegion(
+                                    Sprite(TextureRegion(
                                         texture,
                                         (it) * animDef.itemWidth,
                                         (animDef.row + row) * animDef.itemHeight,
                                         animDef.itemWidth,
                                         animDef.itemHeight
-                                    )
+                                    ))
                                 }.toGdxArray(), animDef.playMode)
                     }.toMap()
                 )

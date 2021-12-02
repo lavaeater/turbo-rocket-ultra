@@ -71,5 +71,6 @@ class TextGridMapDefinition(val def: List<String>) : IGridMapDefinition {
         val levelOne by lazy { convert("maps/level-one.png") }
         val levelTwo by lazy { convert("maps/level-two.png") }
         val levelThree by lazy { convert("maps/level-3.png") }
+        val levelFour by lazy { convert("maps/level-4.png") }
     }
 }

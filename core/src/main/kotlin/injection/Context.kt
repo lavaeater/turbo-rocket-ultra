@@ -13,6 +13,7 @@ import com.badlogic.gdx.graphics.g2d.PolygonSpriteBatch
 import com.badlogic.gdx.utils.viewport.ExtendViewport
 import com.strongjoshua.console.CommandExecutor
 import com.strongjoshua.console.GUIConsole
+import ecs.systems.AnchorPointTransformationSystem
 import ecs.systems.BodyDestroyerSystem
 import ecs.systems.CharacterWalkAndShootDirectionSystem
 import ecs.systems.PhysicsSystem
@@ -40,7 +41,9 @@ import map.grid.GridMapManager
 import physics.ContactManager
 import story.FactsOfTheWorld
 import story.StoryManager
+import ui.Hud
 import ui.IUserInterface
+import ui.MessageHandler
 import ui.UserInterface
 
 object Context {
@@ -59,7 +62,8 @@ object Context {
         context.register {
             bindSingleton(PolygonSpriteBatch())
             bindSingleton(OrthographicCamera())
-            bind<IUserInterface> { UserInterface(inject<PolygonSpriteBatch>() as Batch, false) }
+//            bind<IUserInterface> { UserInterface(inject<PolygonSpriteBatch>() as Batch, false) }
+            bind<IUserInterface> { Hud(inject<PolygonSpriteBatch>() as Batch) }
             bindSingleton(
                 ExtendViewport(
                     GAMEWIDTH,
@@ -79,6 +83,7 @@ object Context {
             bindSingleton(RayHandler(inject(), 500, 500))
             bindSingleton(FactsOfTheWorld(Gdx.app.getPreferences("TurboRocket")))
             bindSingleton(StoryManager())
+            bindSingleton(MessageHandler())
             bindSingleton(getEngine())
         }
     }
@@ -86,7 +91,7 @@ object Context {
     private fun getEngine(): Engine {
         return PooledEngine().apply {
             addSystem(PhysicsSystem())
-            //addSystem(PhysicsDebugRendererSystem(inject(), inject()))
+            addSystem(PhysicsDebugRendererSystem(inject(), inject()))
             addSystem(CameraUpdateSystem())
             addSystem(PlayerMoveSystem())
             addSystem(PlayerHasBeenHereSystem())
@@ -95,7 +100,6 @@ object Context {
             addSystem(BodyDestroyerSystem(inject())) //world
             addSystem(CharacterWalkAndShootDirectionSystem())
             addSystem(PlayerShootingSystem(inject()))
-            //addSystem(BulletSpeedSystem())
             addSystem(EnemyDeathSystem())
             addSystem(EnemyMovementSystem())
             // Ai Systems Start
@@ -128,7 +132,6 @@ object Context {
             addSystem(RenderUserInterfaceSystem(inject<PolygonSpriteBatch>() as Batch))
             addSystem(RenderMiniMapSystem())
             addSystem(PlayerFlashlightSystem())
-            //addSystem(WeaponLaserSystem())
             //lets NOT write debug badges
 //            addSystem(AiDebugSystem())
             addSystem(PlayerContextActionSystem())
@@ -142,6 +145,7 @@ object Context {
             addSystem(FactSystem())
             addSystem(FrustumCullingSystem())
             addSystem(BuildSystem(false))
+            addSystem(AnchorPointTransformationSystem())
         }
     }
 }

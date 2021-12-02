@@ -16,4 +16,6 @@ class Weapon(weaponDefinition: WeaponDefinition) {
     val reloadDelay = weaponDefinition.reloadDelay
     val reloadType = weaponDefinition.reloadType
     val audio = weaponDefinition.audio
+    val rotate = weaponDefinition.rotate
+    val handleKey = weaponDefinition.handleKey
 }

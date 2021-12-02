@@ -2,6 +2,7 @@ package ecs.systems
 
 import com.badlogic.ashley.core.Entity
 import com.badlogic.ashley.systems.IteratingSystem
+import com.badlogic.gdx.math.MathUtils
 import com.badlogic.gdx.math.Vector2
 import ecs.components.BodyComponent
 import ecs.components.gameplay.TransformComponent
@@ -25,11 +26,12 @@ class PhysicsSystem :
 fun Vector2.tileWorldX(): Float {
     return this.tileX().tileWorldX()
 }
+
 fun Vector2.tileWorldY(): Float {
     return this.tileY().tileWorldY()
 }
 
-fun Vector2.sectionX() : Int {
+fun Vector2.sectionX(): Int {
     return this.tileX() / GridMapSection.width
 }
 
@@ -40,6 +42,7 @@ fun Vector2.sectionY(): Int {
 fun Vector2.tileX(): Int {
     return this.tileX(GridMapSection.scaledWidth)
 }
+
 fun Vector2.tileY(): Int {
     return this.tileY(GridMapSection.scaledHeight)
 }
@@ -52,7 +55,7 @@ fun Vector2.tileY(tileHeight: Float): Int {
     return (this.y / tileHeight).toInt()
 }
 
-fun Float.tileX(tileWidth: Float =GridMapSection.tileWidth): Int {
+fun Float.tileX(tileWidth: Float = GridMapSection.tileWidth): Int {
     return (this / tileWidth).toInt()
 }
 

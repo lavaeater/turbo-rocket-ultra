@@ -2,6 +2,7 @@ package physics
 
 import com.badlogic.ashley.core.Engine
 import com.badlogic.ashley.core.Entity
+import com.badlogic.gdx.graphics.OrthographicCamera
 import com.badlogic.gdx.math.Vector2
 import com.badlogic.gdx.physics.box2d.Contact
 import com.badlogic.gdx.physics.box2d.ContactImpulse
@@ -21,7 +22,11 @@ import features.pickups.AmmoLoot
 import features.pickups.WeaponLoot
 import injection.Context.inject
 import ktx.ashley.remove
+import ktx.math.vec3
 import tru.Assets
+import ui.Message
+import ui.MessageHandler
+import wastelandui.toVec2
 
 /*
 How to handle contacts in the absolutely smashingly BEST
@@ -69,7 +74,7 @@ sealed class ContactType {
 fun Contact.thisIsAContactBetween(): ContactType {
     if (this.justOneHas<DamageEffectComponent>()) {
         val damageEffectEntity = this.getEntityFor<DamageEffectComponent>()
-        if(this.bothAreEntities()) {
+        if (this.bothAreEntities()) {
             val otherEntity = this.getOtherEntity(damageEffectEntity)
             return if (otherEntity.has<PlayerComponent>()) {
                 ContactType.PlayerAndDamage(damageEffectEntity, otherEntity)
@@ -149,6 +154,8 @@ fun Contact.thisIsAContactBetween(): ContactType {
 
 class ContactManager : ContactListener {
     private val engine by lazy { inject<Engine>() }
+    private val messageHandler by lazy { inject<MessageHandler>() }
+    private val camera by lazy { inject<OrthographicCamera>() }
 
     @OptIn(ExperimentalStdlibApi::class)
     override fun beginContact(contact: Contact) {
@@ -221,9 +228,13 @@ class ContactManager : ContactListener {
                 val lootEntity = contactType.lootEntity
                 val inventory = playerEntity.getComponent<InventoryComponent>()
                 val lootComponent = lootEntity.getComponent<LootComponent>()
+                val lootPosition = lootEntity.getComponent<TransformComponent>().position
+
+
                 val looted =
                     if (lootComponent.lootTable != null) lootComponent.lootTable!!.result else lootComponent.loot
                 for (loot in looted) {
+                    messageHandler.sendMessage(Message.ShowToast(loot.toString(), camera.project(vec3(lootPosition))))
                     when (loot) {
                         is AmmoLoot -> {
                             if (!inventory.ammo.containsKey(loot.ammoType))
@@ -243,7 +254,7 @@ class ContactManager : ContactListener {
                         }
                     }
                 }
-                lootEntity.addComponent<DestroyComponent>()
+                lootEntity.safeDestroy()
             }
             is ContactType.PlayerAndObjective -> {
                 val objectiveComponent = contactType.objective.getComponent<ObjectiveComponent>()
@@ -252,7 +263,9 @@ class ContactManager : ContactListener {
                 objectiveComponent.touched = true
                 contactType.objective.getComponent<LightComponent>().light.isActive = true
             }
-            is ContactType.PlayerAndProjectile -> {contactType.player.getComponent<PlayerComponent>().player.health -= 20}
+            is ContactType.PlayerAndProjectile -> {
+                contactType.player.getComponent<PlayerComponent>().player.health -= 20
+            }
             is ContactType.PlayerAndSomeoneWhoTackles -> {
                 val enemy = contactType.tackler
                 val player = contactType.player
@@ -273,9 +286,9 @@ class ContactManager : ContactListener {
                 val playerControlComponent = deadPlayer.getComponent<PlayerControlComponent>()
                 val player = deadPlayer.getComponent<PlayerComponent>().player
 
-                if (livingPlayer.has<ContextActionComponent>()) {
-                    livingPlayer.getComponent<ContextActionComponent>().apply {
-                        texture = Assets.ps4Buttons["cross"]!!
+                if (livingPlayer.hasContextAction()) {
+                    livingPlayer.contextAction().apply {
+                        sprite = Assets.ps4Buttons["cross"]!!
                         contextAction = {
                             player.health += (50..85).random()
                             deadPlayer.remove<PlayerWaitsForRespawn>()
@@ -283,8 +296,8 @@ class ContactManager : ContactListener {
                         }
                     }
                 } else {
-                    livingPlayer.addComponent<ContextActionComponent> {
-                        texture = Assets.ps4Buttons["cross"]!!
+                    livingPlayer.addContextAction {
+                        sprite = Assets.ps4Buttons["cross"]!!
                         contextAction = {
                             player.health += (50..85).random()
                             deadPlayer.remove<PlayerWaitsForRespawn>()
@@ -293,7 +306,7 @@ class ContactManager : ContactListener {
                     }
                 }
             }
-            is ContactType.TwoEnemySensors ->  {
+            is ContactType.TwoEnemySensors -> {
                 val enemyAEntity = contactType.enemyOne
                 val enemyBEntity = contactType.enemyTwo
                 if (enemyAEntity.has<TrackingPlayer>() && !enemyBEntity.has<TrackingPlayer>()) {
