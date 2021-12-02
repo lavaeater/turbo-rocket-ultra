@@ -35,6 +35,7 @@ import ktx.ashley.getSystem
 import ktx.ashley.remove
 import map.grid.*
 import map.snake.randomPoint
+import org.w3c.dom.css.Counter
 import physics.AshleyMappers
 import physics.getComponent
 import statemachine.StateMachine
@@ -78,6 +79,12 @@ class GameScreen(private val gameState: StateMachine<GameState, GameEvent>) : Kt
 
         ui.reset()
         ui.show()
+    }
+
+    private fun loadMapZero() : Pair<Map<Coordinate, GridMapSection>, TileGraph> {
+        CounterObject.numberOfEnemies = 0
+        CounterObject.maxSpawnedEnemies = 0
+        return GridMapGenerator.generateFromDefintion(TextGridMapDefinition.levelZero)
     }
 
     private fun loadMapOne() : Pair<Map<Coordinate, GridMapSection>, TileGraph> {
@@ -261,7 +268,7 @@ D1B67A
         CounterObject.numberOfEnemies =  (8f.pow(CounterObject.currentLevel).roundToInt() * 2).coerceAtMost(MAX_ENEMIES)
         CounterObject.maxSpawnedEnemies = CounterObject.numberOfEnemies * 2
         val map = when(level) {
-            1 -> loadMapOne()
+            1 -> loadMapZero() //loadMapOne()
             2 -> loadMapTwo()
             3 -> loadMapThree()
             4 -> loadMapFour()
