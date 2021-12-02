@@ -57,11 +57,11 @@ Lets call the branch level-four, for this one.
 	- [x] Simplify building a userinterface
 	- [x] But with databinding in them, for sure
 - [x] The actual level
+- [x] Add actual bat 
 
 
 ##### Level Five
 - [ ] Add actual bat swing
-	- [x] Add actual bat? 
 	- [ ] Animate bat-swing? Is this fun? <- steps taken
 - [ ] Re-introduce TOWERS
 
@@ -759,11 +759,11 @@ Det här gör vi på det gamla vanliga sättet. Vi bygger en box2d-värld, vi kl
 
 Oj oj oj,  vad roligt. Vi kan göra en box2d-kropp med leder, per tutorials etc. Superkul ju.
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbLTE0MjE2NDg0NTYsLTc1MDM1ODg3OSwtNj
-AyMTI1OTcyLDE2MDgzNzQ1NTYsMzg3MTkzMTY4LC05ODQ2NDIx
-NTUsMTUwODUxNzI4NCwtMTk0MzM0MTIwOCwtMTc3MDA1NjAxMS
-wtNTE3OTcxNDM3LDU3ODQ5NTM5LDU4NjE1MjUxMSwtMTE3OTcx
-Nzk0NCwtMTUxMTQyMTcwMywtMzY4Mzc0NTc2LC03OTEzMjAyMT
-AsLTg1MjkzMjM4Niw4ODUxMTY3MzksMzQyNzQ0MTM2LC05NDY5
-NDM5OV19
+eyJoaXN0b3J5IjpbLTk3ODAxODM1LC03NTAzNTg4NzksLTYwMj
+EyNTk3MiwxNjA4Mzc0NTU2LDM4NzE5MzE2OCwtOTg0NjQyMTU1
+LDE1MDg1MTcyODQsLTE5NDMzNDEyMDgsLTE3NzAwNTYwMTEsLT
+UxNzk3MTQzNyw1Nzg0OTUzOSw1ODYxNTI1MTEsLTExNzk3MTc5
+NDQsLTE1MTE0MjE3MDMsLTM2ODM3NDU3NiwtNzkxMzIwMjEwLC
+04NTI5MzIzODYsODg1MTE2NzM5LDM0Mjc0NDEzNiwtOTQ2OTQz
+OTldfQ==
 -->
