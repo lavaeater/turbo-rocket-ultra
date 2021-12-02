@@ -66,6 +66,17 @@ class RenderSystem(
             scale * spriteComponent.scale,
             if (spriteComponent.rotateWithTransform) transform.rotation else 180f
         )
+        shapeDrawer.filledCircle(
+            transform.position.x + spriteComponent.sprite.originX * scale * spriteComponent.scale,
+            transform.position.y + spriteComponent.sprite.originY * scale * spriteComponent.scale,
+            .2f,
+            Color.BLUE)
+        shapeDrawer.filledCircle(
+            transform.position.x,
+            transform.position.y,
+            .2f,
+            Color.RED)
+
         for ((key, sprite) in spriteComponent.extraSprites) {
             if (spriteComponent.extraSpriteAnchors.contains(key)) {
                 val anchors = entity.anchors()

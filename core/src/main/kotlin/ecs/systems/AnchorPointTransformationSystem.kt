@@ -14,6 +14,9 @@ import physics.playerControl
 import physics.transform
 import tru.Assets
 
+
+
+
 class AnchorPointTransformationSystem(private val debug: Boolean = true) :
     IteratingSystem(allOf(TransformComponent::class, AnchorPointsComponent::class).get(), 64) {
 
@@ -35,7 +38,7 @@ class AnchorPointTransformationSystem(private val debug: Boolean = true) :
             But what is the rotation?
              */
             val rotatedPoint = if(anchors.useDirectionVector) point.cpy().rotateRad(entity.playerControl().directionVector.angleRad()) else point.cpy().rotateRad(transform.rotation)
-            anchors.transformedPoints[key]!!.set(transform.position).add(rotatedPoint)
+            anchors.transformedPoints[key]!!.set(transform.position).add(rotatedPoint.x, rotatedPoint.y / 2)
         }
         if(debug)
             shapeDrawer.batch.use {

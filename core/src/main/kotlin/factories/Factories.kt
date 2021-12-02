@@ -540,33 +540,6 @@ fun boss(at: Vector2, level: Int) {
         144
     )
 
-//    val box2dBody = world().body {
-//        type = BodyDef.BodyType.DynamicBody
-//        position.set(at)
-//        fixedRotation = true
-//        box(3f, 3f) {
-//            density = PLAYER_DENSITY
-//            filter {
-//                categoryBits = Box2dCategories.enemies
-//                maskBits = Box2dCategories.all
-//            }
-//        }
-//        box(3f, 6f, vec2(0f, -1.5f)) {
-//            filter {
-//                categoryBits = Box2dCategories.enemies
-//                maskBits = Box2dCategories.bullets
-//            }
-//        }
-//        circle(10f) {
-//            density = .1f
-//            isSensor = true
-//            filter {
-//                categoryBits = Box2dCategories.enemySensors
-//                maskBits = Box2dCategories.allButLights
-//            }
-//        }
-//    }
-
     val entity = engine().entity {
         with<BodyComponent> { body = box2dBody }
         with<TransformComponent> { position.set(box2dBody.position) }
