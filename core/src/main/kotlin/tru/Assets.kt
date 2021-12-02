@@ -80,11 +80,15 @@ object Assets : Disposable {
     }
 
     val handgunTexture by lazy {
-        Texture(Gdx.files.internal("sprites/guns/handgun.png"))
+        Texture(Gdx.files.internal("sprites/weapons/handgun.png"))
     }
 
     val spas12Texture by lazy {
-        Texture(Gdx.files.internal("sprites/guns/spas-12.png"))
+        Texture(Gdx.files.internal("sprites/weapons/spas-12.png"))
+    }
+
+    val batTextureRegion by lazy {
+        TextureRegion(Texture(Gdx.files.internal("sprites/weapons/bat.png")), 0, 0,64, 6,)
     }
 
 
@@ -111,6 +115,17 @@ object Assets : Disposable {
                                 TextureRegion(spas12Texture, 0, 128, 64, 64),
                         SpriteDirection.East to
                                 TextureRegion(spas12Texture, 0, 192, 64,64)
+                    ),
+            GunFrames.bat to
+                    mapOf(
+                        SpriteDirection.North to
+                                batTextureRegion,
+                        SpriteDirection.West to
+                                batTextureRegion,
+                        SpriteDirection.South to
+                                batTextureRegion,
+                        SpriteDirection.East to
+                                batTextureRegion,
                     )
         )
     }

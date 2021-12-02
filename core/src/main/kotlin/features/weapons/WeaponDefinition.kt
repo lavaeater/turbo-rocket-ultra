@@ -36,7 +36,7 @@ class WeaponDefinition(
             AmmoType.Molotov,
             5f..15f,
             0f,
-            ReloadType.MeleeWeapon,
+            ReloadType.SingleShot,
             Assets.gunAudio["glock17"]!!,
             0f
         )
@@ -48,7 +48,7 @@ class WeaponDefinition(
             45f, //
             -1,
             5f,
-            GunFrames.handGun, //TODO exhange for bat or something
+            GunFrames.bat,
             AmmoType.MeleeWeapon,
             5f..15f,
             0f,
