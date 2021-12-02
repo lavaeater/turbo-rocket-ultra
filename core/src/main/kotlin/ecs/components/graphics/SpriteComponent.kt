@@ -9,6 +9,9 @@ class SpriteComponent: Component, Pool.Poolable {
     var sprite = Sprite()
     var extraSprites = mutableMapOf<String, Sprite>()
     var rotateWithTransform = false
+    var offsetX = 0f
+    var offsetY = 0f
+    var scale = 1f
     override fun reset() {
         layer = 0
         sprite = Sprite()

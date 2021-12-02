@@ -2,6 +2,7 @@ package physics
 
 import com.badlogic.ashley.core.Component
 import com.badlogic.ashley.core.ComponentMapper
+import com.badlogic.ashley.core.Entity
 import ecs.components.BodyComponent
 import ecs.components.ai.*
 import ecs.components.enemy.EnemyComponent
@@ -54,7 +55,6 @@ object AshleyMappers {
     val animatedCharacter = mapperFor<AnimatedCharacterComponent>()
     val cameraFollow = mapperFor<CameraFollowComponent>()
     val miniMap = mapperFor<MiniMapComponent>()
-    val texture = mapperFor<TextureComponent>()
     val loot = mapperFor<LootComponent>()
     val lootDrop = mapperFor<LootDropComponent>()
     val contextAction = mapperFor<ContextActionComponent>()
@@ -63,7 +63,62 @@ object AshleyMappers {
     val weapon = mapperFor<WeaponComponent>()
     val respawn = mapperFor<PlayerIsRespawning>()
     val waitsForRespawn = mapperFor<PlayerWaitsForRespawn>()
-    val frustum = mapperFor<InFrustumComponent>()
+    val frustum = mapperFor<OnScreenComponent>()
     val sprite = mapperFor<SpriteComponent>()
+}
 
+fun Entity.transform(): TransformComponent {
+    return AshleyMappers.transform.get(this)
+}
+
+fun Entity.hasTransform(): Boolean {
+    return AshleyMappers.transform.has(this)
+}
+
+fun Entity.behavior(): BehaviorComponent {
+    return AshleyMappers.behavior.get(this)
+}
+
+fun Entity.hasBehavior(): Boolean {
+    return AshleyMappers.behavior.has(this)
+}
+
+fun Entity.sprite(): SpriteComponent {
+    return AshleyMappers.sprite.get(this)
+}
+
+fun Entity.hasSprite(): Boolean {
+    return AshleyMappers.sprite.has(this)
+}
+
+fun Entity.weapon(): WeaponComponent {
+    return AshleyMappers.weapon.get(this)
+}
+
+fun Entity.hasWeapon(): Boolean {
+    return AshleyMappers.weapon.has(this)
+}
+
+fun Entity.animation(): AnimatedCharacterComponent {
+    return AshleyMappers.animatedCharacter.get(this)
+}
+
+fun Entity.hasAnimation(): Boolean {
+    return AshleyMappers.animatedCharacter.has(this)
+}
+
+fun Entity.contextAction(): ContextActionComponent {
+    return AshleyMappers.contextAction.get(this)
+}
+
+fun Entity.hasContextAction(): Boolean {
+    return AshleyMappers.contextAction.has(this)
+}
+
+fun Entity.playerControl(): PlayerControlComponent {
+    return AshleyMappers.playerControl.get(this)
+}
+
+fun Entity.hasPlayerControl(): Boolean {
+    return AshleyMappers.playerControl.has(this)
 }

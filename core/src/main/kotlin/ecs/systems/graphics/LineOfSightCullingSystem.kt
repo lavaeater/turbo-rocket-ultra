@@ -5,10 +5,9 @@ import com.badlogic.ashley.systems.IteratingSystem
 import data.Players
 import ecs.components.enemy.EnemyComponent
 import ecs.components.gameplay.TransformComponent
-import ecs.components.graphics.InFrustumComponent
+import ecs.components.graphics.OnScreenComponent
 import ecs.components.graphics.InLineOfSightComponent
 import ecs.components.player.PlayerControlComponent
-import factories.player
 import input.canISeeYouFromHere
 import ktx.ashley.allOf
 import ktx.ashley.remove
@@ -19,7 +18,7 @@ import physics.has
 /**
  * Checks if entity is within 270 degrees of any players field of view. If so, it shall be rendered
  */
-class LineOfSightCullingSystem : IteratingSystem(allOf(InFrustumComponent::class, TransformComponent::class).get()) {
+class LineOfSightCullingSystem : IteratingSystem(allOf(OnScreenComponent::class, TransformComponent::class).get()) {
     @OptIn(ExperimentalStdlibApi::class)
     private val players by lazy { Players.players.values.map { it.entity }}
 

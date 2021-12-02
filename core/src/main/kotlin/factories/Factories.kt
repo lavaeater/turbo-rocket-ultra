@@ -19,10 +19,7 @@ import ecs.components.fx.CreateEntityComponent
 import ecs.components.fx.ParticleEffectComponent
 import ecs.components.fx.SplatterComponent
 import ecs.components.gameplay.*
-import ecs.components.graphics.AnimatedCharacterComponent
-import ecs.components.graphics.CameraFollowComponent
-import ecs.components.graphics.MiniMapComponent
-import ecs.components.graphics.TextureComponent
+import ecs.components.graphics.*
 import ecs.components.pickups.LootComponent
 import ecs.components.pickups.LootDropComponent
 import ecs.components.player.*
@@ -114,9 +111,9 @@ fun gibs(at: Vector2, gibAngle: Float = 1000f) {
         gibBody.applyLinearImpulse(force, vec2(gibBody.worldCenter.x + (-1f..1f).random(), gibBody.worldCenter.y + (-1f..1f).random()), true)
 
         val gibEntity = engine().entity {
-            with<TextureComponent> {
+            with<SpriteComponent> {
                 rotateWithTransform = true
-                texture = i
+                sprite = i
             }
             with<TransformComponent> {
                 position.set(at)
@@ -211,9 +208,8 @@ fun tower(at: Vector2 = vec2(), towerType: String = "machinegun") {
             body = towerBody
         }
         with<TransformComponent>()
-        with<TextureComponent> {
-            texture = Assets.towers["obstacle"]!!
-            scale = 4f
+        with<SpriteComponent> {
+            sprite = Assets.towers["obstacle"]!!
             layer = 1
         }
         with<MiniMapComponent> {
@@ -309,9 +305,9 @@ fun player(player: Player, mapper: ControlMapper, at: Vector2, debug: Boolean = 
         with<AnimatedCharacterComponent> {
             anims = Assets.characters[player.selectedCharacterSpriteName]!!
         }
-        with<TextureComponent> {
+        with<SpriteComponent> {
             layer = 1
-            offsetY = -7f
+//            offsetY = -7f
         }
         with<MiniMapComponent> {
             color = Color.GREEN
@@ -375,8 +371,8 @@ fun randomLoot(at: Vector2, lootTable: LootTable) {
     val entity = engine().entity {
         with<BodyComponent> { body = box2dBody }
         with<TransformComponent> { position.set(box2dBody.position) }
-        with<TextureComponent> {
-            texture = Assets.lootBox
+        with<SpriteComponent> {
+            sprite = Assets.lootBox
             layer = 1
         }
         with<LootComponent> {
@@ -408,8 +404,8 @@ fun lootBox(at: Vector2, lootDrop: List<ILoot>) {
     val entity = engine().entity {
         with<BodyComponent> { body = box2dBody }
         with<TransformComponent> { position.set(box2dBody.position) }
-        with<TextureComponent> {
-            texture = Assets.lootBox
+        with<SpriteComponent> {
+            sprite = Assets.lootBox
             layer = 1
         }
         with<LootComponent> {
@@ -439,9 +435,9 @@ fun thrownProjectile(at: Vector2, towards: Vector2, speed: Float, player: Player
             this.player = player
         }
         with<TransformComponent> { position.set(box2dBody.position) }
-        with<TextureComponent> {
+        with<SpriteComponent> {
             layer = 1
-            texture = Assets.bullet //Fix a burning bottle sprite
+            sprite = Assets.bullet //Fix a burning bottle sprite
         }
     }
     box2dBody.userData = entity
@@ -469,9 +465,9 @@ fun bullet(at: Vector2, towards: Vector2, speed: Float, damage: Float, player: P
             this.player = player
         }
         with<TransformComponent> { position.set(box2dBody.position) }
-        with<TextureComponent> {
+        with<SpriteComponent> {
             layer = 1
-            texture = Assets.bullet
+            sprite = Assets.bullet
         }
     }
     box2dBody.userData = entity
@@ -509,7 +505,7 @@ fun enemy(at: Vector2) {
             )
             lootTable.count = (1..2).random()
         }
-        with<TextureComponent> {
+        with<SpriteComponent> {
             layer = 1
         }
         with<MiniMapComponent> {
@@ -588,10 +584,9 @@ fun boss(at: Vector2, level: Int) {
                 AmmoLoot(AmmoType.FnP90Ammo, 50..150, 10f)
             )
         }
-        with<TextureComponent> {
-            scale = 3f
+        with<SpriteComponent> {
             layer = 1
-            offsetY = -7f
+//            offsetY = -7f
         }
         with<MiniMapComponent> {
             color = Color.RED
@@ -623,9 +618,8 @@ fun blockade(
         with<BodyComponent> { body = box2dBody }
         with<TransformComponent> { position.set(box2dBody.position) }
         with<BlockadeComponent>()
-        with<TextureComponent> {
-            texture = Assets.buildables.first()
-            scale = 4f
+        with<SpriteComponent> {
+            sprite = Assets.buildables.first()
             layer = 1
         }
     }
@@ -650,10 +644,9 @@ fun spawner(
         with<BodyComponent> { body = box2dBody }
         with<TransformComponent> { position.set(box2dBody.position) }
         with<ObstacleComponent>()
-        with<TextureComponent> {
-            texture = Assets.towers["obstacle"]!!
-            scale = 4f
-            offsetY = -4f
+        with<SpriteComponent> {
+            sprite  = Assets.towers["obstacle"]!!
+//            offsetY = -4f
             layer = 1
         }
         with<EnemySpawnerComponent> {}
@@ -685,10 +678,9 @@ fun objective(
     val entity = engine().entity() {
         with<BodyComponent> { body = box2dBody }
         with<TransformComponent> { position.set(box2dBody.position) }
-        with<TextureComponent> {
-            texture = Assets.towers["objective"]!!
-            offsetY = -4f
-            scale = 4f
+        with<SpriteComponent> {
+            sprite = Assets.towers["objective"]!!
+//            offsetY = -4f
             layer = 1
         }
         with<MiniMapComponent> {
