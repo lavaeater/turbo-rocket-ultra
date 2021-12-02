@@ -52,6 +52,9 @@ class RenderSystem(
         }
     }
 
+    /*
+
+     */
     override fun processEntity(entity: Entity, deltaTime: Float) {
         val transform = entity.transform()
         val spriteComponent = entity.sprite()
@@ -82,7 +85,6 @@ class RenderSystem(
                     if (spriteComponent.rotateWithTransform) transform.rotation else 180f
                 )
             }
-
         }
         if (debug) {
             shapeDrawer.filledCircle(transform.position, .2f, Color.RED)

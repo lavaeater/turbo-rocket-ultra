@@ -332,8 +332,8 @@ fun player(player: Player, mapper: ControlMapper, at: Vector2, debug: Boolean = 
         with<WeaponLaserComponent>()
         with<AnchorPointsComponent> {
             points["green"] = vec2(0f,2f)
-            points["bat"] = vec2(1f,0f)
-            points["blue"] = vec2(-2f,0f)
+            points["bat"] = vec2(-0.5f,-0.5f)
+            points["blue"] = vec2(-0.5f,0.5f)
             points["yellow"] = vec2(0f,-2f)
             useDirectionVector = true
         }
