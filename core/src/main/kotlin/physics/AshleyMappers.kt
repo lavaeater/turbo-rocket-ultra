@@ -64,5 +64,6 @@ object AshleyMappers {
     val respawn = mapperFor<PlayerIsRespawning>()
     val waitsForRespawn = mapperFor<PlayerWaitsForRespawn>()
     val frustum = mapperFor<InFrustumComponent>()
+    val sprite = mapperFor<SpriteComponent>()
 
 }
