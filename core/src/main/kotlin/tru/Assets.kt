@@ -83,8 +83,8 @@ object Assets : Disposable {
         Texture(Gdx.files.internal("sprites/weapons/handgun.png"))
     }
 
-    private val spas12Texture by lazy {
-        Texture(Gdx.files.internal("sprites/weapons/spas-12.png"))
+    private val spas12Sprite by lazy {
+        Sprite(Texture(Gdx.files.internal("sprites/weapons/shotgun.png"))).apply { this.setOrigin(0f, this.regionHeight / 2f) }
     }
 
     private val batSprite by lazy {
@@ -108,13 +108,13 @@ object Assets : Disposable {
             GunFrames.spas12 to
                     mapOf(
                         SpriteDirection.North to
-                                Sprite(spas12Texture, 0, 0,64, 64),
+                                spas12Sprite,
                         SpriteDirection.West to
-                                Sprite(spas12Texture, 0, 64, 64, 64),
+                                spas12Sprite,
                         SpriteDirection.South to
-                                Sprite(spas12Texture, 0, 128, 64, 64),
+                                spas12Sprite,
                         SpriteDirection.East to
-                                Sprite(spas12Texture, 0, 192, 64,64)
+                                spas12Sprite
                     ),
             GunFrames.bat to
                     mapOf(

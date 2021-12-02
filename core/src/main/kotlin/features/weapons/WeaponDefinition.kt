@@ -40,7 +40,8 @@ class WeaponDefinition(
             0f,
             ReloadType.SingleShot,
             Assets.gunAudio["glock17"]!!,
-            0f
+            0f,
+            handleKey = "melee"
         )
         val baseballBat = WeaponDefinition(
             "Baseball Bat",
@@ -58,7 +59,7 @@ class WeaponDefinition(
             Assets.gunAudio["glock17"]!!,//TODO exhange for bat or something
             0f,
             true,
-            "bat"
+            "melee"
         )
         val weapons = listOf(
             baseballBat,
@@ -93,7 +94,10 @@ class WeaponDefinition(
                 1f,
                 ReloadType.SingleShot,
                 Assets.gunAudio["spas12"]!!,
-                150f
+                150f,
+                true,
+                "rifle"
+
             ),
             WeaponDefinition(
                 "FN P90",

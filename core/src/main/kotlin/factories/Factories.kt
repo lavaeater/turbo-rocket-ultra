@@ -283,7 +283,7 @@ fun bodyForSprite(
     return box2dBody
 }
 
-fun player(player: Player, mapper: ControlMapper, at: Vector2, debug: Boolean = false) {
+fun player(player: Player, mapper: ControlMapper, at: Vector2, debug: Boolean = true) {
     /*
     The player should be two bodies, one for collision detection for
     movement, like a projection of the characters body on "the floor"
@@ -332,8 +332,8 @@ fun player(player: Player, mapper: ControlMapper, at: Vector2, debug: Boolean = 
         with<WeaponLaserComponent>()
         with<AnchorPointsComponent> {
             points["green"] = vec2(0f,2f)
-            points["bat"] = vec2(-0.5f,-0.5f)
-            points["blue"] = vec2(-0.5f,0.5f)
+            points["melee"] = vec2(-0.5f,-0.5f)
+            points["rifle"] = vec2(-0.5f,-0.5f)
             points["yellow"] = vec2(0f,-2f)
             useDirectionVector = true
         }
