@@ -21,7 +21,8 @@ class WeaponDefinition(
     val reloadDelay: Float,
     val reloadType: ReloadType,
     val audio: Map<String, Sound>,
-    val soundRadius: Float
+    val soundRadius: Float,
+    val rotate: Boolean = false
 ) {
     companion object {
         val molotov = WeaponDefinition(
@@ -54,7 +55,8 @@ class WeaponDefinition(
             0f,
             ReloadType.MeleeWeapon,
             Assets.gunAudio["glock17"]!!,//TODO exhange for bat or something
-            0f
+            0f,
+            true
         )
         val weapons = listOf(
             baseballBat,

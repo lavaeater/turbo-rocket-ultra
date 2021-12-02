@@ -79,16 +79,16 @@ object Assets : Disposable {
         )
     }
 
-    val handgunTexture by lazy {
+    private val handgunTexture by lazy {
         Texture(Gdx.files.internal("sprites/weapons/handgun.png"))
     }
 
-    val spas12Texture by lazy {
+    private val spas12Texture by lazy {
         Texture(Gdx.files.internal("sprites/weapons/spas-12.png"))
     }
 
-    val batTextureRegion by lazy {
-        TextureRegion(Texture(Gdx.files.internal("sprites/weapons/bat.png")), 0, 0,64, 6,)
+    private val batTextureRegion by lazy {
+        TextureRegion(Texture(Gdx.files.internal("sprites/weapons/bat.png")), 0, 0,64, 10)
     }
 
 

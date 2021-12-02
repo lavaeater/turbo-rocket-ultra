@@ -6,6 +6,7 @@ import ecs.components.graphics.AnimatedCharacterComponent
 import ecs.components.graphics.TextureComponent
 import ecs.components.player.WeaponComponent
 import ktx.ashley.allOf
+import physics.AshleyMappers
 import physics.getComponent
 import tru.AnimState
 import tru.Assets
@@ -17,13 +18,13 @@ class WeaponUpdateSystem: IteratingSystem(
         AnimatedCharacterComponent::class,
         TextureComponent::class).get()) {
 
-    @OptIn(ExperimentalStdlibApi::class)
     override fun processEntity(entity: Entity, deltaTime: Float) {
-        val weaponComponent = entity.getComponent<WeaponComponent>()
-        val animatedCharacterComponent = entity.getComponent<AnimatedCharacterComponent>()
-        val textureComponent = entity.getComponent<TextureComponent>()
+        val weaponComponent = AshleyMappers.weapon.get(entity)
+        val weapon = weaponComponent.currentWeapon
+        val animatedCharacterComponent = AshleyMappers.animatedCharacter.get(entity)
+        val textureComponent = AshleyMappers.texture.get(entity)
         if(animatedCharacterComponent.currentAnimState == AnimState.Aiming)  {
-            textureComponent.extraTextures["gun"] = Pair(Assets.weapons[weaponComponent.currentWeapon.textureName]!![animatedCharacterComponent.currentDirection]!!, 1.0f)
+            textureComponent.extraTextures["gun"] = Pair(Assets.weapons[weapon.textureName]!![animatedCharacterComponent.currentDirection]!!, 1.0f)
         } else {
             textureComponent.extraTextures.remove("gun")
         }
