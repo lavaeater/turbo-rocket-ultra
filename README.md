@@ -1,5 +1,10 @@
 # turbo-rocket-ultra
 
+## Friday the 3rd of December
+
+Manage your energy, avoid depression.
+
+
 ## Thursday 2nd of December
 Avoid burnout. Manage your energy
 

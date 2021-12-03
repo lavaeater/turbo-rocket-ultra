@@ -4,6 +4,7 @@ import com.badlogic.gdx.graphics.OrthographicCamera
 import com.badlogic.gdx.graphics.g2d.Batch
 import com.badlogic.gdx.math.Vector2
 import com.badlogic.gdx.math.Vector3
+import com.badlogic.gdx.scenes.scene2d.Action
 import com.badlogic.gdx.scenes.scene2d.Stage
 import com.badlogic.gdx.scenes.scene2d.actions.Actions.*
 import com.badlogic.gdx.scenes.scene2d.ui.Label
@@ -126,12 +127,13 @@ class Hud(private val batch: Batch) : IUserInterface, MessageReceiver {
         if(toastQueue.any() && toastCooldown <= 0f) {
             toastCooldown = 1f
             val toastToShow = toastQueue.removeFirst()
-            camera.unproject(toastToShow.screenCoordinate)
-            val sequence = delay(1f) + removeActor()
+            val coordinate = vec3(toastToShow.screenCoordinate.x, toastToShow.screenCoordinate.y, 0f)
+            camera.unproject(coordinate)
+            val sequence =  delay(1f).then(removeActor())
             stage.actors {
                 label(toastToShow.toast, "title") {
                     actor -> actor += sequence
-                }.setPosition(toastToShow.screenCoordinate.x, toastToShow.screenCoordinate.y)
+                }.setPosition(coordinate.x, coordinate.y)
             }
         }
     }

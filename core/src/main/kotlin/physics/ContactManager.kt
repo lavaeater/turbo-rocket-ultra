@@ -234,7 +234,7 @@ class ContactManager : ContactListener {
                 val looted =
                     if (lootComponent.lootTable != null) lootComponent.lootTable!!.result else lootComponent.loot
                 for (loot in looted) {
-                    messageHandler.sendMessage(Message.ShowToast(loot.toString(), camera.project(vec3(lootPosition))))
+                    messageHandler.sendMessage(Message.ShowToast(loot.toString(), camera.project(vec3(lootPosition.x, lootPosition.y, 0f))))
                     when (loot) {
                         is AmmoLoot -> {
                             if (!inventory.ammo.containsKey(loot.ammoType))
