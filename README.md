@@ -1,5 +1,8 @@
 # turbo-rocket-ultra
 
+## Thursday 2nd of December
+Avoid burnout. Manage your energy
+
 ## Thursday the twentyfifth of November 2021
 
 So, I just made the molotov logic work. I managed to load map number two, which is significantly larger. Should we add a "density of enemies" to be sprinkled about the map, somehow?
@@ -64,6 +67,7 @@ Lets call the branch level-four, for this one.
 - [ ] Add actual bat swing
 	- [ ] Animate bat-swing? Is this fun? <- steps taken
 - [ ] Re-introduce TOWERS
+
 
 
 
@@ -759,11 +763,11 @@ Det här gör vi på det gamla vanliga sättet. Vi bygger en box2d-värld, vi kl
 
 Oj oj oj,  vad roligt. Vi kan göra en box2d-kropp med leder, per tutorials etc. Superkul ju.
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbLTk3ODAxODM1LC03NTAzNTg4NzksLTYwMj
-EyNTk3MiwxNjA4Mzc0NTU2LDM4NzE5MzE2OCwtOTg0NjQyMTU1
-LDE1MDg1MTcyODQsLTE5NDMzNDEyMDgsLTE3NzAwNTYwMTEsLT
-UxNzk3MTQzNyw1Nzg0OTUzOSw1ODYxNTI1MTEsLTExNzk3MTc5
-NDQsLTE1MTE0MjE3MDMsLTM2ODM3NDU3NiwtNzkxMzIwMjEwLC
-04NTI5MzIzODYsODg1MTE2NzM5LDM0Mjc0NDEzNiwtOTQ2OTQz
-OTldfQ==
+eyJoaXN0b3J5IjpbLTE2MTk3OTM5MTksLTk3ODAxODM1LC03NT
+AzNTg4NzksLTYwMjEyNTk3MiwxNjA4Mzc0NTU2LDM4NzE5MzE2
+OCwtOTg0NjQyMTU1LDE1MDg1MTcyODQsLTE5NDMzNDEyMDgsLT
+E3NzAwNTYwMTEsLTUxNzk3MTQzNyw1Nzg0OTUzOSw1ODYxNTI1
+MTEsLTExNzk3MTc5NDQsLTE1MTE0MjE3MDMsLTM2ODM3NDU3Ni
+wtNzkxMzIwMjEwLC04NTI5MzIzODYsODg1MTE2NzM5LDM0Mjc0
+NDEzNl19
 -->
