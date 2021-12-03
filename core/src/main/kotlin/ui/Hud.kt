@@ -1,5 +1,6 @@
 package ui
 
+import com.badlogic.gdx.Gdx
 import com.badlogic.gdx.graphics.OrthographicCamera
 import com.badlogic.gdx.graphics.g2d.Batch
 import com.badlogic.gdx.math.Vector2
@@ -127,9 +128,22 @@ class Hud(private val batch: Batch) : IUserInterface, MessageReceiver {
         if(toastQueue.any() && toastCooldown <= 0f) {
             toastCooldown = 1f
             val toastToShow = toastQueue.removeFirst()
-            val coordinate = vec3(toastToShow.screenCoordinate.x, toastToShow.screenCoordinate.y, 0f)
+            val coordinate = toastToShow.screenCoordinate()
+            coordinate.set(coordinate.x, Gdx.graphics.height - coordinate.y, 0f)
             camera.unproject(coordinate)
-            val sequence =  delay(1f).then(removeActor())
+
+            val moveAction = object: Action() {
+                override fun act(delta: Float): Boolean {
+                    val coordinate = toastToShow.screenCoordinate()
+                    coordinate.set(coordinate.x, Gdx.graphics.height - coordinate.y, 0f)
+                    camera.unproject(coordinate)
+                    actor.setPosition(coordinate.x, coordinate.y)
+                    return true
+                }
+            }
+
+
+            val sequence =  (delay(1f).along(moveAction)).then(removeActor())
             stage.actors {
                 label(toastToShow.toast, "title") {
                     actor -> actor += sequence
@@ -168,5 +182,5 @@ class MessageHandler {
 }
 
 sealed class Message() {
-    class ShowToast(val toast: String, val screenCoordinate: Vector3): Message()
+    class ShowToast(val toast: String, val screenCoordinate: () -> Vector3): Message()
 }

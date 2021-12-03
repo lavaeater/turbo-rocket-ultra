@@ -229,12 +229,13 @@ class ContactManager : ContactListener {
                 val inventory = playerEntity.getComponent<InventoryComponent>()
                 val lootComponent = lootEntity.getComponent<LootComponent>()
                 val lootPosition = lootEntity.getComponent<TransformComponent>().position
+                val lootPos = vec3(lootPosition.x, lootPosition.y, 0f)
 
 
                 val looted =
                     if (lootComponent.lootTable != null) lootComponent.lootTable!!.result else lootComponent.loot
                 for (loot in looted) {
-                    messageHandler.sendMessage(Message.ShowToast(loot.toString(), camera.project(vec3(lootPosition.x, lootPosition.y, 0f))))
+                    messageHandler.sendMessage(Message.ShowToast(loot.toString()) { camera.project(lootPos.cpy()) })
                     when (loot) {
                         is AmmoLoot -> {
                             if (!inventory.ammo.containsKey(loot.ammoType))
