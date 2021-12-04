@@ -129,7 +129,7 @@ object Context {
             addSystem(UpdatePlayerStatsSystem())
             addSystem(RenderMapSystem(inject<PolygonSpriteBatch>() as Batch, inject<OrthographicCamera>() as Camera, inject()))
             addSystem(RenderSystem(inject<PolygonSpriteBatch>() as Batch, false))
-            addSystem(RenderUserInterfaceSystem(inject<PolygonSpriteBatch>() as Batch))
+//            addSystem(RenderUserInterfaceSystem(inject<PolygonSpriteBatch>() as Batch))
             addSystem(RenderMiniMapSystem())
             addSystem(PlayerFlashlightSystem())
             //lets NOT write debug badges
@@ -144,8 +144,8 @@ object Context {
             addSystem(GibSystem())
             addSystem(FactSystem())
             addSystem(FrustumCullingSystem())
-            addSystem(BuildSystem(false))
-            addSystem(AnchorPointTransformationSystem())
+            addSystem(BuildSystem(true))
+            addSystem(AnchorPointTransformationSystem(true))
         }
     }
 }

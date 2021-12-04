@@ -140,6 +140,11 @@ object Assets : Disposable {
             "noise" to Sprite(Texture(Gdx.files.internal("sprites/towers/tower-1.png"))).apply { scale(4f) }
         )
     }
+
+    val newTower by lazy {
+        Sprite(Texture(Gdx.files.internal("sprites/towers/tower-template.png")))
+    }
+
     val lootBox by lazy {
         Sprite(Texture(Gdx.files.internal("sprites/loot/lootbox.png")))
     }

@@ -15,7 +15,7 @@ import physics.getComponent
 import tru.Assets
 
 
-class AimingAidSystem(private val debug: Boolean, private val renderRedDot: Boolean = true) :
+class AimingAidSystem(private val debug: Boolean, private val renderRedDot: Boolean) :
     IteratingSystem(
         allOf(
             TransformComponent::class,

@@ -190,7 +190,11 @@ fun fireEntity(at: Vector2, linearVelocity: Vector2, player: Player) {
     }
 }
 
-fun tower(at: Vector2 = vec2(), towerType: String = "machinegun") {
+fun tower(x: Float,
+          y: Float,
+          width: Float = 3f,
+          height: Float = 3f,
+          towerType: String = "machinegun") {
     /*
     There should be an abstract "bounds" concept that defines the actual
     width and height of the object (i.e. the sprite). This height and
@@ -199,8 +203,8 @@ fun tower(at: Vector2 = vec2(), towerType: String = "machinegun") {
      */
     val towerBody = world().body {
         type = BodyDef.BodyType.StaticBody
-        position.set(at)
-        box(3f, 1.5f) {}
+        position.set(x,y)
+        box(width, height) {}
     }
 
     val towerEntity = engine().entity {
@@ -209,9 +213,8 @@ fun tower(at: Vector2 = vec2(), towerType: String = "machinegun") {
         }
         with<TransformComponent>()
         with<SpriteComponent> {
-            sprite = Assets.towers["obstacle"]!!
+            sprite = Assets.newTower
             scale = 4f
-
             layer = 1
         }
         with<MiniMapComponent> {
@@ -337,6 +340,7 @@ fun player(player: Player, mapper: ControlMapper, at: Vector2, debug: Boolean = 
             points["yellow"] = vec2(0f,-2f)
             useDirectionVector = true
         }
+        with<BuildComponent>()
     }
     //TODO: Fix this hot mess
     entity.add(mapper)

@@ -17,7 +17,7 @@ import tru.Assets
 
 
 
-class AnchorPointTransformationSystem(private val debug: Boolean = true) :
+class AnchorPointTransformationSystem(private val debug: Boolean) :
     IteratingSystem(allOf(TransformComponent::class, AnchorPointsComponent::class).get(), 64) {
 
     private val shapeDrawer by lazy { Assets.shapeDrawer }

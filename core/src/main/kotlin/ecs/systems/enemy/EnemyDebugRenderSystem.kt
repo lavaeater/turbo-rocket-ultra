@@ -17,8 +17,8 @@ import tru.Assets
 
 //TODO: Combine this with the new debugrendersystem to render sprites instead of stupid balls
 class EnemyDebugRenderSystem(
-    private val renderStates: Boolean = true,
-    private val renderScans: Boolean = true
+    private val renderStates: Boolean,
+    private val renderScans: Boolean
 ) : IteratingSystem(
     allOf(
         EnemyComponent::class,

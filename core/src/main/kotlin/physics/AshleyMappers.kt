@@ -66,6 +66,7 @@ object AshleyMappers {
     val frustum = mapperFor<OnScreenComponent>()
     val sprite = mapperFor<SpriteComponent>()
     val anchors = mapperFor<AnchorPointsComponent>()
+    val build = mapperFor<BuildComponent>()
 }
 
 fun Entity.transform(): TransformComponent {
@@ -74,6 +75,14 @@ fun Entity.transform(): TransformComponent {
 
 fun Entity.hasTransform(): Boolean {
     return AshleyMappers.transform.has(this)
+}
+
+fun Entity.build(): BuildComponent {
+    return AshleyMappers.build.get(this)
+}
+
+fun Entity.hasBuild(): Boolean {
+    return AshleyMappers.build.has(this)
 }
 
 fun Entity.anchors(): AnchorPointsComponent {
