@@ -225,6 +225,18 @@ D1B67A
 
     private val mapManager by lazy { inject<GridMapManager>() }
 
+    private fun clearAllButPlayers() {
+        for(entity in engine.entities) {
+            if(!AshleyMappers.playerControl.has(entity)) {
+                if(AshleyMappers.body.has(entity)) {
+                    val body = AshleyMappers.body.get(entity).body!!
+                    world.destroyBody(body)
+                }
+                engine.removeEntity(entity)
+            }
+        }
+    }
+
     private fun generateMap(level: Int) {
         /*
         We start the game with a map already generated. But when, how, will we create
@@ -241,28 +253,8 @@ D1B67A
         Now add a goddamned  light
          */
 
-        for (enemy in engine.getEntitiesFor(allOf(EnemyComponent::class).get())) {
-            val bodyComponent = AshleyMappers.body.get(enemy)
-            world.destroyBody(bodyComponent.body)
-            enemy.remove<BodyComponent>()
-        }
-
-        engine.removeAllEntities(allOf(EnemyComponent::class).get())
+        clearAllButPlayers()
         CounterObject.enemyCount = 0
-
-        for (objective in engine.getEntitiesFor(allOf(ObjectiveComponent::class).get())) {
-            val bodyComponent = AshleyMappers.body.get(objective)
-            world.destroyBody(bodyComponent.body)
-            objective.remove<BodyComponent>()
-        }
-        engine.removeAllEntities(allOf(ObjectiveComponent::class).get())
-
-        for (obstacle in engine.getEntitiesFor(allOf(ObstacleComponent::class).get())) {
-            val bodyComponent = AshleyMappers.body.get(obstacle)
-            world.destroyBody(bodyComponent.body)
-            obstacle.remove<BodyComponent>()
-        }
-        engine.removeAllEntities(allOf(ObstacleComponent::class).get())
 
         //For debuggin we will swarm with enemies
         CounterObject.numberOfEnemies =  (8f.pow(CounterObject.currentLevel).roundToInt() * 2).coerceAtMost(MAX_ENEMIES)
