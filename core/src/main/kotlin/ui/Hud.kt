@@ -27,7 +27,7 @@ import ktx.actors.*
 
 class Hud(private val batch: Batch) : IUserInterface, MessageReceiver {
     private val aspectRatio = 14f / 9f
-    private val hudWidth = 1280f
+    private val hudWidth = 640f
     private val hudHeight = hudWidth * aspectRatio
     private val camera = OrthographicCamera()
     override val hudViewPort = ExtendViewport(hudWidth, hudHeight, camera)

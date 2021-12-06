@@ -286,7 +286,7 @@ fun bodyForSprite(
     return box2dBody
 }
 
-fun player(player: Player, mapper: ControlMapper, at: Vector2, debug: Boolean = true) {
+fun player(player: Player, mapper: ControlMapper, at: Vector2, debug: Boolean) {
     /*
     The player should be two bodies, one for collision detection for
     movement, like a projection of the characters body on "the floor"

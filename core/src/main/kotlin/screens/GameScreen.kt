@@ -198,7 +198,7 @@ D1B67A
     private fun addPlayers() {
         val startBounds = mapManager.gridMap.values.first { it.startSection }.innerBounds
         for ((controlComponent, player) in Players.players) {
-            player(player, controlComponent, startBounds.randomPoint())
+            player(player, controlComponent, startBounds.randomPoint(), false)
         }
     }
 
@@ -268,7 +268,7 @@ D1B67A
         CounterObject.numberOfEnemies =  (8f.pow(CounterObject.currentLevel).roundToInt() * 2).coerceAtMost(MAX_ENEMIES)
         CounterObject.maxSpawnedEnemies = CounterObject.numberOfEnemies * 2
         val map = when(level) {
-            1 -> loadMapZero() //loadMapOne()
+            1 -> loadMapOne()
             2 -> loadMapTwo()
             3 -> loadMapThree()
             4 -> loadMapFour()
