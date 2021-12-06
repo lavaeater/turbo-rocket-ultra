@@ -17,10 +17,9 @@ So, make a new MVP-todo list with the things, and only the things, to make the p
 Lets do max FIVE things that make the game feel better for fri-sat. These things should *only* be polish, that is very important.
 
 - [ ] Molotov cocktail sprite
-- [x] Cool post-processing FX
-- [ ] Level transition
 - [ ] Bat swing
 - [ ] Nicer Setup UI, using Scene2d perhaps
+- [x] Cool post-processing FX
 - [x] Fix map reset issue (remove all but players from engine)
 - [x] Five character sprites
 
@@ -795,11 +794,11 @@ Det här gör vi på det gamla vanliga sättet. Vi bygger en box2d-värld, vi kl
 
 Oj oj oj,  vad roligt. Vi kan göra en box2d-kropp med leder, per tutorials etc. Superkul ju.
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbLTE0ODUzOTk3OCwxMTA0MjY2ODIwLDE3Nj
-kyNjE1MTIsMjMyMDQ3Nzg5LDEwMTEzNTc2NiwzMjE5NzkxMTgs
-LTEzNjE1NTc5MTYsMzQzNDc2OTM4LC0xNjE5NzkzOTE5LC05Nz
-gwMTgzNSwtNzUwMzU4ODc5LC02MDIxMjU5NzIsMTYwODM3NDU1
-NiwzODcxOTMxNjgsLTk4NDY0MjE1NSwxNTA4NTE3Mjg0LC0xOT
-QzMzQxMjA4LC0xNzcwMDU2MDExLC01MTc5NzE0MzcsNTc4NDk1
-MzldfQ==
+eyJoaXN0b3J5IjpbMzI4NzE4NDI0LC0xNDg1Mzk5NzgsMTEwND
+I2NjgyMCwxNzY5MjYxNTEyLDIzMjA0Nzc4OSwxMDExMzU3NjYs
+MzIxOTc5MTE4LC0xMzYxNTU3OTE2LDM0MzQ3NjkzOCwtMTYxOT
+c5MzkxOSwtOTc4MDE4MzUsLTc1MDM1ODg3OSwtNjAyMTI1OTcy
+LDE2MDgzNzQ1NTYsMzg3MTkzMTY4LC05ODQ2NDIxNTUsMTUwOD
+UxNzI4NCwtMTk0MzM0MTIwOCwtMTc3MDA1NjAxMSwtNTE3OTcx
+NDM3XX0=
 -->
