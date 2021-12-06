@@ -14,6 +14,11 @@ No, work on level five for a minute, my man. Or add other polish that will actua
 
 So, make a new MVP-todo list with the things, and only the things, to make the playable delight for saturday. And also do a playthrough video for the libgdx discord.
 
+Lets do max FIVE things that make the game feel better for fri-sat.
+
+- [ ] Five character sprites
+- [ ] 
+
 
 
 ## Friday the 3rd of December
@@ -784,11 +789,11 @@ Det här gör vi på det gamla vanliga sättet. Vi bygger en box2d-värld, vi kl
 
 Oj oj oj,  vad roligt. Vi kan göra en box2d-kropp med leder, per tutorials etc. Superkul ju.
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbLTEzNjE1NTc5MTYsMzQzNDc2OTM4LC0xNj
-E5NzkzOTE5LC05NzgwMTgzNSwtNzUwMzU4ODc5LC02MDIxMjU5
-NzIsMTYwODM3NDU1NiwzODcxOTMxNjgsLTk4NDY0MjE1NSwxNT
-A4NTE3Mjg0LC0xOTQzMzQxMjA4LC0xNzcwMDU2MDExLC01MTc5
-NzE0MzcsNTc4NDk1MzksNTg2MTUyNTExLC0xMTc5NzE3OTQ0LC
-0xNTExNDIxNzAzLC0zNjgzNzQ1NzYsLTc5MTMyMDIxMCwtODUy
-OTMyMzg2XX0=
+eyJoaXN0b3J5IjpbMzIxOTc5MTE4LC0xMzYxNTU3OTE2LDM0Mz
+Q3NjkzOCwtMTYxOTc5MzkxOSwtOTc4MDE4MzUsLTc1MDM1ODg3
+OSwtNjAyMTI1OTcyLDE2MDgzNzQ1NTYsMzg3MTkzMTY4LC05OD
+Q2NDIxNTUsMTUwODUxNzI4NCwtMTk0MzM0MTIwOCwtMTc3MDA1
+NjAxMSwtNTE3OTcxNDM3LDU3ODQ5NTM5LDU4NjE1MjUxMSwtMT
+E3OTcxNzk0NCwtMTUxMTQyMTcwMywtMzY4Mzc0NTc2LC03OTEz
+MjAyMTBdfQ==
 -->
