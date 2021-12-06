@@ -1,5 +1,9 @@
 # turbo-rocket-ultra
 
+## Monday the 6th of December
+So, I was thinking about maybe redoing the entire system of projection, all sprites, everything, to make the graphics look better. What was I, insane?
+No, I wasnt. I don't like the way the game looks because it isn't perfect. I would want to do it with an isometric projection, but as a compromise I've tried to make a 
+
 ## Friday the 3rd of December
 
 Manage your energy, avoid depression.
@@ -768,11 +772,11 @@ Det här gör vi på det gamla vanliga sättet. Vi bygger en box2d-värld, vi kl
 
 Oj oj oj,  vad roligt. Vi kan göra en box2d-kropp med leder, per tutorials etc. Superkul ju.
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbLTE2MTk3OTM5MTksLTk3ODAxODM1LC03NT
-AzNTg4NzksLTYwMjEyNTk3MiwxNjA4Mzc0NTU2LDM4NzE5MzE2
-OCwtOTg0NjQyMTU1LDE1MDg1MTcyODQsLTE5NDMzNDEyMDgsLT
-E3NzAwNTYwMTEsLTUxNzk3MTQzNyw1Nzg0OTUzOSw1ODYxNTI1
-MTEsLTExNzk3MTc5NDQsLTE1MTE0MjE3MDMsLTM2ODM3NDU3Ni
-wtNzkxMzIwMjEwLC04NTI5MzIzODYsODg1MTE2NzM5LDM0Mjc0
-NDEzNl19
+eyJoaXN0b3J5IjpbLTM3OTU1NzM3NywtMTYxOTc5MzkxOSwtOT
+c4MDE4MzUsLTc1MDM1ODg3OSwtNjAyMTI1OTcyLDE2MDgzNzQ1
+NTYsMzg3MTkzMTY4LC05ODQ2NDIxNTUsMTUwODUxNzI4NCwtMT
+k0MzM0MTIwOCwtMTc3MDA1NjAxMSwtNTE3OTcxNDM3LDU3ODQ5
+NTM5LDU4NjE1MjUxMSwtMTE3OTcxNzk0NCwtMTUxMTQyMTcwMy
+wtMzY4Mzc0NTc2LC03OTEzMjAyMTAsLTg1MjkzMjM4Niw4ODUx
+MTY3MzldfQ==
 -->
