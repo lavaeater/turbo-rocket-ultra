@@ -5,12 +5,19 @@ import com.badlogic.ashley.systems.SortedIteratingSystem
 import com.badlogic.gdx.graphics.Color
 import com.badlogic.gdx.graphics.g2d.Batch
 import com.badlogic.gdx.math.MathUtils
+import com.crashinvaders.vfx.VfxManager
+import com.crashinvaders.vfx.effects.BloomEffect
+import com.crashinvaders.vfx.effects.ChainVfxEffect
+import com.crashinvaders.vfx.effects.CrtEffect
+import com.crashinvaders.vfx.effects.OldTvEffect
 import ecs.components.gameplay.TransformComponent
 import ecs.components.graphics.OnScreenComponent
 import ecs.components.graphics.SpriteComponent
 import ecs.systems.graphics.GameConstants.scale
+import injection.Context.inject
 import ktx.ashley.allOf
 import ktx.graphics.use
+import map.grid.GridMapManager
 import physics.*
 import tru.Assets
 
@@ -43,13 +50,27 @@ class RenderSystem(
         }
     }, 8
 ) {
+    private val mapManager by lazy { inject<GridMapManager>() }
     private val shapeDrawer by lazy { Assets.shapeDrawer }
+    private val oldTvEffect by lazy { inject<List<ChainVfxEffect>>() }
+    private val vfxManager by lazy { inject<VfxManager>().apply {
+        for(fx in oldTvEffect) {
+            this.addEffect(fx)
+        }
+    }}
 
     override fun update(deltaTime: Float) {
         forceSort()
+
+        vfxManager.cleanUpBuffers()
+        vfxManager.beginInputCapture()
         batch.use {
+            mapManager.render(batch, shapeDrawer, deltaTime)
             super.update(deltaTime)
         }
+        vfxManager.endInputCapture();
+        vfxManager.applyEffects();
+        vfxManager.renderToScreen();
     }
 
     /*

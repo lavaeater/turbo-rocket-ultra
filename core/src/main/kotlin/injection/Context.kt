@@ -8,9 +8,15 @@ import com.badlogic.gdx.Gdx
 import com.badlogic.gdx.Input
 import com.badlogic.gdx.graphics.Camera
 import com.badlogic.gdx.graphics.OrthographicCamera
+import com.badlogic.gdx.graphics.Pixmap
 import com.badlogic.gdx.graphics.g2d.Batch
 import com.badlogic.gdx.graphics.g2d.PolygonSpriteBatch
 import com.badlogic.gdx.utils.viewport.ExtendViewport
+import com.crashinvaders.vfx.VfxManager
+import com.crashinvaders.vfx.effects.BloomEffect
+import com.crashinvaders.vfx.effects.CrtEffect
+import com.crashinvaders.vfx.effects.OldTvEffect
+import com.crashinvaders.vfx.effects.VfxEffect
 import com.strongjoshua.console.CommandExecutor
 import com.strongjoshua.console.GUIConsole
 import ecs.systems.AnchorPointTransformationSystem
@@ -85,6 +91,8 @@ object Context {
             bindSingleton(StoryManager())
             bindSingleton(MessageHandler())
             bindSingleton(getEngine())
+            bindSingleton(listOf(OldTvEffect(), CrtEffect(), BloomEffect()))
+            bindSingleton(VfxManager(Pixmap.Format.RGBA8888))
         }
     }
 
@@ -127,7 +135,6 @@ object Context {
             addSystem(WeaponUpdateSystem())
             addSystem(WeaponChangeAndReloadSystem())
             addSystem(UpdatePlayerStatsSystem())
-            addSystem(RenderMapSystem(inject<PolygonSpriteBatch>() as Batch, inject<OrthographicCamera>() as Camera, inject()))
             addSystem(RenderSystem(inject<PolygonSpriteBatch>() as Batch, false))
 //            addSystem(RenderUserInterfaceSystem(inject<PolygonSpriteBatch>() as Batch))
             addSystem(RenderMiniMapSystem())

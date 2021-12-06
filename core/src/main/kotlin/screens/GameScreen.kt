@@ -7,9 +7,14 @@ import com.badlogic.gdx.Gdx
 import com.badlogic.gdx.controllers.Controllers
 import com.badlogic.gdx.graphics.GL20
 import com.badlogic.gdx.graphics.OrthographicCamera
+import com.badlogic.gdx.graphics.Pixmap
 import com.badlogic.gdx.graphics.g2d.PolygonSpriteBatch
 import com.badlogic.gdx.physics.box2d.World
 import com.badlogic.gdx.utils.viewport.ExtendViewport
+import com.crashinvaders.vfx.VfxManager
+import com.crashinvaders.vfx.effects.ChainVfxEffect
+import com.crashinvaders.vfx.effects.OldTvEffect
+import com.crashinvaders.vfx.effects.VfxEffect
 import com.strongjoshua.console.GUIConsole
 import data.Players
 import ecs.components.BodyComponent
@@ -60,6 +65,7 @@ class GameScreen(private val gameState: StateMachine<GameState, GameEvent>) : Kt
     private val storyManager: StoryManager by lazy { inject() }
     private val factsOfTheWorld: FactsOfTheWorld by lazy { inject() }
     private val console by lazy { inject<GUIConsole>() }
+    private val vfxManager by lazy { inject<VfxManager>() }
 
     override fun show() {
         initializeIfNeeded()
@@ -130,13 +136,12 @@ D1B67A
         Gdx.gl.glClearColor(0f, 0f, 0f, 1f)
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT)
         //Update viewport and camera here and nowhere else...
-
         camera.update(true)
         batch.projectionMatrix = camera.combined
         updatePhysics(delta)
+
         engine.update(delta)
         ui.update(delta)
-        console.draw()
         audioPlayer.update(delta)
         storyManager.checkStories()
 
@@ -162,6 +167,7 @@ D1B67A
     override fun resize(width: Int, height: Int) {
         viewPort.update(width, height)
         batch.projectionMatrix = camera.combined
+        vfxManager.resize(width, height)
     }
 
     override fun pause() {
@@ -273,7 +279,8 @@ D1B67A
     }
 
     override fun dispose() {
-        // Destroy screen's assets here.
+        vfxManager.dispose()
+        inject<List<ChainVfxEffect>>().forEach { it.dispose() }
     }
 }
 
