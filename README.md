@@ -12,6 +12,9 @@ I can't let the fucking projection go. It is insanely annoying. Perhaps I should
 
 No, work on level five for a minute, my man. Or add other polish that will actually add to the game, my man. You want a five-player playable demo on saturday by the latest, can't fiddle around with the projection now!
 
+So, make a new MVP-todo list with the things, and only the things, to make the playable delight for saturday. And also do a playthrough video for the libgdx discord.
+
+
 
 ## Friday the 3rd of December
 
@@ -781,11 +784,11 @@ Det här gör vi på det gamla vanliga sättet. Vi bygger en box2d-värld, vi kl
 
 Oj oj oj,  vad roligt. Vi kan göra en box2d-kropp med leder, per tutorials etc. Superkul ju.
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbMjEyNTQ4MTc1OSwzNDM0NzY5MzgsLTE2MT
-k3OTM5MTksLTk3ODAxODM1LC03NTAzNTg4NzksLTYwMjEyNTk3
-MiwxNjA4Mzc0NTU2LDM4NzE5MzE2OCwtOTg0NjQyMTU1LDE1MD
-g1MTcyODQsLTE5NDMzNDEyMDgsLTE3NzAwNTYwMTEsLTUxNzk3
-MTQzNyw1Nzg0OTUzOSw1ODYxNTI1MTEsLTExNzk3MTc5NDQsLT
-E1MTE0MjE3MDMsLTM2ODM3NDU3NiwtNzkxMzIwMjEwLC04NTI5
-MzIzODZdfQ==
+eyJoaXN0b3J5IjpbLTEzNjE1NTc5MTYsMzQzNDc2OTM4LC0xNj
+E5NzkzOTE5LC05NzgwMTgzNSwtNzUwMzU4ODc5LC02MDIxMjU5
+NzIsMTYwODM3NDU1NiwzODcxOTMxNjgsLTk4NDY0MjE1NSwxNT
+A4NTE3Mjg0LC0xOTQzMzQxMjA4LC0xNzcwMDU2MDExLC01MTc5
+NzE0MzcsNTc4NDk1MzksNTg2MTUyNTExLC0xMTc5NzE3OTQ0LC
+0xNTExNDIxNzAzLC0zNjgzNzQ1NzYsLTc5MTMyMDIxMCwtODUy
+OTMyMzg2XX0=
 -->
