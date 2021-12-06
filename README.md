@@ -14,10 +14,12 @@ No, work on level five for a minute, my man. Or add other polish that will actua
 
 So, make a new MVP-todo list with the things, and only the things, to make the playable delight for saturday. And also do a playthrough video for the libgdx discord.
 
-Lets do max FIVE things that make the game feel better for fri-sat.
+Lets do max FIVE things that make the game feel better for fri-sat. These things should *only* be polish, that is very important.
 
 - [x] Five character sprites
-- [ ] 
+- [ ] Molotov cocktail sprite
+- [ ] Bat swing
+- [ ] Nicer Setup UI, using Scene2d perhaps
 
 
 
@@ -789,11 +791,11 @@ Det här gör vi på det gamla vanliga sättet. Vi bygger en box2d-värld, vi kl
 
 Oj oj oj,  vad roligt. Vi kan göra en box2d-kropp med leder, per tutorials etc. Superkul ju.
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbMTAxMTM1NzY2LDMyMTk3OTExOCwtMTM2MT
-U1NzkxNiwzNDM0NzY5MzgsLTE2MTk3OTM5MTksLTk3ODAxODM1
-LC03NTAzNTg4NzksLTYwMjEyNTk3MiwxNjA4Mzc0NTU2LDM4Nz
-E5MzE2OCwtOTg0NjQyMTU1LDE1MDg1MTcyODQsLTE5NDMzNDEy
-MDgsLTE3NzAwNTYwMTEsLTUxNzk3MTQzNyw1Nzg0OTUzOSw1OD
-YxNTI1MTEsLTExNzk3MTc5NDQsLTE1MTE0MjE3MDMsLTM2ODM3
-NDU3Nl19
+eyJoaXN0b3J5IjpbMjMyMDQ3Nzg5LDEwMTEzNTc2NiwzMjE5Nz
+kxMTgsLTEzNjE1NTc5MTYsMzQzNDc2OTM4LC0xNjE5NzkzOTE5
+LC05NzgwMTgzNSwtNzUwMzU4ODc5LC02MDIxMjU5NzIsMTYwOD
+M3NDU1NiwzODcxOTMxNjgsLTk4NDY0MjE1NSwxNTA4NTE3Mjg0
+LC0xOTQzMzQxMjA4LC0xNzcwMDU2MDExLC01MTc5NzE0MzcsNT
+c4NDk1MzksNTg2MTUyNTExLC0xMTc5NzE3OTQ0LC0xNTExNDIx
+NzAzXX0=
 -->
