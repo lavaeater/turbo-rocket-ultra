@@ -16,7 +16,7 @@ So, make a new MVP-todo list with the things, and only the things, to make the p
 
 Lets do max FIVE things that make the game feel better for fri-sat.
 
-- [ ] Five character sprites
+- [x] Five character sprites
 - [ ] 
 
 
@@ -789,11 +789,11 @@ Det här gör vi på det gamla vanliga sättet. Vi bygger en box2d-värld, vi kl
 
 Oj oj oj,  vad roligt. Vi kan göra en box2d-kropp med leder, per tutorials etc. Superkul ju.
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbMzIxOTc5MTE4LC0xMzYxNTU3OTE2LDM0Mz
-Q3NjkzOCwtMTYxOTc5MzkxOSwtOTc4MDE4MzUsLTc1MDM1ODg3
-OSwtNjAyMTI1OTcyLDE2MDgzNzQ1NTYsMzg3MTkzMTY4LC05OD
-Q2NDIxNTUsMTUwODUxNzI4NCwtMTk0MzM0MTIwOCwtMTc3MDA1
-NjAxMSwtNTE3OTcxNDM3LDU3ODQ5NTM5LDU4NjE1MjUxMSwtMT
-E3OTcxNzk0NCwtMTUxMTQyMTcwMywtMzY4Mzc0NTc2LC03OTEz
-MjAyMTBdfQ==
+eyJoaXN0b3J5IjpbMTAxMTM1NzY2LDMyMTk3OTExOCwtMTM2MT
+U1NzkxNiwzNDM0NzY5MzgsLTE2MTk3OTM5MTksLTk3ODAxODM1
+LC03NTAzNTg4NzksLTYwMjEyNTk3MiwxNjA4Mzc0NTU2LDM4Nz
+E5MzE2OCwtOTg0NjQyMTU1LDE1MDg1MTcyODQsLTE5NDMzNDEy
+MDgsLTE3NzAwNTYwMTEsLTUxNzk3MTQzNyw1Nzg0OTUzOSw1OD
+YxNTI1MTEsLTExNzk3MTc5NDQsLTE1MTE0MjE3MDMsLTM2ODM3
+NDU3Nl19
 -->
