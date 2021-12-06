@@ -2,7 +2,9 @@
 
 ## Monday the 6th of December
 So, I was thinking about maybe redoing the entire system of projection, all sprites, everything, to make the graphics look better. What was I, insane?
-No, I wasnt. I don't like the way the game looks because it isn't perfect. I would want to do it with an isometric projection, but as a compromise I've tried to make a 
+No, I wasnt. I don't like the way the game looks because it isn't perfect. I would want to do it with an isometric projection, but as a compromise I've tried to make an oblique top-down projection. However, the one I am currently using is "wrong" as the y-axis being twice the length it should be. So I started a new branch with the ambition of using it to do everything on. 
+
+So, maybe not? Maybe just think that all of my objects are in fact twice the depth as they are 
 
 ## Friday the 3rd of December
 
@@ -772,7 +774,7 @@ Det här gör vi på det gamla vanliga sättet. Vi bygger en box2d-värld, vi kl
 
 Oj oj oj,  vad roligt. Vi kan göra en box2d-kropp med leder, per tutorials etc. Superkul ju.
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbLTM3OTU1NzM3NywtMTYxOTc5MzkxOSwtOT
+eyJoaXN0b3J5IjpbMjAxNjQ0ODEzNCwtMTYxOTc5MzkxOSwtOT
 c4MDE4MzUsLTc1MDM1ODg3OSwtNjAyMTI1OTcyLDE2MDgzNzQ1
 NTYsMzg3MTkzMTY4LC05ODQ2NDIxNTUsMTUwODUxNzI4NCwtMT
 k0MzM0MTIwOCwtMTc3MDA1NjAxMSwtNTE3OTcxNDM3LDU3ODQ5
