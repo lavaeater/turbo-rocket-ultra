@@ -2,12 +2,10 @@ package ecs.components.player
 
 import com.badlogic.ashley.core.Component
 import com.badlogic.gdx.graphics.g2d.Sprite
-import com.badlogic.gdx.graphics.g2d.TextureRegion
 import com.badlogic.gdx.math.Vector2
 import com.badlogic.gdx.utils.Pool
 import factories.blockade
 import factories.tower
-import sun.jvm.hotspot.opto.Block
 import tru.Assets
 
 sealed class Buildable(val name: String, val sprite: Sprite) {
