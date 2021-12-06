@@ -16,7 +16,7 @@ So, make a new MVP-todo list with the things, and only the things, to make the p
 
 Lets do max FIVE things that make the game feel better for fri-sat. These things should *only* be polish, that is very important.
 
-- [ ] Bat swing 
+- [ ] Bat swing <- lets fucking do the bat swing, maaan!
 - [ ] Nicer Setup UI, using Scene2d perhaps
 - [x] Molotov cocktail sprite
 - [x] Cool post-processing FX
@@ -794,11 +794,11 @@ Det här gör vi på det gamla vanliga sättet. Vi bygger en box2d-värld, vi kl
 
 Oj oj oj,  vad roligt. Vi kan göra en box2d-kropp med leder, per tutorials etc. Superkul ju.
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbMTkyODI5OTY2LDMyODcxODQyNCwtMTQ4NT
-M5OTc4LDExMDQyNjY4MjAsMTc2OTI2MTUxMiwyMzIwNDc3ODks
-MTAxMTM1NzY2LDMyMTk3OTExOCwtMTM2MTU1NzkxNiwzNDM0Nz
-Y5MzgsLTE2MTk3OTM5MTksLTk3ODAxODM1LC03NTAzNTg4Nzks
-LTYwMjEyNTk3MiwxNjA4Mzc0NTU2LDM4NzE5MzE2OCwtOTg0Nj
-QyMTU1LDE1MDg1MTcyODQsLTE5NDMzNDEyMDgsLTE3NzAwNTYw
-MTFdfQ==
+eyJoaXN0b3J5IjpbNTk2MjI1MzQsMzI4NzE4NDI0LC0xNDg1Mz
+k5NzgsMTEwNDI2NjgyMCwxNzY5MjYxNTEyLDIzMjA0Nzc4OSwx
+MDExMzU3NjYsMzIxOTc5MTE4LC0xMzYxNTU3OTE2LDM0MzQ3Nj
+kzOCwtMTYxOTc5MzkxOSwtOTc4MDE4MzUsLTc1MDM1ODg3OSwt
+NjAyMTI1OTcyLDE2MDgzNzQ1NTYsMzg3MTkzMTY4LC05ODQ2ND
+IxNTUsMTUwODUxNzI4NCwtMTk0MzM0MTIwOCwtMTc3MDA1NjAx
+MV19
 -->
