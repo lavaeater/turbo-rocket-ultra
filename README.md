@@ -8,6 +8,11 @@ So, maybe not? Maybe just think that all of my objects are in fact twice the dep
 
 So, go back to getting the towers done instead? And make the towers look good, no matter what. 
 
+I can't let the fucking projection go. It is insanely annoying. Perhaps I should try adding aabb collisions with JBump if I am to destroy everything I have? 
+
+No, work on level five for a minute, my man. Or add other polish that will actually add to the game, my man. You want a five-player playable demo on saturday by the latest, can't fiddle around with the projection now!
+
+
 ## Friday the 3rd of December
 
 Manage your energy, avoid depression.
@@ -776,11 +781,11 @@ Det här gör vi på det gamla vanliga sättet. Vi bygger en box2d-värld, vi kl
 
 Oj oj oj,  vad roligt. Vi kan göra en box2d-kropp med leder, per tutorials etc. Superkul ju.
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbMzQzNDc2OTM4LC0xNjE5NzkzOTE5LC05Nz
-gwMTgzNSwtNzUwMzU4ODc5LC02MDIxMjU5NzIsMTYwODM3NDU1
-NiwzODcxOTMxNjgsLTk4NDY0MjE1NSwxNTA4NTE3Mjg0LC0xOT
-QzMzQxMjA4LC0xNzcwMDU2MDExLC01MTc5NzE0MzcsNTc4NDk1
-MzksNTg2MTUyNTExLC0xMTc5NzE3OTQ0LC0xNTExNDIxNzAzLC
-0zNjgzNzQ1NzYsLTc5MTMyMDIxMCwtODUyOTMyMzg2LDg4NTEx
-NjczOV19
+eyJoaXN0b3J5IjpbMjEyNTQ4MTc1OSwzNDM0NzY5MzgsLTE2MT
+k3OTM5MTksLTk3ODAxODM1LC03NTAzNTg4NzksLTYwMjEyNTk3
+MiwxNjA4Mzc0NTU2LDM4NzE5MzE2OCwtOTg0NjQyMTU1LDE1MD
+g1MTcyODQsLTE5NDMzNDEyMDgsLTE3NzAwNTYwMTEsLTUxNzk3
+MTQzNyw1Nzg0OTUzOSw1ODYxNTI1MTEsLTExNzk3MTc5NDQsLT
+E1MTE0MjE3MDMsLTM2ODM3NDU3NiwtNzkxMzIwMjEwLC04NTI5
+MzIzODZdfQ==
 -->
