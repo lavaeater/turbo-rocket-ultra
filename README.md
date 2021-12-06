@@ -20,7 +20,7 @@ Lets do max FIVE things that make the game feel better for fri-sat. These things
 - [ ] Molotov cocktail sprite
 - [ ] Bat swing
 - [ ] Nicer Setup UI, using Scene2d perhaps
-- [ ] 
+- [ ] Fix map reset issue (remove all but players from engine)
 
 
 
@@ -792,11 +792,11 @@ Det här gör vi på det gamla vanliga sättet. Vi bygger en box2d-värld, vi kl
 
 Oj oj oj,  vad roligt. Vi kan göra en box2d-kropp med leder, per tutorials etc. Superkul ju.
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbLTIwMDUxNDY0MDAsMjMyMDQ3Nzg5LDEwMT
-EzNTc2NiwzMjE5NzkxMTgsLTEzNjE1NTc5MTYsMzQzNDc2OTM4
-LC0xNjE5NzkzOTE5LC05NzgwMTgzNSwtNzUwMzU4ODc5LC02MD
-IxMjU5NzIsMTYwODM3NDU1NiwzODcxOTMxNjgsLTk4NDY0MjE1
-NSwxNTA4NTE3Mjg0LC0xOTQzMzQxMjA4LC0xNzcwMDU2MDExLC
-01MTc5NzE0MzcsNTc4NDk1MzksNTg2MTUyNTExLC0xMTc5NzE3
-OTQ0XX0=
+eyJoaXN0b3J5IjpbMTc2OTI2MTUxMiwyMzIwNDc3ODksMTAxMT
+M1NzY2LDMyMTk3OTExOCwtMTM2MTU1NzkxNiwzNDM0NzY5Mzgs
+LTE2MTk3OTM5MTksLTk3ODAxODM1LC03NTAzNTg4NzksLTYwMj
+EyNTk3MiwxNjA4Mzc0NTU2LDM4NzE5MzE2OCwtOTg0NjQyMTU1
+LDE1MDg1MTcyODQsLTE5NDMzNDEyMDgsLTE3NzAwNTYwMTEsLT
+UxNzk3MTQzNyw1Nzg0OTUzOSw1ODYxNTI1MTEsLTExNzk3MTc5
+NDRdfQ==
 -->
