@@ -4,7 +4,9 @@
 So, I was thinking about maybe redoing the entire system of projection, all sprites, everything, to make the graphics look better. What was I, insane?
 No, I wasnt. I don't like the way the game looks because it isn't perfect. I would want to do it with an isometric projection, but as a compromise I've tried to make an oblique top-down projection. However, the one I am currently using is "wrong" as the y-axis being twice the length it should be. So I started a new branch with the ambition of using it to do everything on. 
 
-So, maybe not? Maybe just think that all of my objects are in fact twice the depth as they are 
+So, maybe not? Maybe just think that all of my objects are in fact twice the depth as they are wide, instead? If they are, that makes the projection correct again, actually.
+
+So, go back to getting the towers done instead? And make the towers look good, no matter what. 
 
 ## Friday the 3rd of December
 
@@ -774,11 +776,11 @@ Det här gör vi på det gamla vanliga sättet. Vi bygger en box2d-värld, vi kl
 
 Oj oj oj,  vad roligt. Vi kan göra en box2d-kropp med leder, per tutorials etc. Superkul ju.
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbMjAxNjQ0ODEzNCwtMTYxOTc5MzkxOSwtOT
-c4MDE4MzUsLTc1MDM1ODg3OSwtNjAyMTI1OTcyLDE2MDgzNzQ1
-NTYsMzg3MTkzMTY4LC05ODQ2NDIxNTUsMTUwODUxNzI4NCwtMT
-k0MzM0MTIwOCwtMTc3MDA1NjAxMSwtNTE3OTcxNDM3LDU3ODQ5
-NTM5LDU4NjE1MjUxMSwtMTE3OTcxNzk0NCwtMTUxMTQyMTcwMy
-wtMzY4Mzc0NTc2LC03OTEzMjAyMTAsLTg1MjkzMjM4Niw4ODUx
-MTY3MzldfQ==
+eyJoaXN0b3J5IjpbMzQzNDc2OTM4LC0xNjE5NzkzOTE5LC05Nz
+gwMTgzNSwtNzUwMzU4ODc5LC02MDIxMjU5NzIsMTYwODM3NDU1
+NiwzODcxOTMxNjgsLTk4NDY0MjE1NSwxNTA4NTE3Mjg0LC0xOT
+QzMzQxMjA4LC0xNzcwMDU2MDExLC01MTc5NzE0MzcsNTc4NDk1
+MzksNTg2MTUyNTExLC0xMTc5NzE3OTQ0LC0xNTExNDIxNzAzLC
+0zNjgzNzQ1NzYsLTc5MTMyMDIxMCwtODUyOTMyMzg2LDg4NTEx
+NjczOV19
 -->
