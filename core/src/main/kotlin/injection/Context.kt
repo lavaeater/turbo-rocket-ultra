@@ -13,10 +13,8 @@ import com.badlogic.gdx.graphics.g2d.Batch
 import com.badlogic.gdx.graphics.g2d.PolygonSpriteBatch
 import com.badlogic.gdx.utils.viewport.ExtendViewport
 import com.crashinvaders.vfx.VfxManager
-import com.crashinvaders.vfx.effects.BloomEffect
-import com.crashinvaders.vfx.effects.CrtEffect
-import com.crashinvaders.vfx.effects.OldTvEffect
-import com.crashinvaders.vfx.effects.VfxEffect
+import com.crashinvaders.vfx.effects.*
+import com.crashinvaders.vfx.effects.util.MixEffect
 import com.strongjoshua.console.CommandExecutor
 import com.strongjoshua.console.GUIConsole
 import ecs.systems.AnchorPointTransformationSystem
@@ -91,7 +89,7 @@ object Context {
             bindSingleton(StoryManager())
             bindSingleton(MessageHandler())
             bindSingleton(getEngine())
-            bindSingleton(listOf(OldTvEffect(), CrtEffect(), BloomEffect()))
+            bindSingleton(listOf(BloomEffect(), CrtEffect(), OldTvEffect()))
             bindSingleton(VfxManager(Pixmap.Format.RGBA8888))
         }
     }
@@ -99,7 +97,6 @@ object Context {
     private fun getEngine(): Engine {
         return PooledEngine().apply {
             addSystem(PhysicsSystem())
-//            addSystem(PhysicsDebugRendererSystem(inject(), inject()))
             addSystem(CameraUpdateSystem())
             addSystem(PlayerMoveSystem())
             addSystem(PlayerHasBeenHereSystem())
@@ -135,8 +132,8 @@ object Context {
             addSystem(WeaponUpdateSystem())
             addSystem(WeaponChangeAndReloadSystem())
             addSystem(UpdatePlayerStatsSystem())
+//            addSystem(PhysicsDebugRendererSystem(inject(), inject()))
             addSystem(RenderSystem(inject<PolygonSpriteBatch>() as Batch, false))
-//            addSystem(RenderUserInterfaceSystem(inject<PolygonSpriteBatch>() as Batch))
             addSystem(RenderMiniMapSystem())
             addSystem(PlayerFlashlightSystem())
             //lets NOT write debug badges

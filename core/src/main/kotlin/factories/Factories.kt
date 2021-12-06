@@ -98,6 +98,7 @@ fun gibs(at: Vector2, gibAngle: Float = 1000f) {
         val gibBody = world().body {
             type = BodyDef.BodyType.DynamicBody
             position.set(at.x - 2f, at.y - 2f)
+            angularVelocity  = 180f * degreesToRadians
             linearDamping = 5f
             box(.3f, .3f) {
                 friction = 1f //Tune
@@ -108,7 +109,7 @@ fun gibs(at: Vector2, gibAngle: Float = 1000f) {
                 }
             }
         }
-        gibBody.applyLinearImpulse(force, vec2(gibBody.worldCenter.x + (-1f..1f).random(), gibBody.worldCenter.y + (-1f..1f).random()), true)
+        gibBody.applyLinearImpulse(force, vec2(gibBody.worldCenter.x, gibBody.worldCenter.y), true)
 
         val gibEntity = engine().entity {
             with<SpriteComponent> {
@@ -428,13 +429,13 @@ fun lootBox(at: Vector2, lootDrop: List<ILoot>) {
     box2dBody.userData = entity
 }
 
-fun thrownProjectile(at: Vector2, towards: Vector2, speed: Float, player: Player) {
+fun throwMolotov(at: Vector2, towards: Vector2, speed: Float, player: Player) {
     val box2dBody = world().body {
         type = BodyDef.BodyType.DynamicBody
         position.set(at)
         linearVelocity.set(towards.cpy().setLength(speed))
-        fixedRotation = true
-        circle(.2f) {
+        angularVelocity = 180f * degreesToRadians
+        box(.5f, .25f) {
             density = .1f
             filter {
                 categoryBits = Box2dCategories.bullets
@@ -447,10 +448,14 @@ fun thrownProjectile(at: Vector2, towards: Vector2, speed: Float, player: Player
         with<MolotovComponent> {
             this.player = player
         }
+        with<ParticleEffectComponent> {
+            effect = Assets.fireEffectPool.obtain()
+        }
         with<TransformComponent> { position.set(box2dBody.position) }
         with<SpriteComponent> {
             layer = 1
-            sprite = Assets.bullet //Fix a burning bottle sprite
+            sprite = Assets.molotov //Fix a burning bottle sprite
+            rotateWithTransform = true
         }
     }
     box2dBody.userData = entity

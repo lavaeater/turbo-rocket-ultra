@@ -48,7 +48,7 @@ class RenderSystem(
                 layer0.compareTo(layer1)
             }
         }
-    }, 8
+    }, 4
 ) {
     private val mapManager by lazy { inject<GridMapManager>() }
     private val shapeDrawer by lazy { Assets.shapeDrawer }
@@ -73,9 +73,6 @@ class RenderSystem(
         vfxManager.renderToScreen();
     }
 
-    /*
-
-     */
     override fun processEntity(entity: Entity, deltaTime: Float) {
         val transform = entity.transform()
         val spriteComponent = entity.sprite()
@@ -85,7 +82,7 @@ class RenderSystem(
             transform.position.x + (spriteComponent.sprite.regionWidth / 2 + spriteComponent.offsetX) * scale * spriteComponent.scale,
             transform.position.y + (spriteComponent.sprite.regionHeight / 2 + spriteComponent.offsetY) * scale * spriteComponent.scale,
             scale * spriteComponent.scale,
-            if (spriteComponent.rotateWithTransform) transform.rotation else 180f
+            if (spriteComponent.rotateWithTransform) transform.rotation * MathUtils.radiansToDegrees else 180f
         )
         if(debug) {
             shapeDrawer.filledCircle(

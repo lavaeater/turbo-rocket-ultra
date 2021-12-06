@@ -246,6 +246,10 @@ object Assets : Disposable {
         Sprite(Texture(Gdx.files.internal("sprites/bullets/bullet.png")))
     }
 
+    val molotov by lazy {
+        Sprite(Texture(Gdx.files.internal("sprites/weapons/molotov.png"))).apply { this.setOrigin(0f, this.regionHeight / 2f) }
+    }
+
     val playerCharacters by lazy { characters }
 
     val splashTexture: Texture by lazy {
