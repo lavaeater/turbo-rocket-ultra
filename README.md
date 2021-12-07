@@ -17,6 +17,7 @@ So, make a new MVP-todo list with the things, and only the things, to make the p
 Lets do max FIVE things that make the game feel better for fri-sat. These things should *only* be polish, that is very important.
 
 - [ ] Bat swing <- lets fucking do the bat swing, maaan!
+- [ ] Zombies with guns
 - [ ] Nicer Setup UI, using Scene2d perhaps
 - [x] Molotov cocktail sprite
 - [x] Cool post-processing FX
@@ -794,11 +795,11 @@ Det här gör vi på det gamla vanliga sättet. Vi bygger en box2d-värld, vi kl
 
 Oj oj oj,  vad roligt. Vi kan göra en box2d-kropp med leder, per tutorials etc. Superkul ju.
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbNTk2MjI1MzQsMzI4NzE4NDI0LC0xNDg1Mz
-k5NzgsMTEwNDI2NjgyMCwxNzY5MjYxNTEyLDIzMjA0Nzc4OSwx
-MDExMzU3NjYsMzIxOTc5MTE4LC0xMzYxNTU3OTE2LDM0MzQ3Nj
-kzOCwtMTYxOTc5MzkxOSwtOTc4MDE4MzUsLTc1MDM1ODg3OSwt
-NjAyMTI1OTcyLDE2MDgzNzQ1NTYsMzg3MTkzMTY4LC05ODQ2ND
-IxNTUsMTUwODUxNzI4NCwtMTk0MzM0MTIwOCwtMTc3MDA1NjAx
-MV19
+eyJoaXN0b3J5IjpbMTMzNjY3Njk0NSw1OTYyMjUzNCwzMjg3MT
+g0MjQsLTE0ODUzOTk3OCwxMTA0MjY2ODIwLDE3NjkyNjE1MTIs
+MjMyMDQ3Nzg5LDEwMTEzNTc2NiwzMjE5NzkxMTgsLTEzNjE1NT
+c5MTYsMzQzNDc2OTM4LC0xNjE5NzkzOTE5LC05NzgwMTgzNSwt
+NzUwMzU4ODc5LC02MDIxMjU5NzIsMTYwODM3NDU1NiwzODcxOT
+MxNjgsLTk4NDY0MjE1NSwxNTA4NTE3Mjg0LC0xOTQzMzQxMjA4
+XX0=
 -->
