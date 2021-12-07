@@ -6,6 +6,9 @@ import com.badlogic.gdx.math.Vector2
 import com.badlogic.gdx.utils.Pool
 import factories.blockade
 import factories.tower
+import ktx.math.vec2
+import ktx.scene2d.scene2d
+import ktx.scene2d.table
 import tru.Assets
 
 sealed class Buildable(val name: String, val sprite: Sprite) {
@@ -26,6 +29,17 @@ class BuildComponent: Component, Pool.Poolable {
     val buildables = selectedItemListOf(Buildable.Blockade, Buildable.MachineGunTower)
     override fun reset() {
         buildables.clear()
+    }
+}
+
+class ComplexActionComponent: Component, Pool.Poolable {
+    val worldPosition = vec2()
+    var busy = false
+    var scene2dTable = scene2d.table {  }
+    override fun reset() {
+        busy = false
+        scene2dTable = scene2d.table {  }
+        worldPosition.setZero()
     }
 
 }

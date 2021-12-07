@@ -41,6 +41,9 @@ import ktx.box2d.circle
 import ktx.box2d.filter
 import ktx.math.random
 import ktx.math.vec2
+import ktx.scene2d.label
+import ktx.scene2d.scene2d
+import ktx.scene2d.table
 import physics.addComponent
 import screens.CounterObject
 import tru.Assets
@@ -558,6 +561,11 @@ fun hackingStation(
         with<BodyComponent> { body = box2dBody }
         with<TransformComponent> { position.set(box2dBody.position) }
         with<HackingComponent>()
+        with<ComplexActionComponent> {
+            scene2dTable = scene2d.table {
+                label("Hack the station")
+            }
+        }
         with<SpriteComponent> {
             sprite = Assets.towers["objective"]!!
 //            offsetY = -4f

@@ -63,6 +63,7 @@ sealed class ContactType {
     class EnemySensesPlayer(val enemy: Entity, val player: Entity) : ContactType()
     class PlayerAndObjective(val player: Entity, val objective: Entity) : ContactType()
     class PlayerAndDeadPlayer(val livingPlayer: Entity, val deadPlayer: Entity) : ContactType()
+    class PlayerAndComplexAction(val player: Entity, val other: Entity) : ContactType()
     class PlayerAndSomeoneWhoTackles(val player: Entity, val tackler: Entity) : ContactType()
     class TwoEnemySensors(val enemyOne: Entity, val enemyTwo: Entity) : ContactType()
     class EnemyAndBullet(val enemy: Entity, val bullet: Entity) : ContactType()
@@ -104,6 +105,11 @@ fun Contact.thisIsAContactBetween(): ContactType {
             val lootEntity = this.getEntityFor<LootComponent>()
 
             return ContactType.PlayerAndLoot(playerEntity, lootEntity)
+        }
+        if(this.atLeastOneHas<ComplexActionComponent>()) {
+            val playerEntity = this.getPlayerFor().entity
+            val other = this.getEntityFor<ComplexActionComponent>()
+            return ContactType.PlayerAndComplexAction(playerEntity, other)
         }
         if (this.atLeastOneHas<ShotComponent>()) {
             val playerEntity = this.getPlayerFor().entity
@@ -323,6 +329,15 @@ class ContactManager : ContactListener {
             }
             is ContactType.DamageAndWall -> {
                 //No op for now
+            }
+            is ContactType.PlayerAndComplexAction -> {
+                val playerControl = contactType.player.playerControl()
+                val playerPosition = contactType.player.transform().position
+                val complexActionComponent = contactType.other.complexAction()
+                if(!complexActionComponent.busy) {
+                    complexActionComponent.busy = true
+                    messageHandler.sendMessage(Message.ShowUiForComplexAction(complexActionComponent, playerControl, playerPosition))
+                }
             }
         }
 

@@ -68,6 +68,7 @@ object AshleyMappers {
     val sprite = mapperFor<SpriteComponent>()
     val anchors = mapperFor<AnchorPointsComponent>()
     val build = mapperFor<BuildComponent>()
+    val complexAction = mapperFor<ComplexActionComponent>()
 }
 
 fun Entity.transform(): TransformComponent {
@@ -148,4 +149,8 @@ fun Entity.hasPlayerControl(): Boolean {
 
 fun Entity.safeDestroy() {
     this.addComponent<DestroyComponent>()
+}
+
+fun Entity.complexAction(): ComplexActionComponent {
+    return AshleyMappers.complexAction.get(this)
 }
