@@ -1,8 +1,10 @@
 package ecs.systems.graphics
 
+import box2dLight.RayHandler
 import com.badlogic.ashley.core.Entity
 import com.badlogic.ashley.systems.SortedIteratingSystem
 import com.badlogic.gdx.graphics.Color
+import com.badlogic.gdx.graphics.OrthographicCamera
 import com.badlogic.gdx.graphics.g2d.Batch
 import com.badlogic.gdx.math.MathUtils
 import com.crashinvaders.vfx.VfxManager
@@ -22,7 +24,11 @@ import physics.*
 import tru.Assets
 
 class RenderSystem(
-    private val batch: Batch, private val debug: Boolean
+    private val batch: Batch,
+    private val debug: Boolean,
+    private val rayHandler: RayHandler,
+    private val camera: OrthographicCamera,
+    priority: Int
 ) : SortedIteratingSystem(
     allOf(
         TransformComponent::class,
@@ -48,19 +54,22 @@ class RenderSystem(
                 layer0.compareTo(layer1)
             }
         }
-    }, 4
+    }, priority
 ) {
     private val mapManager by lazy { inject<GridMapManager>() }
     private val shapeDrawer by lazy { Assets.shapeDrawer }
     private val oldTvEffect by lazy { inject<List<ChainVfxEffect>>() }
-    private val vfxManager by lazy { inject<VfxManager>().apply {
-        for(fx in oldTvEffect) {
-            this.addEffect(fx)
+    private val vfxManager by lazy {
+        inject<VfxManager>().apply {
+            for (fx in oldTvEffect) {
+                this.addEffect(fx)
+            }
         }
-    }}
+    }
 
     override fun update(deltaTime: Float) {
         forceSort()
+        rayHandler.setCombinedMatrix(camera)
 
         vfxManager.cleanUpBuffers()
         vfxManager.beginInputCapture()
@@ -68,9 +77,10 @@ class RenderSystem(
             mapManager.render(batch, shapeDrawer, deltaTime)
             super.update(deltaTime)
         }
-        vfxManager.endInputCapture();
-        vfxManager.applyEffects();
-        vfxManager.renderToScreen();
+        vfxManager.endInputCapture()
+        vfxManager.applyEffects()
+        vfxManager.renderToScreen()
+        rayHandler.updateAndRender()
     }
 
     override fun processEntity(entity: Entity, deltaTime: Float) {
@@ -84,7 +94,7 @@ class RenderSystem(
             scale * spriteComponent.scale,
             if (spriteComponent.rotateWithTransform) transform.rotation * MathUtils.radiansToDegrees else 180f
         )
-        if(debug) {
+        if (debug) {
             shapeDrawer.filledCircle(
                 transform.position.x + spriteComponent.sprite.originX * scale * spriteComponent.scale,
                 transform.position.y + spriteComponent.sprite.originY * scale * spriteComponent.scale,
@@ -105,7 +115,8 @@ class RenderSystem(
                 val drawPosition = anchors.transformedPoints[spriteComponent.extraSpriteAnchors[key]!!]!!
 
                 sprite.setOriginBasedPosition(drawPosition.x, drawPosition.y)
-                sprite.rotation = if (anchors.useDirectionVector) entity.playerControl().directionVector.angleDeg() else transform.rotation * MathUtils.radiansToDegrees
+                sprite.rotation =
+                    if (anchors.useDirectionVector) entity.playerControl().directionVector.angleDeg() else transform.rotation * MathUtils.radiansToDegrees
                 sprite.setScale(scale * spriteComponent.scale)
                 sprite.draw(batch)
 

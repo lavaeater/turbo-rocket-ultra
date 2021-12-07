@@ -34,8 +34,7 @@ class BuildSystem(private val debug: Boolean) : IteratingSystem(
     allOf(
         TransformComponent::class,
         PlayerControlComponent::class
-    ).get(), 1
-) {
+    ).get()) {
     val batch by lazy { inject<PolygonSpriteBatch>() }
     val shapeDrawer by lazy { Assets.shapeDrawer }
     private val cursorColor = Color(0f, 1f, 0f, 0.3f)

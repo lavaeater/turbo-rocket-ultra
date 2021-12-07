@@ -10,8 +10,8 @@ import ktx.ashley.allOf
 import map.grid.GridMapSection
 import physics.AshleyMappers
 
-class PhysicsSystem :
-    IteratingSystem(allOf(BodyComponent::class, TransformComponent::class).get()) {
+class PhysicsSystem(priority: Int) :
+    IteratingSystem(allOf(BodyComponent::class, TransformComponent::class).get(), priority) {
 
     override fun processEntity(entity: Entity, deltaTime: Float) {
         val bodyComponent = AshleyMappers.body.get(entity)

@@ -8,7 +8,7 @@ import ktx.ashley.allOf
 import physics.animation
 import physics.sprite
 
-class AnimationSystem: IteratingSystem(allOf(SpriteComponent::class, AnimatedCharacterComponent::class).get(),2) {
+class AnimationSystem(): IteratingSystem(allOf(SpriteComponent::class, AnimatedCharacterComponent::class).get()) {
     private var animationStateTime = 0f
 
     override fun update(deltaTime: Float) {

@@ -6,8 +6,8 @@ import com.badlogic.gdx.Gdx
 import com.badlogic.gdx.graphics.OrthographicCamera
 import com.badlogic.gdx.math.Vector2
 import com.badlogic.gdx.utils.viewport.ExtendViewport
-import ecs.components.graphics.CameraFollowComponent
 import ecs.components.gameplay.TransformComponent
+import ecs.components.graphics.CameraFollowComponent
 import ecs.systems.graphics.GameConstants.GAMEHEIGHT
 import ecs.systems.graphics.GameConstants.GAMEWIDTH
 import injection.Context.inject
@@ -15,19 +15,16 @@ import ktx.ashley.allOf
 import ktx.math.vec2
 import ktx.math.vec3
 import physics.getComponent
-import screens.GameScreen
 
 class CameraUpdateSystem(
-    private val camera: OrthographicCamera = inject(),
-    private val viewport: ExtendViewport = inject()
+    private val camera: OrthographicCamera,
+    private val viewport: ExtendViewport
 ) :
-
     IteratingSystem(
         allOf(
             CameraFollowComponent::class,
             TransformComponent::class
-        ).get(), 3
-    ) {
+        ).get()) {
 
     private val transformComponents = mutableSetOf<TransformComponent>()
     private val cameraPosition = vec2()
@@ -39,13 +36,25 @@ class CameraUpdateSystem(
 
     override fun update(deltaTime: Float) {
         super.update(deltaTime)
-        cameraPosition.set(transformComponents.map { it.position.x }.sum() /transformComponents.count().toFloat(), transformComponents.map { it.position.y }.sum() /transformComponents.count().toFloat() )
+        cameraPosition.set(
+            transformComponents.map { it.position.x }.sum() / transformComponents.count().toFloat(),
+            transformComponents.map { it.position.y }.sum() / transformComponents.count().toFloat()
+        )
 
         camera.position.lerp(
-            vec3(cameraPosition, 0f), 0.5f)
+            vec3(cameraPosition, 0f), 0.5f
+        )
 
-        viewport.minWorldWidth = (transformComponents.maxOf { it.position.x } - transformComponents.minOf { it.position.x } + 30f).coerceIn(GAMEWIDTH, GAMEWIDTH * 5)
-        viewport.minWorldHeight = (transformComponents.maxOf { it.position.y } - transformComponents.minOf { it.position.y } + 30f).coerceIn(GAMEHEIGHT, GAMEHEIGHT * 5)
+        viewport.minWorldWidth =
+            (transformComponents.maxOf { it.position.x } - transformComponents.minOf { it.position.x } + 30f).coerceIn(
+                GAMEWIDTH,
+                GAMEWIDTH * 5
+            )
+        viewport.minWorldHeight =
+            (transformComponents.maxOf { it.position.y } - transformComponents.minOf { it.position.y } + 30f).coerceIn(
+                GAMEHEIGHT,
+                GAMEHEIGHT * 5
+            )
         viewport.update(Gdx.graphics.width, Gdx.graphics.height)
         camera.update()
     }

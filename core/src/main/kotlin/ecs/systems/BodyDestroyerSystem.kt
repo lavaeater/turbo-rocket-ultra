@@ -13,7 +13,7 @@ import screens.CounterObject
 class BodyDestroyerSystem(private val world: World) : IteratingSystem(
     allOf(
         DestroyComponent::class
-    ).get(), 10) {
+    ).get()) {
 
     @OptIn(ExperimentalStdlibApi::class)
     override fun processEntity(entity: Entity, deltaTime: Float) {

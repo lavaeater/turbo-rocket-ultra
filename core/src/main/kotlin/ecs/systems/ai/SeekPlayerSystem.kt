@@ -28,7 +28,7 @@ import physics.has
 import physics.isPlayer
 import tru.Assets
 
-class SeekPlayerSystem(val debug: Boolean) : IteratingSystem(allOf(SeekPlayer::class).get(), 100) {
+class SeekPlayerSystem(val debug: Boolean) : IteratingSystem(allOf(SeekPlayer::class).get()) {
     val players by lazy { Players.players.values.map { it.entity } }
     val shapeDrawer by lazy { Assets.shapeDrawer }
     lateinit var closestFixture: Fixture

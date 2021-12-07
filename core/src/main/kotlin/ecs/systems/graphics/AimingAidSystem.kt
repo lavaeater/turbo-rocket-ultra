@@ -20,8 +20,7 @@ class AimingAidSystem(private val debug: Boolean, private val renderRedDot: Bool
         allOf(
             TransformComponent::class,
             PlayerControlComponent::class
-        ).get(), 10
-    ) {
+        ).get()) {
 
     private val batch: Batch by lazy { inject<PolygonSpriteBatch>() }
     private val shapeDrawer by lazy { Assets.shapeDrawer }

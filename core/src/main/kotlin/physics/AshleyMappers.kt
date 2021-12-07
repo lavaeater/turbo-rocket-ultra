@@ -28,6 +28,7 @@ object AshleyMappers {
         return mappers[type] as ComponentMapper<T>
     }
 
+    val destroyAfterReading = mapperFor<DestroyAfterCoolDownComponent>()
     val body = mapperFor<BodyComponent>()
     val mappers = mutableMapOf<KType, ComponentMapper<*>>()
     val transform = mapperFor<TransformComponent>()

@@ -18,7 +18,7 @@ import tru.Assets
 
 
 class AnchorPointTransformationSystem(private val debug: Boolean) :
-    IteratingSystem(allOf(TransformComponent::class, AnchorPointsComponent::class).get(), 64) {
+    IteratingSystem(allOf(TransformComponent::class, AnchorPointsComponent::class).get()) {
 
     private val shapeDrawer by lazy { Assets.shapeDrawer }
     private val colorMap = mutableMapOf("blue" to Color.BLUE, "red" to Color.RED, "green" to Color.GREEN, "yellow" to Color.YELLOW)
