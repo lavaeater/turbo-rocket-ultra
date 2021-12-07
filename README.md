@@ -19,9 +19,10 @@ Lets do max FIVE things that make the game feel better for fri-sat. These things
 ### The Hacking Station
 I just realized that what the game needs more than anything, right now, is *towers*... no, not towers. It needs more gameplay somehow. So, I was thinking about adding the **hacking station**, a special node that a player can interact with, just like in Helldivers, to open a door, perhaps? How do we even construct a door in this game?
 
-Don't make it a door at first, just make it something you have to interact with. We have the context action, we can ad
+Don't make it a door at first, just make it something you have to interact with. We have the context action, we can add more features to that. So what this will be is simply an objective and when touching it, it will launch the hacking session, which could simply be pushing a certain sequence of buttons to *hack it*. Using our story system, we could implement any number of mechanisms to get this to work. Test it out on the zero-level.
 
 - [ ] Hacking station <- mini game? Triggers larger hordes of zombies
+	- [ ] Add a StoryComponent (Wh
 - [ ] Bat swing <- lets fucking do the bat swing, maaan!
 - [ ] Zombies with guns
 - [ ] Grenades
@@ -803,11 +804,11 @@ Det här gör vi på det gamla vanliga sättet. Vi bygger en box2d-värld, vi kl
 
 Oj oj oj,  vad roligt. Vi kan göra en box2d-kropp med leder, per tutorials etc. Superkul ju.
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbLTQzODgyODg4MiwtOTc4MzY2NDk5LDEwOT
-E0Nzk3NDcsMTMzNjY3Njk0NSw1OTYyMjUzNCwzMjg3MTg0MjQs
-LTE0ODUzOTk3OCwxMTA0MjY2ODIwLDE3NjkyNjE1MTIsMjMyMD
-Q3Nzg5LDEwMTEzNTc2NiwzMjE5NzkxMTgsLTEzNjE1NTc5MTYs
-MzQzNDc2OTM4LC0xNjE5NzkzOTE5LC05NzgwMTgzNSwtNzUwMz
-U4ODc5LC02MDIxMjU5NzIsMTYwODM3NDU1NiwzODcxOTMxNjhd
-fQ==
+eyJoaXN0b3J5IjpbMjgwNzQ3NTgzLC05NzgzNjY0OTksMTA5MT
+Q3OTc0NywxMzM2Njc2OTQ1LDU5NjIyNTM0LDMyODcxODQyNCwt
+MTQ4NTM5OTc4LDExMDQyNjY4MjAsMTc2OTI2MTUxMiwyMzIwND
+c3ODksMTAxMTM1NzY2LDMyMTk3OTExOCwtMTM2MTU1NzkxNiwz
+NDM0NzY5MzgsLTE2MTk3OTM5MTksLTk3ODAxODM1LC03NTAzNT
+g4NzksLTYwMjEyNTk3MiwxNjA4Mzc0NTU2LDM4NzE5MzE2OF19
+
 -->
