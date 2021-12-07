@@ -19,6 +19,7 @@ fun convert(imagePath: String): TextGridMapDefinition {
                 -65281 -> 'l'
                 255 -> 'x'
                 -1 -> 's'
+                14643494 -> 'h'
                 else -> 'e'
             }
             lines[y] = "${lines[y]}$section"
@@ -48,6 +49,10 @@ class TextGridMapDefinition(val def: List<String>) : IGridMapDefinition {
 
     override fun hasBoss(coordinate: Coordinate): Boolean {
         return sections[coordinate.x][coordinate.y] == 'b'
+    }
+
+    override fun hasHackingStation(coordinate: Coordinate): Boolean {
+        return sections[coordinate.x][coordinate.y] == 'h'
     }
 
     override val booleanSections

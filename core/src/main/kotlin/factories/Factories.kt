@@ -98,7 +98,7 @@ fun gibs(at: Vector2, gibAngle: Float = 1000f) {
         val gibBody = world().body {
             type = BodyDef.BodyType.DynamicBody
             position.set(at.x - 2f, at.y - 2f)
-            angularVelocity  = 180f * degreesToRadians
+            angularVelocity = 180f * degreesToRadians
             linearDamping = 5f
             box(.3f, .3f) {
                 friction = 1f //Tune
@@ -191,11 +191,13 @@ fun fireEntity(at: Vector2, linearVelocity: Vector2, player: Player) {
     }
 }
 
-fun tower(x: Float,
-          y: Float,
-          width: Float = 3f,
-          height: Float = 3f,
-          towerType: String = "machinegun") {
+fun tower(
+    x: Float,
+    y: Float,
+    width: Float = 3f,
+    height: Float = 3f,
+    towerType: String = "machinegun"
+) {
     /*
     There should be an abstract "bounds" concept that defines the actual
     width and height of the object (i.e. the sprite). This height and
@@ -204,7 +206,7 @@ fun tower(x: Float,
      */
     val towerBody = world().body {
         type = BodyDef.BodyType.StaticBody
-        position.set(x,y)
+        position.set(x, y)
         box(width, height) {}
     }
 
@@ -321,7 +323,7 @@ fun player(player: Player, mapper: ControlMapper, at: Vector2, debug: Boolean) {
         with<PlayerComponent> { this.player = player }
         val weapon = WeaponDefinition.baseballBat.getWeapon()
         with<InventoryComponent> {
-            if(debug) {
+            if (debug) {
                 WeaponDefinition.weapons.forEach { weapons.add(it.getWeapon().apply { ammoRemaining = 10000 }) }
                 AmmoType.ammoTypes.forEach { ammo[it] = 1000 }
             } else {
@@ -335,10 +337,10 @@ fun player(player: Player, mapper: ControlMapper, at: Vector2, debug: Boolean) {
         with<FlashlightComponent>()
         with<WeaponLaserComponent>()
         with<AnchorPointsComponent> {
-            points["green"] = vec2(0f,2f)
-            points["melee"] = vec2(-0.5f,-0.5f)
-            points["rifle"] = vec2(-0.5f,-0.5f)
-            points["yellow"] = vec2(0f,-2f)
+            points["green"] = vec2(0f, 2f)
+            points["melee"] = vec2(-0.5f, -0.5f)
+            points["rifle"] = vec2(-0.5f, -0.5f)
+            points["yellow"] = vec2(0f, -2f)
             useDirectionVector = true
         }
         with<BuildComponent>()
@@ -535,6 +537,47 @@ fun enemy(at: Vector2) {
     CounterObject.enemyCount++
 }
 
+fun hackingStation(
+    at: Vector2,
+    level: Int,
+    width: Float = 4f,
+    height: Float = 4f
+) {
+    val box2dBody = world().body {
+        type = BodyDef.BodyType.StaticBody
+        position.set(at)
+        box(width, height) {
+            restitution = 0f
+            filter {
+                categoryBits = Box2dCategories.objectives
+                maskBits = Box2dCategories.players or Box2dCategories.lights
+            }
+        }
+    }
+    val entity = engine().entity() {
+        with<BodyComponent> { body = box2dBody }
+        with<TransformComponent> { position.set(box2dBody.position) }
+        with<HackingComponent>()
+        with<SpriteComponent> {
+            sprite = Assets.towers["objective"]!!
+//            offsetY = -4f
+            scale = 4f
+            layer = 1
+        }
+        with<MiniMapComponent> {
+            color = Color.GREEN
+        }
+        with<ObjectiveComponent> {
+            id = "I did this"
+        }
+        with<LightComponent> {
+            light.position = box2dBody.position
+            light.isStaticLight = true
+        }
+    }
+    box2dBody.userData = entity
+}
+
 fun boss(at: Vector2, level: Int) {
 
     val box2dBody = bodyForSprite(
@@ -639,7 +682,7 @@ fun spawner(
         with<TransformComponent> { position.set(box2dBody.position) }
         with<ObstacleComponent>()
         with<SpriteComponent> {
-            sprite  = Assets.towers["obstacle"]!!
+            sprite = Assets.towers["obstacle"]!!
 //            offsetY = -4f
             scale = 4f
             layer = 1
