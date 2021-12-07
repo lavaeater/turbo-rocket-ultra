@@ -240,7 +240,10 @@ object Assets : Disposable {
             "square" to Sprite(texture, 32, 64, 16,16),
             "triangle" to Sprite(texture, 32, 80, 16,16),
             "circle" to Sprite(texture, 32, 96, 16,16),
-        )
+            "dpadup" to Sprite(texture, 0, 16, 16,16),
+            "dpadright" to Sprite(texture, 0, 32, 16,16),
+            "dpaddown" to Sprite(texture, 0, 48, 16,16),
+            "dpadleft" to Sprite(texture, 0, 64, 16,16))
     }
     val bullet by lazy {
         Sprite(Texture(Gdx.files.internal("sprites/bullets/bullet.png")))

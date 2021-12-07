@@ -32,14 +32,20 @@ class BuildComponent: Component, Pool.Poolable {
     }
 }
 
+
+
 class ComplexActionComponent: Component, Pool.Poolable {
     val worldPosition = vec2()
     var busy = false
     var scene2dTable = scene2d.table {  }
+    var doneFunction: () -> Boolean = {false}
+    val doneCallBacks = mutableListOf<()->Unit>()
     override fun reset() {
         busy = false
         scene2dTable = scene2d.table {  }
         worldPosition.setZero()
+        doneFunction = {false}
+        doneCallBacks.clear()
     }
 
 }

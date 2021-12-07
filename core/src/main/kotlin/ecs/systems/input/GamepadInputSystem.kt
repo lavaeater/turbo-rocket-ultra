@@ -17,7 +17,7 @@ import physics.getComponent
 /**
  * Controllers will be handled by a polling system
  */
-class GamepadInputSystem() : IteratingSystem(allOf(GamepadControl::class).get()), ControllerListener {
+class GamepadInputSystem : IteratingSystem(allOf(GamepadControl::class).get()), ControllerListener {
     private val controllers: List<GamepadControl>
         get() = Players.players.keys.filterIsInstance<GamepadControl>().map { it }
 

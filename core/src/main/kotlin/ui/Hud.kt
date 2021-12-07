@@ -174,6 +174,9 @@ class Hud(private val batch: Batch) : IUserInterface, MessageReceiver {
                     }
                 }
                 val coordinate = worldToHudPosition(message.worldPosition)
+                message.complexActionComponent.doneCallBacks.add {
+                    stage.actors.removeValue(message.complexActionComponent.scene2dTable, true)
+                }
                 val sequence = repeat(10000, moveAction)
                 stage.addActor(message.complexActionComponent.scene2dTable.apply {
                     this += sequence

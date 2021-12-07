@@ -563,7 +563,9 @@ fun hackingStation(
         with<HackingComponent>()
         with<ComplexActionComponent> {
             scene2dTable = scene2d.table {
-                label("Hack the station")
+                label("""
+                    Press the key sequence
+                    to hack the station""".trimMargin())
             }
         }
         with<SpriteComponent> {

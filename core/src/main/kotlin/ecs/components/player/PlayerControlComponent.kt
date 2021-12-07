@@ -19,6 +19,7 @@ import tru.AnimState
  */
 
 class PlayerControlComponent(var controlMapper: ControlMapper, val player: Player) : Component, Pool.Poolable {
+    var locked = false
     var waitsForRespawn = false
     private var cooldownRemaining = 0f
     var rof: Float = 3f
@@ -53,6 +54,8 @@ class PlayerControlComponent(var controlMapper: ControlMapper, val player: Playe
         set(value) {
             controlMapper.doContextAction = value
         }
+
+
 
     val triggerPulled get() = controlMapper.firing
     val firing get() = controlMapper.firing && cooldownRemaining <= 0f

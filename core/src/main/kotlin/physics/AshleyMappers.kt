@@ -28,6 +28,7 @@ object AshleyMappers {
         return mappers[type] as ComponentMapper<T>
     }
 
+    val hacking = mapperFor<HackingComponent>()
     val destroyAfterReading = mapperFor<DestroyAfterCoolDownComponent>()
     val body = mapperFor<BodyComponent>()
     val mappers = mutableMapOf<KType, ComponentMapper<*>>()
@@ -153,4 +154,12 @@ fun Entity.safeDestroy() {
 
 fun Entity.complexAction(): ComplexActionComponent {
     return AshleyMappers.complexAction.get(this)
+}
+
+fun Entity.hacking() : HackingComponent {
+    return AshleyMappers.hacking.get(this)
+}
+
+fun Entity.hasHacking() : Boolean {
+    return AshleyMappers.hacking.has(this)
 }
