@@ -16,6 +16,9 @@ So, make a new MVP-todo list with the things, and only the things, to make the p
 
 Lets do max FIVE things that make the game feel better for fri-sat. These things should *only* be polish, that is very important.
 
+### The Hacking Station
+I just realized that what the game needs more than anything, right now, is *towers*... no, not towers. It needs more gameplay somehow. So, I was thinking about adding the **hacking station**, a special node that a player can interact with, just like in Helldivers, to open a door, perh
+
 - [ ] Hacking station <- mini game? Triggers larger hordes of zombies
 - [ ] Bat swing <- lets fucking do the bat swing, maaan!
 - [ ] Zombies with guns
@@ -798,11 +801,11 @@ Det här gör vi på det gamla vanliga sättet. Vi bygger en box2d-värld, vi kl
 
 Oj oj oj,  vad roligt. Vi kan göra en box2d-kropp med leder, per tutorials etc. Superkul ju.
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbLTE1NzM5OTQ4NDMsLTk3ODM2NjQ5OSwxMD
-kxNDc5NzQ3LDEzMzY2NzY5NDUsNTk2MjI1MzQsMzI4NzE4NDI0
-LC0xNDg1Mzk5NzgsMTEwNDI2NjgyMCwxNzY5MjYxNTEyLDIzMj
-A0Nzc4OSwxMDExMzU3NjYsMzIxOTc5MTE4LC0xMzYxNTU3OTE2
-LDM0MzQ3NjkzOCwtMTYxOTc5MzkxOSwtOTc4MDE4MzUsLTc1MD
-M1ODg3OSwtNjAyMTI1OTcyLDE2MDgzNzQ1NTYsMzg3MTkzMTY4
-XX0=
+eyJoaXN0b3J5IjpbODI5ODE4OTYzLC05NzgzNjY0OTksMTA5MT
+Q3OTc0NywxMzM2Njc2OTQ1LDU5NjIyNTM0LDMyODcxODQyNCwt
+MTQ4NTM5OTc4LDExMDQyNjY4MjAsMTc2OTI2MTUxMiwyMzIwND
+c3ODksMTAxMTM1NzY2LDMyMTk3OTExOCwtMTM2MTU1NzkxNiwz
+NDM0NzY5MzgsLTE2MTk3OTM5MTksLTk3ODAxODM1LC03NTAzNT
+g4NzksLTYwMjEyNTk3MiwxNjA4Mzc0NTU2LDM4NzE5MzE2OF19
+
 -->
