@@ -16,6 +16,8 @@ So, make a new MVP-todo list with the things, and only the things, to make the p
 
 Lets do max FIVE things that make the game feel better for fri-sat. These things should *only* be polish, that is very important.
 
+- [ ] Fix the free floating corners!
+- [ ] Hacking station <- mini game? Triggers larger hordes of zombies
 - [ ] Bat swing <- lets fucking do the bat swing, maaan!
 - [ ] Zombies with guns
 - [ ] Grenades
@@ -796,11 +798,11 @@ Det här gör vi på det gamla vanliga sättet. Vi bygger en box2d-värld, vi kl
 
 Oj oj oj,  vad roligt. Vi kan göra en box2d-kropp med leder, per tutorials etc. Superkul ju.
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbMTA5MTQ3OTc0NywxMzM2Njc2OTQ1LDU5Nj
-IyNTM0LDMyODcxODQyNCwtMTQ4NTM5OTc4LDExMDQyNjY4MjAs
-MTc2OTI2MTUxMiwyMzIwNDc3ODksMTAxMTM1NzY2LDMyMTk3OT
-ExOCwtMTM2MTU1NzkxNiwzNDM0NzY5MzgsLTE2MTk3OTM5MTks
-LTk3ODAxODM1LC03NTAzNTg4NzksLTYwMjEyNTk3MiwxNjA4Mz
-c0NTU2LDM4NzE5MzE2OCwtOTg0NjQyMTU1LDE1MDg1MTcyODRd
+eyJoaXN0b3J5IjpbLTk3ODM2NjQ5OSwxMDkxNDc5NzQ3LDEzMz
+Y2NzY5NDUsNTk2MjI1MzQsMzI4NzE4NDI0LC0xNDg1Mzk5Nzgs
+MTEwNDI2NjgyMCwxNzY5MjYxNTEyLDIzMjA0Nzc4OSwxMDExMz
+U3NjYsMzIxOTc5MTE4LC0xMzYxNTU3OTE2LDM0MzQ3NjkzOCwt
+MTYxOTc5MzkxOSwtOTc4MDE4MzUsLTc1MDM1ODg3OSwtNjAyMT
+I1OTcyLDE2MDgzNzQ1NTYsMzg3MTkzMTY4LC05ODQ2NDIxNTVd
 fQ==
 -->
