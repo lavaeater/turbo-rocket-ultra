@@ -16,12 +16,12 @@ So, make a new MVP-todo list with the things, and only the things, to make the p
 
 Lets do max FIVE things that make the game feel better for fri-sat. These things should *only* be polish, that is very important.
 
-- [ ] Fix the free floating corners!
 - [ ] Hacking station <- mini game? Triggers larger hordes of zombies
 - [ ] Bat swing <- lets fucking do the bat swing, maaan!
 - [ ] Zombies with guns
 - [ ] Grenades
 - [ ] Nicer Setup UI, using Scene2d perhaps
+- [x] Fix the free floating corners!
 - [x] Molotov cocktail sprite
 - [x] Cool post-processing FX
 - [x] Fix map reset issue (remove all but players from engine)
@@ -798,11 +798,11 @@ Det här gör vi på det gamla vanliga sättet. Vi bygger en box2d-värld, vi kl
 
 Oj oj oj,  vad roligt. Vi kan göra en box2d-kropp med leder, per tutorials etc. Superkul ju.
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbLTk3ODM2NjQ5OSwxMDkxNDc5NzQ3LDEzMz
-Y2NzY5NDUsNTk2MjI1MzQsMzI4NzE4NDI0LC0xNDg1Mzk5Nzgs
-MTEwNDI2NjgyMCwxNzY5MjYxNTEyLDIzMjA0Nzc4OSwxMDExMz
-U3NjYsMzIxOTc5MTE4LC0xMzYxNTU3OTE2LDM0MzQ3NjkzOCwt
-MTYxOTc5MzkxOSwtOTc4MDE4MzUsLTc1MDM1ODg3OSwtNjAyMT
-I1OTcyLDE2MDgzNzQ1NTYsMzg3MTkzMTY4LC05ODQ2NDIxNTVd
-fQ==
+eyJoaXN0b3J5IjpbLTE1NzM5OTQ4NDMsLTk3ODM2NjQ5OSwxMD
+kxNDc5NzQ3LDEzMzY2NzY5NDUsNTk2MjI1MzQsMzI4NzE4NDI0
+LC0xNDg1Mzk5NzgsMTEwNDI2NjgyMCwxNzY5MjYxNTEyLDIzMj
+A0Nzc4OSwxMDExMzU3NjYsMzIxOTc5MTE4LC0xMzYxNTU3OTE2
+LDM0MzQ3NjkzOCwtMTYxOTc5MzkxOSwtOTc4MDE4MzUsLTc1MD
+M1ODg3OSwtNjAyMTI1OTcyLDE2MDgzNzQ1NTYsMzg3MTkzMTY4
+XX0=
 -->
