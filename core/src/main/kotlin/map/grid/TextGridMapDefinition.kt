@@ -19,7 +19,7 @@ fun convert(imagePath: String): TextGridMapDefinition {
                 -65281 -> 'l'
                 255 -> 'x'
                 -1 -> 's'
-                14643494 -> 'h'
+                -546232577 -> 'h'
                 else -> 'e'
             }
             lines[y] = "${lines[y]}$section"
