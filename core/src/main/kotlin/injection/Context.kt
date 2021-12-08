@@ -138,7 +138,7 @@ object Context {
             addSystem(PlayerContextActionSystem())
             addSystem(BloodSplatterEffectRenderSystem(inject<PolygonSpriteBatch>() as Batch))
             addSystem(DelayedEntityCreationSystem())
-            addSystem(EffectRenderSystem(inject<PolygonSpriteBatch>() as Batch))
+            addSystem(EffectRenderSystem(inject<PolygonSpriteBatch>() as Batch, 2))
             addSystem(LootDropSystem())
             addSystem(AimingAidSystem(debug = true, renderRedDot = true))
             addSystem(GibSystem())

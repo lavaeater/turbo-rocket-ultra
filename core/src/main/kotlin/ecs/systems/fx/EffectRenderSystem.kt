@@ -11,11 +11,11 @@ import ktx.graphics.use
 import physics.addComponent
 import physics.getComponent
 
-class EffectRenderSystem(private val batch: Batch) : IteratingSystem(
+class EffectRenderSystem(private val batch: Batch, priority:Int) : IteratingSystem(
     allOf(
         ParticleEffectComponent::class,
         TransformComponent::class
-    ).get()) {
+    ).get(), priority) {
     @OptIn(ExperimentalStdlibApi::class)
     override fun processEntity(entity: Entity, deltaTime: Float) {
         val effectComponent = entity.getComponent<ParticleEffectComponent>()
