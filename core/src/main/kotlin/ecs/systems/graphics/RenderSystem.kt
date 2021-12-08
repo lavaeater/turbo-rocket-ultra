@@ -1,21 +1,34 @@
 package ecs.systems.graphics
 
+import box2dLight.RayHandler
 import com.badlogic.ashley.core.Entity
 import com.badlogic.ashley.systems.SortedIteratingSystem
 import com.badlogic.gdx.graphics.Color
+import com.badlogic.gdx.graphics.OrthographicCamera
 import com.badlogic.gdx.graphics.g2d.Batch
 import com.badlogic.gdx.math.MathUtils
+import com.crashinvaders.vfx.VfxManager
+import com.crashinvaders.vfx.effects.BloomEffect
+import com.crashinvaders.vfx.effects.ChainVfxEffect
+import com.crashinvaders.vfx.effects.CrtEffect
+import com.crashinvaders.vfx.effects.OldTvEffect
 import ecs.components.gameplay.TransformComponent
 import ecs.components.graphics.OnScreenComponent
 import ecs.components.graphics.SpriteComponent
 import ecs.systems.graphics.GameConstants.scale
+import injection.Context.inject
 import ktx.ashley.allOf
 import ktx.graphics.use
+import map.grid.GridMapManager
 import physics.*
 import tru.Assets
 
 class RenderSystem(
-    private val batch: Batch, private val debug: Boolean
+    private val batch: Batch,
+    private val debug: Boolean,
+    private val rayHandler: RayHandler,
+    private val camera: OrthographicCamera,
+    priority: Int
 ) : SortedIteratingSystem(
     allOf(
         TransformComponent::class,
@@ -41,20 +54,35 @@ class RenderSystem(
                 layer0.compareTo(layer1)
             }
         }
-    }, 8
+    }, priority
 ) {
+    private val mapManager by lazy { inject<GridMapManager>() }
     private val shapeDrawer by lazy { Assets.shapeDrawer }
-
-    override fun update(deltaTime: Float) {
-        forceSort()
-        batch.use {
-            super.update(deltaTime)
+    private val oldTvEffect by lazy { inject<List<ChainVfxEffect>>() }
+    private val vfxManager by lazy {
+        inject<VfxManager>().apply {
+            for (fx in oldTvEffect) {
+                this.addEffect(fx)
+            }
         }
     }
 
-    /*
+    override fun update(deltaTime: Float) {
+        forceSort()
+        rayHandler.setCombinedMatrix(camera)
 
-     */
+        vfxManager.cleanUpBuffers()
+        vfxManager.beginInputCapture()
+        batch.use {
+            mapManager.render(batch, shapeDrawer, deltaTime)
+            super.update(deltaTime)
+        }
+        vfxManager.endInputCapture()
+        vfxManager.applyEffects()
+        vfxManager.renderToScreen()
+        rayHandler.updateAndRender()
+    }
+
     override fun processEntity(entity: Entity, deltaTime: Float) {
         val transform = entity.transform()
         val spriteComponent = entity.sprite()
@@ -64,9 +92,9 @@ class RenderSystem(
             transform.position.x + (spriteComponent.sprite.regionWidth / 2 + spriteComponent.offsetX) * scale * spriteComponent.scale,
             transform.position.y + (spriteComponent.sprite.regionHeight / 2 + spriteComponent.offsetY) * scale * spriteComponent.scale,
             scale * spriteComponent.scale,
-            if (spriteComponent.rotateWithTransform) transform.rotation else 180f
+            if (spriteComponent.rotateWithTransform) transform.rotation * MathUtils.radiansToDegrees else 180f
         )
-        if(debug) {
+        if (debug) {
             shapeDrawer.filledCircle(
                 transform.position.x + spriteComponent.sprite.originX * scale * spriteComponent.scale,
                 transform.position.y + spriteComponent.sprite.originY * scale * spriteComponent.scale,
@@ -87,7 +115,8 @@ class RenderSystem(
                 val drawPosition = anchors.transformedPoints[spriteComponent.extraSpriteAnchors[key]!!]!!
 
                 sprite.setOriginBasedPosition(drawPosition.x, drawPosition.y)
-                sprite.rotation = if (anchors.useDirectionVector) entity.playerControl().directionVector.angleDeg() else transform.rotation * MathUtils.radiansToDegrees
+                sprite.rotation =
+                    if (anchors.useDirectionVector) entity.playerControl().directionVector.angleDeg() else transform.rotation * MathUtils.radiansToDegrees
                 sprite.setScale(scale * spriteComponent.scale)
                 sprite.draw(batch)
 

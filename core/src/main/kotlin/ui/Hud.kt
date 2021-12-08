@@ -9,10 +9,13 @@ import com.badlogic.gdx.scenes.scene2d.Action
 import com.badlogic.gdx.scenes.scene2d.Stage
 import com.badlogic.gdx.scenes.scene2d.actions.Actions.*
 import com.badlogic.gdx.scenes.scene2d.ui.Label
+import com.badlogic.gdx.scenes.scene2d.ui.Table
 import com.badlogic.gdx.utils.Align
 import com.badlogic.gdx.utils.Queue
 import com.badlogic.gdx.utils.viewport.ExtendViewport
 import data.Players
+import ecs.components.player.ComplexActionComponent
+import ecs.components.player.PlayerControlComponent
 import injection.Context.inject
 import ktx.math.vec2
 import ktx.math.vec3
@@ -27,7 +30,7 @@ import ktx.actors.*
 
 class Hud(private val batch: Batch) : IUserInterface, MessageReceiver {
     private val aspectRatio = 14f / 9f
-    private val hudWidth = 640f
+    private val hudWidth = 960f
     private val hudHeight = hudWidth * aspectRatio
     private val camera = OrthographicCamera()
     override val hudViewPort = ExtendViewport(hudWidth, hudHeight, camera)
@@ -118,7 +121,7 @@ class Hud(private val batch: Batch) : IUserInterface, MessageReceiver {
     override fun reset() {
     }
 
-    override val messageTypes: Set<KClass<*>> = setOf(Message.ShowToast::class)
+    override val messageTypes: Set<KClass<*>> = setOf(Message.ShowToast::class, Message.ShowUiForComplexAction::class)
 
     fun worldToHudPosition(worldPosition: Vector2): Vector2 {
         projectionVector.set(worldPosition.x, worldPosition.y, 0f)
@@ -162,6 +165,24 @@ class Hud(private val batch: Batch) : IUserInterface, MessageReceiver {
             is Message.ShowToast -> {
                 toastQueue.addLast(message)
             }
+            is Message.ShowUiForComplexAction -> {
+                val moveAction = object : Action() {
+                    override fun act(delta: Float): Boolean {
+                        val coordinate = worldToHudPosition(message.worldPosition)
+                        actor.setPosition(coordinate.x, coordinate.y)
+                        return true
+                    }
+                }
+                val coordinate = worldToHudPosition(message.worldPosition)
+                message.complexActionComponent.doneCallBacks.add {
+                    stage.actors.removeValue(message.complexActionComponent.scene2dTable, true)
+                }
+                val sequence = repeat(10000, moveAction)
+                stage.addActor(message.complexActionComponent.scene2dTable.apply {
+                    this += sequence
+                    this.setPosition(coordinate.x, coordinate.y)
+                })
+            }
         }
     }
 }
@@ -186,4 +207,9 @@ class MessageHandler {
 
 sealed class Message() {
     class ShowToast(val toast: String, val worldPosition: Vector2) : Message()
+    class ShowUiForComplexAction(
+        val complexActionComponent: ComplexActionComponent,
+        val controlComponent: PlayerControlComponent,
+        val worldPosition: Vector2
+    ) : Message()
 }

@@ -8,8 +8,7 @@ import ktx.ashley.allOf
 import ktx.graphics.use
 import physics.getComponent
 
-class BloodSplatterEffectRenderSystem(private val batch: Batch) : IteratingSystem(allOf(SplatterComponent::class).get(),2) {
-
+class BloodSplatterEffectRenderSystem(private val batch: Batch) : IteratingSystem(allOf(SplatterComponent::class).get()) {
 
     @OptIn(ExperimentalStdlibApi::class)
     override fun processEntity(entity: Entity, deltaTime: Float) {

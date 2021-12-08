@@ -19,6 +19,7 @@ import tru.AnimState
  */
 
 class PlayerControlComponent(var controlMapper: ControlMapper, val player: Player) : Component, Pool.Poolable {
+    var locked = false
     var waitsForRespawn = false
     private var cooldownRemaining = 0f
     var rof: Float = 3f
@@ -53,6 +54,8 @@ class PlayerControlComponent(var controlMapper: ControlMapper, val player: Playe
         set(value) {
             controlMapper.doContextAction = value
         }
+
+
 
     val triggerPulled get() = controlMapper.firing
     val firing get() = controlMapper.firing && cooldownRemaining <= 0f
@@ -97,6 +100,38 @@ class PlayerControlComponent(var controlMapper: ControlMapper, val player: Playe
         cooldownRemaining = 0f
         shotsFired = 0
         latestHitPoint.setZero()
+    }
+    var lockedInputSequence = mutableListOf<Int>()
+    var checkForSequence = false
+    var complexActionStatus: ComplexActionResult = ComplexActionResult.Failure
+    fun requireSequence(inputSequence: List<Int>) {
+        complexActionStatus = ComplexActionResult.Running
+        lockedInputSequence = inputSequence.toMutableList()
+        checkForSequence = true
+        controlMapper.requireSequencePress = true
+        controlMapper.keyPressedCallback = ::checkSequence
+    }
+
+    fun checkSequence(keyPressed: Int) {
+        if(lockedInputSequence.first() == keyPressed) {
+            lockedInputSequence.removeFirst()
+            if(lockedInputSequence.isEmpty()) {
+                complexActionStatus = ComplexActionResult.Success
+                checkForSequence = false
+                controlMapper.requireSequencePress = false
+                controlMapper.keyPressedCallback = {}
+            }
+        } else {
+            checkForSequence = false
+            controlMapper.requireSequencePress = false
+            controlMapper.keyPressedCallback = {}
+            lockedInputSequence.clear()
+            complexActionStatus = ComplexActionResult.Failure
+        }
+    }
+
+    fun sequencePressingProgress() : ComplexActionResult {
+        return complexActionStatus
     }
 }
 

@@ -8,12 +8,11 @@ import ecs.components.player.PlayerControlComponent
 import ktx.ashley.allOf
 import physics.getComponent
 
-class PlayerMoveSystem(
-    private var speed: Float = 25f): IteratingSystem(
+class PlayerMoveSystem(private var speed: Float): IteratingSystem(
     allOf(
         PlayerControlComponent::class,
         BodyComponent::class,
-        AnimatedCharacterComponent::class).get(), 10) {
+        AnimatedCharacterComponent::class).get()) {
 
     @OptIn(ExperimentalStdlibApi::class)
     override fun processEntity(entity: Entity, deltaTime: Float) {

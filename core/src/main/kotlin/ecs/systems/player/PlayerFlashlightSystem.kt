@@ -8,12 +8,12 @@ import ecs.components.player.PlayerControlComponent
 import ktx.ashley.allOf
 import physics.getComponent
 
-class PlayerFlashlightSystem : IteratingSystem(
+class PlayerFlashlightSystem() : IteratingSystem(
     allOf(
         FlashlightComponent::class,
         TransformComponent::class,
         PlayerControlComponent::class
-    ).get(), 100
+    ).get()
 ) {
     @OptIn(ExperimentalStdlibApi::class)
     override fun processEntity(entity: Entity, deltaTime: Float) {

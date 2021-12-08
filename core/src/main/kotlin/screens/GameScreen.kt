@@ -7,9 +7,14 @@ import com.badlogic.gdx.Gdx
 import com.badlogic.gdx.controllers.Controllers
 import com.badlogic.gdx.graphics.GL20
 import com.badlogic.gdx.graphics.OrthographicCamera
+import com.badlogic.gdx.graphics.Pixmap
 import com.badlogic.gdx.graphics.g2d.PolygonSpriteBatch
 import com.badlogic.gdx.physics.box2d.World
 import com.badlogic.gdx.utils.viewport.ExtendViewport
+import com.crashinvaders.vfx.VfxManager
+import com.crashinvaders.vfx.effects.ChainVfxEffect
+import com.crashinvaders.vfx.effects.OldTvEffect
+import com.crashinvaders.vfx.effects.VfxEffect
 import com.strongjoshua.console.GUIConsole
 import data.Players
 import ecs.components.BodyComponent
@@ -60,6 +65,7 @@ class GameScreen(private val gameState: StateMachine<GameState, GameEvent>) : Kt
     private val storyManager: StoryManager by lazy { inject() }
     private val factsOfTheWorld: FactsOfTheWorld by lazy { inject() }
     private val console by lazy { inject<GUIConsole>() }
+    private val vfxManager by lazy { inject<VfxManager>() }
 
     override fun show() {
         initializeIfNeeded()
@@ -130,13 +136,12 @@ D1B67A
         Gdx.gl.glClearColor(0f, 0f, 0f, 1f)
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT)
         //Update viewport and camera here and nowhere else...
-
         camera.update(true)
         batch.projectionMatrix = camera.combined
         updatePhysics(delta)
+
         engine.update(delta)
         ui.update(delta)
-        console.draw()
         audioPlayer.update(delta)
         storyManager.checkStories()
 
@@ -162,6 +167,7 @@ D1B67A
     override fun resize(width: Int, height: Int) {
         viewPort.update(width, height)
         batch.projectionMatrix = camera.combined
+        vfxManager.resize(width, height)
     }
 
     override fun pause() {
@@ -198,7 +204,7 @@ D1B67A
     private fun addPlayers() {
         val startBounds = mapManager.gridMap.values.first { it.startSection }.innerBounds
         for ((controlComponent, player) in Players.players) {
-            player(player, controlComponent, startBounds.randomPoint(), false)
+            player(player, controlComponent, startBounds.randomPoint(), true)
         }
     }
 
@@ -225,6 +231,18 @@ D1B67A
 
     private val mapManager by lazy { inject<GridMapManager>() }
 
+    private fun clearAllButPlayers() {
+        for(entity in engine.entities) {
+            if(!AshleyMappers.playerControl.has(entity)) {
+                if(AshleyMappers.body.has(entity)) {
+                    val body = AshleyMappers.body.get(entity).body!!
+                    world.destroyBody(body)
+                }
+                engine.removeEntity(entity)
+            }
+        }
+    }
+
     private fun generateMap(level: Int) {
         /*
         We start the game with a map already generated. But when, how, will we create
@@ -241,28 +259,8 @@ D1B67A
         Now add a goddamned  light
          */
 
-        for (enemy in engine.getEntitiesFor(allOf(EnemyComponent::class).get())) {
-            val bodyComponent = AshleyMappers.body.get(enemy)
-            world.destroyBody(bodyComponent.body)
-            enemy.remove<BodyComponent>()
-        }
-
-        engine.removeAllEntities(allOf(EnemyComponent::class).get())
+        clearAllButPlayers()
         CounterObject.enemyCount = 0
-
-        for (objective in engine.getEntitiesFor(allOf(ObjectiveComponent::class).get())) {
-            val bodyComponent = AshleyMappers.body.get(objective)
-            world.destroyBody(bodyComponent.body)
-            objective.remove<BodyComponent>()
-        }
-        engine.removeAllEntities(allOf(ObjectiveComponent::class).get())
-
-        for (obstacle in engine.getEntitiesFor(allOf(ObstacleComponent::class).get())) {
-            val bodyComponent = AshleyMappers.body.get(obstacle)
-            world.destroyBody(bodyComponent.body)
-            obstacle.remove<BodyComponent>()
-        }
-        engine.removeAllEntities(allOf(ObstacleComponent::class).get())
 
         //For debuggin we will swarm with enemies
         CounterObject.numberOfEnemies =  (8f.pow(CounterObject.currentLevel).roundToInt() * 2).coerceAtMost(MAX_ENEMIES)
@@ -281,7 +279,8 @@ D1B67A
     }
 
     override fun dispose() {
-        // Destroy screen's assets here.
+        vfxManager.dispose()
+        inject<List<ChainVfxEffect>>().forEach { it.dispose() }
     }
 }
 

@@ -2,6 +2,7 @@ package physics
 
 import com.badlogic.ashley.core.Engine
 import com.badlogic.ashley.core.Entity
+import com.badlogic.gdx.Input
 import com.badlogic.gdx.graphics.OrthographicCamera
 import com.badlogic.gdx.math.Vector2
 import com.badlogic.gdx.physics.box2d.Contact
@@ -21,12 +22,13 @@ import factories.*
 import features.pickups.AmmoLoot
 import features.pickups.WeaponLoot
 import injection.Context.inject
+import input.Button
 import ktx.ashley.remove
-import ktx.math.vec3
+import ktx.scene2d.label
+import ktx.scene2d.table
 import tru.Assets
 import ui.Message
 import ui.MessageHandler
-import wastelandui.toVec2
 
 /*
 How to handle contacts in the absolutely smashingly BEST
@@ -63,6 +65,7 @@ sealed class ContactType {
     class EnemySensesPlayer(val enemy: Entity, val player: Entity) : ContactType()
     class PlayerAndObjective(val player: Entity, val objective: Entity) : ContactType()
     class PlayerAndDeadPlayer(val livingPlayer: Entity, val deadPlayer: Entity) : ContactType()
+    class PlayerAndComplexAction(val player: Entity, val other: Entity) : ContactType()
     class PlayerAndSomeoneWhoTackles(val player: Entity, val tackler: Entity) : ContactType()
     class TwoEnemySensors(val enemyOne: Entity, val enemyTwo: Entity) : ContactType()
     class EnemyAndBullet(val enemy: Entity, val bullet: Entity) : ContactType()
@@ -104,6 +107,11 @@ fun Contact.thisIsAContactBetween(): ContactType {
             val lootEntity = this.getEntityFor<LootComponent>()
 
             return ContactType.PlayerAndLoot(playerEntity, lootEntity)
+        }
+        if(this.atLeastOneHas<ComplexActionComponent>()) {
+            val playerEntity = this.getPlayerFor().entity
+            val other = this.getEntityFor<ComplexActionComponent>()
+            return ContactType.PlayerAndComplexAction(playerEntity, other)
         }
         if (this.atLeastOneHas<ShotComponent>()) {
             val playerEntity = this.getPlayerFor().entity
@@ -323,6 +331,42 @@ class ContactManager : ContactListener {
             }
             is ContactType.DamageAndWall -> {
                 //No op for now
+            }
+            is ContactType.PlayerAndComplexAction -> {
+                val playerControl = contactType.player.playerControl()
+                val playerPosition = contactType.player.transform().position
+                val complexActionComponent = contactType.other.complexAction()
+                val objectiveComponent = contactType.other.objective()
+                if(!complexActionComponent.busy) {
+                    playerControl.locked = true
+                    if(contactType.other.hasHacking()) {
+                        //create the done function, I suppose?
+                        var inputSequence = listOf(1)
+                        if(playerControl.controlMapper.isGamepad)
+                            inputSequence = listOf(Button.buttonsToCodes[Button.DPadUp]!!,Button.buttonsToCodes[Button.DPadLeft]!!)
+                        else
+                            inputSequence = listOf(Input.Keys.UP, Input.Keys.LEFT)
+
+                        playerControl.requireSequence(inputSequence)
+                        complexActionComponent.scene2dTable.table {
+                            label("Up, Left")
+                        }
+                        complexActionComponent.doneFunction = {
+                             playerControl.sequencePressingProgress()
+                        }
+                        complexActionComponent.doneCallBacks.add {
+                            playerControl.locked = false
+                            complexActionComponent.busy = false
+                            if(it == ComplexActionResult.Success) {
+                                objectiveComponent.touched = true
+                                contactType.other.getComponent<LightComponent>().light.isActive = true
+                                playerControl.player.touchObjective(objectiveComponent)
+                            }
+                        }
+                    }
+                    complexActionComponent.busy = true
+                    messageHandler.sendMessage(Message.ShowUiForComplexAction(complexActionComponent, playerControl, playerPosition))
+                }
             }
         }
 

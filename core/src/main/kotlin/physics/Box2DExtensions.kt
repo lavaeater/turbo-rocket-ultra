@@ -125,7 +125,6 @@ inline fun <reified T : Component> Contact.atLeastOneHas(): Boolean {
 
 @OptIn(ExperimentalStdlibApi::class)
 inline fun <reified T : Component> Contact.justOneHas(): Boolean {
-
         val fOne = this.fixtureA.isEntity() && this.fixtureA.getEntity()
             .has<T>()
     val fTwo = this.fixtureB.isEntity() && this.fixtureB.getEntity().has<T>()

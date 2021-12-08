@@ -113,10 +113,10 @@ object SpriteLoader {
         So we should have anim and direction as two different things.
          */
         val anims = mutableMapOf<String, MutableMap<AnimState, LpcCharacterAnim<Sprite>>>()
-        val characters = listOf("boy", "girl")
+        val characters = listOf("boy", "girl","blondie", "curly", "green", "hogan", "knight", "redsonja", "skeleton")
         for (c in characters) {
             anims[c] = mutableMapOf()
-            val texture = Texture(Gdx.files.internal("sprites/$c/$c.png"))
+            val texture = Texture(Gdx.files.internal("sprites/lpc/$c.png"))
             for (animDef in LpcCharacterAnimDefinition.definitions) {
                 anims[c]!![animDef.state] = LpcCharacterAnim<Sprite>(
                     animDef.state,
