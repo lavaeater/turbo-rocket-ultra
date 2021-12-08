@@ -28,7 +28,24 @@ class WeaponDefinition(
     companion object {
         val molotov = WeaponDefinition(
             "Molotov Cocktail",
-            WeaponType.ThrownArea,
+            WeaponType.ThrownWeapon,
+            1,
+            30f,
+            15f, //
+            1,
+            15f,
+            GunFrames.handGun,
+            AmmoType.Molotov,
+            5f..15f,
+            0f,
+            ReloadType.SingleShot,
+            Assets.gunAudio["glock17"]!!,
+            0f,
+            handleKey = "melee"
+        )
+        val grenade = WeaponDefinition(
+            "Grenade",
+            WeaponType.ThrownWeapon,
             1,
             30f,
             15f, //
@@ -64,6 +81,7 @@ class WeaponDefinition(
         val weapons = listOf(
             baseballBat,
             molotov,
+            grenade,
             WeaponDefinition(
                 "Glock 17",
                 WeaponType.Projectile,

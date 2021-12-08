@@ -434,7 +434,45 @@ fun lootBox(at: Vector2, lootDrop: List<ILoot>) {
     box2dBody.userData = entity
 }
 
-fun throwMolotov(at: Vector2, towards: Vector2, speed: Float, player: Player) {
+fun throwMolotov(
+    at: Vector2,
+    towards: Vector2,
+    speed: Float,
+    player: Player) {
+    val box2dBody = world().body {
+        type = BodyDef.BodyType.DynamicBody
+        position.set(at)
+        linearVelocity.set(towards.cpy().setLength(speed))
+        angularVelocity = 180f * degreesToRadians
+        box(.5f, .25f) {
+            density = .1f
+            filter {
+                categoryBits = Box2dCategories.bullets
+                maskBits = Box2dCategories.thingsBulletsHit
+            }
+        }
+    }
+    val entity = engine().entity {
+        with<BodyComponent> { body = box2dBody }
+        with<GrenadeComponent> {
+            this.player = player
+        }
+        with<TransformComponent> { position.set(box2dBody.position) }
+        with<SpriteComponent> {
+            layer = 1
+            sprite = Assets.molotov //Fix a burning bottle sprite
+            rotateWithTransform = true
+        }
+    }
+    box2dBody.userData = entity
+    CounterObject.bulletCount++
+}
+
+fun throwGrenade(
+    at: Vector2,
+    towards: Vector2,
+    speed: Float,
+    player: Player) {
     val box2dBody = world().body {
         type = BodyDef.BodyType.DynamicBody
         position.set(at)

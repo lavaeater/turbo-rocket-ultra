@@ -23,6 +23,7 @@ import features.pickups.AmmoLoot
 import features.pickups.WeaponLoot
 import injection.Context.inject
 import input.Button
+import ktx.ashley.allOf
 import ktx.ashley.remove
 import ktx.scene2d.label
 import ktx.scene2d.table
@@ -70,6 +71,7 @@ sealed class ContactType {
     class TwoEnemySensors(val enemyOne: Entity, val enemyTwo: Entity) : ContactType()
     class EnemyAndBullet(val enemy: Entity, val bullet: Entity) : ContactType()
     class MolotovHittingAnything(val molotov: Entity) : ContactType()
+    class GrenadeHittingAnything(val grenade: Entity) : ContactType()
 
 }
 
@@ -155,6 +157,13 @@ fun Contact.thisIsAContactBetween(): ContactType {
          */
         val molotov = this.getEntityFor<MolotovComponent>()
         return ContactType.MolotovHittingAnything(molotov)
+    }
+    if (this.atLeastOneHas<GrenadeComponent>()) {
+        /*
+        Lets not add a new entity, let's modify the one we have
+         */
+        val grenade = this.getEntityFor<GrenadeComponent>()
+        return ContactType.GrenadeHittingAnything(grenade)
     }
     return ContactType.Unknown
 }
@@ -367,6 +376,29 @@ class ContactManager : ContactListener {
                     complexActionComponent.busy = true
                     messageHandler.sendMessage(Message.ShowUiForComplexAction(complexActionComponent, playerControl, playerPosition))
                 }
+            }
+            is ContactType.GrenadeHittingAnything -> {
+                //This should be timed using cooldown, not this way
+
+                val grenade = contactType.grenade
+                val grenadeComponent = grenade.getComponent<GrenadeComponent>()
+                val body = grenade.getComponent<BodyComponent>().body!!
+                body.linearVelocity.set(Vector2.Zero)
+
+                /*
+                Now, add five-ten entities / bodies that fly out in the direction of the molotov
+                and also spew fire particles.
+                 */
+
+                //Find all enemies with an area
+                val enemiesInRange = engine().getEntitiesFor(allOf(EnemyComponent::class).get()).filter { it.transform().position.dst(body.worldCenter) < 50f }
+
+                for (enemy in enemiesInRange) {
+                    //apply distance-related damage
+
+                    //apply impulse to enemy body, hopefully sending them away
+                }
+                grenade.addComponent<DestroyComponent>() //This entity will die and disappear now.
             }
         }
 

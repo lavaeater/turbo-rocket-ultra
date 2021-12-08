@@ -9,6 +9,7 @@ import ecs.components.enemy.EnemyComponent
 import ecs.components.gameplay.TransformComponent
 import ecs.components.player.*
 import factories.bullet
+import factories.throwGrenade
 import factories.throwMolotov
 import features.weapons.Weapon
 import features.weapons.WeaponType
@@ -39,15 +40,16 @@ class PlayerShootingSystem(private val audioPlayer: AudioPlayer) : IteratingSyst
         when (weapon.weaponType) {
             WeaponType.Melee -> swingMeleeWeapon(controlComponent, weapon, entity)
             WeaponType.Projectile -> fireProjectileWeapon(controlComponent, weapon, entity)
-            WeaponType.ThrownArea -> throwAreaWeapon(controlComponent, weapon, entity)
+            WeaponType.ThrownWeapon -> trowWeapon(controlComponent, weapon, entity)
         }
     }
 
-    private fun throwAreaWeapon(controlComponent: PlayerControlComponent, weapon: Weapon, playerEntity: Entity) {
+    private fun trowWeapon(controlComponent: PlayerControlComponent, weapon: Weapon, playerEntity: Entity) {
         if (
             controlComponent.firing &&
             weapon.ammoRemaining > 0 &&
-            !(AshleyMappers.respawn.has(playerEntity) || AshleyMappers.waitsForRespawn.has(playerEntity))) {
+            !(AshleyMappers.respawn.has(playerEntity) || AshleyMappers.waitsForRespawn.has(playerEntity))
+        ) {
             val transformComponent = AshleyMappers.transform.get(playerEntity)
             controlComponent.shoot()
 
@@ -76,13 +78,23 @@ class PlayerShootingSystem(private val audioPlayer: AudioPlayer) : IteratingSyst
                 /**
                  * Create a bullet entity at aimVector that travels very fast
                  */
-                throwMolotov(
-                    vec2(
-                        transformComponent.position.x + aimVector.x,
-                        transformComponent.position.y - 1 + aimVector.y
-                    ), aimVector, (15f..25f).random(),
-                    controlComponent.player
-                )
+                when (weapon.name) {
+                    "Molotov Cocktail" -> throwMolotov(
+                        vec2(
+                            transformComponent.position.x + aimVector.x,
+                            transformComponent.position.y - 1 + aimVector.y
+                        ), aimVector, (15f..25f).random(),
+                        controlComponent.player
+                    )
+                    "Grenade" -> throwGrenade(
+                        vec2(
+                            transformComponent.position.x + aimVector.x,
+                            transformComponent.position.y - 1 + aimVector.y
+                        ), aimVector, (15f..25f).random(),
+                        controlComponent.player
+                    )
+                }
+
             }
         }
     }
@@ -149,7 +161,12 @@ class PlayerShootingSystem(private val audioPlayer: AudioPlayer) : IteratingSyst
             !(AshleyMappers.respawn.has(playerEntity) || AshleyMappers.waitsForRespawn.has(playerEntity))
         ) {
             val transformComponent = AshleyMappers.transform.get(playerEntity)
-            AshleyMappers.firedShots.get(playerEntity).queue.addFirst(Pair(transformComponent.position, weapon.soundRadius))
+            AshleyMappers.firedShots.get(playerEntity).queue.addFirst(
+                Pair(
+                    transformComponent.position,
+                    weapon.soundRadius
+                )
+            )
             controlComponent.shoot()
 
             val shotsound = weapon.audio["shot"]!!
