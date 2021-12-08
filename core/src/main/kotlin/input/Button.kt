@@ -20,13 +20,13 @@ sealed class Button(val playstationButtonName: String) {
 
     companion object {
         fun getButton(buttonCode: Int): Button {
-            return when (buttonMap.containsKey(buttonCode)) {
-                true -> buttonMap[buttonCode]!!
+            return when (codesToButtons.containsKey(buttonCode)) {
+                true -> codesToButtons[buttonCode]!!
                 false -> Unknown
             }
         }
 
-        private val buttonMap = mapOf(
+        val codesToButtons = mapOf(
             0 to Cross,
             1 to Ring,
             2 to Square,
@@ -44,6 +44,8 @@ sealed class Button(val playstationButtonName: String) {
             13 to DPadLeft,
             14 to DPadRight
         )
+
+        val buttonsToCodes = codesToButtons.entries.associate { (k,v) -> v to k }.toMap()
     }
 
 }

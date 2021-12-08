@@ -101,6 +101,41 @@ class PlayerControlComponent(var controlMapper: ControlMapper, val player: Playe
         shotsFired = 0
         latestHitPoint.setZero()
     }
+    var lockedInputSequence = mutableListOf<Int>()
+    var checkForSequence = false
+    var complexActionStatus: ComplexActionResult = ComplexActionResult.Failure
+    fun requireSequence(inputSequence: List<Int>) {
+        complexActionStatus = ComplexActionResult.Running
+        lockedInputSequence = inputSequence.toMutableList()
+        checkForSequence = true
+        controlMapper.checkSequence {
+            checkSequence(it)
+        }
+    }
+
+    fun checkSequence(keyPressed: Int) {
+        if(lockedInputSequence.first() == keyPressed) {
+            lockedInputSequence.removeFirst()
+            if(lockedInputSequence.isEmpty()) {
+                complexActionStatus = ComplexActionResult.Success
+                checkForSequence = false
+            }
+        } else {
+            checkForSequence = false
+            lockedInputSequence.clear()
+            complexActionStatus = ComplexActionResult.Failure
+        }
+    }
+
+    fun abortSequence() {
+        checkForSequence = false
+        lockedInputSequence.clear()
+        complexActionStatus = ComplexActionResult.Failure
+    }
+
+    fun sequencePressingProgress() : ComplexActionResult {
+        return complexActionStatus
+    }
 }
 
 fun Vector2.compassDirection(): CompassDirection {

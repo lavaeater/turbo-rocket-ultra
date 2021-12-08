@@ -2,14 +2,13 @@ package physics
 
 import com.badlogic.ashley.core.Engine
 import com.badlogic.ashley.core.Entity
-import com.badlogic.gdx.controllers.Controller
+import com.badlogic.gdx.Input
 import com.badlogic.gdx.graphics.OrthographicCamera
 import com.badlogic.gdx.math.Vector2
 import com.badlogic.gdx.physics.box2d.Contact
 import com.badlogic.gdx.physics.box2d.ContactImpulse
 import com.badlogic.gdx.physics.box2d.ContactListener
 import com.badlogic.gdx.physics.box2d.Manifold
-import data.Players
 import ecs.components.BodyComponent
 import ecs.components.ai.TrackingPlayer
 import ecs.components.enemy.EnemyComponent
@@ -23,13 +22,12 @@ import factories.*
 import features.pickups.AmmoLoot
 import features.pickups.WeaponLoot
 import injection.Context.inject
+import input.Button
 import ktx.ashley.remove
-import ktx.math.vec3
 import ktx.scene2d.table
 import tru.Assets
 import ui.Message
 import ui.MessageHandler
-import wastelandui.toVec2
 
 /*
 How to handle contacts in the absolutely smashingly BEST
@@ -341,12 +339,18 @@ class ContactManager : ContactListener {
                     playerControl.locked = true
                     if(contactType.other.hasHacking()) {
                         //create the done function, I suppose?
-                        val inputSequence = listOf("dpadup", "dpadleft", "dpadright", "dpadright", "dpaddown", "dpadup")
+                        var inputSequence = listOf(1)
+                        if(playerControl.controlMapper.isGamepad)
+                            inputSequence = listOf(Button.buttonsToCodes[Button.DPadLeft]!!,Button.buttonsToCodes[Button.DPadUp]!! )
+                        else
+                            inputSequence = listOf(Input.Keys.UP, Input.Keys.LEFT)
+
+                        playerControl.requireSequence(inputSequence)
                         complexActionComponent.scene2dTable.table {
 
                         }
                         complexActionComponent.doneFunction = {
-                            false
+                             playerControl.sequencePressingProgress()
                         }
                         complexActionComponent.doneCallBacks.add {
                             playerControl.locked = false
