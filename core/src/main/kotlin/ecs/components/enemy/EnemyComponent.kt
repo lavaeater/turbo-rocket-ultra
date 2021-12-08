@@ -59,7 +59,8 @@ class EnemyComponent : Component, Pool.Poolable {
         speed = 2.5f
         viewDistance = 30f
         directionVector.set(Vector2.Zero)
-        health = 100f
+        val randomValue = (1..100).random()
+        health = if(randomValue < 5) 1000f else 100f
         timeRemaining = 0f
     }
 }
