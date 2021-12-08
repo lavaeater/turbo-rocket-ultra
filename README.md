@@ -22,11 +22,11 @@ I just realized that what the game needs more than anything, right now, is *towe
 Don't make it a door at first, just make it something you have to interact with. We have the context action, we can add more features to that. So what this will be is simply an objective and when touching it, it will launch the hacking session, which could simply be pushing a certain sequence of buttons to *hack it*. Using our story system, we could implement any number of mechanisms to get this to work. Test it out on the zero-level.
 
 
-- [ ] Change the fucking floor tiles, 
+- [ ] Grenades
+- [x] Change the fucking floor tiles, 
 - [x] get lights to work again
 - [ ] Bat swing <- lets fucking do the bat swing, maaan!
 - [ ] Zombies with guns
-- [ ] Grenades
 - [ ] Nicer Setup UI, using Scene2d perhaps
 - [x] Hacking station <- mini game? Triggers larger hordes of zombies
 	- [x] Add a StoryComponent (What the FUUUCK man, are you a genius? A generic fucking story component?
@@ -808,11 +808,11 @@ Det här gör vi på det gamla vanliga sättet. Vi bygger en box2d-värld, vi kl
 
 Oj oj oj,  vad roligt. Vi kan göra en box2d-kropp med leder, per tutorials etc. Superkul ju.
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbLTgzOTAyMTM3NywtOTc4MzY2NDk5LDEwOT
-E0Nzk3NDcsMTMzNjY3Njk0NSw1OTYyMjUzNCwzMjg3MTg0MjQs
-LTE0ODUzOTk3OCwxMTA0MjY2ODIwLDE3NjkyNjE1MTIsMjMyMD
-Q3Nzg5LDEwMTEzNTc2NiwzMjE5NzkxMTgsLTEzNjE1NTc5MTYs
-MzQzNDc2OTM4LC0xNjE5NzkzOTE5LC05NzgwMTgzNSwtNzUwMz
-U4ODc5LC02MDIxMjU5NzIsMTYwODM3NDU1NiwzODcxOTMxNjhd
-fQ==
+eyJoaXN0b3J5IjpbLTcwMjQ1MTY0NSwtODM5MDIxMzc3LC05Nz
+gzNjY0OTksMTA5MTQ3OTc0NywxMzM2Njc2OTQ1LDU5NjIyNTM0
+LDMyODcxODQyNCwtMTQ4NTM5OTc4LDExMDQyNjY4MjAsMTc2OT
+I2MTUxMiwyMzIwNDc3ODksMTAxMTM1NzY2LDMyMTk3OTExOCwt
+MTM2MTU1NzkxNiwzNDM0NzY5MzgsLTE2MTk3OTM5MTksLTk3OD
+AxODM1LC03NTAzNTg4NzksLTYwMjEyNTk3MiwxNjA4Mzc0NTU2
+XX0=
 -->
