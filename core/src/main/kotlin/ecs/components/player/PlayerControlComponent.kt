@@ -108,9 +108,8 @@ class PlayerControlComponent(var controlMapper: ControlMapper, val player: Playe
         complexActionStatus = ComplexActionResult.Running
         lockedInputSequence = inputSequence.toMutableList()
         checkForSequence = true
-        controlMapper.checkSequence {
-            checkSequence(it)
-        }
+        controlMapper.requireSequencePress = true
+        controlMapper.keyPressedCallback = ::checkSequence
     }
 
     fun checkSequence(keyPressed: Int) {
@@ -119,18 +118,16 @@ class PlayerControlComponent(var controlMapper: ControlMapper, val player: Playe
             if(lockedInputSequence.isEmpty()) {
                 complexActionStatus = ComplexActionResult.Success
                 checkForSequence = false
+                controlMapper.requireSequencePress = false
+                controlMapper.keyPressedCallback = {}
             }
         } else {
             checkForSequence = false
+            controlMapper.requireSequencePress = false
+            controlMapper.keyPressedCallback = {}
             lockedInputSequence.clear()
             complexActionStatus = ComplexActionResult.Failure
         }
-    }
-
-    fun abortSequence() {
-        checkForSequence = false
-        lockedInputSequence.clear()
-        complexActionStatus = ComplexActionResult.Failure
     }
 
     fun sequencePressingProgress() : ComplexActionResult {

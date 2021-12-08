@@ -26,6 +26,6 @@ interface ControlMapper: Component {
     fun setAimVector(screenX: Int, screenY: Int, position: Vector2)
     var uiControl: UserInterfaceControl
     var requireSequencePress: Boolean
-    fun checkSequence(checker:(Int)-> Unit)
+    var keyPressedCallback: (Int) -> Unit
 }
 

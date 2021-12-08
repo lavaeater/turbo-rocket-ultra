@@ -24,6 +24,7 @@ import features.pickups.WeaponLoot
 import injection.Context.inject
 import input.Button
 import ktx.ashley.remove
+import ktx.scene2d.label
 import ktx.scene2d.table
 import tru.Assets
 import ui.Message
@@ -335,25 +336,32 @@ class ContactManager : ContactListener {
                 val playerControl = contactType.player.playerControl()
                 val playerPosition = contactType.player.transform().position
                 val complexActionComponent = contactType.other.complexAction()
+                val objectiveComponent = contactType.other.objective()
                 if(!complexActionComponent.busy) {
                     playerControl.locked = true
                     if(contactType.other.hasHacking()) {
                         //create the done function, I suppose?
                         var inputSequence = listOf(1)
                         if(playerControl.controlMapper.isGamepad)
-                            inputSequence = listOf(Button.buttonsToCodes[Button.DPadLeft]!!,Button.buttonsToCodes[Button.DPadUp]!! )
+                            inputSequence = listOf(Button.buttonsToCodes[Button.DPadUp]!!,Button.buttonsToCodes[Button.DPadLeft]!!)
                         else
                             inputSequence = listOf(Input.Keys.UP, Input.Keys.LEFT)
 
                         playerControl.requireSequence(inputSequence)
                         complexActionComponent.scene2dTable.table {
-
+                            label("Up, Left")
                         }
                         complexActionComponent.doneFunction = {
                              playerControl.sequencePressingProgress()
                         }
                         complexActionComponent.doneCallBacks.add {
                             playerControl.locked = false
+                            complexActionComponent.busy = false
+                            if(it == ComplexActionResult.Success) {
+                                objectiveComponent.touched = true
+                                contactType.other.getComponent<LightComponent>().light.isActive = true
+                                playerControl.player.touchObjective(objectiveComponent)
+                            }
                         }
                     }
                     complexActionComponent.busy = true

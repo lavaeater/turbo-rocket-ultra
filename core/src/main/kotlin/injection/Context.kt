@@ -146,6 +146,7 @@ object Context {
             addSystem(FrustumCullingSystem())
             addSystem(BuildSystem(false))
             addSystem(AnchorPointTransformationSystem(false))
+            addSystem(ComplexActionSystem())
         }
     }
 }

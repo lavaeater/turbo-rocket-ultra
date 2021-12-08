@@ -43,7 +43,7 @@ class ComplexActionComponent: Component, Pool.Poolable {
     var busy = false
     var scene2dTable = scene2d.table {  }
     var doneFunction: () -> ComplexActionResult = { ComplexActionResult.Failure }
-    val doneCallBacks = mutableListOf<()->Unit>()
+    val doneCallBacks = mutableListOf<(ComplexActionResult)->Unit>()
     override fun reset() {
         busy = false
         scene2dTable = scene2d.table {  }

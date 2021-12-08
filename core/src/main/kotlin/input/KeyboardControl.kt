@@ -38,8 +38,5 @@ class KeyboardControl: ControlMapper, Component {
 
     override var uiControl: UserInterfaceControl = NoOpUserInterfaceControl.control
     override var requireSequencePress: Boolean = false
-
-    override fun checkSequence(checker: (Int) -> Unit) {
-        checker()
-    }
+    override var keyPressedCallback: (Int) -> Unit = {}
 }

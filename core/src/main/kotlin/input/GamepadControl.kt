@@ -30,4 +30,6 @@ class GamepadControl(val controller: Controller): ControlMapper, Component {
     }
 
     override var uiControl: UserInterfaceControl = NoOpUserInterfaceControl.control
+    override var requireSequencePress = true
+    override var keyPressedCallback: (Int) -> Unit = {}
 }

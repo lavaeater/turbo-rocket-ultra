@@ -26,6 +26,13 @@ sealed class Button(val playstationButtonName: String) {
             }
         }
 
+        fun getButtonCode(button: Button): Int {
+            return when(buttonsToCodes.containsKey(button)) {
+                true -> buttonsToCodes[button]!!
+                false -> -1
+            }
+        }
+
         val codesToButtons = mapOf(
             0 to Cross,
             1 to Ring,

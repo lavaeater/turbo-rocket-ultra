@@ -21,9 +21,9 @@ import kotlin.reflect.typeOf
 
 object AshleyMappers {
     @kotlin.ExperimentalStdlibApi
-    inline fun <reified T: Component>getMapper(): ComponentMapper<T> {
+    inline fun <reified T : Component> getMapper(): ComponentMapper<T> {
         val type = typeOf<T>()
-        if(!mappers.containsKey(type))
+        if (!mappers.containsKey(type))
             mappers[type] = mapperFor<T>()
         return mappers[type] as ComponentMapper<T>
     }
@@ -156,10 +156,18 @@ fun Entity.complexAction(): ComplexActionComponent {
     return AshleyMappers.complexAction.get(this)
 }
 
-fun Entity.hacking() : HackingComponent {
+fun Entity.objective(): ObjectiveComponent {
+    return AshleyMappers.objective.get(this)
+}
+
+fun Entity.hasObjective(): Boolean {
+    return AshleyMappers.objective.has(this)
+}
+
+fun Entity.hacking(): HackingComponent {
     return AshleyMappers.hacking.get(this)
 }
 
-fun Entity.hasHacking() : Boolean {
+fun Entity.hasHacking(): Boolean {
     return AshleyMappers.hacking.has(this)
 }
