@@ -355,11 +355,10 @@ class ContactManager : ContactListener {
                     playerControl.locked = true
                     if(contactType.other.hasHacking()) {
                         //create the done function, I suppose?
-                        var inputSequence = listOf(1)
-                        if(playerControl.controlMapper.isGamepad)
-                            inputSequence = listOf(Button.buttonsToCodes[Button.DPadUp]!!,Button.buttonsToCodes[Button.DPadLeft]!!)
+                        var inputSequence: List<Int> = if(playerControl.controlMapper.isGamepad)
+                            listOf(Button.buttonsToCodes[Button.DPadUp]!!,Button.buttonsToCodes[Button.DPadLeft]!!)
                         else
-                            inputSequence = listOf(Input.Keys.UP, Input.Keys.LEFT)
+                            listOf(Input.Keys.UP, Input.Keys.LEFT)
 
                         playerControl.requireSequence(inputSequence)
                         complexActionComponent.scene2dTable.table {
