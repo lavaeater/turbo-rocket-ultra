@@ -1,6 +1,6 @@
 # turbo-rocket-ultra
 
-## Replacing the physics engine
+## Replacing Box2D with JBump
 
 So, this is my biggest and most ambitious change of the project so far. I will replace Box2D, which is fantastic, with JBump. One result is that we will have to manage all physics ourselves, but collisions and stuff will be faster, I think. 
 
@@ -818,11 +818,11 @@ Det här gör vi på det gamla vanliga sättet. Vi bygger en box2d-värld, vi kl
 
 Oj oj oj,  vad roligt. Vi kan göra en box2d-kropp med leder, per tutorials etc. Superkul ju.
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbLTE1NzYyMTE2ODEsMTgxOTYwNzU3MCwtNz
-AyNDUxNjQ1LC04MzkwMjEzNzcsLTk3ODM2NjQ5OSwxMDkxNDc5
-NzQ3LDEzMzY2NzY5NDUsNTk2MjI1MzQsMzI4NzE4NDI0LC0xND
-g1Mzk5NzgsMTEwNDI2NjgyMCwxNzY5MjYxNTEyLDIzMjA0Nzc4
-OSwxMDExMzU3NjYsMzIxOTc5MTE4LC0xMzYxNTU3OTE2LDM0Mz
-Q3NjkzOCwtMTYxOTc5MzkxOSwtOTc4MDE4MzUsLTc1MDM1ODg3
-OV19
+eyJoaXN0b3J5IjpbLTg3ODUyMTUzNiwxODE5NjA3NTcwLC03MD
+I0NTE2NDUsLTgzOTAyMTM3NywtOTc4MzY2NDk5LDEwOTE0Nzk3
+NDcsMTMzNjY3Njk0NSw1OTYyMjUzNCwzMjg3MTg0MjQsLTE0OD
+UzOTk3OCwxMTA0MjY2ODIwLDE3NjkyNjE1MTIsMjMyMDQ3Nzg5
+LDEwMTEzNTc2NiwzMjE5NzkxMTgsLTEzNjE1NTc5MTYsMzQzND
+c2OTM4LC0xNjE5NzkzOTE5LC05NzgwMTgzNSwtNzUwMzU4ODc5
+XX0=
 -->
