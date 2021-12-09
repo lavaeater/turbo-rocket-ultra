@@ -397,6 +397,9 @@ class ContactManager : ContactListener {
                     //apply distance-related damage
 
                     //apply impulse to enemy body, hopefully sending them away
+                    val enemyBody = enemy.body()
+                    val direction = enemyBody.worldCenter.cpy().sub(body.worldCenter).nor()
+                    enemyBody.applyLinearImpulse(direction.scl(500f), enemyBody.worldCenter, true)
                 }
                 grenade.addComponent<DestroyComponent>() //This entity will die and disappear now.
             }
