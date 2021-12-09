@@ -9,6 +9,8 @@ import data.Player
 import ecs.components.gameplay.TransformComponent
 import ktx.math.random
 import ktx.math.vec2
+import kotlin.reflect.KMutableProperty
+import kotlin.reflect.KProperty
 
 class BossComponent : Component, Pool.Poolable {
     override fun reset() {
@@ -21,6 +23,7 @@ class EnemyComponent : Component, Pool.Poolable {
     var fieldOfView = 180f
     var viewDistance = 90f
     var speed = 5f
+    var stunned = false
 
     val directionVector = vec2()
     var health = 100f
@@ -46,7 +49,26 @@ class EnemyComponent : Component, Pool.Poolable {
         lastHitBy = player
     }
 
-    fun coolDown(deltaTime: Float) {
+    val coolDowns = mutableMapOf<KMutableProperty<Boolean>, Float>()
+
+    fun startCooldown(property: KMutableProperty<Boolean>, cooldown: Float) {
+        property.setter.call(true)
+        coolDowns[property] = cooldown
+    }
+
+    fun cooldownPropertyCheckIfDone(property: KMutableProperty<Boolean>, delta: Float) : Boolean {
+        if(!coolDowns.containsKey(property))
+            return true
+        coolDowns[property] = coolDowns[property]!! - delta
+        if(coolDowns[property]!! <= 0f) {
+            property.setter.call(false)
+            coolDowns.remove(property)
+            return true
+        }
+        return false
+    }
+
+    fun coolDown(deltaTime: Float){
         timeRemaining-= deltaTime
         timeRemaining.coerceAtLeast(0f)
     }
@@ -59,7 +81,8 @@ class EnemyComponent : Component, Pool.Poolable {
         speed = 2.5f
         viewDistance = 30f
         directionVector.set(Vector2.Zero)
-        health = 100f
+        val randomValue = (1..100).random()
+        health = if(randomValue < 5) 1000f else 100f
         timeRemaining = 0f
     }
 }

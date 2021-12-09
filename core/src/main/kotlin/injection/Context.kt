@@ -131,7 +131,7 @@ object Context {
             addSystem(UpdatePlayerStatsSystem())
 //            addSystem(PhysicsDebugRendererSystem(inject(), inject()))
             addSystem(RenderSystem(inject<PolygonSpriteBatch>() as Batch, false, inject(), inject(),1))
-            addSystem(RenderMiniMapSystem())
+            addSystem(RenderMiniMapSystem(3))
             addSystem(PlayerFlashlightSystem())
             //lets NOT write debug badges
 //            addSystem(AiDebugSystem())

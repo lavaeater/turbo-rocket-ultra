@@ -72,6 +72,14 @@ object AshleyMappers {
     val complexAction = mapperFor<ComplexActionComponent>()
 }
 
+fun Entity.enemy(): EnemyComponent {
+    return AshleyMappers.enemy.get(this)
+}
+
+fun Entity.hasEnemy(): Boolean {
+    return AshleyMappers.enemy.has(this)
+}
+
 fun Entity.transform(): TransformComponent {
     return AshleyMappers.transform.get(this)
 }

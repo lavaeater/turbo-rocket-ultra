@@ -2,6 +2,6 @@ package features.weapons
 
 sealed class WeaponType {
     object Projectile : WeaponType()
-    object ThrownArea : WeaponType()
+    object ThrownWeapon : WeaponType()
     object Melee : WeaponType()
 }

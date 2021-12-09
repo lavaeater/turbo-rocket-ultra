@@ -14,6 +14,14 @@ class DamageEffectComponent: Component, Pool.Poolable {
 class DestroyAfterCoolDownComponent: CoolDownComponent() {
 }
 
+class GrenadeComponent: CoolDownComponent() {
+    lateinit var player: Player
+    override fun reset() {
+        coolDownRange = 3f..5f
+        super.reset()
+    }
+}
+
 class MolotovComponent: Component, Pool.Poolable {
     lateinit var player: Player
     override fun reset() {
