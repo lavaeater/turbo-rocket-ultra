@@ -6,7 +6,9 @@ So, this is my biggest and most ambitious change of the project so far. I will r
 
 One point of all this is to make the game be a truly oblique projection game, where we will do parables for projectiles (thrown ones) and stuff like that.
 
-The reason I thi
+The reason I think we need to do this with JBump is that box2d is a 2d physics engine, but we are running in a pseudo-3D mode, where one thing we could do is of course use Bullet3d and represent everything using that in 3d to get a y-axis point up from the ground, thus better simulating the world we are actually using.
+
+However, that's not what I want to do. I want it to be 2D and I think using JBump and just some simple algorithms for everything could work out. For instance, for th
 
 ## Monday the 6th of December
 So, I was thinking about maybe redoing the entire system of projection, all sprites, everything, to make the graphics look better. What was I, insane?
@@ -816,11 +818,11 @@ Det här gör vi på det gamla vanliga sättet. Vi bygger en box2d-värld, vi kl
 
 Oj oj oj,  vad roligt. Vi kan göra en box2d-kropp med leder, per tutorials etc. Superkul ju.
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbNjYwMjIxOTY3LDE4MTk2MDc1NzAsLTcwMj
-Q1MTY0NSwtODM5MDIxMzc3LC05NzgzNjY0OTksMTA5MTQ3OTc0
-NywxMzM2Njc2OTQ1LDU5NjIyNTM0LDMyODcxODQyNCwtMTQ4NT
-M5OTc4LDExMDQyNjY4MjAsMTc2OTI2MTUxMiwyMzIwNDc3ODks
-MTAxMTM1NzY2LDMyMTk3OTExOCwtMTM2MTU1NzkxNiwzNDM0Nz
-Y5MzgsLTE2MTk3OTM5MTksLTk3ODAxODM1LC03NTAzNTg4Nzld
-fQ==
+eyJoaXN0b3J5IjpbLTkxNTkzMTAyOSwxODE5NjA3NTcwLC03MD
+I0NTE2NDUsLTgzOTAyMTM3NywtOTc4MzY2NDk5LDEwOTE0Nzk3
+NDcsMTMzNjY3Njk0NSw1OTYyMjUzNCwzMjg3MTg0MjQsLTE0OD
+UzOTk3OCwxMTA0MjY2ODIwLDE3NjkyNjE1MTIsMjMyMDQ3Nzg5
+LDEwMTEzNTc2NiwzMjE5NzkxMTgsLTEzNjE1NTc5MTYsMzQzND
+c2OTM4LC0xNjE5NzkzOTE5LC05NzgwMTgzNSwtNzUwMzU4ODc5
+XX0=
 -->
