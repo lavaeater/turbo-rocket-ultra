@@ -1,5 +1,10 @@
 # turbo-rocket-ultra
 
+## Replacing the physics engine
+
+So, this is mi
+
+
 ## Monday the 6th of December
 So, I was thinking about maybe redoing the entire system of projection, all sprites, everything, to make the graphics look better. What was I, insane?
 No, I wasnt. I don't like the way the game looks because it isn't perfect. I would want to do it with an isometric projection, but as a compromise I've tried to make an oblique top-down projection. However, the one I am currently using is "wrong" as the y-axis being twice the length it should be. So I started a new branch with the ambition of using it to do everything on. 
@@ -22,8 +27,8 @@ I just realized that what the game needs more than anything, right now, is *towe
 Don't make it a door at first, just make it something you have to interact with. We have the context action, we can add more features to that. So what this will be is simply an objective and when touching it, it will launch the hacking session, which could simply be pushing a certain sequence of buttons to *hack it*. Using our story system, we could implement any number of mechanisms to get this to work. Test it out on the zero-level.
 
 
-- [ ] Bat swing <- lets fucking do the bat swing, maaan!
-- [ ] Zombies with guns
+- [ ] Zombies with guns <- this would be genuinely cool, actually
+- [ ] Bat swing
 - [ ] Nicer Setup UI, using Scene2d perhaps
 - [ ] Grenades <- no, laaame
 - [x] Change the fucking floor tiles, 
@@ -808,11 +813,11 @@ Det här gör vi på det gamla vanliga sättet. Vi bygger en box2d-värld, vi kl
 
 Oj oj oj,  vad roligt. Vi kan göra en box2d-kropp med leder, per tutorials etc. Superkul ju.
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbMTgxOTYwNzU3MCwtNzAyNDUxNjQ1LC04Mz
-kwMjEzNzcsLTk3ODM2NjQ5OSwxMDkxNDc5NzQ3LDEzMzY2NzY5
-NDUsNTk2MjI1MzQsMzI4NzE4NDI0LC0xNDg1Mzk5NzgsMTEwND
-I2NjgyMCwxNzY5MjYxNTEyLDIzMjA0Nzc4OSwxMDExMzU3NjYs
-MzIxOTc5MTE4LC0xMzYxNTU3OTE2LDM0MzQ3NjkzOCwtMTYxOT
-c5MzkxOSwtOTc4MDE4MzUsLTc1MDM1ODg3OSwtNjAyMTI1OTcy
-XX0=
+eyJoaXN0b3J5IjpbODg1OTg0MTQ0LDE4MTk2MDc1NzAsLTcwMj
+Q1MTY0NSwtODM5MDIxMzc3LC05NzgzNjY0OTksMTA5MTQ3OTc0
+NywxMzM2Njc2OTQ1LDU5NjIyNTM0LDMyODcxODQyNCwtMTQ4NT
+M5OTc4LDExMDQyNjY4MjAsMTc2OTI2MTUxMiwyMzIwNDc3ODks
+MTAxMTM1NzY2LDMyMTk3OTExOCwtMTM2MTU1NzkxNiwzNDM0Nz
+Y5MzgsLTE2MTk3OTM5MTksLTk3ODAxODM1LC03NTAzNTg4Nzld
+fQ==
 -->
