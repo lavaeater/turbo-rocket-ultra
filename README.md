@@ -2,8 +2,11 @@
 
 ## Replacing the physics engine
 
-So, this is mi
+So, this is my biggest and most ambitious change of the project so far. I will replace Box2D, which is fantastic, with JBump. One result is that we will have to manage all physics ourselves, but collisions and stuff will be faster, I think. 
 
+One point of all this is to make the game be a truly oblique projection game, where we will do parables for projectiles (thrown ones) and stuff like that.
+
+The reason I thi
 
 ## Monday the 6th of December
 So, I was thinking about maybe redoing the entire system of projection, all sprites, everything, to make the graphics look better. What was I, insane?
@@ -813,7 +816,7 @@ Det här gör vi på det gamla vanliga sättet. Vi bygger en box2d-värld, vi kl
 
 Oj oj oj,  vad roligt. Vi kan göra en box2d-kropp med leder, per tutorials etc. Superkul ju.
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbODg1OTg0MTQ0LDE4MTk2MDc1NzAsLTcwMj
+eyJoaXN0b3J5IjpbNjYwMjIxOTY3LDE4MTk2MDc1NzAsLTcwMj
 Q1MTY0NSwtODM5MDIxMzc3LC05NzgzNjY0OTksMTA5MTQ3OTc0
 NywxMzM2Njc2OTQ1LDU5NjIyNTM0LDMyODcxODQyNCwtMTQ4NT
 M5OTc4LDExMDQyNjY4MjAsMTc2OTI2MTUxMiwyMzIwNDc3ODks
