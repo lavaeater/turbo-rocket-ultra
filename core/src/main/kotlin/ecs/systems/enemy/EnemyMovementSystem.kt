@@ -8,9 +8,11 @@ import com.badlogic.gdx.physics.box2d.Body
 import ecs.components.BodyComponent
 import ecs.components.enemy.EnemyComponent
 import ecs.components.gameplay.TransformComponent
+import factories.enemy
 import ktx.ashley.allOf
 import ktx.math.vec2
 import physics.AshleyMappers
+import physics.enemy
 import tru.Assets
 
 class EnemyMovementSystem(private val flocking: Boolean) : IteratingSystem(
@@ -28,12 +30,14 @@ class EnemyMovementSystem(private val flocking: Boolean) : IteratingSystem(
     private val shapeDrawer by lazy { Assets.shapeDrawer }
 
     override fun processEntity(entity: Entity, deltaTime: Float) {
-        val enemyComponent = AshleyMappers.enemy.get(entity)
-        val bodyComponent = AshleyMappers.body.get(entity)
-        if (flocking && AshleyMappers.frustum.has(entity)) {
-            fixFlocking(bodyComponent.body!!)
+        val enemyComponent = entity.enemy()
+        if(enemyComponent.cooldownPropertyCheckIfDone(enemyComponent::stunned, deltaTime)) {
+            val bodyComponent = AshleyMappers.body.get(entity)
+            if (flocking && AshleyMappers.frustum.has(entity)) {
+                fixFlocking(bodyComponent.body!!)
+            }
+            moveEnemy(enemyComponent, bodyComponent)
         }
-        moveEnemy(enemyComponent, bodyComponent)
     }
 
     private fun fixFlocking(body: Body) {

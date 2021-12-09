@@ -9,8 +9,8 @@ import ecs.components.enemy.EnemyComponent
 import ecs.components.gameplay.TransformComponent
 import ecs.components.player.*
 import factories.bullet
-import factories.throwGrenade
 import factories.throwMolotov
+import factories.throwGrenade
 import features.weapons.Weapon
 import features.weapons.WeaponType
 import input.canISeeYouFromHere

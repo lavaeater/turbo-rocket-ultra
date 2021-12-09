@@ -434,7 +434,7 @@ fun lootBox(at: Vector2, lootDrop: List<ILoot>) {
     box2dBody.userData = entity
 }
 
-fun throwMolotov(
+fun throwGrenade(
     at: Vector2,
     towards: Vector2,
     speed: Float,
@@ -468,7 +468,7 @@ fun throwMolotov(
     CounterObject.bulletCount++
 }
 
-fun throwGrenade(
+fun throwMolotov(
     at: Vector2,
     towards: Vector2,
     speed: Float,
