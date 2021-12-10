@@ -33,7 +33,7 @@ class EnemyMovementSystem(private val flocking: Boolean) : IteratingSystem(
         val enemyComponent = entity.enemy()
         if(enemyComponent.cooldownPropertyCheckIfDone(enemyComponent::stunned, deltaTime)) {
             val bodyComponent = AshleyMappers.body.get(entity)
-            if (flocking && AshleyMappers.frustum.has(entity)) {
+            if (flocking && enemyComponent.flock && AshleyMappers.frustum.has(entity)) {
                 fixFlocking(bodyComponent.body!!)
             }
             moveEnemy(enemyComponent, bodyComponent)

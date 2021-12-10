@@ -438,7 +438,8 @@ fun throwGrenade(
     at: Vector2,
     towards: Vector2,
     speed: Float,
-    player: Player) {
+    player: Player
+) {
     val box2dBody = world().body {
         type = BodyDef.BodyType.DynamicBody
         position.set(at)
@@ -472,7 +473,8 @@ fun throwMolotov(
     at: Vector2,
     towards: Vector2,
     speed: Float,
-    player: Player) {
+    player: Player
+) {
     val box2dBody = world().body {
         type = BodyDef.BodyType.DynamicBody
         position.set(at)
@@ -558,13 +560,14 @@ fun enemy(at: Vector2) {
         with<LootDropComponent> {
             WeaponDefinition.weapons.forEach { lootTable.contents.add(WeaponLoot(it, 5f)) }
             lootTable.contents.add(AmmoLoot(AmmoType.NineMilliMeters, 17..51, 10f))
-            lootTable.contents.add(AmmoLoot(AmmoType.FnP90Ammo, 25..150, 10f))
+            lootTable.contents.add(AmmoLoot(AmmoType.FnP90Ammo, 25..75, 10f))
             lootTable.contents.add(AmmoLoot(AmmoType.TwelveGaugeShotgun, 4..18, 10f))
-            lootTable.contents.add(AmmoLoot(AmmoType.Molotov, 4..18, 10f))
+            lootTable.contents.add(AmmoLoot(AmmoType.Molotov, 1..2, 10f))
+            lootTable.contents.add(AmmoLoot(AmmoType.Grenade, 1..2, 10f))
             lootTable.contents.add(
-                NullValue(40f)
+                NullValue(200f)
             )
-            lootTable.count = (1..2).random()
+            lootTable.count = (1..5).random()
         }
         with<SpriteComponent> {
             layer = 1
@@ -601,9 +604,11 @@ fun hackingStation(
         with<HackingComponent>()
         with<ComplexActionComponent> {
             scene2dTable = scene2d.table {
-                label("""
+                label(
+                    """
                     Press the key sequence
-                    to hack the station""".trimMargin())
+                    to hack the station""".trimMargin()
+                )
             }
         }
         with<SpriteComponent> {
@@ -650,21 +655,23 @@ fun boss(at: Vector2, level: Int) {
             rushSpeed = 15f + level * 1.5f
             speed = 10f
             viewDistance = 40f + 5f * level
-            health = 1000f * level
+            health = 2000f * level
+            flock = false
         }
         with<AnimatedCharacterComponent> {
             anims = Assets.bosses.values.random()
         }
         with<LootDropComponent> {
+            WeaponDefinition.weapons.forEach { lootTable.contents.add(WeaponLoot(it, 10f)) }
+            lootTable.contents.add(AmmoLoot(AmmoType.NineMilliMeters, 34..96, 10f))
+            lootTable.contents.add(AmmoLoot(AmmoType.FnP90Ammo, 50..150, 10f))
+            lootTable.contents.add(AmmoLoot(AmmoType.TwelveGaugeShotgun, 8..36, 10f))
+            lootTable.contents.add(AmmoLoot(AmmoType.Molotov, 1..4, 10f))
+            lootTable.contents.add(AmmoLoot(AmmoType.Grenade, 1..4, 10f))
             lootTable.contents.add(
-                AmmoLoot(AmmoType.NineMilliMeters, 6..17, 30f)
+                NullValue(50f)
             )
-            lootTable.contents.add(
-                AmmoLoot(AmmoType.TwelveGaugeShotgun, 4..10, 20f)
-            )
-            lootTable.contents.add(
-                AmmoLoot(AmmoType.FnP90Ammo, 50..150, 10f)
-            )
+            lootTable.count = (3..8).random()
         }
         with<SpriteComponent> {
             layer = 1

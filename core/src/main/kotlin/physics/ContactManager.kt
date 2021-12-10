@@ -25,6 +25,7 @@ import injection.Context.inject
 import input.Button
 import ktx.ashley.allOf
 import ktx.ashley.remove
+import ktx.math.random
 import ktx.scene2d.label
 import ktx.scene2d.table
 import tru.Assets
@@ -406,7 +407,10 @@ class ContactManager : ContactListener {
                     val enemyBody = enemy.body()
                     val distanceVector = enemyBody.worldCenter.cpy().sub(body.worldCenter)
                     val direction = distanceVector.cpy().nor()
-                    enemyBody.applyLinearImpulse(direction.scl(1 / distanceVector.len2() * 500f), enemyBody.worldCenter, true)
+                    val inverseDistance = 1 / distanceVector.len()
+                    enemyComponent.takeDamage((25f..100f).random() * inverseDistance, grenadeComponent.player)
+                    enemyComponent.lastShotAngle  = direction.angleDeg()
+                    enemyBody.applyLinearImpulse(direction.scl(inverseDistance * 500f), enemyBody.worldCenter, true)
                 }
                 grenade.addComponent<DestroyComponent>() //This entity will die and disappear now.
             }

@@ -18,6 +18,7 @@ class BossComponent : Component, Pool.Poolable {
 }
 
 class EnemyComponent : Component, Pool.Poolable {
+    var flock = true
     var lastShotAngle = 0f
     var rushSpeed = 15f
     var fieldOfView = 180f
@@ -74,6 +75,7 @@ class EnemyComponent : Component, Pool.Poolable {
     }
 
     override fun reset() {
+        flock = true
         nextPosition.setZero()
         path.clear()
         needsNewNextPosition = true
