@@ -45,11 +45,11 @@ sealed class Button(val playstationButtonName: String) {
             8 to R3,
             9 to L1,
             10 to R1,
-
             11 to DPadUp,
             12 to DPadDown,
             13 to DPadLeft,
-            14 to DPadRight
+            14 to DPadRight,
+            -1 to Unknown
         )
 
         val buttonsToCodes = codesToButtons.entries.associate { (k,v) -> v to k }.toMap()
