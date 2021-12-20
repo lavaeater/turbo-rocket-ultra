@@ -266,7 +266,7 @@ D1B67A
         CounterObject.numberOfEnemies =  (8f.pow(CounterObject.currentLevel).roundToInt() * 2).coerceAtMost(MAX_ENEMIES)
         CounterObject.maxSpawnedEnemies = CounterObject.numberOfEnemies * 2
         val map = when(level) {
-            1 -> loadMapZero()//loadMapOne()
+            1 -> loadMapOne()
             2 -> loadMapTwo()
             3 -> loadMapThree()
             4 -> loadMapFour()

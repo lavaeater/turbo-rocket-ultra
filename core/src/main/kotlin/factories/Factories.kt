@@ -97,22 +97,24 @@ object Box2dCategories {
 fun gibs(at: Vector2, gibAngle: Float = 1000f) {
     for (i in Assets.enemyGibs) {
         val angle = if (gibAngle == 1000f) (1f..359f).random() else gibAngle
-        val force = vec2(80f, 0f).setAngleDeg(angle + (-25..25).random())
+        val force = vec2(30f, 0f).setAngleDeg(angle + (-25..25).random())
         val gibBody = world().body {
             type = BodyDef.BodyType.DynamicBody
             position.set(at.x - 2f, at.y - 2f)
-            angularVelocity = 180f * degreesToRadians
+            //angularVelocity = 180f * degreesToRadians
             linearDamping = 5f
             box(.3f, .3f) {
-                friction = 1f //Tune
-                density = 10f //tune
+                friction = 10f //Tune
+               // density = 1f //tune
                 filter {
                     categoryBits = Box2dCategories.gibs
                     maskBits = Box2dCategories.whatGibsHit
                 }
             }
         }
-        gibBody.applyLinearImpulse(force, vec2(gibBody.worldCenter.x, gibBody.worldCenter.y), true)
+
+        val vecRange = -1f..1f
+        val localPoint = vec2(vecRange.random(), vecRange.random())
 
         val gibEntity = engine().entity {
             with<SpriteComponent> {
@@ -131,6 +133,8 @@ fun gibs(at: Vector2, gibAngle: Float = 1000f) {
             }
         }
         gibBody.userData = gibEntity
+        gibBody.applyLinearImpulse(force.scl(gibBody.mass), gibBody.getWorldPoint(localPoint).cpy(), true)
+        //gibBody.applyAngularImpulse(50f, true)
     }
 }
 
