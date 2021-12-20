@@ -2,17 +2,27 @@ package ecs.systems
 
 import com.badlogic.ashley.core.Entity
 import com.badlogic.ashley.systems.IteratingSystem
-import com.badlogic.gdx.math.MathUtils
 import com.badlogic.gdx.math.Vector2
 import ecs.components.BodyComponent
+import ecs.components.gameplay.GrenadeComponent
+import ecs.components.gameplay.MolotovComponent
 import ecs.components.gameplay.TransformComponent
+import injection.Context.inject
 import ktx.ashley.allOf
+import ktx.math.vec2
 import map.grid.GridMapSection
 import physics.AshleyMappers
+import physics.ContactManager
+import physics.ContactType
+import physics.has
 
 class PhysicsSystem(priority: Int) :
     IteratingSystem(allOf(BodyComponent::class, TransformComponent::class).get(), priority) {
 
+    val g = -10f //is y up or down?
+    val contactManager by lazy { inject<ContactManager>()}
+
+    @OptIn(ExperimentalStdlibApi::class)
     override fun processEntity(entity: Entity, deltaTime: Float) {
         val bodyComponent = AshleyMappers.body.get(entity)
         val bodyPosition = bodyComponent.body!!.position
@@ -20,6 +30,37 @@ class PhysicsSystem(priority: Int) :
         val transformComponent = AshleyMappers.transform.get(entity)
         transformComponent.position.set(bodyPosition)
         transformComponent.rotation = bodyRotation
+
+        if(transformComponent.feelsGravity) {
+            val body = bodyComponent.body!!
+            /**
+             * We must first accelerate
+             */
+
+
+            if(transformComponent.height > 0f) {
+                transformComponent.verticalSpeed += g * deltaTime
+                transformComponent.height += transformComponent.verticalSpeed//Modify with delta time?
+
+//                val bodySpeed = body.linearVelocity.cpy()
+//                val velChange = transformComponent.verticalSpeed - bodySpeed.y
+//                val impulse = body.mass * velChange
+                body.applyForce(vec2(0f, -g * deltaTime), body.worldCenter, true)
+            } else {
+                transformComponent.verticalSpeed = 0f
+                transformComponent.height = 0f
+                bodyComponent.body!!.linearVelocity = vec2(bodyComponent.body!!.linearVelocity.x, 0f)
+                if(entity.has<GrenadeComponent>()) {
+                    contactManager.handleGrenadeHittingAnything(ContactType.GrenadeHittingAnything(entity))
+                }
+                if(entity.has<MolotovComponent>()) {
+                    contactManager.handleMolotovHittingAnything(ContactType.MolotovHittingAnything(entity))
+                }
+            }
+
+
+
+        }
     }
 }
 

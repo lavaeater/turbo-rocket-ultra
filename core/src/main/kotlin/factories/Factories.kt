@@ -458,7 +458,11 @@ fun throwGrenade(
         with<GrenadeComponent> {
             this.player = player
         }
-        with<TransformComponent> { position.set(box2dBody.position) }
+        with<TransformComponent> {
+            position.set(box2dBody.position)
+            feelsGravity = true
+            verticalSpeed = 5f
+        }
         with<SpriteComponent> {
             layer = 1
             sprite = Assets.molotov //Fix a burning bottle sprite
@@ -496,7 +500,11 @@ fun throwMolotov(
         with<ParticleEffectComponent> {
             effect = Assets.fireEffectPool.obtain()
         }
-        with<TransformComponent> { position.set(box2dBody.position) }
+        with<TransformComponent> {
+            position.set(box2dBody.position)
+            feelsGravity = true
+            verticalSpeed = 5f
+        }
         with<SpriteComponent> {
             layer = 1
             sprite = Assets.molotov //Fix a burning bottle sprite

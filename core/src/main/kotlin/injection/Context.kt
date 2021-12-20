@@ -76,8 +76,9 @@ object Context {
                 setCommandExecutor(CommandExecutor())
                 displayKeyID = Input.Keys.U
             })
+            bindSingleton(ContactManager())
             bindSingleton(createWorld().apply {
-                setContactListener(ContactManager())
+                setContactListener(inject<ContactManager>())
             })
             bindSingleton(AudioPlayer())
             bindSingleton(GridMapManager())

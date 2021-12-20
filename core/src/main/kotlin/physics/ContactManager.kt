@@ -218,22 +218,7 @@ class ContactManager : ContactListener {
                 }
             }
             is ContactType.MolotovHittingAnything -> {
-                val molotov = contactType.molotov
-                val molotovComponent = molotov.getComponent<MolotovComponent>()
-                val body = molotov.getComponent<BodyComponent>().body!!
-                val linearVelocity = body.linearVelocity.cpy()
-                body.linearVelocity = Vector2.Zero.cpy()
-
-                /*
-                Now, add five-ten entities / bodies that fly out in the direction of the molotov
-                and also spew fire particles.
-                 */
-
-                val numOfFireBalls = (10..25).random()
-                for (ballIndex in 0..numOfFireBalls) {
-                    delayedFireEntity(body.worldCenter, linearVelocity, molotovComponent.player)
-                }
-                molotov.addComponent<DestroyComponent>() //This entity will die and disappear now.
+                handleMolotovHittingAnything(contactType)
             }
             is ContactType.SomeEntityAndDamage -> {
                 //No op for now
@@ -383,36 +368,7 @@ class ContactManager : ContactListener {
                 }
             }
             is ContactType.GrenadeHittingAnything -> {
-                //This should be timed using cooldown, not this way
-
-                val grenade = contactType.grenade
-                val grenadeComponent = grenade.getComponent<GrenadeComponent>()
-                val body = grenade.getComponent<BodyComponent>().body!!
-                body.linearVelocity.set(Vector2.Zero)
-
-                /*
-                Now, add five-ten entities / bodies that fly out in the direction of the molotov
-                and also spew fire particles.
-                 */
-
-                //Find all enemies with an area
-                val enemiesInRange = engine().getEntitiesFor(allOf(EnemyComponent::class).get()).filter { it.transform().position.dst(body.worldCenter) < 50f }
-
-                for (enemy in enemiesInRange) {
-                    //apply distance-related damage
-
-                    //apply impulse to enemy body, hopefully sending them away
-                    val enemyComponent = AshleyMappers.enemy.get(enemy)
-                    enemyComponent.startCooldown(enemyComponent::stunned, 0.5f)
-                    val enemyBody = enemy.body()
-                    val distanceVector = enemyBody.worldCenter.cpy().sub(body.worldCenter)
-                    val direction = distanceVector.cpy().nor()
-                    val inverseDistance = 1 / distanceVector.len()
-                    enemyComponent.takeDamage((25f..100f).random() * inverseDistance, grenadeComponent.player)
-                    enemyComponent.lastShotAngle  = direction.angleDeg()
-                    enemyBody.applyLinearImpulse(direction.scl(inverseDistance * 500f), enemyBody.worldCenter, true)
-                }
-                grenade.addComponent<DestroyComponent>() //This entity will die and disappear now.
+                handleGrenadeHittingAnything(contactType)
             }
         }
 
@@ -420,6 +376,60 @@ class ContactManager : ContactListener {
             val entity = contact.getEntityFor<BulletComponent>()
             entity.add(DestroyComponent())
         }
+    }
+
+    @OptIn(ExperimentalStdlibApi::class)
+    fun handleGrenadeHittingAnything(contactType: ContactType.GrenadeHittingAnything) {
+//This should be timed using cooldown, not this way
+
+        val grenade = contactType.grenade
+        val grenadeComponent = grenade.getComponent<GrenadeComponent>()
+        val body = grenade.getComponent<BodyComponent>().body!!
+        body.linearVelocity.set(Vector2.Zero)
+
+        /*
+        Now, add five-ten entities / bodies that fly out in the direction of the molotov
+        and also spew fire particles.
+         */
+
+        //Find all enemies with an area
+        val enemiesInRange = engine().getEntitiesFor(allOf(EnemyComponent::class).get()).filter { it.transform().position.dst(body.worldCenter) < 50f }
+
+        for (enemy in enemiesInRange) {
+            //apply distance-related damage
+
+            //apply impulse to enemy body, hopefully sending them away
+            val enemyComponent = AshleyMappers.enemy.get(enemy)
+            enemyComponent.startCooldown(enemyComponent::stunned, 0.5f)
+            val enemyBody = enemy.body()
+            val distanceVector = enemyBody.worldCenter.cpy().sub(body.worldCenter)
+            val direction = distanceVector.cpy().nor()
+            val inverseDistance = 1 / distanceVector.len()
+            enemyComponent.takeDamage((25f..100f).random() * inverseDistance, grenadeComponent.player)
+            enemyComponent.lastShotAngle  = direction.angleDeg()
+            enemyBody.applyLinearImpulse(direction.scl(inverseDistance * 500f), enemyBody.worldCenter, true)
+        }
+        grenade.addComponent<DestroyComponent>() //This entity will die and disappear now.
+    }
+
+    @OptIn(ExperimentalStdlibApi::class)
+    fun handleMolotovHittingAnything(contactType: ContactType.MolotovHittingAnything) {
+        val molotov = contactType.molotov
+        val molotovComponent = molotov.getComponent<MolotovComponent>()
+        val body = molotov.getComponent<BodyComponent>().body!!
+        val linearVelocity = body.linearVelocity.cpy()
+        body.linearVelocity = Vector2.Zero.cpy()
+
+        /*
+        Now, add five-ten entities / bodies that fly out in the direction of the molotov
+        and also spew fire particles.
+         */
+
+        val numOfFireBalls = (10..25).random()
+        for (ballIndex in 0..numOfFireBalls) {
+            delayedFireEntity(body.worldCenter, linearVelocity, molotovComponent.player)
+        }
+        molotov.addComponent<DestroyComponent>() //This entity will die and disappear now.
     }
 
     override fun endContact(contact: Contact) {
