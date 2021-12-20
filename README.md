@@ -1,7 +1,10 @@
 # turbo-rocket-ultra
 
 ## Not replacing Box2D with JBump
-Whaat? Not for now, at least. I have Box2D working nicely and I'm very happy with performance etc. What I will do now is try to instead work on the 2D / 3D projection of the game - partly because I think that the look and feel of a game is completely central to playability. So, I have thrown items, well, they should fall to the ground. implementing that tiny, tiny feature would make the game look insanely good. 
+Whaat? Not for now, at least. I have Box2D working nicely and I'm very happy with performance etc. What I will do now is try to instead work on the 2D / 3D projection of the game - partly because I think that the look and feel of a game is completely central to playability. So, I have thrown items, well, they should fall to the ground. implementing that tiny, tiny feature would make the game look insanely good. Or at least better
+
+So, what do we need to do?
+- [
 
 ## Replacing Box2D with JBump
 
@@ -821,7 +824,7 @@ Det här gör vi på det gamla vanliga sättet. Vi bygger en box2d-värld, vi kl
 
 Oj oj oj,  vad roligt. Vi kan göra en box2d-kropp med leder, per tutorials etc. Superkul ju.
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbNTMxMDc1NTQxLC04Nzg1MjE1MzYsMTgxOT
+eyJoaXN0b3J5IjpbLTE0NzcxNzQ4LC04Nzg1MjE1MzYsMTgxOT
 YwNzU3MCwtNzAyNDUxNjQ1LC04MzkwMjEzNzcsLTk3ODM2NjQ5
 OSwxMDkxNDc5NzQ3LDEzMzY2NzY5NDUsNTk2MjI1MzQsMzI4Nz
 E4NDI0LC0xNDg1Mzk5NzgsMTEwNDI2NjgyMCwxNzY5MjYxNTEy
