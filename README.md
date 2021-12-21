@@ -34,6 +34,18 @@ It also appears that the mouse position thing was so low hanging that I had alre
 
 ### Soundscape II - the Moaning
 So, some ambient sound effects, some zombie sound effects, explosions, screaming, burning, etc.
+Make a list of sound effects that we absolutely need and then tick them off as you find them
+- [ ] Moans
+- [ ] Shuffling feet
+- [ ] Screaming Boss
+- [ ] Burning flames
+- [ ] Gasoline explosion
+- [ ] Grenade impact
+- [ ] Limbs being torn
+- [ ] Screaming, panicky Zombies
+- [ ] Zombie being spawned
+- [ ] Objective Reached
+- [ ] Magazine empty (em
 
 ### Hud II
 Make the HUD pretty and useful and legible. Work on more simple databinding stuff and Scene2D extensions etc.
@@ -902,11 +914,11 @@ Det här gör vi på det gamla vanliga sättet. Vi bygger en box2d-värld, vi kl
 
 Oj oj oj,  vad roligt. Vi kan göra en box2d-kropp med leder, per tutorials etc. Superkul ju.
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbMTg1MTE0MjU1MCwtNTY3OTUwNzI0LC0zND
-U4NDI2NTIsLTE0NTY3MjY1MDgsLTExNzEyNjE3MjQsMTIzMzA4
-NDEwNSwtMTI5OTc4OTg4OCwxNjc0OTc3ODE5LC0xNDU2Mzg2Mj
-E1LDE3NDc3NjExMDQsLTE1MjM4Mzg4MCwtODc4NTIxNTM2LDE4
-MTk2MDc1NzAsLTcwMjQ1MTY0NSwtODM5MDIxMzc3LC05NzgzNj
-Y0OTksMTA5MTQ3OTc0NywxMzM2Njc2OTQ1LDU5NjIyNTM0LDMy
-ODcxODQyNF19
+eyJoaXN0b3J5IjpbLTE1ODA2NDQ0MDQsMTg1MTE0MjU1MCwtNT
+Y3OTUwNzI0LC0zNDU4NDI2NTIsLTE0NTY3MjY1MDgsLTExNzEy
+NjE3MjQsMTIzMzA4NDEwNSwtMTI5OTc4OTg4OCwxNjc0OTc3OD
+E5LC0xNDU2Mzg2MjE1LDE3NDc3NjExMDQsLTE1MjM4Mzg4MCwt
+ODc4NTIxNTM2LDE4MTk2MDc1NzAsLTcwMjQ1MTY0NSwtODM5MD
+IxMzc3LC05NzgzNjY0OTksMTA5MTQ3OTc0NywxMzM2Njc2OTQ1
+LDU5NjIyNTM0XX0=
 -->
