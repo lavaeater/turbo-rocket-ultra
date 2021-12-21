@@ -392,6 +392,9 @@ class ContactManager : ContactListener {
         and also spew fire particles.
          */
 
+        //Add explosion effect entity
+        explosionEffectEntity(body.worldCenter)
+
         //Find all enemies with an area
         val enemiesInRange = engine().getEntitiesFor(allOf(EnemyComponent::class).get()).filter { it.transform().position.dst(body.worldCenter) < 50f }
 

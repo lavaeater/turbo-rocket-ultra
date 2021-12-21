@@ -113,6 +113,5 @@ class KeyboardInputSystem :
 
     private fun updateMouseInput(position: Vector2) {
         keyboardControl.setAimVector(Gdx.input.x, Gdx.input.y, position)
-
     }
 }

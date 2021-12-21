@@ -166,6 +166,13 @@ object Assets : Disposable {
         ParticleEffectPool(pe, 1000, 3000)
     }
 
+    val explosionEffectPool: ParticleEffectPool by lazy {
+        val pe = ParticleEffect()
+        pe.load(Gdx.files.internal("particles/explosion/explosion.p"), Gdx.files.internal("particles/explosion"))
+        pe.scaleEffect(0.025f)
+        ParticleEffectPool(pe, 10, 100)
+    }
+
     val arrows by lazy {
         mapOf(
             MapDirection.North to TextureRegion(arrowTexture, 0, 0, 16, 16),

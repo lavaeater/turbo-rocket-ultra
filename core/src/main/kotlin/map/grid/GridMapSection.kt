@@ -78,8 +78,8 @@ class GridMapSection(val coordinate: Coordinate, val connections: Set<MapDirecti
     }
 
     companion object {
-        val width = 32
-        val height = 32
+        val width = 6
+        val height = 6
         val tileWidth = 16f
         val tileHeight = 16f
         val tileScale = 1/4f

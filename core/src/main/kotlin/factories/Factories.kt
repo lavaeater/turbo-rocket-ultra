@@ -105,7 +105,7 @@ fun gibs(at: Vector2, gibAngle: Float = 1000f) {
             linearDamping = 5f
             box(.3f, .1f) {
                 friction = 10f //Tune
-               // density = 1f //tune
+                // density = 1f //tune
                 filter {
                     categoryBits = Box2dCategories.gibs
                     maskBits = Box2dCategories.whatGibsHit
@@ -152,6 +152,21 @@ fun delayedFireEntity(at: Vector2, linearVelocity: Vector2, player: Player) {
             creator = {
                 fireEntity(at, linearVelocity, player)
             }
+        }
+    }
+}
+
+fun explosionEffectEntity(at: Vector2) {
+    engine().entity {
+        with<TransformComponent> {
+            position.set(at)
+        }
+        with<ParticleEffectComponent> {
+            effect = Assets.explosionEffectPool.obtain()
+            rotation = 0f
+        }
+        with<DestroyAfterCoolDownComponent> {
+            coolDown = 2f
         }
     }
 }
