@@ -5,16 +5,32 @@ So, I am hesitating when it comes to the oblique projection work. I think it has
 
 Write a short text of what each does and so on.
 
+I have now prioritized this list according to how much I think it adds to the games polish and / or value, then how fun it would be to actually implement (this is supposed to be fun) and then taking into account the effort I think would be involved. I will now simply do them from top to bottom until I get to the line below, then I will re-evaluate everything.
+
+It also appears that the mouse position thing was so low hanging that I had already fixed it.
+
+- [x] Add explosion particle effect to grenade collision
+- [x] Fix mouse position by polling position instead of event-driven system
+- [ ] Flip weapon sprites when facing west
+- [ ] Soundscape II - the Moaning
+- [ ] Objectives II, the sequel
+- [ ] Fix some warnings
+--------
+- [ ] Bat swing
 - [ ] HUD II, Header Upper Displayer <- rediscover MVVM pattern, two-way binding
 - [ ] More Enemy Sprites (generate them)
 - [ ] Lightmaps for sprites
-- [ ] Soundscape II - the Moaning
 - [ ] Enemy AI II, with avoiding walls
-- [ ] Objectives II, the sequel
 - [ ] Player graphics made from components / parts etc.
 - [ ] Vehicles would be cool
 - [ ] Build Towers
-
+- [ ] Gibs and Body Parts II - blood trails and audio
+- [ ] Zombies throwing projectiles
+- [ ] Some other type of enemy
+- [ ] Zombies with guns <- this would be genuinely cool, actually
+- [ ] Nicer Setup UI, using Scene2d perhaps
+- [ ] Puzzle obstacles / machines
+- [ ] Oblique Projection
 
 ### Hud II
 Make the HUD pretty and useful and legible. Work on more simple databinding stuff and Scene2D extensions etc.
@@ -42,16 +58,6 @@ This is like the holy grail of features. This is what all this started with, the
 
 ### Build Towers
 Well, we basically have towers, we basically can build them, this is about making that feature happen and having at least two or three types of towers with nice sprites that we can build and that do different things.
-- [ ] Gibs and Body Parts II - blood trails and audio
-- [ ] Flip weapon sprites when facing west
-- [ ] Add explosion particle effect to grenade collision
-- [ ] Zombies throwing projectiles
-- [ ] Some other type of enemy
-- [ ] Zombies with guns <- this would be genuinely cool, actually
-- [ ] Bat swing
-- [ ] Nicer Setup UI, using Scene2d perhaps
-- [ ] Fix mouse position by polling position instead of event-driven system
-- [ ] Puzzle obstacles / machines
 
 ### Gibs and Body Parts II - blood trails and audio
 What it sounds like. I want smeared blood and a cool sound effect to go with it.
@@ -76,6 +82,15 @@ The bat swing is all about execution. It is an animation of a box2d object and t
 
 ### Nicer Setup UI, using Scene2d
 So, just make a better setup screen, add icons, texts etc that explains what should happen etc.
+
+### Fix mouse position using polling
+Well, this might be even lower hanging than the previous fruit mentioned in that context. 
+
+### Puzzle obstacles
+Perhaps stuff where someone has to stand on a button to open a door, whatever. Also add some crushing machines and stuff. 
+
+### Oblique Projection
+This might not be as important as I want it to be.
 
 ## Not replacing Box2D with JBump
 Whaat? Not for now, at least. I have Box2D working nicely and I'm very happy with performance etc. What I will do now is try to instead work on the 2D / 3D projection of the game - partly because I think that the look and feel of a game is completely central to playability. So, I have thrown items, well, they should fall to the ground. implementing that tiny, tiny feature would make the game look insanely good. Or at least better
@@ -887,11 +902,11 @@ Det här gör vi på det gamla vanliga sättet. Vi bygger en box2d-värld, vi kl
 
 Oj oj oj,  vad roligt. Vi kan göra en box2d-kropp med leder, per tutorials etc. Superkul ju.
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbLTEyOTk3ODk4ODgsMTY3NDk3NzgxOSwtMT
-Q1NjM4NjIxNSwxNzQ3NzYxMTA0LC0xNTIzODM4ODAsLTg3ODUy
-MTUzNiwxODE5NjA3NTcwLC03MDI0NTE2NDUsLTgzOTAyMTM3Ny
-wtOTc4MzY2NDk5LDEwOTE0Nzk3NDcsMTMzNjY3Njk0NSw1OTYy
-MjUzNCwzMjg3MTg0MjQsLTE0ODUzOTk3OCwxMTA0MjY2ODIwLD
-E3NjkyNjE1MTIsMjMyMDQ3Nzg5LDEwMTEzNTc2NiwzMjE5Nzkx
-MThdfQ==
+eyJoaXN0b3J5IjpbLTU2Nzk1MDcyNCwtMzQ1ODQyNjUyLC0xND
+U2NzI2NTA4LC0xMTcxMjYxNzI0LDEyMzMwODQxMDUsLTEyOTk3
+ODk4ODgsMTY3NDk3NzgxOSwtMTQ1NjM4NjIxNSwxNzQ3NzYxMT
+A0LC0xNTIzODM4ODAsLTg3ODUyMTUzNiwxODE5NjA3NTcwLC03
+MDI0NTE2NDUsLTgzOTAyMTM3NywtOTc4MzY2NDk5LDEwOTE0Nz
+k3NDcsMTMzNjY3Njk0NSw1OTYyMjUzNCwzMjg3MTg0MjQsLTE0
+ODUzOTk3OF19
 -->
