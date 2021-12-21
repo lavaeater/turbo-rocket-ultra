@@ -11,7 +11,7 @@ It also appears that the mouse position thing was so low hanging that I had alre
 
 - [x] Add explosion particle effect to grenade collision
 - [x] Fix mouse position by polling position instead of event-driven system
-- [ ] Flip weapon sprites when facing west
+- [x] Flip weapon sprites when facing west
 - [ ] Soundscape II - the Moaning
 - [ ] Objectives II, the sequel
 - [ ] Fix some warnings
@@ -32,6 +32,9 @@ It also appears that the mouse position thing was so low hanging that I had alre
 - [ ] Puzzle obstacles / machines
 - [ ] Oblique Projection
 
+### Soundscape II - the Moaning
+So, some ambient sound effects, some zombie sound effects, explosions, screaming, burning, etc.
+
 ### Hud II
 Make the HUD pretty and useful and legible. Work on more simple databinding stuff and Scene2D extensions etc.
 
@@ -40,9 +43,6 @@ Go back to the character editor and make sure we have access to female bodies as
 
 ### Lightmaps for sprites
 To really make use of the box2d light stuff we could use some lightmaps for the sprites. This would take some learning.
-
-### Soundscape II - the Moaning
-So, some ambient sound effects, some zombie sound effects, explosions, screaming, burning, etc.
 
 ### Enemy AI II
 Make the enemy handle walls and obstacles better. It shouldn't be that hard. In fact, we could make a goddamned A* graph of the entire map space that is passable terrain and that would in fact solve the problem. Or at least make a graph of points that makes sure the enemy does not walk into walls, it could be done. Hey, every section could have a "get valid points"-method. Also, make enemies more aggressive towards players, now they seem to ignore them quite a bit, perhaps sensors are turned off or something.
@@ -902,11 +902,11 @@ Det här gör vi på det gamla vanliga sättet. Vi bygger en box2d-värld, vi kl
 
 Oj oj oj,  vad roligt. Vi kan göra en box2d-kropp med leder, per tutorials etc. Superkul ju.
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbLTU2Nzk1MDcyNCwtMzQ1ODQyNjUyLC0xND
-U2NzI2NTA4LC0xMTcxMjYxNzI0LDEyMzMwODQxMDUsLTEyOTk3
-ODk4ODgsMTY3NDk3NzgxOSwtMTQ1NjM4NjIxNSwxNzQ3NzYxMT
-A0LC0xNTIzODM4ODAsLTg3ODUyMTUzNiwxODE5NjA3NTcwLC03
-MDI0NTE2NDUsLTgzOTAyMTM3NywtOTc4MzY2NDk5LDEwOTE0Nz
-k3NDcsMTMzNjY3Njk0NSw1OTYyMjUzNCwzMjg3MTg0MjQsLTE0
-ODUzOTk3OF19
+eyJoaXN0b3J5IjpbMTg1MTE0MjU1MCwtNTY3OTUwNzI0LC0zND
+U4NDI2NTIsLTE0NTY3MjY1MDgsLTExNzEyNjE3MjQsMTIzMzA4
+NDEwNSwtMTI5OTc4OTg4OCwxNjc0OTc3ODE5LC0xNDU2Mzg2Mj
+E1LDE3NDc3NjExMDQsLTE1MjM4Mzg4MCwtODc4NTIxNTM2LDE4
+MTk2MDc1NzAsLTcwMjQ1MTY0NSwtODM5MDIxMzc3LC05NzgzNj
+Y0OTksMTA5MTQ3OTc0NywxMzM2Njc2OTQ1LDU5NjIyNTM0LDMy
+ODcxODQyNF19
 -->
