@@ -6,6 +6,9 @@ So, I am hesitating when it comes to the oblique projection work. I think it has
 Write a short text of what each does and so on.
 
 - [ ] Fix mouse position by polling position instead of event-driven system
+- [ ] Add explosion particle effect to grenade collision
+- [ ] Flip weapon sprites when facing west
+- [ ] Bat swing
 - [ ] HUD II, Header Upper Displayer <- rediscover MVVM pattern, two-way binding
 - [ ] More Enemy Sprites (generate them)
 - [ ] Lightmaps for sprites
@@ -16,12 +19,9 @@ Write a short text of what each does and so on.
 - [ ] Vehicles would be cool
 - [ ] Build Towers
 - [ ] Gibs and Body Parts II - blood trails and audio
-- [ ] Flip weapon sprites when facing west
-- [ ] Add explosion particle effect to grenade collision
 - [ ] Zombies throwing projectiles
 - [ ] Some other type of enemy
 - [ ] Zombies with guns <- this would be genuinely cool, actually
-- [ ] Bat swing
 - [ ] Nicer Setup UI, using Scene2d perhaps
 - [ ] Puzzle obstacles / machines
 
@@ -892,7 +892,7 @@ Det här gör vi på det gamla vanliga sättet. Vi bygger en box2d-värld, vi kl
 
 Oj oj oj,  vad roligt. Vi kan göra en box2d-kropp med leder, per tutorials etc. Superkul ju.
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbMTU4MTEyNjgzNSwtMTI5OTc4OTg4OCwxNj
+eyJoaXN0b3J5IjpbMTIzMzA4NDEwNSwtMTI5OTc4OTg4OCwxNj
 c0OTc3ODE5LC0xNDU2Mzg2MjE1LDE3NDc3NjExMDQsLTE1MjM4
 Mzg4MCwtODc4NTIxNTM2LDE4MTk2MDc1NzAsLTcwMjQ1MTY0NS
 wtODM5MDIxMzc3LC05NzgzNjY0OTksMTA5MTQ3OTc0NywxMzM2
