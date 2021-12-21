@@ -77,6 +77,9 @@ The bat swing is all about execution. It is an animation of a box2d object and t
 ### Nicer Setup UI, using Scene2d
 So, just make a better setup screen, add icons, texts etc that explains what should happen etc.
 
+### Fix mouse position using polling
+Well, this might be even lower hanging than the previous fruit mentioned in that context. 
+
 ## Not replacing Box2D with JBump
 Whaat? Not for now, at least. I have Box2D working nicely and I'm very happy with performance etc. What I will do now is try to instead work on the 2D / 3D projection of the game - partly because I think that the look and feel of a game is completely central to playability. So, I have thrown items, well, they should fall to the ground. implementing that tiny, tiny feature would make the game look insanely good. Or at least better
 
@@ -887,11 +890,11 @@ Det här gör vi på det gamla vanliga sättet. Vi bygger en box2d-värld, vi kl
 
 Oj oj oj,  vad roligt. Vi kan göra en box2d-kropp med leder, per tutorials etc. Superkul ju.
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbLTEyOTk3ODk4ODgsMTY3NDk3NzgxOSwtMT
-Q1NjM4NjIxNSwxNzQ3NzYxMTA0LC0xNTIzODM4ODAsLTg3ODUy
-MTUzNiwxODE5NjA3NTcwLC03MDI0NTE2NDUsLTgzOTAyMTM3Ny
-wtOTc4MzY2NDk5LDEwOTE0Nzk3NDcsMTMzNjY3Njk0NSw1OTYy
-MjUzNCwzMjg3MTg0MjQsLTE0ODUzOTk3OCwxMTA0MjY2ODIwLD
-E3NjkyNjE1MTIsMjMyMDQ3Nzg5LDEwMTEzNTc2NiwzMjE5Nzkx
-MThdfQ==
+eyJoaXN0b3J5IjpbMjM4MTczOTUsLTEyOTk3ODk4ODgsMTY3ND
+k3NzgxOSwtMTQ1NjM4NjIxNSwxNzQ3NzYxMTA0LC0xNTIzODM4
+ODAsLTg3ODUyMTUzNiwxODE5NjA3NTcwLC03MDI0NTE2NDUsLT
+gzOTAyMTM3NywtOTc4MzY2NDk5LDEwOTE0Nzk3NDcsMTMzNjY3
+Njk0NSw1OTYyMjUzNCwzMjg3MTg0MjQsLTE0ODUzOTk3OCwxMT
+A0MjY2ODIwLDE3NjkyNjE1MTIsMjMyMDQ3Nzg5LDEwMTEzNTc2
+Nl19
 -->
