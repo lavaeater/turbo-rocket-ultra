@@ -47,6 +47,7 @@ import statemachine.StateMachine
 import story.FactsOfTheWorld
 import story.StoryManager
 import story.fact.Facts
+import tru.Assets
 import ui.IUserInterface
 import kotlin.math.pow
 import kotlin.math.roundToInt
@@ -91,6 +92,9 @@ class GameScreen(private val gameState: StateMachine<GameState, GameEvent>) : Kt
 
         ui.reset()
         ui.show()
+
+        Assets.music.first().isLooping = true
+        Assets.music.first().play()
     }
 
     private fun loadMapZero() : Pair<Map<Coordinate, GridMapSection>, TileGraph> {
