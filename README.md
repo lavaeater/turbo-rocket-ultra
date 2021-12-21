@@ -7,6 +7,8 @@ Write a short text of what each does and so on.
 
 I have now prioritized this list according to how much I think it adds to the games polish and / or value, then how fun it would be to actually implement (this is supposed to be fun) and then taking into account the effort I think would be involved. I will now simply do them from top to bottom until I get to the line below, then I will re-evaluate everything.
 
+It also appears that the mouse position thing was 
+
 - [ ] Fix mouse position by polling position instead of event-driven system
 - [ ] Add explosion particle effect to grenade collision
 - [ ] Flip weapon sprites when facing west
@@ -899,11 +901,11 @@ Det här gör vi på det gamla vanliga sättet. Vi bygger en box2d-värld, vi kl
 
 Oj oj oj,  vad roligt. Vi kan göra en box2d-kropp med leder, per tutorials etc. Superkul ju.
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbLTE0NTY3MjY1MDgsLTExNzEyNjE3MjQsMT
-IzMzA4NDEwNSwtMTI5OTc4OTg4OCwxNjc0OTc3ODE5LC0xNDU2
-Mzg2MjE1LDE3NDc3NjExMDQsLTE1MjM4Mzg4MCwtODc4NTIxNT
-M2LDE4MTk2MDc1NzAsLTcwMjQ1MTY0NSwtODM5MDIxMzc3LC05
-NzgzNjY0OTksMTA5MTQ3OTc0NywxMzM2Njc2OTQ1LDU5NjIyNT
-M0LDMyODcxODQyNCwtMTQ4NTM5OTc4LDExMDQyNjY4MjAsMTc2
-OTI2MTUxMl19
+eyJoaXN0b3J5IjpbLTExOTM3Nzk5NTUsLTE0NTY3MjY1MDgsLT
+ExNzEyNjE3MjQsMTIzMzA4NDEwNSwtMTI5OTc4OTg4OCwxNjc0
+OTc3ODE5LC0xNDU2Mzg2MjE1LDE3NDc3NjExMDQsLTE1MjM4Mz
+g4MCwtODc4NTIxNTM2LDE4MTk2MDc1NzAsLTcwMjQ1MTY0NSwt
+ODM5MDIxMzc3LC05NzgzNjY0OTksMTA5MTQ3OTc0NywxMzM2Nj
+c2OTQ1LDU5NjIyNTM0LDMyODcxODQyNCwtMTQ4NTM5OTc4LDEx
+MDQyNjY4MjBdfQ==
 -->
