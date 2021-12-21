@@ -24,6 +24,7 @@ Write a short text of what each does and so on.
 - [ ] Zombies with guns <- this would be genuinely cool, actually
 - [ ] Nicer Setup UI, using Scene2d perhaps
 - [ ] Puzzle obstacles / machines
+- [ ] Oblique Projection
 
 ### Hud II
 Make the HUD pretty and useful and legible. Work on more simple databinding stuff and Scene2D extensions etc.
@@ -81,6 +82,8 @@ Well, this might be even lower hanging than the previous fruit mentioned in that
 
 ### Puzzle obstacles
 Perhaps stuff where someone has to stand on a button to open a door, whatever. Also add some crushing machines and stuff. 
+
+### Obliq
 
 ## Not replacing Box2D with JBump
 Whaat? Not for now, at least. I have Box2D working nicely and I'm very happy with performance etc. What I will do now is try to instead work on the 2D / 3D projection of the game - partly because I think that the look and feel of a game is completely central to playability. So, I have thrown items, well, they should fall to the ground. implementing that tiny, tiny feature would make the game look insanely good. Or at least better
@@ -892,11 +895,11 @@ Det här gör vi på det gamla vanliga sättet. Vi bygger en box2d-värld, vi kl
 
 Oj oj oj,  vad roligt. Vi kan göra en box2d-kropp med leder, per tutorials etc. Superkul ju.
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbMTIzMzA4NDEwNSwtMTI5OTc4OTg4OCwxNj
-c0OTc3ODE5LC0xNDU2Mzg2MjE1LDE3NDc3NjExMDQsLTE1MjM4
-Mzg4MCwtODc4NTIxNTM2LDE4MTk2MDc1NzAsLTcwMjQ1MTY0NS
-wtODM5MDIxMzc3LC05NzgzNjY0OTksMTA5MTQ3OTc0NywxMzM2
-Njc2OTQ1LDU5NjIyNTM0LDMyODcxODQyNCwtMTQ4NTM5OTc4LD
-ExMDQyNjY4MjAsMTc2OTI2MTUxMiwyMzIwNDc3ODksMTAxMTM1
-NzY2XX0=
+eyJoaXN0b3J5IjpbNTkxMzczNTYyLDEyMzMwODQxMDUsLTEyOT
+k3ODk4ODgsMTY3NDk3NzgxOSwtMTQ1NjM4NjIxNSwxNzQ3NzYx
+MTA0LC0xNTIzODM4ODAsLTg3ODUyMTUzNiwxODE5NjA3NTcwLC
+03MDI0NTE2NDUsLTgzOTAyMTM3NywtOTc4MzY2NDk5LDEwOTE0
+Nzk3NDcsMTMzNjY3Njk0NSw1OTYyMjUzNCwzMjg3MTg0MjQsLT
+E0ODUzOTk3OCwxMTA0MjY2ODIwLDE3NjkyNjE1MTIsMjMyMDQ3
+Nzg5XX0=
 -->
