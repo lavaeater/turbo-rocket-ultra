@@ -14,7 +14,16 @@ Write a short text of what each does and so on.
 - [ ] Player graphics made from components / parts etc.
 - [ ] Vehicles would be cool
 - [ ] Build Towers
-
+- [ ] Gibs and Body Parts II - blood trails and audio
+- [ ] Flip weapon sprites when facing west
+- [ ] Add explosion particle effect to grenade collision
+- [ ] Zombies throwing projectiles
+- [ ] Some other type of enemy
+- [ ] Zombies with guns <- this would be genuinely cool, actually
+- [ ] Bat swing
+- [ ] Nicer Setup UI, using Scene2d perhaps
+- [ ] Fix mouse position by polling position instead of event-driven system
+- [ ] Puzzle obstacles / machines
 
 ### Hud II
 Make the HUD pretty and useful and legible. Work on more simple databinding stuff and Scene2D extensions etc.
@@ -42,16 +51,6 @@ This is like the holy grail of features. This is what all this started with, the
 
 ### Build Towers
 Well, we basically have towers, we basically can build them, this is about making that feature happen and having at least two or three types of towers with nice sprites that we can build and that do different things.
-- [ ] Gibs and Body Parts II - blood trails and audio
-- [ ] Flip weapon sprites when facing west
-- [ ] Add explosion particle effect to grenade collision
-- [ ] Zombies throwing projectiles
-- [ ] Some other type of enemy
-- [ ] Zombies with guns <- this would be genuinely cool, actually
-- [ ] Bat swing
-- [ ] Nicer Setup UI, using Scene2d perhaps
-- [ ] Fix mouse position by polling position instead of event-driven system
-- [ ] Puzzle obstacles / machines
 
 ### Gibs and Body Parts II - blood trails and audio
 What it sounds like. I want smeared blood and a cool sound effect to go with it.
@@ -79,6 +78,9 @@ So, just make a better setup screen, add icons, texts etc that explains what sho
 
 ### Fix mouse position using polling
 Well, this might be even lower hanging than the previous fruit mentioned in that context. 
+
+### Puzzle obstacles
+Perhaps stuff where someone has to stand on a button to open a door, whatever. Also add some crushing machines and stuff. 
 
 ## Not replacing Box2D with JBump
 Whaat? Not for now, at least. I have Box2D working nicely and I'm very happy with performance etc. What I will do now is try to instead work on the 2D / 3D projection of the game - partly because I think that the look and feel of a game is completely central to playability. So, I have thrown items, well, they should fall to the ground. implementing that tiny, tiny feature would make the game look insanely good. Or at least better
@@ -890,11 +892,11 @@ Det här gör vi på det gamla vanliga sättet. Vi bygger en box2d-värld, vi kl
 
 Oj oj oj,  vad roligt. Vi kan göra en box2d-kropp med leder, per tutorials etc. Superkul ju.
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbMjM4MTczOTUsLTEyOTk3ODk4ODgsMTY3ND
-k3NzgxOSwtMTQ1NjM4NjIxNSwxNzQ3NzYxMTA0LC0xNTIzODM4
-ODAsLTg3ODUyMTUzNiwxODE5NjA3NTcwLC03MDI0NTE2NDUsLT
-gzOTAyMTM3NywtOTc4MzY2NDk5LDEwOTE0Nzk3NDcsMTMzNjY3
-Njk0NSw1OTYyMjUzNCwzMjg3MTg0MjQsLTE0ODUzOTk3OCwxMT
-A0MjY2ODIwLDE3NjkyNjE1MTIsMjMyMDQ3Nzg5LDEwMTEzNTc2
-Nl19
+eyJoaXN0b3J5IjpbMTk1MjQwODk5NywtMTI5OTc4OTg4OCwxNj
+c0OTc3ODE5LC0xNDU2Mzg2MjE1LDE3NDc3NjExMDQsLTE1MjM4
+Mzg4MCwtODc4NTIxNTM2LDE4MTk2MDc1NzAsLTcwMjQ1MTY0NS
+wtODM5MDIxMzc3LC05NzgzNjY0OTksMTA5MTQ3OTc0NywxMzM2
+Njc2OTQ1LDU5NjIyNTM0LDMyODcxODQyNCwtMTQ4NTM5OTc4LD
+ExMDQyNjY4MjAsMTc2OTI2MTUxMiwyMzIwNDc3ODksMTAxMTM1
+NzY2XX0=
 -->
