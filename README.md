@@ -9,7 +9,7 @@ I have now prioritized this list according to how much I think it adds to the ga
 
 It also appears that the mouse position thing was so low hanging that I had already fixed it.
 
-- [ ] Add explosion particle effect to grenade collision
+- [x] Add explosion particle effect to grenade collision
 - [x] Fix mouse position by polling position instead of event-driven system
 - [ ] Flip weapon sprites when facing west
 - [ ] Soundscape II - the Moaning
@@ -902,11 +902,11 @@ Det här gör vi på det gamla vanliga sättet. Vi bygger en box2d-värld, vi kl
 
 Oj oj oj,  vad roligt. Vi kan göra en box2d-kropp med leder, per tutorials etc. Superkul ju.
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbLTM0NTg0MjY1MiwtMTQ1NjcyNjUwOCwtMT
-E3MTI2MTcyNCwxMjMzMDg0MTA1LC0xMjk5Nzg5ODg4LDE2NzQ5
-Nzc4MTksLTE0NTYzODYyMTUsMTc0Nzc2MTEwNCwtMTUyMzgzOD
-gwLC04Nzg1MjE1MzYsMTgxOTYwNzU3MCwtNzAyNDUxNjQ1LC04
-MzkwMjEzNzcsLTk3ODM2NjQ5OSwxMDkxNDc5NzQ3LDEzMzY2Nz
-Y5NDUsNTk2MjI1MzQsMzI4NzE4NDI0LC0xNDg1Mzk5NzgsMTEw
-NDI2NjgyMF19
+eyJoaXN0b3J5IjpbLTU2Nzk1MDcyNCwtMzQ1ODQyNjUyLC0xND
+U2NzI2NTA4LC0xMTcxMjYxNzI0LDEyMzMwODQxMDUsLTEyOTk3
+ODk4ODgsMTY3NDk3NzgxOSwtMTQ1NjM4NjIxNSwxNzQ3NzYxMT
+A0LC0xNTIzODM4ODAsLTg3ODUyMTUzNiwxODE5NjA3NTcwLC03
+MDI0NTE2NDUsLTgzOTAyMTM3NywtOTc4MzY2NDk5LDEwOTE0Nz
+k3NDcsMTMzNjY3Njk0NSw1OTYyMjUzNCwzMjg3MTg0MjQsLTE0
+ODUzOTk3OF19
 -->
