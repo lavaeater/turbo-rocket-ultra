@@ -83,7 +83,8 @@ Well, this might be even lower hanging than the previous fruit mentioned in that
 ### Puzzle obstacles
 Perhaps stuff where someone has to stand on a button to open a door, whatever. Also add some crushing machines and stuff. 
 
-### Obliq
+### Oblique Projection
+This might not be as important as I want it to be.
 
 ## Not replacing Box2D with JBump
 Whaat? Not for now, at least. I have Box2D working nicely and I'm very happy with performance etc. What I will do now is try to instead work on the 2D / 3D projection of the game - partly because I think that the look and feel of a game is completely central to playability. So, I have thrown items, well, they should fall to the ground. implementing that tiny, tiny feature would make the game look insanely good. Or at least better
@@ -895,11 +896,11 @@ Det här gör vi på det gamla vanliga sättet. Vi bygger en box2d-värld, vi kl
 
 Oj oj oj,  vad roligt. Vi kan göra en box2d-kropp med leder, per tutorials etc. Superkul ju.
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbNTkxMzczNTYyLDEyMzMwODQxMDUsLTEyOT
-k3ODk4ODgsMTY3NDk3NzgxOSwtMTQ1NjM4NjIxNSwxNzQ3NzYx
-MTA0LC0xNTIzODM4ODAsLTg3ODUyMTUzNiwxODE5NjA3NTcwLC
-03MDI0NTE2NDUsLTgzOTAyMTM3NywtOTc4MzY2NDk5LDEwOTE0
-Nzk3NDcsMTMzNjY3Njk0NSw1OTYyMjUzNCwzMjg3MTg0MjQsLT
-E0ODUzOTk3OCwxMTA0MjY2ODIwLDE3NjkyNjE1MTIsMjMyMDQ3
-Nzg5XX0=
+eyJoaXN0b3J5IjpbLTExNzEyNjE3MjQsMTIzMzA4NDEwNSwtMT
+I5OTc4OTg4OCwxNjc0OTc3ODE5LC0xNDU2Mzg2MjE1LDE3NDc3
+NjExMDQsLTE1MjM4Mzg4MCwtODc4NTIxNTM2LDE4MTk2MDc1Nz
+AsLTcwMjQ1MTY0NSwtODM5MDIxMzc3LC05NzgzNjY0OTksMTA5
+MTQ3OTc0NywxMzM2Njc2OTQ1LDU5NjIyNTM0LDMyODcxODQyNC
+wtMTQ4NTM5OTc4LDExMDQyNjY4MjAsMTc2OTI2MTUxMiwyMzIw
+NDc3ODldfQ==
 -->
