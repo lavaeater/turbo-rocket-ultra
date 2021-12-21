@@ -51,6 +51,7 @@ Well, we basically have towers, we basically can build them, this is about makin
 - [ ] Bat swing
 - [ ] Nicer Setup UI, using Scene2d perhaps
 - [ ] Fix mouse position by polling position instead of event-driven system
+- [ ] Puzzle obstacles / machines
 
 ### Gibs and Body Parts II - blood trails and audio
 What it sounds like. I want smeared blood and a cool sound effect to go with it.
@@ -64,7 +65,13 @@ Take the effect we have added to assets and add it to the game. Would make a wor
 ### Zombies throwing projectiles
 Have zombies / enemies throwing projectiles to add to the hectice nature of the game.
 
-### Some other type of enem
+### Some other type of enemy
+Running fast dogs, slime crawling about swallowing players, tentacles, why not tentacles? Exploding enemies? Poisonous enemies?
+
+### Zombies with guns
+Or some other enemy, obviously, but enemies that can shoot back.
+
+### 
 
 ## Not replacing Box2D with JBump
 Whaat? Not for now, at least. I have Box2D working nicely and I'm very happy with performance etc. What I will do now is try to instead work on the 2D / 3D projection of the game - partly because I think that the look and feel of a game is completely central to playability. So, I have thrown items, well, they should fall to the ground. implementing that tiny, tiny feature would make the game look insanely good. Or at least better
@@ -876,7 +883,7 @@ Det här gör vi på det gamla vanliga sättet. Vi bygger en box2d-värld, vi kl
 
 Oj oj oj,  vad roligt. Vi kan göra en box2d-kropp med leder, per tutorials etc. Superkul ju.
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbLTEzMjA1NzA2MDIsMTY3NDk3NzgxOSwtMT
+eyJoaXN0b3J5IjpbLTIwMTA4Mjg2NTQsMTY3NDk3NzgxOSwtMT
 Q1NjM4NjIxNSwxNzQ3NzYxMTA0LC0xNTIzODM4ODAsLTg3ODUy
 MTUzNiwxODE5NjA3NTcwLC03MDI0NTE2NDUsLTgzOTAyMTM3Ny
 wtOTc4MzY2NDk5LDEwOTE0Nzk3NDcsMTMzNjY3Njk0NSw1OTYy
