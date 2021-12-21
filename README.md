@@ -52,7 +52,7 @@ Don't make it a door at first, just make it something you have to interact with.
 - [ ] Zombies with guns <- this would be genuinely cool, actually
 - [ ] Bat swing
 - [ ] Nicer Setup UI, using Scene2d perhaps
-- [ ] Grenades <- no, laaame
+- [x] Grenades <- yes, doone
 - [x] Change the fucking floor tiles, 
 - [x] get lights to work again
 - [x] Hacking station <- mini game? Triggers larger hordes of zombies
@@ -835,7 +835,7 @@ Det här gör vi på det gamla vanliga sättet. Vi bygger en box2d-värld, vi kl
 
 Oj oj oj,  vad roligt. Vi kan göra en box2d-kropp med leder, per tutorials etc. Superkul ju.
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbLTYyMDUxMzIwMywxNzQ3NzYxMTA0LC0xNT
+eyJoaXN0b3J5IjpbLTEwMDQxMzg2NSwxNzQ3NzYxMTA0LC0xNT
 IzODM4ODAsLTg3ODUyMTUzNiwxODE5NjA3NTcwLC03MDI0NTE2
 NDUsLTgzOTAyMTM3NywtOTc4MzY2NDk5LDEwOTE0Nzk3NDcsMT
 MzNjY3Njk0NSw1OTYyMjUzNCwzMjg3MTg0MjQsLTE0ODUzOTk3
