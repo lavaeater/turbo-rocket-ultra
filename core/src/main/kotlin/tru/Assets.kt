@@ -90,6 +90,10 @@ object Assets : Disposable {
         )
     }
 
+    val music by lazy {
+        listOf(Gdx.audio.newMusic(Gdx.files.internal("audio/music/track-1.mp3")))
+    }
+
     val enemyGibs by lazy {
         val texture = Texture(Gdx.files.internal("sprites/enemies/enemy_gibs.png"))
         listOf(
