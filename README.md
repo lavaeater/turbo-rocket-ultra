@@ -4,9 +4,9 @@
 Whaat? Not for now, at least. I have Box2D working nicely and I'm very happy with performance etc. What I will do now is try to instead work on the 2D / 3D projection of the game - partly because I think that the look and feel of a game is completely central to playability. So, I have thrown items, well, they should fall to the ground. implementing that tiny, tiny feature would make the game look insanely good. Or at least better
 
 So, what do we need to do?
-- [ ] Introduce height into transform
-- [ ] Feed transform back into the y-coordinate of bodies by using... forces? Impulses? Something like that.
-- [ ] Profit
+- [x] Introduce height into transform
+- [x] Feed transform back into the y-coordinate of bodies by using... forces? Impulses? Something like that.
+- [x] Profit
 
 After establishing the profit, we could spend some time on re-working all the textures and sprites of the game, to make the look be more as I want it. This means that every item will be half-height etc.
 
@@ -828,11 +828,11 @@ Det här gör vi på det gamla vanliga sättet. Vi bygger en box2d-värld, vi kl
 
 Oj oj oj,  vad roligt. Vi kan göra en box2d-kropp med leder, per tutorials etc. Superkul ju.
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbLTE1MjM4Mzg4MCwtODc4NTIxNTM2LDE4MT
-k2MDc1NzAsLTcwMjQ1MTY0NSwtODM5MDIxMzc3LC05NzgzNjY0
-OTksMTA5MTQ3OTc0NywxMzM2Njc2OTQ1LDU5NjIyNTM0LDMyOD
-cxODQyNCwtMTQ4NTM5OTc4LDExMDQyNjY4MjAsMTc2OTI2MTUx
-MiwyMzIwNDc3ODksMTAxMTM1NzY2LDMyMTk3OTExOCwtMTM2MT
-U1NzkxNiwzNDM0NzY5MzgsLTE2MTk3OTM5MTksLTk3ODAxODM1
-XX0=
+eyJoaXN0b3J5IjpbMTc0Nzc2MTEwNCwtMTUyMzgzODgwLC04Nz
+g1MjE1MzYsMTgxOTYwNzU3MCwtNzAyNDUxNjQ1LC04MzkwMjEz
+NzcsLTk3ODM2NjQ5OSwxMDkxNDc5NzQ3LDEzMzY2NzY5NDUsNT
+k2MjI1MzQsMzI4NzE4NDI0LC0xNDg1Mzk5NzgsMTEwNDI2Njgy
+MCwxNzY5MjYxNTEyLDIzMjA0Nzc4OSwxMDExMzU3NjYsMzIxOT
+c5MTE4LC0xMzYxNTU3OTE2LDM0MzQ3NjkzOCwtMTYxOTc5Mzkx
+OV19
 -->
