@@ -405,7 +405,7 @@ class ContactManager : ContactListener {
             val distanceVector = enemyBody.worldCenter.cpy().sub(body.worldCenter)
             val direction = distanceVector.cpy().nor()
             val inverseDistance = 1 / distanceVector.len()
-            enemyComponent.takeDamage((25f..100f).random() * inverseDistance, grenadeComponent.player)
+            enemyComponent.takeDamage((50f..150f).random() * inverseDistance, grenadeComponent.player)
             enemyComponent.lastShotAngle  = direction.angleDeg()
             enemyBody.applyLinearImpulse(direction.scl(inverseDistance * (500f..1500f).random()), enemyBody.worldCenter, true)
         }
