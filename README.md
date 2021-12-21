@@ -24,6 +24,15 @@ Write a short text of what each does and so on.
 - [ ] Nicer Setup UI, using Scene2d perhaps
 - [ ] Fix mouse position by polling position instead of event-driven system
 
+### Hud II
+Make the HUD pretty and useful and legible. Work on more simple databinding stuff and Scene2D extensions etc.
+
+### More enemy sprites
+Go back to the character editor and make sure we have access to female bodies as well (only male now for some reason), and also enable generating a bunch of different sprites or variations using it.
+
+### Lightmaps for sprites
+T
+
 
 ## Not replacing Box2D with JBump
 Whaat? Not for now, at least. I have Box2D working nicely and I'm very happy with performance etc. What I will do now is try to instead work on the 2D / 3D projection of the game - partly because I think that the look and feel of a game is completely central to playability. So, I have thrown items, well, they should fall to the ground. implementing that tiny, tiny feature would make the game look insanely good. Or at least better
@@ -835,11 +844,11 @@ Det här gör vi på det gamla vanliga sättet. Vi bygger en box2d-värld, vi kl
 
 Oj oj oj,  vad roligt. Vi kan göra en box2d-kropp med leder, per tutorials etc. Superkul ju.
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbMTMxNjc5Mzc4OSwtMTQ1NjM4NjIxNSwxNz
-Q3NzYxMTA0LC0xNTIzODM4ODAsLTg3ODUyMTUzNiwxODE5NjA3
-NTcwLC03MDI0NTE2NDUsLTgzOTAyMTM3NywtOTc4MzY2NDk5LD
-EwOTE0Nzk3NDcsMTMzNjY3Njk0NSw1OTYyMjUzNCwzMjg3MTg0
-MjQsLTE0ODUzOTk3OCwxMTA0MjY2ODIwLDE3NjkyNjE1MTIsMj
-MyMDQ3Nzg5LDEwMTEzNTc2NiwzMjE5NzkxMTgsLTEzNjE1NTc5
-MTZdfQ==
+eyJoaXN0b3J5IjpbOTI2MzY2NTE0LC0xNDU2Mzg2MjE1LDE3ND
+c3NjExMDQsLTE1MjM4Mzg4MCwtODc4NTIxNTM2LDE4MTk2MDc1
+NzAsLTcwMjQ1MTY0NSwtODM5MDIxMzc3LC05NzgzNjY0OTksMT
+A5MTQ3OTc0NywxMzM2Njc2OTQ1LDU5NjIyNTM0LDMyODcxODQy
+NCwtMTQ4NTM5OTc4LDExMDQyNjY4MjAsMTc2OTI2MTUxMiwyMz
+IwNDc3ODksMTAxMTM1NzY2LDMyMTk3OTExOCwtMTM2MTU1Nzkx
+Nl19
 -->
