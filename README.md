@@ -3,6 +3,8 @@
 ## Tuesday the 21st of december
 So, I am hesitating when it comes to the oblique projection work. I think it has to be something done in the background, so I will simply decide on a thing to do, for instance half all heights on box2d static bodies in the game (all characters have passable top halves, so they are good so far) and thereby shrinking the maps. But I also have to change all tiles etc, I think I could be well off sitting for 24 hours straight with this and perhaps then I would like to rework some other stuff. I don't know what to do. I will explore the todo-list and see what jumps out, and add things that I come up with.
 
+Write a short text of what each does and so on.
+
 - [ ] HUD II, Header Upper Displayer <- rediscover MVVM pattern, two-way binding
 - [ ] More Enemy Sprites (generate them)
 - [ ] Lightmaps for sprites
@@ -833,11 +835,11 @@ Det här gör vi på det gamla vanliga sättet. Vi bygger en box2d-värld, vi kl
 
 Oj oj oj,  vad roligt. Vi kan göra en box2d-kropp med leder, per tutorials etc. Superkul ju.
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbLTE0NTYzODYyMTUsMTc0Nzc2MTEwNCwtMT
-UyMzgzODgwLC04Nzg1MjE1MzYsMTgxOTYwNzU3MCwtNzAyNDUx
-NjQ1LC04MzkwMjEzNzcsLTk3ODM2NjQ5OSwxMDkxNDc5NzQ3LD
-EzMzY2NzY5NDUsNTk2MjI1MzQsMzI4NzE4NDI0LC0xNDg1Mzk5
-NzgsMTEwNDI2NjgyMCwxNzY5MjYxNTEyLDIzMjA0Nzc4OSwxMD
-ExMzU3NjYsMzIxOTc5MTE4LC0xMzYxNTU3OTE2LDM0MzQ3Njkz
-OF19
+eyJoaXN0b3J5IjpbMTMxNjc5Mzc4OSwtMTQ1NjM4NjIxNSwxNz
+Q3NzYxMTA0LC0xNTIzODM4ODAsLTg3ODUyMTUzNiwxODE5NjA3
+NTcwLC03MDI0NTE2NDUsLTgzOTAyMTM3NywtOTc4MzY2NDk5LD
+EwOTE0Nzk3NDcsMTMzNjY3Njk0NSw1OTYyMjUzNCwzMjg3MTg0
+MjQsLTE0ODUzOTk3OCwxMTA0MjY2ODIwLDE3NjkyNjE1MTIsMj
+MyMDQ3Nzg5LDEwMTEzNTc2NiwzMjE5NzkxMTgsLTEzNjE1NTc5
+MTZdfQ==
 -->
