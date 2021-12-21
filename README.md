@@ -62,7 +62,7 @@ So, what it sounds like. Should be the lowest hanging fruit of the bunch.
 Take the effect we have added to assets and add it to the game. Would make a world of difference.
 
 ### Zombies throwing projectiles
-Have zombies / enemies throwing projectiles and / or 
+Have zombies / enemies throwing projectiles to add to the hectice nature of the game.
 
 ## Not replacing Box2D with JBump
 Whaat? Not for now, at least. I have Box2D working nicely and I'm very happy with performance etc. What I will do now is try to instead work on the 2D / 3D projection of the game - partly because I think that the look and feel of a game is completely central to playability. So, I have thrown items, well, they should fall to the ground. implementing that tiny, tiny feature would make the game look insanely good. Or at least better
@@ -874,11 +874,11 @@ Det här gör vi på det gamla vanliga sättet. Vi bygger en box2d-värld, vi kl
 
 Oj oj oj,  vad roligt. Vi kan göra en box2d-kropp med leder, per tutorials etc. Superkul ju.
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbLTE1OTM3MzQ3MjYsMTY3NDk3NzgxOSwtMT
-Q1NjM4NjIxNSwxNzQ3NzYxMTA0LC0xNTIzODM4ODAsLTg3ODUy
-MTUzNiwxODE5NjA3NTcwLC03MDI0NTE2NDUsLTgzOTAyMTM3Ny
-wtOTc4MzY2NDk5LDEwOTE0Nzk3NDcsMTMzNjY3Njk0NSw1OTYy
-MjUzNCwzMjg3MTg0MjQsLTE0ODUzOTk3OCwxMTA0MjY2ODIwLD
-E3NjkyNjE1MTIsMjMyMDQ3Nzg5LDEwMTEzNTc2NiwzMjE5Nzkx
-MThdfQ==
+eyJoaXN0b3J5IjpbMjEzMTIxNDI5MSwxNjc0OTc3ODE5LC0xND
+U2Mzg2MjE1LDE3NDc3NjExMDQsLTE1MjM4Mzg4MCwtODc4NTIx
+NTM2LDE4MTk2MDc1NzAsLTcwMjQ1MTY0NSwtODM5MDIxMzc3LC
+05NzgzNjY0OTksMTA5MTQ3OTc0NywxMzM2Njc2OTQ1LDU5NjIy
+NTM0LDMyODcxODQyNCwtMTQ4NTM5OTc4LDExMDQyNjY4MjAsMT
+c2OTI2MTUxMiwyMzIwNDc3ODksMTAxMTM1NzY2LDMyMTk3OTEx
+OF19
 -->
