@@ -7,13 +7,14 @@ Write a short text of what each does and so on.
 
 I have now prioritized this list according to how much I think it adds to the games polish and / or value, then how fun it would be to actually implement (this is supposed to be fun) and then taking into account the effort I think would be involved. I will now simply do them from top to bottom until I get to the line below, then I will re-evaluate everything.
 
-It also appears that the mouse position thing was 
+It also appears that the mouse position thing was so low hanging that I had already fixed it.
 
-- [ ] Fix mouse position by polling position instead of event-driven system
 - [ ] Add explosion particle effect to grenade collision
+- [x] Fix mouse position by polling position instead of event-driven system
 - [ ] Flip weapon sprites when facing west
 - [ ] Soundscape II - the Moaning
 - [ ] Objectives II, the sequel
+- [ ] Fix some warnings
 --------
 - [ ] Bat swing
 - [ ] HUD II, Header Upper Displayer <- rediscover MVVM pattern, two-way binding
@@ -901,11 +902,11 @@ Det här gör vi på det gamla vanliga sättet. Vi bygger en box2d-värld, vi kl
 
 Oj oj oj,  vad roligt. Vi kan göra en box2d-kropp med leder, per tutorials etc. Superkul ju.
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbLTExOTM3Nzk5NTUsLTE0NTY3MjY1MDgsLT
-ExNzEyNjE3MjQsMTIzMzA4NDEwNSwtMTI5OTc4OTg4OCwxNjc0
-OTc3ODE5LC0xNDU2Mzg2MjE1LDE3NDc3NjExMDQsLTE1MjM4Mz
-g4MCwtODc4NTIxNTM2LDE4MTk2MDc1NzAsLTcwMjQ1MTY0NSwt
-ODM5MDIxMzc3LC05NzgzNjY0OTksMTA5MTQ3OTc0NywxMzM2Nj
-c2OTQ1LDU5NjIyNTM0LDMyODcxODQyNCwtMTQ4NTM5OTc4LDEx
-MDQyNjY4MjBdfQ==
+eyJoaXN0b3J5IjpbLTM0NTg0MjY1MiwtMTQ1NjcyNjUwOCwtMT
+E3MTI2MTcyNCwxMjMzMDg0MTA1LC0xMjk5Nzg5ODg4LDE2NzQ5
+Nzc4MTksLTE0NTYzODYyMTUsMTc0Nzc2MTEwNCwtMTUyMzgzOD
+gwLC04Nzg1MjE1MzYsMTgxOTYwNzU3MCwtNzAyNDUxNjQ1LC04
+MzkwMjEzNzcsLTk3ODM2NjQ5OSwxMDkxNDc5NzQ3LDEzMzY2Nz
+Y5NDUsNTk2MjI1MzQsMzI4NzE4NDI0LC0xNDg1Mzk5NzgsMTEw
+NDI2NjgyMF19
 -->
