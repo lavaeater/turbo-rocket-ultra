@@ -383,7 +383,7 @@ class ContactManager : ContactListener {
     @OptIn(ExperimentalStdlibApi::class)
     fun handleGrenadeHittingAnything(contactType: ContactType.GrenadeHittingAnything) {
 //This should be timed using cooldown, not this way
-
+        audioPlayer.playSound(Assets.newSoundEffects["weapons"]!!["grenade"]!!.random())
         val grenade = contactType.grenade
         val grenadeComponent = grenade.getComponent<GrenadeComponent>()
         val body = grenade.getComponent<BodyComponent>().body!!

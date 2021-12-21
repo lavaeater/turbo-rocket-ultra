@@ -82,6 +82,9 @@ object Assets : Disposable {
             "weapons" to mapOf(
                 "molotov" to listOf(
                     Gdx.audio.newSound(Gdx.files.internal("audio/molotov/molotov-1.wav")),
+                ),
+                "grenade" to listOf(
+                    Gdx.audio.newSound(Gdx.files.internal("audio/grenade/grenade-1.wav")),
                 )
             )
         )
