@@ -83,6 +83,12 @@ class GameScreen(private val gameState: StateMachine<GameState, GameEvent>) : Kt
         generateMap(CounterObject.currentLevel)
         addPlayers()
 
+        if(Players.players.keys.any { it.isKeyboard }) {
+            engine.getSystem<KeyboardInputSystem>().setProcessing(true)
+        } else {
+            engine.getSystem<KeyboardInputSystem>().setProcessing(false)
+        }
+
         ui.reset()
         ui.show()
     }
@@ -227,6 +233,11 @@ D1B67A
 
         CounterObject.currentLevel++
         generateMap(CounterObject.currentLevel)
+        if(Players.players.keys.any { it.isKeyboard }) {
+            engine.getSystem<KeyboardInputSystem>().setProcessing(true)
+        } else {
+            engine.getSystem<KeyboardInputSystem>().setProcessing(false)
+        }
     }
 
     private val mapManager by lazy { inject<GridMapManager>() }
