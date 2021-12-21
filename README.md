@@ -1,7 +1,9 @@
 # turbo-rocket-ultra
 
 ## Tuesday the 21st of december
-So, I am hesitating when it comes to the oblique projection work. I think it has to be something done in the background, so I will simply decide on a thing to do, for instance half all heights on box2d static bodies in the game (all characters have passable top halves, so they are good so far) and thereby shrinking the maps. But I also have to change all tiles et
+So, I am hesitating when it comes to the oblique projection work. I think it has to be something done in the background, so I will simply decide on a thing to do, for instance half all heights on box2d static bodies in the game (all characters have passable top halves, so they are good so far) and thereby shrinking the maps. But I also have to change all tiles etc, I think I could be well off sitting for 24 hours straight with this and perhaps then I would like to rework some other stuff. I don't know what to do. I will explore the todo-list and see what jumps out, and add things that I come up with.
+
+- [
 
 ## Not replacing Box2D with JBump
 Whaat? Not for now, at least. I have Box2D working nicely and I'm very happy with performance etc. What I will do now is try to instead work on the 2D / 3D projection of the game - partly because I think that the look and feel of a game is completely central to playability. So, I have thrown items, well, they should fall to the ground. implementing that tiny, tiny feature would make the game look insanely good. Or at least better
@@ -831,11 +833,11 @@ Det här gör vi på det gamla vanliga sättet. Vi bygger en box2d-värld, vi kl
 
 Oj oj oj,  vad roligt. Vi kan göra en box2d-kropp med leder, per tutorials etc. Superkul ju.
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbLTEwOTEzOTMzNzQsMTc0Nzc2MTEwNCwtMT
-UyMzgzODgwLC04Nzg1MjE1MzYsMTgxOTYwNzU3MCwtNzAyNDUx
-NjQ1LC04MzkwMjEzNzcsLTk3ODM2NjQ5OSwxMDkxNDc5NzQ3LD
-EzMzY2NzY5NDUsNTk2MjI1MzQsMzI4NzE4NDI0LC0xNDg1Mzk5
-NzgsMTEwNDI2NjgyMCwxNzY5MjYxNTEyLDIzMjA0Nzc4OSwxMD
-ExMzU3NjYsMzIxOTc5MTE4LC0xMzYxNTU3OTE2LDM0MzQ3Njkz
-OF19
+eyJoaXN0b3J5IjpbMTQ1NDg4ODgwNCwxNzQ3NzYxMTA0LC0xNT
+IzODM4ODAsLTg3ODUyMTUzNiwxODE5NjA3NTcwLC03MDI0NTE2
+NDUsLTgzOTAyMTM3NywtOTc4MzY2NDk5LDEwOTE0Nzk3NDcsMT
+MzNjY3Njk0NSw1OTYyMjUzNCwzMjg3MTg0MjQsLTE0ODUzOTk3
+OCwxMTA0MjY2ODIwLDE3NjkyNjE1MTIsMjMyMDQ3Nzg5LDEwMT
+EzNTc2NiwzMjE5NzkxMTgsLTEzNjE1NTc5MTYsMzQzNDc2OTM4
+XX0=
 -->
