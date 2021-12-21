@@ -45,7 +45,7 @@ Well, we basically have towers, we basically can build them, this is about makin
 - [ ] Gibs and Body Parts II - blood trails and audio
 - [ ] Flip weapon sprites when facing west
 - [ ] Add explosion particle effect to grenade collision
-- [ ] Zombies throwing particles
+- [ ] Zombies throwing projectiles
 - [ ] Some other type of enemy
 - [ ] Zombies with guns <- this would be genuinely cool, actually
 - [ ] Bat swing
@@ -55,7 +55,14 @@ Well, we basically have towers, we basically can build them, this is about makin
 ### Gibs and Body Parts II - blood trails and audio
 What it sounds like. I want smeared blood and a cool sound effect to go with it.
 
-### Flip wea
+### Flip weapon sprites when facing east
+So, what it sounds like. Should be the lowest hanging fruit of the bunch.
+
+### Explosion Effect for Grenades
+Take the effect we have added to assets and add it to the game. Would make a world of difference.
+
+### Zombies throwing projectiles
+Have zombies / enemies throwing projectiles and / or 
 
 ## Not replacing Box2D with JBump
 Whaat? Not for now, at least. I have Box2D working nicely and I'm very happy with performance etc. What I will do now is try to instead work on the 2D / 3D projection of the game - partly because I think that the look and feel of a game is completely central to playability. So, I have thrown items, well, they should fall to the ground. implementing that tiny, tiny feature would make the game look insanely good. Or at least better
@@ -867,7 +874,7 @@ Det här gör vi på det gamla vanliga sättet. Vi bygger en box2d-värld, vi kl
 
 Oj oj oj,  vad roligt. Vi kan göra en box2d-kropp med leder, per tutorials etc. Superkul ju.
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbLTIwMDEyNDA1OTIsMTY3NDk3NzgxOSwtMT
+eyJoaXN0b3J5IjpbLTE1OTM3MzQ3MjYsMTY3NDk3NzgxOSwtMT
 Q1NjM4NjIxNSwxNzQ3NzYxMTA0LC0xNTIzODM4ODAsLTg3ODUy
 MTUzNiwxODE5NjA3NTcwLC03MDI0NTE2NDUsLTgzOTAyMTM3Ny
 wtOTc4MzY2NDk5LDEwOTE0Nzk3NDcsMTMzNjY3Njk0NSw1OTYy
