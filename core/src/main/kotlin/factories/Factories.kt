@@ -97,13 +97,13 @@ object Box2dCategories {
 fun gibs(at: Vector2, gibAngle: Float = 1000f) {
     for (i in Assets.enemyGibs) {
         val angle = if (gibAngle == 1000f) (1f..359f).random() else gibAngle
-        val force = vec2(30f, 0f).setAngleDeg(angle + (-25..25).random())
+        val force = vec2((15f..60f).random(), 0f).setAngleDeg(angle + (-25..25).random())
         val gibBody = world().body {
             type = BodyDef.BodyType.DynamicBody
             position.set(at.x - 2f, at.y - 2f)
             //angularVelocity = 180f * degreesToRadians
             linearDamping = 5f
-            box(.3f, .3f) {
+            box(.3f, .1f) {
                 friction = 10f //Tune
                // density = 1f //tune
                 filter {
@@ -113,8 +113,7 @@ fun gibs(at: Vector2, gibAngle: Float = 1000f) {
             }
         }
 
-        val vecRange = -1f..1f
-        val localPoint = vec2(vecRange.random(), vecRange.random())
+        val localPoint = vec2(-1f, 0f)
 
         val gibEntity = engine().entity {
             with<SpriteComponent> {
