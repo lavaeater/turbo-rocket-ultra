@@ -5,9 +5,14 @@ So, I am hesitating when it comes to the oblique projection work. I think it has
 
 - [ ] Flip weapon sprites when facing west
 - [ ] Add explosion particle effect to grenade collision
+- [ ] Zombies throwing particles
+- [ ] Some other type of enemy
 - [ ] Zombies with guns <- this would be genuinely cool, actually
 - [ ] Bat swing
 - [ ] Nicer Setup UI, using Scene2d perhaps
+- [ ] 
+
+
 ## Not replacing Box2D with JBump
 Whaat? Not for now, at least. I have Box2D working nicely and I'm very happy with performance etc. What I will do now is try to instead work on the 2D / 3D projection of the game - partly because I think that the look and feel of a game is completely central to playability. So, I have thrown items, well, they should fall to the ground. implementing that tiny, tiny feature would make the game look insanely good. Or at least better
 
@@ -62,9 +67,6 @@ Don't make it a door at first, just make it something you have to interact with.
 - [x] Cool post-processing FX
 - [x] Fix map reset issue (remove all but players from engine)
 - [x] Five character sprites
-
-
-
 
 ## Friday the 3rd of December
 
@@ -138,9 +140,6 @@ Lets call the branch level-four, for this one.
 - [ ] Add actual bat swing
 	- [ ] Animate bat-swing? Is this fun? <- steps taken
 - [ ] Re-introduce TOWERS
-
-
-
 
 #### Act one - a small beginning
 The game I have built so far is a very basic zombie survival top-down twin-stick shooter. To make it more game-like, I think we need to make the beginning smaller. Perhaps we could start with the players only having close-combat weapons? That would mean implementing melee combat, which could be cool. So, the gameplay would progress over the ten first levels with small-ish levels (the physical size of the level might be large, just not epic numbers of zombies etc) where the players get to test all their skills and tools, in preparation for the second act, where they are prepared but the hordes are larger. Also, Zombies? They are stand-ins for something properly funny to have as enemies. But that can be changed later. And also, we don't need to plan for the entirety of the three acts, because we can simply work on them as we progress. But the start of the game should be (perhaps) hand-to-hand combat, handguns, molotovs and building barricades if there is a horde coming. We could put some actual level-design to use as well, using some kind of simple format for that. Also, we need UI blurs and speech bubbles to signal stuff in a cool way. Zombies need to be waay slower in the beginning, as well, and we need to add more AI-debug stuff in a nicer way. A nice little nine-patcher would be cool.
@@ -278,11 +277,11 @@ Lets try to prioritize these into what would make the game seem "done" the faste
 - [ ] More Enemy Sprites (generate them)
 - [ ] Lightmaps for sprites
 - [ ] Soundscape II - the Moaning
-- [ ] Fix the MiniMap
+- [x] Fix the MiniMap
 - [ ] Enemy AI II, with avoiding walls
 - [ ] Objectives II, the sequel
-- [ ] Pickups 2 (on-screen blurb indicating what you got)
-- [ ] Interactable Components in-the-game
+- [x] Pickups 2 (on-screen blurb indicating what you got)
+- [x] Interactable Components in-the-game
 - [ ] Player graphics made from components / parts etc.
 - [ ] Vehicles would be cool
 - [ ] Build Towers
@@ -834,11 +833,11 @@ Det här gör vi på det gamla vanliga sättet. Vi bygger en box2d-värld, vi kl
 
 Oj oj oj,  vad roligt. Vi kan göra en box2d-kropp med leder, per tutorials etc. Superkul ju.
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbLTE1MDQ0NDUxMTgsMTc0Nzc2MTEwNCwtMT
-UyMzgzODgwLC04Nzg1MjE1MzYsMTgxOTYwNzU3MCwtNzAyNDUx
-NjQ1LC04MzkwMjEzNzcsLTk3ODM2NjQ5OSwxMDkxNDc5NzQ3LD
-EzMzY2NzY5NDUsNTk2MjI1MzQsMzI4NzE4NDI0LC0xNDg1Mzk5
-NzgsMTEwNDI2NjgyMCwxNzY5MjYxNTEyLDIzMjA0Nzc4OSwxMD
-ExMzU3NjYsMzIxOTc5MTE4LC0xMzYxNTU3OTE2LDM0MzQ3Njkz
-OF19
+eyJoaXN0b3J5IjpbMTY3NDY2NDg0MCwxNzQ3NzYxMTA0LC0xNT
+IzODM4ODAsLTg3ODUyMTUzNiwxODE5NjA3NTcwLC03MDI0NTE2
+NDUsLTgzOTAyMTM3NywtOTc4MzY2NDk5LDEwOTE0Nzk3NDcsMT
+MzNjY3Njk0NSw1OTYyMjUzNCwzMjg3MTg0MjQsLTE0ODUzOTk3
+OCwxMTA0MjY2ODIwLDE3NjkyNjE1MTIsMjMyMDQ3Nzg5LDEwMT
+EzNTc2NiwzMjE5NzkxMTgsLTEzNjE1NTc5MTYsMzQzNDc2OTM4
+XX0=
 -->
