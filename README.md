@@ -5,8 +5,9 @@ So, I am hesitating when it comes to the oblique projection work. I think it has
 
 - [ ] Flip weapon sprites when facing west
 - [ ] Add explosion particle effect to grenade collision
-- [ ] 
-
+- [ ] Zombies with guns <- this would be genuinely cool, actually
+- [ ] Bat swing
+- [ ] Nicer Setup UI, using Scene2d perhaps
 ## Not replacing Box2D with JBump
 Whaat? Not for now, at least. I have Box2D working nicely and I'm very happy with performance etc. What I will do now is try to instead work on the 2D / 3D projection of the game - partly because I think that the look and feel of a game is completely central to playability. So, I have thrown items, well, they should fall to the ground. implementing that tiny, tiny feature would make the game look insanely good. Or at least better
 
@@ -49,9 +50,7 @@ I just realized that what the game needs more than anything, right now, is *towe
 Don't make it a door at first, just make it something you have to interact with. We have the context action, we can add more features to that. So what this will be is simply an objective and when touching it, it will launch the hacking session, which could simply be pushing a certain sequence of buttons to *hack it*. Using our story system, we could implement any number of mechanisms to get this to work. Test it out on the zero-level.
 
 
-- [ ] Zombies with guns <- this would be genuinely cool, actually
-- [ ] Bat swing
-- [ ] Nicer Setup UI, using Scene2d perhaps
+
 - [x] Grenades <- yes, doone
 - [x] Change the fucking floor tiles, 
 - [x] get lights to work again
@@ -835,11 +834,11 @@ Det här gör vi på det gamla vanliga sättet. Vi bygger en box2d-värld, vi kl
 
 Oj oj oj,  vad roligt. Vi kan göra en box2d-kropp med leder, per tutorials etc. Superkul ju.
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbLTEwMDQxMzg2NSwxNzQ3NzYxMTA0LC0xNT
-IzODM4ODAsLTg3ODUyMTUzNiwxODE5NjA3NTcwLC03MDI0NTE2
-NDUsLTgzOTAyMTM3NywtOTc4MzY2NDk5LDEwOTE0Nzk3NDcsMT
-MzNjY3Njk0NSw1OTYyMjUzNCwzMjg3MTg0MjQsLTE0ODUzOTk3
-OCwxMTA0MjY2ODIwLDE3NjkyNjE1MTIsMjMyMDQ3Nzg5LDEwMT
-EzNTc2NiwzMjE5NzkxMTgsLTEzNjE1NTc5MTYsMzQzNDc2OTM4
-XX0=
+eyJoaXN0b3J5IjpbLTE1MDQ0NDUxMTgsMTc0Nzc2MTEwNCwtMT
+UyMzgzODgwLC04Nzg1MjE1MzYsMTgxOTYwNzU3MCwtNzAyNDUx
+NjQ1LC04MzkwMjEzNzcsLTk3ODM2NjQ5OSwxMDkxNDc5NzQ3LD
+EzMzY2NzY5NDUsNTk2MjI1MzQsMzI4NzE4NDI0LC0xNDg1Mzk5
+NzgsMTEwNDI2NjgyMCwxNzY5MjYxNTEyLDIzMjA0Nzc4OSwxMD
+ExMzU3NjYsMzIxOTc5MTE4LC0xMzYxNTU3OTE2LDM0MzQ3Njkz
+OF19
 -->
