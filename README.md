@@ -3,6 +3,16 @@
 ## Tuesday the 21st of december
 So, I am hesitating when it comes to the oblique projection work. I think it has to be something done in the background, so I will simply decide on a thing to do, for instance half all heights on box2d static bodies in the game (all characters have passable top halves, so they are good so far) and thereby shrinking the maps. But I also have to change all tiles etc, I think I could be well off sitting for 24 hours straight with this and perhaps then I would like to rework some other stuff. I don't know what to do. I will explore the todo-list and see what jumps out, and add things that I come up with.
 
+- [ ] HUD II, Header Upper Displayer <- rediscover MVVM pattern, two-way binding
+- [ ] More Enemy Sprites (generate them)
+- [ ] Lightmaps for sprites
+- [ ] Soundscape II - the Moaning
+- [ ] Enemy AI II, with avoiding walls
+- [ ] Objectives II, the sequel
+- [ ] Player graphics made from components / parts etc.
+- [ ] Vehicles would be cool
+- [ ] Build Towers
+- [ ] Gibs and Body Parts II - blood trails and audio
 - [ ] Flip weapon sprites when facing west
 - [ ] Add explosion particle effect to grenade collision
 - [ ] Zombies throwing particles
@@ -10,7 +20,6 @@ So, I am hesitating when it comes to the oblique projection work. I think it has
 - [ ] Zombies with guns <- this would be genuinely cool, actually
 - [ ] Bat swing
 - [ ] Nicer Setup UI, using Scene2d perhaps
-- [ ] 
 
 
 ## Not replacing Box2D with JBump
@@ -273,16 +282,6 @@ To make the graphics and environment easy I am currently working with the concep
 
 Lets try to prioritize these into what would make the game seem "done" the fastest.
 
-- [ ] HUD II, Header Upper Displayer <- rediscover MVVM pattern, two-way binding
-- [ ] More Enemy Sprites (generate them)
-- [ ] Lightmaps for sprites
-- [ ] Soundscape II - the Moaning
-- [ ] Enemy AI II, with avoiding walls
-- [ ] Objectives II, the sequel
-- [ ] Player graphics made from components / parts etc.
-- [ ] Vehicles would be cool
-- [ ] Build Towers
-- [ ] Gibs and Body Parts II - blood trails and audio
 - [x] Pickups 2 (on-screen blurb indicating what you got)
 - [x] Interactable Components in-the-game
 - [x] Fix the MiniMap
@@ -833,7 +832,7 @@ Det här gör vi på det gamla vanliga sättet. Vi bygger en box2d-värld, vi kl
 
 Oj oj oj,  vad roligt. Vi kan göra en box2d-kropp med leder, per tutorials etc. Superkul ju.
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbMTIxNTM4OTcyMiwxNzQ3NzYxMTA0LC0xNT
+eyJoaXN0b3J5IjpbLTI2ODIxNTMzNSwxNzQ3NzYxMTA0LC0xNT
 IzODM4ODAsLTg3ODUyMTUzNiwxODE5NjA3NTcwLC03MDI0NTE2
 NDUsLTgzOTAyMTM3NywtOTc4MzY2NDk5LDEwOTE0Nzk3NDcsMT
 MzNjY3Njk0NSw1OTYyMjUzNCwzMjg3MTg0MjQsLTE0ODUzOTk3
