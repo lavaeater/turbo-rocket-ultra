@@ -14,15 +14,7 @@ Write a short text of what each does and so on.
 - [ ] Player graphics made from components / parts etc.
 - [ ] Vehicles would be cool
 - [ ] Build Towers
-- [ ] Gibs and Body Parts II - blood trails and audio
-- [ ] Flip weapon sprites when facing west
-- [ ] Add explosion particle effect to grenade collision
-- [ ] Zombies throwing particles
-- [ ] Some other type of enemy
-- [ ] Zombies with guns <- this would be genuinely cool, actually
-- [ ] Bat swing
-- [ ] Nicer Setup UI, using Scene2d perhaps
-- [ ] Fix mouse position by polling position instead of event-driven system
+
 
 ### Hud II
 Make the HUD pretty and useful and legible. Work on more simple databinding stuff and Scene2D extensions etc.
@@ -40,8 +32,50 @@ So, some ambient sound effects, some zombie sound effects, explosions, screaming
 Make the enemy handle walls and obstacles better. It shouldn't be that hard. In fact, we could make a goddamned A* graph of the entire map space that is passable terrain and that would in fact solve the problem. Or at least make a graph of points that makes sure the enemy does not walk into walls, it could be done. Hey, every section could have a "get valid points"-method. Also, make enemies more aggressive towards players, now they seem to ignore them quite a bit, perhaps sensors are turned off or something.
 
 ### Objectives II - Quirkier
-Examples: Kill n enemies. Hold an area for n minutes. 
+Examples: Kill n enemies. Hold an area for n minutes. Come up with something really fun, oooh, I got it, every player has to be in a separate place at the same time!
 
+### Player Graphics
+This is what categorizes as a FUN task, it should be FUN! But it also requires lots of work, mainly in making art happen. Making heads, bodies, hair, stuff like that, and enabling generating characters and sprite sheets from that. Lots of work, but there could be great payoffs in the end.
+
+### Vehicles
+This is like the holy grail of features. This is what all this started with, the entire game. So, players enter vehicles, control different parts of the vehicle etc. This could be combined with the concept "moving level" where the players are on a platform that is moving through some kind of river / level somehow.
+
+### Build Towers
+Well, we basically have towers, we basically can build them, this is about making that feature happen and having at least two or three types of towers with nice sprites that we can build and that do different things.
+- [ ] Gibs and Body Parts II - blood trails and audio
+- [ ] Flip weapon sprites when facing west
+- [ ] Add explosion particle effect to grenade collision
+- [ ] Zombies throwing projectiles
+- [ ] Some other type of enemy
+- [ ] Zombies with guns <- this would be genuinely cool, actually
+- [ ] Bat swing
+- [ ] Nicer Setup UI, using Scene2d perhaps
+- [ ] Fix mouse position by polling position instead of event-driven system
+- [ ] Puzzle obstacles / machines
+
+### Gibs and Body Parts II - blood trails and audio
+What it sounds like. I want smeared blood and a cool sound effect to go with it.
+
+### Flip weapon sprites when facing east
+So, what it sounds like. Should be the lowest hanging fruit of the bunch.
+
+### Explosion Effect for Grenades
+Take the effect we have added to assets and add it to the game. Would make a world of difference.
+
+### Zombies throwing projectiles
+Have zombies / enemies throwing projectiles to add to the hectice nature of the game.
+
+### Some other type of enemy
+Running fast dogs, slime crawling about swallowing players, tentacles, why not tentacles? Exploding enemies? Poisonous enemies?
+
+### Zombies with guns
+Or some other enemy, obviously, but enemies that can shoot back.
+
+### Bat swing
+The bat swing is all about execution. It is an animation of a box2d object and that seems like a hassle. But it CAN obviously be done. Figure it out, champ!
+
+### Nicer Setup UI, using Scene2d
+So, just make a better setup screen, add icons, texts etc that explains what should happen etc.
 
 ## Not replacing Box2D with JBump
 Whaat? Not for now, at least. I have Box2D working nicely and I'm very happy with performance etc. What I will do now is try to instead work on the 2D / 3D projection of the game - partly because I think that the look and feel of a game is completely central to playability. So, I have thrown items, well, they should fall to the ground. implementing that tiny, tiny feature would make the game look insanely good. Or at least better
@@ -853,11 +887,11 @@ Det här gör vi på det gamla vanliga sättet. Vi bygger en box2d-värld, vi kl
 
 Oj oj oj,  vad roligt. Vi kan göra en box2d-kropp med leder, per tutorials etc. Superkul ju.
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbMTY3NDk3NzgxOSwtMTQ1NjM4NjIxNSwxNz
-Q3NzYxMTA0LC0xNTIzODM4ODAsLTg3ODUyMTUzNiwxODE5NjA3
-NTcwLC03MDI0NTE2NDUsLTgzOTAyMTM3NywtOTc4MzY2NDk5LD
-EwOTE0Nzk3NDcsMTMzNjY3Njk0NSw1OTYyMjUzNCwzMjg3MTg0
-MjQsLTE0ODUzOTk3OCwxMTA0MjY2ODIwLDE3NjkyNjE1MTIsMj
-MyMDQ3Nzg5LDEwMTEzNTc2NiwzMjE5NzkxMTgsLTEzNjE1NTc5
-MTZdfQ==
+eyJoaXN0b3J5IjpbLTEyOTk3ODk4ODgsMTY3NDk3NzgxOSwtMT
+Q1NjM4NjIxNSwxNzQ3NzYxMTA0LC0xNTIzODM4ODAsLTg3ODUy
+MTUzNiwxODE5NjA3NTcwLC03MDI0NTE2NDUsLTgzOTAyMTM3Ny
+wtOTc4MzY2NDk5LDEwOTE0Nzk3NDcsMTMzNjY3Njk0NSw1OTYy
+MjUzNCwzMjg3MTg0MjQsLTE0ODUzOTk3OCwxMTA0MjY2ODIwLD
+E3NjkyNjE1MTIsMjMyMDQ3Nzg5LDEwMTEzNTc2NiwzMjE5Nzkx
+MThdfQ==
 -->
