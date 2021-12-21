@@ -20,6 +20,7 @@ So, I am hesitating when it comes to the oblique projection work. I think it has
 - [ ] Zombies with guns <- this would be genuinely cool, actually
 - [ ] Bat swing
 - [ ] Nicer Setup UI, using Scene2d perhaps
+- [ ] Fix mouse position by polling position instead of event-driven system
 
 
 ## Not replacing Box2D with JBump
@@ -832,11 +833,11 @@ Det här gör vi på det gamla vanliga sättet. Vi bygger en box2d-värld, vi kl
 
 Oj oj oj,  vad roligt. Vi kan göra en box2d-kropp med leder, per tutorials etc. Superkul ju.
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbLTI2ODIxNTMzNSwxNzQ3NzYxMTA0LC0xNT
-IzODM4ODAsLTg3ODUyMTUzNiwxODE5NjA3NTcwLC03MDI0NTE2
-NDUsLTgzOTAyMTM3NywtOTc4MzY2NDk5LDEwOTE0Nzk3NDcsMT
-MzNjY3Njk0NSw1OTYyMjUzNCwzMjg3MTg0MjQsLTE0ODUzOTk3
-OCwxMTA0MjY2ODIwLDE3NjkyNjE1MTIsMjMyMDQ3Nzg5LDEwMT
-EzNTc2NiwzMjE5NzkxMTgsLTEzNjE1NTc5MTYsMzQzNDc2OTM4
-XX0=
+eyJoaXN0b3J5IjpbLTE0NTYzODYyMTUsMTc0Nzc2MTEwNCwtMT
+UyMzgzODgwLC04Nzg1MjE1MzYsMTgxOTYwNzU3MCwtNzAyNDUx
+NjQ1LC04MzkwMjEzNzcsLTk3ODM2NjQ5OSwxMDkxNDc5NzQ3LD
+EzMzY2NzY5NDUsNTk2MjI1MzQsMzI4NzE4NDI0LC0xNDg1Mzk5
+NzgsMTEwNDI2NjgyMCwxNzY5MjYxNTEyLDIzMjA0Nzc4OSwxMD
+ExMzU3NjYsMzIxOTc5MTE4LC0xMzYxNTU3OTE2LDM0MzQ3Njkz
+OF19
 -->
