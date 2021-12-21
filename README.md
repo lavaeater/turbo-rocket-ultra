@@ -40,7 +40,10 @@ So, some ambient sound effects, some zombie sound effects, explosions, screaming
 Make the enemy handle walls and obstacles better. It shouldn't be that hard. In fact, we could make a goddamned A* graph of the entire map space that is passable terrain and that would in fact solve the problem. Or at least make a graph of points that makes sure the enemy does not walk into walls, it could be done. Hey, every section could have a "get valid points"-method. Also, make enemies more aggressive towards players, now they seem to ignore them quite a bit, perhaps sensors are turned off or something.
 
 ### Objectives II - Quirkier
-Examples: Kill n enemies. Hold an area for n minutes. 
+Examples: Kill n enemies. Hold an area for n minutes. Come up with something really fun, oooh, I got it, every player has to be in a separate place at the same time!
+
+### Player Graphics
+This is what categorizes as a FUN task, it should be FUN! But it also requires lots of work, mainly in making art happen. Making heads, bodies, hair, stuff like that, and enabling generating characters and sprite sheets from that. L
 
 
 ## Not replacing Box2D with JBump
@@ -853,11 +856,11 @@ Det här gör vi på det gamla vanliga sättet. Vi bygger en box2d-värld, vi kl
 
 Oj oj oj,  vad roligt. Vi kan göra en box2d-kropp med leder, per tutorials etc. Superkul ju.
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbMTY3NDk3NzgxOSwtMTQ1NjM4NjIxNSwxNz
-Q3NzYxMTA0LC0xNTIzODM4ODAsLTg3ODUyMTUzNiwxODE5NjA3
-NTcwLC03MDI0NTE2NDUsLTgzOTAyMTM3NywtOTc4MzY2NDk5LD
-EwOTE0Nzk3NDcsMTMzNjY3Njk0NSw1OTYyMjUzNCwzMjg3MTg0
-MjQsLTE0ODUzOTk3OCwxMTA0MjY2ODIwLDE3NjkyNjE1MTIsMj
-MyMDQ3Nzg5LDEwMTEzNTc2NiwzMjE5NzkxMTgsLTEzNjE1NTc5
-MTZdfQ==
+eyJoaXN0b3J5IjpbLTE4NzYyNTY4MzYsMTY3NDk3NzgxOSwtMT
+Q1NjM4NjIxNSwxNzQ3NzYxMTA0LC0xNTIzODM4ODAsLTg3ODUy
+MTUzNiwxODE5NjA3NTcwLC03MDI0NTE2NDUsLTgzOTAyMTM3Ny
+wtOTc4MzY2NDk5LDEwOTE0Nzk3NDcsMTMzNjY3Njk0NSw1OTYy
+MjUzNCwzMjg3MTg0MjQsLTE0ODUzOTk3OCwxMTA0MjY2ODIwLD
+E3NjkyNjE1MTIsMjMyMDQ3Nzg5LDEwMTEzNTc2NiwzMjE5Nzkx
+MThdfQ==
 -->
