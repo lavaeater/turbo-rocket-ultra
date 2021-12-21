@@ -407,7 +407,7 @@ class ContactManager : ContactListener {
             val inverseDistance = 1 / distanceVector.len()
             enemyComponent.takeDamage((25f..100f).random() * inverseDistance, grenadeComponent.player)
             enemyComponent.lastShotAngle  = direction.angleDeg()
-            enemyBody.applyLinearImpulse(direction.scl(inverseDistance * 500f), enemyBody.worldCenter, true)
+            enemyBody.applyLinearImpulse(direction.scl(inverseDistance * (500f..1500f).random()), enemyBody.worldCenter, true)
         }
         grenade.addComponent<DestroyComponent>() //This entity will die and disappear now.
     }
