@@ -40,12 +40,13 @@ Make a list of sound effects that we absolutely need and then tick them off as y
 - [ ] Screaming Boss
 - [x] Burning flames
 - [x] Gasoline explosion
-- [ ] Grenade impact
+- [x] Grenade impact
 - [ ] Limbs being torn
 - [ ] Screaming, panicky Zombies
 - [ ] Zombie being spawned
 - [ ] Objective Reached
 - [ ] Magazine empty (empty click)
+- [ ] Cool one-liners said by players
 
 ### Hud II
 Make the HUD pretty and useful and legible. Work on more simple databinding stuff and Scene2D extensions etc.
@@ -914,11 +915,11 @@ Det här gör vi på det gamla vanliga sättet. Vi bygger en box2d-värld, vi kl
 
 Oj oj oj,  vad roligt. Vi kan göra en box2d-kropp med leder, per tutorials etc. Superkul ju.
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbLTUzMDU4MTg5NiwxNTQ4NjQ3MzY4LC01OT
-cyMzg0OTYsMTg1MTE0MjU1MCwtNTY3OTUwNzI0LC0zNDU4NDI2
-NTIsLTE0NTY3MjY1MDgsLTExNzEyNjE3MjQsMTIzMzA4NDEwNS
-wtMTI5OTc4OTg4OCwxNjc0OTc3ODE5LC0xNDU2Mzg2MjE1LDE3
-NDc3NjExMDQsLTE1MjM4Mzg4MCwtODc4NTIxNTM2LDE4MTk2MD
-c1NzAsLTcwMjQ1MTY0NSwtODM5MDIxMzc3LC05NzgzNjY0OTks
-MTA5MTQ3OTc0N119
+eyJoaXN0b3J5IjpbLTExNDUzODMxNDIsLTUzMDU4MTg5NiwxNT
+Q4NjQ3MzY4LC01OTcyMzg0OTYsMTg1MTE0MjU1MCwtNTY3OTUw
+NzI0LC0zNDU4NDI2NTIsLTE0NTY3MjY1MDgsLTExNzEyNjE3Mj
+QsMTIzMzA4NDEwNSwtMTI5OTc4OTg4OCwxNjc0OTc3ODE5LC0x
+NDU2Mzg2MjE1LDE3NDc3NjExMDQsLTE1MjM4Mzg4MCwtODc4NT
+IxNTM2LDE4MTk2MDc1NzAsLTcwMjQ1MTY0NSwtODM5MDIxMzc3
+LC05NzgzNjY0OTldfQ==
 -->
