@@ -24,6 +24,7 @@ import ecs.components.pickups.LootComponent
 import ecs.components.pickups.LootDropComponent
 import ecs.components.player.*
 import ecs.components.towers.TowerComponent
+import ecs.components.AudioComponent
 import ecs.systems.graphics.GameConstants.PLAYER_DENSITY
 import ecs.systems.graphics.GameConstants.SHIP_ANGULAR_DAMPING
 import ecs.systems.graphics.GameConstants.SHIP_LINEAR_DAMPING
@@ -175,17 +176,17 @@ fun fireEntity(at: Vector2, linearVelocity: Vector2, player: Player) {
     val box2dBody = world().body {
         type = BodyDef.BodyType.DynamicBody
         position.set(at)
-        linearDamping = 1f
+        linearDamping = 5f
         box(.3f, .3f) {
-            friction = 1f //Tune
-            density = 35f //tune
-            restitution = 0.5f
+            friction = 10f //Tune
+            density = 1f //tune
+            restitution = 0.9f
             filter {
                 categoryBits = Box2dCategories.molotov
                 maskBits = Box2dCategories.whatMolotovsHit
             }
         }
-        circle(.5f) {
+        box(.2f, .5f) {
             isSensor = true
             filter {
                 categoryBits = Box2dCategories.sensors
@@ -193,7 +194,7 @@ fun fireEntity(at: Vector2, linearVelocity: Vector2, player: Player) {
             }
         }
     }
-    box2dBody.applyLinearImpulse(linearVelocity.cpy().scl(.5f), at, true)
+    box2dBody.applyLinearImpulse(linearVelocity.scl(box2dBody.mass), box2dBody.getWorldPoint(Vector2.X), true)
     box2dBody.userData = engine().entity {
         with<TransformComponent>()
         with<BodyComponent> {
@@ -579,6 +580,7 @@ fun enemy(at: Vector2) {
         with<BodyComponent> { body = box2dBody }
         with<TransformComponent> { position.set(box2dBody.position) }
         with<EnemySensorComponent>()
+        with<AudioComponent>()
         with<EnemyComponent>()
         with<AnimatedCharacterComponent> {
             anims = Assets.enemies.values.random()

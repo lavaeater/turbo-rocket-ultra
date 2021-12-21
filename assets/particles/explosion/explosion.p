@@ -4,8 +4,8 @@ active: true
 lowMin: 0.0
 lowMax: 0.0
 - Duration - 
-lowMin: 100.0
-lowMax: 100.0
+lowMin: 20.0
+lowMax: 50.0
 - Count - 
 min: 100
 max: 2000
@@ -15,13 +15,15 @@ lowMax: 0.0
 highMin: 2000.0
 highMax: 2000.0
 relative: false
-scalingCount: 1
+scalingCount: 2
 scaling0: 1.0
-timelineCount: 1
+scaling1: 0.0
+timelineCount: 2
 timeline0: 0.0
+timeline1: 0.061643835
 - Life - 
-lowMin: 0.0
-lowMax: 0.0
+lowMin: 200.0
+lowMax: 200.0
 highMin: 250.0
 highMax: 250.0
 relative: false
@@ -79,8 +81,8 @@ active: false
 active: true
 lowMin: 0.0
 lowMax: 0.0
-highMin: 350.0
-highMax: 700.0
+highMin: 500.0
+highMax: 1500.0
 relative: false
 scalingCount: 1
 scaling0: 1.0
@@ -139,7 +141,7 @@ timeline2: 0.65068495
 timeline3: 1.0
 - Options - 
 attached: true
-continuous: true
+continuous: false
 aligned: false
 additive: true
 behind: false

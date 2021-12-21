@@ -116,6 +116,7 @@ object Context {
             addSystem(EnemyHearsShotsSystem())
             addSystem(InvestigateSystem())
             addSystem(RushPlayerSystem())
+            addSystem(AudioSystem())
             // Ai Systems End
             //Burning
             addSystem(BurningSystem())
