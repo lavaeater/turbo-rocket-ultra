@@ -31,7 +31,13 @@ Make the HUD pretty and useful and legible. Work on more simple databinding stuf
 Go back to the character editor and make sure we have access to female bodies as well (only male now for some reason), and also enable generating a bunch of different sprites or variations using it.
 
 ### Lightmaps for sprites
-T
+To really make use of the box2d light stuff we could use some lightmaps for the sprites. This would take some learning.
+
+### Soundscape II - the Moaning
+So, some ambient sound effects, some zombie sound effects, explosions, screaming, burning, etc.
+
+### Enemy AI II
+Make the enemy handle walls and obstacles better. It shouldn't be that hard. In fact, we could make a goddamned A* graph of the entire 
 
 
 ## Not replacing Box2D with JBump
@@ -844,11 +850,11 @@ Det här gör vi på det gamla vanliga sättet. Vi bygger en box2d-värld, vi kl
 
 Oj oj oj,  vad roligt. Vi kan göra en box2d-kropp med leder, per tutorials etc. Superkul ju.
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbOTI2MzY2NTE0LC0xNDU2Mzg2MjE1LDE3ND
-c3NjExMDQsLTE1MjM4Mzg4MCwtODc4NTIxNTM2LDE4MTk2MDc1
-NzAsLTcwMjQ1MTY0NSwtODM5MDIxMzc3LC05NzgzNjY0OTksMT
-A5MTQ3OTc0NywxMzM2Njc2OTQ1LDU5NjIyNTM0LDMyODcxODQy
-NCwtMTQ4NTM5OTc4LDExMDQyNjY4MjAsMTc2OTI2MTUxMiwyMz
-IwNDc3ODksMTAxMTM1NzY2LDMyMTk3OTExOCwtMTM2MTU1Nzkx
-Nl19
+eyJoaXN0b3J5IjpbMTYzMDI1NjM0NiwtMTQ1NjM4NjIxNSwxNz
+Q3NzYxMTA0LC0xNTIzODM4ODAsLTg3ODUyMTUzNiwxODE5NjA3
+NTcwLC03MDI0NTE2NDUsLTgzOTAyMTM3NywtOTc4MzY2NDk5LD
+EwOTE0Nzk3NDcsMTMzNjY3Njk0NSw1OTYyMjUzNCwzMjg3MTg0
+MjQsLTE0ODUzOTk3OCwxMTA0MjY2ODIwLDE3NjkyNjE1MTIsMj
+MyMDQ3Nzg5LDEwMTEzNTc2NiwzMjE5NzkxMTgsLTEzNjE1NTc5
+MTZdfQ==
 -->
