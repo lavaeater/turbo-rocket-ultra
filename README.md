@@ -277,15 +277,15 @@ Lets try to prioritize these into what would make the game seem "done" the faste
 - [ ] More Enemy Sprites (generate them)
 - [ ] Lightmaps for sprites
 - [ ] Soundscape II - the Moaning
-- [x] Fix the MiniMap
 - [ ] Enemy AI II, with avoiding walls
 - [ ] Objectives II, the sequel
-- [x] Pickups 2 (on-screen blurb indicating what you got)
-- [x] Interactable Components in-the-game
 - [ ] Player graphics made from components / parts etc.
 - [ ] Vehicles would be cool
 - [ ] Build Towers
 - [ ] Gibs and Body Parts II - blood trails and audio
+- [x] Pickups 2 (on-screen blurb indicating what you got)
+- [x] Interactable Components in-the-game
+- [x] Fix the MiniMap
 - [x] Smart Transforms - collect all vector stuff pertaining to position, rotation, direction, into one collected class 
 - [x] Story Mode
 - [x] Boss fight
@@ -833,7 +833,7 @@ Det här gör vi på det gamla vanliga sättet. Vi bygger en box2d-värld, vi kl
 
 Oj oj oj,  vad roligt. Vi kan göra en box2d-kropp med leder, per tutorials etc. Superkul ju.
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbMTY3NDY2NDg0MCwxNzQ3NzYxMTA0LC0xNT
+eyJoaXN0b3J5IjpbMTIxNTM4OTcyMiwxNzQ3NzYxMTA0LC0xNT
 IzODM4ODAsLTg3ODUyMTUzNiwxODE5NjA3NTcwLC03MDI0NTE2
 NDUsLTgzOTAyMTM3NywtOTc4MzY2NDk5LDEwOTE0Nzk3NDcsMT
 MzNjY3Njk0NSw1OTYyMjUzNCwzMjg3MTg0MjQsLTE0ODUzOTk3
