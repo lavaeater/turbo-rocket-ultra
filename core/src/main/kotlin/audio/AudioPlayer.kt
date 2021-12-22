@@ -3,7 +3,7 @@ package audio
 import com.badlogic.gdx.audio.Sound
 import tru.Assets
 
-class AudioPlayer(private val defaultVolume : Float = 0.5f) {
+class AudioPlayer(private val defaultVolume : Float = 1f) {
 
     fun playSound(sound: Sound, volume: Float = defaultVolume) {
         sound.play(volume)

@@ -228,9 +228,14 @@ class PlayerShootingSystem(private val audioPlayer: AudioPlayer) : IteratingSyst
                     controlComponent.player
                 )
             }
-        } else if(weapon.ammoRemaining <= 0) {
-            audioPlayer.playSound("players", "out-of-ammo")
+        } else if(weapon.ammoRemaining <= 0 && controlComponent.canPlay(Sfx.outofAmmo)) {
+            audioPlayer.playSound("players", Sfx.outofAmmo)
+            controlComponent.hasPlayed(Sfx.outofAmmo)
         }
     }
+}
+
+object Sfx {
+    const val outofAmmo = "out-of-ammo"
 }
 
