@@ -92,6 +92,27 @@ object Assets : Disposable {
                     Gdx.audio.newSound(Gdx.files.internal("audio/misc/flesh-1.wav")),
                     Gdx.audio.newSound(Gdx.files.internal("audio/misc/flesh-2.wav")),
                 )
+            ),
+            "players" to mapOf(
+                "out-of-ammo" to listOf(
+                    Gdx.audio.newSound(Gdx.files.internal("audio/players/out-of-ammo-1.wav")),
+                    Gdx.audio.newSound(Gdx.files.internal("audio/players/out-of-ammo-2.wav")),
+                ),
+                "death" to listOf(
+                    Gdx.audio.newSound(Gdx.files.internal("audio/players/death-1.wav")),
+                    Gdx.audio.newSound(Gdx.files.internal("audio/players/death-2.wav")),
+                ),
+                "loot-found" to listOf(
+                    Gdx.audio.newSound(Gdx.files.internal("audio/players/loot-1.wav")),
+                    Gdx.audio.newSound(Gdx.files.internal("audio/players/loot-2.wav")),
+                    Gdx.audio.newSound(Gdx.files.internal("audio/players/loot-3.wav")),
+                    Gdx.audio.newSound(Gdx.files.internal("audio/players/loot-4.wav")),
+                ),
+                "one-liners" to listOf(
+                    Gdx.audio.newSound(Gdx.files.internal("audio/players/groovy.wav")),
+                    Gdx.audio.newSound(Gdx.files.internal("audio/players/lets-dance.wav")),
+                    Gdx.audio.newSound(Gdx.files.internal("audio/players/there-u-go.wav")),
+                ),
             )
         )
     }

@@ -214,7 +214,7 @@ D1B67A
     private fun addPlayers() {
         val startBounds = mapManager.gridMap.values.first { it.startSection }.innerBounds
         for ((controlComponent, player) in Players.players) {
-            player(player, controlComponent, startBounds.randomPoint(), true)
+            player(player, controlComponent, startBounds.randomPoint(), false)
         }
     }
 

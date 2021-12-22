@@ -13,6 +13,10 @@ class AudioPlayer(private val defaultVolume : Float = 0.5f) {
         Assets.soundEffects[sound]?.play(volume)
     }
 
+    fun playSound(category: String, group: String, volume: Float = defaultVolume) {
+        Assets.newSoundEffects[category]?.get(group)?.random()?.play(volume)
+    }
+
     private val queuedSounds = mutableListOf<QueuedSound>()
     private val soundsToPlay = mutableListOf<QueuedSound>()
 
