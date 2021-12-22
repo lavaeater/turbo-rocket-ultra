@@ -103,7 +103,7 @@ class PlayerShootingSystem(private val audioPlayer: AudioPlayer) : IteratingSyst
     }
 
     private fun playSound() {
-        if((0..99).random() < 10) {
+        if((0..99).random() < 5) {
             audioPlayer.playSound("players","one-liners")
         }
     }

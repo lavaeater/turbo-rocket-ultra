@@ -229,7 +229,9 @@ class ContactManager : ContactListener {
                 //No op for now
             }
             is ContactType.PlayerAndLoot -> {
-                audioPlayer.playSound("players", "loot-found")
+                if((0..99).random() < 15)
+                    audioPlayer.playSound("players", "loot-found")
+
                 val playerEntity = contactType.player
                 val lootEntity = contactType.lootEntity
                 val inventory = playerEntity.getComponent<InventoryComponent>()
