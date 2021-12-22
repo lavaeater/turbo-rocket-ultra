@@ -1,5 +1,6 @@
 package physics
 
+import audio.AudioPlayer
 import com.badlogic.ashley.core.Engine
 import com.badlogic.ashley.core.Entity
 import com.badlogic.gdx.Input
@@ -174,6 +175,7 @@ class ContactManager : ContactListener {
     private val engine by lazy { inject<Engine>() }
     private val messageHandler by lazy { inject<MessageHandler>() }
     private val camera by lazy { inject<OrthographicCamera>() }
+    private val audioPlayer by lazy { inject<AudioPlayer>() }
 
     @OptIn(ExperimentalStdlibApi::class)
     override fun beginContact(contact: Contact) {
@@ -227,6 +229,7 @@ class ContactManager : ContactListener {
                 //No op for now
             }
             is ContactType.PlayerAndLoot -> {
+                audioPlayer.playSound("players", "loot-found")
                 val playerEntity = contactType.player
                 val lootEntity = contactType.lootEntity
                 val inventory = playerEntity.getComponent<InventoryComponent>()
@@ -381,7 +384,7 @@ class ContactManager : ContactListener {
     @OptIn(ExperimentalStdlibApi::class)
     fun handleGrenadeHittingAnything(contactType: ContactType.GrenadeHittingAnything) {
 //This should be timed using cooldown, not this way
-
+        audioPlayer.playSound(Assets.newSoundEffects["weapons"]!!["grenade"]!!.random())
         val grenade = contactType.grenade
         val grenadeComponent = grenade.getComponent<GrenadeComponent>()
         val body = grenade.getComponent<BodyComponent>().body!!
@@ -417,6 +420,7 @@ class ContactManager : ContactListener {
 
     @OptIn(ExperimentalStdlibApi::class)
     fun handleMolotovHittingAnything(contactType: ContactType.MolotovHittingAnything) {
+        audioPlayer.playSound(Assets.newSoundEffects["weapons"]!!["molotov"]!!.random())
         val molotov = contactType.molotov
         val molotovComponent = molotov.getComponent<MolotovComponent>()
         val body = molotov.getComponent<BodyComponent>().body!!

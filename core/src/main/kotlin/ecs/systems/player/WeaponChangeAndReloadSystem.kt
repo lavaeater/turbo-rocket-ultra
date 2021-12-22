@@ -45,6 +45,7 @@ class WeaponChangeAndReloadSystem : IteratingSystem(
             if (inventoryComponent.ammo.containsKey(ammoType) && inventoryComponent.ammo[ammoType]!! > 0) {
                 weaponComponent.reloadCoolDown -= deltaTime
                 if (weaponComponent.reloadCoolDown <= 0f) {
+                    controlComponent.resetSound(Sfx.outofAmmo)
                     when (gun.reloadType) {
                         ReloadType.SingleShot -> {
                             audioPlayer.playSound(reloadSound)

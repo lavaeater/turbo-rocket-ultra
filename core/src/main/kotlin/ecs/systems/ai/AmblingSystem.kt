@@ -17,7 +17,10 @@ import map.grid.Coordinate
 import map.grid.GridMapManager
 import map.snake.randomPoint
 import physics.AshleyMappers
-import physics.getComponent
+import physics.audio
+import physics.hasAudio
+import tru.Assets
+
 
 class AmblingSystem : IteratingSystem(allOf(Amble::class, EnemyComponent::class, TransformComponent::class).get()) {
 
@@ -38,6 +41,11 @@ class AmblingSystem : IteratingSystem(allOf(Amble::class, EnemyComponent::class,
             findPathFromTo(enemyComponent, currentSection, randomSection)
 
             component.firstRun = false
+            if(entity.hasAudio()) {
+                val audio = entity.audio()
+                audio.soundEffect = Assets.newSoundEffects["zombies"]!!["groans"]!!.random()
+                audio.coolDownRange = 60f..120f
+            }
         }
 
         val weAreDone = progressPath(enemyComponent, currentPosition)

@@ -3,7 +3,7 @@ package audio
 import com.badlogic.gdx.audio.Sound
 import tru.Assets
 
-class AudioPlayer(private val defaultVolume : Float = 0.1f) {
+class AudioPlayer(private val defaultVolume : Float = 1f) {
 
     fun playSound(sound: Sound, volume: Float = defaultVolume) {
         sound.play(volume)
@@ -11,6 +11,10 @@ class AudioPlayer(private val defaultVolume : Float = 0.1f) {
 
     fun playSound(sound: String, volume: Float = defaultVolume) {
         Assets.soundEffects[sound]?.play(volume)
+    }
+
+    fun playSound(category: String, group: String, volume: Float = defaultVolume) {
+        Assets.newSoundEffects[category]?.get(group)?.random()?.play(volume)
     }
 
     private val queuedSounds = mutableListOf<QueuedSound>()

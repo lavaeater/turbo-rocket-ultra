@@ -7,7 +7,10 @@ import ecs.components.ai.Panic
 import ecs.components.enemy.EnemyComponent
 import ktx.ashley.allOf
 import ktx.math.random
+import physics.audio
 import physics.getComponent
+import physics.hasAudio
+import tru.Assets
 
 class PanicSystem : IteratingSystem(allOf(Panic::class, EnemyComponent::class).get()) {
 
@@ -20,6 +23,14 @@ class PanicSystem : IteratingSystem(allOf(Panic::class, EnemyComponent::class).g
             val enemyComponent = entity.getComponent<EnemyComponent>()
             enemyComponent.directionVector.set(directionRange.random(), directionRange.random()).nor()
             enemyComponent.speed = 10f
+
+            if(entity.hasAudio()) {
+                val audio = entity.audio()
+                audio.soundEffect = Assets.newSoundEffects["zombies"]!!["panic"]!!.random()
+                audio.coolDownRange = (1f..7f)
+                audio.coolDown = audio.coolDownRange.random()
+            }
+
         }
         if (component.status == Task.Status.RUNNING) {
             component.coolDown -= deltaTime

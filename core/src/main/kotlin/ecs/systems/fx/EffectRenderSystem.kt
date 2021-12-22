@@ -37,7 +37,6 @@ class EffectRenderSystem(private val batch: Batch, priority:Int) : IteratingSyst
             if(!effectComponent.started) {
                 effectComponent.started = true
             }
-            //effect.scaleEffect(0.8f)
             effect.update(deltaTime)
             batch.use {
                 effect.draw(batch)

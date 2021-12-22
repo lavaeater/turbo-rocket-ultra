@@ -50,6 +50,7 @@ class PlayerShootingSystem(private val audioPlayer: AudioPlayer) : IteratingSyst
             weapon.ammoRemaining > 0 &&
             !(AshleyMappers.respawn.has(playerEntity) || AshleyMappers.waitsForRespawn.has(playerEntity))
         ) {
+            playSound()
             val transformComponent = AshleyMappers.transform.get(playerEntity)
             controlComponent.shoot()
 
@@ -96,6 +97,14 @@ class PlayerShootingSystem(private val audioPlayer: AudioPlayer) : IteratingSyst
                 }
 
             }
+        } else if(weapon.ammoRemaining <= 0) {
+            audioPlayer.playSound("players", "out-of-ammo")
+        }
+    }
+
+    private fun playSound() {
+        if((0..99).random() < 10) {
+            audioPlayer.playSound("players","one-liners")
         }
     }
 
@@ -104,6 +113,7 @@ class PlayerShootingSystem(private val audioPlayer: AudioPlayer) : IteratingSyst
             controlComponent.firing &&
             !(AshleyMappers.respawn.has(playerEntity) || AshleyMappers.waitsForRespawn.has(playerEntity))
         ) {
+            playSound()
             //1. Check if enemies are within distance (is this faster than the sector first?
             val playerPosition = AshleyMappers.transform.get(playerEntity).position
             val allEnemies =
@@ -160,6 +170,7 @@ class PlayerShootingSystem(private val audioPlayer: AudioPlayer) : IteratingSyst
             weapon.ammoRemaining > 0 &&
             !(AshleyMappers.respawn.has(playerEntity) || AshleyMappers.waitsForRespawn.has(playerEntity))
         ) {
+            playSound()
             val transformComponent = AshleyMappers.transform.get(playerEntity)
             AshleyMappers.firedShots.get(playerEntity).queue.addFirst(
                 Pair(
@@ -217,7 +228,14 @@ class PlayerShootingSystem(private val audioPlayer: AudioPlayer) : IteratingSyst
                     controlComponent.player
                 )
             }
+        } else if(weapon.ammoRemaining <= 0 && controlComponent.canPlay(Sfx.outofAmmo)) {
+            audioPlayer.playSound("players", Sfx.outofAmmo)
+            controlComponent.hasPlayed(Sfx.outofAmmo)
         }
     }
+}
+
+object Sfx {
+    const val outofAmmo = "out-of-ammo"
 }
 

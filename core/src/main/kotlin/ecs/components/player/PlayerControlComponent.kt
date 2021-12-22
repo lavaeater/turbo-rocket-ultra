@@ -57,13 +57,15 @@ class PlayerControlComponent(var controlMapper: ControlMapper, val player: Playe
         }
 
 
-
     val triggerPulled get() = controlMapper.firing
     val firing get() = controlMapper.firing && cooldownRemaining <= 0f
     val aiming get() = controlMapper.aiming
     val aimVector get() = controlMapper.aimVector
 
-    val directionVector: Vector2 get() { return if(aiming) aimVector else walkVector }
+    val directionVector: Vector2
+        get() {
+            return if (aiming) aimVector else walkVector
+        }
 
     val compassDirection get() = aimVector.compassDirection()
     val mousePosition get() = controlMapper.mousePosition
@@ -102,6 +104,7 @@ class PlayerControlComponent(var controlMapper: ControlMapper, val player: Playe
         shotsFired = 0
         latestHitPoint.setZero()
     }
+
     var lockedInputSequence = mutableListOf<Int>()
     var checkForSequence = false
     var complexActionStatus: ComplexActionResult = ComplexActionResult.Failure
@@ -114,9 +117,9 @@ class PlayerControlComponent(var controlMapper: ControlMapper, val player: Playe
     }
 
     fun checkSequence(keyPressed: Int) {
-        if(lockedInputSequence.first() == keyPressed) {
+        if (lockedInputSequence.first() == keyPressed) {
             lockedInputSequence.removeFirst()
-            if(lockedInputSequence.isEmpty()) {
+            if (lockedInputSequence.isEmpty()) {
                 complexActionStatus = ComplexActionResult.Success
                 checkForSequence = false
                 controlMapper.requireSequencePress = false
@@ -131,7 +134,7 @@ class PlayerControlComponent(var controlMapper: ControlMapper, val player: Playe
         }
     }
 
-    fun sequencePressingProgress() : ComplexActionResult {
+    fun sequencePressingProgress(): ComplexActionResult {
         return complexActionStatus
     }
 
@@ -143,16 +146,32 @@ class PlayerControlComponent(var controlMapper: ControlMapper, val player: Playe
         coolDowns[property] = cooldown
     }
 
-    fun cooldownPropertyCheckIfDone(property: KMutableProperty<Boolean>, delta: Float) : Boolean {
-        if(!coolDowns.containsKey(property))
+    fun cooldownPropertyCheckIfDone(property: KMutableProperty<Boolean>, delta: Float): Boolean {
+        if (!coolDowns.containsKey(property))
             return true
         coolDowns[property] = coolDowns[property]!! - delta
-        if(coolDowns[property]!! <= 0f) {
+        if (coolDowns[property]!! <= 0f) {
             property.setter.call(false)
             coolDowns.remove(property)
             return true
         }
         return false
+    }
+
+    private val soundsThatCanPlayAndSuch = mutableMapOf<String, Boolean>()
+    fun canPlay(soundGroup: String): Boolean {
+        if (!soundsThatCanPlayAndSuch.containsKey(soundGroup)) {
+            soundsThatCanPlayAndSuch[soundGroup] = true
+        }
+        return soundsThatCanPlayAndSuch[soundGroup]!!
+    }
+
+    fun hasPlayed(soundGroup: String) {
+        soundsThatCanPlayAndSuch[soundGroup] = false
+    }
+
+    fun resetSound(soundGroup: String) {
+        soundsThatCanPlayAndSuch[soundGroup] = true
     }
 }
 
