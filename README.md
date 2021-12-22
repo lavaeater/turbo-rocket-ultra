@@ -12,7 +12,7 @@ It also appears that the mouse position thing was so low hanging that I had alre
 - [x] Add explosion particle effect to grenade collision
 - [x] Fix mouse position by polling position instead of event-driven system
 - [x] Flip weapon sprites when facing west
-- [ ] Soundscape II - the Moaning
+- [x] Soundscape II - the Moaning
 - [ ] Objectives II, the sequel
 - [ ] Fix some warnings
 --------
@@ -42,11 +42,11 @@ Make a list of sound effects that we absolutely need and then tick them off as y
 - [x] Gasoline explosion
 - [x] Grenade impact
 - [x] Limbs being torn
-- [ ] Screaming, panicky Zombies
+- [x] Screaming, panicky Zombies
 - [ ] Zombie being spawned
 - [ ] Objective Reached
-- [ ] Magazine empty (empty click)
-- [ ] Cool one-liners said by players
+- [x] Magazine empty - is now one-liner
+- [x] Cool one-liners said by players
 
 ### Hud II
 Make the HUD pretty and useful and legible. Work on more simple databinding stuff and Scene2D extensions etc.
@@ -915,11 +915,11 @@ Det här gör vi på det gamla vanliga sättet. Vi bygger en box2d-värld, vi kl
 
 Oj oj oj,  vad roligt. Vi kan göra en box2d-kropp med leder, per tutorials etc. Superkul ju.
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbLTE4Mzk1MTgyNzAsLTExNDUzODMxNDIsLT
-UzMDU4MTg5NiwxNTQ4NjQ3MzY4LC01OTcyMzg0OTYsMTg1MTE0
-MjU1MCwtNTY3OTUwNzI0LC0zNDU4NDI2NTIsLTE0NTY3MjY1MD
-gsLTExNzEyNjE3MjQsMTIzMzA4NDEwNSwtMTI5OTc4OTg4OCwx
-Njc0OTc3ODE5LC0xNDU2Mzg2MjE1LDE3NDc3NjExMDQsLTE1Mj
-M4Mzg4MCwtODc4NTIxNTM2LDE4MTk2MDc1NzAsLTcwMjQ1MTY0
-NSwtODM5MDIxMzc3XX0=
+eyJoaXN0b3J5IjpbLTYzMzk3MDI2NCwtMTgzOTUxODI3MCwtMT
+E0NTM4MzE0MiwtNTMwNTgxODk2LDE1NDg2NDczNjgsLTU5NzIz
+ODQ5NiwxODUxMTQyNTUwLC01Njc5NTA3MjQsLTM0NTg0MjY1Mi
+wtMTQ1NjcyNjUwOCwtMTE3MTI2MTcyNCwxMjMzMDg0MTA1LC0x
+Mjk5Nzg5ODg4LDE2NzQ5Nzc4MTksLTE0NTYzODYyMTUsMTc0Nz
+c2MTEwNCwtMTUyMzgzODgwLC04Nzg1MjE1MzYsMTgxOTYwNzU3
+MCwtNzAyNDUxNjQ1XX0=
 -->
