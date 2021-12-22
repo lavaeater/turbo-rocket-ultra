@@ -1,5 +1,6 @@
 package ecs.systems.enemy
 
+import audio.AudioPlayer
 import com.badlogic.ashley.core.Entity
 import com.badlogic.ashley.systems.IteratingSystem
 import ecs.components.enemy.EnemyComponent
@@ -13,12 +14,14 @@ import physics.AshleyMappers
 import physics.addComponent
 import physics.getComponent
 import physics.has
+import tru.Assets
 
-class EnemyDeathSystem : IteratingSystem(allOf(EnemyComponent::class).get()) {
+class EnemyDeathSystem(private val audioPlayer: AudioPlayer) : IteratingSystem(allOf(EnemyComponent::class).get()) {
 
     override fun processEntity(entity: Entity, deltaTime: Float) {
         val enemyComponent = AshleyMappers.enemy.get(entity)
         if (enemyComponent.isDead) {
+            audioPlayer.playSound(Assets.newSoundEffects["misc"]!!["flesh"]!!.random())
             val transformComponent = AshleyMappers.transform.get(entity)
             if (AshleyMappers.lootDrop.has(entity)) {
                 val result = AshleyMappers.lootDrop.get(entity).lootTable.result
