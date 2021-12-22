@@ -72,8 +72,8 @@ object Assets : Disposable {
                     Gdx.audio.newSound(Gdx.files.internal("audio/zombies/zombie-groan-2.wav"))
                 ),
                 "panic" to listOf(
-                    Gdx.audio.newSound(Gdx.files.internal("audio/zombies/panic-1.ogg")),
-//                    Gdx.audio.newSound(Gdx.files.internal("audio/zombies/panic-2.ogg"))
+                    Gdx.audio.newSound(Gdx.files.internal("audio/zombies/panic-1.wav")),
+                    Gdx.audio.newSound(Gdx.files.internal("audio/zombies/panic-2.wav"))
                 ),
                 "attacks" to listOf(
                     Gdx.audio.newSound(Gdx.files.internal("audio/zombies/zombie-attack.wav"))
