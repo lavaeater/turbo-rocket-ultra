@@ -41,7 +41,7 @@ Make a list of sound effects that we absolutely need and then tick them off as y
 - [x] Burning flames
 - [x] Gasoline explosion
 - [x] Grenade impact
-- [ ] Limbs being torn
+- [x] Limbs being torn
 - [ ] Screaming, panicky Zombies
 - [ ] Zombie being spawned
 - [ ] Objective Reached
@@ -915,11 +915,11 @@ Det här gör vi på det gamla vanliga sättet. Vi bygger en box2d-värld, vi kl
 
 Oj oj oj,  vad roligt. Vi kan göra en box2d-kropp med leder, per tutorials etc. Superkul ju.
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbLTExNDUzODMxNDIsLTUzMDU4MTg5NiwxNT
-Q4NjQ3MzY4LC01OTcyMzg0OTYsMTg1MTE0MjU1MCwtNTY3OTUw
-NzI0LC0zNDU4NDI2NTIsLTE0NTY3MjY1MDgsLTExNzEyNjE3Mj
-QsMTIzMzA4NDEwNSwtMTI5OTc4OTg4OCwxNjc0OTc3ODE5LC0x
-NDU2Mzg2MjE1LDE3NDc3NjExMDQsLTE1MjM4Mzg4MCwtODc4NT
-IxNTM2LDE4MTk2MDc1NzAsLTcwMjQ1MTY0NSwtODM5MDIxMzc3
-LC05NzgzNjY0OTldfQ==
+eyJoaXN0b3J5IjpbLTE4Mzk1MTgyNzAsLTExNDUzODMxNDIsLT
+UzMDU4MTg5NiwxNTQ4NjQ3MzY4LC01OTcyMzg0OTYsMTg1MTE0
+MjU1MCwtNTY3OTUwNzI0LC0zNDU4NDI2NTIsLTE0NTY3MjY1MD
+gsLTExNzEyNjE3MjQsMTIzMzA4NDEwNSwtMTI5OTc4OTg4OCwx
+Njc0OTc3ODE5LC0xNDU2Mzg2MjE1LDE3NDc3NjExMDQsLTE1Mj
+M4Mzg4MCwtODc4NTIxNTM2LDE4MTk2MDc1NzAsLTcwMjQ1MTY0
+NSwtODM5MDIxMzc3XX0=
 -->
