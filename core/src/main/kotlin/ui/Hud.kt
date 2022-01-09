@@ -67,8 +67,8 @@ class Hud(private val batch: Batch) : IUserInterface, MessageReceiver {
                 table {
                     setFillParent(true)
                     killCountLabel =
-                        boundLabel({ "Kill Count: ${factsOfTheWorld.getIntFact(Facts.EnemyKillCount).value } / $targetCount" }) {
-                            isVisible = showKillCount
+                        boundLabel({ "Kill Count: ${factsOfTheWorld.getIntValue(Facts.EnemyKillCount) } / ${factsOfTheWorld.getIntValue(Facts.TargetEnemyKillCount) }" }) {
+                            isVisible = factsOfTheWorld.getBooleanFact(Facts.ShowEnemyKillCount).value
                         }
                 }
                 row()
@@ -128,6 +128,7 @@ class Hud(private val batch: Batch) : IUserInterface, MessageReceiver {
         showToasts(delta)
         stage.act(delta)
         stage.draw()
+        killCountLabel.isVisible = factsOfTheWorld.getBooleanFact(Facts.ShowEnemyKillCount).value
     }
 
     override fun dispose() {
@@ -140,18 +141,10 @@ class Hud(private val batch: Batch) : IUserInterface, MessageReceiver {
     override fun reset() {
     }
 
-    var targetCount = 20
-    var showKillCount = true
-
     /***
      * This is a story method, this should be generalized to support more
      * dynamic stuff.
      */
-    override fun showKillCount(count: Int) {
-        targetCount = count
-        showKillCount = true
-    }
-
     override val messageTypes: Set<KClass<*>> = setOf(Message.ShowToast::class, Message.ShowUiForComplexAction::class)
 
     fun worldToHudPosition(worldPosition: Vector2): Vector2 {

@@ -236,9 +236,11 @@ D1B67A
         for (player in Players.players.values) {
             player.touchedObjectives.clear()
         }
-        factsOfTheWorld.stateBoolFact(Facts.BossIsDead, false)
-        factsOfTheWorld.stateBoolFact(Facts.AllObjectivesAreTouched, false)
-        factsOfTheWorld.stateBoolFact(Facts.LevelComplete, false)
+//        factsOfTheWorld.stateBoolFact(Facts.BossIsDead, false)
+//        factsOfTheWorld.stateBoolFact(Facts.AllObjectivesAreTouched, false)
+//        factsOfTheWorld.stateBoolFact(Facts.LevelComplete, false)
+//        factsOfTheWorld.stateBoolFact(Facts.ShowEnemyKillCount, false)
+
 
         CounterObject.currentLevel++
         generateMap(CounterObject.currentLevel)

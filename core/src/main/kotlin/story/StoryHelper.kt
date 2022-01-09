@@ -5,7 +5,6 @@ import gamestate.GameState
 import injection.Context.inject
 import statemachine.StateMachine
 import story.fact.Facts
-import ui.Hud
 import ui.IUserInterface
 
 
@@ -20,6 +19,7 @@ object StoryHelper {
                 factsOfTheWorld.stateBoolFact(Facts.LevelComplete, false)
                 factsOfTheWorld.stateBoolFact(Facts.BossIsDead, false)
                 factsOfTheWorld.stateBoolFact(Facts.AllObjectivesAreTouched, false)
+                factsOfTheWorld.stateBoolFact(Facts.ShowEnemyKillCount, false)
             }
             storyBeat {
                 name = "Check If Work is Done"
@@ -42,14 +42,14 @@ object StoryHelper {
                 factsOfTheWorld.stateBoolFact(Facts.BossIsDead, false)
                 factsOfTheWorld.stateBoolFact(Facts.AllObjectivesAreTouched, false)
                 factsOfTheWorld.stateIntFact(Facts.EnemyKillCount, 0)
-                //The initializer could actually set up the UI-thingie. Lets try that.
-                inject<IUserInterface>().showKillCount(20)
+                factsOfTheWorld.stateIntFact(Facts.TargetEnemyKillCount, 20)
+                factsOfTheWorld.stateBoolFact(Facts.ShowEnemyKillCount, true)
             }
             storyBeat {
                 name = "Check If Work is Done"
                 moreThanCriterion(Facts.EnemyKillCount, 20)
-                booleanCriteria(Facts.BossIsDead, true)
-                booleanCriteria(Facts.AllObjectivesAreTouched, true)
+//                booleanCriteria(Facts.BossIsDead, true)
+//                booleanCriteria(Facts.AllObjectivesAreTouched, true)
                 consequence {
                     apply = {
                         factsOfTheWorld.stateBoolFact(Facts.LevelComplete, true)

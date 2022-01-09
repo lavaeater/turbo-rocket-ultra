@@ -21,5 +21,4 @@ interface IUserInterface : Disposable {
     TODO("Not yet implemented")
   }
 
-  fun showKillCount(count: Int)
 }

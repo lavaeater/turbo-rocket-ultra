@@ -18,5 +18,7 @@ class Facts {
         const val AllObjectivesAreTouched = "AllObjectivesAreTouched"
         const val LevelComplete = "LevelComplete"
         const val EnemyKillCount = "EnemyKillCount"
+        const val TargetEnemyKillCount = "TargetEnemyKillCount"
+        const val ShowEnemyKillCount = "ShowEnemyKillCount"
     }
 }
