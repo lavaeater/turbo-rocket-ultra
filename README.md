@@ -38,7 +38,11 @@ Examples: Kill n enemies. Hold an area for n minutes. Come up with something rea
 - [ ] Hold area for n seconds 
 - [ ] All players in different place at the same time
 
+#### Kill N Enemies
+This could be saved in some kind of setting for the map or something (check the story stuff). However, we also want to be able to add rules making spawning go faster and faster for this, would be real cool.
 
+#### Hold an area for n seconds
+So, a timer starts counting down, or a progress bar starts going up or whatever, like in Helldivers, and at the same time the spawners go haywire and spawn lots of
 
 ### Soundscape II - the Moaning
 To make audio effects working nicely, we need a way of controlling how many are playing at any one time, their duration, and queueing. I have managed to implement some of these things, but we need a few more.
@@ -927,7 +931,7 @@ Det här gör vi på det gamla vanliga sättet. Vi bygger en box2d-värld, vi kl
 
 Oj oj oj,  vad roligt. Vi kan göra en box2d-kropp med leder, per tutorials etc. Superkul ju.
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbLTcyNTYzMzcxNSw0MTg3ODE2MjMsLTE0Mz
+eyJoaXN0b3J5IjpbMTI5NjM5NTUxMyw0MTg3ODE2MjMsLTE0Mz
 g2MDgyNDksLTYzMzk3MDI2NCwtMTgzOTUxODI3MCwtMTE0NTM4
 MzE0MiwtNTMwNTgxODk2LDE1NDg2NDczNjgsLTU5NzIzODQ5Ni
 wxODUxMTQyNTUwLC01Njc5NTA3MjQsLTM0NTg0MjY1MiwtMTQ1
