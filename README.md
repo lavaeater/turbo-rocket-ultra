@@ -32,6 +32,9 @@ It also appears that the mouse position thing was so low hanging that I had alre
 - [ ] Puzzle obstacles / machines
 - [ ] Oblique Projection
 
+### Objectives II - Quirkier
+Examples: Kill n enemies. Hold an area for n minutes. Come up with something really fun, oooh, I got it, every player has to be in a separate place at the same time!
+
 ### Soundscape II - the Moaning
 To make audio effects working nicely, we need a way of controlling how many are playing at any one time, their duration, and queueing. I have managed to implement some of these things, but we need a few more.
 - [x] Debug View for Audio Channels
@@ -66,9 +69,6 @@ To really make use of the box2d light stuff we could use some lightmaps for the 
 
 ### Enemy AI II
 Make the enemy handle walls and obstacles better. It shouldn't be that hard. In fact, we could make a goddamned A* graph of the entire map space that is passable terrain and that would in fact solve the problem. Or at least make a graph of points that makes sure the enemy does not walk into walls, it could be done. Hey, every section could have a "get valid points"-method. Also, make enemies more aggressive towards players, now they seem to ignore them quite a bit, perhaps sensors are turned off or something.
-
-### Objectives II - Quirkier
-Examples: Kill n enemies. Hold an area for n minutes. Come up with something really fun, oooh, I got it, every player has to be in a separate place at the same time!
 
 ### Player Graphics
 This is what categorizes as a FUN task, it should be FUN! But it also requires lots of work, mainly in making art happen. Making heads, bodies, hair, stuff like that, and enabling generating characters and sprite sheets from that. Lots of work, but there could be great payoffs in the end.
@@ -922,11 +922,11 @@ Det här gör vi på det gamla vanliga sättet. Vi bygger en box2d-värld, vi kl
 
 Oj oj oj,  vad roligt. Vi kan göra en box2d-kropp med leder, per tutorials etc. Superkul ju.
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbLTE0MTM3NTA3MSwtMTQzODYwODI0OSwtNj
-MzOTcwMjY0LC0xODM5NTE4MjcwLC0xMTQ1MzgzMTQyLC01MzA1
-ODE4OTYsMTU0ODY0NzM2OCwtNTk3MjM4NDk2LDE4NTExNDI1NT
-AsLTU2Nzk1MDcyNCwtMzQ1ODQyNjUyLC0xNDU2NzI2NTA4LC0x
-MTcxMjYxNzI0LDEyMzMwODQxMDUsLTEyOTk3ODk4ODgsMTY3ND
-k3NzgxOSwtMTQ1NjM4NjIxNSwxNzQ3NzYxMTA0LC0xNTIzODM4
-ODAsLTg3ODUyMTUzNl19
+eyJoaXN0b3J5IjpbMjE4MDMxMDk1LC0xNDM4NjA4MjQ5LC02Mz
+M5NzAyNjQsLTE4Mzk1MTgyNzAsLTExNDUzODMxNDIsLTUzMDU4
+MTg5NiwxNTQ4NjQ3MzY4LC01OTcyMzg0OTYsMTg1MTE0MjU1MC
+wtNTY3OTUwNzI0LC0zNDU4NDI2NTIsLTE0NTY3MjY1MDgsLTEx
+NzEyNjE3MjQsMTIzMzA4NDEwNSwtMTI5OTc4OTg4OCwxNjc0OT
+c3ODE5LC0xNDU2Mzg2MjE1LDE3NDc3NjExMDQsLTE1MjM4Mzg4
+MCwtODc4NTIxNTM2XX0=
 -->
