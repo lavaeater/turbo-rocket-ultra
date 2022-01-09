@@ -34,7 +34,7 @@ It also appears that the mouse position thing was so low hanging that I had alre
 
 ### Objectives II - Quirkier
 Examples: Kill n enemies. Hold an area for n minutes. Come up with something really fun, oooh, I got it, every player has to be in a separate place at the same time!
-- [ ] Kill n enemies
+- [x] Kill n enemies
 - [ ] Hold area for n seconds 
 - [ ] All players in different place at the same time
 
@@ -940,11 +940,11 @@ Det här gör vi på det gamla vanliga sättet. Vi bygger en box2d-värld, vi kl
 
 Oj oj oj,  vad roligt. Vi kan göra en box2d-kropp med leder, per tutorials etc. Superkul ju.
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbLTE2MjQ2NjUyNjEsLTEzNjQ4MTY4OTMsND
-E4NzgxNjIzLC0xNDM4NjA4MjQ5LC02MzM5NzAyNjQsLTE4Mzk1
-MTgyNzAsLTExNDUzODMxNDIsLTUzMDU4MTg5NiwxNTQ4NjQ3Mz
-Y4LC01OTcyMzg0OTYsMTg1MTE0MjU1MCwtNTY3OTUwNzI0LC0z
-NDU4NDI2NTIsLTE0NTY3MjY1MDgsLTExNzEyNjE3MjQsMTIzMz
-A4NDEwNSwtMTI5OTc4OTg4OCwxNjc0OTc3ODE5LC0xNDU2Mzg2
-MjE1LDE3NDc3NjExMDRdfQ==
+eyJoaXN0b3J5IjpbLTE0OTYyNTY1MTcsLTE2MjQ2NjUyNjEsLT
+EzNjQ4MTY4OTMsNDE4NzgxNjIzLC0xNDM4NjA4MjQ5LC02MzM5
+NzAyNjQsLTE4Mzk1MTgyNzAsLTExNDUzODMxNDIsLTUzMDU4MT
+g5NiwxNTQ4NjQ3MzY4LC01OTcyMzg0OTYsMTg1MTE0MjU1MCwt
+NTY3OTUwNzI0LC0zNDU4NDI2NTIsLTE0NTY3MjY1MDgsLTExNz
+EyNjE3MjQsMTIzMzA4NDEwNSwtMTI5OTc4OTg4OCwxNjc0OTc3
+ODE5LC0xNDU2Mzg2MjE1XX0=
 -->
