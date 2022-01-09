@@ -33,6 +33,13 @@ It also appears that the mouse position thing was so low hanging that I had alre
 - [ ] Oblique Projection
 
 ### Soundscape II - the Moaning
+To make audio effects working nicely, we need a way of controlling how many are playing at any one time, their duration, and queueing. I have managed to implement some of these things, but we need a few more.
+- [ ] Debug View for Audio Channels
+
+#### Debug View For Audio Channels
+This should be simple - just add some properties to channel, like name, name of sound being played, if it is played. Should be easy enough.
+
+
 So, some ambient sound effects, some zombie sound effects, explosions, screaming, burning, etc.
 Make a list of sound effects that we absolutely need and then tick them off as you find them
 - [x] Moans
@@ -915,11 +922,11 @@ Det här gör vi på det gamla vanliga sättet. Vi bygger en box2d-värld, vi kl
 
 Oj oj oj,  vad roligt. Vi kan göra en box2d-kropp med leder, per tutorials etc. Superkul ju.
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbLTYzMzk3MDI2NCwtMTgzOTUxODI3MCwtMT
-E0NTM4MzE0MiwtNTMwNTgxODk2LDE1NDg2NDczNjgsLTU5NzIz
-ODQ5NiwxODUxMTQyNTUwLC01Njc5NTA3MjQsLTM0NTg0MjY1Mi
-wtMTQ1NjcyNjUwOCwtMTE3MTI2MTcyNCwxMjMzMDg0MTA1LC0x
-Mjk5Nzg5ODg4LDE2NzQ5Nzc4MTksLTE0NTYzODYyMTUsMTc0Nz
-c2MTEwNCwtMTUyMzgzODgwLC04Nzg1MjE1MzYsMTgxOTYwNzU3
-MCwtNzAyNDUxNjQ1XX0=
+eyJoaXN0b3J5IjpbLTE0Mzg2MDgyNDksLTYzMzk3MDI2NCwtMT
+gzOTUxODI3MCwtMTE0NTM4MzE0MiwtNTMwNTgxODk2LDE1NDg2
+NDczNjgsLTU5NzIzODQ5NiwxODUxMTQyNTUwLC01Njc5NTA3Mj
+QsLTM0NTg0MjY1MiwtMTQ1NjcyNjUwOCwtMTE3MTI2MTcyNCwx
+MjMzMDg0MTA1LC0xMjk5Nzg5ODg4LDE2NzQ5Nzc4MTksLTE0NT
+YzODYyMTUsMTc0Nzc2MTEwNCwtMTUyMzgzODgwLC04Nzg1MjE1
+MzYsMTgxOTYwNzU3MF19
 -->
