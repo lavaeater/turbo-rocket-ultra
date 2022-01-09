@@ -65,6 +65,10 @@ class UserInterface(
     override fun reset() {
     }
 
+    override fun showKillCount(count: Int) {
+
+    }
+
     @ExperimentalStdlibApi
     private val newUi by lazy {
         SpacedContainer(vec2(200f, 0f), vec2(20f, hudViewPort.worldHeight / 4), true).apply {

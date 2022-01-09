@@ -45,6 +45,7 @@ import physics.AshleyMappers
 import physics.getComponent
 import statemachine.StateMachine
 import story.FactsOfTheWorld
+import story.StoryHelper
 import story.StoryManager
 import story.fact.Facts
 import tru.Assets
@@ -95,6 +96,7 @@ class GameScreen(private val gameState: StateMachine<GameState, GameEvent>) : Kt
 
         Assets.music.first().isLooping = true
         Assets.music.first().play()
+        storyManager.activate()
     }
 
     private fun loadMapZero() : Pair<Map<Coordinate, GridMapSection>, TileGraph> {
@@ -107,13 +109,14 @@ class GameScreen(private val gameState: StateMachine<GameState, GameEvent>) : Kt
         CounterObject.numberOfEnemies = 50
         CounterObject.maxSpawnedEnemies = 1024
 
+        storyManager.addStory(StoryHelper.enemyKillCountStory)
         return GridMapGenerator.generateFromDefintion(TextGridMapDefinition.levelOne)
     }
 
     private fun loadMapTwo(): Pair<Map<Coordinate, GridMapSection>, TileGraph>  {
         CounterObject.numberOfEnemies = 100
         CounterObject.maxSpawnedEnemies= 1024
-
+        storyManager.addStory(StoryHelper.basicStory)
         return GridMapGenerator.generateFromDefintion(TextGridMapDefinition.levelTwo)
     }
 
@@ -121,12 +124,14 @@ class GameScreen(private val gameState: StateMachine<GameState, GameEvent>) : Kt
         CounterObject.numberOfEnemies = 300
         CounterObject.maxSpawnedEnemies= 1024
 
+        storyManager.addStory(StoryHelper.basicStory)
         return GridMapGenerator.generateFromDefintion(TextGridMapDefinition.levelThree)
     }
     private fun loadMapFour(): Pair<Map<Coordinate, GridMapSection>, TileGraph>  {
         CounterObject.numberOfEnemies = 512
         CounterObject.maxSpawnedEnemies= 1024
 
+        storyManager.addStory(StoryHelper.basicStory)
         return GridMapGenerator.generateFromDefintion(TextGridMapDefinition.levelFour)
     }
     /*
@@ -242,6 +247,7 @@ D1B67A
         } else {
             engine.getSystem<KeyboardInputSystem>().setProcessing(false)
         }
+        storyManager.activate()
     }
 
     private val mapManager by lazy { inject<GridMapManager>() }

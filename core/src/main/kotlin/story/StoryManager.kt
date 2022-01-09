@@ -48,12 +48,13 @@ class StoryManager {
 		}
 	}
 
-	fun addStory(story: Story) {
-		story.activate()
-		stories.add(story)
+	fun activate() {
+		for(story in stories)
+			story.activate()
 	}
 
-	init {
-		addStory(StoryHelper.levelCompleteStory)
+	fun addStory(story: Story) {
+//		story.activate()
+		stories.add(story)
 	}
 }

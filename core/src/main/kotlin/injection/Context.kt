@@ -103,7 +103,7 @@ object Context {
             addSystem(BodyDestroyerSystem(inject())) //world
             addSystem(CharacterWalkAndShootDirectionSystem())
             addSystem(PlayerShootingSystem(inject()))
-            addSystem(EnemyDeathSystem(audioPlayer = inject()))
+            addSystem(EnemyDeathSystem(audioPlayer = inject(), factsOfTheWorld = inject()))
             addSystem(EnemyMovementSystem(true))
             // Ai Systems Start
             addSystem(AmblingSystem())

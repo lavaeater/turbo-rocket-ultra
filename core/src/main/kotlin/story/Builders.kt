@@ -85,6 +85,11 @@ class RuleBuilder:Builder<Rule> {
 	fun <T> equalsCriterion(key: String, value: T) {
 		criteria.add(Criterion.equalsCriterion(key, value))
 	}
+
+	fun moreThanCriterion(key: String, value: Int) {
+		criteria.add(Criterion.moreThanCriterion(key, value))
+	}
+
 	fun rangeCriterion(key: String, range: IntRange) {
 		criteria.add(Criterion.rangeCriterion(key, range))
 	}

@@ -11,9 +11,13 @@ import factories.lootBox
 import ktx.ashley.allOf
 import physics.AshleyMappers
 import physics.addComponent
+import story.FactsOfTheWorld
+import story.fact.Facts
 import tru.Assets
 
-class EnemyDeathSystem(private val audioPlayer: AudioPlayer) : IteratingSystem(allOf(EnemyComponent::class).get()) {
+class EnemyDeathSystem(
+    private val audioPlayer: AudioPlayer,
+    private val factsOfTheWorld: FactsOfTheWorld) : IteratingSystem(allOf(EnemyComponent::class).get()) {
 
     override fun processEntity(entity: Entity, deltaTime: Float) {
         val enemyComponent = AshleyMappers.enemy.get(entity)
@@ -30,6 +34,7 @@ class EnemyDeathSystem(private val audioPlayer: AudioPlayer) : IteratingSystem(a
                 }
             }
             enemyComponent.lastHitBy.kills++
+            factsOfTheWorld.addToIntFact(Facts.EnemyKillCount, 1)
 
             gibs(transformComponent.position, enemyComponent.lastShotAngle)
             entity.addComponent<DestroyComponent>()

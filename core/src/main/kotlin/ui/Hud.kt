@@ -5,12 +5,10 @@ import com.badlogic.gdx.Gdx
 import com.badlogic.gdx.graphics.OrthographicCamera
 import com.badlogic.gdx.graphics.g2d.Batch
 import com.badlogic.gdx.math.Vector2
-import com.badlogic.gdx.math.Vector3
 import com.badlogic.gdx.scenes.scene2d.Action
 import com.badlogic.gdx.scenes.scene2d.Stage
 import com.badlogic.gdx.scenes.scene2d.actions.Actions.*
 import com.badlogic.gdx.scenes.scene2d.ui.Label
-import com.badlogic.gdx.scenes.scene2d.ui.Table
 import com.badlogic.gdx.utils.Align
 import com.badlogic.gdx.utils.Queue
 import com.badlogic.gdx.utils.viewport.ExtendViewport
@@ -18,15 +16,21 @@ import data.Players
 import ecs.components.player.ComplexActionComponent
 import ecs.components.player.PlayerControlComponent
 import injection.Context.inject
+import ktx.actors.along
+import ktx.actors.plusAssign
+import ktx.actors.then
 import ktx.math.vec2
 import ktx.math.vec3
-import ktx.scene2d.*
+import ktx.scene2d.actors
+import ktx.scene2d.label
+import ktx.scene2d.table
 import physics.AshleyMappers
+import story.FactsOfTheWorld
+import story.fact.Facts
 import ui.customactors.boundLabel
 import ui.customactors.boundProgressBar
 import ui.customactors.repeatingTexture
 import kotlin.reflect.KClass
-import ktx.actors.*
 
 
 class Hud(private val batch: Batch) : IUserInterface, MessageReceiver {
@@ -37,6 +41,7 @@ class Hud(private val batch: Batch) : IUserInterface, MessageReceiver {
     override val hudViewPort = ExtendViewport(hudWidth, hudHeight, camera)
     private val worldCamera by lazy { inject<OrthographicCamera>() }
     private val audioPlayer by lazy { inject<AudioPlayer>() }
+    private val factsOfTheWorld by lazy { inject<FactsOfTheWorld>() }
 
 
     private val projectionVector = vec3()
@@ -50,59 +55,68 @@ class Hud(private val batch: Batch) : IUserInterface, MessageReceiver {
     override fun hide() {
     }
 
-    lateinit var toastLabel: Label
+    lateinit var killCountLabel: Label
 
     private val stage by lazy {
         val aStage = Stage(hudViewPort, batch)
+        //aStage.isDebugAll = true
         aStage.actors {
-//            toastLabel = label()
             table {
                 setFillParent(true)
-                left()
-                bottom()
-                for ((control, player) in Players.players) {
-                    table {
-                        width = aStage.width / 8
-                        label("${control.controllerId}").inCell.align(Align.right).width(aStage.width / 8)
-                        row()
-                        boundLabel({ "Kills: ${player.kills}" }).inCell.align(Align.right)
-                        row()
-                        boundLabel({ "Objectives: ${player.touchedObjectives.count()}" }).inCell.align(Align.right)
-                        row()
-                        boundLabel({ "Score: ${player.score}" }).inCell.align(Align.right)
-                        row()
-                        boundLabel({ "${player.currentWeapon}: ${player.ammoLeft}|${player.totalAmmo}" }).inCell.align(
-                            Align.right
-                        )
-                        row()
-                        boundProgressBar(
-                            { player.health },
-                            0f,
-                            player.startingHealth,
-                            0.1f
-                        ) { }.inCell.align(Align.right)
-                        row()
-                        repeatingTexture(
-                            { player.lives },
-                            5f,
-                            AshleyMappers.animatedCharacter.get(player.entity).currentAnim.keyFrames.first()
-                        ) {}
+                top()
+                table {
+                    setFillParent(true)
+                    killCountLabel =
+                        boundLabel({ "Kill Count: ${factsOfTheWorld.getIntFact(Facts.EnemyKillCount).value } / $targetCount" }) {
+                            isVisible = showKillCount
+                        }
+                }
+                row()
+                table {
+                    for ((control, player) in Players.players) {
+                        table {
+                            width = aStage.width / 8
+                            label("${control.controllerId}").inCell.align(Align.right).width(aStage.width / 8)
+                            row()
+                            boundLabel({ "Kills: ${player.kills}" }).inCell.align(Align.right)
+                            row()
+                            boundLabel({ "Objectives: ${player.touchedObjectives.count()}" }).inCell.align(Align.right)
+                            row()
+                            boundLabel({ "Score: ${player.score}" }).inCell.align(Align.right)
+                            row()
+                            boundLabel({ "${player.currentWeapon}: ${player.ammoLeft}|${player.totalAmmo}" }).inCell.align(
+                                Align.right
+                            )
+                            row()
+                            boundProgressBar(
+                                { player.health },
+                                0f,
+                                player.startingHealth,
+                                0.1f
+                            ) { }.inCell.align(Align.right)
+                            row()
+                            repeatingTexture(
+                                { player.lives },
+                                5f,
+                                AshleyMappers.animatedCharacter.get(player.entity).currentAnim.keyFrames.first()
+                            ) {}
+                        }
                     }
                 }
-                table {
-                    width = aStage.width / 8
-                    boundLabel({ audioPlayer.toString() }).inCell.align(Align.right)
-                }
+                left()
+                bottom()
             }
         }
         aStage
     }
+
 
     override fun show() {
         //Set up this as receiver for messages with messagehandler
         inject<MessageHandler>().apply {
             this.receivers.add(this@Hud)
         }
+        //access lazy props
         //I won't use the UI for input at this stage, right?
         /*
         To use both the UI and my stuff, we could multiplex it or something.
@@ -124,6 +138,18 @@ class Hud(private val batch: Batch) : IUserInterface, MessageReceiver {
     }
 
     override fun reset() {
+    }
+
+    var targetCount = 20
+    var showKillCount = true
+
+    /***
+     * This is a story method, this should be generalized to support more
+     * dynamic stuff.
+     */
+    override fun showKillCount(count: Int) {
+        targetCount = count
+        showKillCount = true
     }
 
     override val messageTypes: Set<KClass<*>> = setOf(Message.ShowToast::class, Message.ShowUiForComplexAction::class)
