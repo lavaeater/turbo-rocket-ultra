@@ -7,23 +7,16 @@ import com.badlogic.gdx.Gdx
 import com.badlogic.gdx.controllers.Controllers
 import com.badlogic.gdx.graphics.GL20
 import com.badlogic.gdx.graphics.OrthographicCamera
-import com.badlogic.gdx.graphics.Pixmap
 import com.badlogic.gdx.graphics.g2d.PolygonSpriteBatch
 import com.badlogic.gdx.physics.box2d.World
 import com.badlogic.gdx.utils.viewport.ExtendViewport
 import com.crashinvaders.vfx.VfxManager
 import com.crashinvaders.vfx.effects.ChainVfxEffect
-import com.crashinvaders.vfx.effects.OldTvEffect
-import com.crashinvaders.vfx.effects.VfxEffect
 import com.strongjoshua.console.GUIConsole
 import data.Players
-import ecs.components.BodyComponent
-import ecs.components.enemy.EnemyComponent
 import ecs.components.gameplay.ObjectiveComponent
-import ecs.components.gameplay.ObstacleComponent
 import ecs.components.player.PlayerComponent
 import ecs.systems.graphics.CameraUpdateSystem
-import ecs.systems.graphics.GameConstants
 import ecs.systems.graphics.GameConstants.MAX_ENEMIES
 import ecs.systems.graphics.RenderMiniMapSystem
 import ecs.systems.graphics.RenderSystem
@@ -37,12 +30,9 @@ import injection.Context.inject
 import ktx.app.KtxScreen
 import ktx.ashley.allOf
 import ktx.ashley.getSystem
-import ktx.ashley.remove
 import map.grid.*
 import map.snake.randomPoint
-import org.w3c.dom.css.Counter
 import physics.AshleyMappers
-import physics.getComponent
 import statemachine.StateMachine
 import story.FactsOfTheWorld
 import story.StoryHelper
@@ -100,13 +90,13 @@ class GameScreen(private val gameState: StateMachine<GameState, GameEvent>) : Kt
     }
 
     private fun loadMapZero() : Pair<Map<Coordinate, GridMapSection>, TileGraph> {
-        CounterObject.numberOfEnemies = 0
+        CounterObject.maxEnemies = 0
         CounterObject.maxSpawnedEnemies = 0
         return GridMapGenerator.generateFromDefintion(TextGridMapDefinition.levelZero)
     }
 
     private fun loadMapOne() : Pair<Map<Coordinate, GridMapSection>, TileGraph> {
-        CounterObject.numberOfEnemies = 50
+        CounterObject.maxEnemies = 1024
         CounterObject.maxSpawnedEnemies = 1024
 
         storyManager.addStory(StoryHelper.enemyKillCountStory)
@@ -114,21 +104,21 @@ class GameScreen(private val gameState: StateMachine<GameState, GameEvent>) : Kt
     }
 
     private fun loadMapTwo(): Pair<Map<Coordinate, GridMapSection>, TileGraph>  {
-        CounterObject.numberOfEnemies = 100
+        CounterObject.maxEnemies = 100
         CounterObject.maxSpawnedEnemies= 1024
         storyManager.addStory(StoryHelper.basicStory)
         return GridMapGenerator.generateFromDefintion(TextGridMapDefinition.levelTwo)
     }
 
     private fun loadMapThree(): Pair<Map<Coordinate, GridMapSection>, TileGraph>  {
-        CounterObject.numberOfEnemies = 300
+        CounterObject.maxEnemies = 300
         CounterObject.maxSpawnedEnemies= 1024
 
         storyManager.addStory(StoryHelper.basicStory)
         return GridMapGenerator.generateFromDefintion(TextGridMapDefinition.levelThree)
     }
     private fun loadMapFour(): Pair<Map<Coordinate, GridMapSection>, TileGraph>  {
-        CounterObject.numberOfEnemies = 512
+        CounterObject.maxEnemies = 512
         CounterObject.maxSpawnedEnemies= 1024
 
         storyManager.addStory(StoryHelper.basicStory)
@@ -286,8 +276,8 @@ D1B67A
         CounterObject.enemyCount = 0
 
         //For debuggin we will swarm with enemies
-        CounterObject.numberOfEnemies =  (8f.pow(CounterObject.currentLevel).roundToInt() * 2).coerceAtMost(MAX_ENEMIES)
-        CounterObject.maxSpawnedEnemies = CounterObject.numberOfEnemies * 2
+        CounterObject.maxEnemies =  (8f.pow(CounterObject.currentLevel).roundToInt() * 2).coerceAtMost(MAX_ENEMIES)
+        CounterObject.maxSpawnedEnemies = CounterObject.maxEnemies * 2
         val map = when(level) {
             1 -> loadMapOne()
             2 -> loadMapTwo()

@@ -42,14 +42,14 @@ object StoryHelper {
                 factsOfTheWorld.stateBoolFact(Facts.BossIsDead, false)
                 factsOfTheWorld.stateBoolFact(Facts.AllObjectivesAreTouched, false)
                 factsOfTheWorld.stateIntFact(Facts.EnemyKillCount, 0)
-                factsOfTheWorld.stateIntFact(Facts.TargetEnemyKillCount, 20)
+                factsOfTheWorld.stateIntFact(Facts.TargetEnemyKillCount, 200)
                 factsOfTheWorld.stateBoolFact(Facts.ShowEnemyKillCount, true)
                 factsOfTheWorld.stateBoolFact(Facts.AcceleratingSpawns, true)
 
             }
             storyBeat {
                 name = "Check If Work is Done"
-                moreThanCriterion(Facts.EnemyKillCount, 20)
+                moreThanCriterion(Facts.EnemyKillCount, 200)
 //                booleanCriteria(Facts.BossIsDead, true)
 //                booleanCriteria(Facts.AllObjectivesAreTouched, true)
                 consequence {
