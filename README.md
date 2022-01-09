@@ -34,7 +34,7 @@ It also appears that the mouse position thing was so low hanging that I had alre
 
 ### Soundscape II - the Moaning
 To make audio effects working nicely, we need a way of controlling how many are playing at any one time, their duration, and queueing. I have managed to implement some of these things, but we need a few more.
-- [ ] Debug View for Audio Channels
+- [x] Debug View for Audio Channels
 
 #### Debug View For Audio Channels
 This should be simple - just add some properties to channel, like name, name of sound being played, if it is played. Should be easy enough.
@@ -42,18 +42,18 @@ This should be simple - just add some properties to channel, like name, name of 
 
 So, some ambient sound effects, some zombie sound effects, explosions, screaming, burning, etc.
 Make a list of sound effects that we absolutely need and then tick them off as you find them
-- [x] Moans
 - [ ] Shuffling feet
 - [ ] Screaming Boss
+- [ ] Zombie being spawned
+- [ ] Objective Reached
+- [x] Magazine empty - is now one-liner
+- [x] Cool one-liners said by players
 - [x] Burning flames
 - [x] Gasoline explosion
 - [x] Grenade impact
 - [x] Limbs being torn
 - [x] Screaming, panicky Zombies
-- [ ] Zombie being spawned
-- [ ] Objective Reached
-- [x] Magazine empty - is now one-liner
-- [x] Cool one-liners said by players
+- [x] Moans
 
 ### Hud II
 Make the HUD pretty and useful and legible. Work on more simple databinding stuff and Scene2D extensions etc.
@@ -922,11 +922,11 @@ Det här gör vi på det gamla vanliga sättet. Vi bygger en box2d-värld, vi kl
 
 Oj oj oj,  vad roligt. Vi kan göra en box2d-kropp med leder, per tutorials etc. Superkul ju.
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbLTE0Mzg2MDgyNDksLTYzMzk3MDI2NCwtMT
-gzOTUxODI3MCwtMTE0NTM4MzE0MiwtNTMwNTgxODk2LDE1NDg2
-NDczNjgsLTU5NzIzODQ5NiwxODUxMTQyNTUwLC01Njc5NTA3Mj
-QsLTM0NTg0MjY1MiwtMTQ1NjcyNjUwOCwtMTE3MTI2MTcyNCwx
-MjMzMDg0MTA1LC0xMjk5Nzg5ODg4LDE2NzQ5Nzc4MTksLTE0NT
-YzODYyMTUsMTc0Nzc2MTEwNCwtMTUyMzgzODgwLC04Nzg1MjE1
-MzYsMTgxOTYwNzU3MF19
+eyJoaXN0b3J5IjpbLTE0MTM3NTA3MSwtMTQzODYwODI0OSwtNj
+MzOTcwMjY0LC0xODM5NTE4MjcwLC0xMTQ1MzgzMTQyLC01MzA1
+ODE4OTYsMTU0ODY0NzM2OCwtNTk3MjM4NDk2LDE4NTExNDI1NT
+AsLTU2Nzk1MDcyNCwtMzQ1ODQyNjUyLC0xNDU2NzI2NTA4LC0x
+MTcxMjYxNzI0LDEyMzMwODQxMDUsLTEyOTk3ODk4ODgsMTY3ND
+k3NzgxOSwtMTQ1NjM4NjIxNSwxNzQ3NzYxMTA0LC0xNTIzODM4
+ODAsLTg3ODUyMTUzNl19
 -->
