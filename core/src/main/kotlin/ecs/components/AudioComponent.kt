@@ -4,6 +4,7 @@ import audio.TurboSound
 import ecs.components.ai.CoolDownComponent
 
 object AudioChannels {
+    const val enemyDeath = "ENEMYDEATH"
     const val default = "DEFAULT"
     const val simultaneous = "SIMULTANEOUS"
 }

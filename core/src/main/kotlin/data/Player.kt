@@ -7,7 +7,10 @@ import tru.*
 import java.util.*
 
 class Player {
-    val playerId = UUID.randomUUID().toString()
+    init {
+        playerIndex++
+    }
+    val playerId = "P$playerIndex"
     var currentWeapon = ""
     var kills = 0
     set(value) {
@@ -49,5 +52,8 @@ class Player {
         health = startingHealth
         kills = 0
         touchedObjectives.clear()
+    }
+    companion object {
+        var playerIndex = 0
     }
 }

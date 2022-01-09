@@ -3,6 +3,7 @@ package ecs.systems.enemy
 import audio.AudioPlayer
 import com.badlogic.ashley.core.Entity
 import com.badlogic.ashley.systems.IteratingSystem
+import ecs.components.AudioChannels
 import ecs.components.enemy.EnemyComponent
 import ecs.components.gameplay.DestroyComponent
 import factories.gibs
@@ -17,8 +18,10 @@ class EnemyDeathSystem(private val audioPlayer: AudioPlayer) : IteratingSystem(a
     override fun processEntity(entity: Entity, deltaTime: Float) {
         val enemyComponent = AshleyMappers.enemy.get(entity)
         if (enemyComponent.isDead) {
-            audioPlayer.playNextOnChannel("enemydeath",Assets.newSoundEffects["misc"]!!["flesh"]!!.last())
-            audioPlayer.playNextOnChannel("enemydeath",Assets.newSoundEffects["misc"]!!["flesh"]!!.first())
+            audioPlayer.playNextIfEmpty(
+                AudioChannels.enemyDeath,
+                Assets.newSoundEffects["misc"]!!["flesh"]!!.last(),
+                Assets.newSoundEffects["misc"]!!["flesh"]!!.first())
             val transformComponent = AshleyMappers.transform.get(entity)
             if (AshleyMappers.lootDrop.has(entity)) {
                 val result = AshleyMappers.lootDrop.get(entity).lootTable.result

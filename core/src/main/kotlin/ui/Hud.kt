@@ -1,5 +1,6 @@
 package ui
 
+import audio.AudioPlayer
 import com.badlogic.gdx.Gdx
 import com.badlogic.gdx.graphics.OrthographicCamera
 import com.badlogic.gdx.graphics.g2d.Batch
@@ -35,6 +36,8 @@ class Hud(private val batch: Batch) : IUserInterface, MessageReceiver {
     private val camera = OrthographicCamera()
     override val hudViewPort = ExtendViewport(hudWidth, hudHeight, camera)
     private val worldCamera by lazy { inject<OrthographicCamera>() }
+    private val audioPlayer by lazy { inject<AudioPlayer>() }
+
 
     private val projectionVector = vec3()
     private val _projectionVector = vec2()
@@ -85,8 +88,10 @@ class Hud(private val batch: Batch) : IUserInterface, MessageReceiver {
                             AshleyMappers.animatedCharacter.get(player.entity).currentAnim.keyFrames.first()
                         ) {}
                     }
-
-
+                }
+                table {
+                    width = aStage.width / 8
+                    boundLabel({ audioPlayer.toString() }).inCell.align(Align.right)
                 }
             }
         }

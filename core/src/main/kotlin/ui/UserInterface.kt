@@ -1,5 +1,6 @@
 package ui
 
+import audio.AudioPlayer
 import com.badlogic.gdx.Gdx
 import com.badlogic.gdx.graphics.OrthographicCamera
 import com.badlogic.gdx.graphics.g2d.Batch
@@ -28,6 +29,7 @@ class UserInterface(
     private val camera = OrthographicCamera()
     override val hudViewPort = ExtendViewport(uiWidth, uiHeight, camera)
     private val mapManager by lazy { inject<GridMapManager>() }
+    private val audioPlayer by lazy { inject<AudioPlayer>() }
 
     override fun show() {
         scene2d
@@ -65,16 +67,16 @@ class UserInterface(
 
     @ExperimentalStdlibApi
     private val newUi by lazy {
-        SpacedContainer(vec2(150f, 0f), vec2(20f, hudViewPort.worldHeight / 4), true).apply {
+        SpacedContainer(vec2(200f, 0f), vec2(20f, hudViewPort.worldHeight / 4), true).apply {
             children.add(
                 SpacedContainer(vec2(0f, 25f), vec2()).apply {
-                    children.add(BoundTextActor({ "Bullets: ${screens.CounterObject.bulletCount}" }))
-                    children.add(BoundTextActor({ "Enemies: ${screens.CounterObject.enemyCount}" }))
-                    children.add(BoundTextActor({ "Max Enemies: ${screens.CounterObject.numberOfEnemies}" }))
-                    children.add(BoundTextActor({ "Objectives: ${screens.CounterObject.numberOfObjectives}" }))
-                    children.add(BoundTextActor({ "MapLength: ${screens.CounterObject.currentLength}" }))
-                    children.add(BoundTextActor({ "Current Level: ${screens.CounterObject.currentLevel}" }))
-                    children.add(BoundTextActor({ "Fps: ${Gdx.graphics.framesPerSecond}" }))
+                    children.add(BoundTextActor({ audioPlayer.toString() }))
+//                    children.add(BoundTextActor({ "Enemies: ${screens.CounterObject.enemyCount}" }))
+//                    children.add(BoundTextActor({ "Max Enemies: ${screens.CounterObject.numberOfEnemies}" }))
+//                    children.add(BoundTextActor({ "Objectives: ${screens.CounterObject.numberOfObjectives}" }))
+//                    children.add(BoundTextActor({ "MapLength: ${screens.CounterObject.currentLength}" }))
+//                    children.add(BoundTextActor({ "Current Level: ${screens.CounterObject.currentLevel}" }))
+//                    children.add(BoundTextActor({ "Fps: ${Gdx.graphics.framesPerSecond}" }))
                 }
             )
             children.add(

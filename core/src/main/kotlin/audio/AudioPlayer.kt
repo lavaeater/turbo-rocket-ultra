@@ -8,8 +8,10 @@ import tru.Assets
 class SoundChannel(val name: String, var volume: Float) {
     var nowCoolDown = 0f
     var queueCoolDown = 0f
-    private val canPlayNow get() = nowCoolDown <= 0f || name == AudioChannels.simultaneous
-    private val soundQueue = Queue<TurboSound>()
+    val isPlaying get() = nowCoolDown > 0f
+    val canPlayNow get() = nowCoolDown <= 0f || name == AudioChannels.simultaneous
+    val soundQueue = Queue<TurboSound>()
+    val isQueueEmpty get() = soundQueue.isEmpty
     fun playNow(turboSound: TurboSound, volume: Float) {
         if(canPlayNow) {
             this.volume = volume
@@ -32,6 +34,15 @@ class SoundChannel(val name: String, var volume: Float) {
         updateQueue()
     }
 
+    override fun toString(): String {
+        return """
+            Name: $name
+            Playing: $isPlaying
+            CanPlay: $canPlayNow
+            Queue: ${soundQueue.count()}
+        """.trimIndent()
+    }
+
     private fun updateQueue() {
         if(queueCoolDown <= 0f && soundQueue.notEmpty()) {
             soundQueue.removeFirst()
@@ -52,13 +63,20 @@ open class TurboSound(val sound: Sound, val duration: Float) {
 }
 
 class AudioPlayer(private val defaultVolume : Float = 1f) {
-    private val soundChannels = mutableMapOf<String, SoundChannel>()
+    val soundChannels = mutableMapOf<String, SoundChannel>()
+
+
+    fun playNextIfEmpty(channel:String, vararg turboSounds: TurboSound) {
+        val ch = getChannel(channel)
+        if(ch.isQueueEmpty) {
+            for (ts in turboSounds) {
+                ch.playOnQueue(ts)
+            }
+        }
+    }
 
     fun playNextOnChannel(channel: String, turboSound: TurboSound) {
-        if(!soundChannels.containsKey(channel)) {
-            soundChannels[channel] = SoundChannel(channel, defaultVolume)
-        }
-        soundChannels[channel]!!.playOnQueue(turboSound)
+        getChannel(channel).playOnQueue(turboSound)
     }
 
     fun getChannel(channel: String) : SoundChannel {
@@ -85,6 +103,10 @@ class AudioPlayer(private val defaultVolume : Float = 1f) {
         for((_,q) in soundChannels) {
             q.update(delta)
         }
+    }
+
+    override fun toString(): String {
+        return soundChannels.values.joinToString("\t")
     }
 }
 
