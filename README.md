@@ -51,7 +51,7 @@ Slightly harder, but not that hard. Every player has to go to some specific plac
 - [ ] Faster and Faster Spawning
 - [ ] Area Hold Timer (when is area not holding? Distance)
 - [ ] Enemy wave spawning (perhaps ten at a time etc for spawn component)
-- [ ] Dynamic split screen
+- [ ] Dynamic split screen <- coolest feature ever
 
 ### Soundscape II - the Moaning
 To make audio effects working nicely, we need a way of controlling how many are playing at any one time, their duration, and queueing. I have managed to implement some of these things, but we need a few more.
@@ -940,11 +940,11 @@ Det här gör vi på det gamla vanliga sättet. Vi bygger en box2d-värld, vi kl
 
 Oj oj oj,  vad roligt. Vi kan göra en box2d-kropp med leder, per tutorials etc. Superkul ju.
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbMTUzODQ4NjMxMyw0MTg3ODE2MjMsLTE0Mz
-g2MDgyNDksLTYzMzk3MDI2NCwtMTgzOTUxODI3MCwtMTE0NTM4
-MzE0MiwtNTMwNTgxODk2LDE1NDg2NDczNjgsLTU5NzIzODQ5Ni
-wxODUxMTQyNTUwLC01Njc5NTA3MjQsLTM0NTg0MjY1MiwtMTQ1
-NjcyNjUwOCwtMTE3MTI2MTcyNCwxMjMzMDg0MTA1LC0xMjk5Nz
-g5ODg4LDE2NzQ5Nzc4MTksLTE0NTYzODYyMTUsMTc0Nzc2MTEw
-NCwtMTUyMzgzODgwXX0=
+eyJoaXN0b3J5IjpbLTEzNjQ4MTY4OTMsNDE4NzgxNjIzLC0xND
+M4NjA4MjQ5LC02MzM5NzAyNjQsLTE4Mzk1MTgyNzAsLTExNDUz
+ODMxNDIsLTUzMDU4MTg5NiwxNTQ4NjQ3MzY4LC01OTcyMzg0OT
+YsMTg1MTE0MjU1MCwtNTY3OTUwNzI0LC0zNDU4NDI2NTIsLTE0
+NTY3MjY1MDgsLTExNzEyNjE3MjQsMTIzMzA4NDEwNSwtMTI5OT
+c4OTg4OCwxNjc0OTc3ODE5LC0xNDU2Mzg2MjE1LDE3NDc3NjEx
+MDQsLTE1MjM4Mzg4MF19
 -->
