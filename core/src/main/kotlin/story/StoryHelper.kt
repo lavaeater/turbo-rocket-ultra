@@ -44,6 +44,8 @@ object StoryHelper {
                 factsOfTheWorld.stateIntFact(Facts.EnemyKillCount, 0)
                 factsOfTheWorld.stateIntFact(Facts.TargetEnemyKillCount, 20)
                 factsOfTheWorld.stateBoolFact(Facts.ShowEnemyKillCount, true)
+                factsOfTheWorld.stateBoolFact(Facts.AcceleratingSpawns, true)
+
             }
             storyBeat {
                 name = "Check If Work is Done"

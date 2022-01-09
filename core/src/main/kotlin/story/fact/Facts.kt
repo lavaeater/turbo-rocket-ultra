@@ -20,5 +20,6 @@ class Facts {
         const val EnemyKillCount = "EnemyKillCount"
         const val TargetEnemyKillCount = "TargetEnemyKillCount"
         const val ShowEnemyKillCount = "ShowEnemyKillCount"
+        const val AcceleratingSpawns = "AcceleratingSpawns"
     }
 }
