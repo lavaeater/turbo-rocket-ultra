@@ -34,6 +34,11 @@ It also appears that the mouse position thing was so low hanging that I had alre
 
 ### Objectives II - Quirkier
 Examples: Kill n enemies. Hold an area for n minutes. Come up with something really fun, oooh, I got it, every player has to be in a separate place at the same time!
+- [ ] Kill n enemies
+- [ ] Hold area for n seconds 
+- [ ] All players in different place at the same time
+
+
 
 ### Soundscape II - the Moaning
 To make audio effects working nicely, we need a way of controlling how many are playing at any one time, their duration, and queueing. I have managed to implement some of these things, but we need a few more.
@@ -922,11 +927,11 @@ Det här gör vi på det gamla vanliga sättet. Vi bygger en box2d-värld, vi kl
 
 Oj oj oj,  vad roligt. Vi kan göra en box2d-kropp med leder, per tutorials etc. Superkul ju.
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbNDE4NzgxNjIzLC0xNDM4NjA4MjQ5LC02Mz
-M5NzAyNjQsLTE4Mzk1MTgyNzAsLTExNDUzODMxNDIsLTUzMDU4
-MTg5NiwxNTQ4NjQ3MzY4LC01OTcyMzg0OTYsMTg1MTE0MjU1MC
-wtNTY3OTUwNzI0LC0zNDU4NDI2NTIsLTE0NTY3MjY1MDgsLTEx
-NzEyNjE3MjQsMTIzMzA4NDEwNSwtMTI5OTc4OTg4OCwxNjc0OT
-c3ODE5LC0xNDU2Mzg2MjE1LDE3NDc3NjExMDQsLTE1MjM4Mzg4
-MCwtODc4NTIxNTM2XX0=
+eyJoaXN0b3J5IjpbLTcyNTYzMzcxNSw0MTg3ODE2MjMsLTE0Mz
+g2MDgyNDksLTYzMzk3MDI2NCwtMTgzOTUxODI3MCwtMTE0NTM4
+MzE0MiwtNTMwNTgxODk2LDE1NDg2NDczNjgsLTU5NzIzODQ5Ni
+wxODUxMTQyNTUwLC01Njc5NTA3MjQsLTM0NTg0MjY1MiwtMTQ1
+NjcyNjUwOCwtMTE3MTI2MTcyNCwxMjMzMDg0MTA1LC0xMjk5Nz
+g5ODg4LDE2NzQ5Nzc4MTksLTE0NTYzODYyMTUsMTc0Nzc2MTEw
+NCwtMTUyMzgzODgwXX0=
 -->
