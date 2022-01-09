@@ -45,7 +45,13 @@ This could be saved in some kind of setting for the map or something (check the 
 So, a timer starts counting down, or a progress bar starts going up or whatever, like in Helldivers, and at the same time the spawners go haywire and spawn lots of enemies, perhaps in waves? So, like they spawn one per update for 10 updates, or stuff like that. Some cool settings for each
 
 #### Different places
-Slightly harder, but not that hard. Every player has to go to some specific place on the map, could be a cool time to implement split-screen so that the player that is the farthest from the center of the group is split off, temporarily, to enable better controls. This would be so fucking cool I puss
+Slightly harder, but not that hard. Every player has to go to some specific place on the map, could be a cool time to implement split-screen so that the player that is the farthest from the center of the group is split off, temporarily, to enable better controls. This would be so fucking cool I piss my pants. 
+
+- [ ] Enemy Kill Counter
+- [ ] Faster and Faster Spawning
+- [ ] Area Hold Timer (when is area not holding? Distance)
+- [ ] Enemy wave spawning (perhaps ten at a time etc for spawn component)
+- [ ] Dynamic split screen
 
 ### Soundscape II - the Moaning
 To make audio effects working nicely, we need a way of controlling how many are playing at any one time, their duration, and queueing. I have managed to implement some of these things, but we need a few more.
@@ -934,7 +940,7 @@ Det här gör vi på det gamla vanliga sättet. Vi bygger en box2d-värld, vi kl
 
 Oj oj oj,  vad roligt. Vi kan göra en box2d-kropp med leder, per tutorials etc. Superkul ju.
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbLTU1MzMwMDU3Myw0MTg3ODE2MjMsLTE0Mz
+eyJoaXN0b3J5IjpbMTUzODQ4NjMxMyw0MTg3ODE2MjMsLTE0Mz
 g2MDgyNDksLTYzMzk3MDI2NCwtMTgzOTUxODI3MCwtMTE0NTM4
 MzE0MiwtNTMwNTgxODk2LDE1NDg2NDczNjgsLTU5NzIzODQ5Ni
 wxODUxMTQyNTUwLC01Njc5NTA3MjQsLTM0NTg0MjY1MiwtMTQ1
