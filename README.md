@@ -16,11 +16,11 @@ It also appears that the mouse position thing was so low hanging that I had alre
 - [ ] Objectives II, the sequel
 - [ ] Fix some warnings
 --------
+- [ ] Enemy AI II, with avoiding walls
 - [ ] Bat swing
 - [ ] HUD II, Header Upper Displayer <- rediscover MVVM pattern, two-way binding
 - [ ] More Enemy Sprites (generate them)
 - [ ] Lightmaps for sprites
-- [ ] Enemy AI II, with avoiding walls
 - [ ] Player graphics made from components / parts etc.
 - [ ] Vehicles would be cool
 - [ ] Build Towers
@@ -922,7 +922,7 @@ Det här gör vi på det gamla vanliga sättet. Vi bygger en box2d-värld, vi kl
 
 Oj oj oj,  vad roligt. Vi kan göra en box2d-kropp med leder, per tutorials etc. Superkul ju.
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbMjE4MDMxMDk1LC0xNDM4NjA4MjQ5LC02Mz
+eyJoaXN0b3J5IjpbNDE4NzgxNjIzLC0xNDM4NjA4MjQ5LC02Mz
 M5NzAyNjQsLTE4Mzk1MTgyNzAsLTExNDUzODMxNDIsLTUzMDU4
 MTg5NiwxNTQ4NjQ3MzY4LC01OTcyMzg0OTYsMTg1MTE0MjU1MC
 wtNTY3OTUwNzI0LC0zNDU4NDI2NTIsLTE0NTY3MjY1MDgsLTEx
