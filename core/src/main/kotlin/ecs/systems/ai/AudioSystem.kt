@@ -28,7 +28,7 @@ class AudioSystem : IteratingSystem(allOf(AudioComponent::class, TransformCompon
                 if(distance > 5f)
                     factor = 1 / distance * 2
             }
-            audioPlayer.playSound(audioComponent.soundEffect, 1f * factor)
+            audioPlayer.playOnChannel(audioComponent.channel, audioComponent.soundEffect!!, 1f * factor)
         }
     }
 }

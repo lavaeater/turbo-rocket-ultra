@@ -50,7 +50,7 @@ class PlayerShootingSystem(private val audioPlayer: AudioPlayer) : IteratingSyst
             weapon.ammoRemaining > 0 &&
             !(AshleyMappers.respawn.has(playerEntity) || AshleyMappers.waitsForRespawn.has(playerEntity))
         ) {
-            playSound()
+            playSound(controlComponent.player.playerId)
             val transformComponent = AshleyMappers.transform.get(playerEntity)
             controlComponent.shoot()
 
@@ -97,15 +97,14 @@ class PlayerShootingSystem(private val audioPlayer: AudioPlayer) : IteratingSyst
                 }
 
             }
-        } else if(weapon.ammoRemaining <= 0) {
-            audioPlayer.playSound("players", "out-of-ammo")
+        } else if (weapon.ammoRemaining <= 0) {
+            audioPlayer.playOnChannel(controlComponent.player.playerId, "players", "out-of-ammo")
         }
     }
 
-    private fun playSound() {
-        if((0..99).random() < 5) {
-            audioPlayer.playSound("players","one-liners")
-        }
+    private fun playSound(playerId: String) {
+        if((1..5).random() == 1)
+            audioPlayer.playOnChannel(playerId, "players", "one-liners")
     }
 
     private fun swingMeleeWeapon(controlComponent: PlayerControlComponent, weapon: Weapon, playerEntity: Entity) {
@@ -113,7 +112,7 @@ class PlayerShootingSystem(private val audioPlayer: AudioPlayer) : IteratingSyst
             controlComponent.firing &&
             !(AshleyMappers.respawn.has(playerEntity) || AshleyMappers.waitsForRespawn.has(playerEntity))
         ) {
-            playSound()
+            playSound(controlComponent.player.playerId)
             //1. Check if enemies are within distance (is this faster than the sector first?
             val playerPosition = AshleyMappers.transform.get(playerEntity).position
             val allEnemies =
@@ -170,7 +169,7 @@ class PlayerShootingSystem(private val audioPlayer: AudioPlayer) : IteratingSyst
             weapon.ammoRemaining > 0 &&
             !(AshleyMappers.respawn.has(playerEntity) || AshleyMappers.waitsForRespawn.has(playerEntity))
         ) {
-            playSound()
+            playSound(controlComponent.player.playerId)
             val transformComponent = AshleyMappers.transform.get(playerEntity)
             AshleyMappers.firedShots.get(playerEntity).queue.addFirst(
                 Pair(
@@ -181,16 +180,18 @@ class PlayerShootingSystem(private val audioPlayer: AudioPlayer) : IteratingSyst
             controlComponent.shoot()
 
             val shotsound = weapon.audio["shot"]!!
+            shotsound.play()
 
-            if ((1..5).random() == 1)
-                audioPlayer.playSounds(
-                    mapOf(
-                        shotsound to 0f,
-                        Assets.soundEffects["shellcasing"]!! to (0.1f..1f).random()
-                    )
-                )
-            else
-                audioPlayer.playSound(shotsound)
+            //TODO: Fix combined audio of shots fired and shell casings dropping on floor
+//            if ((1..5).random() == 1)
+//                audioPlayer.playSounds(
+//                    mapOf(
+//                        shotsound to 0f,
+//                        Assets.soundEffects["shellcasing"]!! to (0.1f..1f).random()
+//                    )
+//                )
+//            else
+//                audioPlayer.playSound(shotsound)
 
 
             weapon.ammoRemaining--
@@ -228,8 +229,8 @@ class PlayerShootingSystem(private val audioPlayer: AudioPlayer) : IteratingSyst
                     controlComponent.player
                 )
             }
-        } else if(weapon.ammoRemaining <= 0 && controlComponent.canPlay(Sfx.outofAmmo)) {
-            audioPlayer.playSound("players", Sfx.outofAmmo)
+        } else if (weapon.ammoRemaining <= 0 && controlComponent.canPlay(Sfx.outofAmmo)) {
+            audioPlayer.playOnChannel(controlComponent.player.playerId, "players", Sfx.outofAmmo)
             controlComponent.hasPlayed(Sfx.outofAmmo)
         }
     }

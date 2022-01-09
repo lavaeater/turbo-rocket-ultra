@@ -4,8 +4,10 @@ import com.badlogic.ashley.core.Entity
 import com.badlogic.gdx.physics.box2d.Body
 import ecs.components.gameplay.ObjectiveComponent
 import tru.*
+import java.util.*
 
-class Player() {
+class Player {
+    val playerId = UUID.randomUUID().toString()
     var currentWeapon = ""
     var kills = 0
     set(value) {
