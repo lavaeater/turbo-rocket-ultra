@@ -48,6 +48,7 @@ So, a timer starts counting down, or a progress bar starts going up or whatever,
 Slightly harder, but not that hard. Every player has to go to some specific place on the map, could be a cool time to implement split-screen so that the player that is the farthest from the center of the group is split off, temporarily, to enable better controls. This would be so fucking cool I piss my pants. 
 
 - [x] Enemy Kill Counter
+- [x] 
 - [x] Faster and Faster Spawning
 - [ ] Area Hold Timer (when is area not holding? Distance)
 - [ ] Enemy wave spawning (perhaps ten at a time etc for spawn component)
@@ -940,11 +941,11 @@ Det här gör vi på det gamla vanliga sättet. Vi bygger en box2d-värld, vi kl
 
 Oj oj oj,  vad roligt. Vi kan göra en box2d-kropp med leder, per tutorials etc. Superkul ju.
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbLTE0OTYyNTY1MTcsLTE2MjQ2NjUyNjEsLT
-EzNjQ4MTY4OTMsNDE4NzgxNjIzLC0xNDM4NjA4MjQ5LC02MzM5
-NzAyNjQsLTE4Mzk1MTgyNzAsLTExNDUzODMxNDIsLTUzMDU4MT
-g5NiwxNTQ4NjQ3MzY4LC01OTcyMzg0OTYsMTg1MTE0MjU1MCwt
-NTY3OTUwNzI0LC0zNDU4NDI2NTIsLTE0NTY3MjY1MDgsLTExNz
-EyNjE3MjQsMTIzMzA4NDEwNSwtMTI5OTc4OTg4OCwxNjc0OTc3
-ODE5LC0xNDU2Mzg2MjE1XX0=
+eyJoaXN0b3J5IjpbLTE1ODEyNzI3NDYsLTE0OTYyNTY1MTcsLT
+E2MjQ2NjUyNjEsLTEzNjQ4MTY4OTMsNDE4NzgxNjIzLC0xNDM4
+NjA4MjQ5LC02MzM5NzAyNjQsLTE4Mzk1MTgyNzAsLTExNDUzOD
+MxNDIsLTUzMDU4MTg5NiwxNTQ4NjQ3MzY4LC01OTcyMzg0OTYs
+MTg1MTE0MjU1MCwtNTY3OTUwNzI0LC0zNDU4NDI2NTIsLTE0NT
+Y3MjY1MDgsLTExNzEyNjE3MjQsMTIzMzA4NDEwNSwtMTI5OTc4
+OTg4OCwxNjc0OTc3ODE5XX0=
 -->
