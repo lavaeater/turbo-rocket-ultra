@@ -770,7 +770,9 @@ fun spawner(
             scale = 4f
             layer = 1
         }
-        with<EnemySpawnerComponent> {}
+        with<EnemySpawnerComponent> {
+            waveSize = 1
+        }
         with<MiniMapComponent> {
             color = Color.PINK
         }

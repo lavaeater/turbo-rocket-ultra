@@ -6,6 +6,7 @@ import ecs.components.enemy.EnemyComponent
 import ecs.components.enemy.EnemySpawnerComponent
 import ecs.components.gameplay.TransformComponent
 import factories.enemy
+import factories.spawner
 import injection.Context.inject
 import ktx.ashley.allOf
 import ktx.math.random
@@ -28,10 +29,12 @@ class EnemySpawnSystem : IteratingSystem(allOf(EnemySpawnerComponent::class, Tra
                 spawnerComponent.coolDownRange = (spawnerComponent.coolDownRange.start / 2)..(spawnerComponent.coolDownRange.endInclusive / 2)
             }
             spawnerComponent.reset()
-            spawnPosition.set(AshleyMappers.transform.get(entity).position)
-            spawnPosition.set(spawnPosition.x + (-2f..2f).random(), spawnPosition.y + (-2f..2f).random())
-            enemy(spawnPosition)
-            CounterObject.maxSpawnedEnemies--
+            for(i in 0 until spawnerComponent.waveSize) {
+                spawnPosition.set(AshleyMappers.transform.get(entity).position)
+                spawnPosition.set(spawnPosition.x + (-2f..2f).random(), spawnPosition.y + (-2f..2f).random())
+                enemy(spawnPosition)
+                CounterObject.maxSpawnedEnemies--
+            }
         }
     }
 }
