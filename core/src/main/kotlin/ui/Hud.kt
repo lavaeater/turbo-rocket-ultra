@@ -145,7 +145,7 @@ class Hud(private val batch: Batch) : IUserInterface, MessageReceiver {
      * This is a story method, this should be generalized to support more
      * dynamic stuff.
      */
-    override val messageTypes: Set<KClass<*>> = setOf(Message.ShowToast::class, Message.ShowUiForComplexAction::class)
+    override val messageTypes: Set<KClass<*>> = setOf(Message.ShowToast::class, Message.ShowUiForComplexAction::class, Message.ShowProgressBar::class)
 
     fun worldToHudPosition(worldPosition: Vector2): Vector2 {
         projectionVector.set(worldPosition.x, worldPosition.y, 0f)
@@ -184,6 +184,23 @@ class Hud(private val batch: Batch) : IUserInterface, MessageReceiver {
         }
     }
 
+    fun addProgressBar(progressBar: Message.ShowProgressBar) {
+        val coordinate = worldToHudPosition(progressBar.worldPosition)
+        val moveAction = object: Action() {
+            override fun act(delta:Float) : Boolean {
+                val c = worldToHudPosition(progressBar.worldPosition)
+                actor.setPosition(c.x, c.y)
+                return true
+            }
+        }
+        val sequence = (delay(progressBar.maxTime).along(moveAction)).then(removeActor())
+        stage.actors {
+            boundProgressBar(progressBar.progress, 0f, progressBar.maxTime) {
+                this += sequence
+            }.setPosition(coordinate.x, coordinate.y)
+        }
+    }
+
     override fun recieveMessage(message: Message) {
         when (message) {
             is Message.ShowToast -> {
@@ -207,6 +224,9 @@ class Hud(private val batch: Batch) : IUserInterface, MessageReceiver {
                     this.setPosition(coordinate.x, coordinate.y)
                 })
             }
+            is Message.ShowProgressBar -> {
+                addProgressBar(message)
+            }
         }
     }
 }
@@ -229,7 +249,8 @@ class MessageHandler {
     }
 }
 
-sealed class Message() {
+sealed class Message {
+    class ShowProgressBar(val maxTime: Float, val worldPosition: Vector2, val progress: () -> Float) : Message()
     class ShowToast(val toast: String, val worldPosition: Vector2) : Message()
     class ShowUiForComplexAction(
         val complexActionComponent: ComplexActionComponent,

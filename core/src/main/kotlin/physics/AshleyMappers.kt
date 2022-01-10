@@ -73,6 +73,7 @@ object AshleyMappers {
     val anchors = mapperFor<AnchorPointsComponent>()
     val build = mapperFor<BuildComponent>()
     val complexAction = mapperFor<ComplexActionComponent>()
+    val light = mapperFor<LightComponent>()
 }
 
 fun Entity.audio(): AudioComponent {
@@ -181,6 +182,10 @@ fun Entity.complexAction(): ComplexActionComponent {
 
 fun Entity.objective(): ObjectiveComponent {
     return AshleyMappers.objective.get(this)
+}
+
+fun Entity.light(): LightComponent {
+    return AshleyMappers.light.get(this)
 }
 
 fun Entity.hasObjective(): Boolean {
