@@ -25,9 +25,9 @@ class GridMapGenerator {
     companion object {
         val engine by lazy { inject<Engine>() }
         val rayHandler by lazy { inject<RayHandler>() }
-        fun addObjective(bounds: Rectangle) {
+        fun addObjective(bounds: Rectangle, perimeterObjectives: Boolean) {
             var position = bounds.randomPoint()
-            objective(position.x, position.y)
+            objective(position.x, position.y, perimeterObjectives)
 
             position = bounds.randomPoint()
             val emitter = spawner(position.x, position.y)
@@ -44,7 +44,7 @@ class GridMapGenerator {
             boss(position, 1)
         }
 
-        fun generateFromDefintion(def: TextGridMapDefinition): Pair<Map<Coordinate, GridMapSection>, TileGraph> {
+        fun generateFromDefintion(def: TextGridMapDefinition, perimeterObjectives: Boolean = false): Pair<Map<Coordinate, GridMapSection>, TileGraph> {
             //TODO: Move this somewhere
             Light.setGlobalContactFilter(
                 Box2dCategories.lights,
@@ -82,7 +82,7 @@ class GridMapGenerator {
 
                         tileMap[coordinate] = section
                         if (def.hasGoal(coordinate)) {
-                            addObjective(section.innerBounds)
+                            addObjective(section.innerBounds, perimeterObjectives)
                         }
                         if (def.hasObstacle(coordinate))
                             addObstacle(section.innerBounds)
@@ -222,7 +222,7 @@ class GridMapGenerator {
                         }
                         tileMap[coordinate] = section
                         if (objectives.contains(coordinate)) {
-                            addObjective(section.innerBounds)
+                            addObjective(section.innerBounds, false)
                         }
 
                         if ((1..20).random() <= level) {
