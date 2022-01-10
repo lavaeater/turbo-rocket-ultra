@@ -35,6 +35,7 @@ object AshleyMappers {
     val body = mapperFor<BodyComponent>()
     val mappers = mutableMapOf<KType, ComponentMapper<*>>()
     val transform = mapperFor<TransformComponent>()
+    val perimeter = mapperFor<PerimeterObjectiveComponent>()
     val amble = mapperFor<Amble>()
     val attackPlayer = mapperFor<AttackPlayer>()
     val behavior = mapperFor<BehaviorComponent>()
@@ -96,6 +97,10 @@ fun Entity.transform(): TransformComponent {
 
 fun Entity.hasTransform(): Boolean {
     return AshleyMappers.transform.has(this)
+}
+
+fun Entity.perimeter() : PerimeterObjectiveComponent {
+    return AshleyMappers.perimeter.get(this)
 }
 
 fun Entity.build(): BuildComponent {

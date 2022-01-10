@@ -16,7 +16,3 @@ class LightComponent : Component, Pool.Poolable {
     }
 }
 
-class PerimeterObjectiveComponent: Component, Pool.Poolable {
-    override fun reset() {
-    }
-}

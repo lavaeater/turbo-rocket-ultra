@@ -26,6 +26,7 @@ import ecs.systems.ai.towers.TowerShootSystem
 import ecs.systems.ai.towers.TowerTargetFinderSystem
 import ecs.systems.enemy.*
 import ecs.systems.facts.FactSystem
+import ecs.systems.facts.PerimeterObjectiveSystem
 import ecs.systems.fx.BloodSplatterEffectRenderSystem
 import ecs.systems.fx.DelayedEntityCreationSystem
 import ecs.systems.fx.EffectRenderSystem
@@ -105,6 +106,7 @@ object Context {
             addSystem(PlayerShootingSystem(inject()))
             addSystem(EnemyDeathSystem(audioPlayer = inject(), factsOfTheWorld = inject()))
             addSystem(EnemyMovementSystem(true))
+            addSystem(PerimeterObjectiveSystem())
             // Ai Systems Start
             addSystem(AmblingSystem())
             addSystem(PanicSystem())
