@@ -50,6 +50,7 @@ Slightly harder, but not that hard. Every player has to go to some specific plac
 - [x] Enemy Kill Counter
 - [x] Faster and Faster Spawning
 - [x] Area Hold Timer (when is area not holding? Distance)
+- [x] Area Hold Timer in Map Def
 - [ ] Enemy wave spawning (perhaps ten at a time etc for spawn component)
 - [ ] Dynamic split screen <- coolest feature ever
 
@@ -940,7 +941,7 @@ Det här gör vi på det gamla vanliga sättet. Vi bygger en box2d-värld, vi kl
 
 Oj oj oj,  vad roligt. Vi kan göra en box2d-kropp med leder, per tutorials etc. Superkul ju.
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbMTU5NjA3MTE1LDIwNTAzMDE2MDMsLTE1OD
+eyJoaXN0b3J5IjpbNTUzMjQ0OTgzLDIwNTAzMDE2MDMsLTE1OD
 EyNzI3NDYsLTE0OTYyNTY1MTcsLTE2MjQ2NjUyNjEsLTEzNjQ4
 MTY4OTMsNDE4NzgxNjIzLC0xNDM4NjA4MjQ5LC02MzM5NzAyNj
 QsLTE4Mzk1MTgyNzAsLTExNDUzODMxNDIsLTUzMDU4MTg5Niwx
