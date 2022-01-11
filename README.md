@@ -14,10 +14,10 @@ It also appears that the mouse position thing was so low hanging that I had alre
 - [x] Flip weapon sprites when facing west
 - [x] Soundscape II - the Moaning
 - [x] Objectives II, the sequel
-- [ ] Transitions schmanzitions
 - [ ] Build Towers
 - [ ] Fix some warnings
 --------
+- [ ] Transitions schmanzitions
 - [ ] Enemy AI II, with avoiding walls
 - [ ] Objectives III - now with players all over the map
 - [ ] Split Screen
@@ -34,6 +34,9 @@ It also appears that the mouse position thing was so low hanging that I had alre
 - [ ] Nicer Setup UI, using Scene2d perhaps
 - [ ] Puzzle obstacles / machines
 - [ ] Oblique Projection
+
+### Transitions
+It uses nested framebuffers and a separate SpriteBatch (instead of generic batch) so I couldn't make myself bother. Will try something else instead.
 
 ### Objectives II - Quirkier
 Examples: Kill n enemies. Hold an area for n minutes. Come up with something really fun, oooh, I got it, every player has to be in a separate place at the same time!
@@ -944,11 +947,11 @@ Det här gör vi på det gamla vanliga sättet. Vi bygger en box2d-värld, vi kl
 
 Oj oj oj,  vad roligt. Vi kan göra en box2d-kropp med leder, per tutorials etc. Superkul ju.
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbMjEwMDgwMzg1Miw1NTMyNDQ5ODMsMjA1MD
-MwMTYwMywtMTU4MTI3Mjc0NiwtMTQ5NjI1NjUxNywtMTYyNDY2
-NTI2MSwtMTM2NDgxNjg5Myw0MTg3ODE2MjMsLTE0Mzg2MDgyND
-ksLTYzMzk3MDI2NCwtMTgzOTUxODI3MCwtMTE0NTM4MzE0Miwt
-NTMwNTgxODk2LDE1NDg2NDczNjgsLTU5NzIzODQ5NiwxODUxMT
-QyNTUwLC01Njc5NTA3MjQsLTM0NTg0MjY1MiwtMTQ1NjcyNjUw
-OCwtMTE3MTI2MTcyNF19
+eyJoaXN0b3J5IjpbMjAwNzQ1OTAyNSwyMTAwODAzODUyLDU1Mz
+I0NDk4MywyMDUwMzAxNjAzLC0xNTgxMjcyNzQ2LC0xNDk2MjU2
+NTE3LC0xNjI0NjY1MjYxLC0xMzY0ODE2ODkzLDQxODc4MTYyMy
+wtMTQzODYwODI0OSwtNjMzOTcwMjY0LC0xODM5NTE4MjcwLC0x
+MTQ1MzgzMTQyLC01MzA1ODE4OTYsMTU0ODY0NzM2OCwtNTk3Mj
+M4NDk2LDE4NTExNDI1NTAsLTU2Nzk1MDcyNCwtMzQ1ODQyNjUy
+LC0xNDU2NzI2NTA4XX0=
 -->
