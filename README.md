@@ -14,6 +14,7 @@ It also appears that the mouse position thing was so low hanging that I had alre
 - [x] Flip weapon sprites when facing west
 - [x] Soundscape II - the Moaning
 - [x] Objectives II, the sequel
+- [ ] Text Crawl
 - [ ] Build Towers
 - [ ] Fix some warnings
 --------
@@ -34,6 +35,11 @@ It also appears that the mouse position thing was so low hanging that I had alre
 - [ ] Nicer Setup UI, using Scene2d perhaps
 - [ ] Puzzle obstacles / machines
 - [ ] Oblique Projection
+
+### Text Crawl
+This could be combined with the transition concept. Here's what I want to do:
+- [ ] Show a dialog or crawl with paused game before level starts (what to do etc)
+- [ ] Pause game when level is done and show stats or something
 
 ### Transitions
 It uses nested framebuffers and a separate SpriteBatch (instead of generic batch) so I couldn't make myself bother. Will try something else instead.
@@ -947,11 +953,11 @@ Det här gör vi på det gamla vanliga sättet. Vi bygger en box2d-värld, vi kl
 
 Oj oj oj,  vad roligt. Vi kan göra en box2d-kropp med leder, per tutorials etc. Superkul ju.
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbMjAwNzQ1OTAyNSwyMTAwODAzODUyLDU1Mz
-I0NDk4MywyMDUwMzAxNjAzLC0xNTgxMjcyNzQ2LC0xNDk2MjU2
-NTE3LC0xNjI0NjY1MjYxLC0xMzY0ODE2ODkzLDQxODc4MTYyMy
-wtMTQzODYwODI0OSwtNjMzOTcwMjY0LC0xODM5NTE4MjcwLC0x
-MTQ1MzgzMTQyLC01MzA1ODE4OTYsMTU0ODY0NzM2OCwtNTk3Mj
-M4NDk2LDE4NTExNDI1NTAsLTU2Nzk1MDcyNCwtMzQ1ODQyNjUy
-LC0xNDU2NzI2NTA4XX0=
+eyJoaXN0b3J5IjpbLTE4ODYyNzE2NDIsMjEwMDgwMzg1Miw1NT
+MyNDQ5ODMsMjA1MDMwMTYwMywtMTU4MTI3Mjc0NiwtMTQ5NjI1
+NjUxNywtMTYyNDY2NTI2MSwtMTM2NDgxNjg5Myw0MTg3ODE2Mj
+MsLTE0Mzg2MDgyNDksLTYzMzk3MDI2NCwtMTgzOTUxODI3MCwt
+MTE0NTM4MzE0MiwtNTMwNTgxODk2LDE1NDg2NDczNjgsLTU5Nz
+IzODQ5NiwxODUxMTQyNTUwLC01Njc5NTA3MjQsLTM0NTg0MjY1
+MiwtMTQ1NjcyNjUwOF19
 -->
