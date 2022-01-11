@@ -26,7 +26,7 @@ class EnemySpawnSystem : IteratingSystem(allOf(EnemySpawnerComponent::class, Tra
         spawnerComponent.coolDown -= deltaTime
         if(spawnerComponent.coolDown <= 0f && enemyCount < CounterObject.maxEnemies && CounterObject.maxSpawnedEnemies > 0) {
             if(factsOfTheWorld.getBoolean(Facts.AcceleratingSpawns)) {
-                spawnerComponent.coolDownRange = (spawnerComponent.coolDownRange.start / 2)..(spawnerComponent.coolDownRange.endInclusive / 2)
+                spawnerComponent.coolDownRange = (spawnerComponent.coolDownRange.start / 1.25f)..(spawnerComponent.coolDownRange.endInclusive / 1.25f)
             }
             spawnerComponent.reset()
             for(i in 0 until spawnerComponent.waveSize) {
