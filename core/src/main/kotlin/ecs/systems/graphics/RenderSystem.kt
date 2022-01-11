@@ -3,10 +3,13 @@ package ecs.systems.graphics
 import box2dLight.RayHandler
 import com.badlogic.ashley.core.Entity
 import com.badlogic.ashley.systems.SortedIteratingSystem
+import com.badlogic.gdx.Gdx
 import com.badlogic.gdx.graphics.Color
+import com.badlogic.gdx.graphics.GL20
 import com.badlogic.gdx.graphics.OrthographicCamera
 import com.badlogic.gdx.graphics.g2d.Batch
 import com.badlogic.gdx.math.MathUtils
+import com.badlogic.gdx.utils.viewport.Viewport
 import com.crashinvaders.vfx.VfxManager
 import com.crashinvaders.vfx.effects.BloomEffect
 import com.crashinvaders.vfx.effects.ChainVfxEffect
@@ -28,6 +31,7 @@ class RenderSystem(
     private val debug: Boolean,
     private val rayHandler: RayHandler,
     private val camera: OrthographicCamera,
+    private val mainViewPort: Viewport,
     priority: Int
 ) : SortedIteratingSystem(
     allOf(
@@ -68,6 +72,11 @@ class RenderSystem(
     }
 
     override fun update(deltaTime: Float) {
+        Gdx.gl.glClearColor(0f, 0f, 0f, 1f)
+        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT)
+
+        camera.update(false) //True or false, what's the difference?
+        batch.projectionMatrix = camera.combined
         forceSort()
         rayHandler.setCombinedMatrix(camera)
 
