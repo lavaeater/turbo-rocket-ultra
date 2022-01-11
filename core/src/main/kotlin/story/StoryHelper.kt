@@ -42,7 +42,7 @@ object StoryHelper {
                 factsOfTheWorld.stateBoolFact(Facts.BossIsDead, false)
                 factsOfTheWorld.stateBoolFact(Facts.AllObjectivesAreTouched, false)
                 factsOfTheWorld.stateIntFact(Facts.EnemyKillCount, 0)
-                factsOfTheWorld.stateIntFact(Facts.TargetEnemyKillCount, 200)
+                factsOfTheWorld.stateIntFact(Facts.TargetEnemyKillCount, 50)
                 factsOfTheWorld.stateBoolFact(Facts.ShowEnemyKillCount, true)
                 factsOfTheWorld.stateBoolFact(Facts.AcceleratingSpawns, true)
                 factsOfTheWorld.stateFloatFact(Facts.AcceleratingSpawnsFactor, 1.25f)
