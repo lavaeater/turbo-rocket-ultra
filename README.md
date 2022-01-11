@@ -16,11 +16,11 @@ It also appears that the mouse position thing was so low hanging that I had alre
 - [ ] Objectives II, the sequel
 - [ ] Fix some warnings
 --------
+- [ ] Enemy AI II, with avoiding walls
 - [ ] Bat swing
 - [ ] HUD II, Header Upper Displayer <- rediscover MVVM pattern, two-way binding
 - [ ] More Enemy Sprites (generate them)
 - [ ] Lightmaps for sprites
-- [ ] Enemy AI II, with avoiding walls
 - [ ] Player graphics made from components / parts etc.
 - [ ] Vehicles would be cool
 - [ ] Build Towers
@@ -32,9 +32,31 @@ It also appears that the mouse position thing was so low hanging that I had alre
 - [ ] Puzzle obstacles / machines
 - [ ] Oblique Projection
 
+### Objectives II - Quirkier
+Examples: Kill n enemies. Hold an area for n minutes. Come up with something really fun, oooh, I got it, every player has to be in a separate place at the same time!
+- [x] Kill n enemies
+- [x] Hold area for n seconds 
+- [ ] All players in different place at the same time
+
+#### Kill N Enemies
+This could be saved in some kind of setting for the map or something (check the story stuff). However, we also want to be able to add rules making spawning go faster and faster for this, would be real cool.
+
+#### Hold an area for n seconds
+So, a timer starts counting down, or a progress bar starts going up or whatever, like in Helldivers, and at the same time the spawners go haywire and spawn lots of enemies, perhaps in waves? So, like they spawn one per update for 10 updates, or stuff like that. Some cool settings for each
+
+#### Different places
+Slightly harder, but not that hard. Every player has to go to some specific place on the map, could be a cool time to implement split-screen so that the player that is the farthest from the center of the group is split off, temporarily, to enable better controls. This would be so fucking cool I piss my pants. 
+
+- [x] Enemy Kill Counter
+- [x] Faster and Faster Spawning
+- [x] Area Hold Timer (when is area not holding? Distance)
+- [x] Area Hold Timer in Map Def
+- [ ] Enemy wave spawning (perhaps ten at a time etc for spawn component)
+- [ ] Dynamic split screen <- coolest feature ever
+
 ### Soundscape II - the Moaning
 To make audio effects working nicely, we need a way of controlling how many are playing at any one time, their duration, and queueing. I have managed to implement some of these things, but we need a few more.
-- [ ] Debug View for Audio Channels
+- [x] Debug View for Audio Channels
 
 #### Debug View For Audio Channels
 This should be simple - just add some properties to channel, like name, name of sound being played, if it is played. Should be easy enough.
@@ -42,18 +64,18 @@ This should be simple - just add some properties to channel, like name, name of 
 
 So, some ambient sound effects, some zombie sound effects, explosions, screaming, burning, etc.
 Make a list of sound effects that we absolutely need and then tick them off as you find them
-- [x] Moans
 - [ ] Shuffling feet
 - [ ] Screaming Boss
+- [ ] Zombie being spawned
+- [ ] Objective Reached
+- [x] Magazine empty - is now one-liner
+- [x] Cool one-liners said by players
 - [x] Burning flames
 - [x] Gasoline explosion
 - [x] Grenade impact
 - [x] Limbs being torn
 - [x] Screaming, panicky Zombies
-- [ ] Zombie being spawned
-- [ ] Objective Reached
-- [x] Magazine empty - is now one-liner
-- [x] Cool one-liners said by players
+- [x] Moans
 
 ### Hud II
 Make the HUD pretty and useful and legible. Work on more simple databinding stuff and Scene2D extensions etc.
@@ -66,9 +88,6 @@ To really make use of the box2d light stuff we could use some lightmaps for the 
 
 ### Enemy AI II
 Make the enemy handle walls and obstacles better. It shouldn't be that hard. In fact, we could make a goddamned A* graph of the entire map space that is passable terrain and that would in fact solve the problem. Or at least make a graph of points that makes sure the enemy does not walk into walls, it could be done. Hey, every section could have a "get valid points"-method. Also, make enemies more aggressive towards players, now they seem to ignore them quite a bit, perhaps sensors are turned off or something.
-
-### Objectives II - Quirkier
-Examples: Kill n enemies. Hold an area for n minutes. Come up with something really fun, oooh, I got it, every player has to be in a separate place at the same time!
 
 ### Player Graphics
 This is what categorizes as a FUN task, it should be FUN! But it also requires lots of work, mainly in making art happen. Making heads, bodies, hair, stuff like that, and enabling generating characters and sprite sheets from that. Lots of work, but there could be great payoffs in the end.
@@ -922,11 +941,11 @@ Det här gör vi på det gamla vanliga sättet. Vi bygger en box2d-värld, vi kl
 
 Oj oj oj,  vad roligt. Vi kan göra en box2d-kropp med leder, per tutorials etc. Superkul ju.
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbLTE0Mzg2MDgyNDksLTYzMzk3MDI2NCwtMT
-gzOTUxODI3MCwtMTE0NTM4MzE0MiwtNTMwNTgxODk2LDE1NDg2
-NDczNjgsLTU5NzIzODQ5NiwxODUxMTQyNTUwLC01Njc5NTA3Mj
-QsLTM0NTg0MjY1MiwtMTQ1NjcyNjUwOCwtMTE3MTI2MTcyNCwx
-MjMzMDg0MTA1LC0xMjk5Nzg5ODg4LDE2NzQ5Nzc4MTksLTE0NT
-YzODYyMTUsMTc0Nzc2MTEwNCwtMTUyMzgzODgwLC04Nzg1MjE1
-MzYsMTgxOTYwNzU3MF19
+eyJoaXN0b3J5IjpbNTUzMjQ0OTgzLDIwNTAzMDE2MDMsLTE1OD
+EyNzI3NDYsLTE0OTYyNTY1MTcsLTE2MjQ2NjUyNjEsLTEzNjQ4
+MTY4OTMsNDE4NzgxNjIzLC0xNDM4NjA4MjQ5LC02MzM5NzAyNj
+QsLTE4Mzk1MTgyNzAsLTExNDUzODMxNDIsLTUzMDU4MTg5Niwx
+NTQ4NjQ3MzY4LC01OTcyMzg0OTYsMTg1MTE0MjU1MCwtNTY3OT
+UwNzI0LC0zNDU4NDI2NTIsLTE0NTY3MjY1MDgsLTExNzEyNjE3
+MjQsMTIzMzA4NDEwNV19
 -->
