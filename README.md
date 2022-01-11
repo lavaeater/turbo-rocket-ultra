@@ -14,11 +14,13 @@ It also appears that the mouse position thing was so low hanging that I had alre
 - [x] Flip weapon sprites when facing west
 - [x] Soundscape II - the Moaning
 - [x] Objectives II, the sequel
-- [ ] Fix some warnings
+- [ ] Transitions schmanzitions
 - [ ] Build Towers
+- [ ] Fix some warnings
 --------
 - [ ] Enemy AI II, with avoiding walls
-- [ ] Objectives III 
+- [ ] Objectives III - now with players all over the map
+- [ ] Split Screen
 - [ ] Bat swing
 - [ ] HUD II, Header Upper Displayer <- rediscover MVVM pattern, two-way binding
 - [ ] More Enemy Sprites (generate them)
@@ -942,11 +944,11 @@ Det här gör vi på det gamla vanliga sättet. Vi bygger en box2d-värld, vi kl
 
 Oj oj oj,  vad roligt. Vi kan göra en box2d-kropp med leder, per tutorials etc. Superkul ju.
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbLTgyMTYxMzA5LDU1MzI0NDk4MywyMDUwMz
-AxNjAzLC0xNTgxMjcyNzQ2LC0xNDk2MjU2NTE3LC0xNjI0NjY1
-MjYxLC0xMzY0ODE2ODkzLDQxODc4MTYyMywtMTQzODYwODI0OS
-wtNjMzOTcwMjY0LC0xODM5NTE4MjcwLC0xMTQ1MzgzMTQyLC01
-MzA1ODE4OTYsMTU0ODY0NzM2OCwtNTk3MjM4NDk2LDE4NTExND
-I1NTAsLTU2Nzk1MDcyNCwtMzQ1ODQyNjUyLC0xNDU2NzI2NTA4
-LC0xMTcxMjYxNzI0XX0=
+eyJoaXN0b3J5IjpbMjEwMDgwMzg1Miw1NTMyNDQ5ODMsMjA1MD
+MwMTYwMywtMTU4MTI3Mjc0NiwtMTQ5NjI1NjUxNywtMTYyNDY2
+NTI2MSwtMTM2NDgxNjg5Myw0MTg3ODE2MjMsLTE0Mzg2MDgyND
+ksLTYzMzk3MDI2NCwtMTgzOTUxODI3MCwtMTE0NTM4MzE0Miwt
+NTMwNTgxODk2LDE1NDg2NDczNjgsLTU5NzIzODQ5NiwxODUxMT
+QyNTUwLC01Njc5NTA3MjQsLTM0NTg0MjY1MiwtMTQ1NjcyNjUw
+OCwtMTE3MTI2MTcyNF19
 -->
