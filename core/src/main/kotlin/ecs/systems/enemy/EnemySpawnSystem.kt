@@ -6,7 +6,6 @@ import ecs.components.enemy.EnemyComponent
 import ecs.components.enemy.EnemySpawnerComponent
 import ecs.components.gameplay.TransformComponent
 import factories.enemy
-import factories.spawner
 import injection.Context.inject
 import ktx.ashley.allOf
 import ktx.math.random
@@ -26,7 +25,8 @@ class EnemySpawnSystem : IteratingSystem(allOf(EnemySpawnerComponent::class, Tra
         spawnerComponent.coolDown -= deltaTime
         if(spawnerComponent.coolDown <= 0f && enemyCount < CounterObject.maxEnemies && CounterObject.maxSpawnedEnemies > 0) {
             if(factsOfTheWorld.getBoolean(Facts.AcceleratingSpawns)) {
-                spawnerComponent.coolDownRange = (spawnerComponent.coolDownRange.start / 1.25f)..(spawnerComponent.coolDownRange.endInclusive / 1.25f)
+                val factor = factsOfTheWorld.getFloatValue(Facts.AcceleratingSpawnsFactor)
+                spawnerComponent.coolDownRange = (spawnerComponent.coolDownRange.start / factor)..(spawnerComponent.coolDownRange.endInclusive / factor)
             }
             spawnerComponent.reset()
             for(i in 0 until spawnerComponent.waveSize) {

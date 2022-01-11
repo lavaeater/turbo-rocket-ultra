@@ -45,6 +45,7 @@ object StoryHelper {
                 factsOfTheWorld.stateIntFact(Facts.TargetEnemyKillCount, 200)
                 factsOfTheWorld.stateBoolFact(Facts.ShowEnemyKillCount, true)
                 factsOfTheWorld.stateBoolFact(Facts.AcceleratingSpawns, true)
+                factsOfTheWorld.stateFloatFact(Facts.AcceleratingSpawnsFactor, 1.25f)
 
             }
             storyBeat {

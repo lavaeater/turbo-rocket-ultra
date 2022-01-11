@@ -35,6 +35,9 @@ class FactsOfTheWorld(private val preferences: com.badlogic.gdx.Preferences, cle
         if (value.isInt())
             return IntFact(key, value.parseToInt())
 
+        if (value.isFloat())
+            return FloatFact(key, value.parseToFloat())
+
         if (value.isString())
             return StringFact(key, value.parseToString())
 
@@ -91,6 +94,11 @@ class FactsOfTheWorld(private val preferences: com.badlogic.gdx.Preferences, cle
         storeIntFact(fact)
     }
 
+    fun stateFloatFact(key: String, value: Float) {
+        val fact = FloatFact(key, value)
+        storeFloatFact(fact)
+    }
+
     fun addToIntFact(key: String, value: Int) {
         val factValue = getIntValue(key)
         storeIntFact(IntFact(key, factValue + value))
@@ -125,7 +133,15 @@ class FactsOfTheWorld(private val preferences: com.badlogic.gdx.Preferences, cle
         return preferences.getString(key).parseToInt()
     }
 
+    fun getFloatValue(key: String): Float {
+        return preferences.getString(key).parseToFloat()
+    }
+
     private fun storeIntFact(fact: IntFact) {
+        preferences.putString(fact.key, fact.value.serializeToString())
+    }
+
+    private fun storeFloatFact(fact: FloatFact) {
         preferences.putString(fact.key, fact.value.serializeToString())
     }
 
@@ -173,6 +189,8 @@ class FactsOfTheWorld(private val preferences: com.badlogic.gdx.Preferences, cle
 
             if (fact is ListFact)
                 saveListFact(fact)
+            if(fact is FloatFact)
+                storeFloatFact(fact)
         }
     }
 
@@ -199,7 +217,7 @@ class FactsOfTheWorld(private val preferences: com.badlogic.gdx.Preferences, cle
     }
 
     fun getBoolean(key: String): Boolean {
-        return if(preferences.contains(key)) preferences.getString(key).parseToBoolean() else false
+        return if (preferences.contains(key)) preferences.getString(key).parseToBoolean() else false
     }
 
     fun stringForKey(key: String): String {
