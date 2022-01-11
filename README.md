@@ -13,17 +13,18 @@ It also appears that the mouse position thing was so low hanging that I had alre
 - [x] Fix mouse position by polling position instead of event-driven system
 - [x] Flip weapon sprites when facing west
 - [x] Soundscape II - the Moaning
-- [ ] Objectives II, the sequel
+- [x] Objectives II, the sequel
 - [ ] Fix some warnings
+- [ ] Build Towers
 --------
 - [ ] Enemy AI II, with avoiding walls
+- [ ] Objectives III 
 - [ ] Bat swing
 - [ ] HUD II, Header Upper Displayer <- rediscover MVVM pattern, two-way binding
 - [ ] More Enemy Sprites (generate them)
 - [ ] Lightmaps for sprites
 - [ ] Player graphics made from components / parts etc.
 - [ ] Vehicles would be cool
-- [ ] Build Towers
 - [ ] Gibs and Body Parts II - blood trails and audio
 - [ ] Zombies throwing projectiles
 - [ ] Some other type of enemy
@@ -941,11 +942,11 @@ Det här gör vi på det gamla vanliga sättet. Vi bygger en box2d-värld, vi kl
 
 Oj oj oj,  vad roligt. Vi kan göra en box2d-kropp med leder, per tutorials etc. Superkul ju.
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbNTUzMjQ0OTgzLDIwNTAzMDE2MDMsLTE1OD
-EyNzI3NDYsLTE0OTYyNTY1MTcsLTE2MjQ2NjUyNjEsLTEzNjQ4
-MTY4OTMsNDE4NzgxNjIzLC0xNDM4NjA4MjQ5LC02MzM5NzAyNj
-QsLTE4Mzk1MTgyNzAsLTExNDUzODMxNDIsLTUzMDU4MTg5Niwx
-NTQ4NjQ3MzY4LC01OTcyMzg0OTYsMTg1MTE0MjU1MCwtNTY3OT
-UwNzI0LC0zNDU4NDI2NTIsLTE0NTY3MjY1MDgsLTExNzEyNjE3
-MjQsMTIzMzA4NDEwNV19
+eyJoaXN0b3J5IjpbLTgyMTYxMzA5LDU1MzI0NDk4MywyMDUwMz
+AxNjAzLC0xNTgxMjcyNzQ2LC0xNDk2MjU2NTE3LC0xNjI0NjY1
+MjYxLC0xMzY0ODE2ODkzLDQxODc4MTYyMywtMTQzODYwODI0OS
+wtNjMzOTcwMjY0LC0xODM5NTE4MjcwLC0xMTQ1MzgzMTQyLC01
+MzA1ODE4OTYsMTU0ODY0NzM2OCwtNTk3MjM4NDk2LDE4NTExND
+I1NTAsLTU2Nzk1MDcyNCwtMzQ1ODQyNjUyLC0xNDU2NzI2NTA4
+LC0xMTcxMjYxNzI0XX0=
 -->
