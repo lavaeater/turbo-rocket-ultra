@@ -8,6 +8,7 @@ import com.badlogic.gdx.math.Vector2
 import com.badlogic.gdx.scenes.scene2d.Action
 import com.badlogic.gdx.scenes.scene2d.Stage
 import com.badlogic.gdx.scenes.scene2d.actions.Actions.*
+import com.badlogic.gdx.scenes.scene2d.ui.Dialog
 import com.badlogic.gdx.scenes.scene2d.ui.Label
 import com.badlogic.gdx.utils.Align
 import com.badlogic.gdx.utils.Queue
@@ -17,13 +18,12 @@ import ecs.components.player.ComplexActionComponent
 import ecs.components.player.PlayerControlComponent
 import injection.Context.inject
 import ktx.actors.along
+import ktx.actors.centerPosition
 import ktx.actors.plusAssign
 import ktx.actors.then
 import ktx.math.vec2
 import ktx.math.vec3
-import ktx.scene2d.actors
-import ktx.scene2d.label
-import ktx.scene2d.table
+import ktx.scene2d.*
 import physics.AshleyMappers
 import story.FactsOfTheWorld
 import story.fact.Facts
@@ -59,7 +59,7 @@ class Hud(private val batch: Batch) : IUserInterface, MessageReceiver {
 
     private val stage by lazy {
         val aStage = Stage(hudViewPort, batch)
-        //aStage.isDebugAll = true
+        aStage.isDebugAll = true
         aStage.actors {
             table {
                 setFillParent(true)
@@ -67,7 +67,13 @@ class Hud(private val batch: Batch) : IUserInterface, MessageReceiver {
                 table {
                     setFillParent(true)
                     killCountLabel =
-                        boundLabel({ "Kill Count: ${factsOfTheWorld.getIntValue(Facts.EnemyKillCount) } / ${factsOfTheWorld.getIntValue(Facts.TargetEnemyKillCount) }" }) {
+                        boundLabel({
+                            "Kill Count: ${factsOfTheWorld.getIntValue(Facts.EnemyKillCount)} / ${
+                                factsOfTheWorld.getIntValue(
+                                    Facts.TargetEnemyKillCount
+                                )
+                            }"
+                        }) {
                             isVisible = factsOfTheWorld.getBooleanFact(Facts.ShowEnemyKillCount).value
                         }
                 }
@@ -111,17 +117,12 @@ class Hud(private val batch: Batch) : IUserInterface, MessageReceiver {
     }
 
 
+    var isReady = false
     override fun show() {
         //Set up this as receiver for messages with messagehandler
         inject<MessageHandler>().apply {
             this.receivers.add(this@Hud)
         }
-        //access lazy props
-        //I won't use the UI for input at this stage, right?
-        /*
-        To use both the UI and my stuff, we could multiplex it or something.
-         */
-//        Gdx.input.inputProcessor = stage
     }
 
     override fun update(delta: Float) {
@@ -129,6 +130,7 @@ class Hud(private val batch: Batch) : IUserInterface, MessageReceiver {
         stage.act(delta)
         stage.draw()
         killCountLabel.isVisible = factsOfTheWorld.getBooleanFact(Facts.ShowEnemyKillCount).value
+        isReady = true
     }
 
     override fun dispose() {
@@ -141,11 +143,37 @@ class Hud(private val batch: Batch) : IUserInterface, MessageReceiver {
     override fun reset() {
     }
 
+    private val pauseBlurb by lazy {
+        val dialogWidth = 600f
+        val dialogHeight = 400f
+        val x = stage.width / 2 - dialogWidth / 2
+        val y = stage.height / 4 + dialogHeight / 2
+        val d = scene2d.dialog("Paused") {
+            contentTable.add(label("WHAT THE HELL"))
+            width = dialogWidth
+            height = dialogHeight
+            setPosition(x, y)
+        }
+        //
+        stage.addActor(d)
+        d
+    }
+
+    override fun pause() {
+        pauseBlurb.isVisible = true
+    }
+
+    override fun resume() {
+        if (isReady)
+            pauseBlurb.isVisible = false
+    }
+
     /***
      * This is a story method, this should be generalized to support more
      * dynamic stuff.
      */
-    override val messageTypes: Set<KClass<*>> = setOf(Message.ShowToast::class, Message.ShowUiForComplexAction::class, Message.ShowProgressBar::class)
+    override val messageTypes: Set<KClass<*>> =
+        setOf(Message.ShowToast::class, Message.ShowUiForComplexAction::class, Message.ShowProgressBar::class)
 
     fun worldToHudPosition(worldPosition: Vector2): Vector2 {
         projectionVector.set(worldPosition.x, worldPosition.y, 0f)
@@ -186,8 +214,8 @@ class Hud(private val batch: Batch) : IUserInterface, MessageReceiver {
 
     fun addProgressBar(progressBar: Message.ShowProgressBar) {
         val coordinate = worldToHudPosition(progressBar.worldPosition)
-        val moveAction = object: Action() {
-            override fun act(delta:Float) : Boolean {
+        val moveAction = object : Action() {
+            override fun act(delta: Float): Boolean {
                 val c = worldToHudPosition(progressBar.worldPosition)
                 actor.setPosition(c.x, c.y)
                 return true

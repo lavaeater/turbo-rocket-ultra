@@ -183,6 +183,9 @@ D1B67A
         //Continue to render, though
         engine.getSystem<RenderSystem>().setProcessing(true)
         engine.getSystem<RenderMiniMapSystem>().setProcessing(true)
+
+        ui.pause()
+
         running = false
     }
 
@@ -192,6 +195,7 @@ D1B67A
         for (system in engine.systems)
             system.setProcessing(true)
 
+        ui.resume()
         running = true
     }
 
