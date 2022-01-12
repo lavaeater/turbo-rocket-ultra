@@ -14,10 +14,11 @@ It also appears that the mouse position thing was so low hanging that I had alre
 - [x] Flip weapon sprites when facing west
 - [x] Soundscape II - the Moaning
 - [x] Objectives II, the sequel
-- [ ] Transitions schmanzitions
+- [ ] Text Crawl
 - [ ] Build Towers
 - [ ] Fix some warnings
 --------
+- [ ] Transitions schmanzitions
 - [ ] Enemy AI II, with avoiding walls
 - [ ] Objectives III - now with players all over the map
 - [ ] Split Screen
@@ -34,6 +35,15 @@ It also appears that the mouse position thing was so low hanging that I had alre
 - [ ] Nicer Setup UI, using Scene2d perhaps
 - [ ] Puzzle obstacles / machines
 - [ ] Oblique Projection
+
+### Text Crawl
+This could be combined with the transition concept. Here's what I want to do:
+- [ ] Show a dialog or crawl with paused game before level starts (what to do etc)
+- [ ] A working pause mode
+- [ ] Pause game when level is done and show stats or something
+
+### Transitions
+It uses nested framebuffers and a separate SpriteBatch (instead of generic batch) so I couldn't make myself bother. Will try something else instead.
 
 ### Objectives II - Quirkier
 Examples: Kill n enemies. Hold an area for n minutes. Come up with something really fun, oooh, I got it, every player has to be in a separate place at the same time!
@@ -944,11 +954,11 @@ Det här gör vi på det gamla vanliga sättet. Vi bygger en box2d-värld, vi kl
 
 Oj oj oj,  vad roligt. Vi kan göra en box2d-kropp med leder, per tutorials etc. Superkul ju.
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbMjEwMDgwMzg1Miw1NTMyNDQ5ODMsMjA1MD
-MwMTYwMywtMTU4MTI3Mjc0NiwtMTQ5NjI1NjUxNywtMTYyNDY2
-NTI2MSwtMTM2NDgxNjg5Myw0MTg3ODE2MjMsLTE0Mzg2MDgyND
-ksLTYzMzk3MDI2NCwtMTgzOTUxODI3MCwtMTE0NTM4MzE0Miwt
-NTMwNTgxODk2LDE1NDg2NDczNjgsLTU5NzIzODQ5NiwxODUxMT
-QyNTUwLC01Njc5NTA3MjQsLTM0NTg0MjY1MiwtMTQ1NjcyNjUw
-OCwtMTE3MTI2MTcyNF19
+eyJoaXN0b3J5IjpbMTMxOTMzMTQzOCwtMTg4NjI3MTY0MiwyMT
+AwODAzODUyLDU1MzI0NDk4MywyMDUwMzAxNjAzLC0xNTgxMjcy
+NzQ2LC0xNDk2MjU2NTE3LC0xNjI0NjY1MjYxLC0xMzY0ODE2OD
+kzLDQxODc4MTYyMywtMTQzODYwODI0OSwtNjMzOTcwMjY0LC0x
+ODM5NTE4MjcwLC0xMTQ1MzgzMTQyLC01MzA1ODE4OTYsMTU0OD
+Y0NzM2OCwtNTk3MjM4NDk2LDE4NTExNDI1NTAsLTU2Nzk1MDcy
+NCwtMzQ1ODQyNjUyXX0=
 -->
