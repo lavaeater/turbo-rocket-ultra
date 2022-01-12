@@ -39,6 +39,7 @@ It also appears that the mouse position thing was so low hanging that I had alre
 ### Text Crawl
 This could be combined with the transition concept. Here's what I want to do:
 - [ ] Show a dialog or crawl with paused game before level starts (what to do etc)
+- [ ] A working pause mode
 - [ ] Pause game when level is done and show stats or something
 
 ### Transitions
@@ -953,11 +954,11 @@ Det här gör vi på det gamla vanliga sättet. Vi bygger en box2d-värld, vi kl
 
 Oj oj oj,  vad roligt. Vi kan göra en box2d-kropp med leder, per tutorials etc. Superkul ju.
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbLTE4ODYyNzE2NDIsMjEwMDgwMzg1Miw1NT
-MyNDQ5ODMsMjA1MDMwMTYwMywtMTU4MTI3Mjc0NiwtMTQ5NjI1
-NjUxNywtMTYyNDY2NTI2MSwtMTM2NDgxNjg5Myw0MTg3ODE2Mj
-MsLTE0Mzg2MDgyNDksLTYzMzk3MDI2NCwtMTgzOTUxODI3MCwt
-MTE0NTM4MzE0MiwtNTMwNTgxODk2LDE1NDg2NDczNjgsLTU5Nz
-IzODQ5NiwxODUxMTQyNTUwLC01Njc5NTA3MjQsLTM0NTg0MjY1
-MiwtMTQ1NjcyNjUwOF19
+eyJoaXN0b3J5IjpbMTMxOTMzMTQzOCwtMTg4NjI3MTY0MiwyMT
+AwODAzODUyLDU1MzI0NDk4MywyMDUwMzAxNjAzLC0xNTgxMjcy
+NzQ2LC0xNDk2MjU2NTE3LC0xNjI0NjY1MjYxLC0xMzY0ODE2OD
+kzLDQxODc4MTYyMywtMTQzODYwODI0OSwtNjMzOTcwMjY0LC0x
+ODM5NTE4MjcwLC0xMTQ1MzgzMTQyLC01MzA1ODE4OTYsMTU0OD
+Y0NzM2OCwtNTk3MjM4NDk2LDE4NTExNDI1NTAsLTU2Nzk1MDcy
+NCwtMzQ1ODQyNjUyXX0=
 -->
