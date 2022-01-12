@@ -58,35 +58,38 @@ class GameScreen(private val gameState: StateMachine<GameState, GameEvent>) : Kt
     private val factsOfTheWorld: FactsOfTheWorld by lazy { inject() }
     private val console by lazy { inject<GUIConsole>() }
     private val vfxManager by lazy { inject<VfxManager>() }
+    private var running = true
 
     override fun show() {
         initializeIfNeeded()
-        camera.setToOrtho(true, viewPort.maxWorldWidth, viewPort.maxWorldHeight)
-        Gdx.input.inputProcessor = engine.getSystem(KeyboardInputSystem::class.java)
-        Controllers.addListener(engine.getSystem(GamepadInputSystem::class.java))
+        if(running) {
+            camera.setToOrtho(true, viewPort.maxWorldWidth, viewPort.maxWorldHeight)
+            Gdx.input.inputProcessor = engine.getSystem(KeyboardInputSystem::class.java)
+            Controllers.addListener(engine.getSystem(GamepadInputSystem::class.java))
 
-        engine.getSystem<CameraUpdateSystem>().reset()
-        engine.removeAllEntities()
-        CounterObject.currentLevel = 1
+            engine.getSystem<CameraUpdateSystem>().reset()
+            engine.removeAllEntities()
+            CounterObject.currentLevel = 1
 
-        for (system in engine.systems) {
-            system.setProcessing(true)
+            for (system in engine.systems) {
+                system.setProcessing(true)
+            }
+            generateMap(CounterObject.currentLevel)
+            addPlayers()
+
+            if (Players.players.keys.any { it.isKeyboard }) {
+                engine.getSystem<KeyboardInputSystem>().setProcessing(true)
+            } else {
+                engine.getSystem<KeyboardInputSystem>().setProcessing(false)
+            }
+
+            ui.reset()
+            ui.show()
+
+            Assets.music.first().isLooping = true
+            Assets.music.first().play()
+            storyManager.activate()
         }
-        generateMap(CounterObject.currentLevel)
-        addPlayers()
-
-        if(Players.players.keys.any { it.isKeyboard }) {
-            engine.getSystem<KeyboardInputSystem>().setProcessing(true)
-        } else {
-            engine.getSystem<KeyboardInputSystem>().setProcessing(false)
-        }
-
-        ui.reset()
-        ui.show()
-
-        Assets.music.first().isLooping = true
-        Assets.music.first().play()
-        storyManager.activate()
     }
 
     private fun loadMapZero() : Pair<Map<Coordinate, GridMapSection>, TileGraph> {
@@ -180,6 +183,7 @@ D1B67A
         //Continue to render, though
         engine.getSystem<RenderSystem>().setProcessing(true)
         engine.getSystem<RenderMiniMapSystem>().setProcessing(true)
+        running = false
     }
 
     override fun resume() {
@@ -187,6 +191,8 @@ D1B67A
         Controllers.addListener(engine.getSystem(GamepadInputSystem::class.java))
         for (system in engine.systems)
             system.setProcessing(true)
+
+        running = true
     }
 
     override fun hide() {
