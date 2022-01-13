@@ -8,19 +8,18 @@ import com.badlogic.gdx.math.Vector2
 import com.badlogic.gdx.scenes.scene2d.Action
 import com.badlogic.gdx.scenes.scene2d.Stage
 import com.badlogic.gdx.scenes.scene2d.actions.Actions.*
+import com.badlogic.gdx.scenes.scene2d.ui.Cell
 import com.badlogic.gdx.scenes.scene2d.ui.Dialog
 import com.badlogic.gdx.scenes.scene2d.ui.Label
 import com.badlogic.gdx.utils.Align
+import com.badlogic.gdx.utils.Align.topLeft
 import com.badlogic.gdx.utils.Queue
 import com.badlogic.gdx.utils.viewport.ExtendViewport
 import data.Players
 import ecs.components.player.ComplexActionComponent
 import ecs.components.player.PlayerControlComponent
 import injection.Context.inject
-import ktx.actors.along
-import ktx.actors.centerPosition
-import ktx.actors.plusAssign
-import ktx.actors.then
+import ktx.actors.*
 import ktx.math.vec2
 import ktx.math.vec3
 import ktx.scene2d.*
@@ -30,6 +29,7 @@ import story.fact.Facts
 import ui.customactors.boundLabel
 import ui.customactors.boundProgressBar
 import ui.customactors.repeatingTexture
+import ui.customactors.typingLabel
 import kotlin.reflect.KClass
 
 
@@ -144,17 +144,30 @@ class Hud(private val batch: Batch) : IUserInterface, MessageReceiver {
     }
 
     private val pauseBlurb by lazy {
-        val dialogWidth = 600f
-        val dialogHeight = 400f
+        val dialogWidth = 800f
+        val dialogHeight = 800f
         val x = stage.width / 2 - dialogWidth / 2
         val y = stage.height / 4 + dialogHeight / 2
+        val text = """
+    So, can it do line feeds? Can it handle end of column and wrapping and stuff like that?
+    Will this actually work?
+    Can this be the coolness?
+""".trimIndent()
+
         val d = scene2d.dialog("Paused") {
-            contentTable.add(label("WHAT THE HELL"))
+            contentTable.add(
+                scene2d.table {
+                    setFillParent(true)
+                    left()
+                    top()
+                    typingLabel(text)//.inCell.expand()
+                })
             width = dialogWidth
             height = dialogHeight
+            //contentTable.pack()
+            pack()
             setPosition(x, y)
         }
-        //
         stage.addActor(d)
         d
     }
