@@ -20,6 +20,8 @@ import map.snake.random
 import map.snake.randomPoint
 import org.w3c.dom.css.Counter
 import screens.CounterObject
+import story.FactsOfTheWorld
+import story.fact.Facts
 
 class GridMapGenerator {
     companion object {
@@ -42,6 +44,24 @@ class GridMapGenerator {
         fun addBoss(bounds: Rectangle) {
             var position = bounds.randomPoint()
             boss(position, 1)
+        }
+
+        private val factsOfTheWorld by lazy { inject<FactsOfTheWorld>() }
+
+        fun generateFromMapFile(mapFile: MapFile): Pair<Map<Coordinate, GridMapSection>, TileGraph> {
+            //TODO: Move this somewhere
+            Light.setGlobalContactFilter(
+                Box2dCategories.lights,
+                0, Box2dCategories.allButSensors
+            )
+            rayHandler.setAmbientLight(.5f)
+            rayHandler.setBlurNum(3)
+
+            factsOfTheWorld.stateStringFact(Facts.CurrentMapName, mapFile.name)
+            factsOfTheWorld.stateStringFact(Facts.MapStartMessage, mapFile.startMessage)
+            factsOfTheWorld.stateStringFact(Facts.MapSuccessMessage, mapFile.successMessage)
+            factsOfTheWorld.stateStringFact(Facts.MapFailMessage, mapFile.failMessage)
+            return generateFromDefintion(mapFile.mapDefinition)
         }
 
         fun generateFromDefintion(def: TextGridMapDefinition, perimeterObjectives: Boolean = false): Pair<Map<Coordinate, GridMapSection>, TileGraph> {

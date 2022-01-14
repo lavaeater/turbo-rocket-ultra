@@ -22,5 +22,11 @@ class Facts {
         const val ShowEnemyKillCount = "ShowEnemyKillCount"
         const val AcceleratingSpawns = "AcceleratingSpawns"
         const val AcceleratingSpawnsFactor = "AcceleratingSpawnsFactor"
+
+        //Map Facts
+        const val CurrentMapName = "CurrentMapName"
+        const val MapStartMessage = "MapStartMessage"
+        const val MapSuccessMessage = "MapSuccessMessage"
+        const val MapFailMessage = "MapFailMessage"
     }
 }
