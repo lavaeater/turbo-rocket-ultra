@@ -89,6 +89,13 @@ class GameScreen(private val gameState: StateMachine<GameState, GameEvent>) : Kt
             Assets.music.first().isLooping = true
             Assets.music.first().play()
             storyManager.activate()
+
+            //And then we pause and show intro text, wait for any input at all.
+            //That will be a total pain in the ass
+            /*
+            Maybe
+            How would we want this to work, ideally?
+             */
         }
     }
 
