@@ -145,6 +145,7 @@ class Hud(private val batch: Batch) : IUserInterface, MessageReceiver {
     }
 
     private lateinit var pauseLabel: TypingLabel
+    private lateinit var pauseDialog: KDialog
 
     private val pauseBlurb by lazy {
         val dialogWidth = 800f
@@ -154,7 +155,7 @@ class Hud(private val batch: Batch) : IUserInterface, MessageReceiver {
         val text = """
 """.trimIndent()
 
-        val d = scene2d.dialog("Paused") {
+        pauseDialog = scene2d.dialog("Paused") {
             contentTable.add(
                 scene2d.table {
                     setFillParent(true)
@@ -168,13 +169,14 @@ class Hud(private val batch: Batch) : IUserInterface, MessageReceiver {
             pack()
             setPosition(x, y)
         }
-        stage.addActor(d)
-        d
+        stage.addActor(pauseDialog)
+        pauseDialog
     }
 
     override fun pause() {
-        pauseLabel.setText("Game Paused")
         pauseBlurb.isVisible = true
+        pauseLabel.setText("Game Paused")
+        pauseLabel.pack()
     }
 
     override fun resume() {
@@ -284,8 +286,10 @@ class Hud(private val batch: Batch) : IUserInterface, MessageReceiver {
     }
 
     fun setPauseLabelText(text: String) {
-        if(this::pauseLabel.isInitialized)
+        if(this::pauseLabel.isInitialized) {
             pauseLabel.setText(text)
+            pauseDialog.pack()
+        }
     }
 }
 

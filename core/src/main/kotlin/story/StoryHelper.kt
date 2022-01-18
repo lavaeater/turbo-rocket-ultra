@@ -38,6 +38,7 @@ object StoryHelper {
             }
             storyBeat {
                 name = "Check If Work is Done"
+                equalsCriterion(Facts.LevelStarted, true)
                 booleanCriteria(Facts.BossIsDead, true)
                 booleanCriteria(Facts.AllObjectivesAreTouched, true)
                 consequence {
@@ -56,6 +57,7 @@ object StoryHelper {
             storyBeat {
                 name = "Level Complete Rules"
                 equalsCriterion(Facts.LevelComplete, true)
+                equalsCriterion(Facts.LevelStarted, true)
                 consequence {
                     apply = {
                         factsOfTheWorld.stateBoolFact(Facts.LevelFailed, true)
@@ -74,6 +76,7 @@ object StoryHelper {
             storyBeat {
                 name = "General Game Over Rules"
                 equalsCriterion(Facts.LivingPlayerCount, 0)
+                equalsCriterion(Facts.LevelStarted, true)
                 consequence {
                     apply = {
                         factsOfTheWorld.stateBoolFact(Facts.LevelComplete, false)
@@ -92,9 +95,10 @@ object StoryHelper {
             neverEnding = false
             storyBeat {
                 name = "Level Start Rules"
-                equalsCriterion(Facts.LevelStarted, true)
+                equalsCriterion(Facts.LevelStarted, false)
                 consequence {
                     apply = {
+                        factsOfTheWorld.stateBoolFact(Facts.LevelStarted, true)
                         factsOfTheWorld.stateBoolFact(Facts.LevelComplete, false)
                         factsOfTheWorld.stateBoolFact(Facts.LevelFailed, false)
                         gameStateMachine.acceptEvent(GameEvent.PausedGame)
