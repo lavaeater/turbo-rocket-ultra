@@ -31,8 +31,8 @@ import ktx.math.random
 import ktx.scene2d.label
 import ktx.scene2d.table
 import tru.Assets
-import ui.Message
-import ui.MessageHandler
+import messaging.Message
+import messaging.MessageHandler
 
 /*
 How to handle contacts in the absolutely smashingly BEST

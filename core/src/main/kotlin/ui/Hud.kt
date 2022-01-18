@@ -8,21 +8,21 @@ import com.badlogic.gdx.math.Vector2
 import com.badlogic.gdx.scenes.scene2d.Action
 import com.badlogic.gdx.scenes.scene2d.Stage
 import com.badlogic.gdx.scenes.scene2d.actions.Actions.*
-import com.badlogic.gdx.scenes.scene2d.ui.Cell
-import com.badlogic.gdx.scenes.scene2d.ui.Dialog
 import com.badlogic.gdx.scenes.scene2d.ui.Label
 import com.badlogic.gdx.utils.Align
-import com.badlogic.gdx.utils.Align.topLeft
 import com.badlogic.gdx.utils.Queue
 import com.badlogic.gdx.utils.viewport.ExtendViewport
 import data.Players
-import ecs.components.player.ComplexActionComponent
-import ecs.components.player.PlayerControlComponent
 import injection.Context.inject
-import ktx.actors.*
+import ktx.actors.along
+import ktx.actors.plusAssign
+import ktx.actors.then
 import ktx.math.vec2
 import ktx.math.vec3
 import ktx.scene2d.*
+import messaging.Message
+import messaging.MessageHandler
+import messaging.MessageReceiver
 import physics.AshleyMappers
 import story.FactsOfTheWorld
 import story.fact.Facts
@@ -268,34 +268,9 @@ class Hud(private val batch: Batch) : IUserInterface, MessageReceiver {
             is Message.ShowProgressBar -> {
                 addProgressBar(message)
             }
+            is Message.FactUpdated -> TODO() //We don't subscribe to this type of messages so this won't happen
         }
     }
 }
 
 
-interface MessageReceiver {
-    val messageTypes: Set<KClass<*>>
-    fun recieveMessage(message: Message)
-}
-
-class MessageHandler {
-    // QUeue not used for now, but perhaps later, much later?
-    val messageQueue = Queue<Message>()
-    val receivers = mutableListOf<MessageReceiver>()
-    fun sendMessage(message: Message) {
-        val validReceivers = receivers.filter { it.messageTypes.contains<KClass<out Any>>(message::class) }
-        for (receiver in validReceivers) {
-            receiver.recieveMessage(message)
-        }
-    }
-}
-
-sealed class Message {
-    class ShowProgressBar(val maxTime: Float, val worldPosition: Vector2, val progress: () -> Float) : Message()
-    class ShowToast(val toast: String, val worldPosition: Vector2) : Message()
-    class ShowUiForComplexAction(
-        val complexActionComponent: ComplexActionComponent,
-        val controlComponent: PlayerControlComponent,
-        val worldPosition: Vector2
-    ) : Message()
-}

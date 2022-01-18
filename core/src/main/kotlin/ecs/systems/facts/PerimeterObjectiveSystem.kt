@@ -11,8 +11,8 @@ import physics.light
 import physics.objective
 import physics.perimeter
 import physics.transform
-import ui.Message
-import ui.MessageHandler
+import messaging.Message
+import messaging.MessageHandler
 
 class PerimeterObjectiveSystem: IteratingSystem(allOf(PerimeterObjectiveComponent::class, TransformComponent::class).get())  {
     private val playerEntities get() = engine.getEntitiesFor(allOf(PlayerComponent::class, TransformComponent::class).get())

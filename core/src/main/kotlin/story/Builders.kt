@@ -90,6 +90,10 @@ class RuleBuilder:Builder<Rule> {
 		criteria.add(Criterion.moreThanCriterion(key, value))
 	}
 
+	fun lessThanCriterion(key: String, value: Int) {
+		criteria.add(Criterion.lessThanCriterion(key, value))
+	}
+
 	fun rangeCriterion(key: String, range: IntRange) {
 		criteria.add(Criterion.rangeCriterion(key, range))
 	}

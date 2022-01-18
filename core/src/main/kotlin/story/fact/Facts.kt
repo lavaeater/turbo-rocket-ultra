@@ -17,6 +17,7 @@ class Facts {
         const val BossIsDead = "BossIsDead"
         const val AllObjectivesAreTouched = "AllObjectivesAreTouched"
         const val LevelComplete = "LevelComplete"
+        const val LevelFailed = "LevelFailed"
         const val EnemyKillCount = "EnemyKillCount"
         const val TargetEnemyKillCount = "TargetEnemyKillCount"
         const val ShowEnemyKillCount = "ShowEnemyKillCount"
@@ -28,5 +29,8 @@ class Facts {
         const val MapStartMessage = "MapStartMessage"
         const val MapSuccessMessage = "MapSuccessMessage"
         const val MapFailMessage = "MapFailMessage"
+
+        //PlayerFacts
+        const val LivingPlayerCount = "LivingPlayerCount"
     }
 }
