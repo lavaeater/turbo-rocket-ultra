@@ -3,41 +3,31 @@ package story
 import gamestate.GameEvent
 import gamestate.GameState
 import injection.Context.inject
+import messaging.Message
+import messaging.MessageHandler
 import statemachine.StateMachine
 import story.fact.Facts
-import ui.IUserInterface
 
 
 object StoryHelper {
     val factsOfTheWorld by lazy { inject<FactsOfTheWorld>() }
     val gameStateMachine by lazy { inject<StateMachine<GameState, GameEvent>>() }
+    val messageHandler by lazy { inject<MessageHandler>()}
 
-    fun gameOverRules(story: StoryBuilder) {
-        story.storyBeat {
-            name = "General Game Over Rules"
-            equalsCriterion(Facts.LivingPlayerCount, 0)
-            consequence {
-                apply = {
-                    factsOfTheWorld.stateBoolFact(Facts.LevelComplete, false)
-                    factsOfTheWorld.stateBoolFact(Facts.LevelFailed, true)
-                }
-            }
-        }
-    }
 
-    fun levelStartFacts() {
-        factsOfTheWorld.stateBoolFact(Facts.LevelComplete, false)
+    private fun levelStartFacts() {
         factsOfTheWorld.stateBoolFact(Facts.BossIsDead, false)
         factsOfTheWorld.stateBoolFact(Facts.AllObjectivesAreTouched, false)
         factsOfTheWorld.stateBoolFact(Facts.ShowEnemyKillCount, false)
         factsOfTheWorld.stateBoolFact(Facts.LevelComplete, false)
         factsOfTheWorld.stateBoolFact(Facts.LevelFailed, false)
         factsOfTheWorld.stateBoolFact(Facts.BossIsDead, false)
-        factsOfTheWorld.stateBoolFact(Facts.AllObjectivesAreTouched, false)
         factsOfTheWorld.stateIntFact(Facts.EnemyKillCount, 0)
         factsOfTheWorld.stateIntFact(Facts.TargetEnemyKillCount, 50)
         factsOfTheWorld.stateBoolFact(Facts.ShowEnemyKillCount, true)
         factsOfTheWorld.stateBoolFact(Facts.AcceleratingSpawns, false)
+        factsOfTheWorld.stateBoolFact(Facts.LevelStarted, false)
+
     }
     val basicStory by lazy {
         story {
@@ -58,6 +48,63 @@ object StoryHelper {
             }
         }
     }
+
+    val levelCompleteStory by lazy {
+        story {
+            name = "Level Complete Story"
+            neverEnding = false
+            storyBeat {
+                name = "Level Complete Rules"
+                equalsCriterion(Facts.LevelComplete, true)
+                consequence {
+                    apply = {
+                        factsOfTheWorld.stateBoolFact(Facts.LevelFailed, true)
+                        gameStateMachine.acceptEvent(GameEvent.PausedGame)
+                        messageHandler.sendMessage(Message.LevelComplete(factsOfTheWorld.stringForKey(Facts.MapSuccessMessage)))
+                    }
+                }
+            }
+        }
+    }
+
+    val levelFailedStory by lazy {
+        story {
+            name = "Level Failed Story"
+            neverEnding = false
+            storyBeat {
+                name = "General Game Over Rules"
+                equalsCriterion(Facts.LivingPlayerCount, 0)
+                consequence {
+                    apply = {
+                        factsOfTheWorld.stateBoolFact(Facts.LevelComplete, false)
+                        factsOfTheWorld.stateBoolFact(Facts.LevelFailed, true)
+                        gameStateMachine.acceptEvent(GameEvent.PausedGame)
+                        messageHandler.sendMessage(Message.LevelFailed(factsOfTheWorld.stringForKey(Facts.MapFailMessage)))
+                    }
+                }
+            }
+        }
+    }
+
+    val levelStartStory by lazy {
+        story {
+            name = "Game Start Story"
+            neverEnding = false
+            storyBeat {
+                name = "Level Start Rules"
+                equalsCriterion(Facts.LevelStarted, true)
+                consequence {
+                    apply = {
+                        factsOfTheWorld.stateBoolFact(Facts.LevelComplete, false)
+                        factsOfTheWorld.stateBoolFact(Facts.LevelFailed, false)
+                        gameStateMachine.acceptEvent(GameEvent.PausedGame)
+                        messageHandler.sendMessage(Message.LevelStarting(factsOfTheWorld.stringForKey(Facts.MapStartMessage)))
+                    }
+                }
+            }
+        }
+    }
+
     val enemyKillCountStory by lazy {
         story {
             name = "Touch All Objectives and Kill the Boss"
@@ -67,12 +114,9 @@ object StoryHelper {
                 factsOfTheWorld.stateBoolFact(Facts.AcceleratingSpawns, true)
                 factsOfTheWorld.stateFloatFact(Facts.AcceleratingSpawnsFactor, 1.25f)
             }
-            gameOverRules(this)
             storyBeat {
                 name = "Check If Work is Done"
                 moreThanCriterion(Facts.EnemyKillCount, 200)
-//                booleanCriteria(Facts.BossIsDead, true)
-//                booleanCriteria(Facts.AllObjectivesAreTouched, true)
                 consequence {
                     apply = {
                         factsOfTheWorld.stateBoolFact(Facts.LevelComplete, true)

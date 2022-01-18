@@ -61,6 +61,7 @@ class GridMapGenerator {
             factsOfTheWorld.stateStringFact(Facts.MapStartMessage, mapFile.startMessage)
             factsOfTheWorld.stateStringFact(Facts.MapSuccessMessage, mapFile.successMessage)
             factsOfTheWorld.stateStringFact(Facts.MapFailMessage, mapFile.failMessage)
+            //Embed stories in level files...
             return generateFromDefintion(mapFile.mapDefinition)
         }
 

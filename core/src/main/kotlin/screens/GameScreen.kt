@@ -109,6 +109,9 @@ class GameScreen(private val gameState: StateMachine<GameState, GameEvent>) : Kt
         CounterObject.maxEnemies = 64
         CounterObject.maxSpawnedEnemies = 1024
 
+        storyManager.addStory(StoryHelper.levelStartStory)
+        storyManager.addStory(StoryHelper.levelCompleteStory)
+        storyManager.addStory(StoryHelper.levelFailedStory)
         storyManager.addStory(StoryHelper.enemyKillCountStory)
         MapLoader.saveMap(NewMaps.levelOne) //One-off
         return GridMapGenerator.generateFromMapFile(NewMaps.levelOne)

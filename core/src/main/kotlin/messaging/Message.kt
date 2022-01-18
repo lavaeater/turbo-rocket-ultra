@@ -13,4 +13,7 @@ sealed class Message {
         val worldPosition: Vector2
     ) : Message()
     class FactUpdated(val key: String): Message()
+    class LevelComplete(val completeMessage: String): Message()
+    class LevelFailed(val failMessage: String): Message()
+    class LevelStarting(val beforeStartMessage: String): Message()
 }

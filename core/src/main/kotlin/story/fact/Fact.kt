@@ -1,12 +1,18 @@
 package story.fact
 
-class StringFact(override val key: String, override var value: String) : IFact<String>
+abstract class AbstractFact<T>:IFact<T> {
+  override fun toString(): String {
+    return "$key: ${value.toString()}"
+  }
+}
 
-class IntFact(override val key: String, override var value: Int) : IFact<Int>
+class StringFact(override val key: String, override var value: String) : AbstractFact<String>()
 
-class FloatFact(override val key: String, override var value: Float): IFact<Float>
+class IntFact(override val key: String, override var value: Int) : AbstractFact<Int>()
 
-class BooleanFact(override val key: String, override var value: Boolean) : IFact<Boolean>
+class FloatFact(override val key: String, override var value: Float): AbstractFact<Float>()
+
+class BooleanFact(override val key: String, override var value: Boolean) : AbstractFact<Boolean>()
 
 class ListFact(override val key: String, override var value: MutableSet<String> = mutableSetOf()) : IListFact<String> {
   override fun contains(v: String): Boolean {

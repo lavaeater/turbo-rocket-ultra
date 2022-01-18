@@ -100,7 +100,7 @@ inline fun <S> KWidget<S>.typingLabel(
     style: String = defaultStyle,
     skin: Skin = Scene2DSkin.defaultSkin,
     init: (@Scene2dDsl TypingLabel).(S) -> Unit = {}
-): Label {
+): TypingLabel {
     contract { callsInPlace(init, InvocationKind.EXACTLY_ONCE) }
     return actor(TypingLabel(text, skin, style), init)
 }

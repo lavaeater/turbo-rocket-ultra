@@ -12,6 +12,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Label
 import com.badlogic.gdx.utils.Align
 import com.badlogic.gdx.utils.Queue
 import com.badlogic.gdx.utils.viewport.ExtendViewport
+import com.rafaskoberg.gdx.typinglabel.TypingLabel
 import data.Players
 import injection.Context.inject
 import ktx.actors.along
@@ -143,15 +144,14 @@ class Hud(private val batch: Batch) : IUserInterface, MessageReceiver {
     override fun reset() {
     }
 
+    private lateinit var pauseLabel: TypingLabel
+
     private val pauseBlurb by lazy {
         val dialogWidth = 800f
         val dialogHeight = 800f
         val x = stage.width / 2 - dialogWidth / 2
         val y = stage.height / 4 + dialogHeight / 2
         val text = """
-    So, can it do line feeds? Can it handle end of column and wrapping and stuff like that?
-    Will this actually work?
-    Can this be the coolness?
 """.trimIndent()
 
         val d = scene2d.dialog("Paused") {
@@ -160,7 +160,7 @@ class Hud(private val batch: Batch) : IUserInterface, MessageReceiver {
                     setFillParent(true)
                     left()
                     top()
-                    typingLabel(text)//.inCell.expand()
+                    pauseLabel = typingLabel(text)//.inCell.expand()
                 })
             width = dialogWidth
             height = dialogHeight
@@ -173,6 +173,7 @@ class Hud(private val batch: Batch) : IUserInterface, MessageReceiver {
     }
 
     override fun pause() {
+        pauseLabel.setText("Game Paused")
         pauseBlurb.isVisible = true
     }
 
@@ -186,7 +187,14 @@ class Hud(private val batch: Batch) : IUserInterface, MessageReceiver {
      * dynamic stuff.
      */
     override val messageTypes: Set<KClass<*>> =
-        setOf(Message.ShowToast::class, Message.ShowUiForComplexAction::class, Message.ShowProgressBar::class)
+        setOf(
+            Message.ShowToast::class,
+            Message.ShowUiForComplexAction::class,
+            Message.ShowProgressBar::class,
+            Message.LevelStarting::class,
+            Message.LevelComplete::class,
+            Message.LevelFailed::class
+        )
 
     fun worldToHudPosition(worldPosition: Vector2): Vector2 {
         projectionVector.set(worldPosition.x, worldPosition.y, 0f)
@@ -269,7 +277,15 @@ class Hud(private val batch: Batch) : IUserInterface, MessageReceiver {
                 addProgressBar(message)
             }
             is Message.FactUpdated -> TODO() //We don't subscribe to this type of messages so this won't happen
+            is Message.LevelComplete -> { setPauseLabelText(message.completeMessage) }
+            is Message.LevelFailed -> { setPauseLabelText(message.failMessage) }
+            is Message.LevelStarting -> { setPauseLabelText(message.beforeStartMessage) }
         }
+    }
+
+    fun setPauseLabelText(text: String) {
+        if(this::pauseLabel.isInitialized)
+            pauseLabel.setText(text)
     }
 }
 

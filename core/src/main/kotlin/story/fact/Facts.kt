@@ -29,6 +29,7 @@ class Facts {
         const val MapStartMessage = "MapStartMessage"
         const val MapSuccessMessage = "MapSuccessMessage"
         const val MapFailMessage = "MapFailMessage"
+        const val LevelStarted = "LevelStarted"
 
         //PlayerFacts
         const val LivingPlayerCount = "LivingPlayerCount"
