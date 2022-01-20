@@ -27,7 +27,7 @@ object StoryHelper {
         factsOfTheWorld.stateBoolFact(Facts.ShowEnemyKillCount, true)
         factsOfTheWorld.stateBoolFact(Facts.AcceleratingSpawns, false)
         factsOfTheWorld.stateBoolFact(Facts.LevelStarted, false)
-
+        factsOfTheWorld.stateBoolFact(Facts.GotoNextLevel, false)
     }
     val basicStory by lazy {
         story {
@@ -120,7 +120,7 @@ object StoryHelper {
             }
             storyBeat {
                 name = "Check If Work is Done"
-                moreThanCriterion(Facts.EnemyKillCount, 200)
+                moreThanCriterion(Facts.EnemyKillCount, factsOfTheWorld.getIntValue(Facts.TargetEnemyKillCount))
                 consequence {
                     apply = {
                         factsOfTheWorld.stateBoolFact(Facts.LevelComplete, true)

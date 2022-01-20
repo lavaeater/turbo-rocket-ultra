@@ -17,6 +17,7 @@ class Facts {
         const val BossIsDead = "BossIsDead"
         const val AllObjectivesAreTouched = "AllObjectivesAreTouched"
         const val LevelComplete = "LevelComplete"
+        const val GotoNextLevel = "GotoNextLevel"
         const val LevelFailed = "LevelFailed"
         const val EnemyKillCount = "EnemyKillCount"
         const val TargetEnemyKillCount = "TargetEnemyKillCount"

@@ -162,7 +162,7 @@ D1B67A
         audioPlayer.update(delta)
         storyManager.checkStories()
 
-        if (factsOfTheWorld.getBooleanFact(Facts.LevelComplete).value)
+        if (factsOfTheWorld.getBoolean(Facts.GotoNextLevel))
             nextLevel()
     }
 
