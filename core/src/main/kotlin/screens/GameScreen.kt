@@ -120,7 +120,8 @@ class GameScreen(private val gameState: StateMachine<GameState, GameEvent>) : Kt
         CounterObject.maxSpawnedEnemies= 1024
         storyManager.addStories(*StoryHelper.baseStories)
         storyManager.addStory(StoryHelper.basicStory)
-        return GridMapGenerator.generateFromDefintion(TextGridMapDefinition.levelTwo)
+        MapLoader.saveMap(NewMaps.levelTwo) //One-off
+        return GridMapGenerator.generateFromMapFile(NewMaps.levelTwo)
     }
 
     private fun loadMapThree(): Pair<Map<Coordinate, GridMapSection>, TileGraph>  {
