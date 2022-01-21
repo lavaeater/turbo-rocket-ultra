@@ -37,10 +37,9 @@ data class MapFile(val name: String, val startMessage: String, val successMessag
 }
 
 object MapLoader {
-    fun loadMap(fileName: String) : MapFile {
+    fun loadMap(fileName: String): MapFile {
         val jsonString = Gdx.files.local(fileName).readString()
-        val mapFile = Json.decodeFromString<MapFile>(jsonString)
-        return mapFile
+        return Json.decodeFromString(jsonString)
     }
 
     fun saveMap(mapFile: MapFile)  {
