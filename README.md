@@ -40,6 +40,10 @@ It also appears that the mouse position thing was so low hanging that I had alre
 - [ ] Puzzle obstacles / machines
 - [ ] Oblique Projection
 
+## Build Towers
+Well, we basically have towers, we basically can build them, this is about making that feature happen and having at least two or three types of towers with nice sprites that we can build and that do different things.
+
+
 ## Text Crawl
 This could be combined with the transition concept. Here's what I want to do:
 - [x] Show a dialog or crawl with paused game before level starts (what to do etc)
@@ -117,9 +121,6 @@ This is what categorizes as a FUN task, it should be FUN! But it also requires l
 
 ### Vehicles
 This is like the holy grail of features. This is what all this started with, the entire game. So, players enter vehicles, control different parts of the vehicle etc. This could be combined with the concept "moving level" where the players are on a platform that is moving through some kind of river / level somehow.
-
-### Build Towers
-Well, we basically have towers, we basically can build them, this is about making that feature happen and having at least two or three types of towers with nice sprites that we can build and that do different things.
 
 ### Gibs and Body Parts II - blood trails and audio
 What it sounds like. I want smeared blood and a cool sound effect to go with it.
@@ -964,11 +965,11 @@ Det här gör vi på det gamla vanliga sättet. Vi bygger en box2d-värld, vi kl
 
 Oj oj oj,  vad roligt. Vi kan göra en box2d-kropp med leder, per tutorials etc. Superkul ju.
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbLTE1MzM4ODQ3MDcsLTQ0MzQwMzUyMiwtMj
-E5NDU5Mzc2LDEzMTkzMzE0MzgsLTE4ODYyNzE2NDIsMjEwMDgw
-Mzg1Miw1NTMyNDQ5ODMsMjA1MDMwMTYwMywtMTU4MTI3Mjc0Ni
-wtMTQ5NjI1NjUxNywtMTYyNDY2NTI2MSwtMTM2NDgxNjg5Myw0
-MTg3ODE2MjMsLTE0Mzg2MDgyNDksLTYzMzk3MDI2NCwtMTgzOT
-UxODI3MCwtMTE0NTM4MzE0MiwtNTMwNTgxODk2LDE1NDg2NDcz
-NjgsLTU5NzIzODQ5Nl19
+eyJoaXN0b3J5IjpbNzIwNTg0OTIsLTQ0MzQwMzUyMiwtMjE5ND
+U5Mzc2LDEzMTkzMzE0MzgsLTE4ODYyNzE2NDIsMjEwMDgwMzg1
+Miw1NTMyNDQ5ODMsMjA1MDMwMTYwMywtMTU4MTI3Mjc0NiwtMT
+Q5NjI1NjUxNywtMTYyNDY2NTI2MSwtMTM2NDgxNjg5Myw0MTg3
+ODE2MjMsLTE0Mzg2MDgyNDksLTYzMzk3MDI2NCwtMTgzOTUxOD
+I3MCwtMTE0NTM4MzE0MiwtNTMwNTgxODk2LDE1NDg2NDczNjgs
+LTU5NzIzODQ5Nl19
 -->
