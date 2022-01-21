@@ -43,6 +43,7 @@ It also appears that the mouse position thing was so low hanging that I had alre
 ## Build Towers
 Well, we basically have towers, we basically can build them, this is about making that feature happen and having at least two or three types of towers with nice sprites that we can build and that do different things.
 
+First, we do inventory of what we actually have.
 
 ## Text Crawl
 This could be combined with the transition concept. Here's what I want to do:
@@ -965,11 +966,11 @@ Det här gör vi på det gamla vanliga sättet. Vi bygger en box2d-värld, vi kl
 
 Oj oj oj,  vad roligt. Vi kan göra en box2d-kropp med leder, per tutorials etc. Superkul ju.
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbNzIwNTg0OTIsLTQ0MzQwMzUyMiwtMjE5ND
-U5Mzc2LDEzMTkzMzE0MzgsLTE4ODYyNzE2NDIsMjEwMDgwMzg1
-Miw1NTMyNDQ5ODMsMjA1MDMwMTYwMywtMTU4MTI3Mjc0NiwtMT
-Q5NjI1NjUxNywtMTYyNDY2NTI2MSwtMTM2NDgxNjg5Myw0MTg3
-ODE2MjMsLTE0Mzg2MDgyNDksLTYzMzk3MDI2NCwtMTgzOTUxOD
-I3MCwtMTE0NTM4MzE0MiwtNTMwNTgxODk2LDE1NDg2NDczNjgs
-LTU5NzIzODQ5Nl19
+eyJoaXN0b3J5IjpbMTEwOTI3Mjg1LC00NDM0MDM1MjIsLTIxOT
+Q1OTM3NiwxMzE5MzMxNDM4LC0xODg2MjcxNjQyLDIxMDA4MDM4
+NTIsNTUzMjQ0OTgzLDIwNTAzMDE2MDMsLTE1ODEyNzI3NDYsLT
+E0OTYyNTY1MTcsLTE2MjQ2NjUyNjEsLTEzNjQ4MTY4OTMsNDE4
+NzgxNjIzLC0xNDM4NjA4MjQ5LC02MzM5NzAyNjQsLTE4Mzk1MT
+gyNzAsLTExNDUzODMxNDIsLTUzMDU4MTg5NiwxNTQ4NjQ3MzY4
+LC01OTcyMzg0OTZdfQ==
 -->
