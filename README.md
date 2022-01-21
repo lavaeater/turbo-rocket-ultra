@@ -51,7 +51,6 @@ For instance, previously we worked under the assumption that pausing would be it
 
 It's like there are all these different ways of doing things. Like, I can actually control the game using my *Story* concept, which allows me to create rules and apply consequences. I have done some alterations to that because, well, it only cared about one story before and that might be wrong, I don't know...
 
-
 ## Transitions
 It uses nested framebuffers and a separate SpriteBatch (instead of generic batch) so I couldn't make myself bother. Will try something else instead. Maybe I will simply clone his project and update the code and rewrite it in Kotlin.
 
@@ -964,11 +963,11 @@ Det här gör vi på det gamla vanliga sättet. Vi bygger en box2d-värld, vi kl
 
 Oj oj oj,  vad roligt. Vi kan göra en box2d-kropp med leder, per tutorials etc. Superkul ju.
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbLTIxOTQ1OTM3NiwxMzE5MzMxNDM4LC0xOD
-g2MjcxNjQyLDIxMDA4MDM4NTIsNTUzMjQ0OTgzLDIwNTAzMDE2
-MDMsLTE1ODEyNzI3NDYsLTE0OTYyNTY1MTcsLTE2MjQ2NjUyNj
-EsLTEzNjQ4MTY4OTMsNDE4NzgxNjIzLC0xNDM4NjA4MjQ5LC02
-MzM5NzAyNjQsLTE4Mzk1MTgyNzAsLTExNDUzODMxNDIsLTUzMD
-U4MTg5NiwxNTQ4NjQ3MzY4LC01OTcyMzg0OTYsMTg1MTE0MjU1
-MCwtNTY3OTUwNzI0XX0=
+eyJoaXN0b3J5IjpbLTQ0MzQwMzUyMiwtMjE5NDU5Mzc2LDEzMT
+kzMzE0MzgsLTE4ODYyNzE2NDIsMjEwMDgwMzg1Miw1NTMyNDQ5
+ODMsMjA1MDMwMTYwMywtMTU4MTI3Mjc0NiwtMTQ5NjI1NjUxNy
+wtMTYyNDY2NTI2MSwtMTM2NDgxNjg5Myw0MTg3ODE2MjMsLTE0
+Mzg2MDgyNDksLTYzMzk3MDI2NCwtMTgzOTUxODI3MCwtMTE0NT
+M4MzE0MiwtNTMwNTgxODk2LDE1NDg2NDczNjgsLTU5NzIzODQ5
+NiwxODUxMTQyNTUwXX0=
 -->
