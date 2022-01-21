@@ -13,8 +13,8 @@ I have now prioritized this list according to how much I think it adds to the ga
 It also appears that the mouse position thing was so low hanging that I had already fixed it.
 
 - [ ] Build Towers
-- [x] Text Crawl
 - [ ] Fix some warnings
+- [x] Text Crawl
 - [x] Add explosion particle effect to grenade collision
 - [x] Fix mouse position by polling position instead of event-driven system
 - [x] Flip weapon sprites when facing west
@@ -964,11 +964,11 @@ Det här gör vi på det gamla vanliga sättet. Vi bygger en box2d-värld, vi kl
 
 Oj oj oj,  vad roligt. Vi kan göra en box2d-kropp med leder, per tutorials etc. Superkul ju.
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbMzgzODM4Nzk1LC00NDM0MDM1MjIsLTIxOT
-Q1OTM3NiwxMzE5MzMxNDM4LC0xODg2MjcxNjQyLDIxMDA4MDM4
-NTIsNTUzMjQ0OTgzLDIwNTAzMDE2MDMsLTE1ODEyNzI3NDYsLT
-E0OTYyNTY1MTcsLTE2MjQ2NjUyNjEsLTEzNjQ4MTY4OTMsNDE4
-NzgxNjIzLC0xNDM4NjA4MjQ5LC02MzM5NzAyNjQsLTE4Mzk1MT
-gyNzAsLTExNDUzODMxNDIsLTUzMDU4MTg5NiwxNTQ4NjQ3MzY4
-LC01OTcyMzg0OTZdfQ==
+eyJoaXN0b3J5IjpbLTE1MzM4ODQ3MDcsLTQ0MzQwMzUyMiwtMj
+E5NDU5Mzc2LDEzMTkzMzE0MzgsLTE4ODYyNzE2NDIsMjEwMDgw
+Mzg1Miw1NTMyNDQ5ODMsMjA1MDMwMTYwMywtMTU4MTI3Mjc0Ni
+wtMTQ5NjI1NjUxNywtMTYyNDY2NTI2MSwtMTM2NDgxNjg5Myw0
+MTg3ODE2MjMsLTE0Mzg2MDgyNDksLTYzMzk3MDI2NCwtMTgzOT
+UxODI3MCwtMTE0NTM4MzE0MiwtNTMwNTgxODk2LDE1NDg2NDcz
+NjgsLTU5NzIzODQ5Nl19
 -->
