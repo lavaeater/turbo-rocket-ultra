@@ -1,5 +1,8 @@
 # turbo-rocket-ultra
 
+## Friday the 21st of January
+
+
 ## Tuesday the 21st of december
 So, I am hesitating when it comes to the oblique projection work. I think it has to be something done in the background, so I will simply decide on a thing to do, for instance half all heights on box2d static bodies in the game (all characters have passable top halves, so they are good so far) and thereby shrinking the maps. But I also have to change all tiles etc, I think I could be well off sitting for 24 hours straight with this and perhaps then I would like to rework some other stuff. I don't know what to do. I will explore the todo-list and see what jumps out, and add things that I come up with.
 
@@ -9,14 +12,14 @@ I have now prioritized this list according to how much I think it adds to the ga
 
 It also appears that the mouse position thing was so low hanging that I had already fixed it.
 
+- [ ] Text Crawl
+- [ ] Build Towers
+- [ ] Fix some warnings
 - [x] Add explosion particle effect to grenade collision
 - [x] Fix mouse position by polling position instead of event-driven system
 - [x] Flip weapon sprites when facing west
 - [x] Soundscape II - the Moaning
 - [x] Objectives II, the sequel
-- [ ] Text Crawl
-- [ ] Build Towers
-- [ ] Fix some warnings
 --------
 - [ ] Transitions schmanzitions
 - [ ] Enemy AI II, with avoiding walls
@@ -958,11 +961,11 @@ Det här gör vi på det gamla vanliga sättet. Vi bygger en box2d-värld, vi kl
 
 Oj oj oj,  vad roligt. Vi kan göra en box2d-kropp med leder, per tutorials etc. Superkul ju.
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbMzY2NTEyMTUyLDEzMTkzMzE0MzgsLTE4OD
-YyNzE2NDIsMjEwMDgwMzg1Miw1NTMyNDQ5ODMsMjA1MDMwMTYw
-MywtMTU4MTI3Mjc0NiwtMTQ5NjI1NjUxNywtMTYyNDY2NTI2MS
-wtMTM2NDgxNjg5Myw0MTg3ODE2MjMsLTE0Mzg2MDgyNDksLTYz
-Mzk3MDI2NCwtMTgzOTUxODI3MCwtMTE0NTM4MzE0MiwtNTMwNT
-gxODk2LDE1NDg2NDczNjgsLTU5NzIzODQ5NiwxODUxMTQyNTUw
-LC01Njc5NTA3MjRdfQ==
+eyJoaXN0b3J5IjpbMTU4NDE2MjU0MSwxMzE5MzMxNDM4LC0xOD
+g2MjcxNjQyLDIxMDA4MDM4NTIsNTUzMjQ0OTgzLDIwNTAzMDE2
+MDMsLTE1ODEyNzI3NDYsLTE0OTYyNTY1MTcsLTE2MjQ2NjUyNj
+EsLTEzNjQ4MTY4OTMsNDE4NzgxNjIzLC0xNDM4NjA4MjQ5LC02
+MzM5NzAyNjQsLTE4Mzk1MTgyNzAsLTExNDUzODMxNDIsLTUzMD
+U4MTg5NiwxNTQ4NjQ3MzY4LC01OTcyMzg0OTYsMTg1MTE0MjU1
+MCwtNTY3OTUwNzI0XX0=
 -->
