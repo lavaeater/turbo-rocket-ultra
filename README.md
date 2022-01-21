@@ -12,9 +12,9 @@ I have now prioritized this list according to how much I think it adds to the ga
 
 It also appears that the mouse position thing was so low hanging that I had already fixed it.
 
-- [ ] Text Crawl
 - [ ] Build Towers
 - [ ] Fix some warnings
+- [x] Text Crawl
 - [x] Add explosion particle effect to grenade collision
 - [x] Fix mouse position by polling position instead of event-driven system
 - [x] Flip weapon sprites when facing west
@@ -22,6 +22,7 @@ It also appears that the mouse position thing was so low hanging that I had alre
 - [x] Objectives II, the sequel
 --------
 - [ ] Transitions schmanzitions
+- [ ] Text Crawl II - with templates for stats and stuff
 - [ ] Enemy AI II, with avoiding walls
 - [ ] Objectives III - now with players all over the map
 - [ ] Split Screen
@@ -39,11 +40,16 @@ It also appears that the mouse position thing was so low hanging that I had alre
 - [ ] Puzzle obstacles / machines
 - [ ] Oblique Projection
 
+## Build Towers
+Well, we basically have towers, we basically can build them, this is about making that feature happen and having at least two or three types of towers with nice sprites that we can build and that do different things.
+
+First, we do inventory of what we actually have.
+
 ## Text Crawl
 This could be combined with the transition concept. Here's what I want to do:
-- [ ] Show a dialog or crawl with paused game before level starts (what to do etc)
-- [ ] A working pause mode
-- [ ] Pause game when level is done and show stats or something
+- [x] Show a dialog or crawl with paused game before level starts (what to do etc)
+- [x] A working pause mode
+- [x] Pause game when level is done and show end-of-level text
 
 More thoughts: there is more to this than meets the eye. It comes down to a few very important points, namely: how do we do these things? How do we control the flow of the game, the exchange of information in the game and where is this information stored. Right now, it is something of a "hot mess", but that is to be expected. This particular feature shines a light on a deficiency of the game and changes need to be made.
 
@@ -116,9 +122,6 @@ This is what categorizes as a FUN task, it should be FUN! But it also requires l
 
 ### Vehicles
 This is like the holy grail of features. This is what all this started with, the entire game. So, players enter vehicles, control different parts of the vehicle etc. This could be combined with the concept "moving level" where the players are on a platform that is moving through some kind of river / level somehow.
-
-### Build Towers
-Well, we basically have towers, we basically can build them, this is about making that feature happen and having at least two or three types of towers with nice sprites that we can build and that do different things.
 
 ### Gibs and Body Parts II - blood trails and audio
 What it sounds like. I want smeared blood and a cool sound effect to go with it.
@@ -963,11 +966,11 @@ Det här gör vi på det gamla vanliga sättet. Vi bygger en box2d-värld, vi kl
 
 Oj oj oj,  vad roligt. Vi kan göra en box2d-kropp med leder, per tutorials etc. Superkul ju.
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbLTQ0MzQwMzUyMiwtMjE5NDU5Mzc2LDEzMT
-kzMzE0MzgsLTE4ODYyNzE2NDIsMjEwMDgwMzg1Miw1NTMyNDQ5
-ODMsMjA1MDMwMTYwMywtMTU4MTI3Mjc0NiwtMTQ5NjI1NjUxNy
-wtMTYyNDY2NTI2MSwtMTM2NDgxNjg5Myw0MTg3ODE2MjMsLTE0
-Mzg2MDgyNDksLTYzMzk3MDI2NCwtMTgzOTUxODI3MCwtMTE0NT
-M4MzE0MiwtNTMwNTgxODk2LDE1NDg2NDczNjgsLTU5NzIzODQ5
-NiwxODUxMTQyNTUwXX0=
+eyJoaXN0b3J5IjpbMTEwOTI3Mjg1LC00NDM0MDM1MjIsLTIxOT
+Q1OTM3NiwxMzE5MzMxNDM4LC0xODg2MjcxNjQyLDIxMDA4MDM4
+NTIsNTUzMjQ0OTgzLDIwNTAzMDE2MDMsLTE1ODEyNzI3NDYsLT
+E0OTYyNTY1MTcsLTE2MjQ2NjUyNjEsLTEzNjQ4MTY4OTMsNDE4
+NzgxNjIzLC0xNDM4NjA4MjQ5LC02MzM5NzAyNjQsLTE4Mzk1MT
+gyNzAsLTExNDUzODMxNDIsLTUzMDU4MTg5NiwxNTQ4NjQ3MzY4
+LC01OTcyMzg0OTZdfQ==
 -->
