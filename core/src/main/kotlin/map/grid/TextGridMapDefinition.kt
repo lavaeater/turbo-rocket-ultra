@@ -45,7 +45,7 @@ object MapLoader {
 
     fun saveMap(mapFile: MapFile)  {
         val jsonString = Json.encodeToString(mapFile)
-        val fileHandle = Gdx.files.local(mapFile.name)
+        val fileHandle = Gdx.files.local("${mapFile.name.lowercase().toCharArray().filterNot { it.isWhitespace() }.joinToString("")}.json")
         fileHandle.writeString(jsonString, false)
     }
 }

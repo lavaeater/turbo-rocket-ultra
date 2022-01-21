@@ -1,0 +1,7 @@
+{
+  "name": "Level Five",
+  "startMessage": "\nDestroy all the Mutato-Emitters, they are turning these hapless and mindless \n\ncreatures into blood-thirsty monsters craving flesh!\n",
+  "successMessage": "\nWell done.\n\nWe are all very pleased with your performance, keep this up and you will notice\n\nour pleasure on your paycheck.\n",
+  "failMessage": "Awww, that didn't go to well\nNot to worry, you will have more opportunities",
+  "mapFile": "maps/level-5.png"
+}

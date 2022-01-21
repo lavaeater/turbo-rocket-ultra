@@ -111,8 +111,7 @@ class GameScreen(private val gameState: StateMachine<GameState, GameEvent>) : Kt
 
         storyManager.addStories(*StoryHelper.baseStories)
         storyManager.addStory(StoryHelper.enemyKillCountStory)
-        MapLoader.saveMap(NewMaps.levelOne) //One-off
-        return GridMapGenerator.generateFromMapFile(NewMaps.levelOne)
+        return GridMapGenerator.generateFromMapFile(MapLoader.loadMap("levelone.json"))
     }
 
     private fun loadMapTwo(): Pair<Map<Coordinate, GridMapSection>, TileGraph>  {
@@ -120,8 +119,7 @@ class GameScreen(private val gameState: StateMachine<GameState, GameEvent>) : Kt
         CounterObject.maxSpawnedEnemies= 1024
         storyManager.addStories(*StoryHelper.baseStories)
         storyManager.addStory(StoryHelper.basicStory)
-        MapLoader.saveMap(NewMaps.levelTwo) //One-off
-        return GridMapGenerator.generateFromMapFile(NewMaps.levelTwo)
+        return GridMapGenerator.generateFromMapFile(MapLoader.loadMap("leveltwo.json"))
     }
 
     private fun loadMapThree(): Pair<Map<Coordinate, GridMapSection>, TileGraph>  {
@@ -130,7 +128,7 @@ class GameScreen(private val gameState: StateMachine<GameState, GameEvent>) : Kt
 
         storyManager.addStories(*StoryHelper.baseStories)
         storyManager.addStory(StoryHelper.basicStory)
-        return GridMapGenerator.generateFromDefintion(TextGridMapDefinition.levelThree)
+        return GridMapGenerator.generateFromMapFile(MapLoader.loadMap("levelthree.json"))
     }
     private fun loadMapFour(): Pair<Map<Coordinate, GridMapSection>, TileGraph>  {
         CounterObject.maxEnemies = 512
@@ -138,7 +136,7 @@ class GameScreen(private val gameState: StateMachine<GameState, GameEvent>) : Kt
 
         storyManager.addStories(*StoryHelper.baseStories)
         storyManager.addStory(StoryHelper.basicStory)
-        return GridMapGenerator.generateFromDefintion(TextGridMapDefinition.levelFour)
+        return GridMapGenerator.generateFromMapFile(MapLoader.loadMap("levelfour.json"))
     }
     /*
     4E4048
