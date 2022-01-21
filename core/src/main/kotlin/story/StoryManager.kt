@@ -56,4 +56,8 @@ class StoryManager {
 //		story.activate()
 		stories.add(story)
 	}
+
+	fun addStories(vararg story: Story) {
+		stories.addAll(story)
+	}
 }

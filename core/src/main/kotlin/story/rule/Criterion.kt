@@ -47,6 +47,12 @@ class Criterion(val key: String, private val matcher: (IFact<*>) -> Boolean) {
       }
     }
 
+    fun moreThanCriterionWithFunction(key:String, value: ()-> Int) : Criterion {
+      return Criterion(key) {
+        (it.value as Int) > value()
+      }
+    }
+
     fun rangeCriterion(key: String, range: IntRange): Criterion {
       return Criterion(key) {
         it.value in range

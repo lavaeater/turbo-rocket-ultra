@@ -109,9 +109,7 @@ class GameScreen(private val gameState: StateMachine<GameState, GameEvent>) : Kt
         CounterObject.maxEnemies = 64
         CounterObject.maxSpawnedEnemies = 1024
 
-        storyManager.addStory(StoryHelper.levelStartStory)
-        storyManager.addStory(StoryHelper.levelCompleteStory)
-        storyManager.addStory(StoryHelper.levelFailedStory)
+        storyManager.addStories(*StoryHelper.baseStories)
         storyManager.addStory(StoryHelper.enemyKillCountStory)
         MapLoader.saveMap(NewMaps.levelOne) //One-off
         return GridMapGenerator.generateFromMapFile(NewMaps.levelOne)
@@ -120,6 +118,7 @@ class GameScreen(private val gameState: StateMachine<GameState, GameEvent>) : Kt
     private fun loadMapTwo(): Pair<Map<Coordinate, GridMapSection>, TileGraph>  {
         CounterObject.maxEnemies = 100
         CounterObject.maxSpawnedEnemies= 1024
+        storyManager.addStories(*StoryHelper.baseStories)
         storyManager.addStory(StoryHelper.basicStory)
         return GridMapGenerator.generateFromDefintion(TextGridMapDefinition.levelTwo)
     }
@@ -128,6 +127,7 @@ class GameScreen(private val gameState: StateMachine<GameState, GameEvent>) : Kt
         CounterObject.maxEnemies = 300
         CounterObject.maxSpawnedEnemies= 1024
 
+        storyManager.addStories(*StoryHelper.baseStories)
         storyManager.addStory(StoryHelper.basicStory)
         return GridMapGenerator.generateFromDefintion(TextGridMapDefinition.levelThree)
     }
@@ -135,6 +135,7 @@ class GameScreen(private val gameState: StateMachine<GameState, GameEvent>) : Kt
         CounterObject.maxEnemies = 512
         CounterObject.maxSpawnedEnemies= 1024
 
+        storyManager.addStories(*StoryHelper.baseStories)
         storyManager.addStory(StoryHelper.basicStory)
         return GridMapGenerator.generateFromDefintion(TextGridMapDefinition.levelFour)
     }
@@ -161,9 +162,6 @@ D1B67A
         ui.update(delta)
         audioPlayer.update(delta)
         storyManager.checkStories()
-
-        if (factsOfTheWorld.getBoolean(Facts.GotoNextLevel))
-            nextLevel()
     }
 
     private val velIters = 8
@@ -208,6 +206,8 @@ D1B67A
 
         ui.resume()
         running = true
+        if (factsOfTheWorld.getBoolean(Facts.GotoNextLevel))
+            nextLevel()
     }
 
     override fun hide() {
@@ -242,6 +242,12 @@ D1B67A
     }
 
     private fun nextLevel() {
+        /*
+        Needs to load the stories for the level, they might all
+        need to be loaded again, which is probably better.
+         */
+
+
         for (player in Players.players.values) {
             player.touchedObjectives.clear()
         }

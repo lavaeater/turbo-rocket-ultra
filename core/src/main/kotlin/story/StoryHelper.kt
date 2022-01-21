@@ -23,7 +23,7 @@ object StoryHelper {
         factsOfTheWorld.stateBoolFact(Facts.LevelFailed, false)
         factsOfTheWorld.stateBoolFact(Facts.BossIsDead, false)
         factsOfTheWorld.stateIntFact(Facts.EnemyKillCount, 0)
-        factsOfTheWorld.stateIntFact(Facts.TargetEnemyKillCount, 50)
+        factsOfTheWorld.stateIntFact(Facts.TargetEnemyKillCount, 10)
         factsOfTheWorld.stateBoolFact(Facts.ShowEnemyKillCount, true)
         factsOfTheWorld.stateBoolFact(Facts.AcceleratingSpawns, false)
         factsOfTheWorld.stateBoolFact(Facts.LevelStarted, false)
@@ -60,7 +60,7 @@ object StoryHelper {
                 equalsCriterion(Facts.LevelStarted, true)
                 consequence {
                     apply = {
-                        factsOfTheWorld.stateBoolFact(Facts.LevelFailed, true)
+                        factsOfTheWorld.stateBoolFact(Facts.GotoNextLevel, true)
                         gameStateMachine.acceptEvent(GameEvent.PausedGame)
                         messageHandler.sendMessage(Message.LevelComplete(factsOfTheWorld.stringForKey(Facts.MapSuccessMessage)))
                     }
@@ -79,7 +79,6 @@ object StoryHelper {
                 equalsCriterion(Facts.LevelStarted, true)
                 consequence {
                     apply = {
-                        factsOfTheWorld.stateBoolFact(Facts.LevelComplete, false)
                         factsOfTheWorld.stateBoolFact(Facts.LevelFailed, true)
                         gameStateMachine.acceptEvent(GameEvent.PausedGame)
                         messageHandler.sendMessage(Message.LevelFailed(factsOfTheWorld.stringForKey(Facts.MapFailMessage)))
@@ -92,7 +91,7 @@ object StoryHelper {
     val levelStartStory by lazy {
         story {
             name = "Game Start Story"
-            neverEnding = false
+            neverEnding = true
             storyBeat {
                 name = "Level Start Rules"
                 equalsCriterion(Facts.LevelStarted, false)
@@ -110,6 +109,7 @@ object StoryHelper {
     }
 
     val enemyKillCountStory by lazy {
+
         story {
             name = "Touch All Objectives and Kill the Boss"
             neverEnding = false
@@ -120,7 +120,7 @@ object StoryHelper {
             }
             storyBeat {
                 name = "Check If Work is Done"
-                moreThanCriterion(Facts.EnemyKillCount, factsOfTheWorld.getIntValue(Facts.TargetEnemyKillCount))
+                moreThanWithFunction(Facts.EnemyKillCount) { factsOfTheWorld.getIntValue(Facts.TargetEnemyKillCount) }
                 consequence {
                     apply = {
                         factsOfTheWorld.stateBoolFact(Facts.LevelComplete, true)
@@ -128,5 +128,8 @@ object StoryHelper {
                 }
             }
         }
+    }
+    val baseStories by lazy {
+        listOf(levelStartStory, levelFailedStory, levelCompleteStory).toTypedArray()
     }
 }
