@@ -49,7 +49,8 @@ More thoughts: there is more to this than meets the eye. It comes down to a few 
 
 For instance, previously we worked under the assumption that pausing would be its own screen, that's not the case right now, I think I like the way it is now much better. We just need to slow down and think about it for a minute or two, away from the code. 
 
-It's like there are all these different ways of doing things. Like, I can actually control the game using my *Story* concept, which allows me to create rules and apply consequences. I have done some alterations to that because, well, it only cared about one story and ao
+It's like there are all these different ways of doing things. Like, I can actually control the game using my *Story* concept, which allows me to create rules and apply consequences. I have done some alterations to that because, well, it only cared about one story before and that might be wrong, I don't know...
+
 
 ## Transitions
 It uses nested framebuffers and a separate SpriteBatch (instead of generic batch) so I couldn't make myself bother. Will try something else instead. Maybe I will simply clone his project and update the code and rewrite it in Kotlin.
@@ -963,11 +964,11 @@ Det här gör vi på det gamla vanliga sättet. Vi bygger en box2d-värld, vi kl
 
 Oj oj oj,  vad roligt. Vi kan göra en box2d-kropp med leder, per tutorials etc. Superkul ju.
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbODM0NDM4Mzc5LDEzMTkzMzE0MzgsLTE4OD
-YyNzE2NDIsMjEwMDgwMzg1Miw1NTMyNDQ5ODMsMjA1MDMwMTYw
-MywtMTU4MTI3Mjc0NiwtMTQ5NjI1NjUxNywtMTYyNDY2NTI2MS
-wtMTM2NDgxNjg5Myw0MTg3ODE2MjMsLTE0Mzg2MDgyNDksLTYz
-Mzk3MDI2NCwtMTgzOTUxODI3MCwtMTE0NTM4MzE0MiwtNTMwNT
-gxODk2LDE1NDg2NDczNjgsLTU5NzIzODQ5NiwxODUxMTQyNTUw
-LC01Njc5NTA3MjRdfQ==
+eyJoaXN0b3J5IjpbLTIxOTQ1OTM3NiwxMzE5MzMxNDM4LC0xOD
+g2MjcxNjQyLDIxMDA4MDM4NTIsNTUzMjQ0OTgzLDIwNTAzMDE2
+MDMsLTE1ODEyNzI3NDYsLTE0OTYyNTY1MTcsLTE2MjQ2NjUyNj
+EsLTEzNjQ4MTY4OTMsNDE4NzgxNjIzLC0xNDM4NjA4MjQ5LC02
+MzM5NzAyNjQsLTE4Mzk1MTgyNzAsLTExNDUzODMxNDIsLTUzMD
+U4MTg5NiwxNTQ4NjQ3MzY4LC01OTcyMzg0OTYsMTg1MTE0MjU1
+MCwtNTY3OTUwNzI0XX0=
 -->
