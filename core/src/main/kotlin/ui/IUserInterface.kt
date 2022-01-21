@@ -12,6 +12,8 @@ interface IUserInterface : Disposable {
   override fun dispose()
   fun clear()
   fun reset()
+  fun pause()
+  fun resume()
   fun runConversation(
     conversation: IConversation,
     function: () -> Unit,
@@ -20,5 +22,6 @@ interface IUserInterface : Disposable {
   ) {
     TODO("Not yet implemented")
   }
+
 
 }

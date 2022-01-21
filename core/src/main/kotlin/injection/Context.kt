@@ -46,7 +46,7 @@ import story.FactsOfTheWorld
 import story.StoryManager
 import ui.Hud
 import ui.IUserInterface
-import ui.MessageHandler
+import messaging.MessageHandler
 
 object Context {
     val context = Context()

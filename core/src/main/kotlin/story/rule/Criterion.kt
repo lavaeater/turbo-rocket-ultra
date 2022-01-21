@@ -20,25 +20,25 @@ class Criterion(val key: String, private val matcher: (IFact<*>) -> Boolean) {
     private val factsOfTheWorld by lazy { inject<FactsOfTheWorld>() }
 
     fun booleanCriterion(key: String, checkFor: Boolean) : Criterion {
-      return Criterion(key, { it.value == checkFor })
+      return Criterion(key) { it.value == checkFor }
     }
 
     fun <T> equalsCriterion(key: String, value: T): Criterion {
-      return Criterion(key, {
+      return Criterion(key) {
         it.value == value
-      })
+      }
     }
 
     fun <T> notEqualsCriterion(key: String, value: T): Criterion {
-      return Criterion(key, {
+      return Criterion(key) {
         it.value != value
-      })
+      }
     }
 
     fun lessThanCriterion(key: String, value: Int) : Criterion {
-      return Criterion(key, {
+      return Criterion(key) {
         (it.value as Int) < value
-      })
+      }
     }
 
     fun moreThanCriterion(key: String, value: Int) : Criterion {
@@ -47,17 +47,23 @@ class Criterion(val key: String, private val matcher: (IFact<*>) -> Boolean) {
       }
     }
 
+    fun moreThanCriterionWithFunction(key:String, value: ()-> Int) : Criterion {
+      return Criterion(key) {
+        (it.value as Int) > value()
+      }
+    }
+
     fun rangeCriterion(key: String, range: IntRange): Criterion {
-      return Criterion(key, {
+      return Criterion(key) {
         it.value in range
-      })
+      }
     }
 
     fun containsCriterion(key: String, value: String) : Criterion {
-      return Criterion(key, {
+      return Criterion(key) {
         val factList = factsOfTheWorld.getFactList(key)
         factList.contains(value)
-      })
+      }
     }
 
     fun listContainsFact(key:String, contextKey:String): Criterion {
@@ -68,22 +74,22 @@ class Criterion(val key: String, private val matcher: (IFact<*>) -> Boolean) {
     }
 
     fun listDoesNotContainFact(key:String, contextKey:String): Criterion {
-      return Criterion(key, {
+      return Criterion(key) {
         val contextValue = factsOfTheWorld.stringForKey(contextKey)
         !factsOfTheWorld.getFactList(key).contains(contextValue)
-      })
+      }
     }
 
     fun context(context: String) : Criterion {
-      return Criterion(Facts.Context, { fact ->
+      return Criterion(Facts.Context) { fact ->
         fact.value == context
-      })
+      }
     }
 
     fun notContainsCriterion(key: String, value: String): Criterion {
-      return Criterion(key, {
+      return Criterion(key) {
         !factsOfTheWorld.getFactList(key).contains(value)
-      })
+      }
     }
   }
 }

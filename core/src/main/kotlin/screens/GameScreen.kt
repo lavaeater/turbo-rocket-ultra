@@ -89,6 +89,13 @@ class GameScreen(private val gameState: StateMachine<GameState, GameEvent>) : Kt
             Assets.music.first().isLooping = true
             Assets.music.first().play()
             storyManager.activate()
+
+            //And then we pause and show intro text, wait for any input at all.
+            //That will be a total pain in the ass
+            /*
+            Maybe
+            How would we want this to work, ideally?
+             */
         }
     }
 
@@ -102,13 +109,16 @@ class GameScreen(private val gameState: StateMachine<GameState, GameEvent>) : Kt
         CounterObject.maxEnemies = 64
         CounterObject.maxSpawnedEnemies = 1024
 
+        storyManager.addStories(*StoryHelper.baseStories)
         storyManager.addStory(StoryHelper.enemyKillCountStory)
-        return GridMapGenerator.generateFromDefintion(TextGridMapDefinition.levelOne)
+        MapLoader.saveMap(NewMaps.levelOne) //One-off
+        return GridMapGenerator.generateFromMapFile(NewMaps.levelOne)
     }
 
     private fun loadMapTwo(): Pair<Map<Coordinate, GridMapSection>, TileGraph>  {
         CounterObject.maxEnemies = 100
         CounterObject.maxSpawnedEnemies= 1024
+        storyManager.addStories(*StoryHelper.baseStories)
         storyManager.addStory(StoryHelper.basicStory)
         return GridMapGenerator.generateFromDefintion(TextGridMapDefinition.levelTwo)
     }
@@ -117,6 +127,7 @@ class GameScreen(private val gameState: StateMachine<GameState, GameEvent>) : Kt
         CounterObject.maxEnemies = 300
         CounterObject.maxSpawnedEnemies= 1024
 
+        storyManager.addStories(*StoryHelper.baseStories)
         storyManager.addStory(StoryHelper.basicStory)
         return GridMapGenerator.generateFromDefintion(TextGridMapDefinition.levelThree)
     }
@@ -124,6 +135,7 @@ class GameScreen(private val gameState: StateMachine<GameState, GameEvent>) : Kt
         CounterObject.maxEnemies = 512
         CounterObject.maxSpawnedEnemies= 1024
 
+        storyManager.addStories(*StoryHelper.baseStories)
         storyManager.addStory(StoryHelper.basicStory)
         return GridMapGenerator.generateFromDefintion(TextGridMapDefinition.levelFour)
     }
@@ -150,9 +162,6 @@ D1B67A
         ui.update(delta)
         audioPlayer.update(delta)
         storyManager.checkStories()
-
-        if (factsOfTheWorld.getBooleanFact(Facts.LevelComplete).value)
-            nextLevel()
     }
 
     private val velIters = 8
@@ -183,6 +192,9 @@ D1B67A
         //Continue to render, though
         engine.getSystem<RenderSystem>().setProcessing(true)
         engine.getSystem<RenderMiniMapSystem>().setProcessing(true)
+
+        ui.pause()
+
         running = false
     }
 
@@ -192,7 +204,10 @@ D1B67A
         for (system in engine.systems)
             system.setProcessing(true)
 
+        ui.resume()
         running = true
+        if (factsOfTheWorld.getBoolean(Facts.GotoNextLevel))
+            nextLevel()
     }
 
     override fun hide() {
@@ -227,6 +242,12 @@ D1B67A
     }
 
     private fun nextLevel() {
+        /*
+        Needs to load the stories for the level, they might all
+        need to be loaded again, which is probably better.
+         */
+
+
         for (player in Players.players.values) {
             player.touchedObjectives.clear()
         }

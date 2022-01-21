@@ -53,6 +53,7 @@ dependencies {
 	api "io.github.libktx:ktx-tiled:$ktxVersion"
 	api "org.jetbrains.kotlin:kotlin-stdlib:$kotlinVersion"
 	api "org.jetbrains.kotlinx:kotlinx-coroutines-core:$kotlinxCoroutinesVersion"
+	api "org.jetbrains.kotlinx:kotlinx-serialization-json:1.3.2"
 	api "space.earlygrey:shapedrawer:$shapeDrawerVersion"
 	api "org.jetbrains.kotlin:kotlin-reflect:$kotlinVersion"
 }

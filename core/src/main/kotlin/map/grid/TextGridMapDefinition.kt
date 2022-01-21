@@ -2,6 +2,8 @@ package map.grid
 
 import com.badlogic.gdx.Gdx
 import com.badlogic.gdx.graphics.Pixmap
+import kotlinx.serialization.*
+import kotlinx.serialization.json.Json
 
 fun convert(imagePath: String): TextGridMapDefinition {
     val pixMap = Pixmap(Gdx.files.internal(imagePath))
@@ -27,6 +29,25 @@ fun convert(imagePath: String): TextGridMapDefinition {
     }
     pixMap.dispose()
     return TextGridMapDefinition(lines)
+}
+
+@Serializable
+data class MapFile(val name: String, val startMessage: String, val successMessage: String, val failMessage: String, val mapFile: String) {
+    val mapDefinition by lazy { convert(mapFile) }
+}
+
+object MapLoader {
+    fun loadMap(fileName: String) : MapFile {
+        val jsonString = Gdx.files.local(fileName).readString()
+        val mapFile = Json.decodeFromString<MapFile>(jsonString)
+        return mapFile
+    }
+
+    fun saveMap(mapFile: MapFile)  {
+        val jsonString = Json.encodeToString(mapFile)
+        val fileHandle = Gdx.files.local(mapFile.name)
+        fileHandle.writeString(jsonString, false)
+    }
 }
 
 class TextGridMapDefinition(val def: List<String>) : IGridMapDefinition {
@@ -80,3 +101,25 @@ class TextGridMapDefinition(val def: List<String>) : IGridMapDefinition {
         val levelFour by lazy { convert("maps/level-4.png") }
     }
 }
+
+object NewMaps {
+    val levelOne by lazy {
+        MapFile("Level One", """
+            This is the first map
+            It will be a harsh mistress
+        """.trimIndent(),
+        """
+            You managed to do what no one has done before you
+            You will now move on to the next level
+        """.trimIndent(),
+        """
+            Awww, that didn't go to well
+            Not to worry, you will have more opportunities
+        """.trimIndent(),
+            "maps/level-one.png")
+    }
+    fun saveMap(mapFile: MapFile) {
+        MapLoader.saveMap(mapFile)
+    }
+}
+

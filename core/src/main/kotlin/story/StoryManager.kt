@@ -14,7 +14,7 @@ class StoryManager {
 		val matchingStories = stories.filter {
 			it.active &&
 					factsOfTheWorld.storyMatches(it) }
-				.sortedByDescending { it.matchingRule?.criteriaCount } //just grab the first active story - null  check later
+				.sortedByDescending { it.matchingRule?.criteriaCount } //Grab the ones with the most criteria first
 
 		/*
 		Consequences MUST be self-contained, I realize this now
@@ -28,22 +28,21 @@ class StoryManager {
 		I think some kind of simple callback mechanism to do one story at a time,
 		somehow. So to begin with we do "more complicated story first" if there are more than one!
 		 */
-		var story = matchingStories.firstOrNull()
-		if(story != null) {
-
-			val rule = factsOfTheWorld.rulesThatPass(story.rules.toSet()).firstOrNull()
-			if (rule != null) {
-				rule.consequence.apply()
-				story.finishedRules.add(rule.name)
-			}
-			if (story.storyFinished) {
-				//A story sets its own finished state when it's done
-				finishedStories.add(story)
-				story.consequence.apply()
-				if(!story.neverEnding)
-					stories.remove(story)
-				else
-					story.reset()
+		for(story in matchingStories) {
+			for(rule in factsOfTheWorld.rulesThatPass(story.rules.toSet())) {
+				if (rule != null) {
+					rule.consequence.apply()
+					story.finishedRules.add(rule.name)
+				}
+				if (story.storyFinished) {
+					//A story sets its own finished state when it's done
+					finishedStories.add(story)
+					story.consequence.apply()
+					if (!story.neverEnding)
+						stories.remove(story)
+					else
+						story.reset()
+				}
 			}
 		}
 	}
@@ -56,5 +55,9 @@ class StoryManager {
 	fun addStory(story: Story) {
 //		story.activate()
 		stories.add(story)
+	}
+
+	fun addStories(vararg story: Story) {
+		stories.addAll(story)
 	}
 }

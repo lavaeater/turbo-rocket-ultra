@@ -7,6 +7,8 @@ import ktx.app.KtxScreen
 import ktx.inject.register
 import screens.*
 import statemachine.StateMachine
+import story.StoryHelper.factsOfTheWorld
+import story.fact.Facts
 import tru.Assets
 
 class MainGame : KtxGame<KtxScreen>() {
@@ -59,8 +61,10 @@ class MainGame : KtxGame<KtxScreen>() {
     }
 
     private fun resetPlayers() {
+        factsOfTheWorld.stateIntFact(Facts.LivingPlayerCount, 0)
         for (player in Players.players.values) {
             player.reset()
+            factsOfTheWorld.addToIntFact(Facts.LivingPlayerCount, 1)
         }
     }
 
