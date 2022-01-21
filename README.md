@@ -42,8 +42,10 @@ This could be combined with the transition concept. Here's what I want to do:
 - [ ] A working pause mode
 - [ ] Pause game when level is done and show stats or something
 
+More thoughts: there is more to this than meets the eye. It comes down to a few
+
 ### Transitions
-It uses nested framebuffers and a separate SpriteBatch (instead of generic batch) so I couldn't make myself bother. Will try something else instead.
+It uses nested framebuffers and a separate SpriteBatch (instead of generic batch) so I couldn't make myself bother. Will try something else instead. Maybe I will simply clone his project and update the code and rewrite it in Kotlin.
 
 ### Objectives II - Quirkier
 Examples: Kill n enemies. Hold an area for n minutes. Come up with something really fun, oooh, I got it, every player has to be in a separate place at the same time!
@@ -954,11 +956,11 @@ Det här gör vi på det gamla vanliga sättet. Vi bygger en box2d-värld, vi kl
 
 Oj oj oj,  vad roligt. Vi kan göra en box2d-kropp med leder, per tutorials etc. Superkul ju.
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbMTMxOTMzMTQzOCwtMTg4NjI3MTY0MiwyMT
-AwODAzODUyLDU1MzI0NDk4MywyMDUwMzAxNjAzLC0xNTgxMjcy
-NzQ2LC0xNDk2MjU2NTE3LC0xNjI0NjY1MjYxLC0xMzY0ODE2OD
-kzLDQxODc4MTYyMywtMTQzODYwODI0OSwtNjMzOTcwMjY0LC0x
-ODM5NTE4MjcwLC0xMTQ1MzgzMTQyLC01MzA1ODE4OTYsMTU0OD
-Y0NzM2OCwtNTk3MjM4NDk2LDE4NTExNDI1NTAsLTU2Nzk1MDcy
-NCwtMzQ1ODQyNjUyXX0=
+eyJoaXN0b3J5IjpbMTMwMzQyODY5NSwxMzE5MzMxNDM4LC0xOD
+g2MjcxNjQyLDIxMDA4MDM4NTIsNTUzMjQ0OTgzLDIwNTAzMDE2
+MDMsLTE1ODEyNzI3NDYsLTE0OTYyNTY1MTcsLTE2MjQ2NjUyNj
+EsLTEzNjQ4MTY4OTMsNDE4NzgxNjIzLC0xNDM4NjA4MjQ5LC02
+MzM5NzAyNjQsLTE4Mzk1MTgyNzAsLTExNDUzODMxNDIsLTUzMD
+U4MTg5NiwxNTQ4NjQ3MzY4LC01OTcyMzg0OTYsMTg1MTE0MjU1
+MCwtNTY3OTUwNzI0XX0=
 -->
