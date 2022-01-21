@@ -42,7 +42,9 @@ This could be combined with the transition concept. Here's what I want to do:
 - [ ] A working pause mode
 - [ ] Pause game when level is done and show stats or something
 
-More thoughts: there is more to this than meets the eye. It comes down to a few
+More thoughts: there is more to this than meets the eye. It comes down to a few very important points, namely: how do we do these things? How do we control the flow of the game, the exchange of information in the game and where is this information stored. Right now, it is something of a "hot mess", but that is to be expected. This particular feature shines a light on a deficiency of the game and changes need to be made.
+
+For instance, previousl
 
 ### Transitions
 It uses nested framebuffers and a separate SpriteBatch (instead of generic batch) so I couldn't make myself bother. Will try something else instead. Maybe I will simply clone his project and update the code and rewrite it in Kotlin.
@@ -956,7 +958,7 @@ Det här gör vi på det gamla vanliga sättet. Vi bygger en box2d-värld, vi kl
 
 Oj oj oj,  vad roligt. Vi kan göra en box2d-kropp med leder, per tutorials etc. Superkul ju.
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbMTMwMzQyODY5NSwxMzE5MzMxNDM4LC0xOD
+eyJoaXN0b3J5IjpbLTcxNzcxOTk4MywxMzE5MzMxNDM4LC0xOD
 g2MjcxNjQyLDIxMDA4MDM4NTIsNTUzMjQ0OTgzLDIwNTAzMDE2
 MDMsLTE1ODEyNzI3NDYsLTE0OTYyNTY1MTcsLTE2MjQ2NjUyNj
 EsLTEzNjQ4MTY4OTMsNDE4NzgxNjIzLC0xNDM4NjA4MjQ5LC02
