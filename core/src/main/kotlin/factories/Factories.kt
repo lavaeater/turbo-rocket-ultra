@@ -311,6 +311,16 @@ fun bodyForSprite(
     return box2dBody
 }
 
+fun buildCursor(): Entity {
+    val entity = engine().entity {
+        with<TransformComponent>()
+        with<SpriteComponent> {
+            layer = 2
+        }
+    }
+    return entity
+ }
+
 fun player(player: Player, mapper: ControlMapper, at: Vector2, debug: Boolean) {
     /*
     The player should be two bodies, one for collision detection for

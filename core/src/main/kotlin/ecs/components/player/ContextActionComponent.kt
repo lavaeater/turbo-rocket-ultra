@@ -1,6 +1,7 @@
 package ecs.components.player
 
 import com.badlogic.ashley.core.Component
+import com.badlogic.ashley.core.Entity
 import com.badlogic.gdx.graphics.g2d.Sprite
 import com.badlogic.gdx.math.Vector2
 import com.badlogic.gdx.utils.Pool
@@ -28,8 +29,12 @@ sealed class Buildable(val name: String, val sprite: Sprite) {
 
 class BuildComponent: Component, Pool.Poolable {
     val buildables = selectedItemListOf(Buildable.Blockade, Buildable.MachineGunTower)
+    var isInBuildMode = false
+    var buildCursorEntity: Entity? = null
     override fun reset() {
         buildables.clear()
+        buildCursorEntity = null
+        isInBuildMode = false
     }
 }
 

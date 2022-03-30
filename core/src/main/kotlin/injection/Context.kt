@@ -148,8 +148,8 @@ object Context {
             addSystem(GibSystem())
             addSystem(FactSystem())
             addSystem(FrustumCullingSystem())
-            addSystem(BuildSystem(false))
-            addSystem(AnchorPointTransformationSystem(false))
+            addSystem(BuildSystem(true))
+            addSystem(AnchorPointTransformationSystem(true))
             addSystem(ComplexActionSystem())
         }
     }
