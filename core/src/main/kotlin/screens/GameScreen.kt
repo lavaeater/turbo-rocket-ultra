@@ -102,7 +102,7 @@ class GameScreen(private val gameState: StateMachine<GameState, GameEvent>) : Kt
     private fun loadMapZero() : Pair<Map<Coordinate, GridMapSection>, TileGraph> {
         CounterObject.maxEnemies = 0
         CounterObject.maxSpawnedEnemies = 0
-        return GridMapGenerator.generateFromDefintion(TextGridMapDefinition.levelZero, true)
+        return GridMapGenerator.generateFromMapFile(MapLoader.loadMap("levelzero.json"))
     }
 
     private fun loadMapOne() : Pair<Map<Coordinate, GridMapSection>, TileGraph> {
@@ -303,7 +303,7 @@ D1B67A
         CounterObject.maxEnemies =  (8f.pow(CounterObject.currentLevel).roundToInt() * 2).coerceAtMost(MAX_ENEMIES)
         CounterObject.maxSpawnedEnemies = CounterObject.maxEnemies * 2
         val map = when(level) {
-            1 -> loadMapOne()
+            1 -> loadMapZero()//loadMapOne()
             2 -> loadMapTwo()
             3 -> loadMapThree()
             4 -> loadMapFour()
