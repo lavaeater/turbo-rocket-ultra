@@ -1,96 +1,110 @@
-# turbo-rocket-ultra
+# The total Log of things that are Done
+## Transitions
+It uses nested framebuffers and a separate SpriteBatch (instead of generic batch) so I couldn't make myself bother. Will try something else instead. Maybe I will simply clone his project and update the code and rewrite it in Kotlin.
 
-## Wednesday the 30th of March
-So, it's been a while. Why? Well, sometimes things don't get done. I have had a lot of other things to do, moving into a new house and stuff. But now I feel a fire burning, burning in my soul.
-I will get to work on something in the game. I will try to choose it carefully and try to organize my work properly. The top priority that I list consistently is [[Build Towers]], for some reason. It seems I really want that - but it seems like it's hard to get off the ground. I wonder why? I think I get stuck on the graphics, the design of the feature, what towers to use, etc. So, the solution to that dilemma is to reduce it, reduce reduce. Get that feature to be as small as possible. To do that we first have to figure out what we already have, then what is missing to call the feature DONE. This will be documented under the feature itself.
+### Objectives II - Quirkier
+Examples: Kill n enemies. Hold an area for n minutes. Come up with something really fun, oooh, I got it, every player has to be in a separate place at the same time!
+- [x] Kill n enemies
+- [x] Hold area for n seconds 
+- [ ] All players in different place at the same time
 
-## Tuesday the 21st of december
-So, I am hesitating when it comes to the oblique projection work. I think it has to be something done in the background, so I will simply decide on a thing to do, for instance half all heights on box2d static bodies in the game (all characters have passable top halves, so they are good so far) and thereby shrinking the maps. But I also have to change all tiles etc, I think I could be well off sitting for 24 hours straight with this and perhaps then I would like to rework some other stuff. I don't know what to do. I will explore the todo-list and see what jumps out, and add things that I come up with.
+#### Kill N Enemies
+This could be saved in some kind of setting for the map or something (check the story stuff). However, we also want to be able to add rules making spawning go faster and faster for this, would be real cool.
 
-Write a short text of what each does and so on.
+#### Hold an area for n seconds
+So, a timer starts counting down, or a progress bar starts going up or whatever, like in Helldivers, and at the same time the spawners go haywire and spawn lots of enemies, perhaps in waves? So, like they spawn one per update for 10 updates, or stuff like that. Some cool settings for each
 
-I have now prioritized this list according to how much I think it adds to the games polish and / or value, then how fun it would be to actually implement (this is supposed to be fun) and then taking into account the effort I think would be involved. I will now simply do them from top to bottom until I get to the line below, then I will re-evaluate everything.
+#### Different places
+Slightly harder, but not that hard. Every player has to go to some specific place on the map, could be a cool time to implement split-screen so that the player that is the farthest from the center of the group is split off, temporarily, to enable better controls. This would be so fucking cool I piss my pants. 
 
-It also appears that the mouse position thing was so low hanging that I had already fixed it.
+- [x] Enemy Kill Counter
+- [x] Faster and Faster Spawning
+- [x] Area Hold Timer (when is area not holding? Distance)
+- [x] Area Hold Timer in Map Def
+- [ ] Enemy wave spawning (perhaps ten at a time etc for spawn component)
+- [ ] Dynamic split screen <- coolest feature ever
 
-- [ ] [[Build Towers]]
-- [ ] Fix some warnings
-- [x] [[Text Crawl]]
-- [x] [[Explosion Effect for Grenades]]
-- [x] [[Fix mouse position using polling]]
-- [x] [[Flip weapon sprites when facing east]]
-- [x] [[Soundscape II - the Moaning]]
-- [x] [[Objectives II - Quirkier]]
-- [x] [[Thrown Item Trajectory]]
---------
-- [ ] [[Transitions]]
-- [ ] Text Crawl II - with templates for stats and stuff
-- [ ] Enemy AI II, with avoiding walls
-- [ ] Objectives III - now with players all over the map
-- [ ] Split Screen
-- [ ] Bat swing
-- [ ] HUD II, Header Upper Displayer <- rediscover MVVM pattern, two-way binding
-- [ ] More Enemy Sprites (generate them)
-- [ ] Lightmaps for sprites
-- [ ] Player graphics made from components / parts etc.
-- [ ] Vehicles would be cool
-- [ ] [[Gibs and Body Parts II]]
-- [ ] [[Zombies throwing projectiles]]
-- [ ] [[New Enemies]]
-- [ ] [[Zombies with guns]] <- this would be genuinely cool, actually
-- [ ] [[Nicer Setup UI]], using Scene2d perhaps
-- [ ] [[Puzzle obstacles]]
+### Soundscape II - the Moaning
+To make audio effects working nicely, we need a way of controlling how many are playing at any one time, their duration, and queueing. I have managed to implement some of these things, but we need a few more.
+- [x] Debug View for Audio Channels
+
+#### Debug View For Audio Channels
+This should be simple - just add some properties to channel, like name, name of sound being played, if it is played. Should be easy enough.
 
 
-## Things that are done or not
-[[Text Crawl]]
+So, some ambient sound effects, some zombie sound effects, explosions, screaming, burning, etc.
+Make a list of sound effects that we absolutely need and then tick them off as you find them
+- [ ] Shuffling feet
+- [ ] Screaming Boss
+- [ ] Zombie being spawned
+- [ ] Objective Reached
+- [x] Magazine empty - is now one-liner
+- [x] Cool one-liners said by players
+- [x] Burning flames
+- [x] Gasoline explosion
+- [x] Grenade impact
+- [x] Limbs being torn
+- [x] Screaming, panicky Zombies
+- [x] Moans
 
-[[Transitions]]
+### Hud II
+Make the HUD pretty and useful and legible. Work on more simple databinding stuff and Scene2D extensions etc.
 
-[[Objectives II - Quirkier]]
+### More enemy sprites
+Go back to the character editor and make sure we have access to female bodies as well (only male now for some reason), and also enable generating a bunch of different sprites or variations using it.
 
-[[Kill N Enemies]]
+### Lightmaps for sprites
+To really make use of the box2d light stuff we could use some lightmaps for the sprites. This would take some learning.
 
-[[Hold an area for n seconds]]
+### Enemy AI II
+Make the enemy handle walls and obstacles better. It shouldn't be that hard. In fact, we could make a goddamned A* graph of the entire map space that is passable terrain and that would in fact solve the problem. Or at least make a graph of points that makes sure the enemy does not walk into walls, it could be done. Hey, every section could have a "get valid points"-method. Also, make enemies more aggressive towards players, now they seem to ignore them quite a bit, perhaps sensors are turned off or something.
 
-[[Different places]]
+### Player Graphics
+This is what categorizes as a FUN task, it should be FUN! But it also requires lots of work, mainly in making art happen. Making heads, bodies, hair, stuff like that, and enabling generating characters and sprite sheets from that. Lots of work, but there could be great payoffs in the end.
 
-[[Soundscape II - the Moaning]]
+### Vehicles
+This is like the holy grail of features. This is what all this started with, the entire game. So, players enter vehicles, control different parts of the vehicle etc. This could be combined with the concept "moving level" where the players are on a platform that is moving through some kind of river / level somehow.
 
-[[Hud II]]
+### Gibs and Body Parts II - blood trails and audio
+What it sounds like. I want smeared blood and a cool sound effect to go with it.
 
-[[More enemy sprites]]
+### Flip weapon sprites when facing east
+So, what it sounds like. Should be the lowest hanging fruit of the bunch.
 
-[[Lightmaps for sprites]]
+### Explosion Effect for Grenades
+Take the effect we have added to assets and add it to the game. Would make a world of difference.
 
-[[Enemy AI II]]
+### Zombies throwing projectiles
+Have zombies / enemies throwing projectiles to add to the hectice nature of the game.
 
-[[Player Graphics]]
+### Some other type of enemy
+Running fast dogs, slime crawling about swallowing players, tentacles, why not tentacles? Exploding enemies? Poisonous enemies?
 
-[[Vehicles]]
-
-[[Gibs and Body Parts II]]
-
-[[Flip weapon sprites when facing east]]
-
-[[Explosion Effect for Grenades]]
-
-[[Zombies throwing projectiles]]
-
-[[New Enemies]]
-
-[[Zombies with guns]]
+### Zombies with guns
+Or some other enemy, obviously, but enemies that can shoot back.
 
 ### Bat swing
 The bat swing is all about execution. It is an animation of a box2d object and that seems like a hassle. But it CAN obviously be done. Figure it out, champ!
 
-[[Nicer Setup UI]]
+### Nicer Setup UI, using Scene2d
+So, just make a better setup screen, add icons, texts etc that explains what should happen etc.
 
-[[Fix mouse position using polling]]
+### Fix mouse position using polling
+Well, this might be even lower hanging than the previous fruit mentioned in that context. 
 
-[[Puzzle obstacles]]
+### Puzzle obstacles
+Perhaps stuff where someone has to stand on a button to open a door, whatever. Also add some crushing machines and stuff. 
 
-[[Thrown Item Trajectory]]
+### Oblique Projection
+This might not be as important as I want it to be.
+
+## Not replacing Box2D with JBump
+Whaat? Not for now, at least. I have Box2D working nicely and I'm very happy with performance etc. What I will do now is try to instead work on the 2D / 3D projection of the game - partly because I think that the look and feel of a game is completely central to playability. So, I have thrown items, well, they should fall to the ground. implementing that tiny, tiny feature would make the game look insanely good. Or at least better
+
+So, what do we need to do?
+- [x] Introduce height into transform
+- [x] Feed transform back into the y-coordinate of bodies by using... forces? Impulses? Something like that.
+- [x] Profit
 
 After establishing the profit, we could spend some time on re-working all the textures and sprites of the game, to make the look be more as I want it. This means that every item will be half-height etc.
 
@@ -821,9 +835,6 @@ I am going to try to make some kind of AI-training in all of this. The AI will h
 
 ## Shooting from a platform
 
-
-
-
 ## Walking is different from flying 
 
 A flying ship obviously behaves differently from a walking character. <- did some things on this
@@ -854,42 +865,8 @@ Anyways, the roadmap is this:
 
 The issue is that constructing an AI is a cool thing. But making a game is something else - it needs to be you know, done and stuff like that. 
 
-
-* I am not certain
-
 If I want the multiplayer aspect to work, I should try controller support. But perhaps I want the racing component? Or is it the AI-controlled enemies that I want? Different types of weapons? What should be next?
 
 Next should probably be the feature that requires the least work to make it a "game". So, so far we can fly, we can shoot, but we cannot die, we cannot win. 
 
 So the next feature will be ship collisions.
-
-
-## Alla framsteg KAN ju noteras här?
-
-Hur ska jag egentligen jobba med någonting alls, egentligen? Man måste anteckna så mycket att man kan hoppa tillbaka in i projektet när som helst i någon framtid. Vart man är, vart man är på väg. Anteckningarna ska väcka ens minnen, ens känslor, och ha information så att man kan tekniskt förstå vad som behöver och kan göras.
-
-Så, det här är TurboRaketti Ultra. Eller?
-
-Jag konstaterade efter att vi spelat Lovers in a Dangerous Space Time att det jag mest av allt vill göra är att utveckla ett gameplay. Jag vill göra narrativa spel också, men jag vill också kunna göra actionspel - med kooperativ multiplayer. Det är the name of the game.
-
-Så, jag tänker inte anteckna någonting om en stor roadmap för hela spelet, utan bara börja med det som behövs och bara anteckna det som behövs.
-
-Så, det jag tänker göra härnäst är... 
-
-# WIP - skepp med styrning och framdrivning
-
-## Skjutning
-
-Jag har råkat påbörja och avsluta den grundläggande skjutningen. Poängen här var litegrann att få till riktningen och hastigheten 100% korrekt. Det gör man genom att stanna vid ett givet koncept och verkligen satsa på att få det rätt, innan man går vidare till nästa del. 
-
-## Styrning
-
-Styrning implementeras med en ShipControl-klass som ska agera mellanhand mellan input-system (tangentbord, handkontroll) och kroppen i världen. Vad vi behöver göra härnäst är att ta emot input från tangentbordet, sen handkontroller, om möjligt i linux, förstås.
-
-Styrning är samma sak som att ta input från något vad som helst och göra om det till kommandon eller liknande som t.ex. gasar eller annat på vårat skepp. Vi vill stödja handkontroller såsom Xbox360-kontrollers (fungerar det på linux? Eller, what what? Fan också.), så vi behöver något slags *abstraktion* för kontrollen. 
-
-Vår kontroll ska vara thrust-rotation-baserad. Så spelaren använder någon kontroll för att "gasa" och en annan kontroll för att rotera skeppet med- eller motsols. 
-
-Det här gör vi på det gamla vanliga sättet. Vi bygger en box2d-värld, vi klistrar på texturer på de objekten, allt blir bra. Men hur fungerar det då...
-
-Oj oj oj,  vad roligt. Vi kan göra en box2d-kropp med leder, per tutorials etc. Superkul ju.
