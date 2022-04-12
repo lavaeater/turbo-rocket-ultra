@@ -377,7 +377,6 @@ fun player(player: Player, mapper: ControlMapper, at: Vector2, debug: Boolean) {
         }
         with<BuildComponent>()
     }
-    //TODO: Fix this hot mess
     entity.add(mapper)
     entity.add(PlayerControlComponent(mapper, player))
     box2dBody.userData = entity

@@ -1,9 +1,26 @@
-## Build Towers
+# Build Towers
 Well, we basically have towers, we basically can build them, this is about making that feature happen and having at least two or three types of towers with nice sprites that we can build and that do different things.
+## New thoughts on coupled entities
+It's not entities that are coupled. It is components that describe state. So how does that work? Can we have a component that contains the state of some other entity, to be able to modify said state later? 
+
+### What to do, the plan
+Intents. When the player presses "build", he intends to build something. So we had a component to that entity called IntendsToBuildComponent. 
+When an entity has that component, a system will handle that... no, we will have generic IntentComponent, called 
+`IntendsTo<Build>,
+
+that way we can have a sealed class...
+
+That in turn makes the intentsystem create the necessary entities and components to display build stuff on the screen. Test this track.
+
+The idea of having *one* system that handles intents might have serious limitations, but I'll go with it for now. It's like, this could be "simple intents" or something to that effect, something that helps me set stuff up for more advanced things or something. 
+
 
 First, we do inventory of what we actually have.
-### What we have
+
+## What we have
+
 To do this, we need to run the game.
+
 
 ### Things to do
 #### Render pipeline

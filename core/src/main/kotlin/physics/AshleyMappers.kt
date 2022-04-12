@@ -3,6 +3,7 @@ package physics
 import com.badlogic.ashley.core.Component
 import com.badlogic.ashley.core.ComponentMapper
 import com.badlogic.ashley.core.Entity
+import com.badlogic.gdx.math.Vector2
 import ecs.components.BodyComponent
 import ecs.components.ai.*
 import ecs.components.enemy.EnemyComponent
@@ -16,6 +17,9 @@ import ecs.components.pickups.LootComponent
 import ecs.components.pickups.LootDropComponent
 import ecs.components.player.*
 import ecs.components.AudioComponent
+import ecs.components.intent.IntendsTo
+import ecs.components.intent.IntentComponent
+import ecs.systems.intent.CalculatedPositionComponent
 import ktx.ashley.mapperFor
 import kotlin.reflect.KType
 import kotlin.reflect.typeOf
@@ -74,6 +78,30 @@ object AshleyMappers {
     val build = mapperFor<BuildComponent>()
     val complexAction = mapperFor<ComplexActionComponent>()
     val light = mapperFor<LightComponent>()
+    val intent = mapperFor<IntentComponent>()
+    val calculatedPosition = mapperFor<CalculatedPositionComponent>()
+}
+
+fun Entity.getCalculatedPosition(): Vector2 {
+    return AshleyMappers.calculatedPosition.get(this).calculate()
+}
+
+fun Entity.intendsTo(intendsTo: IntendsTo): Boolean {
+    return this.intent() == intendsTo
+}
+
+fun Entity.hasIntent(): Boolean {
+    return AshleyMappers.intent.has(this)
+}
+
+fun Entity.intent(): IntendsTo {
+    return AshleyMappers.intent.get(this).intendsTo
+}
+
+fun Entity.intendTo(intent: IntendsTo) {
+    this.addComponent<IntentComponent> {
+        intendsTo = intent
+    }
 }
 
 fun Entity.audio(): AudioComponent {
