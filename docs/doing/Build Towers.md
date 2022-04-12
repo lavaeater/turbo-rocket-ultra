@@ -22,3 +22,5 @@ So, what have we done so far?
 
 Well, we have added a new entity and that entity will simply hold a position and a sprite. It should work like a charm!
 
+Or, we'll at least see.
+
