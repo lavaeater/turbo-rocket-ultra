@@ -19,7 +19,7 @@ import ecs.components.player.*
 import ecs.components.AudioComponent
 import ecs.components.intent.IntendsTo
 import ecs.components.intent.IntentComponent
-import ecs.systems.intent.CalculatedPositionComponent
+import ecs.components.intent.CalculatedPositionComponent
 import ktx.ashley.mapperFor
 import kotlin.reflect.KType
 import kotlin.reflect.typeOf

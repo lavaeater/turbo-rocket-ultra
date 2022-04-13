@@ -1,17 +1,14 @@
 package ecs.systems.intent
 
-import com.badlogic.ashley.core.Component
 import com.badlogic.ashley.core.Entity
 import com.badlogic.ashley.systems.IteratingSystem
-import com.badlogic.gdx.math.Vector2
-import com.badlogic.gdx.utils.Pool
 import ecs.components.gameplay.TransformComponent
 import ecs.components.graphics.OnScreenComponent
 import ecs.components.graphics.SpriteComponent
+import ecs.components.intent.CalculatedPositionComponent
 import ecs.components.intent.IntendsTo
 import ecs.components.intent.IntentComponent
 import ecs.components.player.BuildModeComponent
-import ecs.components.player.Buildable
 import ecs.systems.graphics.CompassDirection
 import ecs.systems.tileWorldX
 import ecs.systems.tileWorldY
@@ -19,11 +16,8 @@ import ktx.ashley.allOf
 import ktx.ashley.entity
 import ktx.ashley.remove
 import ktx.ashley.with
-import ktx.math.vec2
-import map.grid.GridMapSection
 import map.grid.GridMapSection.Companion.scaledHeight
 import map.grid.GridMapSection.Companion.scaledWidth
-import map.grid.GridMapSection.Companion.tileScale
 import physics.*
 
 class IntentionSystem: IteratingSystem(allOf(IntentComponent::class).get()) {
@@ -56,8 +50,8 @@ class IntentionSystem: IteratingSystem(allOf(IntentComponent::class).get()) {
                 with<CalculatedPositionComponent> {
                     calculate = {
                         val cursorOffset = CompassDirection.directionOffsets[control.compassDirection]!!
-                        calcPos.x = builderPosition.tileWorldX() + (cursorOffset.x * scaledWidth) + scaledWidth
-                        calcPos.y = builderPosition.tileWorldY() + (cursorOffset.y * scaledHeight) + scaledHeight
+                        calcPos.x = builderPosition.tileWorldX() + (cursorOffset.x * scaledWidth) + scaledWidth / 2
+                        calcPos.y = builderPosition.tileWorldY() + (cursorOffset.y * scaledHeight) + scaledHeight / 2
                         calcPos
                     }
                 }
@@ -69,21 +63,5 @@ class IntentionSystem: IteratingSystem(allOf(IntentComponent::class).get()) {
                 }
             }
         }
-    }
-}
-
-class CalculatedPositionComponent : Component, Pool.Poolable {
-    val calcPos = vec2()
-    var calculate: () -> Vector2 = {Vector2.Zero.cpy()}
-    override fun reset() {
-        calculate = { Vector2.Zero.cpy() }
-        calcPos.setZero()
-    }
-}
-
-class CalculatePositionSystem : IteratingSystem(allOf(CalculatedPositionComponent::class, TransformComponent::class).get()) {
-    override fun processEntity(entity: Entity, deltaTime: Float) {
-        val transform = entity.transform()
-        transform.position.set(entity.getCalculatedPosition())
     }
 }

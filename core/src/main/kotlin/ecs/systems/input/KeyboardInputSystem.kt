@@ -37,8 +37,6 @@ class KeyboardInputSystem :
                 Input.Keys.S -> keyboardControl.thrust = -1f
                 Input.Keys.A -> keyboardControl.turning = -1f
                 Input.Keys.D -> keyboardControl.turning = 1f
-                Input.Keys.SPACE -> if (keyboardControl.isInBuildMode) keyboardControl.buildIfPossible =
-                    true else keyboardControl.doContextAction = true
                 Input.Keys.P -> if (gameState.currentState.state == GameState.Running) gameState.acceptEvent(GameEvent.PausedGame) else gameState.acceptEvent(
                     GameEvent.ResumedGame
                 )
@@ -69,17 +67,22 @@ class KeyboardInputSystem :
                 Input.Keys.S -> keyboardControl.thrust = 0f
                 Input.Keys.A -> keyboardControl.turning = 0f
                 Input.Keys.D -> keyboardControl.turning = 0f
-                Input.Keys.SPACE -> if (keyboardControl.isInBuildMode) keyboardControl.buildIfPossible =
-                    false else keyboardControl.doContextAction = false
                 Input.Keys.R -> keyboardControl.needsReload = true
                 Input.Keys.B -> toggleBuildMode()
                 Input.Keys.LEFT -> keyboardControl.uiControl.left()
                 Input.Keys.RIGHT -> keyboardControl.uiControl.right()
                 Input.Keys.ENTER -> keyboardControl.uiControl.select()
+                Input.Keys.SPACE -> handleSpace()
                 else -> return false
             }
         }
         return true
+    }
+
+    private fun handleSpace() {
+        /*
+        This shouldn't really be implemented here..
+         */
     }
 
     private fun toggleBuildMode() {

@@ -4,7 +4,7 @@ import com.badlogic.ashley.core.Entity
 import com.badlogic.ashley.systems.IteratingSystem
 import ecs.components.graphics.AnimatedCharacterComponent
 import ecs.components.player.PlayerControlComponent
-import ecs.systems.graphics.spriteDirection
+import extensions.spriteDirection
 import ktx.ashley.allOf
 import physics.AshleyMappers
 import tru.SpriteDirection

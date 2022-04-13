@@ -4,14 +4,12 @@ import com.badlogic.ashley.core.Entity
 import com.badlogic.ashley.systems.IteratingSystem
 import com.badlogic.gdx.graphics.Color
 import com.badlogic.gdx.graphics.g2d.PolygonSpriteBatch
-import com.badlogic.gdx.math.Vector2
 import com.badlogic.gdx.physics.box2d.Fixture
 import ecs.components.gameplay.TransformComponent
 import ecs.components.player.PlayerControlComponent
 import ecs.systems.tileWorldX
 import ecs.systems.tileWorldY
 import factories.blockade
-import factories.buildCursor
 import factories.world
 import injection.Context.inject
 import ktx.ashley.allOf
@@ -25,8 +23,6 @@ import map.grid.GridMapSection.Companion.tileScale
 import map.grid.GridMapSection.Companion.tileWidth
 import physics.*
 import tru.Assets
-import tru.SpriteDirection
-
 
 
 //Should render after map, before entities, that's the best...
@@ -150,16 +146,5 @@ class BuildSystem(private val debug: Boolean) : IteratingSystem(
                 }
             }
         }
-    }
-}
-
-fun Vector2.spriteDirection(): SpriteDirection {
-    return when (this.angleDeg()) {
-        in 150f..209f -> SpriteDirection.East
-        in 210f..329f -> SpriteDirection.North
-        in 330f..360f -> SpriteDirection.West
-        in 0f..29f -> SpriteDirection.West
-        in 30f..149f -> SpriteDirection.South
-        else -> SpriteDirection.South
     }
 }
