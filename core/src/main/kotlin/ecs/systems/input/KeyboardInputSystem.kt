@@ -16,7 +16,37 @@ import ktx.app.KtxInputAdapter
 import ktx.ashley.allOf
 import physics.getComponent
 import physics.intendTo
+import physics.isBuilding
 import statemachine.StateMachine
+
+class ActionHandler {
+    /**
+     * Handles spaceBar, for instance
+     */
+    fun next(entity: Entity) {
+        if(entity.isBuilding())
+    }
+
+    fun previous(entity: Entity) {
+
+    }
+
+    /**
+     * Depending on mode, selects something - if in buildMode, it will simply BUILD
+     */
+    fun select(entity: Entity) {
+        if(entity.isBuilding()) {
+            entity.intendTo(IntendsTo.Build)
+        }
+    }
+
+    fun act(entity: Entity) {
+        if(entity.isBuilding()) {
+            entity.intendTo(IntendsTo.Build)
+        }
+
+    }
+}
 
 class KeyboardInputSystem :
     KtxInputAdapter, IteratingSystem(
@@ -27,6 +57,7 @@ class KeyboardInputSystem :
 ) {
     lateinit var keyboardControl: KeyboardControl
     lateinit var keyboardEntity: Entity
+    val actionHandler by lazy { inject<ActionHandler>() }
     val gameState by lazy { inject<StateMachine<GameState, GameEvent>>() }
 
     override fun keyDown(keycode: Int): Boolean {
@@ -69,20 +100,30 @@ class KeyboardInputSystem :
                 Input.Keys.D -> keyboardControl.turning = 0f
                 Input.Keys.R -> keyboardControl.needsReload = true
                 Input.Keys.B -> toggleBuildMode()
-                Input.Keys.LEFT -> keyboardControl.uiControl.left()
-                Input.Keys.RIGHT -> keyboardControl.uiControl.right()
-                Input.Keys.ENTER -> keyboardControl.uiControl.select()
-                Input.Keys.SPACE -> handleSpace()
+                Input.Keys.LEFT -> handleLeft() //keyboardControl.uiControl.left()
+                Input.Keys.RIGHT -> handleRight() //keyboardControl.uiControl.right()
+                Input.Keys.ENTER -> handleSelect()//keyboardControl.uiControl.select()
+                Input.Keys.SPACE -> handleAction()
                 else -> return false
             }
         }
         return true
     }
 
-    private fun handleSpace() {
-        /*
-        This shouldn't really be implemented here..
-         */
+    private fun handleSelect() {
+        actionHandler.select(keyboardEntity)
+    }
+
+    private fun handleRight() {
+        actionHandler.next(keyboardEntity)
+    }
+
+    private fun handleLeft() {
+        actionHandler.previous(keyboardEntity)
+    }
+
+    private fun handleAction() {
+        actionHandler.act(keyboardEntity)
     }
 
     private fun toggleBuildMode() {

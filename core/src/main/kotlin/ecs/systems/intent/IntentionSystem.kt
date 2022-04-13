@@ -30,12 +30,14 @@ class IntentionSystem: IteratingSystem(allOf(IntentComponent::class).get()) {
         entity.remove<IntentComponent>()
     }
 
-    private fun leaveBuildMode(entity:Entity) {
-        TODO("Not yet implemented")
-    }
-
     private fun build(entity: Entity) {
-        TODO("Not yet implemented")
+        if(entity.isBuilding()) {
+            val buildComponent = entity.build()
+            val cursorEntity = buildComponent.buildCursorEntity!!
+            buildComponent.buildables.selectedItem.buildIt(cursorEntity.transform().position)
+            engine.removeEntity(cursorEntity)
+            entity.remove<BuildModeComponent>()
+        }
     }
 
     private fun toggleBuildMode(entity: Entity) {
