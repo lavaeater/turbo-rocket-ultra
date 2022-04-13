@@ -33,6 +33,7 @@ import ecs.systems.fx.EffectRenderSystem
 import ecs.systems.graphics.*
 import ecs.systems.graphics.GameConstants.GAMEHEIGHT
 import ecs.systems.graphics.GameConstants.GAMEWIDTH
+import ecs.systems.input.ActionHandler
 import ecs.systems.input.GamepadInputSystem
 import ecs.systems.input.KeyboardInputSystem
 import ecs.systems.intent.CalculatePositionSystem
@@ -65,6 +66,7 @@ object Context {
     private fun buildContext() {
         context.register {
             bindSingleton(PolygonSpriteBatch())
+            bindSingleton(ActionHandler())
             bindSingleton(OrthographicCamera())
 //            bind<IUserInterface> { UserInterface(inject<PolygonSpriteBatch>() as Batch, false) }
             bind<IUserInterface> { Hud(inject<PolygonSpriteBatch>() as Batch) }

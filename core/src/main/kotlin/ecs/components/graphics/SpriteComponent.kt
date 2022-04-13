@@ -6,7 +6,12 @@ import com.badlogic.gdx.utils.Pool
 
 class SpriteComponent: Component, Pool.Poolable {
     var layer = 0
+    var updateSprite: ()->Unit = {}
     var sprite = Sprite()
+        get() {
+            updateSprite()
+            return field
+        }
     val extraSprites = mutableMapOf<String, Sprite>()
     val extraSpriteAnchors = mutableMapOf<String, String>()
     var rotateWithTransform = false
@@ -19,5 +24,6 @@ class SpriteComponent: Component, Pool.Poolable {
         extraSprites.clear()
         extraSpriteAnchors.clear()
         rotateWithTransform = false
+        updateSprite = {}
     }
 }

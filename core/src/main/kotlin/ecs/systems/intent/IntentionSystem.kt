@@ -35,13 +35,13 @@ class IntentionSystem: IteratingSystem(allOf(IntentComponent::class).get()) {
             val buildComponent = entity.build()
             val cursorEntity = buildComponent.buildCursorEntity!!
             buildComponent.buildables.selectedItem.buildIt(cursorEntity.transform().position)
-            engine.removeEntity(cursorEntity)
-            entity.remove<BuildModeComponent>()
         }
     }
 
     private fun toggleBuildMode(entity: Entity) {
         if(entity.isBuilding()) {
+            val bc = entity.build()
+            engine.removeEntity(bc.buildCursorEntity)
             entity.remove<BuildModeComponent>()
         } else {
             entity.addComponent<BuildModeComponent> {  }
@@ -62,6 +62,7 @@ class IntentionSystem: IteratingSystem(allOf(IntentComponent::class).get()) {
                 with<SpriteComponent> {
                     sprite = entity.build().buildables.selectedItem.sprite
                     scale = 4f
+                    updateSprite = { sprite = entity.build().buildables.selectedItem.sprite }
                 }
             }
         }

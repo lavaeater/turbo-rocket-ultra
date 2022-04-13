@@ -14,6 +14,7 @@ import input.InputIndicator
 import input.KeyboardControl
 import ktx.app.KtxInputAdapter
 import ktx.ashley.allOf
+import physics.build
 import physics.getComponent
 import physics.intendTo
 import physics.isBuilding
@@ -24,11 +25,15 @@ class ActionHandler {
      * Handles spaceBar, for instance
      */
     fun next(entity: Entity) {
-        if(entity.isBuilding())
+        if(entity.isBuilding()) {
+            entity.build().buildables.nextItem()
+        }
     }
 
     fun previous(entity: Entity) {
-
+        if(entity.isBuilding()) {
+            entity.build().buildables.previousItem()
+        }
     }
 
     /**
