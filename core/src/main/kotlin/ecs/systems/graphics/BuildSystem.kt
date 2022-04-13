@@ -63,13 +63,8 @@ class BuildSystem(private val debug: Boolean) : IteratingSystem(
         val buildComponent = entity.build()
 
         if (controlComponent.isInBuildMode) {
-            if(!buildComponent.isInBuildMode) {
-                buildComponent.isInBuildMode = true
-                buildComponent.buildCursorEntity = buildCursor()
-            }
             val cursorEntity = buildComponent.buildCursorEntity!!
             cursorEntity.sprite().sprite = buildComponent.buildables.selectedItem.sprite
-
 
             /*
             Now all we have to fix is simply... setting the position of the sprite
@@ -88,9 +83,6 @@ class BuildSystem(private val debug: Boolean) : IteratingSystem(
 
             val bodyX = builderPosition.tileWorldX() + (cursorOffset.x * scaledWidth)
             val bodyY = builderPosition.tileWorldY() + (cursorOffset.y * scaledHeight)
-
-
-
 
             val pWidth = tileWidth * tileScale
             val pHeight = tileHeight * tileScale
@@ -156,13 +148,6 @@ class BuildSystem(private val debug: Boolean) : IteratingSystem(
 
                     blockade(cursorX + 2f, cursorY + 2f)
                 }
-            }
-        } else {
-            if(buildComponent.isInBuildMode) {
-                buildComponent.isInBuildMode = false
-                val cursor = buildComponent.buildCursorEntity!!
-                engine.removeEntity(cursor)
-                buildComponent.buildCursorEntity = null
             }
         }
     }

@@ -6,6 +6,7 @@ import com.badlogic.gdx.Gdx
 import com.badlogic.gdx.Input
 import com.badlogic.gdx.math.Vector2
 import ecs.components.gameplay.TransformComponent
+import ecs.components.intent.IntendsTo
 import gamestate.GameEvent
 import gamestate.GameState
 import injection.Context.inject
@@ -14,6 +15,7 @@ import input.KeyboardControl
 import ktx.app.KtxInputAdapter
 import ktx.ashley.allOf
 import physics.getComponent
+import physics.intendTo
 import statemachine.StateMachine
 
 class KeyboardInputSystem :
@@ -24,11 +26,12 @@ class KeyboardInputSystem :
     ).get()
 ) {
     lateinit var keyboardControl: KeyboardControl
-    val gameState by lazy { inject<StateMachine<GameState, GameEvent>>()}
+    lateinit var keyboardEntity: Entity
+    val gameState by lazy { inject<StateMachine<GameState, GameEvent>>() }
 
     override fun keyDown(keycode: Int): Boolean {
         keyboardControl.aiming = false
-        if(!keyboardControl.requireSequencePress) {
+        if (!keyboardControl.requireSequencePress) {
             when (keycode) {
                 Input.Keys.W -> keyboardControl.thrust = 1f
                 Input.Keys.S -> keyboardControl.thrust = -1f
@@ -36,7 +39,9 @@ class KeyboardInputSystem :
                 Input.Keys.D -> keyboardControl.turning = 1f
                 Input.Keys.SPACE -> if (keyboardControl.isInBuildMode) keyboardControl.buildIfPossible =
                     true else keyboardControl.doContextAction = true
-                Input.Keys.P -> if(gameState.currentState.state == GameState.Running) gameState.acceptEvent(GameEvent.PausedGame) else gameState.acceptEvent(GameEvent.ResumedGame)
+                Input.Keys.P -> if (gameState.currentState.state == GameState.Running) gameState.acceptEvent(GameEvent.PausedGame) else gameState.acceptEvent(
+                    GameEvent.ResumedGame
+                )
                 else -> return false
             }
         }
@@ -55,7 +60,7 @@ class KeyboardInputSystem :
     val hackingKeys = listOf(Input.Keys.UP, Input.Keys.DOWN, Input.Keys.LEFT, Input.Keys.RIGHT, Input.Keys.ESCAPE)
 
     override fun keyUp(keycode: Int): Boolean {
-        if(keyboardControl.requireSequencePress && hackingKeys.contains(keycode)) {
+        if (keyboardControl.requireSequencePress && hackingKeys.contains(keycode)) {
             keyboardControl.keyPressedCallback(keycode)
         } else {
             keyboardControl.aiming = true
@@ -78,8 +83,9 @@ class KeyboardInputSystem :
     }
 
     private fun toggleBuildMode() {
-
-        keyboardControl.isInBuildMode = !keyboardControl.isInBuildMode
+        //Fucking finally
+        keyboardEntity.intendTo(IntendsTo.ToggleBuildMode)
+        //keyboardControl.isInBuildMode = !keyboardControl.isInBuildMode
     }
 
     override fun touchDown(screenX: Int, screenY: Int, pointer: Int, button: Int): Boolean {
@@ -114,6 +120,7 @@ class KeyboardInputSystem :
 
     @OptIn(ExperimentalStdlibApi::class)
     override fun processEntity(entity: Entity, deltaTime: Float) {
+        keyboardEntity = entity
         keyboardControl = entity.getComponent()
         updateMouseInput(entity.getComponent<TransformComponent>().position)
     }

@@ -6,9 +6,11 @@ import com.badlogic.ashley.systems.IteratingSystem
 import com.badlogic.gdx.math.Vector2
 import com.badlogic.gdx.utils.Pool
 import ecs.components.gameplay.TransformComponent
+import ecs.components.graphics.OnScreenComponent
 import ecs.components.graphics.SpriteComponent
 import ecs.components.intent.IntendsTo
 import ecs.components.intent.IntentComponent
+import ecs.components.player.BuildModeComponent
 import ecs.components.player.Buildable
 import ecs.systems.graphics.CompassDirection
 import ecs.systems.tileWorldX
@@ -19,15 +21,17 @@ import ktx.ashley.remove
 import ktx.ashley.with
 import ktx.math.vec2
 import map.grid.GridMapSection
+import map.grid.GridMapSection.Companion.scaledHeight
+import map.grid.GridMapSection.Companion.scaledWidth
+import map.grid.GridMapSection.Companion.tileScale
 import physics.*
 
 class IntentionSystem: IteratingSystem(allOf(IntentComponent::class).get()) {
     override fun processEntity(entity: Entity, deltaTime: Float) {
         when(entity.intent()) {
-            IntendsTo.EnterBuildMode -> enterBuildMode(entity)
+            IntendsTo.ToggleBuildMode -> toggleBuildMode(entity)
             IntendsTo.DoNothing -> {}
             IntendsTo.Build -> build(entity)
-            IntendsTo.LeaveBuildMode -> leaveBuildMode(entity)
         }
         entity.remove<IntentComponent>()
     }
@@ -40,36 +44,40 @@ class IntentionSystem: IteratingSystem(allOf(IntentComponent::class).get()) {
         TODO("Not yet implemented")
     }
 
-    private fun enterBuildMode(entity: Entity) {
-        val builderTransform = entity.transform()
-        val builderPosition  = builderTransform.position
-        val control = entity.playerControl()
-        val cursorEntity = engine.entity {
-            with<CalculatedPositionComponent> {
-                calculate = {
-                    val cursorOffset = CompassDirection.directionOffsets[control.compassDirection]!!
-                    holderVector.x = builderPosition.tileWorldX() + (cursorOffset.x * GridMapSection.scaledWidth)
-                    holderVector.y = builderPosition.tileWorldY() + (cursorOffset.y * GridMapSection.scaledHeight)
-                    holderVector
+    private fun toggleBuildMode(entity: Entity) {
+        if(entity.isBuilding()) {
+            entity.remove<BuildModeComponent>()
+        } else {
+            entity.addComponent<BuildModeComponent> {  }
+            val builderTransform = entity.transform()
+            val builderPosition  = builderTransform.position
+            val control = entity.playerControl()
+            entity.build().buildCursorEntity = engine.entity {
+                with<CalculatedPositionComponent> {
+                    calculate = {
+                        val cursorOffset = CompassDirection.directionOffsets[control.compassDirection]!!
+                        calcPos.x = builderPosition.tileWorldX() + (cursorOffset.x * scaledWidth) + scaledWidth
+                        calcPos.y = builderPosition.tileWorldY() + (cursorOffset.y * scaledHeight) + scaledHeight
+                        calcPos
+                    }
                 }
-            }
-            /*
-            For now, we will just add a sprite as a
-            test to the proceedings
-             */
-            with<SpriteComponent> {
-                sprite = Buildable.MachineGunTower.sprite
+                with<TransformComponent>()
+                with<OnScreenComponent>()
+                with<SpriteComponent> {
+                    sprite = entity.build().buildables.selectedItem.sprite
+                    scale = 4f
+                }
             }
         }
     }
 }
 
 class CalculatedPositionComponent : Component, Pool.Poolable {
-    val holderVector = vec2()
+    val calcPos = vec2()
     var calculate: () -> Vector2 = {Vector2.Zero.cpy()}
     override fun reset() {
         calculate = { Vector2.Zero.cpy() }
-        holderVector.setZero()
+        calcPos.setZero()
     }
 }
 

@@ -75,7 +75,7 @@ object AshleyMappers {
     val frustum = mapperFor<OnScreenComponent>()
     val sprite = mapperFor<SpriteComponent>()
     val anchors = mapperFor<AnchorPointsComponent>()
-    val build = mapperFor<BuildComponent>()
+    val build = mapperFor<BuildModeComponent>()
     val complexAction = mapperFor<ComplexActionComponent>()
     val light = mapperFor<LightComponent>()
     val intent = mapperFor<IntentComponent>()
@@ -132,11 +132,11 @@ fun Entity.perimeter() : PerimeterObjectiveComponent {
     return AshleyMappers.perimeter.get(this)
 }
 
-fun Entity.build(): BuildComponent {
+fun Entity.build(): BuildModeComponent {
     return AshleyMappers.build.get(this)
 }
 
-fun Entity.hasBuild(): Boolean {
+fun Entity.isBuilding(): Boolean {
     return AshleyMappers.build.has(this)
 }
 

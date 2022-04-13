@@ -375,7 +375,6 @@ fun player(player: Player, mapper: ControlMapper, at: Vector2, debug: Boolean) {
             points["yellow"] = vec2(0f, -2f)
             useDirectionVector = true
         }
-        with<BuildComponent>()
     }
     entity.add(mapper)
     entity.add(PlayerControlComponent(mapper, player))

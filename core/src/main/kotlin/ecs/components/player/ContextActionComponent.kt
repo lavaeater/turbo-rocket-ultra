@@ -27,14 +27,12 @@ sealed class Buildable(val name: String, val sprite: Sprite) {
     }
 }
 
-class BuildComponent: Component, Pool.Poolable {
+class BuildModeComponent: Component, Pool.Poolable {
     val buildables = selectedItemListOf(Buildable.Blockade, Buildable.MachineGunTower)
-    var isInBuildMode = false
     var buildCursorEntity: Entity? = null
     override fun reset() {
         buildables.clear()
         buildCursorEntity = null
-        isInBuildMode = false
     }
 }
 

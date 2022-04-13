@@ -5,8 +5,7 @@ import com.badlogic.gdx.utils.Pool
 
 sealed class IntendsTo {
     object DoNothing: IntendsTo()
-    object EnterBuildMode : IntendsTo()
-    object LeaveBuildMode : IntendsTo()
+    object ToggleBuildMode : IntendsTo()
     object Build : IntendsTo()
 }
 
