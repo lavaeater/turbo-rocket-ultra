@@ -78,6 +78,7 @@ class KeyboardInputSystem :
     }
 
     private fun toggleBuildMode() {
+
         keyboardControl.isInBuildMode = !keyboardControl.isInBuildMode
     }
 

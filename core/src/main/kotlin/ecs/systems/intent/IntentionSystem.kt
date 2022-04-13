@@ -9,6 +9,7 @@ import ecs.components.gameplay.TransformComponent
 import ecs.components.graphics.SpriteComponent
 import ecs.components.intent.IntendsTo
 import ecs.components.intent.IntentComponent
+import ecs.components.player.Buildable
 import ecs.systems.graphics.CompassDirection
 import ecs.systems.tileWorldX
 import ecs.systems.tileWorldY
@@ -52,7 +53,12 @@ class IntentionSystem: IteratingSystem(allOf(IntentComponent::class).get()) {
                     holderVector
                 }
             }
+            /*
+            For now, we will just add a sprite as a
+            test to the proceedings
+             */
             with<SpriteComponent> {
+                sprite = Buildable.MachineGunTower.sprite
             }
         }
     }

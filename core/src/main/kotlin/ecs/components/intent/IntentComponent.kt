@@ -16,3 +16,10 @@ class IntentComponent: Component, Pool.Poolable {
         intendsTo = IntendsTo.DoNothing
     }
 }
+
+class ModeComponent: Component, Pool.Poolable {
+    override fun reset() {
+        TODO("Not yet implemented")
+    }
+
+}
