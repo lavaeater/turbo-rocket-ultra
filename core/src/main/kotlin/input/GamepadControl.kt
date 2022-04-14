@@ -1,9 +1,10 @@
 package input
 
 import com.badlogic.ashley.core.Component
+import com.badlogic.ashley.core.Entity
 import com.badlogic.gdx.controllers.Controller
 import com.badlogic.gdx.math.Vector2
-import ecs.components.player.PlayerMode
+import data.Players
 import ktx.math.vec2
 
 class GamepadControl(val controller: Controller): ControlMapper, Component {
@@ -32,4 +33,8 @@ class GamepadControl(val controller: Controller): ControlMapper, Component {
     override var uiControl: UserInterfaceControl = NoOpUserInterfaceControl.control
     override var requireSequencePress = false
     override var keyPressedCallback: (Int) -> Unit = {}
+}
+
+fun GamepadControl.entityFor() : Entity {
+    return Players.players.filter { it.key == this }.map { it.value.entity }.first()
 }

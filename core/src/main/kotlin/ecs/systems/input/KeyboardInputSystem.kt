@@ -49,7 +49,6 @@ class ActionHandler {
         if(entity.isBuilding()) {
             entity.intendTo(IntendsTo.Build)
         }
-
     }
 }
 

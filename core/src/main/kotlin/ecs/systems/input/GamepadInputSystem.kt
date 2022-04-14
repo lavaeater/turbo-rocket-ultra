@@ -5,19 +5,20 @@ import com.badlogic.ashley.systems.IteratingSystem
 import com.badlogic.gdx.controllers.Controller
 import com.badlogic.gdx.controllers.ControllerListener
 import data.Players
-import input.Axis
+import ecs.components.intent.IntendsTo
+import injection.Context.inject
+import input.*
 import input.Axis.Companion.valueOK
-import input.Button
-import input.GamepadControl
-import input.InputIndicator
 import ktx.ashley.allOf
 import ktx.math.vec2
 import physics.getComponent
+import physics.intendTo
 
 /**
  * Controllers will be handled by a polling system
  */
 class GamepadInputSystem : IteratingSystem(allOf(GamepadControl::class).get()), ControllerListener {
+    private val actionHandler by lazy { inject<ActionHandler>() }
     private val controllers: List<GamepadControl>
         get() = Players.players.keys.filterIsInstance<GamepadControl>().map { it }
 
@@ -59,10 +60,7 @@ class GamepadInputSystem : IteratingSystem(allOf(GamepadControl::class).get()), 
                 actualController.keyPressedCallback(buttonCode)
             } else {
                 when (Button.getButton(buttonCode)) {
-                    Button.Cross -> {
-                        if (actualController.isInBuildMode) actualController.buildIfPossible =
-                            false else actualController.doContextAction = false
-                    }
+                    Button.Cross -> handleAction(actualController.entityFor())
                     Button.Ring -> {}
                     Button.Square -> actualController.needsReload = true
                     Button.DPadLeft -> {
@@ -71,9 +69,10 @@ class GamepadInputSystem : IteratingSystem(allOf(GamepadControl::class).get()), 
                     Button.DPadRight -> {
                         actualController.needToChangeGun = InputIndicator.Next
                     }
-                    Button.Triangle -> actualController.isInBuildMode = !actualController.isInBuildMode
-                    Button.DPadDown -> {}
-                    Button.DPadUp -> {}
+                    Button.Triangle -> toggleBuildMode(actualController.entityFor())
+
+                    Button.DPadDown -> handleDown(actualController.entityFor())
+                    Button.DPadUp -> handleUp(actualController.entityFor())
                     Button.L1 -> actualController.needToChangeGun = InputIndicator.Previous
                     Button.L3 -> {}
                     Button.Options -> {}
@@ -86,6 +85,22 @@ class GamepadInputSystem : IteratingSystem(allOf(GamepadControl::class).get()), 
             }
         }
         return true
+    }
+
+    private fun handleUp(entity: Entity) {
+        actionHandler.previous(entity)
+    }
+
+    private fun handleDown(entity: Entity) {
+        actionHandler.next(entity)
+    }
+
+    private fun handleAction(entity: Entity) {
+        actionHandler.act(entity)
+    }
+
+    private fun toggleBuildMode(entity: Entity) {
+        entity.intendTo(IntendsTo.ToggleBuildMode)
     }
 
     override fun axisMoved(controller: Controller?, axisCode: Int, value: Float): Boolean {
