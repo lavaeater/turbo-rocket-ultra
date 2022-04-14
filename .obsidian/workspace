@@ -4,15 +4,11 @@
     "type": "split",
     "children": [
       {
-        "id": "fe2184909ea9a837",
+        "id": "04665df505dbdf18",
         "type": "leaf",
         "state": {
-          "type": "markdown",
-          "state": {
-            "file": "docs/devlog/2022-04-14.md",
-            "mode": "source",
-            "source": false
-          }
+          "type": "empty",
+          "state": {}
         }
       }
     ],
@@ -69,7 +65,6 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "docs/devlog/2022-04-14.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -87,15 +82,16 @@
     "width": 300,
     "collapsed": true
   },
-  "active": "fe2184909ea9a837",
+  "active": "04665df505dbdf18",
   "lastOpenFiles": [
+    "README.md",
+    "docs/OldREADME.md",
     "docs/devlog/2022-04-14.md",
     "docs/devlog/2022-04-13.md",
-    "docs/doing/Build Towers.md",
+    "docs/done/Build Towers.md",
     "docs/devlog/daily-template.md",
-    "README.md",
     "docs/Done things.md",
-    "docs/features/Soundscape II - the Moaning.md",
-    "docs/features/Text Crawl.md"
+    "docs/todo/Soundscape II - the Moaning.md",
+    "docs/todo/Text Crawl.md"
   ]
 }
