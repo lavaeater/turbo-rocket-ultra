@@ -11,6 +11,12 @@ import tru.AnimState
 import kotlin.reflect.KMutableProperty
 
 /**
+ * The ideas expressed below are wrong. We shall have a sea of components,
+ * absolutely drowning everything in components, and they shall be small and specific, it is quite
+ * glorious.
+ */
+
+/**
  * Make this into the one-stop shop of player state data.
  *
  * I have previously quite often done data by having different components and small components, I think that is actually
