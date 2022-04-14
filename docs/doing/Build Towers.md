@@ -3,6 +3,7 @@ Well, we basically have towers, we basically can build them, this is about makin
 ## New thoughts on coupled entities
 It's not entities that are coupled. It is components that describe state. So how does that work? Can we have a component that contains the state of some other entity, to be able to modify said state later? 
 
+
 ### What to do, the plan
 Intents. When the player presses "build", he intends to build something. So we had a component to that entity called IntendsToBuildComponent. 
 When an entity has that component, a system will handle that... no, we will have generic IntentComponent, called 
