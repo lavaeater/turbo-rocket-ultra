@@ -1,0 +1,7 @@
+{
+  "name": "Level Zero",
+  "startMessage": "\nThis is the test level\n\nThis is used to test stuff.",
+  "successMessage": "\nThis is a success message.\n",
+  "failMessage": "\nThis is a failure message.\n",
+  "mapFile": "maps/level-0.png"
+}

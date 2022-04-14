@@ -11,10 +11,7 @@ import com.badlogic.gdx.graphics.g2d.Batch
 import com.badlogic.gdx.math.MathUtils
 import com.badlogic.gdx.utils.viewport.Viewport
 import com.crashinvaders.vfx.VfxManager
-import com.crashinvaders.vfx.effects.BloomEffect
 import com.crashinvaders.vfx.effects.ChainVfxEffect
-import com.crashinvaders.vfx.effects.CrtEffect
-import com.crashinvaders.vfx.effects.OldTvEffect
 import ecs.components.gameplay.TransformComponent
 import ecs.components.graphics.OnScreenComponent
 import ecs.components.graphics.SpriteComponent

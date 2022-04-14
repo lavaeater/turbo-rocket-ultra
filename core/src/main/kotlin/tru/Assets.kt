@@ -235,7 +235,6 @@ object Assets : Disposable {
         }
     }
 
-
     val weapons by lazy {
         mapOf(
             GunFrames.handGun to

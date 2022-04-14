@@ -33,8 +33,11 @@ import ecs.systems.fx.EffectRenderSystem
 import ecs.systems.graphics.*
 import ecs.systems.graphics.GameConstants.GAMEHEIGHT
 import ecs.systems.graphics.GameConstants.GAMEWIDTH
+import ecs.systems.input.ActionHandler
 import ecs.systems.input.GamepadInputSystem
 import ecs.systems.input.KeyboardInputSystem
+import ecs.systems.intent.CalculatePositionSystem
+import ecs.systems.intent.IntentionSystem
 import ecs.systems.pickups.LootDropSystem
 import ecs.systems.player.*
 import ktx.box2d.createWorld
@@ -63,6 +66,7 @@ object Context {
     private fun buildContext() {
         context.register {
             bindSingleton(PolygonSpriteBatch())
+            bindSingleton(ActionHandler())
             bindSingleton(OrthographicCamera())
 //            bind<IUserInterface> { UserInterface(inject<PolygonSpriteBatch>() as Batch, false) }
             bind<IUserInterface> { Hud(inject<PolygonSpriteBatch>() as Batch) }
@@ -148,9 +152,12 @@ object Context {
             addSystem(GibSystem())
             addSystem(FactSystem())
             addSystem(FrustumCullingSystem())
-            addSystem(BuildSystem(false))
-            addSystem(AnchorPointTransformationSystem(false))
+            addSystem(AnchorPointTransformationSystem(true))
             addSystem(ComplexActionSystem())
+//            addSystem(BuildSystem(true))
+            addSystem(IntentionSystem())
+            addSystem(CalculatePositionSystem())
+
         }
     }
 }

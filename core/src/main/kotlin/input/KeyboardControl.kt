@@ -3,7 +3,6 @@ package input
 import com.badlogic.ashley.core.Component
 import com.badlogic.gdx.graphics.OrthographicCamera
 import com.badlogic.gdx.math.Vector2
-import ecs.components.player.PlayerMode
 import injection.Context
 import ktx.math.vec2
 import ktx.math.vec3
