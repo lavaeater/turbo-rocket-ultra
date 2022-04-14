@@ -7,12 +7,8 @@
         "id": "fe2184909ea9a837",
         "type": "leaf",
         "state": {
-          "type": "markdown",
-          "state": {
-            "file": "docs/doing/Build Towers.md",
-            "mode": "source",
-            "source": false
-          }
+          "type": "empty",
+          "state": {}
         }
       }
     ],
@@ -69,7 +65,6 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "docs/doing/Build Towers.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -89,7 +84,10 @@
   },
   "active": "fe2184909ea9a837",
   "lastOpenFiles": [
+    "docs/devlog/2022-04-14.md",
+    "docs/devlog/2022-04-13.md",
     "docs/doing/Build Towers.md",
+    "docs/devlog/daily-template.md",
     "README.md",
     "docs/Done things.md",
     "docs/features/Soundscape II - the Moaning.md",
