@@ -1,15 +1,15 @@
 {
   "main": {
-    "id": "fcbcd14a0035a4f5",
+    "id": "41c952328828e994",
     "type": "split",
     "children": [
       {
-        "id": "04665df505dbdf18",
+        "id": "8e049c068b972f1d",
         "type": "leaf",
         "state": {
           "type": "markdown",
           "state": {
-            "file": "docs/todo/Enemies and walls.md",
+            "file": "OldREADME.md",
             "mode": "source",
             "source": false
           }
@@ -19,15 +19,15 @@
     "direction": "vertical"
   },
   "left": {
-    "id": "e212c534dc8c2368",
+    "id": "76d94abbf2437875",
     "type": "split",
     "children": [
       {
-        "id": "74cb22bb9a9aaa62",
+        "id": "f53c0705113610bd",
         "type": "tabs",
         "children": [
           {
-            "id": "7740f4b596bebc38",
+            "id": "5b5c6bd3414aef0c",
             "type": "leaf",
             "state": {
               "type": "file-explorer",
@@ -35,7 +35,7 @@
             }
           },
           {
-            "id": "1a39f0fa5ee2ecc4",
+            "id": "e0927c60a8ffa022",
             "type": "leaf",
             "state": {
               "type": "search",
@@ -56,20 +56,20 @@
     "width": 300
   },
   "right": {
-    "id": "1771e0d2306bf3dd",
+    "id": "89a467550a8f6cbc",
     "type": "split",
     "children": [
       {
-        "id": "af196a400d887dfd",
+        "id": "eec9592dde97d095",
         "type": "tabs",
         "children": [
           {
-            "id": "a8eb87869aac00e2",
+            "id": "6d82935c4c6a3362",
             "type": "leaf",
             "state": {
               "type": "backlink",
               "state": {
-                "file": "docs/todo/Enemies and walls.md",
+                "file": "OldREADME.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -87,17 +87,11 @@
     "width": 300,
     "collapsed": true
   },
-  "active": "04665df505dbdf18",
+  "active": "8e049c068b972f1d",
   "lastOpenFiles": [
-    "docs/todo/Enemies and walls.md",
-    "docs/todo/Zombies with guns.md",
-    "docs/todo/Enemy Aggression.md",
-    "docs/todo/Hold an area for n seconds.md",
-    "docs/todo/Zombies throwing projectiles.md",
-    "docs/todo/Vehicles.md",
-    "docs/todo/Transitions.md",
-    "docs/done/Thrown Item Trajectory.md",
-    "docs/done/Text Crawl.md",
-    "docs/done/Soundscape II - the Moaning.md"
+    "OldREADME.md",
+    "Done things.md",
+    "devlog/2022-04-13.md",
+    "devlog/2022-04-14.md"
   ]
 }

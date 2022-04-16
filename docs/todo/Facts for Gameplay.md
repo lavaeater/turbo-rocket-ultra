@@ -1,0 +1,2 @@
+## Facts for Gameplay
+Now I use the story system to figure out if the players are done with a level, but the story system can literally control every aspect of the game. So, when the players have killed 100 zombies, we could increase base health for all zombies, easily. Or spawn the boss when that happens. 

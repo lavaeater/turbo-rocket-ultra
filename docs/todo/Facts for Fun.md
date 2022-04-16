@@ -1,0 +1,2 @@
+## Facts for Fun
+I have been playing audio when certain things happen, with some weird kind of probability added to it, which is just retarded when I actually have my handy "FactsOfTheWorld"-system attached to the game, which can be used for this, quite easily. So, say I want to play "toys toys" audio for every tenth pickup? Well, store how many pickups a player has made in the FactsOfTheWorld - and then have a system check stuff like that based on rules - which I also already happen to have a system for. Very cool.
