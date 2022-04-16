@@ -4,4 +4,4 @@ Enemies should not get stuck on walls, enemies should try to find good routes to
 - [ ] A training map for enemies
 - [ ] Ability to play game with tracking on enemy
 - [ ] Debug view showing destinations for enemy and steps to get there
-- [ ] 
+
