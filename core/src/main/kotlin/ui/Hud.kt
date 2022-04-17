@@ -58,7 +58,7 @@ class Hud(private val batch: Batch) : IUserInterface, MessageReceiver {
 
     lateinit var killCountLabel: Label
 
-    private val stage by lazy {
+    override val stage by lazy {
         val aStage = Stage(hudViewPort, batch)
         aStage.isDebugAll = true
         aStage.actors {
@@ -116,7 +116,6 @@ class Hud(private val batch: Batch) : IUserInterface, MessageReceiver {
         }
         aStage
     }
-
 
     var isReady = false
     override fun show() {
@@ -204,6 +203,10 @@ class Hud(private val batch: Batch) : IUserInterface, MessageReceiver {
         projectionVector.set(projectionVector.x, Gdx.graphics.height - projectionVector.y, projectionVector.z)
         camera.unproject(projectionVector)
         return projection2d.cpy()
+    }
+
+    fun getMoveableDialog() {
+
     }
 
     /*

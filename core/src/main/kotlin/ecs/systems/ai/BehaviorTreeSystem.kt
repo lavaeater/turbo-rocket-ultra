@@ -8,7 +8,7 @@ import ktx.ashley.allOf
 import physics.AshleyMappers
 import physics.getComponent
 
-class BehaviorTreeSystem : IntervalIteratingSystem(allOf(BehaviorComponent::class).get(), 0.5f) {
+class BehaviorTreeSystem : IntervalIteratingSystem(allOf(BehaviorComponent::class).get(), 2f) {
     override fun processEntity(entity: Entity) {
         AshleyMappers.behavior.get(entity).tree.step()
     }

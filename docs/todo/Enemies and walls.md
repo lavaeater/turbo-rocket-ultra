@@ -3,5 +3,7 @@ Enemies should not get stuck on walls, enemies should try to find good routes to
 ## TODO
 - [ ] A training map for enemies
 - [ ] Ability to play game with tracking on enemy
-- [ ] Debug view showing destinations for enemy and steps to get there
+- [ ] Reduce enemy spawning somehow to like 1
+- [ ] Display behavior tree debug info in some coherent way
+- [x] Debug view showing destinations for enemy and steps to get there
 

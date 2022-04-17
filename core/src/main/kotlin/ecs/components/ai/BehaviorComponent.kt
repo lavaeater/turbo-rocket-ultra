@@ -16,6 +16,7 @@ class BehaviorComponent : Component,Pool.Poolable {
     }
 
     var currentStatus = ""
+
     private fun addListeners() {
         tree.addListener(object: BehaviorTree.Listener<Entity> {
             override fun statusUpdated(task: Task<Entity>, previousStatus: Task.Status) {

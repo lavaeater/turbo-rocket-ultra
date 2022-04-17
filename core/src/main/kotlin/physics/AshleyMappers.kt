@@ -116,7 +116,7 @@ fun Entity.enemy(): EnemyComponent {
     return AshleyMappers.enemy.get(this)
 }
 
-fun Entity.hasEnemy(): Boolean {
+fun Entity.isEnemy(): Boolean {
     return AshleyMappers.enemy.has(this)
 }
 

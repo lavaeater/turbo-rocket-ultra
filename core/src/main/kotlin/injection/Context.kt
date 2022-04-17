@@ -68,7 +68,6 @@ object Context {
             bindSingleton(PolygonSpriteBatch())
             bindSingleton(ActionHandler())
             bindSingleton(OrthographicCamera())
-//            bind<IUserInterface> { UserInterface(inject<PolygonSpriteBatch>() as Batch, false) }
             bind<IUserInterface> { Hud(inject<PolygonSpriteBatch>() as Batch) }
             bindSingleton(
                 ExtendViewport(
@@ -138,7 +137,7 @@ object Context {
             addSystem(WeaponChangeAndReloadSystem())
             addSystem(UpdatePlayerStatsSystem())
 //            addSystem(PhysicsDebugRendererSystem(inject(), inject()))
-            addSystem(RenderSystem(inject<PolygonSpriteBatch>() as Batch, false, inject(), inject(), inject<ExtendViewport>(),1))
+            addSystem(RenderSystem(inject<PolygonSpriteBatch>() as Batch, false, inject(), inject(), inject<ExtendViewport>(), true,1))
             addSystem(RenderMiniMapSystem(3))
             addSystem(PlayerFlashlightSystem())
             //lets NOT write debug badges
