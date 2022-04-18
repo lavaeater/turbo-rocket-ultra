@@ -24,17 +24,7 @@ class UiThing(val widget: KTableWidget) {
     }
 }
 
-object {
-    fun g(): UiThing {
-        return getUiThing {
-            widget = scene2d.table {
-
-            }
-        }
-    }
-}
-
-fun getUiThing(block: UiThingBuilder.() -> Unit) : UiThing = UiThingBuilder().apply { block }.build()
+fun getUiThing(block: UiThingBuilder.() -> Unit) : UiThing = UiThingBuilder().apply(block).build()
 
 class UiThingBuilder {
     val stage by lazy { inject<IUserInterface>().stage }

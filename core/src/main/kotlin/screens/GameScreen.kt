@@ -106,8 +106,8 @@ class GameScreen(private val gameState: StateMachine<GameState, GameEvent>) : Kt
     }
 
     private fun loadMapOne() : Pair<Map<Coordinate, GridMapSection>, TileGraph> {
-        CounterObject.maxEnemies = 64
-        CounterObject.maxSpawnedEnemies = 1024
+        CounterObject.maxEnemies = 12
+        CounterObject.maxSpawnedEnemies = 12
 
         storyManager.addStories(*StoryHelper.baseStories)
         storyManager.addStory(StoryHelper.enemyKillCountStory)

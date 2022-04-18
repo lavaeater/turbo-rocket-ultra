@@ -3,6 +3,8 @@ package factories
 import ai.Tree
 import com.badlogic.ashley.core.Engine
 import com.badlogic.ashley.core.Entity
+import com.badlogic.gdx.ai.btree.BehaviorTree.Listener
+import com.badlogic.gdx.ai.btree.Task
 import com.badlogic.gdx.graphics.Color
 import com.badlogic.gdx.math.MathUtils
 import com.badlogic.gdx.math.MathUtils.degreesToRadians
@@ -48,6 +50,7 @@ import ktx.scene2d.table
 import physics.addComponent
 import screens.CounterObject
 import tru.Assets
+import ui.getUiThing
 import kotlin.experimental.or
 
 fun world(): World {
@@ -319,7 +322,7 @@ fun buildCursor(): Entity {
         }
     }
     return entity
- }
+}
 
 fun player(player: Player, mapper: ControlMapper, at: Vector2, debug: Boolean) {
     /*
@@ -612,7 +615,27 @@ fun enemy(at: Vector2) {
             color = Color.RED
         }
     }
-    entity.addComponent<BehaviorComponent> { tree = Tree.getEnemyBehaviorTree().apply { `object` = entity } }
+
+    val btComponent =
+        entity.addComponent<BehaviorComponent> { tree = Tree.getEnemyBehaviorTree().apply { `object` = entity } }
+
+    val something = getUiThing {
+        widget = scene2d.table {
+            width = 400f
+            height = 400f
+            val l = label("TreeStatus")
+            btComponent.tree.addListener(object : Listener<Entity> {
+                override fun statusUpdated(task: Task<Entity>, previousStatus: Task.Status) {
+                    l.setText("$task - $previousStatus")
+                }
+
+                override fun childAdded(task: Task<Entity>?, index: Int) {
+
+                }
+            })
+        }
+    }
+
     box2dBody.userData = entity
     CounterObject.enemyCount++
 }
@@ -826,7 +849,7 @@ fun objective(
             light.position = box2dBody.position
             light.isStaticLight = true
         }
-        if(perimeterObjective)
+        if (perimeterObjective)
             with<PerimeterObjectiveComponent>()
     }
     box2dBody.userData = entity
