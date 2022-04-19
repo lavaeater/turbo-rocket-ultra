@@ -13,6 +13,7 @@ import com.badlogic.gdx.physics.box2d.Body
 import com.badlogic.gdx.physics.box2d.BodyDef
 import com.badlogic.gdx.physics.box2d.World
 import data.Player
+import ecs.components.AudioComponent
 import ecs.components.BodyComponent
 import ecs.components.ai.BehaviorComponent
 import ecs.components.ai.GibComponent
@@ -21,13 +22,15 @@ import ecs.components.fx.CreateEntityComponent
 import ecs.components.fx.ParticleEffectComponent
 import ecs.components.fx.SplatterComponent
 import ecs.components.gameplay.*
-import ecs.components.graphics.*
+import ecs.components.graphics.AnimatedCharacterComponent
+import ecs.components.graphics.CameraFollowComponent
+import ecs.components.graphics.MiniMapComponent
+import ecs.components.graphics.SpriteComponent
+import ecs.components.intent.FunctionsComponent
 import ecs.components.pickups.LootComponent
 import ecs.components.pickups.LootDropComponent
 import ecs.components.player.*
 import ecs.components.towers.TowerComponent
-import ecs.components.AudioComponent
-import ecs.components.intent.FunctionsComponent
 import ecs.systems.graphics.GameConstants.PLAYER_DENSITY
 import ecs.systems.graphics.GameConstants.SHIP_ANGULAR_DAMPING
 import ecs.systems.graphics.GameConstants.SHIP_LINEAR_DAMPING
@@ -45,12 +48,16 @@ import ktx.box2d.circle
 import ktx.box2d.filter
 import ktx.math.random
 import ktx.math.vec2
+import ktx.scene2d.actors
 import ktx.scene2d.label
 import ktx.scene2d.scene2d
 import ktx.scene2d.table
 import physics.addComponent
+import physics.onScreen
+import physics.transform
 import screens.CounterObject
 import tru.Assets
+import ui.IUserInterface
 import ui.getUiThing
 import kotlin.experimental.or
 
@@ -619,30 +626,36 @@ fun enemy(at: Vector2) {
 
     val btComponent =
         entity.addComponent<BehaviorComponent> { tree = Tree.getEnemyBehaviorTree().apply { `object` = entity } }
+    val hud = inject<IUserInterface>()
     val something = getUiThing {
-        widget = scene2d.table {
-            width = 400f
-            height = 400f
-            val l = label("TreeStatus")
-            btComponent.tree.addListener(object : Listener<Entity> {
-                override fun statusUpdated(task: Task<Entity>, previousStatus: Task.Status) {
-                    l.setText("$task - $previousStatus")
-                }
+        val startPosition = hud.worldToHudPosition(vec2(7f, 120f))
 
-                override fun childAdded(task: Task<Entity>?, index: Int) {
+        stage.actors {
+            label("TreeStatus", "title") { actor ->
+                widget = this
+                actor.debug = true
+                btComponent.tree.addListener(object : Listener<Entity> {
+                    override fun statusUpdated(task: Task<Entity>, previousStatus: Task.Status) {
+                        this@label.setText("$task - $previousStatus")
+                    }
 
-                }
-            })
+                    override fun childAdded(task: Task<Entity>?, index: Int) {
+
+                    }
+                })
+            }.setPosition(startPosition.x, startPosition.y)
+
         }
     }
     entity.addComponent<FunctionsComponent> {
         functions["debugblurbpositionupdate"] = {
-            something.widget.stage
-
+//            if(entity.onScreen()) {
+                val enemyPos = entity.transform().position.cpy().set(7f, 120f)
+                val widgetPos = inject<IUserInterface>().worldToHudPosition(enemyPos)
+                something.widget.setPosition(widgetPos.x, widgetPos.y)
+//            }
         }
     }
-
-
 
     box2dBody.userData = entity
     CounterObject.enemyCount++

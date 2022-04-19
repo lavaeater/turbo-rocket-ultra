@@ -25,6 +25,7 @@ import messaging.Message
 import messaging.MessageHandler
 import messaging.MessageReceiver
 import physics.AshleyMappers
+import physics.transform
 import story.FactsOfTheWorld
 import story.fact.Facts
 import ui.customactors.boundLabel
@@ -90,6 +91,8 @@ class Hud(private val batch: Batch) : IUserInterface, MessageReceiver {
                             boundLabel({ "Objectives: ${player.touchedObjectives.count()}" }).inCell.align(Align.right)
                             row()
                             boundLabel({ "Score: ${player.score}" }).inCell.align(Align.right)
+                            row()
+                            boundLabel({ "Pos: ${player.entity.transform().position}" }).inCell.align(Align.right)
                             row()
                             boundLabel({ "${player.currentWeapon}: ${player.ammoLeft}|${player.totalAmmo}" }).inCell.align(
                                 Align.right
@@ -197,7 +200,7 @@ class Hud(private val batch: Batch) : IUserInterface, MessageReceiver {
             Message.LevelFailed::class
         )
 
-    fun worldToHudPosition(worldPosition: Vector2): Vector2 {
+    override fun worldToHudPosition(worldPosition: Vector2): Vector2 {
         projectionVector.set(worldPosition.x, worldPosition.y, 0f)
         worldCamera.project(projectionVector)
         projectionVector.set(projectionVector.x, Gdx.graphics.height - projectionVector.y, projectionVector.z)

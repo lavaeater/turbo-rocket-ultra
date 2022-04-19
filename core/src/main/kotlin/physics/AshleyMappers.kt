@@ -84,6 +84,10 @@ object AshleyMappers {
     val functions = mapperFor<FunctionsComponent>()
 }
 
+fun Entity.onScreen() : Boolean {
+    return AshleyMappers.frustum.has(this)
+}
+
 fun Entity.getCalculatedPosition(): Vector2 {
     return AshleyMappers.calculatedPosition.get(this).calculate()
 }

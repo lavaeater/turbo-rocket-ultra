@@ -38,6 +38,7 @@ import ecs.systems.input.GamepadInputSystem
 import ecs.systems.input.KeyboardInputSystem
 import ecs.systems.intent.CalculatePositionSystem
 import ecs.systems.intent.IntentionSystem
+import ecs.systems.intent.RunFunctionsSystem
 import ecs.systems.pickups.LootDropSystem
 import ecs.systems.player.*
 import ktx.box2d.createWorld
@@ -156,6 +157,7 @@ object Context {
 //            addSystem(BuildSystem(true))
             addSystem(IntentionSystem())
             addSystem(CalculatePositionSystem())
+            addSystem(RunFunctionsSystem())
 
         }
     }

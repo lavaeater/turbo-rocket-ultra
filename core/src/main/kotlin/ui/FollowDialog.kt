@@ -1,5 +1,6 @@
 package ui
 
+import com.badlogic.gdx.scenes.scene2d.Actor
 import com.badlogic.gdx.scenes.scene2d.ui.Widget
 import injection.Context.inject
 import ktx.scene2d.KTableWidget
@@ -10,7 +11,7 @@ import ktx.scene2d.table
 /**
  *
  */
-class UiThing(val widget: KTableWidget) {
+class UiThing(val widget: Actor) {
     fun show() {
         widget.isVisible = true
     }
@@ -28,9 +29,9 @@ fun getUiThing(block: UiThingBuilder.() -> Unit) : UiThing = UiThingBuilder().ap
 
 class UiThingBuilder {
     val stage by lazy { inject<IUserInterface>().stage }
-    lateinit var widget: KTableWidget
+    lateinit var widget: Actor
     fun build() : UiThing {
-        stage.addActor(widget)
+//        stage.addActor(widget)
         return UiThing(widget)
     }
 }
