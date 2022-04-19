@@ -27,6 +27,7 @@ import ecs.components.pickups.LootDropComponent
 import ecs.components.player.*
 import ecs.components.towers.TowerComponent
 import ecs.components.AudioComponent
+import ecs.components.intent.FunctionsComponent
 import ecs.systems.graphics.GameConstants.PLAYER_DENSITY
 import ecs.systems.graphics.GameConstants.SHIP_ANGULAR_DAMPING
 import ecs.systems.graphics.GameConstants.SHIP_LINEAR_DAMPING
@@ -618,7 +619,6 @@ fun enemy(at: Vector2) {
 
     val btComponent =
         entity.addComponent<BehaviorComponent> { tree = Tree.getEnemyBehaviorTree().apply { `object` = entity } }
-
     val something = getUiThing {
         widget = scene2d.table {
             width = 400f
@@ -635,6 +635,14 @@ fun enemy(at: Vector2) {
             })
         }
     }
+    entity.addComponent<FunctionsComponent> {
+        functions["debugblurbpositionupdate"] = {
+            something.widget.stage
+
+        }
+    }
+
+
 
     box2dBody.userData = entity
     CounterObject.enemyCount++

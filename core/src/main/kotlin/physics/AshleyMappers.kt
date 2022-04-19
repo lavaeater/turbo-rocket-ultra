@@ -20,6 +20,7 @@ import ecs.components.AudioComponent
 import ecs.components.intent.IntendsTo
 import ecs.components.intent.IntentComponent
 import ecs.components.intent.CalculatedPositionComponent
+import ecs.components.intent.FunctionsComponent
 import ktx.ashley.mapperFor
 import kotlin.reflect.KType
 import kotlin.reflect.typeOf
@@ -80,10 +81,19 @@ object AshleyMappers {
     val light = mapperFor<LightComponent>()
     val intent = mapperFor<IntentComponent>()
     val calculatedPosition = mapperFor<CalculatedPositionComponent>()
+    val functions = mapperFor<FunctionsComponent>()
 }
 
 fun Entity.getCalculatedPosition(): Vector2 {
     return AshleyMappers.calculatedPosition.get(this).calculate()
+}
+
+fun Entity.runFunctions() {
+    for(f in AshleyMappers.functions.get(this).functions.values) f()
+}
+
+fun Entity.runFunction(key: String) {
+    AshleyMappers.functions.get(this).functions[key]!!()
 }
 
 fun Entity.intendsTo(intendsTo: IntendsTo): Boolean {
