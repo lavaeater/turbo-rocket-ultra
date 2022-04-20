@@ -252,6 +252,17 @@ inline fun <reified T : Component> Engine.createComponent(block: T.() -> Unit = 
 
 @ExperimentalStdlibApi
 fun Contact.thisIsAContactBetween(): ContactType {
+    if(this.justOneHas<EnemyComponent>()) {
+        val entity = this.getEntityFor<EnemyComponent>()
+        val otherFixture = if(this.fixtureA.isEntity() && entity == this.fixtureA.getEntity()) this.fixtureB else this.fixtureA
+
+        if(!otherFixture.isEntity()) {
+            //This is a wall, for sure
+            return ContactType.EnemyAndObstacle(entity)
+        } else if(otherFixture.getEntity().hasObstacle()) {
+            return ContactType.EnemyAndObstacle(entity)
+        }
+    }
     if (this.justOneHas<DamageEffectComponent>()) {
         val damageEffectEntity = this.getEntityFor<DamageEffectComponent>()
         if (this.bothAreEntities()) {

@@ -143,6 +143,8 @@ class RenderSystem(
         if (enemyDebug && entity.isEnemy()) {
             val ec = entity.enemy()
             val previous = entity.transform().position.cpy()
+            shapeDrawer.line(previous, ec.nextPosition, Color.BLUE,0.1f)
+            previous.set(ec.nextPosition)
             for ((i, node) in ec.path.withIndex()) {
                 shapeDrawer.line(previous, node, Color.BLUE,0.1f)
                 when (i) {

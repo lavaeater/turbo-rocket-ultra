@@ -82,8 +82,12 @@ object AshleyMappers {
     val intent = mapperFor<IntentComponent>()
     val calculatedPosition = mapperFor<CalculatedPositionComponent>()
     val functions = mapperFor<FunctionsComponent>()
+    val obstacleCollision = mapperFor<CollidedWithObstacle>()
 }
 
+fun Entity.hasCollidedWithObstacle() : Boolean {
+    return AshleyMappers.obstacleCollision.has(this)
+}
 fun Entity.onScreen() : Boolean {
     return AshleyMappers.frustum.has(this)
 }
@@ -240,4 +244,8 @@ fun Entity.hacking(): HackingComponent {
 
 fun Entity.hasHacking(): Boolean {
     return AshleyMappers.hacking.has(this)
+}
+
+fun Entity.hasObstacle() : Boolean {
+    return AshleyMappers.obstacle.has(this)
 }

@@ -43,7 +43,7 @@ class GridMapGenerator {
 
         fun addBoss(bounds: Rectangle) {
             var position = bounds.randomPoint()
-            boss(position, 1)
+            //boss(position, 1)
         }
 
         private val factsOfTheWorld by lazy { inject<FactsOfTheWorld>() }
@@ -252,7 +252,7 @@ class GridMapGenerator {
                         }
 
                         if (coordinate == bossCoordinate) {
-                            boss(section.innerBounds.randomPoint(), level)
+                            //boss(section.innerBounds.randomPoint(), level)
                         }
                     }
             }

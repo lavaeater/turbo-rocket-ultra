@@ -7,12 +7,14 @@ import com.badlogic.gdx.math.Vector2
 import com.badlogic.gdx.physics.box2d.Body
 import ecs.components.BodyComponent
 import ecs.components.enemy.EnemyComponent
+import ecs.components.gameplay.ObstacleComponent
 import ecs.components.gameplay.TransformComponent
 import factories.enemy
 import ktx.ashley.allOf
 import ktx.math.vec2
 import physics.AshleyMappers
 import physics.enemy
+import physics.transform
 import tru.Assets
 
 class EnemyMovementSystem(private val flocking: Boolean) : IteratingSystem(
@@ -20,22 +22,28 @@ class EnemyMovementSystem(private val flocking: Boolean) : IteratingSystem(
         EnemyComponent::class,
         BodyComponent::class,
         TransformComponent::class
-    ).get()) {
+    ).get()
+) {
     private val separationRange = 10f
     private val enemyFamily = allOf(EnemyComponent::class).get()
     private val allEnemies get() = engine.getEntitiesFor(enemyFamily)
+    private val obstacleFamily = allOf(ObstacleComponent::class).get()
+    private val allObstacles get() = engine.getEntitiesFor(obstacleFamily)
+
     private val alignment = vec2()
     private val cohesion = vec2()
     private val separation = vec2()
+    private val obstacleAvoidance = vec2()
     private val shapeDrawer by lazy { Assets.shapeDrawer }
 
     override fun processEntity(entity: Entity, deltaTime: Float) {
         val enemyComponent = entity.enemy()
-        if(enemyComponent.cooldownPropertyCheckIfDone(enemyComponent::stunned, deltaTime)) {
+        if (enemyComponent.cooldownPropertyCheckIfDone(enemyComponent::stunned, deltaTime)) {
             val bodyComponent = AshleyMappers.body.get(entity)
             if (flocking && enemyComponent.flock && AshleyMappers.frustum.has(entity)) {
                 fixFlocking(bodyComponent.body!!)
             }
+            avoidObstacles(bodyComponent.body!!.position)
             moveEnemy(enemyComponent, bodyComponent)
         }
     }
@@ -50,7 +58,7 @@ class EnemyMovementSystem(private val flocking: Boolean) : IteratingSystem(
         val ali = vec2()
         var count = 0
         for (enemy in allEnemies) {
-            val position = AshleyMappers.transform.get(enemy).position
+            val position = enemy.transform().position
             if (position.dst(enemyPosition) < separationRange) {
                 sep.x += position.x - enemyPosition.x
                 sep.y += position.y - enemyPosition.y
@@ -78,20 +86,43 @@ class EnemyMovementSystem(private val flocking: Boolean) : IteratingSystem(
         }
     }
 
+    private fun avoidObstacles(enemyPosition: Vector2) {
+        val avoid = vec2()
+        var count = 0
+        for(obstacle in allObstacles) {
+            val position = obstacle.transform().position
+            val distance = position.dst(enemyPosition)
+            if(distance < 5f) {
+                //The closer we get, the more we avoid the obstacle!
+                avoid.x += position.x - enemyPosition.x
+                avoid.y += position.y - enemyPosition.y
+                count++
+            }
+        }
+        if(count > 0) {
+            avoid.x /= count
+            avoid.y /= count
+            avoid.x *= -1
+            avoid.y *= -1
+        }
+        obstacleAvoidance.set(avoid).nor()
+    }
+
     private val actualDirectionVector = vec2()
     private val circleColor = Color(1f, 0f, 0f, 0.1f)
 
     private fun moveEnemy(enemyComponent: EnemyComponent, bodyComponent: BodyComponent) {
-        actualDirectionVector.set(enemyComponent.directionVector).add(cohesion.scl(.3f)).add(separation.scl(0.7f)).add(alignment.scl(.5f)).nor()
+        //.
+        actualDirectionVector.set(enemyComponent.directionVector)
+        if(flocking)
+            actualDirectionVector.add(cohesion.scl(.3f)).add(separation.scl(0.7f))
+            .add(alignment.scl(.5f))
+        actualDirectionVector.add(obstacleAvoidance.scl(.8f)).nor()
         bodyComponent.body!!.linearVelocity = actualDirectionVector.scl(enemyComponent.speed)
-//        shapeDrawer.batch.use {
-//            shapeDrawer.filledCircle(
-//                bodyComponent.body!!.worldCenter.x,
-//                bodyComponent.body!!.worldCenter.y,
-//                separationRange,
-//                circleColor
-//            )
-//        }
+    }
+
+    private fun handleObstacles(enemyComponent: EnemyComponent, bodyComponent: BodyComponent) {
+
     }
 }
 

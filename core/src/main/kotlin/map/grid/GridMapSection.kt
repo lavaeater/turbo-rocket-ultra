@@ -1,18 +1,28 @@
 package map.grid
 
 import box2dLight.ConeLight
-import box2dLight.PointLight
 import box2dLight.RayHandler
 import com.badlogic.gdx.graphics.Color
 import com.badlogic.gdx.math.Rectangle
+import com.badlogic.gdx.math.Vector2
 import ecs.components.graphics.renderables.RenderableTextureRegion
 import ecs.components.graphics.renderables.RenderableTextureRegions
+import factories.world
 import injection.Context.inject
+import ktx.box2d.Query
+import ktx.box2d.query
 import ktx.math.vec2
 import map.snake.*
+import physics.getEntity
+import physics.hasObstacle
+import physics.isEntity
 import tru.Assets
 
-class GridMapSection(val coordinate: Coordinate, val connections: Set<MapDirection>, val startSection: Boolean = false) {
+class GridMapSection(
+    val coordinate: Coordinate,
+    val connections: Set<MapDirection>,
+    val startSection: Boolean = false
+) {
     val x get() = coordinate.x
     val y get() = coordinate.y
     val sectionWidth = width * tileWidth * tileScale
@@ -49,13 +59,46 @@ class GridMapSection(val coordinate: Coordinate, val connections: Set<MapDirecti
         )
     }
 
+    val safePoints by lazy {
+        val sp = mutableListOf<Vector2>()
+        val testVector = vec2()
+        var x = safeBounds.x
+        var y = safeBounds.y
+        val maxCols = (safeBounds.width).toInt()
+        val maxRows = (safeBounds.height).toInt()
+        for(i in 0..maxCols) {
+            for(j in 0..maxRows) {
+                testVector.set(x, y)
+                if(isThisPointSafe(testVector)) {
+                    sp.add(testVector.cpy())
+                }
+                y -= j
+            }
+            x += i
+            y = safeBounds.y
+        }
+        sp
+    }
+
+    fun isThisPointSafe(position: Vector2) : Boolean {
+        var itIsSafe = true
+        world().query(position.x, position.y, position.x, position.y) {
+            if(it.isEntity() && it.getEntity().hasObstacle()) {
+                itIsSafe = false
+                Query.STOP
+            }
+            Query.CONTINUE
+        }
+        return itIsSafe
+    }
+
     val lights by lazy {
         rayHandler.setShadows(true)
         val lightDirections = MapDirection.directions.filter { !connections.contains(it) }
 
         lightDirections.map { lightDirection ->
             val lightPosition = vec2()
-            when(lightDirection) {
+            when (lightDirection) {
                 MapDirection.North -> lightPosition.set(innerBounds.horizontalCenter(), innerBounds.bottom())
                 MapDirection.East -> lightPosition.set(innerBounds.right(), innerBounds.verticalCenter())
                 MapDirection.South -> lightPosition.set(innerBounds.horizontalCenter(), innerBounds.top())
@@ -82,7 +125,7 @@ class GridMapSection(val coordinate: Coordinate, val connections: Set<MapDirecti
         val height = 6
         val tileWidth = 16f
         val tileHeight = 16f
-        val tileScale = 1/4f
+        val tileScale = 1 / 4f
         val scaledWidth = tileWidth * tileScale
         val scaledHeight = tileHeight * tileScale
         val directionAlignment by lazy {
@@ -93,13 +136,18 @@ class GridMapSection(val coordinate: Coordinate, val connections: Set<MapDirecti
                 MapDirection.South to listOf(TileAlignment.Bottom)
             )
         }
-        val directionColorMap = mapOf(MapDirection.North to Color(.5f,.5f,0f,.5f), MapDirection.East to Color(.5f,.5f,0f,.5f), MapDirection.South to Color(.5f,.5f,0f,.5f), MapDirection.West to Color(.5f,.5f,0f,.5f))
+        val directionColorMap = mapOf(
+            MapDirection.North to Color(.5f, .5f, 0f, .5f),
+            MapDirection.East to Color(.5f, .5f, 0f, .5f),
+            MapDirection.South to Color(.5f, .5f, 0f, .5f),
+            MapDirection.West to Color(.5f, .5f, 0f, .5f)
+        )
     }
 
     val connectionAlignments by lazy { connections.map { directionAlignment[it]!! }.flatten() }
     val rayHandler by lazy { inject<RayHandler>() }
 
-     val tiles by lazy {
+    val tiles by lazy {
         Array(width) { x ->
             Array(height) { y ->
                 val tileAlignment = when (x) {
@@ -130,7 +178,10 @@ class GridMapSection(val coordinate: Coordinate, val connections: Set<MapDirecti
                             listOf(RenderableTextureRegion(Assets.wallTiles.random()))
                         ), false
                     )
-                    TileAlignment.BottomLeft -> if(connectionAlignments.contains(TileAlignment.Left) && connectionAlignments.contains(TileAlignment.Bottom)) MapTile(
+                    TileAlignment.BottomLeft -> if (connectionAlignments.contains(TileAlignment.Left) && connectionAlignments.contains(
+                            TileAlignment.Bottom
+                        )
+                    ) MapTile(
                         RenderableTextureRegions(
                             listOf(RenderableTextureRegion(Assets.floorTiles.random()))
                         ), true
@@ -139,7 +190,10 @@ class GridMapSection(val coordinate: Coordinate, val connections: Set<MapDirecti
                             listOf(RenderableTextureRegion(Assets.wallTiles.random()))
                         ), false
                     )
-                    TileAlignment.BottomRight -> if(connectionAlignments.contains(TileAlignment.Right) && connectionAlignments.contains(TileAlignment.Bottom)) MapTile(
+                    TileAlignment.BottomRight -> if (connectionAlignments.contains(TileAlignment.Right) && connectionAlignments.contains(
+                            TileAlignment.Bottom
+                        )
+                    ) MapTile(
                         RenderableTextureRegions(
                             listOf(RenderableTextureRegion(Assets.floorTiles.random()))
                         ), true
@@ -180,7 +234,10 @@ class GridMapSection(val coordinate: Coordinate, val connections: Set<MapDirecti
                             listOf(RenderableTextureRegion(Assets.wallEndTile))
                         ), false
                     )
-                    TileAlignment.TopLeft -> if(connectionAlignments.contains(TileAlignment.Left) && connectionAlignments.contains(TileAlignment.Top)) MapTile(
+                    TileAlignment.TopLeft -> if (connectionAlignments.contains(TileAlignment.Left) && connectionAlignments.contains(
+                            TileAlignment.Top
+                        )
+                    ) MapTile(
                         RenderableTextureRegions(
                             listOf(RenderableTextureRegion(Assets.floorTiles.random()))
                         ), true
@@ -193,7 +250,10 @@ class GridMapSection(val coordinate: Coordinate, val connections: Set<MapDirecti
                             listOf(RenderableTextureRegion(Assets.wallTiles.random()))
                         ), false
                     )
-                    TileAlignment.TopRight -> if(connectionAlignments.contains(TileAlignment.Right) && connectionAlignments.contains(TileAlignment.Top)) MapTile(
+                    TileAlignment.TopRight -> if (connectionAlignments.contains(TileAlignment.Right) && connectionAlignments.contains(
+                            TileAlignment.Top
+                        )
+                    ) MapTile(
                         RenderableTextureRegions(
                             listOf(RenderableTextureRegion(Assets.floorTiles.random()))
                         ), true

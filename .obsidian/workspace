@@ -9,7 +9,7 @@
         "state": {
           "type": "markdown",
           "state": {
-            "file": "docs/devlog/2022-04-19.md",
+            "file": "docs/todo/Enemies and walls.md",
             "mode": "source",
             "source": false
           }
@@ -69,7 +69,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "docs/devlog/2022-04-19.md",
+                "file": "docs/todo/Enemies and walls.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -89,10 +89,10 @@
   },
   "active": "04665df505dbdf18",
   "lastOpenFiles": [
+    "docs/todo/Enemies and walls.md",
     "docs/devlog/2022-04-19.md",
     "docs/devlog/2022-04-18.md",
     "docs/devlog/2022-04-17.md",
-    "docs/todo/Enemies and walls.md",
     "docs/todo/Zombies with guns.md",
     "docs/todo/Enemy Aggression.md",
     "docs/todo/Hold an area for n seconds.md",

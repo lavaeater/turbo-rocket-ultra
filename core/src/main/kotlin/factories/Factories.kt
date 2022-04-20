@@ -55,9 +55,7 @@ import ktx.scene2d.actors
 import ktx.scene2d.label
 import ktx.scene2d.scene2d
 import ktx.scene2d.table
-import physics.addComponent
-import physics.onScreen
-import physics.transform
+import physics.*
 import screens.CounterObject
 import tru.Assets
 import ui.IUserInterface
@@ -260,6 +258,7 @@ fun tower(
             color = Color.GREEN
         }
         with<TowerComponent>()
+        with<ObstacleComponent>()
     }
     towerEntity.addComponent<BehaviorComponent> { tree = Tree.getTowerBehaviorTree().apply { `object` = towerEntity } }
     towerBody.userData = towerEntity
@@ -631,18 +630,18 @@ fun enemy(at: Vector2) {
         entity.addComponent<BehaviorComponent> { tree = Tree.getEnemyBehaviorTree().apply { `object` = entity } }
     val hud = inject<IUserInterface>()
     val something = getUiThing {
-        val startPosition = hud.worldToHudPosition(entity.transform().position)
+        val startPosition = hud.worldToHudPosition(entity.transform().position.cpy().add(1f, 1f))
 
         val moveAction = object : Action() {
             override fun act(delta: Float): Boolean {
-                val coordinate = hud.worldToHudPosition(entity.transform().position)
+                val coordinate = hud.worldToHudPosition(entity.transform().position.cpy().add(1f, 1f))
                 actor.setPosition(coordinate.x, coordinate.y)
                 return true
             }
         }.repeatForever()
 
         stage.actors {
-            label("TreeStatus", "title") { actor ->
+            label("TreeStatus" ) { actor ->
                 widget = this
                 actor.debug = true
                 actor += moveAction
@@ -651,10 +650,13 @@ fun enemy(at: Vector2) {
                     override fun statusUpdated(task: Task<Entity>, previousStatus: Task.Status) {
                         var taskString = task.toString()
                         if (!taskString.contains("@"))
-                            this@label.setText("$taskString - $previousStatus")
-//                            taskString = taskString.substringAfterLast(".").substringBeforeLast("@")
+                            this@label.setText("""$taskString - $previousStatus
+speed: ${entity.body().linearVelocity.cpy().nor() }
+dir: ${entity.enemy().directionVector} 
+dist: ${entity.transform().position.dst(entity.enemy().nextPosition)}
+                            """.trimMargin())
                     }
-
+//steps: ${entity.enemy().path.size}
                     override fun childAdded(task: Task<Entity>?, index: Int) {
 
                     }
@@ -723,6 +725,7 @@ fun hackingStation(
             light.position = box2dBody.position
             light.isStaticLight = true
         }
+        with<ObstacleComponent>()
     }
     box2dBody.userData = entity
 }
@@ -805,6 +808,7 @@ fun blockade(
         with<BodyComponent> { body = box2dBody }
         with<TransformComponent> { position.set(box2dBody.position) }
         with<BlockadeComponent>()
+        with<ObstacleComponent>()
         with<SpriteComponent> {
             sprite = Assets.buildables.first()
             scale = 4f
@@ -882,6 +886,7 @@ fun objective(
         with<ObjectiveComponent> {
             id = "I did this"
         }
+        with<ObstacleComponent>()
         with<LightComponent> {
             light.position = box2dBody.position
             light.isStaticLight = true
