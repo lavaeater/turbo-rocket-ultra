@@ -69,7 +69,7 @@ object Context {
             bindSingleton(PolygonSpriteBatch())
             bindSingleton(ActionHandler())
             bindSingleton(OrthographicCamera())
-            bind<IUserInterface> { Hud(inject<PolygonSpriteBatch>() as Batch) }
+            bindSingleton<IUserInterface> { Hud(inject<PolygonSpriteBatch>() as Batch) }
             bindSingleton(
                 ExtendViewport(
                     GAMEWIDTH,

@@ -628,7 +628,7 @@ fun enemy(at: Vector2) {
         entity.addComponent<BehaviorComponent> { tree = Tree.getEnemyBehaviorTree().apply { `object` = entity } }
     val hud = inject<IUserInterface>()
     val something = getUiThing {
-        val startPosition = hud.worldToHudPosition(vec2(7f, 120f))
+        val startPosition = hud.worldToHudPosition(entity.transform().position.cpy())
 
         stage.actors {
             label("TreeStatus", "title") { actor ->
@@ -650,7 +650,7 @@ fun enemy(at: Vector2) {
     entity.addComponent<FunctionsComponent> {
         functions["debugblurbpositionupdate"] = {
 //            if(entity.onScreen()) {
-                val enemyPos = entity.transform().position.cpy().set(7f, 120f)
+                val enemyPos = entity.transform().position.cpy()
                 val widgetPos = inject<IUserInterface>().worldToHudPosition(enemyPos)
                 something.widget.setPosition(widgetPos.x, widgetPos.y)
 //            }
