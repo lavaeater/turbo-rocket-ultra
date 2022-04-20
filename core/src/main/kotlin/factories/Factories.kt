@@ -634,7 +634,7 @@ fun enemy(at: Vector2) {
 
         val moveAction = object : Action() {
             override fun act(delta: Float): Boolean {
-                val coordinate = hud.worldToHudPosition(entity.transform().position.cpy().add(1f, 1f))
+                val coordinate = hud.worldToHudPosition(entity.transform().position.cpy().add(.5f, -.5f))
                 actor.setPosition(coordinate.x, coordinate.y)
                 return true
             }
@@ -651,11 +651,12 @@ fun enemy(at: Vector2) {
                         var taskString = task.toString()
                         if (!taskString.contains("@"))
                             this@label.setText("""$taskString - $previousStatus
-speed: ${entity.body().linearVelocity.cpy().nor() }
-dir: ${entity.enemy().directionVector} 
-dist: ${entity.transform().position.dst(entity.enemy().nextPosition)}
+${entity.components.joinToString("\n")}                                
                             """.trimMargin())
                     }
+//                    speed: ${entity.body().linearVelocity.cpy().nor() }
+//                    dir: ${entity.enemy().directionVector}
+//                    dist: ${entity.transform().position.dst(entity.enemy().nextPosition)}
 //steps: ${entity.enemy().path.size}
                     override fun childAdded(task: Task<Entity>?, index: Int) {
 

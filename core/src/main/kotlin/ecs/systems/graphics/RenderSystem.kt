@@ -146,7 +146,7 @@ class RenderSystem(
             shapeDrawer.line(previous, ec.nextPosition, Color.BLUE,0.1f)
             previous.set(ec.nextPosition)
             for ((i, node) in ec.path.withIndex()) {
-                shapeDrawer.line(previous, node, Color.BLUE,0.1f)
+                shapeDrawer.line(previous, node, lineColor,0.1f)
                 when (i) {
                     0 -> {
                         shapeDrawer.filledCircle(node, .25f, Color.GREEN)
@@ -162,5 +162,6 @@ class RenderSystem(
             }
         }
     }
+    val lineColor = Color(0f,0f,1f,0.5f)
 }
 

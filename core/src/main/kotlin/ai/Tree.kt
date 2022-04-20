@@ -14,8 +14,8 @@ object Tree {
     fun getEnemyBehaviorTree() = tree<Entity> {
         dynamicGuardSelector {
             first(entityDo<Panic> { ifEntityHas<BurningComponent>() })
-            //then(entityDo<AttackPlayer> { ifEntityHas<PlayerIsInRange>() })
-            //then(entityDo<ChasePlayer> { ifEntityHas<TrackingPlayer>() })
+            then(entityDo<AttackPlayer> { ifEntityHas<PlayerIsInRange>() })
+            then(entityDo<ChasePlayer> { ifEntityHas<TrackingPlayer>() })
             ifThen(
                 entityHas<NoticedSomething>(),
                 selector {
@@ -27,7 +27,7 @@ object Tree {
                 selector<Entity> {
                     first(invert(entityDo<Amble>()))
                     then(invert(entityDo<SeekPlayer>()))
-                    //last(invert(entityDo<ChasePlayer>()))
+                    last(invert(entityDo<ChasePlayer>()))
                 })
         }
     }

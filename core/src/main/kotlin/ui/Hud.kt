@@ -61,7 +61,7 @@ class Hud(private val batch: Batch) : IUserInterface, MessageReceiver {
 
     override val stage by lazy {
         val aStage = Stage(hudViewPort, batch)
-        aStage.isDebugAll = true
+        aStage.isDebugAll = false
         aStage.actors {
             table {
                 setFillParent(true)
@@ -91,8 +91,8 @@ class Hud(private val batch: Batch) : IUserInterface, MessageReceiver {
                             boundLabel({ "Objectives: ${player.touchedObjectives.count()}" }).inCell.align(Align.right)
                             row()
                             boundLabel({ "Score: ${player.score}" }).inCell.align(Align.right)
-                            row()
-                            boundLabel({ "Pos: ${player.entity.transform().position}" }).inCell.align(Align.right)
+//                            row()
+//                            boundLabel({ "Pos: ${player.entity.transform().position}" }).inCell.align(Align.right)
                             row()
                             boundLabel({ "${player.currentWeapon}: ${player.ammoLeft}|${player.totalAmmo}" }).inCell.align(
                                 Align.right
