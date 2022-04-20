@@ -12,6 +12,7 @@ import com.badlogic.gdx.math.Vector2
 import com.badlogic.gdx.physics.box2d.Body
 import com.badlogic.gdx.physics.box2d.BodyDef
 import com.badlogic.gdx.physics.box2d.World
+import com.badlogic.gdx.scenes.scene2d.Action
 import data.Player
 import ecs.components.AudioComponent
 import ecs.components.BodyComponent
@@ -40,6 +41,8 @@ import features.weapons.AmmoType
 import features.weapons.WeaponDefinition
 import injection.Context.inject
 import input.ControlMapper
+import ktx.actors.plusAssign
+import ktx.actors.repeatForever
 import ktx.ashley.entity
 import ktx.ashley.with
 import ktx.box2d.body
@@ -628,15 +631,28 @@ fun enemy(at: Vector2) {
         entity.addComponent<BehaviorComponent> { tree = Tree.getEnemyBehaviorTree().apply { `object` = entity } }
     val hud = inject<IUserInterface>()
     val something = getUiThing {
-        val startPosition = hud.worldToHudPosition(entity.transform().position.cpy())
+        val startPosition = hud.worldToHudPosition(entity.transform().position)
+
+        val moveAction = object : Action() {
+            override fun act(delta: Float): Boolean {
+                val coordinate = hud.worldToHudPosition(entity.transform().position)
+                actor.setPosition(coordinate.x, coordinate.y)
+                return true
+            }
+        }.repeatForever()
 
         stage.actors {
             label("TreeStatus", "title") { actor ->
                 widget = this
                 actor.debug = true
+                actor += moveAction
+
                 btComponent.tree.addListener(object : Listener<Entity> {
                     override fun statusUpdated(task: Task<Entity>, previousStatus: Task.Status) {
-                        this@label.setText("$task - $previousStatus")
+                        var taskString = task.toString()
+                        if (!taskString.contains("@"))
+                            this@label.setText("$taskString - $previousStatus")
+//                            taskString = taskString.substringAfterLast(".").substringBeforeLast("@")
                     }
 
                     override fun childAdded(task: Task<Entity>?, index: Int) {
@@ -647,15 +663,15 @@ fun enemy(at: Vector2) {
 
         }
     }
-    entity.addComponent<FunctionsComponent> {
-        functions["debugblurbpositionupdate"] = {
-//            if(entity.onScreen()) {
-                val enemyPos = entity.transform().position.cpy()
-                val widgetPos = inject<IUserInterface>().worldToHudPosition(enemyPos)
-                something.widget.setPosition(widgetPos.x, widgetPos.y)
-//            }
-        }
-    }
+//    entity.addComponent<FunctionsComponent> {
+//        functions["debugblurbpositionupdate"] = {
+////            if(entity.onScreen()) {
+//            val enemyPos = entity.transform().position.cpy()
+//            val widgetPos = inject<IUserInterface>().worldToHudPosition(enemyPos)
+//            something.widget.setPosition(widgetPos.x, widgetPos.y)
+////            }
+//        }
+//    }
 
     box2dBody.userData = entity
     CounterObject.enemyCount++

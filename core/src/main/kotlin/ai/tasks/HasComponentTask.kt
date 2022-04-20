@@ -5,7 +5,7 @@ import com.badlogic.ashley.core.ComponentMapper
 import com.badlogic.ashley.core.Entity
 import com.badlogic.gdx.ai.btree.Task
 
-class HasComponentTask<T: Component>(private val componentClass: Class<T>) : EntityTask() {
+class HasComponentTask<T: Component>(val componentClass: Class<T>) : EntityTask() {
     private val mapper by lazy { ComponentMapper.getFor(componentClass) }
     override fun copyTo(task: Task<Entity>?): Task<Entity> {
         TODO("Not yet implemented")
