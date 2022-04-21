@@ -9,7 +9,7 @@
         "state": {
           "type": "markdown",
           "state": {
-            "file": "docs/done/Enemies and walls.md",
+            "file": "docs/devlog/2022-04-21.md",
             "mode": "source",
             "source": false
           }
@@ -69,7 +69,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "docs/done/Enemies and walls.md",
+                "file": "docs/devlog/2022-04-21.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -89,9 +89,9 @@
   },
   "active": "04665df505dbdf18",
   "lastOpenFiles": [
-    "docs/done/Enemies and walls.md",
     "docs/devlog/2022-04-21.md",
     "docs/KANBAN.md",
+    "docs/done/Enemies and walls.md",
     "docs/todo/Training map for enemies.md",
     "docs/devlog/2022-04-19.md",
     "docs/devlog/2022-04-18.md",
