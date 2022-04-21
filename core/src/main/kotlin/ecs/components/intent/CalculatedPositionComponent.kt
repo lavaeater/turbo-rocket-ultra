@@ -18,3 +18,10 @@ class CalculatedPositionComponent : Component, Pool.Poolable {
         calcPos.setZero()
     }
 }
+
+class FunctionsComponent: Component, Pool.Poolable {
+    var functions = mutableMapOf<String, ()->Unit>()
+    override fun reset() {
+        functions.clear()
+    }
+}

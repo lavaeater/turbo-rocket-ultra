@@ -3,11 +3,14 @@ package ecs.systems
 import com.badlogic.ashley.core.Entity
 import com.badlogic.ashley.systems.IteratingSystem
 import com.badlogic.gdx.physics.box2d.World
+import com.badlogic.gdx.scenes.scene2d.actions.Actions.removeActor
 import ecs.components.BodyComponent
 import ecs.components.gameplay.DestroyComponent
 import ktx.ashley.allOf
 import ktx.ashley.remove
 import physics.AshleyMappers
+import physics.hasUiThing
+import physics.uiThing
 import screens.CounterObject
 
 class BodyDestroyerSystem(private val world: World) : IteratingSystem(
@@ -15,7 +18,6 @@ class BodyDestroyerSystem(private val world: World) : IteratingSystem(
         DestroyComponent::class
     ).get()) {
 
-    @OptIn(ExperimentalStdlibApi::class)
     override fun processEntity(entity: Entity, deltaTime: Float) {
         if(AshleyMappers.body.has(entity)) {
             val bodyComponent = AshleyMappers.body.get(entity)
@@ -27,6 +29,11 @@ class BodyDestroyerSystem(private val world: World) : IteratingSystem(
         }
         if(AshleyMappers.enemy.has(entity))
             CounterObject.enemyCount--
+        if(entity.hasUiThing()) {
+            val uiThing = entity.uiThing()
+            uiThing.widget.isVisible = false
+            uiThing.widget.remove()// .addAction(removeActor())
+        }
 
         entity.removeAll()
         engine.removeEntity(entity)

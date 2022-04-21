@@ -9,7 +9,7 @@
         "state": {
           "type": "markdown",
           "state": {
-            "file": "docs/todo/Enemies and walls.md",
+            "file": "docs/devlog/2022-04-21.md",
             "mode": "source",
             "source": false
           }
@@ -69,7 +69,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "docs/todo/Enemies and walls.md",
+                "file": "docs/devlog/2022-04-21.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -89,15 +89,15 @@
   },
   "active": "04665df505dbdf18",
   "lastOpenFiles": [
-    "docs/todo/Enemies and walls.md",
+    "docs/devlog/2022-04-21.md",
+    "docs/KANBAN.md",
+    "docs/done/Enemies and walls.md",
+    "docs/todo/Training map for enemies.md",
+    "docs/devlog/2022-04-19.md",
+    "docs/devlog/2022-04-18.md",
+    "docs/devlog/2022-04-17.md",
     "docs/todo/Zombies with guns.md",
     "docs/todo/Enemy Aggression.md",
-    "docs/todo/Hold an area for n seconds.md",
-    "docs/todo/Zombies throwing projectiles.md",
-    "docs/todo/Vehicles.md",
-    "docs/todo/Transitions.md",
-    "docs/done/Thrown Item Trajectory.md",
-    "docs/done/Text Crawl.md",
-    "docs/done/Soundscape II - the Moaning.md"
+    "docs/todo/Hold an area for n seconds.md"
   ]
 }
