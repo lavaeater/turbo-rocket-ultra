@@ -31,6 +31,7 @@ class BodyDestroyerSystem(private val world: World) : IteratingSystem(
             CounterObject.enemyCount--
         if(entity.hasUiThing()) {
             val uiThing = entity.uiThing()
+            uiThing.widget.isVisible = false
             uiThing.widget.remove()// .addAction(removeActor())
         }
 
