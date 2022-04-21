@@ -8,3 +8,7 @@ Can different enemies have their own little worlds of facts?
 
 What we want to do is set facts with dots, or using some kind of hierarchy. That would mean, basically, a fudging graph. But graphs are chaotic and disordered, a tree is logical and structured. Always keep it simple unless you need to.
 
+Dots and schmots. These can be viewed as completely separate, set however we wish. So start by adding the ability to set facts inside the behavior tree implementation. Why? We'll see.
+
+- [ ] Create Unique Id for every enemy
+
