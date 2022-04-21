@@ -648,11 +648,9 @@ fun enemy(at: Vector2) {
                 actor += moveAction
                 btComponent.tree.addListener(object : Listener<Entity> {
                     override fun statusUpdated(task: Task<Entity>, previousStatus: Task.Status) {
-                        var taskString = task.toString()
+                        val taskString = task.toString()
                         if (!taskString.contains("@"))
-                            this@label.setText("""$taskString - $previousStatus
-${entity.components.joinToString("\n")}                                
-                            """.trimMargin())
+                            this@label.setText("""$taskString - $previousStatus""".trimMargin())
                     }
                     override fun childAdded(task: Task<Entity>?, index: Int) {
 
