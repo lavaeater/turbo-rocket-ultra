@@ -4,7 +4,7 @@ class Amble: TaskComponent() {
     var needsNew = true
 
     override fun reset() {
-        coolDownRange = (30f..180f)
+        coolDownRange = (10f..30f)
         needsNew = true
         super.reset()
     }

@@ -1,0 +1,6 @@
+{
+  "new-line-trigger": "enter",
+  "new-note-folder": "docs/todo",
+  "hide-tags-in-title": true,
+  "show-checkboxes": false
+}

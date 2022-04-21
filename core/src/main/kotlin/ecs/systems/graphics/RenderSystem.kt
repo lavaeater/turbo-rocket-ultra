@@ -29,6 +29,7 @@ class RenderSystem(
     private val rayHandler: RayHandler,
     private val camera: OrthographicCamera,
     private val mainViewPort: Viewport,
+    private val enemyDebug: Boolean,
     priority: Int
 ) : SortedIteratingSystem(
     allOf(
@@ -139,6 +140,28 @@ class RenderSystem(
         if (debug) {
             shapeDrawer.filledCircle(transform.position, .2f, Color.RED)
         }
+        if (enemyDebug && entity.isEnemy()) {
+            val ec = entity.enemy()
+            val previous = entity.transform().position.cpy()
+            shapeDrawer.line(previous, ec.nextPosition, Color.BLUE,0.1f)
+            previous.set(ec.nextPosition)
+            for ((i, node) in ec.path.withIndex()) {
+                shapeDrawer.line(previous, node, lineColor,0.1f)
+                when (i) {
+                    0 -> {
+                        shapeDrawer.filledCircle(node, .25f, Color.GREEN)
+                    }
+                    ec.path.size - 1 -> {
+                        shapeDrawer.filledCircle(node, .25f, Color.RED)
+                    }
+                    else -> {
+                        shapeDrawer.filledCircle(node, .25f, Color.BLUE)
+                    }
+                }
+                previous.set(node)
+            }
+        }
     }
+    val lineColor = Color(0f,0f,1f,0.5f)
 }
 

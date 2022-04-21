@@ -136,6 +136,9 @@ class GridMapManager {
                     }
                 }
             }
+            for(point in section.safePoints) {
+                shapeDrawer.rectangle(point.x - 0.5f, point.y - 0.5f, 1f, 1f, Color.GREEN)
+            }
             section.lights.forEach { it.isActive = true }
         }
     }

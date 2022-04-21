@@ -38,6 +38,7 @@ import ecs.systems.input.GamepadInputSystem
 import ecs.systems.input.KeyboardInputSystem
 import ecs.systems.intent.CalculatePositionSystem
 import ecs.systems.intent.IntentionSystem
+import ecs.systems.intent.RunFunctionsSystem
 import ecs.systems.pickups.LootDropSystem
 import ecs.systems.player.*
 import ktx.box2d.createWorld
@@ -68,8 +69,7 @@ object Context {
             bindSingleton(PolygonSpriteBatch())
             bindSingleton(ActionHandler())
             bindSingleton(OrthographicCamera())
-//            bind<IUserInterface> { UserInterface(inject<PolygonSpriteBatch>() as Batch, false) }
-            bind<IUserInterface> { Hud(inject<PolygonSpriteBatch>() as Batch) }
+            bindSingleton<IUserInterface> { Hud(inject<PolygonSpriteBatch>() as Batch) }
             bindSingleton(
                 ExtendViewport(
                     GAMEWIDTH,
@@ -109,7 +109,7 @@ object Context {
             addSystem(CharacterWalkAndShootDirectionSystem())
             addSystem(PlayerShootingSystem(inject()))
             addSystem(EnemyDeathSystem(audioPlayer = inject(), factsOfTheWorld = inject()))
-            addSystem(EnemyMovementSystem(true))
+            addSystem(EnemyMovementSystem(false))
             addSystem(PerimeterObjectiveSystem())
             // Ai Systems Start
             addSystem(AmblingSystem())
@@ -138,7 +138,7 @@ object Context {
             addSystem(WeaponChangeAndReloadSystem())
             addSystem(UpdatePlayerStatsSystem())
 //            addSystem(PhysicsDebugRendererSystem(inject(), inject()))
-            addSystem(RenderSystem(inject<PolygonSpriteBatch>() as Batch, false, inject(), inject(), inject<ExtendViewport>(),1))
+            addSystem(RenderSystem(inject<PolygonSpriteBatch>() as Batch, false, inject(), inject(), inject<ExtendViewport>(), true,1))
             addSystem(RenderMiniMapSystem(3))
             addSystem(PlayerFlashlightSystem())
             //lets NOT write debug badges
@@ -157,6 +157,7 @@ object Context {
 //            addSystem(BuildSystem(true))
             addSystem(IntentionSystem())
             addSystem(CalculatePositionSystem())
+            addSystem(RunFunctionsSystem())
 
         }
     }

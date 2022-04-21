@@ -20,7 +20,9 @@ import ecs.components.AudioComponent
 import ecs.components.intent.IntendsTo
 import ecs.components.intent.IntentComponent
 import ecs.components.intent.CalculatedPositionComponent
+import ecs.components.intent.FunctionsComponent
 import ktx.ashley.mapperFor
+import ui.UiThingComponent
 import kotlin.reflect.KType
 import kotlin.reflect.typeOf
 
@@ -80,10 +82,39 @@ object AshleyMappers {
     val light = mapperFor<LightComponent>()
     val intent = mapperFor<IntentComponent>()
     val calculatedPosition = mapperFor<CalculatedPositionComponent>()
+    val functions = mapperFor<FunctionsComponent>()
+    val obstacleCollision = mapperFor<CollidedWithObstacle>()
+    val uiThing = mapperFor<UiThingComponent>()
+}
+
+fun Entity.bullet(): BulletComponent {
+    return AshleyMappers.bullet.get(this)
+}
+
+fun Entity.uiThing(): UiThingComponent {
+    return AshleyMappers.uiThing.get(this)
+}
+fun Entity.hasUiThing() : Boolean {
+    return AshleyMappers.uiThing.has(this)
+}
+
+fun Entity.hasCollidedWithObstacle() : Boolean {
+    return AshleyMappers.obstacleCollision.has(this)
+}
+fun Entity.onScreen() : Boolean {
+    return AshleyMappers.frustum.has(this)
 }
 
 fun Entity.getCalculatedPosition(): Vector2 {
     return AshleyMappers.calculatedPosition.get(this).calculate()
+}
+
+fun Entity.runFunctions() {
+    for(f in AshleyMappers.functions.get(this).functions.values) f()
+}
+
+fun Entity.runFunction(key: String) {
+    AshleyMappers.functions.get(this).functions[key]!!()
 }
 
 fun Entity.intendsTo(intendsTo: IntendsTo): Boolean {
@@ -116,7 +147,7 @@ fun Entity.enemy(): EnemyComponent {
     return AshleyMappers.enemy.get(this)
 }
 
-fun Entity.hasEnemy(): Boolean {
+fun Entity.isEnemy(): Boolean {
     return AshleyMappers.enemy.has(this)
 }
 
@@ -226,4 +257,8 @@ fun Entity.hacking(): HackingComponent {
 
 fun Entity.hasHacking(): Boolean {
     return AshleyMappers.hacking.has(this)
+}
+
+fun Entity.hasObstacle() : Boolean {
+    return AshleyMappers.obstacle.has(this)
 }

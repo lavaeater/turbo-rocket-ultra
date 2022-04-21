@@ -1,9 +1,11 @@
 package physics
 
 import com.badlogic.ashley.core.Entity
+import com.badlogic.gdx.physics.box2d.Contact
 
 sealed class ContactType {
     object Unknown : ContactType()
+    class EnemyAndObstacle(val enemy: Entity) : ContactType()
     class EnemyAndDamage(val damageEntity: Entity, val enemy: Entity) : ContactType()
     class PlayerAndDamage(val damageEntity: Entity, val player: Entity) : ContactType()
     class SomeEntityAndDamage(val damageEntity: Entity, val otherThing: Entity) : ContactType()
