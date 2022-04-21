@@ -4,15 +4,11 @@
     "type": "split",
     "children": [
       {
-        "id": "04665df505dbdf18",
+        "id": "638fa58aa5f16d69",
         "type": "leaf",
         "state": {
-          "type": "markdown",
-          "state": {
-            "file": "docs/todo/Enemies and walls.md",
-            "mode": "source",
-            "source": false
-          }
+          "type": "empty",
+          "state": {}
         }
       }
     ],
@@ -69,7 +65,6 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "docs/todo/Enemies and walls.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -87,8 +82,10 @@
     "width": 300,
     "collapsed": true
   },
-  "active": "04665df505dbdf18",
+  "active": "638fa58aa5f16d69",
   "lastOpenFiles": [
+    "docs/devlog/2022-04-18.md",
+    "docs/devlog/2022-04-17.md",
     "docs/todo/Enemies and walls.md",
     "docs/todo/Zombies with guns.md",
     "docs/todo/Enemy Aggression.md",
@@ -96,8 +93,6 @@
     "docs/todo/Zombies throwing projectiles.md",
     "docs/todo/Vehicles.md",
     "docs/todo/Transitions.md",
-    "docs/done/Thrown Item Trajectory.md",
-    "docs/done/Text Crawl.md",
-    "docs/done/Soundscape II - the Moaning.md"
+    "docs/done/Thrown Item Trajectory.md"
   ]
 }
