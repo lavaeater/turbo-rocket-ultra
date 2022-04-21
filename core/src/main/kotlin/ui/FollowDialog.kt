@@ -1,17 +1,15 @@
 package ui
 
+import com.badlogic.ashley.core.Component
 import com.badlogic.gdx.scenes.scene2d.Actor
-import com.badlogic.gdx.scenes.scene2d.ui.Widget
+import com.badlogic.gdx.utils.Pool
 import injection.Context.inject
-import ktx.scene2d.KTableWidget
-import ktx.scene2d.KWidget
-import ktx.scene2d.scene2d
-import ktx.scene2d.table
 
 /**
  *
  */
-class UiThing(val widget: Actor) {
+class UiThingComponent: Component, Pool.Poolable {
+    var widget: Actor = Actor()
     fun show() {
         widget.isVisible = true
     }
@@ -23,15 +21,21 @@ class UiThing(val widget: Actor) {
     fun update() {
         //Dunno
     }
+
+    override fun reset() {
+        widget.isVisible = false
+        widget.remove()
+        widget = Actor()
+    }
 }
 
-fun getUiThing(block: UiThingBuilder.() -> Unit) : UiThing = UiThingBuilder().apply(block).build()
+fun getUiThing(block: UiThingBuilder.() -> Unit) : UiThingComponent = UiThingBuilder().apply(block).build()
 
 class UiThingBuilder {
     val stage by lazy { inject<IUserInterface>().stage }
     lateinit var widget: Actor
-    fun build() : UiThing {
+    fun build() : UiThingComponent {
 //        stage.addActor(widget)
-        return UiThing(widget)
+        return UiThingComponent().apply { this.widget = widget }
     }
 }

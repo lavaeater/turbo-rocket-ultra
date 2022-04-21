@@ -629,13 +629,15 @@ fun enemy(at: Vector2) {
     val btComponent =
         entity.addComponent<BehaviorComponent> { tree = Tree.getEnemyBehaviorTree().apply { `object` = entity } }
     val hud = inject<IUserInterface>()
-    val something = getUiThing {
+    entity.add(getUiThing {
         val startPosition = hud.worldToHudPosition(entity.transform().position.cpy().add(1f, 1f))
 
         val moveAction = object : Action() {
             override fun act(delta: Float): Boolean {
-                val coordinate = hud.worldToHudPosition(entity.transform().position.cpy().add(.5f, -.5f))
-                actor.setPosition(coordinate.x, coordinate.y)
+                if(entity.hasTransform()) {
+                    val coordinate = hud.worldToHudPosition(entity.transform().position.cpy().add(.5f, -.5f))
+                    actor.setPosition(coordinate.x, coordinate.y)
+                }
                 return true
             }
         }.repeatForever()
@@ -643,9 +645,7 @@ fun enemy(at: Vector2) {
         stage.actors {
             label("TreeStatus" ) { actor ->
                 widget = this
-                actor.debug = true
                 actor += moveAction
-
                 btComponent.tree.addListener(object : Listener<Entity> {
                     override fun statusUpdated(task: Task<Entity>, previousStatus: Task.Status) {
                         var taskString = task.toString()
@@ -654,28 +654,13 @@ fun enemy(at: Vector2) {
 ${entity.components.joinToString("\n")}                                
                             """.trimMargin())
                     }
-//                    speed: ${entity.body().linearVelocity.cpy().nor() }
-//                    dir: ${entity.enemy().directionVector}
-//                    dist: ${entity.transform().position.dst(entity.enemy().nextPosition)}
-//steps: ${entity.enemy().path.size}
                     override fun childAdded(task: Task<Entity>?, index: Int) {
 
                     }
                 })
             }.setPosition(startPosition.x, startPosition.y)
-
         }
-    }
-//    entity.addComponent<FunctionsComponent> {
-//        functions["debugblurbpositionupdate"] = {
-////            if(entity.onScreen()) {
-//            val enemyPos = entity.transform().position.cpy()
-//            val widgetPos = inject<IUserInterface>().worldToHudPosition(enemyPos)
-//            something.widget.setPosition(widgetPos.x, widgetPos.y)
-////            }
-//        }
-//    }
-
+    })
     box2dBody.userData = entity
     CounterObject.enemyCount++
 }

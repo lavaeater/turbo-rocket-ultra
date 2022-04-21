@@ -22,6 +22,7 @@ import ecs.components.intent.IntentComponent
 import ecs.components.intent.CalculatedPositionComponent
 import ecs.components.intent.FunctionsComponent
 import ktx.ashley.mapperFor
+import ui.UiThingComponent
 import kotlin.reflect.KType
 import kotlin.reflect.typeOf
 
@@ -83,6 +84,14 @@ object AshleyMappers {
     val calculatedPosition = mapperFor<CalculatedPositionComponent>()
     val functions = mapperFor<FunctionsComponent>()
     val obstacleCollision = mapperFor<CollidedWithObstacle>()
+    val uiThing = mapperFor<UiThingComponent>()
+}
+
+fun Entity.uiThing(): UiThingComponent {
+    return AshleyMappers.uiThing.get(this)
+}
+fun Entity.hasUiThing() : Boolean {
+    return AshleyMappers.uiThing.has(this)
 }
 
 fun Entity.hasCollidedWithObstacle() : Boolean {
