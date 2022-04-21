@@ -11,6 +11,7 @@ import com.badlogic.gdx.physics.box2d.ContactListener
 import com.badlogic.gdx.physics.box2d.Manifold
 import ecs.components.AudioChannels
 import ecs.components.BodyComponent
+import ecs.components.ai.CollidedWithObstacle
 import ecs.components.ai.TrackingPlayer
 import ecs.components.enemy.EnemyComponent
 import ecs.components.enemy.EnemySensorComponent
@@ -260,12 +261,20 @@ class ContactManager : ContactListener {
             is ContactType.GrenadeHittingAnything -> {
                 handleGrenadeHittingAnything(contactType)
             }
+            is ContactType.EnemyAndObstacle -> {
+                handleEnemyHittingObstacle(contactType)
+            }
         }
 
         if (contact.atLeastOneHas<BulletComponent>()) {
             val entity = contact.getEntityFor<BulletComponent>()
             entity.add(DestroyComponent())
         }
+    }
+
+    private fun handleEnemyHittingObstacle(contactType: ContactType.EnemyAndObstacle) {
+        if(!contactType.enemy.hasCollidedWithObstacle())
+            contactType.enemy.addComponent<CollidedWithObstacle>()
     }
 
     @OptIn(ExperimentalStdlibApi::class)

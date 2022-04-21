@@ -3,6 +3,8 @@ package factories
 import ai.Tree
 import com.badlogic.ashley.core.Engine
 import com.badlogic.ashley.core.Entity
+import com.badlogic.gdx.ai.btree.BehaviorTree.Listener
+import com.badlogic.gdx.ai.btree.Task
 import com.badlogic.gdx.graphics.Color
 import com.badlogic.gdx.math.MathUtils
 import com.badlogic.gdx.math.MathUtils.degreesToRadians
@@ -10,7 +12,9 @@ import com.badlogic.gdx.math.Vector2
 import com.badlogic.gdx.physics.box2d.Body
 import com.badlogic.gdx.physics.box2d.BodyDef
 import com.badlogic.gdx.physics.box2d.World
+import com.badlogic.gdx.scenes.scene2d.Action
 import data.Player
+import ecs.components.AudioComponent
 import ecs.components.BodyComponent
 import ecs.components.ai.BehaviorComponent
 import ecs.components.ai.GibComponent
@@ -19,12 +23,15 @@ import ecs.components.fx.CreateEntityComponent
 import ecs.components.fx.ParticleEffectComponent
 import ecs.components.fx.SplatterComponent
 import ecs.components.gameplay.*
-import ecs.components.graphics.*
+import ecs.components.graphics.AnimatedCharacterComponent
+import ecs.components.graphics.CameraFollowComponent
+import ecs.components.graphics.MiniMapComponent
+import ecs.components.graphics.SpriteComponent
+import ecs.components.intent.FunctionsComponent
 import ecs.components.pickups.LootComponent
 import ecs.components.pickups.LootDropComponent
 import ecs.components.player.*
 import ecs.components.towers.TowerComponent
-import ecs.components.AudioComponent
 import ecs.systems.graphics.GameConstants.PLAYER_DENSITY
 import ecs.systems.graphics.GameConstants.SHIP_ANGULAR_DAMPING
 import ecs.systems.graphics.GameConstants.SHIP_LINEAR_DAMPING
@@ -34,6 +41,8 @@ import features.weapons.AmmoType
 import features.weapons.WeaponDefinition
 import injection.Context.inject
 import input.ControlMapper
+import ktx.actors.plusAssign
+import ktx.actors.repeatForever
 import ktx.ashley.entity
 import ktx.ashley.with
 import ktx.box2d.body
@@ -42,12 +51,15 @@ import ktx.box2d.circle
 import ktx.box2d.filter
 import ktx.math.random
 import ktx.math.vec2
+import ktx.scene2d.actors
 import ktx.scene2d.label
 import ktx.scene2d.scene2d
 import ktx.scene2d.table
-import physics.addComponent
+import physics.*
 import screens.CounterObject
 import tru.Assets
+import ui.IUserInterface
+import ui.getUiThing
 import kotlin.experimental.or
 
 fun world(): World {
@@ -246,6 +258,7 @@ fun tower(
             color = Color.GREEN
         }
         with<TowerComponent>()
+        with<ObstacleComponent>()
     }
     towerEntity.addComponent<BehaviorComponent> { tree = Tree.getTowerBehaviorTree().apply { `object` = towerEntity } }
     towerBody.userData = towerEntity
@@ -319,7 +332,7 @@ fun buildCursor(): Entity {
         }
     }
     return entity
- }
+}
 
 fun player(player: Player, mapper: ControlMapper, at: Vector2, debug: Boolean) {
     /*
@@ -612,7 +625,40 @@ fun enemy(at: Vector2) {
             color = Color.RED
         }
     }
-    entity.addComponent<BehaviorComponent> { tree = Tree.getEnemyBehaviorTree().apply { `object` = entity } }
+
+    val btComponent =
+        entity.addComponent<BehaviorComponent> { tree = Tree.getEnemyBehaviorTree().apply { `object` = entity } }
+    val hud = inject<IUserInterface>()
+    entity.add(getUiThing {
+        val startPosition = hud.worldToHudPosition(entity.transform().position.cpy().add(1f, 1f))
+
+        val moveAction = object : Action() {
+            override fun act(delta: Float): Boolean {
+                if(entity.hasTransform()) {
+                    val coordinate = hud.worldToHudPosition(entity.transform().position.cpy().add(.5f, -.5f))
+                    actor.setPosition(coordinate.x, coordinate.y)
+                }
+                return true
+            }
+        }.repeatForever()
+
+        stage.actors {
+            label("TreeStatus" ) { actor ->
+                widget = this
+                actor += moveAction
+                btComponent.tree.addListener(object : Listener<Entity> {
+                    override fun statusUpdated(task: Task<Entity>, previousStatus: Task.Status) {
+                        val taskString = task.toString()
+                        if (!taskString.contains("@"))
+                            this@label.setText("""$taskString - $previousStatus""".trimMargin())
+                    }
+                    override fun childAdded(task: Task<Entity>?, index: Int) {
+
+                    }
+                })
+            }.setPosition(startPosition.x, startPosition.y)
+        }
+    })
     box2dBody.userData = entity
     CounterObject.enemyCount++
 }
@@ -663,6 +709,7 @@ fun hackingStation(
             light.position = box2dBody.position
             light.isStaticLight = true
         }
+        with<ObstacleComponent>()
     }
     box2dBody.userData = entity
 }
@@ -745,6 +792,7 @@ fun blockade(
         with<BodyComponent> { body = box2dBody }
         with<TransformComponent> { position.set(box2dBody.position) }
         with<BlockadeComponent>()
+        with<ObstacleComponent>()
         with<SpriteComponent> {
             sprite = Assets.buildables.first()
             scale = 4f
@@ -822,11 +870,12 @@ fun objective(
         with<ObjectiveComponent> {
             id = "I did this"
         }
+        with<ObstacleComponent>()
         with<LightComponent> {
             light.position = box2dBody.position
             light.isStaticLight = true
         }
-        if(perimeterObjective)
+        if (perimeterObjective)
             with<PerimeterObjectiveComponent>()
     }
     box2dBody.userData = entity
