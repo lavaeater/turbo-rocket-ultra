@@ -7,9 +7,11 @@
         "id": "04665df505dbdf18",
         "type": "leaf",
         "state": {
-          "type": "kanban",
+          "type": "markdown",
           "state": {
-            "file": "docs/KANBAN.md"
+            "file": "docs/todo/BehaviorTree Facts.md",
+            "mode": "source",
+            "source": false
           }
         }
       },
@@ -19,7 +21,7 @@
         "state": {
           "type": "markdown",
           "state": {
-            "file": "docs/todo/BehaviorTree Facts.md",
+            "file": "docs/todo/Enemy Aggression.md",
             "mode": "source",
             "source": false
           }
@@ -97,17 +99,17 @@
     "width": 300,
     "collapsed": true
   },
-  "active": "51b61f7cff92c2f1",
+  "active": "04665df505dbdf18",
   "lastOpenFiles": [
     "docs/todo/BehaviorTree Facts.md",
     "docs/KANBAN.md",
+    "docs/todo/Guns as Entities.md",
     "docs/devlog/2022-04-21.md",
     "docs/done/Enemies and walls.md",
     "docs/todo/Training map for enemies.md",
     "docs/devlog/2022-04-19.md",
     "docs/devlog/2022-04-18.md",
     "docs/devlog/2022-04-17.md",
-    "docs/todo/Zombies with guns.md",
-    "docs/todo/Enemy Aggression.md"
+    "docs/todo/Zombies with guns.md"
   ]
 }

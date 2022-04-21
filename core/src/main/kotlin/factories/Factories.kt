@@ -57,6 +57,7 @@ import ktx.scene2d.scene2d
 import ktx.scene2d.table
 import physics.*
 import screens.CounterObject
+import story.FactsOfTheWorld
 import tru.Assets
 import ui.IUserInterface
 import ui.getUiThing
@@ -67,6 +68,10 @@ fun world(): World {
 }
 
 fun engine(): Engine {
+    return inject()
+}
+
+fun factsOfTheWorld(): FactsOfTheWorld {
     return inject()
 }
 
