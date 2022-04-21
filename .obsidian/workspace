@@ -7,9 +7,19 @@
         "id": "04665df505dbdf18",
         "type": "leaf",
         "state": {
+          "type": "kanban",
+          "state": {
+            "file": "docs/KANBAN.md"
+          }
+        }
+      },
+      {
+        "id": "51b61f7cff92c2f1",
+        "type": "leaf",
+        "state": {
           "type": "markdown",
           "state": {
-            "file": "docs/devlog/2022-04-21.md",
+            "file": "docs/todo/BehaviorTree Facts.md",
             "mode": "source",
             "source": false
           }
@@ -69,7 +79,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "docs/devlog/2022-04-21.md",
+                "file": "docs/todo/BehaviorTree Facts.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -87,17 +97,17 @@
     "width": 300,
     "collapsed": true
   },
-  "active": "04665df505dbdf18",
+  "active": "51b61f7cff92c2f1",
   "lastOpenFiles": [
-    "docs/devlog/2022-04-21.md",
+    "docs/todo/BehaviorTree Facts.md",
     "docs/KANBAN.md",
+    "docs/devlog/2022-04-21.md",
     "docs/done/Enemies and walls.md",
     "docs/todo/Training map for enemies.md",
     "docs/devlog/2022-04-19.md",
     "docs/devlog/2022-04-18.md",
     "docs/devlog/2022-04-17.md",
     "docs/todo/Zombies with guns.md",
-    "docs/todo/Enemy Aggression.md",
-    "docs/todo/Hold an area for n seconds.md"
+    "docs/todo/Enemy Aggression.md"
   ]
 }

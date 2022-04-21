@@ -87,6 +87,10 @@ object AshleyMappers {
     val uiThing = mapperFor<UiThingComponent>()
 }
 
+fun Entity.bullet(): BulletComponent {
+    return AshleyMappers.bullet.get(this)
+}
+
 fun Entity.uiThing(): UiThingComponent {
     return AshleyMappers.uiThing.get(this)
 }

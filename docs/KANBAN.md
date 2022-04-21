@@ -24,6 +24,7 @@ kanban-plugin: basic
 - [ ] [[Transitions]]
 - [ ] [[Zombies throwing projectiles]]
 - [ ] [[Zombies with guns]]
+- [ ] [[BehaviorTree Facts]]
 
 
 ## Doing

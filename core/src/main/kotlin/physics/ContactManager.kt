@@ -3,7 +3,6 @@ package physics
 import audio.AudioPlayer
 import com.badlogic.ashley.core.Engine
 import com.badlogic.gdx.Input
-import com.badlogic.gdx.graphics.OrthographicCamera
 import com.badlogic.gdx.math.Vector2
 import com.badlogic.gdx.physics.box2d.Contact
 import com.badlogic.gdx.physics.box2d.ContactImpulse
@@ -14,8 +13,6 @@ import ecs.components.BodyComponent
 import ecs.components.ai.CollidedWithObstacle
 import ecs.components.ai.TrackingPlayer
 import ecs.components.enemy.EnemyComponent
-import ecs.components.enemy.EnemySensorComponent
-import ecs.components.enemy.TackleComponent
 import ecs.components.fx.ParticleEffectComponent
 import ecs.components.gameplay.*
 import ecs.components.pickups.LootComponent
@@ -61,21 +58,19 @@ contact, which is one of the superpowers of sealed classes, that become availabl
 class ContactManager : ContactListener {
     private val engine by lazy { inject<Engine>() }
     private val messageHandler by lazy { inject<MessageHandler>() }
-    private val camera by lazy { inject<OrthographicCamera>() }
     private val audioPlayer by lazy { inject<AudioPlayer>() }
 
     @OptIn(ExperimentalStdlibApi::class)
     override fun beginContact(contact: Contact) {
-        val contactType = contact.thisIsAContactBetween()
-        when (contactType) {
+        when (val contactType = contact.thisIsAContactBetween()) {
             is ContactType.EnemyAndBullet -> {
-                val enemy = contactType.enemy
+                val enemyEntity = contactType.enemy
                 val bulletEntity = contactType.bullet
 
-                val enemyComponent = enemy.getComponent<EnemyComponent>()
-                val bulletComponent = bulletEntity.getComponent<BulletComponent>()
+                val enemyComponent = enemyEntity.enemy()
+                val bulletComponent = bulletEntity.bullet()
                 enemyComponent.takeDamage(bulletComponent.damage, bulletComponent.player)
-                val bulletBody = bulletEntity.getComponent<BodyComponent>().body!!
+                val bulletBody = bulletEntity.body()
                 val splatterAngle = bulletBody.linearVelocity.cpy().angleDeg()
 
                 enemyComponent.lastShotAngle = splatterAngle
@@ -232,7 +227,7 @@ class ContactManager : ContactListener {
                     playerControl.locked = true
                     if(contactType.other.hasHacking()) {
                         //create the done function, I suppose?
-                        var inputSequence: List<Int> = if(playerControl.controlMapper.isGamepad)
+                        val inputSequence: List<Int> = if(playerControl.controlMapper.isGamepad)
                             listOf(Button.buttonsToCodes[Button.DPadUp]!!,Button.buttonsToCodes[Button.DPadLeft]!!)
                         else
                             listOf(Input.Keys.UP, Input.Keys.LEFT)
@@ -279,7 +274,7 @@ class ContactManager : ContactListener {
 
     @OptIn(ExperimentalStdlibApi::class)
     fun handleGrenadeHittingAnything(contactType: ContactType.GrenadeHittingAnything) {
-//This should be timed using cooldown, not this way
+        //This should be timed using cooldown, not this way
         audioPlayer.playOnChannel(AudioChannels.simultaneous, Assets.newSoundEffects["weapons"]!!["grenade"]!!.random())
         val grenade = contactType.grenade
         val grenadeComponent = grenade.getComponent<GrenadeComponent>()
