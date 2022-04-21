@@ -62,9 +62,9 @@ class GridMapSection(
     val safePoints by lazy {
         val sp = mutableListOf<Vector2>()
         val testVector = vec2()
-        val maxPoints = (safeBounds.area()).toInt()
+        val maxPoints = (innerBounds.area()).toInt() / 10
         for (i in 0..maxPoints) {
-            val point = safeBounds.randomPoint()
+            val point = innerBounds.randomPoint()
             if (isThisPointSafe(point)) {
                 sp.add(point)
             }
@@ -74,7 +74,7 @@ class GridMapSection(
 
     private fun isThisPointSafe(position: Vector2): Boolean {
         var itIsSafe = true
-        world().query(position.x, position.y, position.x, position.y) {
+        world().query(position.x - 0.5f, position.y - 0.5f, position.x + 0.5f, position.y + 0.5f) {
             if (it.isEntity() && it.getEntity().hasObstacle()) {
                 itIsSafe = false
                 Query.STOP

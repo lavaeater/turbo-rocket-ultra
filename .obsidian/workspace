@@ -90,6 +90,7 @@
   "active": "04665df505dbdf18",
   "lastOpenFiles": [
     "docs/todo/Enemies and walls.md",
+    "docs/KANBAN.md",
     "docs/devlog/2022-04-19.md",
     "docs/devlog/2022-04-18.md",
     "docs/devlog/2022-04-17.md",
@@ -97,7 +98,6 @@
     "docs/todo/Enemy Aggression.md",
     "docs/todo/Hold an area for n seconds.md",
     "docs/todo/Zombies throwing projectiles.md",
-    "docs/todo/Vehicles.md",
-    "docs/todo/Transitions.md"
+    "docs/todo/Vehicles.md"
   ]
 }
