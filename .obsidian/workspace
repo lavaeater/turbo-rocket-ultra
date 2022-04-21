@@ -14,18 +14,6 @@
             "source": false
           }
         }
-      },
-      {
-        "id": "51b61f7cff92c2f1",
-        "type": "leaf",
-        "state": {
-          "type": "markdown",
-          "state": {
-            "file": "docs/todo/Enemy Aggression.md",
-            "mode": "source",
-            "source": false
-          }
-        }
       }
     ],
     "direction": "vertical"
@@ -102,6 +90,7 @@
   "active": "04665df505dbdf18",
   "lastOpenFiles": [
     "docs/todo/BehaviorTree Facts.md",
+    "docs/todo/Enemy Aggression.md",
     "docs/KANBAN.md",
     "docs/todo/Guns as Entities.md",
     "docs/devlog/2022-04-21.md",
@@ -109,7 +98,6 @@
     "docs/todo/Training map for enemies.md",
     "docs/devlog/2022-04-19.md",
     "docs/devlog/2022-04-18.md",
-    "docs/devlog/2022-04-17.md",
-    "docs/todo/Zombies with guns.md"
+    "docs/devlog/2022-04-17.md"
   ]
 }

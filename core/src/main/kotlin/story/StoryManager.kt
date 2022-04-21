@@ -1,14 +1,25 @@
 package story
 
 import injection.Context.inject
+import messaging.Message
+import messaging.MessageHandler
+import messaging.MessageReceiver
+import kotlin.reflect.KClass
 
-class StoryManager {
+class StoryManager : MessageReceiver {
 	private val stories  = mutableListOf<Story>()
 	private val finishedStories = mutableListOf<Story>()
 	private val factsOfTheWorld by lazy { inject<FactsOfTheWorld>() }
 	/*
 	or do we create a global, main story... yes we do, yes we do...
 	 */
+	init {
+	    inject<MessageHandler>().apply {
+			this.receivers.add(this@StoryManager)
+		}
+	}
+
+
 
 	fun checkStories() {
 		val matchingStories = stories.filter {
@@ -50,6 +61,7 @@ class StoryManager {
 	fun activate() {
 		for(story in stories)
 			story.activate()
+
 	}
 
 	fun addStory(story: Story) {
@@ -59,5 +71,14 @@ class StoryManager {
 
 	fun addStories(vararg story: Story) {
 		stories.addAll(story)
+	}
+
+	override val messageTypes: Set<KClass<*>> = setOf(Message.FactUpdated::class)
+
+	override fun recieveMessage(message: Message) {
+		when(message) {
+			is Message.FactUpdated -> checkStories()
+			else -> {} //We only care about one type of message
+		}
 	}
 }

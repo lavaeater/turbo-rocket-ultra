@@ -8,10 +8,25 @@ import physics.getComponent
 import story.fact.*
 import story.rule.Rule
 
-class FactsOfTheWorld(private val preferences: com.badlogic.gdx.Preferences, clearFacts: Boolean = false) {
+
+class FactsOfTheWorld(
+    private val preferences: com.badlogic.gdx.Preferences,
+    private val onFactUpdated: (key: String) -> Unit = {},
+    clearFacts: Boolean = false) {
     init {
         if (clearFacts)
             clearAllFacts()
+    }
+    private var isUpdating = true
+    fun silent(action: (FactsOfTheWorld) -> Unit) {
+        isUpdating = false
+        action(this)
+        isUpdating = true
+    }
+
+    fun doUpdateCall(key: String) {
+        if(isUpdating)
+            onFactUpdated(key)
     }
 
     val npcNames = mapOf(
@@ -83,10 +98,12 @@ class FactsOfTheWorld(private val preferences: com.badlogic.gdx.Preferences, cle
 
     fun storeStringFact(fact: StringFact) {
         preferences.putString(fact.key, fact.value.serializeToString())
+        doUpdateCall(fact.key)
     }
 
     fun clearStringFact(key: String) {
         preferences.putString(key, "".serializeToString())
+        doUpdateCall(key)
     }
 
     fun stateIntFact(key: String, value: Int) {
@@ -99,9 +116,10 @@ class FactsOfTheWorld(private val preferences: com.badlogic.gdx.Preferences, cle
         storeFloatFact(fact)
     }
 
-    fun addToIntFact(key: String, value: Int) {
-        val factValue = getIntValue(key)
-        storeIntFact(IntFact(key, factValue + value))
+    fun addToIntFact(key: String, value: Int): Int {
+        val factValue = getIntValue(key) + value
+        storeIntFact(IntFact(key, factValue))
+        return factValue
     }
 
     fun subtractFromIntFact(key: String, value: Int) {
@@ -117,6 +135,7 @@ class FactsOfTheWorld(private val preferences: com.badlogic.gdx.Preferences, cle
 
     private fun saveListFact(fact: ListFact) {
         preferences.putString(fact.key, fact.value.serializeToString())
+        doUpdateCall(fact.key)
     }
 
     fun removeFromList(key: String, value: String) {
@@ -127,6 +146,7 @@ class FactsOfTheWorld(private val preferences: com.badlogic.gdx.Preferences, cle
 
     fun storeBooleanFact(fact: BooleanFact) {
         preferences.putString(fact.key, fact.value.serializeToString())
+        doUpdateCall(fact.key)
     }
 
     fun getIntValue(key: String): Int {
@@ -139,10 +159,12 @@ class FactsOfTheWorld(private val preferences: com.badlogic.gdx.Preferences, cle
 
     private fun storeIntFact(fact: IntFact) {
         preferences.putString(fact.key, fact.value.serializeToString())
+        doUpdateCall(fact.key)
     }
 
     private fun storeFloatFact(fact: FloatFact) {
         preferences.putString(fact.key, fact.value.serializeToString())
+        doUpdateCall(fact.key)
     }
 
     private fun ensureListFact(key: String): ListFact {
@@ -282,9 +304,3 @@ class FactsOfTheWorld(private val preferences: com.badlogic.gdx.Preferences, cle
     }
 }
 
-enum class FactTypes {
-    String,
-    Int,
-    Boolean,
-    List
-}

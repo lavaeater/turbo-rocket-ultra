@@ -160,7 +160,6 @@ D1B67A
         engine.update(delta)
         ui.update(delta)
         audioPlayer.update(delta)
-        storyManager.checkStories()
     }
 
     private val velIters = 8
