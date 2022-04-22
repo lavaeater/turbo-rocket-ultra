@@ -64,7 +64,7 @@ class CriteriaBuilder:Builder<Criterion> {
 	 */
 
 	override fun build(): Criterion {
-		return Criterion(key, matcher)
+		return Criterion(key,false, matcher)
 	}
 
 }

@@ -63,7 +63,7 @@ open class TurboSound(val sound: Sound, val duration: Float) {
 }
 
 class AudioPlayer(private val defaultVolume : Float = 1f) {
-    val soundChannels = mutableMapOf<String, SoundChannel>()
+    private val soundChannels = mutableMapOf<String, SoundChannel>()
 
 
     fun playNextIfEmpty(channel:String, vararg turboSounds: TurboSound) {
@@ -79,7 +79,7 @@ class AudioPlayer(private val defaultVolume : Float = 1f) {
         getChannel(channel).playOnQueue(turboSound)
     }
 
-    fun getChannel(channel: String) : SoundChannel {
+    private fun getChannel(channel: String) : SoundChannel {
         if(!soundChannels.containsKey(channel)) {
             soundChannels[channel] = SoundChannel(channel, defaultVolume)
         }
@@ -90,7 +90,7 @@ class AudioPlayer(private val defaultVolume : Float = 1f) {
         getChannel(channel).playNow(getSound(category,sound), vol)
     }
 
-    fun getSound(category: String, sound: String): TurboSound {
+    private fun getSound(category: String, sound: String): TurboSound {
         return Assets.newSoundEffects[category]!![sound]!!.random()
     }
 

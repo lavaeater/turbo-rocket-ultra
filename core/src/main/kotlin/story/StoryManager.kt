@@ -44,10 +44,8 @@ class StoryManager : MessageReceiver {
              */
 			for (story in matchingStories) {
 				for (rule in factsOfTheWorld.rulesThatPass(story.rules.toSet())) {
-					if (rule != null) {
-						rule.consequence.apply()
-						story.finishedRules.add(rule.name)
-					}
+					rule.consequence.apply()
+					story.finishedRules.add(rule.name)
 					if (story.storyFinished) {
 						//A story sets its own finished state when it's done
 						finishedStories.add(story)

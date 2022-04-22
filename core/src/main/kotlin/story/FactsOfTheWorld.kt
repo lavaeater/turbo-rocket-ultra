@@ -12,11 +12,13 @@ import story.rule.Rule
 class FactsOfTheWorld(
     private val preferences: com.badlogic.gdx.Preferences,
     private val onFactUpdated: (key: String) -> Unit = {},
-    clearFacts: Boolean = false) {
+    clearFacts: Boolean = false
+) {
     init {
         if (clearFacts)
             clearAllFacts()
     }
+
     private var isUpdating = true
     fun silent(action: (FactsOfTheWorld) -> Unit) {
         isUpdating = false
@@ -25,7 +27,7 @@ class FactsOfTheWorld(
     }
 
     fun doUpdateCall(key: String) {
-        if(isUpdating)
+        if (isUpdating)
             onFactUpdated(key)
     }
 
@@ -65,7 +67,8 @@ class FactsOfTheWorld(
     fun factsForKeys(keys: Set<String>): Sequence<IFact<*>> {
         //A key can be "VisitedCities" or "VisitedCities.Europe" or something...
 
-        return preferences.get().filterKeys { keys.contains(it) }.map { factForKey(it.key, it.value!! as String) }
+        return preferences.get().filterKeys { f -> keys.any { k -> f.contains(k) } }
+            .map { factForKey(it.key, it.value!! as String) }
             .asSequence()
     }
 
@@ -211,7 +214,7 @@ class FactsOfTheWorld(
 
             if (fact is ListFact)
                 saveListFact(fact)
-            if(fact is FloatFact)
+            if (fact is FloatFact)
                 storeFloatFact(fact)
         }
     }

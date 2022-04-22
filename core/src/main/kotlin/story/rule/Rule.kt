@@ -17,6 +17,8 @@ class Rule(var name: String = "",
 
 		if(facts.count() >= criteriaCount) {
 			val res = facts.all {
+				// THis is where we need to remove facts that do not in fact belong here.
+
 				f -> criteria.first { if(it.fuzzyKey) f.key.contains(it.key) else it.key == f.key }.isMatch(f) }
 			if (res) {
 				matchedFacts = facts

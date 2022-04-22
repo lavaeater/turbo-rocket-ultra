@@ -1,5 +1,7 @@
 package story
 
+import audio.AudioPlayer
+import ecs.components.AudioChannels
 import gamestate.GameEvent
 import gamestate.GameState
 import injection.Context.inject
@@ -7,12 +9,14 @@ import messaging.Message
 import messaging.MessageHandler
 import statemachine.StateMachine
 import story.fact.Facts
+import tru.Assets
 
 
 object StoryHelper {
     val factsOfTheWorld by lazy { inject<FactsOfTheWorld>() }
-    val gameStateMachine by lazy { inject<StateMachine<GameState, GameEvent>>() }
-    val messageHandler by lazy { inject<MessageHandler>() }
+    private val gameStateMachine by lazy { inject<StateMachine<GameState, GameEvent>>() }
+    private val messageHandler by lazy { inject<MessageHandler>() }
+    private val audioPlayer by lazy { inject<AudioPlayer>() }
 
 
     private fun levelStartFacts() {
@@ -40,7 +44,12 @@ object StoryHelper {
                 name = "CheckWayPoint"
                 fuzzyBooleanCriteria("ReachedWayPoint", true)
                 consequence {
-                    
+                    apply = {
+                        audioPlayer.playOnChannel(
+                            AudioChannels.simultaneous,
+                            Assets.newSoundEffects["zombies"]!!["groans"]!!.random()
+                        )
+                    }
                 }
             }
         }
@@ -149,6 +158,6 @@ object StoryHelper {
         }
     }
     val baseStories by lazy {
-        listOf(levelStartStory, levelFailedStory, levelCompleteStory).toTypedArray()
+        listOf(levelStartStory, levelFailedStory, levelCompleteStory, zombieMoanStory).toTypedArray()
     }
 }

@@ -606,7 +606,7 @@ fun enemy(at: Vector2) {
         with<BodyComponent> { body = box2dBody }
         with<TransformComponent> { position.set(box2dBody.position) }
         with<EnemySensorComponent>()
-        with<AudioComponent>()
+        //with<AudioComponent>()
         with<EnemyComponent>()
         with<AnimatedCharacterComponent> {
             anims = Assets.enemies.values.random()
