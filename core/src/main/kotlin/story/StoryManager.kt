@@ -75,7 +75,7 @@ class StoryManager : MessageReceiver {
 
 	override val messageTypes: Set<KClass<*>> = setOf(Message.FactUpdated::class)
 
-	override fun recieveMessage(message: Message) {
+	override fun receiveMessage(message: Message) {
 		when(message) {
 			is Message.FactUpdated -> checkStories()
 			else -> {} //We only care about one type of message

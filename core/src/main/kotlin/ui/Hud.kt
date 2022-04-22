@@ -258,7 +258,7 @@ class Hud(private val batch: Batch) : IUserInterface, MessageReceiver {
         }
     }
 
-    override fun recieveMessage(message: Message) {
+    override fun receiveMessage(message: Message) {
         when (message) {
             is Message.ShowToast -> {
                 toastQueue.addLast(message)
