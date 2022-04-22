@@ -32,6 +32,20 @@ object StoryHelper {
         }
     }
 
+    val zombieMoanStory by lazy {
+        story {
+            name = "Play FX When zombies reach waypoints"
+            neverEnding = true
+            storyBeat {
+                name = "CheckWayPoint"
+                fuzzyBooleanCriteria("ReachedWayPoint", true)
+                consequence {
+                    
+                }
+            }
+        }
+    }
+
     val basicStory by lazy {
         story {
             name = "Touch All Objectives and Kill the Boss"

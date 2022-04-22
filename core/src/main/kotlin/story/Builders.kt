@@ -78,6 +78,10 @@ class RuleBuilder:Builder<Rule> {
 		criteria.add(CriteriaBuilder().apply(block).build())
 	}
 
+	fun fuzzyBooleanCriteria(key: String, checkFor: Boolean) {
+		criteria.add(Criterion.fuzzyBooleanCriterion(key, checkFor))
+	}
+
 	fun booleanCriteria(key: String, checkFor:Boolean) {
 		criteria.add(Criterion.booleanCriterion(key, checkFor))
 	}

@@ -11,7 +11,7 @@ class EntityFact(override val key: String, override var value: Entity) : IFact<E
 }
 
 
-class Criterion(val key: String, private val matcher: (IFact<*>) -> Boolean) {
+class Criterion(val key: String, val fuzzyKey: Boolean = false, private val matcher: (IFact<*>) -> Boolean) {
   fun isMatch(fact: IFact<*>):Boolean {
     return matcher(fact)
   }
@@ -19,6 +19,9 @@ class Criterion(val key: String, private val matcher: (IFact<*>) -> Boolean) {
   companion object {
     private val factsOfTheWorld by lazy { inject<FactsOfTheWorld>() }
 
+    fun fuzzyBooleanCriterion(key: String, checkFor: Boolean) : Criterion {
+      return Criterion(key, true) {it.value == checkFor }
+    }
     fun booleanCriterion(key: String, checkFor: Boolean) : Criterion {
       return Criterion(key) { it.value == checkFor }
     }

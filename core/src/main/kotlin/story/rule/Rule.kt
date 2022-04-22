@@ -17,7 +17,7 @@ class Rule(var name: String = "",
 
 		if(facts.count() >= criteriaCount) {
 			val res = facts.all {
-				f -> criteria.first { it.key == f.key }.isMatch(f) }
+				f -> criteria.first { if(it.fuzzyKey) f.key.contains(it.key) else it.key == f.key }.isMatch(f) }
 			if (res) {
 				matchedFacts = facts
 				consequence.facts = matchedFacts

@@ -52,6 +52,10 @@ fun multiKey(vararg key: String): String {
     return key.joinToString(".")
 }
 
+fun stateBooleanFact(toSet: Boolean, vararg key: String) {
+    return inject<FactsOfTheWorld>().stateBoolFact(multiKey(*key), toSet)
+}
+
 fun addToIntStat(toAdd: Int, vararg key: String): Int {
     return inject<FactsOfTheWorld>().addToIntFact(multiKey(*key), toAdd)
 }
