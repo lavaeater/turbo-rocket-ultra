@@ -9,7 +9,19 @@
         "state": {
           "type": "markdown",
           "state": {
-            "file": "docs/todo/BehaviorTree Facts.md",
+            "file": "docs/devlog/2022-04-22.md",
+            "mode": "source",
+            "source": false
+          }
+        }
+      },
+      {
+        "id": "0bd9cd42fc664113",
+        "type": "leaf",
+        "state": {
+          "type": "markdown",
+          "state": {
+            "file": "Facts of The World.md",
             "mode": "source",
             "source": false
           }
@@ -69,7 +81,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "docs/todo/BehaviorTree Facts.md",
+                "file": "docs/devlog/2022-04-22.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -89,6 +101,8 @@
   },
   "active": "04665df505dbdf18",
   "lastOpenFiles": [
+    "docs/devlog/2022-04-22.md",
+    "Facts of The World.md",
     "docs/todo/BehaviorTree Facts.md",
     "docs/todo/Enemy Aggression.md",
     "docs/KANBAN.md",
@@ -96,8 +110,6 @@
     "docs/devlog/2022-04-21.md",
     "docs/done/Enemies and walls.md",
     "docs/todo/Training map for enemies.md",
-    "docs/devlog/2022-04-19.md",
-    "docs/devlog/2022-04-18.md",
-    "docs/devlog/2022-04-17.md"
+    "docs/devlog/2022-04-19.md"
   ]
 }
