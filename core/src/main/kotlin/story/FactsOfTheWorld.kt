@@ -6,6 +6,7 @@ import injection.Context.inject
 import map.grid.GridMapSection
 import physics.getComponent
 import story.fact.*
+import story.rule.Criterion
 import story.rule.Rule
 
 
@@ -64,11 +65,25 @@ class FactsOfTheWorld(
         throw IllegalArgumentException("BLAGH")
     }
 
-    fun factsForKeys(keys: Set<String>): Sequence<IFact<*>> {
-        //A key can be "VisitedCities" or "VisitedCities.Europe" or something...
+    fun factsForCriteria(criteria: Set<Criterion>): Sequence<IFact<*>> {
+        val nonFuzzyKeys = criteria.filter { !it.fuzzyKey }.map { it.key }.distinct().toSet()
+        val nonFuzzyFacts = factsForKeys(nonFuzzyKeys)
+        val fuzzyKeys = criteria.filter { it.fuzzyKey }.map { it.key }.distinct().toSet()
+        val fuzzyFacts = preferences.get()
+            .filterKeys { f ->
+                fuzzyKeys.any { fk -> f.contains(fk) } &&
+                        nonFuzzyKeys.all { nfk -> !f.contains(nfk) }
+            }.map {
+                factForKey(it.key, it.value!! as String)
+            }
+            .asSequence()
+        return nonFuzzyFacts + fuzzyFacts
+    }
 
-        return preferences.get().filterKeys { f -> keys.any { k -> f.contains(k) } }
-            .map { factForKey(it.key, it.value!! as String) }
+
+    private fun factsForKeys(keys: Set<String>): Sequence<IFact<*>> {
+        //A key can be "VisitedCities" or "VisitedCities.Europe" or something...
+        return preferences.get().filterKeys { keys.contains(it) }.map { factForKey(it.key, it.value!! as String) }
             .asSequence()
     }
 
@@ -79,7 +94,7 @@ class FactsOfTheWorld(
      */
 
     private fun checkRule(rule: Rule): Boolean {
-        val factsToCheck = factsForKeys(rule.keys)
+        val factsToCheck = factsForCriteria(rule.criteria.toSet())
             .toSet()
         return rule.pass(factsToCheck)
     }
