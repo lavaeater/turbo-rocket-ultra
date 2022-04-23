@@ -5,20 +5,7 @@ import story.consequence.Consequence
 import story.consequence.EmptyConsequence
 import story.fact.IFact
 
-class CollectionRule<E : Any>(
-    name: String = "",
-    criteria: MutableCollection<Criterion> = mutableListOf(),
-    consequence: Consequence = EmptyConsequence(),
-    private val getCollection: () -> Collection<E>,
-    private val getItemKeyPrefix: (E) -> Array<String>
-) : Rule(name, criteria, consequence) {
-    fun getIterator(): Iterable<Set<String>> {
-        return getCollection().map { it -> criteria.map { c -> multiKey(*getItemKeyPrefix(it), c.key) }.toSet() }
-            .asIterable()
-    }
-}
-
-open class Rule(
+class Rule(
     var name: String = "",
     protected val criteria: MutableCollection<Criterion> = mutableListOf(),
     var consequence: Consequence = EmptyConsequence()

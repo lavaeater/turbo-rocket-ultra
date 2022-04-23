@@ -40,32 +40,6 @@ object StoryHelper {
         }
     }
 
-    val zombieMoanStory by lazy {
-        story {
-            name = "Play FX When zombies reach waypoints"
-            neverEnding = true
-            collectionStoryBeat<EnemyComponent> {
-                name = "CheckWayPoint"
-                val enemyComponentFamily = allOf(EnemyComponent::class).get()
-                getCollection = {
-                    engine().getEntitiesFor(enemyComponentFamily).map { it.enemy() }
-                }
-                getItemKeyPrefix = {
-                    arrayOf("Enemy", it.id.toString())
-                }
-                booleanCriteria("ReachedWayPoint", true)
-                consequence {
-                    apply = {
-                        audioPlayer.playOnChannel(
-                            AudioChannels.simultaneous,
-                            Assets.newSoundEffects["zombies"]!!["groans"]!!.random()
-                        )
-                    }
-                }
-            }
-        }
-    }
-
     val basicStory by lazy {
         story {
             name = "Touch All Objectives and Kill the Boss"
@@ -169,6 +143,6 @@ object StoryHelper {
         }
     }
     val baseStories by lazy {
-        listOf(levelStartStory, levelFailedStory, levelCompleteStory, zombieMoanStory).toTypedArray()
+        listOf(levelStartStory, levelFailedStory, levelCompleteStory).toTypedArray()
     }
 }

@@ -6,8 +6,6 @@ import injection.Context.inject
 import map.grid.GridMapSection
 import physics.getComponent
 import story.fact.*
-import story.rule.CollectionRule
-import story.rule.Criterion
 import story.rule.Rule
 
 
@@ -78,18 +76,9 @@ class FactsOfTheWorld(
      *     so a fact only exists once. Yay
      */
     private fun checkRule(rule: Rule): Boolean {
-        if(rule is CollectionRule<*>) {
-            rule.getIterator().forEach { keySet ->
-                val factsToCheck = factsForKeys(keySet).toSet()
-                if(rule.pass(factsToCheck))
-                    return true
-            }
-            return false
-        } else {
-            val factsToCheck = factsForKeys(rule.keys)
-                .toSet()
-            return rule.pass(factsToCheck)
-        }
+        val factsToCheck = factsForKeys(rule.keys)
+            .toSet()
+        return rule.pass(factsToCheck)
     }
 
     fun rulesThatPass(rules: Set<Rule>): List<Rule> {

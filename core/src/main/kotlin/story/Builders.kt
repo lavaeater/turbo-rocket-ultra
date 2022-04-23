@@ -6,7 +6,6 @@ import story.consequence.EmptyConsequence
 import story.consequence.SimpleConsequence
 import story.conversation.*
 import story.fact.IFact
-import story.rule.CollectionRule
 import story.rule.Criterion
 import story.rule.Rule
 
@@ -45,13 +44,9 @@ class StoryBuilder: Builder<Story> {
 	private var consequence: Consequence = EmptyConsequence()
 	var neverEnding = false
 
-	fun <T: Any>collectionStoryBeat(block: CollectionRuleBuilder<T>.()-> Unit) {
-		rules.add(CollectionRuleBuilder<T>().apply(block).build())
-	}
 	fun storyBeat(block: RuleBuilder.() -> Unit) {
 		rules.add(RuleBuilder().apply(block).build())
 	}
-
 
 	fun consequence(block: ConsequenceBuilder.() -> Unit) {
 		consequence = ConsequenceBuilder().apply(block).build()
@@ -73,18 +68,7 @@ class CriteriaBuilder:Builder<Criterion> {
 
 }
 
-class CollectionRuleBuilder<T : Any> : RuleBuilder() {
-	lateinit var getCollection: () -> Collection<T>
-	lateinit var getItemKeyPrefix: (T) -> Array<String>
-
-	override fun build(): CollectionRule<T> {
-		if(consequence == null)
-			throw IllegalStateException("You must define a consequence for a rule")
-		return CollectionRule(name, criteria, consequence!!,getCollection, getItemKeyPrefix)
-	}
-}
-
-open class RuleBuilder:Builder<Rule> {
+class RuleBuilder:Builder<Rule> {
 	var name = ""
 	val criteria = mutableSetOf<Criterion>()
 	var consequence: Consequence? = null
