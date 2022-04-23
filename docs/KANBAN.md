@@ -6,7 +6,6 @@ kanban-plugin: basic
 
 ## Todo
 
-- [ ] [[BehaviorTree Facts]]
 - [ ] [[Facts for Gameplay]]
 - [ ] [[Hierarchical Facts]]
 - [ ] [[Thought Bubbles]]
@@ -16,19 +15,22 @@ kanban-plugin: basic
 - [ ] [[Facts for Fun]]
 - [ ] [[Hold an area for n seconds]]
 - [ ] [[Hud II]]
+- [ ] [[Intent-based Weapon Select]]
+- [ ] [[Intent-based Context Action]]
 - [ ] [[More enemy sprites]]
 - [ ] [[New Enemies]]
-- [ ] [[Nicer Setup UI]]
 - [ ] [[Tower Mechanics]]
 - [ ] [[Training map for enemies]]
 - [ ] [[Vehicles]]
 - [ ] [[Transitions]]
 - [ ] [[Zombies throwing projectiles]]
 - [ ] [[Zombies with guns]]
+- [ ] [[BehaviorTree Facts]]
 
 
 ## Doing
 
+- [ ] [[Nicer Setup UI]]
 
 
 ## Done
