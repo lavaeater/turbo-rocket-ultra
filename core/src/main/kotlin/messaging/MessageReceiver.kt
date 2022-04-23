@@ -4,5 +4,12 @@ import kotlin.reflect.KClass
 
 interface MessageReceiver {
     val messageTypes: Set<KClass<*>>
-    fun recieveMessage(message: Message)
+
+    /**
+     * For this system to work properly, this method
+     * should return **immediately** - any updates etc
+     * can be handled using flags in whatever system receives
+     * the message. Exceptions might be OK, of course -
+     */
+    fun receiveMessage(message: Message)
 }

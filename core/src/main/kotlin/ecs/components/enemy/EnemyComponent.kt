@@ -1,19 +1,24 @@
 package ecs.components.enemy
 
 import com.badlogic.ashley.core.Component
-import ai.enemy.EnemyState
 import com.badlogic.gdx.math.Vector2
 import com.badlogic.gdx.utils.Pool
 import com.badlogic.gdx.utils.Queue
 import data.Player
-import ecs.components.gameplay.TransformComponent
 import ktx.math.random
 import ktx.math.vec2
 import kotlin.reflect.KMutableProperty
-import kotlin.reflect.KProperty
 
 class BossComponent : Component, Pool.Poolable {
     override fun reset() {
+    }
+}
+
+object UniqueId {
+    private var id = 0
+    fun next(): Int {
+        id++
+        return id
     }
 }
 
@@ -39,6 +44,9 @@ class EnemyComponent : Component, Pool.Poolable {
     var nextPosition = vec2()
     val path = Queue<Vector2>()
     var needsNewNextPosition = true
+
+    //Unique short Id
+    var id = UniqueId.next()
 
     fun takeDamage(damage: Float, player: Player) {
         health -= damage
@@ -75,6 +83,7 @@ class EnemyComponent : Component, Pool.Poolable {
     }
 
     override fun reset() {
+        id = UniqueId.next()
         flock = true
         nextPosition.setZero()
         path.clear()

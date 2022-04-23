@@ -20,12 +20,12 @@ class FactSystem : IntervalSystem(1f) {
 
     init {
         rules.add {
-            if (engine.getEntitiesFor(allOf(BossComponent::class).get()).size() == 0) {
+            if (!factsOfTheWorld.getBoolean(Facts.BossIsDead) && engine.getEntitiesFor(allOf(BossComponent::class).get()).size() == 0) {
                 factsOfTheWorld.stateBoolFact(Facts.BossIsDead, true)
             }
         }
         rules.add {
-            if (engine.getEntitiesFor(allOf(ObjectiveComponent::class).get())
+            if (!factsOfTheWorld.getBoolean(Facts.AllObjectivesAreTouched) && engine.getEntitiesFor(allOf(ObjectiveComponent::class).get())
                     .all { it.getComponent<ObjectiveComponent>().touched }
             ) {
                 factsOfTheWorld.stateBoolFact(Facts.AllObjectivesAreTouched, true)

@@ -1,7 +1,6 @@
 package ecs.systems.ai
 
 import ai.pathfinding.TileGraph
-import com.badlogic.ashley.core.Engine
 import com.badlogic.ashley.core.Entity
 import com.badlogic.ashley.systems.IteratingSystem
 import com.badlogic.gdx.ai.btree.Task
@@ -10,6 +9,7 @@ import ecs.components.ai.Amble
 import ecs.components.ai.CollidedWithObstacle
 import ecs.components.enemy.EnemyComponent
 import ecs.components.gameplay.TransformComponent
+import ecs.systems.enemy.stateBooleanFact
 import ecs.systems.sectionX
 import ecs.systems.sectionY
 import factories.world
@@ -22,7 +22,6 @@ import ktx.math.random
 import ktx.math.vec2
 import map.grid.Coordinate
 import map.grid.GridMapManager
-import map.snake.randomPoint
 import physics.*
 import tru.Assets
 
@@ -72,10 +71,12 @@ fun progressPath(enemyComponent: EnemyComponent, currentPosition: Vector2) : Boo
     if(enemyComponent.needsNewNextPosition && !enemyComponent.path.isEmpty) {
         enemyComponent.nextPosition = enemyComponent.path.removeFirst()
         enemyComponent.needsNewNextPosition = false
+        stateBooleanFact(false, "Enemy", enemyComponent.id.toString(),"ReachedWayPoint")
     }
     if(currentPosition.dst(enemyComponent.nextPosition) <= 1f) {
         enemyComponent.nextPosition = vec2()
         enemyComponent.needsNewNextPosition = true
+        stateBooleanFact(true, "Enemy", enemyComponent.id.toString(),"ReachedWayPoint")
     }
 
     val direction = enemyComponent.nextPosition.cpy().sub(currentPosition).nor()

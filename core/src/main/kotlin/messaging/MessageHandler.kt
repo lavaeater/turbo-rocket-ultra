@@ -10,7 +10,7 @@ class MessageHandler {
     fun sendMessage(message: Message) {
         val validReceivers = receivers.filter { it.messageTypes.contains<KClass<out Any>>(message::class) }
         for (receiver in validReceivers) {
-            receiver.recieveMessage(message)
+            receiver.receiveMessage(message)
         }
     }
 }

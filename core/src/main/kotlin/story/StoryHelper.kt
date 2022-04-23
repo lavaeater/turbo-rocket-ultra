@@ -1,34 +1,45 @@
 package story
 
+import audio.AudioPlayer
+import ecs.components.AudioChannels
+import ecs.components.enemy.EnemyComponent
+import factories.engine
 import gamestate.GameEvent
 import gamestate.GameState
 import injection.Context.inject
+import ktx.ashley.allOf
 import messaging.Message
 import messaging.MessageHandler
+import physics.enemy
 import statemachine.StateMachine
 import story.fact.Facts
+import tru.Assets
 
 
 object StoryHelper {
     val factsOfTheWorld by lazy { inject<FactsOfTheWorld>() }
-    val gameStateMachine by lazy { inject<StateMachine<GameState, GameEvent>>() }
-    val messageHandler by lazy { inject<MessageHandler>()}
+    private val gameStateMachine by lazy { inject<StateMachine<GameState, GameEvent>>() }
+    private val messageHandler by lazy { inject<MessageHandler>() }
+    private val audioPlayer by lazy { inject<AudioPlayer>() }
 
 
     private fun levelStartFacts() {
-        factsOfTheWorld.stateBoolFact(Facts.BossIsDead, false)
-        factsOfTheWorld.stateBoolFact(Facts.AllObjectivesAreTouched, false)
-        factsOfTheWorld.stateBoolFact(Facts.ShowEnemyKillCount, false)
-        factsOfTheWorld.stateBoolFact(Facts.LevelComplete, false)
-        factsOfTheWorld.stateBoolFact(Facts.LevelFailed, false)
-        factsOfTheWorld.stateBoolFact(Facts.BossIsDead, false)
-        factsOfTheWorld.stateIntFact(Facts.EnemyKillCount, 0)
-        factsOfTheWorld.stateIntFact(Facts.TargetEnemyKillCount, 10)
-        factsOfTheWorld.stateBoolFact(Facts.ShowEnemyKillCount, true)
-        factsOfTheWorld.stateBoolFact(Facts.AcceleratingSpawns, false)
-        factsOfTheWorld.stateBoolFact(Facts.LevelStarted, false)
-        factsOfTheWorld.stateBoolFact(Facts.GotoNextLevel, false)
+        factsOfTheWorld.silent {
+            it.stateBoolFact(Facts.BossIsDead, false)
+            it.stateBoolFact(Facts.AllObjectivesAreTouched, false)
+            it.stateBoolFact(Facts.ShowEnemyKillCount, false)
+            it.stateBoolFact(Facts.LevelComplete, false)
+            it.stateBoolFact(Facts.LevelFailed, false)
+            it.stateBoolFact(Facts.BossIsDead, false)
+            it.stateIntFact(Facts.EnemyKillCount, 0)
+            it.stateIntFact(Facts.TargetEnemyKillCount, 10)
+            it.stateBoolFact(Facts.ShowEnemyKillCount, true)
+            it.stateBoolFact(Facts.AcceleratingSpawns, false)
+            it.stateBoolFact(Facts.LevelStarted, false)
+            it.stateBoolFact(Facts.GotoNextLevel, false)
+        }
     }
+
     val basicStory by lazy {
         story {
             name = "Touch All Objectives and Kill the Boss"
@@ -115,8 +126,10 @@ object StoryHelper {
             neverEnding = false
             initializer = {
                 levelStartFacts()
-                factsOfTheWorld.stateBoolFact(Facts.AcceleratingSpawns, true)
-                factsOfTheWorld.stateFloatFact(Facts.AcceleratingSpawnsFactor, 1.25f)
+                factsOfTheWorld.silent {
+                    it.stateBoolFact(Facts.AcceleratingSpawns, true)
+                    it.stateFloatFact(Facts.AcceleratingSpawnsFactor, 1.25f)
+                }
             }
             storyBeat {
                 name = "Check If Work is Done"

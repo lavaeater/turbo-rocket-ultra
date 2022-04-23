@@ -3,10 +3,13 @@ package ai.tasks
 import com.badlogic.ashley.core.Engine
 import com.badlogic.ashley.core.Entity
 import com.badlogic.gdx.ai.btree.LeafTask
-import injection.Context
+import factories.engine
+import factories.factsOfTheWorld
+import story.FactsOfTheWorld
 
 abstract class EntityTask : LeafTask<Entity>() {
-    protected val engine: Engine by lazy { Context.inject() }
+    protected val engine: Engine by lazy { engine() }
+    protected val factsOfTheWorld: FactsOfTheWorld by lazy { factsOfTheWorld() }
     protected val entity: Entity get() = `object`
     protected var firstRun = true
 
