@@ -12,8 +12,6 @@ class EntityFact(override val key: String, override var value: Entity) : IFact<E
 
 
 open class Criterion(val key: String, private val matcher: (IFact<*>) -> Boolean) {
-
-  
   fun isMatch(fact: IFact<*>):Boolean {
     return matcher(fact)
   }

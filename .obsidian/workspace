@@ -9,7 +9,7 @@
         "state": {
           "type": "markdown",
           "state": {
-            "file": "docs/devlog/2022-04-22.md",
+            "file": "docs/devlog/2022-04-23.md",
             "mode": "source",
             "source": false
           }
@@ -81,7 +81,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "docs/devlog/2022-04-22.md",
+                "file": "docs/devlog/2022-04-23.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -101,6 +101,7 @@
   },
   "active": "04665df505dbdf18",
   "lastOpenFiles": [
+    "docs/devlog/2022-04-23.md",
     "docs/devlog/2022-04-22.md",
     "Facts of The World.md",
     "docs/todo/BehaviorTree Facts.md",
@@ -109,7 +110,6 @@
     "docs/todo/Guns as Entities.md",
     "docs/devlog/2022-04-21.md",
     "docs/done/Enemies and walls.md",
-    "docs/todo/Training map for enemies.md",
-    "docs/devlog/2022-04-19.md"
+    "docs/todo/Training map for enemies.md"
   ]
 }
