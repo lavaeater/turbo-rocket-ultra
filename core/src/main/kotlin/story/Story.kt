@@ -42,7 +42,13 @@ import story.rule.Rule
  * class that handles messages
  *
  */
-class Story(val name:String, val rules: List<Rule>, val consequence: Consequence, val activate: () -> Unit, var active: Boolean = true, val neverEnding: Boolean = false) {
+class Story(
+	val name:String,
+	val rules: List<Rule>,
+	val consequence: Consequence,
+	val activate: () -> Unit,
+	var active: Boolean = true,
+	val neverEnding: Boolean = false) {
 	val finishedRules = mutableSetOf<String>()
 
 	val storyFinished get() = finishedRules.containsAll(rules.map { it.name })
@@ -50,7 +56,6 @@ class Story(val name:String, val rules: List<Rule>, val consequence: Consequence
 	fun reset() {
 		active = true
 		finishedRules.clear()
-
 	}
 
 	override fun toString(): String {

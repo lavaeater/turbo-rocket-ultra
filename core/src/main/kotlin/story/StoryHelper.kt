@@ -2,11 +2,15 @@ package story
 
 import audio.AudioPlayer
 import ecs.components.AudioChannels
+import ecs.components.enemy.EnemyComponent
+import factories.engine
 import gamestate.GameEvent
 import gamestate.GameState
 import injection.Context.inject
+import ktx.ashley.allOf
 import messaging.Message
 import messaging.MessageHandler
+import physics.enemy
 import statemachine.StateMachine
 import story.fact.Facts
 import tru.Assets
@@ -40,9 +44,16 @@ object StoryHelper {
         story {
             name = "Play FX When zombies reach waypoints"
             neverEnding = true
-            storyBeat {
+            collectionStoryBeat<EnemyComponent> {
                 name = "CheckWayPoint"
-                fuzzyBooleanCriteria("ReachedWayPoint", true)
+                val enemyComponentFamily = allOf(EnemyComponent::class).get()
+                getCollection = {
+                    engine().getEntitiesFor(enemyComponentFamily).map { it.enemy() }
+                }
+                getItemKeyPrefix = {
+                    arrayOf("Enemy", it.id.toString())
+                }
+                booleanCriteria("ReachedWayPoint", true)
                 consequence {
                     apply = {
                         audioPlayer.playOnChannel(

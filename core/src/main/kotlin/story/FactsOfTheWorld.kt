@@ -6,6 +6,7 @@ import injection.Context.inject
 import map.grid.GridMapSection
 import physics.getComponent
 import story.fact.*
+import story.rule.CollectionRule
 import story.rule.Criterion
 import story.rule.Rule
 
@@ -65,22 +66,6 @@ class FactsOfTheWorld(
         throw IllegalArgumentException("BLAGH")
     }
 
-    fun factsForCriteria(criteria: Set<Criterion>): Sequence<IFact<*>> {
-        val nonFuzzyKeys = criteria.filter { !it.fuzzyKey }.map { it.key }.distinct().toSet()
-        val nonFuzzyFacts = factsForKeys(nonFuzzyKeys)
-        val fuzzyKeys = criteria.filter { it.fuzzyKey }.map { it.key }.distinct().toSet()
-        val fuzzyFacts = preferences.get()
-            .filterKeys { f ->
-                fuzzyKeys.any { fk -> f.contains(fk) } &&
-                        nonFuzzyKeys.all { nfk -> !f.contains(nfk) }
-            }.map {
-                factForKey(it.key, it.value!! as String)
-            }
-            .asSequence()
-        return nonFuzzyFacts + fuzzyFacts
-    }
-
-
     private fun factsForKeys(keys: Set<String>): Sequence<IFact<*>> {
         //A key can be "VisitedCities" or "VisitedCities.Europe" or something...
         return preferences.get().filterKeys { keys.contains(it) }.map { factForKey(it.key, it.value!! as String) }
@@ -92,11 +77,19 @@ class FactsOfTheWorld(
      *     Any keys in Context that exists in world facts are filtered out
      *     so a fact only exists once. Yay
      */
-
     private fun checkRule(rule: Rule): Boolean {
-        val factsToCheck = factsForCriteria(rule.criteria.toSet())
-            .toSet()
-        return rule.pass(factsToCheck)
+        if(rule is CollectionRule<*>) {
+            rule.getIterator().forEach { keySet ->
+                val factsToCheck = factsForKeys(keySet).toSet()
+                if(rule.pass(factsToCheck))
+                    return true
+            }
+            return false
+        } else {
+            val factsToCheck = factsForKeys(rule.keys)
+                .toSet()
+            return rule.pass(factsToCheck)
+        }
     }
 
     fun rulesThatPass(rules: Set<Rule>): List<Rule> {

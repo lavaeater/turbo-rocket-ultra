@@ -6,6 +6,7 @@ import story.consequence.EmptyConsequence
 import story.consequence.SimpleConsequence
 import story.conversation.*
 import story.fact.IFact
+import story.rule.CollectionRule
 import story.rule.Criterion
 import story.rule.Rule
 
@@ -44,6 +45,9 @@ class StoryBuilder: Builder<Story> {
 	private var consequence: Consequence = EmptyConsequence()
 	var neverEnding = false
 
+	fun <T: Any>collectionStoryBeat(block: CollectionRuleBuilder<T>.()-> Unit) {
+		rules.add(CollectionRuleBuilder<T>().apply(block).build())
+	}
 	fun storyBeat(block: RuleBuilder.() -> Unit) {
 		rules.add(RuleBuilder().apply(block).build())
 	}
@@ -64,74 +68,26 @@ class CriteriaBuilder:Builder<Criterion> {
 	 */
 
 	override fun build(): Criterion {
-		return Criterion(key,false, matcher)
+		return Criterion(key, matcher)
 	}
 
 }
 
-class RuleBuilder:Builder<Rule> {
+class CollectionRuleBuilder<T : Any> : RuleBuilder() {
+	lateinit var getCollection: () -> Collection<T>
+	lateinit var getItemKeyPrefix: (T) -> Array<String>
+
+	override fun build(): CollectionRule<T> {
+		if(consequence == null)
+			throw IllegalStateException("You must define a consequence for a rule")
+		return CollectionRule(name, criteria, consequence!!,getCollection, getItemKeyPrefix)
+	}
+}
+
+open class RuleBuilder:Builder<Rule> {
 	var name = ""
-	private val criteria = mutableSetOf<Criterion>()
+	val criteria = mutableSetOf<Criterion>()
 	var consequence: Consequence? = null
-
-	fun criterion(block: CriteriaBuilder.() -> Unit) {
-		criteria.add(CriteriaBuilder().apply(block).build())
-	}
-
-	fun fuzzyBooleanCriteria(key: String, checkFor: Boolean) {
-		criteria.add(Criterion.fuzzyBooleanCriterion(key, checkFor))
-	}
-
-	fun booleanCriteria(key: String, checkFor:Boolean) {
-		criteria.add(Criterion.booleanCriterion(key, checkFor))
-	}
-
-	fun <T> equalsCriterion(key: String, value: T) {
-		criteria.add(Criterion.equalsCriterion(key, value))
-	}
-
-	fun moreThanCriterion(key: String, value: Int) {
-		criteria.add(Criterion.moreThanCriterion(key, value))
-	}
-
-	fun moreThanWithFunction(key: String, value: () -> Int) {
-		criteria.add(Criterion.moreThanCriterionWithFunction(key, value))
-	}
-
-	fun lessThanCriterion(key: String, value: Int) {
-		criteria.add(Criterion.lessThanCriterion(key, value))
-	}
-
-	fun rangeCriterion(key: String, range: IntRange) {
-		criteria.add(Criterion.rangeCriterion(key, range))
-	}
-
-	fun containsCriterion(key: String, value: String) {
-		criteria.add(Criterion.containsCriterion(key, value))
-	}
-	fun listContainsFact(key:String, contextKey:String) {
-		criteria.add(Criterion.listContainsFact(key, contextKey))
-	}
-
-	fun listDoesNotContainFact(key:String, contextKey:String) {
-		criteria.add(Criterion.listDoesNotContainFact(key, contextKey))
-	}
-
-	fun context(context: String) {
-		criteria.add(Criterion.context(context))
-	}
-
-	fun notContainsCriterion(key: String, value: String) {
-		criteria.add(Criterion.notContainsCriterion(key, value))
-	}
-
-	fun consequence(block: ConsequenceBuilder.() -> Unit) {
-		consequence = ConsequenceBuilder().apply(block).build()
-	}
-
-	fun conversation(block: ConversationConsequenceBuilder.() -> Unit) {
-		consequence = ConversationConsequenceBuilder().apply(block).build()
-	}
 
 	override fun build(): Rule {
 		if(consequence == null)
@@ -139,6 +95,62 @@ class RuleBuilder:Builder<Rule> {
 		return Rule(name, criteria, consequence!!)
 	}
 
+}
+
+fun RuleBuilder.conversation(block: ConversationConsequenceBuilder.() -> Unit) {
+	consequence = ConversationConsequenceBuilder().apply(block).build()
+}
+
+fun RuleBuilder.consequence(block: ConsequenceBuilder.() -> Unit) {
+	consequence = ConsequenceBuilder().apply(block).build()
+}
+
+fun RuleBuilder.context(context: String) {
+	criteria.add(Criterion.context(context))
+}
+
+fun RuleBuilder.notContainsCriterion(key: String, value: String) {
+	criteria.add(Criterion.notContainsCriterion(key, value))
+}
+
+fun RuleBuilder.listDoesNotContainFact(key:String, contextKey:String) {
+	criteria.add(Criterion.listDoesNotContainFact(key, contextKey))
+}
+
+fun RuleBuilder.containsCriterion(key: String, value: String) {
+	criteria.add(Criterion.containsCriterion(key, value))
+}
+
+fun RuleBuilder.rangeCriterion(key: String, range: IntRange) {
+	criteria.add(Criterion.rangeCriterion(key, range))
+}
+
+fun RuleBuilder.lessThanCriterion(key: String, value: Int) {
+	criteria.add(Criterion.lessThanCriterion(key, value))
+}
+
+fun RuleBuilder.listContainsFact(key:String, contextKey:String) {
+	criteria.add(Criterion.listContainsFact(key, contextKey))
+}
+
+fun RuleBuilder.moreThanWithFunction(key: String, value: () -> Int) {
+	criteria.add(Criterion.moreThanCriterionWithFunction(key, value))
+}
+
+fun RuleBuilder.moreThanCriterion(key: String, value: Int) {
+	criteria.add(Criterion.moreThanCriterion(key, value))
+}
+
+fun <T> RuleBuilder.equalsCriterion(key: String, value: T) {
+	criteria.add(Criterion.equalsCriterion(key, value))
+}
+
+fun RuleBuilder.booleanCriteria(key: String, checkFor:Boolean) {
+	criteria.add(Criterion.booleanCriterion(key, checkFor))
+}
+
+fun RuleBuilder.criterion(block: CriteriaBuilder.() -> Unit) {
+	criteria.add(CriteriaBuilder().apply(block).build())
 }
 
 fun story(block: StoryBuilder.() -> Unit) = StoryBuilder().apply(block).build()
