@@ -9,7 +9,7 @@
         "state": {
           "type": "markdown",
           "state": {
-            "file": "docs/todo/Hud II.md",
+            "file": "docs/devlog/2022-04-25.md",
             "mode": "source",
             "source": false
           }
@@ -69,7 +69,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "docs/todo/Hud II.md",
+                "file": "docs/devlog/2022-04-25.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -89,15 +89,15 @@
   },
   "active": "59b1566fe10bf841",
   "lastOpenFiles": [
-    "docs/todo/Hud II.md",
+    "docs/devlog/2022-04-25.md",
     "docs/todo/Nicer Setup UI.md",
     "docs/KANBAN.md",
+    "docs/todo/New Facts.md",
+    "docs/todo/Hud II.md",
     "docs/todo/Facts for Gameplay.md",
     "docs/devlog/2022-04-23.md",
     "docs/todo/Facts for Fun.md",
     "docs/todo/BehaviorTree Facts.md",
-    "docs/Facts of The World.md",
-    "docs/todo/New Facts.md",
-    "docs/devlog/2022-04-22.md"
+    "docs/Facts of The World.md"
   ]
 }
