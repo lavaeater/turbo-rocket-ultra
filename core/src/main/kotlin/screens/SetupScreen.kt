@@ -3,6 +3,10 @@ package screens
 import com.badlogic.gdx.Input
 import com.badlogic.gdx.controllers.Controller
 import com.badlogic.gdx.graphics.OrthographicCamera
+import com.badlogic.gdx.scenes.scene2d.Actor
+import com.badlogic.gdx.scenes.scene2d.Stage
+import com.badlogic.gdx.scenes.scene2d.ui.HorizontalGroup
+import com.badlogic.gdx.utils.SnapshotArray
 import com.badlogic.gdx.utils.viewport.ExtendViewport
 import gamestate.GameEvent
 import gamestate.GameState
@@ -21,6 +25,15 @@ import tru.SpriteDirection
 import ui.new.BoundAnimationElement
 import ui.new.BoundTextElement
 import ui.new.CollectionContainerElement
+import java.util.Observable
+
+
+class SetupViewModel {
+    
+}
+
+open class BoundHorizontalGroup : HorizontalGroup() {
+}
 
 class SetupScreen(gameState: StateMachine<GameState, GameEvent>) : BasicScreen(gameState) {
 
@@ -42,24 +55,15 @@ class SetupScreen(gameState: StateMachine<GameState, GameEvent>) : BasicScreen(g
     val shapeDrawer by lazy { Assets.shapeDrawer }
 
     private val activePlayers = mutableListOf<Pair<ControlMapper, Player>>()
-
-    private val altUi = CollectionContainerElement(
-        activePlayers,
-        listOf(
-            BoundTextElement({ p -> p.second.selectedCharacterSpriteName }),
-            BoundTextElement({ p -> p.first.controllerId }),
-            BoundTextElement({ p -> p.second.kills.toString() }),
-            BoundTextElement({ p -> p.second.score.toString() }),
-            BoundAnimationElement( { p -> p.second.selectedSprite[AnimState.Walk]!!.animations[SpriteDirection.South]!! })
-        ), position = vec2(50f, 400f)
-    )
+    private val stage by lazy {
+        val aStage = Stage(viewport, batch)
+        aStage.isDebugAll = true
+        aStage
+    }
 
     override fun render(delta: Float) {
         super.render(delta)
-        batch.use {
-            altUi.render(batch, delta, 1f, debug)
-        }
-
+        stage.act(delta)
     }
 
     override fun resize(width: Int, height: Int) {
