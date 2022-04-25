@@ -2,6 +2,8 @@ package screens
 
 import com.badlogic.gdx.Input
 import com.badlogic.gdx.controllers.Controller
+import com.badlogic.gdx.controllers.ControllerListener
+import com.badlogic.gdx.controllers.Controllers
 import com.badlogic.gdx.graphics.OrthographicCamera
 import com.badlogic.gdx.utils.viewport.ExtendViewport
 import gamestate.GameEvent
@@ -18,46 +20,46 @@ import statemachine.StateMachine
 import tru.AnimState
 import tru.Assets
 import tru.SpriteDirection
-import ui.new.BoundAnimationElement
-import ui.new.BoundTextElement
-import ui.new.CollectionContainerElement
+import ui.new.*
+
+sealed class TurboController(val name: String) {
+    class Keyboard: TurboController("Keyboard")
+    class GamePad(val controller: Controller): TurboController("GamePad")
+}
 
 class SetupScreen(gameState: StateMachine<GameState, GameEvent>) : BasicScreen(gameState) {
-
-    /*
-    Setup screen should be the classic "press x / space to join
-    When doing so, you get to see the actual character you are playing and
-
-    SHOULD be able to customize it.
-
-    That would be fudging fabulous.
-
-    Customizing would require that every character was like 300 sprites or something, but it could totally be worth
-    it.
-     */
     override val camera = OrthographicCamera()
     override val viewport = ExtendViewport(800f, 600f, camera)
 
     val debug = false
     val shapeDrawer by lazy { Assets.shapeDrawer }
 
+    private val availableControllers = mutableListOf(Controllers.getControllers().map { TurboController.GamePad(it) },
+        TurboController.Keyboard()
+    )
+
     private val activePlayers = mutableListOf<Pair<ControlMapper, Player>>()
 
-    private val altUi = CollectionContainerElement(
-        activePlayers,
-        listOf(
-            BoundTextElement({ p -> p.second.selectedCharacterSpriteName }),
-            BoundTextElement({ p -> p.first.controllerId }),
-            BoundTextElement({ p -> p.second.kills.toString() }),
-            BoundTextElement({ p -> p.second.score.toString() }),
-            BoundAnimationElement( { p -> p.second.selectedSprite[AnimState.Walk]!!.animations[SpriteDirection.South]!! })
-        ), position = vec2(50f, 400f)
-    )
+    private val ui =""
+
+
+    override fun connected(controller: Controller) {
+        super.connected(controller)
+        val gp = availableControllers.firstOrNull { it is TurboController.GamePad && it.controller == controller }
+        if(gp == null)
+            availableControllers.add(TurboController.GamePad(controller))
+    }
+
+    override fun disconnected(controller: Controller) {
+        super.disconnected(controller)
+        val gp = availableControllers.firstOrNull { it is TurboController.GamePad && it.controller == controller }
+        if(gp != null)
+            availableControllers.remove(gp)
+    }
 
     override fun render(delta: Float) {
         super.render(delta)
         batch.use {
-            altUi.render(batch, delta, 1f, debug)
         }
 
     }

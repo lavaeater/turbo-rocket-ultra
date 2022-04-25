@@ -5,6 +5,8 @@ import com.badlogic.gdx.math.Vector2
 import ktx.math.vec2
 import tru.Assets
 
+
+
 open class BoundTextElement<T:Any>(valueFunc: (T) -> String, position: Vector2 = vec2(), parent: AbstractElement? = null) :
     BoundElement<T, String>(valueFunc, position, parent) {
 
