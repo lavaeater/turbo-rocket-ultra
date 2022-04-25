@@ -2,59 +2,50 @@ package screens
 
 import com.badlogic.gdx.Input
 import com.badlogic.gdx.controllers.Controller
+import com.badlogic.gdx.controllers.Controllers
 import com.badlogic.gdx.graphics.OrthographicCamera
-import com.badlogic.gdx.scenes.scene2d.Actor
 import com.badlogic.gdx.scenes.scene2d.Stage
 import com.badlogic.gdx.scenes.scene2d.ui.HorizontalGroup
-import com.badlogic.gdx.utils.SnapshotArray
 import com.badlogic.gdx.utils.viewport.ExtendViewport
-import gamestate.GameEvent
-import gamestate.GameState
 import data.Player
 import data.Players
+import gamestate.GameEvent
+import gamestate.GameState
 import input.Button
 import input.ControlMapper
 import input.GamepadControl
 import input.KeyboardControl
-import ktx.graphics.use
-import ktx.math.vec2
 import statemachine.StateMachine
-import tru.AnimState
 import tru.Assets
-import tru.SpriteDirection
-import ui.new.BoundAnimationElement
-import ui.new.BoundTextElement
-import ui.new.CollectionContainerElement
-import java.util.Observable
-
 
 class SetupViewModel {
-    
+
 }
 
 open class BoundHorizontalGroup : HorizontalGroup() {
 }
 
+
+sealed class TurboController(val name: String) {
+    class Keyboard: TurboController("Keyboard")
+    class GamePad(val controller: Controller): TurboController("GamePad")
+}
+
 class SetupScreen(gameState: StateMachine<GameState, GameEvent>) : BasicScreen(gameState) {
-
-    /*
-    Setup screen should be the classic "press x / space to join
-    When doing so, you get to see the actual character you are playing and
-
-    SHOULD be able to customize it.
-
-    That would be fudging fabulous.
-
-    Customizing would require that every character was like 300 sprites or something, but it could totally be worth
-    it.
-     */
     override val camera = OrthographicCamera()
     override val viewport = ExtendViewport(800f, 600f, camera)
 
     val debug = false
     val shapeDrawer by lazy { Assets.shapeDrawer }
 
+    private val availableControllers = mutableListOf(Controllers.getControllers().map { TurboController.GamePad(it) },
+        TurboController.Keyboard()
+    )
+
     private val activePlayers = mutableListOf<Pair<ControlMapper, Player>>()
+
+    private val ui =""
+
     private val stage by lazy {
         val aStage = Stage(viewport, batch)
         aStage.isDebugAll = true
@@ -64,6 +55,21 @@ class SetupScreen(gameState: StateMachine<GameState, GameEvent>) : BasicScreen(g
     override fun render(delta: Float) {
         super.render(delta)
         stage.act(delta)
+    }
+
+
+    override fun connected(controller: Controller) {
+        super.connected(controller)
+        val gp = availableControllers.firstOrNull { it is TurboController.GamePad && it.controller == controller }
+        if(gp == null)
+            availableControllers.add(TurboController.GamePad(controller))
+    }
+
+    override fun disconnected(controller: Controller) {
+        super.disconnected(controller)
+        val gp = availableControllers.firstOrNull { it is TurboController.GamePad && it.controller == controller }
+        if(gp != null)
+            availableControllers.remove(gp)
     }
 
     override fun resize(width: Int, height: Int) {

@@ -104,3 +104,12 @@ inline fun <S> KWidget<S>.typingLabel(
     contract { callsInPlace(init, InvocationKind.EXACTLY_ONCE) }
     return actor(TypingLabel(text, skin, style), init)
 }
+
+@Scene2dDsl
+@OptIn(ExperimentalContracts::class)
+inline fun <S> KWidget<S>.boundHorizontalGroup(
+    init: KHorizontalGroup.(S) -> Unit = {}
+): KHorizontalGroup {
+    contract { callsInPlace(init, InvocationKind.EXACTLY_ONCE) }
+    return actor(KHorizontalGroup(), init)
+}
