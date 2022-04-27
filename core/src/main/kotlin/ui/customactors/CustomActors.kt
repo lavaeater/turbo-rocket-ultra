@@ -1,7 +1,10 @@
 package ui.customactors
 
+import com.badlogic.gdx.graphics.g2d.Animation
 import com.badlogic.gdx.graphics.g2d.Batch
+import com.badlogic.gdx.graphics.g2d.Sprite
 import com.badlogic.gdx.graphics.g2d.TextureRegion
+import com.badlogic.gdx.scenes.scene2d.Action
 import com.badlogic.gdx.scenes.scene2d.ui.Image
 import com.badlogic.gdx.scenes.scene2d.ui.Label
 import com.badlogic.gdx.scenes.scene2d.ui.ProgressBar
@@ -10,9 +13,13 @@ import com.badlogic.gdx.scenes.scene2d.utils.TransformDrawable
 import com.rafaskoberg.gdx.typinglabel.TypingLabel
 import ktx.actors.txt
 import ktx.scene2d.*
+import tru.Assets
+import tru.LpcCharacterAnim
+import tru.SpriteDirection
 import kotlin.contracts.ExperimentalContracts
 import kotlin.contracts.InvocationKind
 import kotlin.contracts.contract
+import kotlin.properties.Delegates
 
 open class BoundLabel(private val textFunction: ()-> String, skin: Skin = Scene2DSkin.defaultSkin): Label(textFunction(), skin) {
     override fun act(delta: Float) {
@@ -34,6 +41,41 @@ inline fun <S> KWidget<S>.repeatingTexture(noinline countFunction: () -> Int, sp
 {
     contract { callsInPlace(init, InvocationKind.EXACTLY_ONCE) }
     return actor(RepeatingTextureActor(countFunction, spacing, textureRegion), init)
+}
+
+@OptIn(ExperimentalContracts::class)
+@ktx.scene2d.Scene2dDsl
+inline fun <S> KWidget<S>.animatedSpriteImage(animation: Animation<Sprite>, init: (@ktx.scene2d.Scene2dDsl AnimatedSpriteImage).(S) -> Unit): AnimatedSpriteImage
+{
+    contract { callsInPlace(init, InvocationKind.EXACTLY_ONCE) }
+    return actor(AnimatedSpriteImage(animation), init)
+}
+
+open class AnimatedSpriteImage(var animation: Animation<Sprite>): Image() {
+    var pw = 0f
+    var ph = 0f
+    init {
+        pw = animation.keyFrames.first().width
+        ph = animation.keyFrames.first().height
+    }
+    var stateTime = 0f
+    override fun act(delta: Float) {
+        super.act(delta)
+        stateTime += delta
+    }
+
+    override fun getPrefHeight(): Float {
+        return ph
+    }
+
+    override fun getPrefWidth(): Float {
+        return pw
+    }
+
+    override fun draw(batch: Batch, parentAlpha: Float) {
+        val keyFrame = animation.getKeyFrame(stateTime)
+        batch.draw(keyFrame, x, y, width, height)
+    }
 }
 
 
