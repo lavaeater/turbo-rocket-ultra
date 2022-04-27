@@ -7,14 +7,14 @@ sealed class Criterion(val factKey: String) {
     abstract fun checkRule(): Boolean
     sealed class BooleanCriteria(factKey: String) : Criterion(factKey) {
         sealed class All(factKey: String) : BooleanCriteria(factKey) {
-            class IsTrue(factKey: String) : All(factKey) {
+            class AreTrue(factKey: String) : All(factKey) {
                 override fun checkRule(): Boolean {
                     val facts = facts.factsFor(factKey)
                     return facts.all { it is Factoid.Fact.BooleanFact && it.value }
                 }
             }
 
-            class IsFalse(factKey: String) : All(factKey) {
+            class AreFalse(factKey: String) : All(factKey) {
                 override fun checkRule(): Boolean {
                     val facts = facts.factsFor(factKey)
                     return facts.all { it is Factoid.Fact.BooleanFact && !it.value }
@@ -151,8 +151,12 @@ sealed class Criterion(val factKey: String) {
         }
 
         sealed class All(factKey: String) : StringCriteria(factKey) {
-            fun allContains(factKey: String, valueToCheck: String) = AllOperatorCriteria(factKey, valueToCheck, ::containsChecker)
-            fun allEquals(factKey: String, valueToCheck: String) = AllOperatorCriteria(factKey, valueToCheck, ::equalsChecker)
+            fun allContains(factKey: String, valueToCheck: String): AllOperatorCriteria {
+                return AllOperatorCriteria(factKey, valueToCheck, ::containsChecker)
+            }
+            fun allEquals(factKey: String, valueToCheck: String): AllOperatorCriteria {
+                return AllOperatorCriteria(factKey, valueToCheck, ::equalsChecker)
+            }
             class AllOperatorCriteria(factKey: String, val valueToCheck:String, val checker: (String, String) -> Boolean): All(factKey) {
                 override fun checkRule(): Boolean {
                     return facts.factsFor(factKey).all { it is Factoid.Fact.StringFact && checker(valueToCheck, it.value) }

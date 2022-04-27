@@ -5,7 +5,6 @@ import audio.AudioPlayer
 import com.badlogic.ashley.core.Engine
 import com.badlogic.gdx.Gdx
 import com.badlogic.gdx.controllers.Controllers
-import com.badlogic.gdx.graphics.GL20
 import com.badlogic.gdx.graphics.OrthographicCamera
 import com.badlogic.gdx.graphics.g2d.PolygonSpriteBatch
 import com.badlogic.gdx.physics.box2d.World
@@ -39,7 +38,7 @@ import story.StoryHelper
 import story.StoryManager
 import story.fact.Facts
 import tru.Assets
-import turbofacts.NewStoryManager
+import turbofacts.TurboStoryManager
 import ui.IUserInterface
 import kotlin.math.pow
 import kotlin.math.roundToInt
@@ -162,9 +161,9 @@ D1B67A
         ui.update(delta)
         audioPlayer.update(delta)
         storyManager.checkStoriesIfNeeded()
-        newStoryManager.checkIfNeeded()
+        turboStoryManager.checkIfNeeded()
     }
-    private val newStoryManager by lazy { inject<NewStoryManager>() }
+    private val turboStoryManager by lazy { inject<TurboStoryManager>() }
 
     private val velIters = 8
     private val posIters = 3
