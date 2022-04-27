@@ -25,13 +25,13 @@ class ActionHandler {
      * Handles spaceBar, for instance
      */
     fun next(entity: Entity) {
-        if(entity.isBuilding()) {
+        if (entity.isBuilding()) {
             entity.build().buildables.nextItem()
         }
     }
 
     fun previous(entity: Entity) {
-        if(entity.isBuilding()) {
+        if (entity.isBuilding()) {
             entity.build().buildables.previousItem()
         }
     }
@@ -40,13 +40,13 @@ class ActionHandler {
      * Depending on mode, selects something - if in buildMode, it will simply BUILD
      */
     fun select(entity: Entity) {
-        if(entity.isBuilding()) {
+        if (entity.isBuilding()) {
             entity.intendTo(IntendsTo.Build)
         }
     }
 
     fun act(entity: Entity) {
-        if(entity.isBuilding()) {
+        if (entity.isBuilding()) {
             entity.intendTo(IntendsTo.Build)
         }
     }
@@ -65,14 +65,22 @@ class KeyboardInputSystem :
     val gameState by lazy { inject<StateMachine<GameState, GameEvent>>() }
 
     override fun keyDown(keycode: Int): Boolean {
-        keyboardControl.aiming = false
-        if (!keyboardControl.requireSequencePress) {
+        if (::keyboardControl.isInitialized) {
+            keyboardControl.aiming = false
+            if (!keyboardControl.requireSequencePress) {
+                when (keycode) {
+                    Input.Keys.W -> keyboardControl.thrust = 1f
+                    Input.Keys.S -> keyboardControl.thrust = -1f
+                    Input.Keys.A -> keyboardControl.turning = -1f
+                    Input.Keys.D -> keyboardControl.turning = 1f
+                    else -> return false
+                }
+            }
+        } else {
             when (keycode) {
-                Input.Keys.W -> keyboardControl.thrust = 1f
-                Input.Keys.S -> keyboardControl.thrust = -1f
-                Input.Keys.A -> keyboardControl.turning = -1f
-                Input.Keys.D -> keyboardControl.turning = 1f
-                Input.Keys.P -> if (gameState.currentState.state == GameState.Running) gameState.acceptEvent(GameEvent.PausedGame) else gameState.acceptEvent(
+                Input.Keys.P -> if (gameState.currentState.state == GameState.Running) gameState.acceptEvent(
+                    GameEvent.PausedGame
+                ) else gameState.acceptEvent(
                     GameEvent.ResumedGame
                 )
                 else -> return false
@@ -82,10 +90,12 @@ class KeyboardInputSystem :
     }
 
     override fun scrolled(amountX: Float, amountY: Float): Boolean {
-        if (amountY > 0f) {
-            keyboardControl.needToChangeGun = InputIndicator.Next
-        } else if (amountY < 0f) {
-            keyboardControl.needToChangeGun = InputIndicator.Previous
+        if (::keyboardControl.isInitialized) {
+            if (amountY > 0f) {
+                keyboardControl.needToChangeGun = InputIndicator.Next
+            } else if (amountY < 0f) {
+                keyboardControl.needToChangeGun = InputIndicator.Previous
+            }
         }
         return true
     }
@@ -93,22 +103,24 @@ class KeyboardInputSystem :
     val hackingKeys = listOf(Input.Keys.UP, Input.Keys.DOWN, Input.Keys.LEFT, Input.Keys.RIGHT, Input.Keys.ESCAPE)
 
     override fun keyUp(keycode: Int): Boolean {
-        if (keyboardControl.requireSequencePress && hackingKeys.contains(keycode)) {
-            keyboardControl.keyPressedCallback(keycode)
-        } else {
-            keyboardControl.aiming = true
-            when (keycode) {
-                Input.Keys.W -> keyboardControl.thrust = 0f
-                Input.Keys.S -> keyboardControl.thrust = 0f
-                Input.Keys.A -> keyboardControl.turning = 0f
-                Input.Keys.D -> keyboardControl.turning = 0f
-                Input.Keys.R -> keyboardControl.needsReload = true
-                Input.Keys.B -> toggleBuildMode()
-                Input.Keys.LEFT -> handleLeft() //keyboardControl.uiControl.left()
-                Input.Keys.RIGHT -> handleRight() //keyboardControl.uiControl.right()
-                Input.Keys.ENTER -> handleSelect()//keyboardControl.uiControl.select()
-                Input.Keys.SPACE -> handleAction()
-                else -> return false
+        if (::keyboardControl.isInitialized) {
+            if (keyboardControl.requireSequencePress && hackingKeys.contains(keycode)) {
+                keyboardControl.keyPressedCallback(keycode)
+            } else {
+                keyboardControl.aiming = true
+                when (keycode) {
+                    Input.Keys.W -> keyboardControl.thrust = 0f
+                    Input.Keys.S -> keyboardControl.thrust = 0f
+                    Input.Keys.A -> keyboardControl.turning = 0f
+                    Input.Keys.D -> keyboardControl.turning = 0f
+                    Input.Keys.R -> keyboardControl.needsReload = true
+                    Input.Keys.B -> toggleBuildMode()
+                    Input.Keys.LEFT -> handleLeft() //keyboardControl.uiControl.left()
+                    Input.Keys.RIGHT -> handleRight() //keyboardControl.uiControl.right()
+                    Input.Keys.ENTER -> handleSelect()//keyboardControl.uiControl.select()
+                    Input.Keys.SPACE -> handleAction()
+                    else -> return false
+                }
             }
         }
         return true
@@ -137,33 +149,38 @@ class KeyboardInputSystem :
     }
 
     override fun touchDown(screenX: Int, screenY: Int, pointer: Int, button: Int): Boolean {
-        return when (button) {
-            Input.Buttons.LEFT -> {
-                keyboardControl.firing = true
-                keyboardControl.aiming = true
-                true
+        return if (::keyboardControl.isInitialized) {
+            when (button) {
+                Input.Buttons.LEFT -> {
+                    keyboardControl.firing = true
+                    keyboardControl.aiming = true
+                    true
+                }
+                else -> false
             }
-            else -> false
-        }
+        } else false
     }
 
     override fun touchDragged(screenX: Int, screenY: Int, pointer: Int): Boolean {
-        if (!keyboardControl.firing) {
-            keyboardControl.firing = true
+        if (::keyboardControl.isInitialized) {
+            if (!keyboardControl.firing) {
+                keyboardControl.firing = true
+            }
         }
-
         return true
     }
 
     override fun touchUp(screenX: Int, screenY: Int, pointer: Int, button: Int): Boolean {
-        return when (button) {
-            Input.Buttons.LEFT -> {
-                keyboardControl.firing = false
-                keyboardControl.aiming = false
-                true
+        return if (::keyboardControl.isInitialized) {
+            when (button) {
+                Input.Buttons.LEFT -> {
+                    keyboardControl.firing = false
+                    keyboardControl.aiming = false
+                    true
+                }
+                else -> false
             }
-            else -> false
-        }
+        } else false
     }
 
     override fun processEntity(entity: Entity, deltaTime: Float) {
