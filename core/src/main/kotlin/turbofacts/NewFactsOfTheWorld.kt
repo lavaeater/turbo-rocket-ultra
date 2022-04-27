@@ -2,7 +2,6 @@ package turbofacts
 
 import ecs.systems.enemy.multiKey
 
-
 class NewFactsOfTheWorld(private val onFactUpdated: (key: String) -> Unit = {}) {
     val facts = mutableMapOf<String, Factoid>()
 
@@ -113,7 +112,7 @@ class NewFactsOfTheWorld(private val onFactUpdated: (key: String) -> Unit = {}) 
         return ensureStringList(*key)
     }
 
-    fun ensureStringList(vararg key: String): Factoid.Fact.StringListFact {
+    private fun ensureStringList(vararg key: String): Factoid.Fact.StringListFact {
         val mk = multiKey(*key)
         if (!facts.containsKey(mk)) {
             val newFact = Factoid.Fact.StringListFact(mk, mutableListOf())

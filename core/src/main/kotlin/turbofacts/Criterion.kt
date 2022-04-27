@@ -151,14 +151,33 @@ sealed class Criterion(val factKey: String) {
         }
 
         sealed class All(factKey: String) : StringCriteria(factKey) {
+            fun allContains(factKey: String, valueToCheck: String) = AllOperatorCriteria(factKey, valueToCheck, ::containsChecker)
+            fun allEquals(factKey: String, valueToCheck: String) = AllOperatorCriteria(factKey, valueToCheck, ::equalsChecker)
+            class AllOperatorCriteria(factKey: String, val valueToCheck:String, val checker: (String, String) -> Boolean): All(factKey) {
+                override fun checkRule(): Boolean {
+                    return facts.factsFor(factKey).all { it is Factoid.Fact.StringFact && checker(valueToCheck, it.value) }
+                }
+            }
         }
 
         sealed class Any(factKey: String) : StringCriteria(factKey) {
-
+            fun anyContains(factKey: String, valueToCheck: String) = AnyOperatorCriteria(factKey, valueToCheck, ::containsChecker)
+            fun anyEquals(factKey: String, valueToCheck: String) = AnyOperatorCriteria(factKey, valueToCheck, ::equalsChecker)
+            class AnyOperatorCriteria(factKey: String, val valueToCheck:String, val checker: (String, String) -> Boolean): Any(factKey) {
+                override fun checkRule(): Boolean {
+                    return facts.factsFor(factKey).any { it is Factoid.Fact.StringFact && checker(valueToCheck, it.value) }
+                }
+            }
         }
 
         sealed class Single(factKey: String) : StringCriteria(factKey) {
-
+            fun singleContains(factKey: String, valueToCheck: String) = SingleOperatorCriteria(factKey, valueToCheck, ::containsChecker)
+            fun singleEquals(factKey: String, valueToCheck: String) = SingleOperatorCriteria(factKey, valueToCheck, ::equalsChecker)
+            class SingleOperatorCriteria(factKey: String, val valueToCheck:String, val checker: (String, String) -> Boolean): Single(factKey) {
+                override fun checkRule(): Boolean {
+                    return checker(valueToCheck, facts.getStringFact(factKey).value)
+                }
+            }
         }
     }
 }
