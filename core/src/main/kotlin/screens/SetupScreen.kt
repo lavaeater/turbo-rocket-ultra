@@ -12,12 +12,15 @@ import com.badlogic.gdx.scenes.scene2d.Stage
 import com.badlogic.gdx.scenes.scene2d.ui.HorizontalGroup
 import com.badlogic.gdx.utils.viewport.ExtendViewport
 import data.Player
+import data.Players
 import ecs.systems.player.SelectedItemList
 import ecs.systems.player.selectedItemListOf
 import gamestate.GameEvent
 import gamestate.GameState
 import input.Button
 import input.ControlMapper
+import input.GamepadControl
+import input.KeyboardControl
 import ktx.scene2d.*
 import statemachine.StateMachine
 import tru.*
@@ -195,10 +198,19 @@ class SetupScreen(gameState: StateMachine<GameState, GameEvent>) : BasicScreen(g
 
     private fun startGame(): Boolean {
         /* Take players we have here and add them to the game or something.
-
-
+        This is just a stop-over for later.
          */
+        for(model in availableControllers.filter { it.isSelected }) {
+            when(model) {
+                is PlayerModel.Keyboard -> Players.players[KeyboardControl()] = Player(model.name).apply {
+                    selectedCharacterSpriteName = model.selectedAbleSpriteAnims.selectedItem.key
+                }
+                is PlayerModel.GamePad -> Players.players[GamepadControl(model.controller)] = Player(model.name).apply {
+                    selectedCharacterSpriteName = model.selectedAbleSpriteAnims.selectedItem.key
+                }
+            }
 
+        }
         gameState.acceptEvent(GameEvent.StartedGame)
         return true
     }
@@ -220,8 +232,7 @@ class SetupScreen(gameState: StateMachine<GameState, GameEvent>) : BasicScreen(g
     }
 
     private fun toggleController(controller: Controller): Boolean {
-        val model =
-            availableControllers.firstOrNull { it is PlayerModel.GamePad && it.controller == controller }?.toggle()
+        availableControllers.firstOrNull { it is PlayerModel.GamePad && it.controller == controller }?.toggle()
         return true
     }
 
