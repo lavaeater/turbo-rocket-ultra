@@ -12,7 +12,6 @@ import physics.has
 
 
 class PlayerDeathSystem: IteratingSystem(allOf(PlayerComponent::class).get()) {
-    @ExperimentalStdlibApi
     override fun processEntity(entity: Entity, deltaTime: Float) {
         val pc = entity.getComponent<PlayerComponent>()
         if(pc.player.isDead && pc.player.lives > 0 && !entity.has<PlayerWaitsForRespawn>() && !entity.has<PlayerIsRespawning>()) {

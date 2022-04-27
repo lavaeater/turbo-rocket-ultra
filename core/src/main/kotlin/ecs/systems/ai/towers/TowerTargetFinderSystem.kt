@@ -16,7 +16,6 @@ class TowerTargetFinderSystem : IteratingSystem(allOf(FindTarget::class, Transfo
     private val enemies get() = engine.getEntitiesFor(enemyFamily)
 
 
-    @OptIn(ExperimentalStdlibApi::class)
     override fun processEntity(entity: Entity, deltaTime: Float) {
         /*
         Tries to find a target within some range of the position given by transformcomponent.

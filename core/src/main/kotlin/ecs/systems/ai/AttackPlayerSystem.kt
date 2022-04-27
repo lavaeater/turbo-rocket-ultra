@@ -23,7 +23,6 @@ class AttackPlayerSystem : IteratingSystem(allOf(
     TransformComponent::class,
     TrackingPlayer::class).get()) {
 
-    @ExperimentalStdlibApi
     override fun processEntity(entity: Entity, deltaTime: Float) {
         val attackPlayer = entity.getComponent<AttackPlayer>()
         val transformComponent = entity.getComponent<TransformComponent>()

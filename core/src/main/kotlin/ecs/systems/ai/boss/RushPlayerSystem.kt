@@ -15,7 +15,6 @@ class RushPlayerSystem : IteratingSystem(
     allOf(
         RushPlayer::class).get()
 ) {
-    @OptIn(ExperimentalStdlibApi::class)
     override fun processEntity(entity: Entity, deltaTime: Float) {
         /**
          * Try something different this time.

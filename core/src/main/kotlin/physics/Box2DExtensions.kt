@@ -44,22 +44,18 @@ fun Body.forwardVelocity(): Vector2 {
     return forwardNormal * this.linearVelocity.dot(forwardNormal)
 }
 
-@OptIn(ExperimentalStdlibApi::class)
 fun Entity.body(): Body {
     return getComponent<BodyComponent>().body!!
 }
 
-@OptIn(ExperimentalStdlibApi::class)
 fun Entity.vehicleControlComponent(): VehicleControlComponent {
     return this.getComponent()
 }
 
-@OptIn(ExperimentalStdlibApi::class)
 fun Entity.playerControlComponent(): PlayerControlComponent {
     return this.getComponent()
 }
 
-@OptIn(ExperimentalStdlibApi::class)
 fun Entity.vehicle(): VehicleComponent {
     return this.getComponent()
 }
@@ -72,27 +68,22 @@ fun Contact.bothAreEntities(): Boolean {
     return this.fixtureA.body.userData is Entity && this.fixtureB.body.userData is Entity
 }
 
-@ExperimentalStdlibApi
 fun Body.isEnemy(): Boolean {
     return (userData as Entity).has<EnemyComponent>()
 }
 
-@ExperimentalStdlibApi
 fun Body.isPlayer(): Boolean {
     return (userData as Entity).has<PlayerComponent>()
 }
 
-@ExperimentalStdlibApi
 fun Body.playerComponent(): PlayerComponent {
     return (userData as Entity).getComponent()
 }
 
-@ExperimentalStdlibApi
 fun Body.player(): Player {
     return (userData as Entity).getComponent<PlayerComponent>().player
 }
 
-@OptIn(ExperimentalStdlibApi::class)
 fun Fixture.isPlayer(): Boolean {
     return this.body.userData is Entity && (this.body.isPlayer())
 }
@@ -105,12 +96,10 @@ fun Fixture.getEntity(): Entity {
     return this.body.userData as Entity
 }
 
-@ExperimentalStdlibApi
 inline fun <reified T : Component> Entity.has(): Boolean {
     return AshleyMappers.getMapper<T>().has(this)
 }
 
-@ExperimentalStdlibApi
 inline fun <reified T : Component> Entity.getComponent(): T {
     return AshleyMappers.getMapper<T>().get(this)
 }
@@ -119,7 +108,6 @@ fun Contact.noSensors() : Boolean {
     return !this.fixtureA.isSensor && !this.fixtureB.isSensor()
 }
 
-@OptIn(ExperimentalStdlibApi::class)
 inline fun <reified T : Component> Contact.atLeastOneHas(): Boolean {
     if (this.eitherIsEntity()) {
         return if (this.fixtureA.isEntity() && this.fixtureA.getEntity()
@@ -129,7 +117,6 @@ inline fun <reified T : Component> Contact.atLeastOneHas(): Boolean {
     return false
 }
 
-@OptIn(ExperimentalStdlibApi::class)
 inline fun <reified T : Component> Contact.justOneHas(): Boolean {
         val fOne = this.fixtureA.isEntity() && this.fixtureA.getEntity()
             .has<T>()
@@ -137,19 +124,9 @@ inline fun <reified T : Component> Contact.justOneHas(): Boolean {
     return fOne xor fTwo
 }
 
-
-
-@ExperimentalStdlibApi
-inline fun <reified T: Component> doesEitherOneHave(entityOne: Entity, entityTwo: Entity): Boolean {
-    return entityOne.has<T>() || entityTwo.has<T>()
-}
-
-@ExperimentalStdlibApi
 inline fun<reified T: Component> getEntityThatHas(entityOne: Entity, entityTwo: Entity): Entity {
     return if(entityOne.has<T>()) entityOne else entityTwo
 }
-
-@OptIn(ExperimentalStdlibApi::class)
 inline fun <reified T : Component> Contact.bothHaveComponent(): Boolean {
     if (this.bothAreEntities()) {
         val mapper = AshleyMappers.getMapper<T>()
@@ -159,7 +136,6 @@ inline fun <reified T : Component> Contact.bothHaveComponent(): Boolean {
     return false
 }
 
-@ExperimentalStdlibApi
 fun Contact.getPlayerFor(): Player {
     return this.getEntityFor<PlayerComponent>().getComponent<PlayerComponent>().player
 }
@@ -169,7 +145,6 @@ fun Contact.getOtherEntity(entity: Entity): Entity {
     return if (entityA == entity) this.fixtureB.getEntity() else entityA
 }
 
-@OptIn(ExperimentalStdlibApi::class)
 inline fun <reified T : Component> Contact.getEntityFor(): Entity {
     return if(this.fixtureA.isEntity() && this.fixtureA.getEntity().has<T>()) this.fixtureA.getEntity() else this.fixtureB.getEntity()
 }
@@ -250,7 +225,6 @@ inline fun <reified T : Component> Engine.createComponent(block: T.() -> Unit = 
     return this.createComponent(T::class.java).apply(block)
 }
 
-@ExperimentalStdlibApi
 fun Contact.thisIsAContactBetween(): ContactType {
     if(this.justOneHas<EnemyComponent>()) {
         val entity = this.getEntityFor<EnemyComponent>()

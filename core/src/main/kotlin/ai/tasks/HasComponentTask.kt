@@ -11,7 +11,6 @@ class HasComponentTask<T: Component>(val componentClass: Class<T>) : EntityTask(
         TODO("Not yet implemented")
     }
 
-    @ExperimentalStdlibApi
     override fun execute(): Status {
         return if(mapper.has(entity)) Status.SUCCEEDED else Status.FAILED
     }

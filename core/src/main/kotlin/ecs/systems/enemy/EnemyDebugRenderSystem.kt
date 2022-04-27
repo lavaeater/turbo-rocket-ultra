@@ -35,7 +35,6 @@ class EnemyDebugRenderSystem(
         }
     }
 
-    @ExperimentalStdlibApi
     override fun processEntity(entity: Entity, deltaTime: Float) {
         if (renderStates) {
             var color = Color.GREEN

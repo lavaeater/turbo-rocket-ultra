@@ -12,7 +12,6 @@ import physics.has
 class UpdatePlayerStatsSystem : IteratingSystem(
     allOf(PlayerComponent::class, WeaponComponent::class, InventoryComponent::class).get()
 ) {
-    @OptIn(ExperimentalStdlibApi::class)
     override fun processEntity(entity: Entity, deltaTime: Float) {
         val player = entity.getComponent<PlayerComponent>().player
         val inventoryComponent = entity.getComponent<InventoryComponent>()

@@ -11,7 +11,6 @@ import physics.getComponent
 
 class BossAmblingSystem : IteratingSystem(allOf(Amble::class, EnemyComponent::class).get()) {
 
-    @OptIn(ExperimentalStdlibApi::class)
     override fun processEntity(entity: Entity, deltaTime: Float) {
         val component = entity.getComponent<Amble>()
         if(component.firstRun) {

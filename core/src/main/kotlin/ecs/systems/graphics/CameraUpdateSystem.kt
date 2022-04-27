@@ -59,7 +59,6 @@ class CameraUpdateSystem(
         camera.update()
     }
 
-    @ExperimentalStdlibApi
     override fun processEntity(entity: Entity, deltaTime: Float) {
         transformComponents.add(entity.getComponent())
     }

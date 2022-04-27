@@ -27,7 +27,6 @@ import kotlin.reflect.KType
 import kotlin.reflect.typeOf
 
 object AshleyMappers {
-    @kotlin.ExperimentalStdlibApi
     inline fun <reified T : Component> getMapper(): ComponentMapper<T> {
         val type = typeOf<T>()
         if (!mappers.containsKey(type))

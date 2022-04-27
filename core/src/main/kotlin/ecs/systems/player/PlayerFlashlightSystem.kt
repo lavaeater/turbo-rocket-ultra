@@ -15,7 +15,6 @@ class PlayerFlashlightSystem() : IteratingSystem(
         PlayerControlComponent::class
     ).get()
 ) {
-    @OptIn(ExperimentalStdlibApi::class)
     override fun processEntity(entity: Entity, deltaTime: Float) {
         val flashlight = entity.getComponent<FlashlightComponent>().flashLight
         val playerPosition = entity.getComponent<TransformComponent>().position

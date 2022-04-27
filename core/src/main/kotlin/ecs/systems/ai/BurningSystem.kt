@@ -10,7 +10,6 @@ import ktx.ashley.remove
 import physics.getComponent
 
 class BurningSystem: IteratingSystem(allOf(BurningComponent::class, EnemyComponent::class).get()) {
-    @ExperimentalStdlibApi
     override fun processEntity(entity: Entity, deltaTime: Float) {
         val enemyComponent = entity.getComponent<EnemyComponent>()
         val burningComponent = entity.getComponent<BurningComponent>()

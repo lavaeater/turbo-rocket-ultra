@@ -22,7 +22,6 @@ class PhysicsSystem(priority: Int) :
     val g = -10f //is y up or down?
     val contactManager by lazy { inject<ContactManager>()}
 
-    @OptIn(ExperimentalStdlibApi::class)
     override fun processEntity(entity: Entity, deltaTime: Float) {
         val bodyComponent = AshleyMappers.body.get(entity)
         val bodyPosition = bodyComponent.body!!.position

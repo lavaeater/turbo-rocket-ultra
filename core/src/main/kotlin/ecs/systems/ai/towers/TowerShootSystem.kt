@@ -24,7 +24,6 @@ import physics.*
 class TowerShootSystem: IteratingSystem(allOf(Shoot::class, BodyComponent::class).get()) {
     private val world: World by lazy { Context.inject() }
 
-    @OptIn(ExperimentalStdlibApi::class)
     override fun processEntity(entity: Entity, deltaTime: Float) {
         val shootComponent = entity.getComponent<Shoot>()
         if(!entity.has<TargetInRange>())

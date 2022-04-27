@@ -246,7 +246,6 @@ class FactsOfTheWorld(
         return getStringFact(key).value
     }
 
-    @OptIn(ExperimentalStdlibApi::class)
     fun save() {
 
         /*

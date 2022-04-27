@@ -39,6 +39,10 @@ object Assets : Disposable {
         SpriteLoader.initCharachterAnims()
     }
 
+    val characterTurboAnims by lazy {
+        SpriteLoader.initCharacterTurboAnims()
+    }
+
     val enemies by lazy {
         SpriteLoader.initEnemyAnims()
     }

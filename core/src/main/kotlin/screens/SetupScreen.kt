@@ -3,6 +3,7 @@ package screens
 import com.badlogic.gdx.Input
 import com.badlogic.gdx.controllers.Controller
 import com.badlogic.gdx.controllers.Controllers
+import com.badlogic.gdx.graphics.Color
 import com.badlogic.gdx.graphics.OrthographicCamera
 import com.badlogic.gdx.graphics.g2d.Animation
 import com.badlogic.gdx.graphics.g2d.Sprite
@@ -17,10 +18,7 @@ import gamestate.GameEvent
 import gamestate.GameState
 import input.Button
 import input.ControlMapper
-import ktx.scene2d.actors
-import ktx.scene2d.horizontalGroup
-import ktx.scene2d.scene2d
-import ktx.scene2d.verticalGroup
+import ktx.scene2d.*
 import statemachine.StateMachine
 import tru.*
 import ui.customactors.animatedSpriteImage
@@ -38,18 +36,19 @@ open class BoundHorizontalGroup : HorizontalGroup() {
 
 sealed class PlayerModel(
     val name: String,
-    var selectedCharacter: String = "boy"
+    var selectedCharacter: String
 ) {
     lateinit var isSelectedCallback: (Boolean) -> Unit
-    lateinit var selectedAbleSpriteAnims: SelectedItemList<String>
+    lateinit var selectedAbleSpriteAnims: SelectedItemList<TurboCharacterAnim>
     var isSelected = false
     fun toggle() {
         isSelected = !isSelected
         isSelectedCallback(isSelected)
     }
 
-    class Keyboard : PlayerModel("Keyboard")
-    class GamePad(val controller: Controller) : PlayerModel("GamePad ${controller.playerIndex}")
+    class Keyboard : PlayerModel("Keyboard", Assets.characterTurboAnims.first().name)
+    class GamePad(val controller: Controller) :
+        PlayerModel("GamePad ${controller.playerIndex + 1}", Assets.characterTurboAnims.first().name)
 }
 
 class SetupScreen(gameState: StateMachine<GameState, GameEvent>) : BasicScreen(gameState) {
@@ -75,30 +74,64 @@ class SetupScreen(gameState: StateMachine<GameState, GameEvent>) : BasicScreen(g
 
     private val stage by lazy {
         val aStage = Stage(viewport, batch)
-        aStage.isDebugAll = true
+        aStage.isDebugAll = false
         aStage.addActor(playerCards)
         aStage
     }
 
     private fun cardForPlayerModel(playerModel: PlayerModel): Actor {
-        val characterKeys = Assets.playerCharacters.keys.toList()
         return scene2d.verticalGroup {
             userObject = playerModel
             isVisible = true
+            val selectedGroup = verticalGroup {
+                isVisible = false
+                boundLabel({ playerModel.name })
+                boundLabel({ playerModel.selectedCharacter })
+                val ai = animatedSpriteImage(
+                    Assets.characterTurboAnims.first().animationFor(AnimState.Walk, SpriteDirection.South)
+                ) {}
+                addActor(ai)
+                verticalGroup {
+                    horizontalGroup {
+                        label("Press ")
+                        when (playerModel) {
+                            is PlayerModel.Keyboard -> label("[Return]")
+                            is PlayerModel.GamePad -> image(Assets.ps4Buttons["square"]!!)
+                        }
+
+                    }
+                    label(" to start")
+                }
+                playerModel.selectedAbleSpriteAnims = selectedItemListOf(
+                    { anim ->
+                        playerModel.selectedCharacter = anim.name
+                        ai.animation = anim.animationFor(AnimState.Walk, SpriteDirection.South)
+                    },
+                    *Assets.characterTurboAnims.toTypedArray()
+                )
+            }
+            addActor(selectedGroup)
+            val notSelectedGroup = verticalGroup {
+                isVisible = true
+                verticalGroup {
+                    horizontalGroup {
+                        label("Press ")
+                        when (playerModel) {
+                            is PlayerModel.Keyboard -> label("[Space]")
+                            is PlayerModel.GamePad -> image(Assets.ps4Buttons["cross"]!!)
+                        }
+
+                    }
+                    label(" to join")
+                }
+            }
+            addActor(notSelectedGroup)
             playerModel.isSelectedCallback = { isSelected ->
-                isVisible = isSelected
+                selectedGroup.isVisible = isSelected
+                notSelectedGroup.isVisible = !isSelected
             }
-            boundLabel({ playerModel.name })
-            boundLabel({ playerModel.selectedCharacter })
-            val ai = animatedSpriteImage(Assets.playerCharacters.getFirstFor(AnimState.Walk, SpriteDirection.South)) {
-            }
-            addActor(ai)
-            playerModel.selectedAbleSpriteAnims = selectedItemListOf({ key ->
-                playerModel.selectedCharacter = key
-                ai.animation = Assets.playerCharacters.getAnimationFor(playerModel.selectedCharacter, AnimState.Walk, SpriteDirection.South)
-            },
-                *characterKeys.toTypedArray()
-            )
+
+            color = Color.RED
         }
     }
 
@@ -161,6 +194,11 @@ class SetupScreen(gameState: StateMachine<GameState, GameEvent>) : BasicScreen(g
     }
 
     private fun startGame(): Boolean {
+        /* Take players we have here and add them to the game or something.
+
+
+         */
+
         gameState.acceptEvent(GameEvent.StartedGame)
         return true
     }

@@ -22,7 +22,6 @@ class WeaponChangeAndReloadSystem : IteratingSystem(
 
     private val audioPlayer by lazy { inject<AudioPlayer>()}
 
-    @OptIn(ExperimentalStdlibApi::class)
     override fun processEntity(entity: Entity, deltaTime: Float) {
         val controlComponent = entity.getComponent<PlayerControlComponent>()
         if (controlComponent.needToChangeGun != InputIndicator.Neutral) {

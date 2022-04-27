@@ -33,7 +33,6 @@ class TowerDebugSystem() :
         }
     }
 
-    @OptIn(ExperimentalStdlibApi::class)
     override fun processEntity(entity: Entity, deltaTime: Float) {
         if(entity.has<TargetInRange>()) {
             val transform = entity.getComponent<TransformComponent>()

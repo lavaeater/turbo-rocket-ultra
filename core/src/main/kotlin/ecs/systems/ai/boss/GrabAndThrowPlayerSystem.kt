@@ -23,7 +23,6 @@ class GrabAndThrowPlayerSystem : IteratingSystem(allOf(
     TransformComponent::class,
     TrackingPlayer::class).get()) {
 
-    @ExperimentalStdlibApi
     override fun processEntity(entity: Entity, deltaTime: Float) {
         val attackPlayer = entity.getComponent<GrabAndThrowPlayer>()
         val transformComponent = entity.getComponent<TransformComponent>()
