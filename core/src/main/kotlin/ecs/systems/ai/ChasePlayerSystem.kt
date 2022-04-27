@@ -18,7 +18,6 @@ class ChasePlayerSystem: IteratingSystem(allOf(
     EnemyComponent::class,
     TransformComponent::class,
     TrackingPlayer::class).get()) {
-    @OptIn(ExperimentalStdlibApi::class)
     override fun processEntity(entity: Entity, deltaTime: Float) {
         val chasePlayer = entity.getComponent<ChasePlayer>()
         if(chasePlayer.status == Task.Status.RUNNING) {

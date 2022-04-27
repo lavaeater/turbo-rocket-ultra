@@ -42,10 +42,15 @@ class GamepadInputSystem : IteratingSystem(allOf(GamepadControl::class).get()), 
                     Button.DPadRight -> {}
                     Button.Triangle -> {}
                     Button.Unknown -> {}
-                    else -> {
-                        //Wuut
-                        val v = "a"
-                    }
+                    Button.DPadDown -> {}
+                    Button.DPadUp -> {}
+                    Button.L1 -> {}
+                    Button.L3 -> {}
+                    Button.Options -> {}
+                    Button.PsButton -> {}
+                    Button.R1 -> {}
+                    Button.R3 -> {}
+                    Button.Share -> {}
                 }
             }
         }
@@ -131,7 +136,6 @@ class GamepadInputSystem : IteratingSystem(allOf(GamepadControl::class).get()), 
 
     val deadZone = -0.2f..0.2f
 
-    @OptIn(ExperimentalStdlibApi::class)
     override fun processEntity(entity: Entity, deltaTime: Float) {
         val controlComponent = entity.getComponent<GamepadControl>()
 

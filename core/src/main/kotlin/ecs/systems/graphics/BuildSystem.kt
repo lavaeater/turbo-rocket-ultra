@@ -53,7 +53,6 @@ class BuildSystem(private val debug: Boolean) : IteratingSystem(
 
      */
 
-    @OptIn(ExperimentalStdlibApi::class)
     override fun processEntity(entity: Entity, deltaTime: Float) {
         val controlComponent = entity.playerControl()
         val buildComponent = entity.build()
@@ -70,7 +69,6 @@ class BuildSystem(private val debug: Boolean) : IteratingSystem(
             val builderPosition = entity.transform().position
             val cursorOffset = CompassDirection.directionOffsets[controlComponent.compassDirection]!!
 
-            val texture = buildables.first()
             val textureX = builderPosition.tileWorldX() + (cursorOffset.x * scaledWidth)
             val textureY = builderPosition.tileWorldY() + (cursorOffset.y * scaledHeight)
 

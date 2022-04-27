@@ -7,7 +7,6 @@ import ktx.ashley.allOf
 
 class PlayerBuildSystem: IteratingSystem(
     allOf(PlayerControlComponent::class).get()) {
-    @OptIn(ExperimentalStdlibApi::class)
     override fun processEntity(entity: Entity, deltaTime: Float) {
 
     }

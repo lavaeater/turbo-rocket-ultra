@@ -14,7 +14,6 @@ import tru.Assets
 
 class PanicSystem : IteratingSystem(allOf(Panic::class, EnemyComponent::class).get()) {
 
-    @OptIn(ExperimentalStdlibApi::class)
     override fun processEntity(entity: Entity, deltaTime: Float) {
         val component = entity.getComponent<Panic>()
         if(component.firstRun) {

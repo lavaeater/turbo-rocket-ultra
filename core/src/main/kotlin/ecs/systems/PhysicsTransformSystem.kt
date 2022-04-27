@@ -8,7 +8,6 @@ import ktx.ashley.allOf
 import physics.getComponent
 
 class PhysicsTransformSystem: IteratingSystem(allOf(BodyComponent::class, NewTransformComponent::class).get()) {
-    @OptIn(ExperimentalStdlibApi::class)
     override fun processEntity(entity: Entity, deltaTime: Float) {
         val tc = entity.getComponent<NewTransformComponent>()
         val body = entity.getComponent<BodyComponent>().body!!

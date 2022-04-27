@@ -32,7 +32,6 @@ class AimingAidSystem(private val debug: Boolean, private val renderRedDot: Bool
         }
     }
 
-    @OptIn(ExperimentalStdlibApi::class)
     override fun processEntity(entity: Entity, deltaTime: Float) {
         val controlComponent = entity.getComponent<PlayerControlComponent>()
         val transform = entity.getComponent<TransformComponent>()

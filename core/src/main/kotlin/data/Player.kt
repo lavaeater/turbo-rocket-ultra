@@ -6,7 +6,7 @@ import ecs.components.gameplay.ObjectiveComponent
 import tru.*
 import java.util.*
 
-class Player {
+class Player(val name: String) {
     init {
         playerIndex++
     }

@@ -7,6 +7,12 @@ import com.badlogic.gdx.graphics.g2d.Sprite
 import com.badlogic.gdx.graphics.g2d.TextureRegion
 import ktx.collections.toGdxArray
 
+data class TurboCharacterAnim(val key: String, val name: String, val animations: Map<AnimState, LpcCharacterAnim<Sprite>>) {
+    fun animationFor(animState: AnimState, direction: SpriteDirection) : Animation<Sprite> {
+        return animations[animState]!!.animations[direction]!!
+    }
+}
+
 object SpriteLoader {
 
     /* Get it to work or ditch it. Right now it ain't even rendering anything.*/
@@ -103,6 +109,34 @@ object SpriteLoader {
         return anims
     }
 
+    fun initCharacterTurboAnims(): List<TurboCharacterAnim> {
+        val animList = mutableListOf<TurboCharacterAnim>()
+        val characterNames = mapOf("Genku" to "boy", "Zdanya" to "girl", "Atomic" to "blondie", "Grafen" to "curly", "Hangko" to "green", "Hogan" to "hogan", "KNIGHT" to "knight", "Red Sonja" to "redsonja", "Skeltor" to "skeleton")
+        for((n, k) in characterNames) {
+            val someAnims = mutableMapOf<AnimState, LpcCharacterAnim<Sprite>>()
+            val texture = Texture(Gdx.files.internal("sprites/lpc/$k.png"))
+            for (animDef in LpcCharacterAnimDefinition.definitions) {
+                someAnims[animDef.state] = LpcCharacterAnim<Sprite>(
+                    animDef.state,
+                    animDef.directions.mapIndexed
+                    { row, r ->
+                        r to
+                                Animation(0.1f, (animDef.frames).map {
+                                    Sprite(TextureRegion(
+                                        texture,
+                                        (it) * animDef.itemWidth,
+                                        (animDef.row + row) * animDef.itemHeight,
+                                        animDef.itemWidth,
+                                        animDef.itemHeight))
+                                }.toGdxArray(), animDef.playMode)
+                    }.toMap()
+                )
+            }
+            animList.add(TurboCharacterAnim(k, n, someAnims))
+        }
+        return animList
+    }
+
     fun initCharachterAnims(): Map<String, Map<AnimState, LpcCharacterAnim<Sprite>>> {
         /*
         For now, we will simply load the sheets and assign anims etc using
@@ -114,6 +148,7 @@ object SpriteLoader {
          */
         val anims = mutableMapOf<String, MutableMap<AnimState, LpcCharacterAnim<Sprite>>>()
         val characters = listOf("boy", "girl","blondie", "curly", "green", "hogan", "knight", "redsonja", "skeleton")
+
         for (c in characters) {
             anims[c] = mutableMapOf()
             val texture = Texture(Gdx.files.internal("sprites/lpc/$c.png"))

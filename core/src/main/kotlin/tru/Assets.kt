@@ -39,6 +39,10 @@ object Assets : Disposable {
         SpriteLoader.initCharachterAnims()
     }
 
+    val characterTurboAnims by lazy {
+        SpriteLoader.initCharacterTurboAnims()
+    }
+
     val enemies by lazy {
         SpriteLoader.initEnemyAnims()
     }
@@ -491,3 +495,11 @@ object Assets : Disposable {
 
     }
 }
+
+fun Map<String, Map<AnimState, LpcCharacterAnim<Sprite>>>.getFirstFor(anim: AnimState, direction: SpriteDirection) : Animation<Sprite> {
+    return this.values.first()[anim]!!.animations[direction]!!
+}
+fun Map<String, Map<AnimState, LpcCharacterAnim<Sprite>>>.getAnimationFor(character:String, anim: AnimState, direction: SpriteDirection) : Animation<Sprite> {
+    return this[character]!![anim]!!.animations[direction]!!
+}
+

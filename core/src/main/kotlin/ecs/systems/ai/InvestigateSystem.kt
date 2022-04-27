@@ -19,7 +19,6 @@ class InvestigateSystem : IteratingSystem(allOf(Investigate::class, EnemyCompone
 
     private val mapManager by lazy { inject<GridMapManager>() }
 
-    @OptIn(ExperimentalStdlibApi::class)
     override fun processEntity(entity: Entity, deltaTime: Float) {
         val component = entity.getComponent<Investigate>()
         val enemyComponent = entity.getComponent<EnemyComponent>()

@@ -10,7 +10,6 @@ import physics.getComponent
 
 class BloodSplatterEffectRenderSystem(private val batch: Batch) : IteratingSystem(allOf(SplatterComponent::class).get()) {
 
-    @OptIn(ExperimentalStdlibApi::class)
     override fun processEntity(entity: Entity, deltaTime: Float) {
         val component = entity.getComponent<SplatterComponent>()
         val effect = component.splatterEffect

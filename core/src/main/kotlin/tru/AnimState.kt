@@ -3,7 +3,7 @@ package tru
 //import kotlinx.serialization.Serializable
 
 //@Serializable
-sealed class AnimState() {
+sealed class AnimState {
     companion object {
         val animStates = listOf(Idle, Walk, StartAim, Aiming, Death, Run, Hurt, WalkWithGun, RunWithGun, PickUp, Climb, Roll, Shoot)
     }

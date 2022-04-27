@@ -33,7 +33,6 @@ class SeekPlayerSystem(val debug: Boolean) : IteratingSystem(allOf(SeekPlayer::c
     val shapeDrawer by lazy { Assets.shapeDrawer }
     lateinit var closestFixture: Fixture
 
-    @OptIn(ExperimentalStdlibApi::class)
     override fun processEntity(entity: Entity, deltaTime: Float) {
         val seekComponent = entity.getComponent<SeekPlayer>()
         val debugColor = Color(0f, 1f, 0f, 0.1f)

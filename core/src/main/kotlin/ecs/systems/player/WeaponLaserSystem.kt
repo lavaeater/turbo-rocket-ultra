@@ -23,7 +23,6 @@ class WeaponLaserSystem : IteratingSystem(
         WeaponComponent::class
     ).get()
 ) {
-    @OptIn(ExperimentalStdlibApi::class)
     override fun processEntity(entity: Entity, deltaTime: Float) {
         val weaponLaser = entity.getComponent<WeaponLaserComponent>().weaponlaser
         val transformComponent = entity.getComponent<TransformComponent>()

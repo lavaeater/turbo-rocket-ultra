@@ -166,7 +166,6 @@ class KeyboardInputSystem :
         }
     }
 
-    @OptIn(ExperimentalStdlibApi::class)
     override fun processEntity(entity: Entity, deltaTime: Float) {
         keyboardEntity = entity
         keyboardControl = entity.getComponent()

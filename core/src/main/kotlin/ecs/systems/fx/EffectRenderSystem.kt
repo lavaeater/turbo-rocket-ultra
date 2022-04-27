@@ -16,7 +16,6 @@ class EffectRenderSystem(private val batch: Batch, priority:Int) : IteratingSyst
         ParticleEffectComponent::class,
         TransformComponent::class
     ).get(), priority) {
-    @OptIn(ExperimentalStdlibApi::class)
     override fun processEntity(entity: Entity, deltaTime: Float) {
         val effectComponent = entity.getComponent<ParticleEffectComponent>()
         if(effectComponent.ready) {

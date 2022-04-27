@@ -60,7 +60,6 @@ class ContactManager : ContactListener {
     private val messageHandler by lazy { inject<MessageHandler>() }
     private val audioPlayer by lazy { inject<AudioPlayer>() }
 
-    @OptIn(ExperimentalStdlibApi::class)
     override fun beginContact(contact: Contact) {
         when (val contactType = contact.thisIsAContactBetween()) {
             is ContactType.EnemyAndBullet -> {
@@ -272,7 +271,6 @@ class ContactManager : ContactListener {
             contactType.enemy.addComponent<CollidedWithObstacle>()
     }
 
-    @OptIn(ExperimentalStdlibApi::class)
     fun handleGrenadeHittingAnything(contactType: ContactType.GrenadeHittingAnything) {
         //This should be timed using cooldown, not this way
         audioPlayer.playOnChannel(AudioChannels.simultaneous, Assets.newSoundEffects["weapons"]!!["grenade"]!!.random())
@@ -309,7 +307,6 @@ class ContactManager : ContactListener {
         grenade.addComponent<DestroyComponent>() //This entity will die and disappear now.
     }
 
-    @OptIn(ExperimentalStdlibApi::class)
     fun handleMolotovHittingAnything(contactType: ContactType.MolotovHittingAnything) {
         audioPlayer.playOnChannel(AudioChannels.simultaneous, Assets.newSoundEffects["weapons"]!!["molotov"]!!.random())
         val molotov = contactType.molotov

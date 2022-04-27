@@ -14,7 +14,6 @@ class PlayerMoveSystem(private var speed: Float): IteratingSystem(
         BodyComponent::class,
         AnimatedCharacterComponent::class).get()) {
 
-    @OptIn(ExperimentalStdlibApi::class)
     override fun processEntity(entity: Entity, deltaTime: Float) {
         val pcc = entity.getComponent<PlayerControlComponent>()
         if(pcc.cooldownPropertyCheckIfDone(pcc::stunned, deltaTime)) {

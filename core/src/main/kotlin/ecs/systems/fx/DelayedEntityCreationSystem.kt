@@ -7,7 +7,6 @@ import ktx.ashley.allOf
 import physics.getComponent
 
 class DelayedEntityCreationSystem: IteratingSystem(allOf(CreateEntityComponent::class).get()) {
-    @OptIn(ExperimentalStdlibApi::class)
     override fun processEntity(entity: Entity, deltaTime: Float) {
         val creator = entity.getComponent<CreateEntityComponent>()
         creator.creator()
