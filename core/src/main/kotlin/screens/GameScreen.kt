@@ -39,6 +39,7 @@ import story.StoryHelper
 import story.StoryManager
 import story.fact.Facts
 import tru.Assets
+import turbofacts.NewStoryManager
 import ui.IUserInterface
 import kotlin.math.pow
 import kotlin.math.roundToInt
@@ -161,7 +162,9 @@ D1B67A
         ui.update(delta)
         audioPlayer.update(delta)
         storyManager.checkStoriesIfNeeded()
+        newStoryManager.checkIfNeeded()
     }
+    private val newStoryManager by lazy { inject<NewStoryManager>() }
 
     private val velIters = 8
     private val posIters = 3

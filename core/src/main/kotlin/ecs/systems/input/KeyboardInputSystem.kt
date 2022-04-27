@@ -73,7 +73,11 @@ class KeyboardInputSystem :
                     Input.Keys.S -> keyboardControl.thrust = -1f
                     Input.Keys.A -> keyboardControl.turning = -1f
                     Input.Keys.D -> keyboardControl.turning = 1f
-                    else -> return false
+                    Input.Keys.P -> if (gameState.currentState.state == GameState.Running) gameState.acceptEvent(
+                        GameEvent.PausedGame
+                    ) else gameState.acceptEvent(
+                        GameEvent.ResumedGame
+                    )                    else -> return false
                 }
             }
         } else {

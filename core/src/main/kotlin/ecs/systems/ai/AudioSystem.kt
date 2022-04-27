@@ -18,10 +18,9 @@ class AudioSystem : IteratingSystem(allOf(AudioComponent::class, TransformCompon
     private val camera by lazy { inject<OrthographicCamera>() }
     override fun processEntity(entity: Entity, deltaTime: Float) {
         val audioComponent = entity.audio()
-        audioComponent.coolDown -= deltaTime
-        if(audioComponent.coolDown < 0f) {
+        if(audioComponent.playSound) {
+            audioComponent.playSound = !audioComponent.playOnce
             var factor = 1f
-            audioComponent.coolDown = audioComponent.coolDownRange.random()
             if(audioComponent.takeDistanceIntoAccount) {
                 val soundPosition = entity.transform().position
                 val distance = camera.position.toVec2().dst(soundPosition)
@@ -30,6 +29,13 @@ class AudioSystem : IteratingSystem(allOf(AudioComponent::class, TransformCompon
             }
             if(audioComponent.soundEffect != null)
                 audioPlayer.playOnChannel(audioComponent.channel, audioComponent.soundEffect!!, 1f * factor)
+        }
+        if(!audioComponent.playOnce) {
+            audioComponent.coolDown -= deltaTime
+            if(audioComponent.coolDown < 0f) {
+                audioComponent.playSound = true
+                audioComponent.coolDown = audioComponent.coolDownRange.random()
+            }
         }
     }
 }

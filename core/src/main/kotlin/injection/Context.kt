@@ -52,6 +52,8 @@ import story.StoryManager
 import ui.Hud
 import ui.IUserInterface
 import messaging.MessageHandler
+import turbofacts.FotW
+import turbofacts.NewStoryManager
 
 object Context {
     val context = Context()
@@ -90,6 +92,8 @@ object Context {
             bindSingleton(GridMapManager())
             bindSingleton(RayHandler(inject(), 500, 500))
             bindSingleton(MessageHandler())
+            bindSingleton(NewStoryManager())
+            bindSingleton(FotW { key -> inject<NewStoryManager>().apply { this.needsChecking = true } })
             bindSingleton(FactsOfTheWorld(
                 Gdx.app.getPreferences("TurboRocket"),
                 { key -> inject<MessageHandler>().sendMessage(Message.FactUpdated(key))}
