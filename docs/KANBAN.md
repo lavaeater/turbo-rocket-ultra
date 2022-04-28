@@ -6,32 +6,32 @@ kanban-plugin: basic
 
 ## Todo
 
-- [ ] [[Facts for Gameplay]]
-- [ ] [[Hierarchical Facts]]
-- [ ] [[Thought Bubbles]]
 - [ ] [[Enemy Aggression]]
-- [ ] [[Guns as Entities]]
+- [ ] [[Intent-based Weapon Select]]
+- [ ] [[Intent-based Context Action]]
+- [ ] [[Tower Mechanics]]
+- [ ] [[Zombies throwing projectiles]]
+- [ ] [[Facts for Gameplay]]
+- [ ] [[Thought Bubbles]]
 - [ ] [[Gibs and Body Parts II]]
 - [ ] [[Facts for Fun]]
 - [ ] [[Hold an area for n seconds]]
 - [ ] [[Hud II]]
-- [ ] [[Intent-based Weapon Select]]
-- [ ] [[Intent-based Context Action]]
 - [ ] [[More enemy sprites]]
 - [ ] [[New Enemies]]
-- [ ] [[Tower Mechanics]]
 - [ ] [[Training map for enemies]]
 - [ ] [[Vehicles]]
 - [ ] [[Transitions]]
-- [ ] [[Zombies throwing projectiles]]
 - [ ] [[Zombies with guns]]
 - [ ] [[BehaviorTree Facts]]
 - [ ] [[A Nice Logo]]
+- [ ] [[Hierarchical Facts]]
 
 
 ## Doing
 
-- [ ] [[New Fact System]]
+- [ ] [[Guns as Entities]]
+- [ ] [[New Look and Feel]]
 
 
 ## Done
@@ -39,6 +39,7 @@ kanban-plugin: basic
 **Complete**
 - [x] [[Nicer Setup UI]]
 - [x] [[Enemies and walls]]
+- [x] [[New Fact System]]
 
 
 
