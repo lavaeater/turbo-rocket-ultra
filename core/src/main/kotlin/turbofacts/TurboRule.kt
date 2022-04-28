@@ -81,8 +81,8 @@ fun TurboRuleBuilder.intMoreThan(value: Int, vararg key: String) {
     criteria.add(Criterion.IntCriteria.Single.moreThan(multiKey(*key), value))
 }
 
-fun TurboRuleBuilder.intMoreThanF(value: ()-> Int, vararg key: String) {
-    criteria.add(Criterion.IntCriteria.Single.moreThanF(multiKey(*key), value))
+fun TurboRuleBuilder.intMoreThan(factToCheck: String, factToCheckAgainst: String) {
+    criteria.add(Criterion.IntCriteria.Versus.moreThan(factToCheck, factToCheckAgainst))
 }
 
 fun TurboRuleBuilder.intLessThan(value: Int, vararg key: String) {

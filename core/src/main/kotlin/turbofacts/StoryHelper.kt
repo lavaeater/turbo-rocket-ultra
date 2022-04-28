@@ -22,7 +22,7 @@ object StoryHelper {
             setBooleanFact(false, Factoids.LevelFailed)
             setBooleanFact(false, Factoids.BossIsDead)
             setIntFact(0, Factoids.EnemyKillCount)
-            setIntFact(10, Factoids.TargetEnemyKillCount)
+            setIntFact(3, Factoids.TargetEnemyKillCount)
             setBooleanFact(true, Factoids.ShowEnemyKillCount)
             setBooleanFact(false, Factoids.AcceleratingSpawns)
             setBooleanFact(false, Factoids.LevelStarted)
@@ -110,7 +110,7 @@ object StoryHelper {
             }
             rule {
                 name = "Check If Work is Done"
-                intMoreThanF({ factsOfTheWorld.getInt(Factoids.TargetEnemyKillCount) }, Factoids.EnemyKillCount)
+                intMoreThan(Factoids.EnemyKillCount, Factoids.TargetEnemyKillCount)
                 consequence = {
                         factsOfTheWorld.setTrue(Factoids.LevelComplete)
                 }

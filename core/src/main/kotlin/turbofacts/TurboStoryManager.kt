@@ -34,6 +34,8 @@ class TurboStoryManager {
 
     fun activate() {
         isActive = true
+        for(story in stories)
+            story.initialize()
     }
 
     fun addStory(story: TurboStory) {

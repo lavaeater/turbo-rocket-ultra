@@ -1,6 +1,7 @@
 package turbofacts
 
 import injection.Context
+import java.util.zip.CheckedInputStream
 
 sealed class Criterion(val factKey: String) {
     protected val facts by lazy { Context.inject<NewFactsOfTheWorld>() }
@@ -125,10 +126,6 @@ sealed class Criterion(val factKey: String) {
                     return SingleOperatorCriteria(factKey, valueToCheck, IntCriteria::moreThanChecker)
                 }
 
-                fun moreThanF(factKey: String, valueToCheck: ()-> Int): SingleOperatorCriteria {
-                    return SingleOperatorCriteria(factKey, valueToCheck()) { _, value -> valueToCheck() > value }
-                }
-
                 fun equals(factKey: String, valueToCheck: Int): SingleOperatorCriteria {
                     return SingleOperatorCriteria(factKey, valueToCheck, IntCriteria::equalsChecker)
                 }
@@ -140,6 +137,28 @@ sealed class Criterion(val factKey: String) {
                     return checker(valueToCheck, facts.getIntFact(factKey).value)
                 }
             }
+        }
+
+        sealed class Versus(val factToCheck: String, val factToCheckAgainst: String) : IntCriteria(factToCheck) {
+            companion object {
+                fun lessThan(factToCheck: String, factToCheckAgainst: String): VersusOperatorCriteria {
+                    return VersusOperatorCriteria(factToCheck, factToCheckAgainst, IntCriteria::lessThanChecker)
+                }
+
+                fun moreThan(factToCheck: String, factToCheckAgainst: String): VersusOperatorCriteria {
+                    return VersusOperatorCriteria(factToCheck, factToCheckAgainst, IntCriteria::moreThanChecker)
+                }
+
+                fun equals(factToCheck: String, factToCheckAgainst: String): VersusOperatorCriteria {
+                    return VersusOperatorCriteria(factToCheck, factToCheckAgainst, IntCriteria::equalsChecker)
+                }
+            }
+            class VersusOperatorCriteria(factToCheck: String, factToCheckAgainst: String, val checker:(Int, Int) -> Boolean): Versus(factToCheck, factToCheckAgainst) {
+                override fun checkRule(): Boolean {
+                    return checker(facts.getInt(factToCheck), facts.getInt(factToCheckAgainst))
+                }
+            }
+
         }
     }
 

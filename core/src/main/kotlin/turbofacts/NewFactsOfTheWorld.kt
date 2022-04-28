@@ -5,6 +5,12 @@ import ecs.systems.enemy.multiKey
 class NewFactsOfTheWorld(private val onFactUpdated: (key: String) -> Unit = {}) {
     val facts = mutableMapOf<String, Factoid>()
 
+    fun updated(key: String) {
+        if(!silent) {
+            onFactUpdated(key)
+        }
+    }
+
     fun factsFor(vararg key: String): List<Factoid> {
         /*
         advanced queries, my main man
@@ -31,11 +37,11 @@ class NewFactsOfTheWorld(private val onFactUpdated: (key: String) -> Unit = {}) 
         var fact = Factoid.Fact.BooleanFact(mk, value)
         if (!facts.containsKey(mk)) {
             facts[mk] = fact
-            onFactUpdated(mk)
+            updated(mk)
         } else if (facts[mk]!! is Factoid.Fact.BooleanFact) {
             fact = facts[mk]!! as Factoid.Fact.BooleanFact
             fact.value = value
-            onFactUpdated(mk)
+            updated(mk)
         } else {
             throw Exception("Not a boolean fact")
         }
@@ -53,13 +59,7 @@ class NewFactsOfTheWorld(private val onFactUpdated: (key: String) -> Unit = {}) 
 
     fun getBooleanFact(vararg key: String): Factoid.Fact.BooleanFact {
         val mk = multiKey(*key)
-        if (facts.containsKey(mk))
-            if (facts[mk] is Factoid.Fact.BooleanFact)
-                return facts[mk]!! as Factoid.Fact.BooleanFact
-            else
-                throw Exception("Fact $mk is not a Boolean")
-        else
-            throw Exception("Fact $mk is not set in Facts")
+        return facts[mk] as Factoid.Fact.BooleanFact? ?: setBooleanFact(false, *key)
     }
 
     fun getBoolean(vararg key: String) : Boolean {
@@ -71,12 +71,12 @@ class NewFactsOfTheWorld(private val onFactUpdated: (key: String) -> Unit = {}) 
         if (!facts.containsKey(mk)) {
             val fact = Factoid.Fact.IntFact(mk, value)
             facts[mk] = fact
-            onFactUpdated(mk)
+            updated(mk)
             return fact
         } else if (facts[mk]!! is Factoid.Fact.IntFact) {
             val fact = facts[mk]!! as Factoid.Fact.IntFact
             fact.value = value
-            onFactUpdated(mk)
+            updated(mk)
             return fact
         }
         throw Exception("Fact with key $mk is not of type Int")
@@ -109,12 +109,12 @@ class NewFactsOfTheWorld(private val onFactUpdated: (key: String) -> Unit = {}) 
         if (!facts.containsKey(mk)) {
             val fact = Factoid.Fact.FloatFact(mk, value)
             facts[mk] = fact
-            onFactUpdated(mk)
+            updated(mk)
             return fact
         } else if (facts[mk]!! is Factoid.Fact.FloatFact) {
             val fact = facts[mk]!! as Factoid.Fact.FloatFact
             fact.value = value
-            onFactUpdated(mk)
+            updated(mk)
             return fact
         }
         throw Exception("Fact with key $mk is not of type Float")
@@ -142,16 +142,24 @@ class NewFactsOfTheWorld(private val onFactUpdated: (key: String) -> Unit = {}) 
         return setFloatFact(getFloat(*key) + value, *key).value
     }
 
-    fun setStringFact(value: String, vararg key: String) {
+    fun setStringFact(value: String, vararg key: String) : Factoid.Fact.StringFact {
         val mk = multiKey(*key)
-        if (!facts.containsKey(mk)) {
-            val fact = Factoid.Fact.StringFact(mk, value)
-            facts[mk] = fact
-        } else if (facts[mk]!! is Factoid.Fact.StringFact) {
-            (facts[mk]!! as Factoid.Fact.StringFact).value = value
+        var fact = facts[mk]
+        when (fact) {
+            null -> {
+                updated(mk)
+                fact = Factoid.Fact.StringFact(mk, value)
+                facts[mk] = fact
+            }
+            is Factoid.Fact.StringFact -> {
+                updated(mk)
+                fact.value = value
+            }
+            else -> {
+                throw Exception("Fact with key $mk is not of type String")
+            }
         }
-        onFactUpdated(mk)
-        throw Exception("Fact with key $mk is not of type String")
+        return fact
     }
 
     fun getStringFact(vararg key: String): Factoid.Fact.StringFact {
@@ -175,13 +183,13 @@ class NewFactsOfTheWorld(private val onFactUpdated: (key: String) -> Unit = {}) 
     fun addToStringList(value: String, vararg key: String) {
         val listFact = ensureStringList(*key)
         listFact.value.add(value)
-        onFactUpdated(multiKey(*key))
+        updated(multiKey(*key))
     }
 
     fun removeFromStringList(value: String, vararg key: String) {
         val listFact = ensureStringList(*key)
         listFact.value.remove(value)
-        onFactUpdated(multiKey(*key))
+        updated(multiKey(*key))
     }
 
     fun getStringList(vararg key: String): Factoid.Fact.StringListFact {

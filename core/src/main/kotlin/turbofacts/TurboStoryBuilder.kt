@@ -6,8 +6,9 @@ class TurboStoryBuilder: Builder<TurboStory> {
     val rules = mutableListOf<TurboRule>()
     var consequence: (List<Criterion>) -> Unit = {}
     var initializer: ()->Unit = {}
+    var repeat = true
 
     fun rule(block: TurboRuleBuilder.() -> Unit) = rules.add(TurboRuleBuilder().apply(block).build())
 
-    override fun build(): TurboStory = TurboStory(name, description, rules, consequence, initializer)
+    override fun build(): TurboStory = TurboStory(name, description, repeat, rules, consequence, initializer)
 }

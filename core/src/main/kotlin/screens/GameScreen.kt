@@ -95,6 +95,7 @@ class GameScreen(private val gameState: StateMachine<GameState, GameEvent>) : Kt
             Maybe
             How would we want this to work, ideally?
              */
+            storyManager.activate()
         }
     }
 
