@@ -1,18 +1,5 @@
 package turbofacts
 
-fun story(block: TurboStoryBuilder.() -> Unit) = TurboStoryBuilder().apply(block).build()
-
-class TurboStoryBuilder: Builder<TurboStory> {
-    var name = "Story"
-    var description = "Describe your story"
-    val rules = mutableListOf<TurboRule>()
-    var consequence: (List<Criterion>) -> Unit = {}
-    var initializer: ()->Unit = {}
-
-    fun rule(block: TurboRuleBuilder.() -> Unit) = rules.add(TurboRuleBuilder().apply(block).build())
-
-    override fun build(): TurboStory = TurboStory(name, description, rules, consequence, initializer)
-}
 class TurboStory(
     val name: String,
     val description: String,
@@ -36,3 +23,5 @@ class TurboStory(
         return checksOut
     }
 }
+
+fun story(block: TurboStoryBuilder.() -> Unit) = TurboStoryBuilder().apply(block).build()

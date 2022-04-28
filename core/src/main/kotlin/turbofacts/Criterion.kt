@@ -125,6 +125,10 @@ sealed class Criterion(val factKey: String) {
                     return SingleOperatorCriteria(factKey, valueToCheck, IntCriteria::moreThanChecker)
                 }
 
+                fun moreThanF(factKey: String, valueToCheck: ()-> Int): SingleOperatorCriteria {
+                    return SingleOperatorCriteria(factKey, valueToCheck()) { _, value -> valueToCheck() > value }
+                }
+
                 fun equals(factKey: String, valueToCheck: Int): SingleOperatorCriteria {
                     return SingleOperatorCriteria(factKey, valueToCheck, IntCriteria::equalsChecker)
                 }
@@ -149,13 +153,15 @@ sealed class Criterion(val factKey: String) {
                 return value == valueToCheck
             }
         }
-
         sealed class All(factKey: String) : StringCriteria(factKey) {
-            fun allContains(factKey: String, valueToCheck: String): AllOperatorCriteria {
-                return AllOperatorCriteria(factKey, valueToCheck, ::containsChecker)
-            }
-            fun allEquals(factKey: String, valueToCheck: String): AllOperatorCriteria {
-                return AllOperatorCriteria(factKey, valueToCheck, ::equalsChecker)
+            companion object {
+                fun contains(factKey: String, valueToCheck: String): AllOperatorCriteria {
+                    return AllOperatorCriteria(factKey, valueToCheck, ::containsChecker)
+                }
+
+                fun equals(factKey: String, valueToCheck: String): AllOperatorCriteria {
+                    return AllOperatorCriteria(factKey, valueToCheck, ::equalsChecker)
+                }
             }
             class AllOperatorCriteria(factKey: String, val valueToCheck:String, val checker: (String, String) -> Boolean): All(factKey) {
                 override fun checkRule(): Boolean {
@@ -165,8 +171,13 @@ sealed class Criterion(val factKey: String) {
         }
 
         sealed class Any(factKey: String) : StringCriteria(factKey) {
-            fun anyContains(factKey: String, valueToCheck: String) = AnyOperatorCriteria(factKey, valueToCheck, ::containsChecker)
-            fun anyEquals(factKey: String, valueToCheck: String) = AnyOperatorCriteria(factKey, valueToCheck, ::equalsChecker)
+            companion object {
+                fun contains(factKey: String, valueToCheck: String) =
+                    AnyOperatorCriteria(factKey, valueToCheck, ::containsChecker)
+
+                fun equals(factKey: String, valueToCheck: String) =
+                    AnyOperatorCriteria(factKey, valueToCheck, ::equalsChecker)
+            }
             class AnyOperatorCriteria(factKey: String, val valueToCheck:String, val checker: (String, String) -> Boolean): Any(factKey) {
                 override fun checkRule(): Boolean {
                     return facts.factsFor(factKey).any { it is Factoid.Fact.StringFact && checker(valueToCheck, it.value) }
@@ -175,8 +186,13 @@ sealed class Criterion(val factKey: String) {
         }
 
         sealed class Single(factKey: String) : StringCriteria(factKey) {
-            fun singleContains(factKey: String, valueToCheck: String) = SingleOperatorCriteria(factKey, valueToCheck, ::containsChecker)
-            fun singleEquals(factKey: String, valueToCheck: String) = SingleOperatorCriteria(factKey, valueToCheck, ::equalsChecker)
+            companion object {
+                fun contains(factKey: String, valueToCheck: String) =
+                    SingleOperatorCriteria(factKey, valueToCheck, ::containsChecker)
+
+                fun equals(factKey: String, valueToCheck: String) =
+                    SingleOperatorCriteria(factKey, valueToCheck, ::equalsChecker)
+            }
             class SingleOperatorCriteria(factKey: String, val valueToCheck:String, val checker: (String, String) -> Boolean): Single(factKey) {
                 override fun checkRule(): Boolean {
                     return checker(valueToCheck, facts.getStringFact(factKey).value)

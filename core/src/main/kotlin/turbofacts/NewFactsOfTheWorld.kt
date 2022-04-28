@@ -26,17 +26,29 @@ class NewFactsOfTheWorld(private val onFactUpdated: (key: String) -> Unit = {}) 
         return fs
     }
 
-    fun setBooleanFact(value: Boolean, vararg key: String) {
+    fun setBooleanFact(value: Boolean, vararg key: String) : Factoid.Fact.BooleanFact {
         val mk = multiKey(*key)
-        val fact = Factoid.Fact.BooleanFact(mk, value)
+        var fact = Factoid.Fact.BooleanFact(mk, value)
         if (!facts.containsKey(mk)) {
             facts[mk] = fact
+            onFactUpdated(mk)
         } else if (facts[mk]!! is Factoid.Fact.BooleanFact) {
-            val fact = facts[mk]!! as Factoid.Fact.BooleanFact
+            fact = facts[mk]!! as Factoid.Fact.BooleanFact
             fact.value = value
+            onFactUpdated(mk)
+        } else {
+            throw Exception("Not a boolean fact")
         }
+        return fact
         //Check all this out later
-        onFactUpdated(mk)
+    }
+
+    fun setTrue(vararg key: String) {
+        setBooleanFact(true, *key)
+    }
+
+    fun setFalse(vararg key: String) {
+        setBooleanFact(false, *key)
     }
 
     fun getBooleanFact(vararg key: String): Factoid.Fact.BooleanFact {
@@ -50,27 +62,84 @@ class NewFactsOfTheWorld(private val onFactUpdated: (key: String) -> Unit = {}) 
             throw Exception("Fact $mk is not set in Facts")
     }
 
-    fun setIntFact(value: Int, vararg key: String) {
+    fun getBoolean(vararg key: String) : Boolean {
+        return getBooleanFact(*key).value
+    }
+
+    fun setIntFact(value: Int, vararg key: String):Factoid.Fact.IntFact {
         val mk = multiKey(*key)
         if (!facts.containsKey(mk)) {
             val fact = Factoid.Fact.IntFact(mk, value)
             facts[mk] = fact
+            onFactUpdated(mk)
+            return fact
         } else if (facts[mk]!! is Factoid.Fact.IntFact) {
-            (facts[mk]!! as Factoid.Fact.IntFact).value = value
+            val fact = facts[mk]!! as Factoid.Fact.IntFact
+            fact.value = value
+            onFactUpdated(mk)
+            return fact
         }
-        onFactUpdated(mk)
         throw Exception("Fact with key $mk is not of type Int")
     }
 
     fun getIntFact(vararg key: String): Factoid.Fact.IntFact {
         val mk = multiKey(*key)
-        if (facts.containsKey(mk))
+        return if (facts.containsKey(mk))
             if (facts[mk] is Factoid.Fact.IntFact)
-                return facts[mk]!! as Factoid.Fact.IntFact
+                facts[mk]!! as Factoid.Fact.IntFact
             else
                 throw Exception("Fact $mk is not a Int")
-        else
-            throw Exception("Fact $mk is not set in Facts")
+        else {
+            val fact = Factoid.Fact.IntFact(mk, 0)
+            facts[mk] = fact
+            fact
+        }
+    }
+
+    fun getInt(vararg key: String): Int {
+        return getIntFact(*key).value
+    }
+
+    fun addToInt(value: Int, vararg key: String): Int {
+        return setIntFact(getInt(*key) + value, *key).value
+    }
+
+    fun setFloatFact(value: Float, vararg key: String):Factoid.Fact.FloatFact {
+        val mk = multiKey(*key)
+        if (!facts.containsKey(mk)) {
+            val fact = Factoid.Fact.FloatFact(mk, value)
+            facts[mk] = fact
+            onFactUpdated(mk)
+            return fact
+        } else if (facts[mk]!! is Factoid.Fact.FloatFact) {
+            val fact = facts[mk]!! as Factoid.Fact.FloatFact
+            fact.value = value
+            onFactUpdated(mk)
+            return fact
+        }
+        throw Exception("Fact with key $mk is not of type Float")
+    }
+
+    fun getFloatFact(vararg key: String): Factoid.Fact.FloatFact {
+        val mk = multiKey(*key)
+        return if (facts.containsKey(mk))
+            if (facts[mk] is Factoid.Fact.FloatFact)
+                facts[mk]!! as Factoid.Fact.FloatFact
+            else
+                throw Exception("Fact $mk is not a Float")
+        else {
+            val fact = Factoid.Fact.FloatFact(mk, 0f)
+            facts[mk] = fact
+            fact
+        }
+    }
+
+    fun getFloat(vararg key: String): Float {
+        return getFloatFact(*key).value
+    }
+
+    fun addToFloat(value: Float, vararg key: String): Float {
+        return setFloatFact(getFloat(*key) + value, *key).value
     }
 
     fun setStringFact(value: String, vararg key: String) {
@@ -87,13 +156,20 @@ class NewFactsOfTheWorld(private val onFactUpdated: (key: String) -> Unit = {}) 
 
     fun getStringFact(vararg key: String): Factoid.Fact.StringFact {
         val mk = multiKey(*key)
-        if (facts.containsKey(mk))
+        return if (facts.containsKey(mk))
             if (facts[mk] is Factoid.Fact.StringFact)
-                return facts[mk]!! as Factoid.Fact.StringFact
+                facts[mk]!! as Factoid.Fact.StringFact
             else
                 throw Exception("Fact $mk is not a String")
-        else
-            throw Exception("Fact $mk is not set in Facts")
+        else {
+            val fact = Factoid.Fact.StringFact(mk, "")
+            facts[mk] = fact
+            fact
+        }
+    }
+
+    fun getString(vararg key: String): String {
+        return getStringFact(*key).value
     }
 
     fun addToStringList(value: String, vararg key: String) {
@@ -122,6 +198,15 @@ class NewFactsOfTheWorld(private val onFactUpdated: (key: String) -> Unit = {}) 
             return facts[mk]!! as Factoid.Fact.StringListFact
         }
         throw Exception("Fact $mk exists and is not a stringlist")
+    }
+
+    var silent = false
+
+    fun silent(block: NewFactsOfTheWorld.()->Unit) {
+        silent = true
+        block()
+        silent = false
+
     }
 
 }

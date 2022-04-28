@@ -26,7 +26,6 @@ kanban-plugin: basic
 - [ ] [[Zombies throwing projectiles]]
 - [ ] [[Zombies with guns]]
 - [ ] [[BehaviorTree Facts]]
-- [ ] [[New Facts]]
 - [ ] [[A Nice Logo]]
 
 

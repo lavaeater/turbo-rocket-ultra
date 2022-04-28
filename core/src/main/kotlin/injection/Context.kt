@@ -47,8 +47,6 @@ import ktx.inject.register
 import map.grid.GridMapManager
 import messaging.Message
 import physics.ContactManager
-import story.FactsOfTheWorld
-import story.StoryManager
 import ui.Hud
 import ui.IUserInterface
 import messaging.MessageHandler
@@ -93,12 +91,7 @@ object Context {
             bindSingleton(RayHandler(inject(), 500, 500))
             bindSingleton(MessageHandler())
             bindSingleton(TurboStoryManager())
-            bindSingleton(NewFactsOfTheWorld { key -> inject<TurboStoryManager>().apply { this.needsChecking = true } })
-            bindSingleton(FactsOfTheWorld(
-                Gdx.app.getPreferences("TurboRocket"),
-                { key -> inject<MessageHandler>().sendMessage(Message.FactUpdated(key))}
-            ))
-            bindSingleton(StoryManager())
+            bindSingleton(NewFactsOfTheWorld { key -> inject<MessageHandler>().sendMessage(Message.FactUpdated(key)) })
             bindSingleton(getEngine())
             bindSingleton(listOf(BloomEffect(), CrtEffect(), OldTvEffect()))
             bindSingleton(VfxManager(Pixmap.Format.RGBA8888))

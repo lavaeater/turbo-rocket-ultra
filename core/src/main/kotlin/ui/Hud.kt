@@ -14,6 +14,7 @@ import com.badlogic.gdx.utils.Queue
 import com.badlogic.gdx.utils.viewport.ExtendViewport
 import com.rafaskoberg.gdx.typinglabel.TypingLabel
 import data.Players
+import factories.factsOfTheWorld
 import injection.Context.inject
 import ktx.actors.along
 import ktx.actors.plusAssign
@@ -25,9 +26,7 @@ import messaging.Message
 import messaging.MessageHandler
 import messaging.MessageReceiver
 import physics.AshleyMappers
-import physics.transform
-import story.FactsOfTheWorld
-import story.fact.Facts
+import turbofacts.Factoids
 import ui.customactors.boundLabel
 import ui.customactors.boundProgressBar
 import ui.customactors.repeatingTexture
@@ -43,7 +42,7 @@ class Hud(private val batch: Batch) : IUserInterface, MessageReceiver {
     override val hudViewPort = ExtendViewport(hudWidth, hudHeight, camera)
     private val worldCamera by lazy { inject<OrthographicCamera>() }
     private val audioPlayer by lazy { inject<AudioPlayer>() }
-    private val factsOfTheWorld by lazy { inject<FactsOfTheWorld>() }
+    private val factsOfTheWorld by lazy { factsOfTheWorld() }
 
 
     private val projectionVector = vec3()
@@ -70,13 +69,11 @@ class Hud(private val batch: Batch) : IUserInterface, MessageReceiver {
                     setFillParent(true)
                     killCountLabel =
                         boundLabel({
-                            "Kill Count: ${factsOfTheWorld.getIntValue(Facts.EnemyKillCount)} / ${
-                                factsOfTheWorld.getIntValue(
-                                    Facts.TargetEnemyKillCount
-                                )
+                            "Kill Count: ${factsOfTheWorld.getInt(Factoids.EnemyKillCount)} / ${
+                                factsOfTheWorld.getInt(Factoids.TargetEnemyKillCount)
                             }"
                         }) {
-                            isVisible = factsOfTheWorld.getBooleanFact(Facts.ShowEnemyKillCount).value
+                            isVisible = factsOfTheWorld.getBooleanFact(Factoids.ShowEnemyKillCount).value
                         }
                 }
                 row()
@@ -123,16 +120,14 @@ class Hud(private val batch: Batch) : IUserInterface, MessageReceiver {
     var isReady = false
     override fun show() {
         //Set up this as receiver for messages with messagehandler
-        inject<MessageHandler>().apply {
-            this.receivers.add(this@Hud)
-        }
+        inject<MessageHandler>().addReceiver(this@Hud)
     }
 
     override fun update(delta: Float) {
         showToasts(delta)
         stage.act(delta)
         stage.draw()
-        killCountLabel.isVisible = factsOfTheWorld.getBooleanFact(Facts.ShowEnemyKillCount).value
+        killCountLabel.isVisible = factsOfTheWorld.getBooleanFact(Factoids.ShowEnemyKillCount).value
         isReady = true
     }
 
@@ -285,14 +280,20 @@ class Hud(private val batch: Batch) : IUserInterface, MessageReceiver {
                 addProgressBar(message)
             }
             is Message.FactUpdated -> TODO() //We don't subscribe to this type of messages so this won't happen
-            is Message.LevelComplete -> { setPauseLabelText(message.completeMessage) }
-            is Message.LevelFailed -> { setPauseLabelText(message.failMessage) }
-            is Message.LevelStarting -> { setPauseLabelText(message.beforeStartMessage) }
+            is Message.LevelComplete -> {
+                setPauseLabelText(message.completeMessage)
+            }
+            is Message.LevelFailed -> {
+                setPauseLabelText(message.failMessage)
+            }
+            is Message.LevelStarting -> {
+                setPauseLabelText(message.beforeStartMessage)
+            }
         }
     }
 
     fun setPauseLabelText(text: String) {
-        if(this::pauseLabel.isInitialized) {
+        if (this::pauseLabel.isInitialized) {
             pauseLabel.setText(text)
             pauseDialog.pack()
         }

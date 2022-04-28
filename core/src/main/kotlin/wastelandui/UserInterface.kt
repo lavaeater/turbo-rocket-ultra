@@ -15,16 +15,16 @@ import ktx.scene2d.KTableWidget
 import ktx.scene2d.scene2d
 import ktx.scene2d.table
 import statemachine.StateMachine
-import story.FactsOfTheWorld
 import story.conversation.IConversation
-import story.fact.Facts
 import tru.Assets
+import turbofacts.Factoids
+import turbofacts.NewFactsOfTheWorld
 
 class UserInterface(
   private val batch: Batch,
   private val gameState: StateMachine<GameState, GameEvent>,
   private val inputManager: InputMultiplexer,
-  private val factsOfTheWorld: FactsOfTheWorld,
+  private val factsOfTheWorld: NewFactsOfTheWorld,
   debug: Boolean = false): IUserInterface {
 
   override val hudViewPort = ExtendViewport(uiWidth, uiHeight, OrthographicCamera())
@@ -74,7 +74,7 @@ class UserInterface(
   private var score = 0
 
   private fun updateScore() {
-    val tempScore = factsOfTheWorld.getIntValue(Facts.Score)
+    val tempScore = factsOfTheWorld.getInt(Factoids.Score)
     if (tempScore != score) {
       score = tempScore
       scoreLabel.setText("Score: $score")

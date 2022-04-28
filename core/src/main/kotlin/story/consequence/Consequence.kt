@@ -1,11 +1,12 @@
 package story.consequence
 
-import story.fact.IFact
-import story.rule.Rule
+import turbofacts.Factoid
+import turbofacts.TurboRule
+
 
 interface Consequence {
-  var rule: Rule
-  var facts: Set<IFact<*>>
-	val consequenceType: ConsequenceType
+  var rule: TurboRule
+  var facts: Set<Factoid>
+    val consequenceType: ConsequenceType
 	fun apply()
 }

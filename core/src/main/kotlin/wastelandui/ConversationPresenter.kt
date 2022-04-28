@@ -24,21 +24,21 @@ import story.conversation.IConversation
 import tru.Assets
 
 class ConversationPresenter(
-		override val s: Stage,
-		override val conversation: IConversation,
-		override val conversationEnded: () -> Unit,
-		val showProtagonistPortrait: Boolean = true,
-		val showAntagonistPortrait: Boolean = true) : IConversationPresenter {
+    override val s: Stage,
+    override val conversation: IConversation,
+    override val conversationEnded: () -> Unit,
+    private val showProtagonistPortrait: Boolean = true,
+    private val showAntagonistPortrait: Boolean = true) : IConversationPresenter {
   private val speechBubbleNinePatch = NinePatchDrawable(Assets.speechBubble)
   private val speechBubbleStyle = Label.LabelStyle(Assets.font, Color.BLACK).apply { background = speechBubbleNinePatch }
 
   private val baseWidth = UserInterface.uiWidth / 2
   private val baseHeight = UserInterface.uiHeight / 3
 
-  private lateinit var antagonistSpeechBubble: Label
+  private var antagonistSpeechBubble: Label
   private var antagonistRoot: Table
 	private var protagonistRoot: Table
-	private lateinit var choiceTable: KTableWidget
+	private var choiceTable: KTableWidget
 	private var rootTable: KTableWidget
 
   val stateMachine : StateMachine<ConversationState, ConversationEvent> =
@@ -80,8 +80,6 @@ class ConversationPresenter(
 		  isVisible = false
 		  pack()
 	  }
-
-    val antagonistKey = conversation.antagonist.name.replace(" ", "")
 
     antagonistRoot = scene2d.table {
 	    antagonistSpeechBubble = label("", speechBubbleStyle) {

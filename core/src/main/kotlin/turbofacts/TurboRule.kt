@@ -2,13 +2,6 @@ package turbofacts
 
 import ecs.systems.enemy.multiKey
 
-class TurboRuleBuilder : Builder<TurboRule> {
-    var name = "Rule Name"
-    val criteria = mutableListOf<Criterion>()
-
-    override fun build(): TurboRule = TurboRule(name, criteria)
-}
-
 class TurboRule(val name: String, val criteria: List<Criterion>) {
     fun checkRule(): Boolean {
         return criteria.all { it.checkRule() }
@@ -37,8 +30,29 @@ fun TurboRuleBuilder.isFalse(vararg key: String) {
 }
 
 fun TurboRuleBuilder.allStringEquals(value: String, vararg key: String) {
-    criteria.add(Criterion.StringCriteria.All.allEquals())
+    criteria.add(Criterion.StringCriteria.All.equals(value, multiKey(*key)))
 }
+
+fun TurboRuleBuilder.allStringContains(value: String, vararg key: String) {
+    criteria.add(Criterion.StringCriteria.All.contains(value, multiKey(*key)))
+}
+
+fun TurboRuleBuilder.anyStringEquals(value: String, vararg key: String) {
+    criteria.add(Criterion.StringCriteria.Any.equals(value, multiKey(*key)))
+}
+
+fun TurboRuleBuilder.anyStringContains(value: String, vararg key: String) {
+    criteria.add(Criterion.StringCriteria.Any.contains(value, multiKey(*key)))
+}
+
+fun TurboRuleBuilder.stringEquals(value: String, vararg key: String) {
+    criteria.add(Criterion.StringCriteria.Single.equals(value, multiKey(*key)))
+}
+
+fun TurboRuleBuilder.stringContains(value: String, vararg key: String) {
+    criteria.add(Criterion.StringCriteria.Single.contains(value, multiKey(*key)))
+}
+
 
 fun TurboRuleBuilder.allIntEquals(value: Int, vararg key: String) {
     criteria.add(Criterion.IntCriteria.All.equals(multiKey(*key), value))
@@ -66,6 +80,11 @@ fun TurboRuleBuilder.intEquals(value: Int, vararg key: String) {
 fun TurboRuleBuilder.intMoreThan(value: Int, vararg key: String) {
     criteria.add(Criterion.IntCriteria.Single.moreThan(multiKey(*key), value))
 }
+
+fun TurboRuleBuilder.intMoreThanF(value: ()-> Int, vararg key: String) {
+    criteria.add(Criterion.IntCriteria.Single.moreThanF(multiKey(*key), value))
+}
+
 fun TurboRuleBuilder.intLessThan(value: Int, vararg key: String) {
     criteria.add(Criterion.IntCriteria.Single.lessThan(multiKey(*key), value))
 }

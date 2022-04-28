@@ -57,8 +57,8 @@ import ktx.scene2d.scene2d
 import ktx.scene2d.table
 import physics.*
 import screens.CounterObject
-import story.FactsOfTheWorld
 import tru.Assets
+import turbofacts.NewFactsOfTheWorld
 import ui.IUserInterface
 import ui.getUiThing
 import kotlin.experimental.or
@@ -71,7 +71,7 @@ fun engine(): Engine {
     return inject()
 }
 
-fun factsOfTheWorld(): FactsOfTheWorld {
+fun factsOfTheWorld(): NewFactsOfTheWorld {
     return inject()
 }
 
