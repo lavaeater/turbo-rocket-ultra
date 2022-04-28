@@ -32,7 +32,7 @@ class GridMapManager {
         val minY = except.y - maxDistance
         val maxY = except.y + maxDistance
         val keys = gridMap.keys.filter { it != except && it.x > minX && it.x < maxX && it.y > minY && it.y < maxY }
-        return if(keys.any()) keys.random() else getRandomSection(except, ++maxDistance)
+        return if(keys.any()) keys.random() else getRandomSection(except, maxDistance + 1)
     }
 
     fun canWeBuildAt(x: Int, y:Int) : Boolean {
