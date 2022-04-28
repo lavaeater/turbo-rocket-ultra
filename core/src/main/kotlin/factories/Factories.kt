@@ -27,15 +27,20 @@ import ecs.components.graphics.AnimatedCharacterComponent
 import ecs.components.graphics.CameraFollowComponent
 import ecs.components.graphics.MiniMapComponent
 import ecs.components.graphics.SpriteComponent
+import ecs.components.intent.CalculatedPositionComponent
+import ecs.components.intent.CalculatedRotationComponent
 import ecs.components.intent.FunctionsComponent
 import ecs.components.pickups.LootComponent
 import ecs.components.pickups.LootDropComponent
 import ecs.components.player.*
 import ecs.components.towers.TowerComponent
+import ecs.systems.graphics.CompassDirection
 import ecs.systems.graphics.GameConstants.PLAYER_DENSITY
 import ecs.systems.graphics.GameConstants.SHIP_ANGULAR_DAMPING
 import ecs.systems.graphics.GameConstants.SHIP_LINEAR_DAMPING
 import ecs.systems.graphics.GameConstants.pixelsPerMeter
+import ecs.systems.tileWorldX
+import ecs.systems.tileWorldY
 import features.pickups.*
 import features.weapons.AmmoType
 import features.weapons.WeaponDefinition
@@ -55,9 +60,11 @@ import ktx.scene2d.actors
 import ktx.scene2d.label
 import ktx.scene2d.scene2d
 import ktx.scene2d.table
+import map.grid.GridMapSection
 import physics.*
 import screens.CounterObject
 import tru.Assets
+import tru.getSpriteFor
 import turbofacts.NewFactsOfTheWorld
 import ui.IUserInterface
 import ui.getUiThing
@@ -371,7 +378,7 @@ fun player(player: Player, mapper: ControlMapper, at: Vector2, debug: Boolean) {
             color = Color.GREEN
         }
         with<PlayerComponent> { this.player = player }
-        val weapon = WeaponDefinition.baseballBat.getWeapon()
+        val weapon = WeaponDefinition.spas12.getWeapon()
         with<InventoryComponent> {
             if (debug) {
                 WeaponDefinition.weapons.forEach { weapons.add(it.getWeapon().apply { ammoRemaining = 10000 }) }
@@ -387,9 +394,9 @@ fun player(player: Player, mapper: ControlMapper, at: Vector2, debug: Boolean) {
         with<FlashlightComponent>()
         with<WeaponLaserComponent>()
         with<AnchorPointsComponent> {
-            points["green"] = vec2(0f, 2f)
-            points["melee"] = vec2(-0.5f, -0.5f)
-            points["rifle"] = vec2(-0.5f, -0.5f)
+            points["green"] = vec2(0f, -1f).rotate90(1)
+            points["blue"] = vec2(-0.5f, -0.5f)
+            points["red"] = vec2(-0.5f, -0.5f)
             points["yellow"] = vec2(0f, -2f)
             useDirectionVector = true
         }
@@ -400,6 +407,41 @@ fun player(player: Player, mapper: ControlMapper, at: Vector2, debug: Boolean) {
 
     player.body = box2dBody
     player.entity = entity
+    playerWeapon(entity, "green")
+}
+
+fun playerWeapon(playerEntity: Entity, anchor: String = "green" ) {
+    engine().entity {
+        with<TransformComponent>()
+        with<SpriteComponent> {
+            layer = 1
+            rotateWithTransform = true
+            isVisible = true
+        }
+        val weapon = WeaponDefinition.spas12.getWeapon()
+        with<WeaponComponent> {
+            currentWeapon = weapon
+        }
+        with<CalculatedPositionComponent> {
+            calculate = {
+                calcPos.set(playerEntity.anchors().transformedPoints[anchor]!!)
+            }
+        }
+        with<CalculatedRotationComponent> {
+            calculate = {
+                playerEntity.anchors().transformedPoints[anchor]!!.cpy().sub(playerEntity.transform().position).angleRad()
+            }
+        }
+        with<FunctionsComponent> {
+            functions["SetVisibility"] = { w ->
+                w.sprite().isVisible = playerEntity.playerControl().aiming
+            }
+            functions["UpdateWeaponSprite"] = { w ->
+                w.sprite().sprite = Assets.weapons.getSpriteFor(w.weapon().currentWeapon, playerEntity.animation().currentDirection)
+//                w.sprite().sprite.setOrigin(-1f, 0.5f)
+            }
+        }
+    }
 }
 
 fun semicircle(): List<Vector2> {

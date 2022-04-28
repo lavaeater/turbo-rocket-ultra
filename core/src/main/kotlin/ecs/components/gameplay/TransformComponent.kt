@@ -7,7 +7,6 @@ import com.badlogic.gdx.utils.Pool
 import ktx.math.ImmutableVector2
 import ktx.math.toMutable
 import ktx.math.vec2
-import physics.playerControl
 
 class AnchoredRenderable(val relativePosition: ImmutableVector2) : Sprite() {
     var useDirectionVector = true
@@ -30,18 +29,6 @@ class SceneGraphComponent : Component, Pool.Poolable {
         useDirectionVector = true
     }
 
-}
-
-class AnchorPointsComponent : Component, Pool.Poolable {
-    val points = mutableMapOf<String, Vector2>()
-    val transformedPoints = mutableMapOf<String, Vector2>()
-    var useDirectionVector = false
-
-    override fun reset() {
-        points.clear()
-        transformedPoints.clear()
-        useDirectionVector = false
-    }
 }
 
 

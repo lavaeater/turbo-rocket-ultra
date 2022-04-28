@@ -14,15 +14,8 @@ import physics.playerControl
 import physics.transform
 import tru.Assets
 
-
-
-
 class AnchorPointTransformationSystem(private val debug: Boolean) :
     IteratingSystem(allOf(TransformComponent::class, AnchorPointsComponent::class).get()) {
-
-    private val shapeDrawer by lazy { Assets.shapeDrawer }
-    private val colorMap = mutableMapOf("blue" to Color.BLUE, "red" to Color.RED, "green" to Color.GREEN, "yellow" to Color.YELLOW)
-    private val r = 0f..1f
 
     override fun processEntity(entity: Entity, deltaTime: Float) {
         val transform = entity.transform()
@@ -40,14 +33,5 @@ class AnchorPointTransformationSystem(private val debug: Boolean) :
             val rotatedPoint = if(anchors.useDirectionVector) point.cpy().rotateRad(entity.playerControl().directionVector.angleRad()) else point.cpy().rotateRad(transform.rotation)
             anchors.transformedPoints[key]!!.set(transform.position).add(rotatedPoint.x, rotatedPoint.y / 2)
         }
-        if(debug)
-            shapeDrawer.batch.use {
-                for ((key, point) in anchors.transformedPoints) {
-                    if(!colorMap.containsKey(key))
-                        colorMap[key] = Color(r.random(), r.random(), r.random(),1f)
-
-                    shapeDrawer.filledCircle(point, 0.2f, colorMap[key]!!)
-                }
-            }
     }
 }

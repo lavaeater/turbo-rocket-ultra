@@ -13,12 +13,12 @@ import com.badlogic.gdx.utils.viewport.Viewport
 import com.crashinvaders.vfx.VfxManager
 import com.crashinvaders.vfx.effects.ChainVfxEffect
 import ecs.components.gameplay.TransformComponent
-import ecs.components.graphics.OnScreenComponent
 import ecs.components.graphics.SpriteComponent
 import ecs.systems.graphics.GameConstants.scale
 import injection.Context.inject
 import ktx.ashley.allOf
 import ktx.graphics.use
+import ktx.math.random
 import map.grid.GridMapManager
 import physics.*
 import tru.Assets
@@ -34,8 +34,7 @@ class RenderSystem(
 ) : SortedIteratingSystem(
     allOf(
         TransformComponent::class,
-        SpriteComponent::class,
-        OnScreenComponent::class
+        SpriteComponent::class
     ).get(),
     object : Comparator<Entity> {
         override fun compare(p0: Entity, p1: Entity): Int {
@@ -68,6 +67,9 @@ class RenderSystem(
             }
         }
     }
+    private val colorMap =
+        mutableMapOf("blue" to Color.BLUE, "red" to Color.RED, "green" to Color.GREEN, "yellow" to Color.YELLOW)
+    private val r = 0f..1f
 
     override fun update(deltaTime: Float) {
         Gdx.gl.glClearColor(0f, 0f, 0f, 1f)
@@ -78,15 +80,15 @@ class RenderSystem(
         forceSort()
         rayHandler.setCombinedMatrix(camera)
 
-        vfxManager.cleanUpBuffers()
-        vfxManager.beginInputCapture()
+//        vfxManager.cleanUpBuffers()
+//        vfxManager.beginInputCapture()
         batch.use {
             mapManager.render(batch, shapeDrawer, deltaTime)
             super.update(deltaTime)
         }
-        vfxManager.endInputCapture()
-        vfxManager.applyEffects()
-        vfxManager.renderToScreen()
+//        vfxManager.endInputCapture()
+//        vfxManager.applyEffects()
+//        vfxManager.renderToScreen()
         rayHandler.updateAndRender()
     }
 
@@ -94,28 +96,47 @@ class RenderSystem(
         val transform = entity.transform()
         val spriteComponent = entity.sprite()
 
-        batch.drawScaled(
-            spriteComponent.sprite,
-            transform.position.x + (spriteComponent.sprite.regionWidth / 2 + spriteComponent.offsetX) * scale * spriteComponent.scale,
-            transform.position.y + (spriteComponent.sprite.regionHeight / 2 + spriteComponent.offsetY) * scale * spriteComponent.scale,
-            scale * spriteComponent.scale,
-            if (spriteComponent.rotateWithTransform) transform.rotation * MathUtils.radiansToDegrees else 180f
-        )
-        if (debug) {
-            shapeDrawer.filledCircle(
-                transform.position.x + spriteComponent.sprite.originX * scale * spriteComponent.scale,
-                transform.position.y + spriteComponent.sprite.originY * scale * spriteComponent.scale,
-                .2f,
-                Color.BLUE
-            )
-            shapeDrawer.filledCircle(
-                transform.position.x,
-                transform.position.y,
-                .2f,
-                Color.RED
-            )
+        if (spriteComponent.isVisible) {
+            val sprite = spriteComponent.sprite
+            val actualScale = scale * spriteComponent.scale
+            sprite.setScale(actualScale, actualScale)
+            sprite.setFlip(true, true)
+            if (spriteComponent.rotateWithTransform)
+                sprite.rotation = transform.rotation * MathUtils.radiansToDegrees
+            sprite.setOriginBasedPosition(transform.position.x, transform.position.y)
+            sprite.draw(batch)
+//
+//            batch.drawScaled(
+//                spriteComponent.sprite,
+//                transform.position.x + (spriteComponent.sprite.regionWidth / 2 + spriteComponent.offsetX) * scale * spriteComponent.scale,
+//                transform.position.y + (spriteComponent.sprite.regionHeight / 2 + spriteComponent.offsetY) * scale * spriteComponent.scale,
+//                scale * spriteComponent.scale,
+//                if (spriteComponent.rotateWithTransform) transform.rotation * MathUtils.radiansToDegrees else 180f
+//            )
+            if (debug) {
+                shapeDrawer.filledCircle(
+                    sprite.originX,
+                    sprite.originY,.5f,
+                    Color.GREEN
+
+                )
+                shapeDrawer.filledCircle(
+                    transform.position.x + spriteComponent.sprite.originX * scale * spriteComponent.scale,
+                    transform.position.y + spriteComponent.sprite.originY * scale * spriteComponent.scale,
+                    .5f,
+                    Color.RED
+                )
+                shapeDrawer.filledCircle(
+                    transform.position.x,
+                    transform.position.y,
+                    .5f,
+                    Color.WHITE
+                )
+            }
         }
 
+        /*
+        Comment out this, for the time being
         for ((key, sprite) in spriteComponent.extraSprites) {
             if (spriteComponent.extraSpriteAnchors.contains(key)) {
                 val anchors = entity.anchors()
@@ -137,16 +158,27 @@ class RenderSystem(
                 )
             }
         }
-        if (debug) {
-            shapeDrawer.filledCircle(transform.position, .2f, Color.RED)
-        }
+         */
+//        if (debug) {
+//            shapeDrawer.filledCircle(transform.position, .2f, Color.RED)
+//        }
+//        if (debug && entity.hasAnchors()) {
+//            val anchors = entity.anchors()
+//            for ((key, point) in anchors.transformedPoints) {
+//                if (!colorMap.containsKey(key))
+//                    colorMap[key] = Color(r.random(), r.random(), r.random(), 1f)
+//
+//                shapeDrawer.filledCircle(point, 0.2f, colorMap[key]!!)
+//            }
+//        }
+
         if (enemyDebug && entity.isEnemy()) {
             val ec = entity.enemy()
             val previous = entity.transform().position.cpy()
-            shapeDrawer.line(previous, ec.nextPosition, Color.BLUE,0.1f)
+            shapeDrawer.line(previous, ec.nextPosition, Color.BLUE, 0.1f)
             previous.set(ec.nextPosition)
             for ((i, node) in ec.path.withIndex()) {
-                shapeDrawer.line(previous, node, lineColor,0.1f)
+                shapeDrawer.line(previous, node, lineColor, 0.1f)
                 when (i) {
                     0 -> {
                         shapeDrawer.filledCircle(node, .25f, Color.GREEN)
@@ -162,6 +194,7 @@ class RenderSystem(
             }
         }
     }
-    val lineColor = Color(0f,0f,1f,0.5f)
+
+    val lineColor = Color(0f, 0f, 1f, 0.5f)
 }
 

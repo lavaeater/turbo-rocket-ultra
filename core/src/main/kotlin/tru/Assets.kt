@@ -13,6 +13,7 @@ import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator.FreeTypeFont
 import com.badlogic.gdx.scenes.scene2d.ui.Skin
 import com.badlogic.gdx.utils.Disposable
 import features.weapons.GunFrames
+import features.weapons.Weapon
 import injection.Context.inject
 import ktx.scene2d.Scene2DSkin
 import map.snake.MapDirection
@@ -239,7 +240,7 @@ object Assets : Disposable {
         }
     }
 
-    val weapons by lazy {
+    val weapons: Map<String, Map<SpriteDirection, Sprite>> by lazy {
         mapOf(
             GunFrames.handGun to
                     mapOf(
@@ -505,5 +506,9 @@ fun Map<String, Map<AnimState, LpcCharacterAnim<Sprite>>>.getFirstFor(anim: Anim
 }
 fun Map<String, Map<AnimState, LpcCharacterAnim<Sprite>>>.getAnimationFor(character:String, anim: AnimState, direction: SpriteDirection) : Animation<Sprite> {
     return this[character]!![anim]!!.animations[direction]!!
+}
+
+fun Map<String, Map<SpriteDirection, Sprite>>.getSpriteFor(weapon: Weapon, direction: SpriteDirection): Sprite {
+    return this[weapon.textureName]!![direction]!!
 }
 

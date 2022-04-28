@@ -3,7 +3,6 @@ package ecs.systems.intent
 import com.badlogic.ashley.core.Entity
 import com.badlogic.ashley.systems.IteratingSystem
 import ecs.components.gameplay.TransformComponent
-import ecs.components.graphics.OnScreenComponent
 import ecs.components.graphics.SpriteComponent
 import ecs.components.intent.CalculatedPositionComponent
 import ecs.components.intent.IntendsTo
@@ -58,7 +57,6 @@ class IntentionSystem: IteratingSystem(allOf(IntentComponent::class).get()) {
                     }
                 }
                 with<TransformComponent>()
-                with<OnScreenComponent>()
                 with<SpriteComponent> {
                     sprite = entity.build().buildables.selectedItem.sprite
                     scale = 4f

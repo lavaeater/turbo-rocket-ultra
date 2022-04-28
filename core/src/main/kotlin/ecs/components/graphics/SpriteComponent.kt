@@ -1,6 +1,7 @@
 package ecs.components.graphics
 
 import com.badlogic.ashley.core.Component
+import com.badlogic.ashley.core.Entity
 import com.badlogic.gdx.graphics.g2d.Sprite
 import com.badlogic.gdx.utils.Pool
 
@@ -18,7 +19,9 @@ class SpriteComponent: Component, Pool.Poolable {
     var offsetX = 0f
     var offsetY = 0f
     var scale = 1f
+    var isVisible = true
     override fun reset() {
+        isVisible = true
         layer = 0
         sprite = Sprite()
         extraSprites.clear()

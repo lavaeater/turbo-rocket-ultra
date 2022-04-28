@@ -14,6 +14,6 @@ object GameConstants {
     const val SHIP_ANGULAR_DAMPING = 20f
     const val MAX_ENEMIES = 2000
 
-    const val GAMEWIDTH = 48f
-    const val GAMEHEIGHT = 40f
+    const val GAMEWIDTH = 72f
+    const val GAMEHEIGHT = 64f
 }
