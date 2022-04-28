@@ -1,5 +1,6 @@
 package ecs.systems
 
+import ai.enemy.EnemyState
 import com.badlogic.ashley.core.Entity
 import com.badlogic.ashley.systems.IteratingSystem
 import ecs.components.CharacterSpriteComponent

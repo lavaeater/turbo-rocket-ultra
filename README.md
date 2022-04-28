@@ -18,19 +18,21 @@ Inspirations off the bat for this game are:
 To make the graphics and environment easy I am currently working with the concept of "zombie tower defense", which is obviously lame and very boring, but hey... it's easy to find art for.
 
 ### MVP
-* Player damage / Enemy attacks
-* Multiplayer
 * Controller support
 * Twin Stick shooting
+* Multiplayer
 * Towers
-* Vehicles
+* Fix enemy direction systems
+* Fix enemy sensors / noticing
+* Vehicles <- nice to have
 * Different weapons to shoot with
+* Player damage / Enemy attacks <- Done
 * Objectives <- Done!
 * Enemies <- Done
 * Blood Splatter <- Done
 * MiniMap <- Done
 
-## Doing now: Player Damage / Enemy Attacks
+## Done: Player Damage / Enemy Attacks v0.1
 
 ### Mechanics
 Just like when the player shoots, enemy attacks will have a cooldown. When they are within a certain range, they will simply attack the player and with some probability they will succeed. Blood must splatter, health must be reduced, the player must be careful
@@ -265,11 +267,11 @@ Next should probably be the feature that requires the least work to make it a "g
 
 So the next feature will be ship collisions.
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbOTU0NDQyMzQ1LDE4NTE3MDkzMjUsLTE2OT
-gyMTM3NDMsLTE2NDExNDAyODcsMTMxNTMxNzczNiwtMzY4ODUz
-NTEyLDIxMzU4MTkwMDQsLTIxMTg4OTAxMDksMTcwNDk0NjE5OC
-w0NDM4NDkzNjQsMTQ4Nzc4NDQ0NiwtMTQ3MjQ4MTI5OSwtNzY3
-NzEyNzcxLC00MDA4OTIwOTAsMTA2MTQ4MjUzNiwyMTE3OTc1OT
-YxLDE5NDAyNjQ3NywtMTA3MTQwOTU4NCw3NDEwMDc1MzEsNjkz
-MjIyODc2XX0=
+eyJoaXN0b3J5IjpbLTkwMzY2NTkyNSw5NTQ0NDIzNDUsMTg1MT
+cwOTMyNSwtMTY5ODIxMzc0MywtMTY0MTE0MDI4NywxMzE1MzE3
+NzM2LC0zNjg4NTM1MTIsMjEzNTgxOTAwNCwtMjExODg5MDEwOS
+wxNzA0OTQ2MTk4LDQ0Mzg0OTM2NCwxNDg3Nzg0NDQ2LC0xNDcy
+NDgxMjk5LC03Njc3MTI3NzEsLTQwMDg5MjA5MCwxMDYxNDgyNT
+M2LDIxMTc5NzU5NjEsMTk0MDI2NDc3LC0xMDcxNDA5NTg0LDc0
+MTAwNzUzMV19
 -->

@@ -1,14 +1,13 @@
 package ecs.components
 
 import com.badlogic.ashley.core.Component
-import com.badlogic.gdx.utils.Queue
-import ecs.systems.EnemyState
+import ai.enemy.EnemyState
 import ktx.math.vec2
 
 class EnemyComponent(health: Int = 25) : Component {
+    var speed = 2.5f
     var maxNumberOfScans = 0
     var scanCount = 0
-    var endAngle = 0f
     var keepScanning = true
     val scanVector = vec2()
     var needsScanVector = true

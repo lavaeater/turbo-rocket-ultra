@@ -2,7 +2,7 @@ package physics
 
 import com.badlogic.gdx.physics.box2d.*
 import ecs.components.*
-import ecs.systems.EnemyState
+import ai.enemy.EnemyState
 import gamestate.Player
 import injection.Context.inject
 import ktx.ashley.remove

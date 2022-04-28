@@ -32,31 +32,16 @@ class UserInterface(
     debug: Boolean = false
 ) : IUserInterface {
 
-//    private val controlMapper: ControlMapper by lazy { inject() }
     private val engine: Engine by lazy { inject() }
-    private val playerEntity: Entity by lazy { engine.getEntitiesFor(allOf(PlayerComponent::class).get()).first() }
-//    private val transform: TransformComponent by lazy { playerEntity[mapperFor()]!! }
-    private val bodyComponent: BodyComponent by lazy { playerEntity[mapperFor()]!! }
-    private val playerControlComponent: PlayerControlComponent by lazy { playerEntity[mapperFor()]!! }
-//    private val bodyPos get() = bodyComponent.body.position
-//    private val bodyRotation get() = bodyComponent.body.angle
-
-    private val particleCount get() = engine.getEntitiesFor(allOf(ParticleComponent::class).get()).count()
     private val splatterCount get() = engine.getEntitiesFor(allOf(SplatterComponent::class).get()).count()
     private val enemyCount get() = engine.getEntitiesFor(allOf(EnemyComponent::class).get()).count()
     private val objectiveCount get() = engine.getEntitiesFor(allOf(ObjectiveComponent::class).get()).count()
     private val player: Player by lazy { inject() }
     private val touchedObjectiveCount get () = player.touchedObjectives.count()
 
-//    private val firing get() = playerControlComponent.firing
-//    private val coolDown get() = playerControlComponent.cooldownRemaining
-
-
-
     private lateinit var rootTable: KTableWidget
     private lateinit var infoBoard: KTableWidget
     private lateinit var infoLabel: Label
-    private lateinit var npcLabel: Label
 
 
     override val hudViewPort = ExtendViewport(uiWidth, uiHeight, OrthographicCamera())
@@ -82,26 +67,17 @@ class UserInterface(
         stage.act(delta)
         stage.draw()
     }
-//    AimVectorAngle: ${playerControlComponent.aimVector.angleDeg()}
 
     private fun updateInfo(delta: Float) {
         infoLabel.setText(
             """
-      Objectives Left: ${objectiveCount - touchedObjectiveCount}
-      Splatter: $splatterCount
-      Enemies: $enemyCount
+      Player Health:  ${player.health}
+      Targets Left:   ${objectiveCount - touchedObjectiveCount}
+      Splatter Count: $splatterCount
+      Enemies Left:   $enemyCount
     """.trimIndent()
         )
     }
-
-    /*
-      MouseScreen: $mouseVector
-      MouseWorld: ${controlMapper.mousePosition}
-      AimVector: ${controlMapper.aimVector}
-      ShotPos: ${transform.position.cpy().add(controlMapper.aimVector.cpy().scl(3f))}
-      ShotVelocity: ${controlMapper.aimVector.cpy().scl(1000f)}
-
-     */
 
     private val mouseVector = vec2()
     private fun getMousePosition(): Vector2 {
