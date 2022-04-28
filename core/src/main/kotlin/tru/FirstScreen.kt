@@ -7,13 +7,27 @@ import com.badlogic.gdx.Screen
 import com.badlogic.gdx.graphics.GL20
 import com.badlogic.gdx.graphics.OrthographicCamera
 import com.badlogic.gdx.graphics.g2d.PolygonSpriteBatch
+import com.badlogic.gdx.math.Vector2
+import com.badlogic.gdx.physics.box2d.World
 import com.badlogic.gdx.utils.viewport.ExtendViewport
+import ecs.components.BodyComponent
+import ecs.components.EnemyComponent
+import ecs.components.ObjectiveComponent
+import ecs.components.TransformComponent
 import factories.enemy
+import factories.objective
 import factories.obstacle
+import gamestate.Player
 import injection.Context.inject
 import input.InputAdapter
+import ktx.ashley.allOf
+import ktx.ashley.mapperFor
+import ktx.ashley.remove
 import ktx.math.random
+import ktx.math.vec2
 import ui.IUserInterface
+import kotlin.math.pow
+import kotlin.math.roundToInt
 
 
 class FirstScreen : Screen {
@@ -36,13 +50,16 @@ class FirstScreen : Screen {
     private val camera: OrthographicCamera by lazy { inject() }
     private val viewPort: ExtendViewport by lazy { inject() }
     private val engine: Engine by lazy { inject() }
+    private val world: World by lazy { inject() }
     private val batch: PolygonSpriteBatch by lazy { inject() }
     private val ui: IUserInterface by lazy { inject() }
     private val audioPlayer: AudioPlayer by lazy { inject() }
+    private val player: Player by lazy { inject() }
+    private val transformMapper = mapperFor<TransformComponent>()
 
     override fun show() {
         if (needsInit) {
-            Gdx.gl.glClearColor(.3f, .5f, .8f, 1f)
+            Gdx.gl.glClearColor(.4f, .4f, .4f, 1f)
             Assets.load()
             setupInput()
             generateMap()
@@ -55,17 +72,67 @@ class FirstScreen : Screen {
         Gdx.input.inputProcessor = InputAdapter()
     }
 
-    private fun generateMap() {
-        val randomFactor = 10f..25f
 
-        for (x in 0..25)
-            for (y in 0..25) {
-                obstacle(x * 25f + randomFactor.random(), y * 25f + randomFactor.random())
-            }
-        for (x in -10..10)
-            for (y in -10..10)
-                enemy(x * 3f * randomFactor.random(), y * 3f * randomFactor.random())
+    var currentLevel = 0
+    var numberOfObjectives = 1
+    var numberOfEnemies = 1
+    val randomFactor = -500f..500f
+    val enemyRandomFactor = -15f..15f
+
+    fun nextLevel() {
+        currentLevel++
+        generateMap()
     }
+
+    private val bodyMapper = mapperFor<BodyComponent>()
+    private fun generateMap() {
+
+        var randomAngle = (0f..360f)
+        val startVector = Vector2.X.cpy().scl(50f).setAngleDeg(randomAngle.random())
+
+        player.touchedObjectives.clear()
+        numberOfEnemies = 2f.pow(currentLevel).roundToInt() * 3
+        numberOfObjectives = 2f.pow(currentLevel).roundToInt()
+
+        for (enemy in engine.getEntitiesFor(allOf(EnemyComponent::class).get())) {
+            val bodyComponent = bodyMapper.get(enemy)
+            world.destroyBody(bodyComponent.body)
+            enemy.remove<BodyComponent>()
+        }
+
+        engine.removeAllEntities(allOf(EnemyComponent::class).get())
+
+        for (objective in engine.getEntitiesFor(allOf(ObjectiveComponent::class).get())) {
+            val bodyComponent = bodyMapper.get(objective)
+            world.destroyBody(bodyComponent.body)
+            objective.remove<BodyComponent>()
+        }
+
+        engine.removeAllEntities(allOf(ObjectiveComponent::class).get())
+
+        for (x in 1..25)
+            for (y in 1..25) {
+                obstacle(x * randomFactor.random(), y * randomFactor.random())
+            }
+
+        val position = transformMapper.get(player.entity).position.cpy()
+
+        for(i in 0 until numberOfObjectives) {
+            position.add(startVector)
+            objective(position.x, position.y)
+
+            for(e in 0 until numberOfEnemies)
+                enemy(position.x + enemyRandomFactor.random(), position.y + enemyRandomFactor.random())
+
+            randomAngle = (0f..(randomAngle.endInclusive / 2f))
+            startVector.setAngleDeg(randomAngle.random())
+        }
+
+
+
+    }
+
+
 
     override fun render(delta: Float) {
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT)
@@ -76,6 +143,8 @@ class FirstScreen : Screen {
         engine.update(delta)
         ui.update(delta)
         audioPlayer.update(delta)
+        if(player.touchedObjectives.count() == numberOfObjectives) //Add check if we killed all enemies
+            nextLevel()
     }
 
     override fun resize(width: Int, height: Int) {

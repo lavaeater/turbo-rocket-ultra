@@ -6,20 +6,16 @@ import com.badlogic.gdx.graphics.g2d.Batch
 import com.badlogic.gdx.math.Vector2
 import space.earlygrey.shapedrawer.ShapeDrawer
 
-class SplatterComponent(
-    var life: Float = 20f,
-    private val color: Color = Color.RED,
-    private val radius: Float = 1f) : Renderable, Component {
-
+class BoxComponent(private val width: Float = 2f, private val height: Float = 2f, private val color: Color = Color.GREEN): Renderable,
+    Component {
     override fun render(
         position: Vector2,
         rotation: Float,
-        scale:Float,
+        scale: Float,
         animationStateTime: Float,
         batch: Batch,
         shapeDrawer: ShapeDrawer
     ) {
-        shapeDrawer.filledCircle(position, radius, color)
+        shapeDrawer.filledRectangle(position.x, position.y, width, height, color)
     }
 }
-

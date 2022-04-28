@@ -15,7 +15,7 @@ import ktx.ashley.mapperFor
 import ktx.graphics.use
 import tru.Assets
 
-class EnemyDebugRenderSystem(private val renderStates: Boolean = false, private val renderScans: Boolean = true) : IteratingSystem(
+class EnemyDebugRenderSystem(private val renderStates: Boolean = false, private val renderScans: Boolean = false) : IteratingSystem(
     allOf(
         EnemyComponent::class,
         TransformComponent::class).get()) {

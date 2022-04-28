@@ -2,7 +2,7 @@ package audio
 
 import tru.Assets
 
-class AudioPlayer(private val defaultVolume : Float = 0.2f) {
+class AudioPlayer(private val defaultVolume : Float = 0.1f) {
 
     fun playSound(sound: String, volume: Float = defaultVolume) {
         Assets.soundEffects[sound]?.play(volume)
@@ -30,4 +30,3 @@ class AudioPlayer(private val defaultVolume : Float = 0.2f) {
     }
 }
 
-data class QueuedSound(val sound: String, val delay: Float, var delta:Float = 0f)

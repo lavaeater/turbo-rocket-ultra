@@ -31,6 +31,7 @@ class RenderSystem(
     private val tMapper = mapperFor<TransformComponent>()
     private val sMapper = mapperFor<CharacterSpriteComponent>()
     private val pMapper = mapperFor<SplatterComponent>()
+    private val bMapper = mapperFor<BoxComponent>()
 
     override fun update(deltaTime: Float) {
         animationStateTime += deltaTime
@@ -52,6 +53,13 @@ class RenderSystem(
             shapeDrawer)
 
         entity[pMapper]?.render(
+            transform.position,
+            transform.rotation,
+            scale,
+            animationStateTime,
+            batch,
+            shapeDrawer)
+        entity[bMapper]?.render(
             transform.position,
             transform.rotation,
             scale,

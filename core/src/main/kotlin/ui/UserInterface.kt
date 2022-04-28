@@ -13,6 +13,7 @@ import com.badlogic.gdx.utils.Align
 import com.badlogic.gdx.utils.viewport.ExtendViewport
 import ecs.components.*
 import factories.player
+import gamestate.Player
 import injection.Context.inject
 import ktx.ashley.allOf
 import ktx.ashley.get
@@ -31,21 +32,24 @@ class UserInterface(
     debug: Boolean = false
 ) : IUserInterface {
 
-    private val controlMapper: ControlMapper by lazy { inject() }
+//    private val controlMapper: ControlMapper by lazy { inject() }
     private val engine: Engine by lazy { inject() }
     private val playerEntity: Entity by lazy { engine.getEntitiesFor(allOf(PlayerComponent::class).get()).first() }
-    private val transform: TransformComponent by lazy { playerEntity[mapperFor()]!! }
+//    private val transform: TransformComponent by lazy { playerEntity[mapperFor()]!! }
     private val bodyComponent: BodyComponent by lazy { playerEntity[mapperFor()]!! }
     private val playerControlComponent: PlayerControlComponent by lazy { playerEntity[mapperFor()]!! }
-    private val bodyPos get() = bodyComponent.body.position
-    private val bodyRotation get() = bodyComponent.body.angle
+//    private val bodyPos get() = bodyComponent.body.position
+//    private val bodyRotation get() = bodyComponent.body.angle
 
     private val particleCount get() = engine.getEntitiesFor(allOf(ParticleComponent::class).get()).count()
     private val splatterCount get() = engine.getEntitiesFor(allOf(SplatterComponent::class).get()).count()
     private val enemyCount get() = engine.getEntitiesFor(allOf(EnemyComponent::class).get()).count()
+    private val objectiveCount get() = engine.getEntitiesFor(allOf(ObjectiveComponent::class).get()).count()
+    private val player: Player by lazy { inject() }
+    private val touchedObjectiveCount get () = player.touchedObjectives.count()
 
-    private val firing get() = playerControlComponent.firing
-    private val coolDown get() = playerControlComponent.cooldownRemaining
+//    private val firing get() = playerControlComponent.firing
+//    private val coolDown get() = playerControlComponent.cooldownRemaining
 
 
 
@@ -63,7 +67,7 @@ class UserInterface(
 
     companion object {
         private const val aspectRatio = 16 / 9
-        const val uiWidth = 400f
+        const val uiWidth = 720f
         const val uiHeight = uiWidth * aspectRatio
     }
 
@@ -78,15 +82,14 @@ class UserInterface(
         stage.act(delta)
         stage.draw()
     }
+//    AimVectorAngle: ${playerControlComponent.aimVector.angleDeg()}
 
     private fun updateInfo(delta: Float) {
         infoLabel.setText(
             """
-      AimVector: ${(playerControlComponent.aimVector.x * 100).roundToInt() }, ${(playerControlComponent.aimVector.y * 100).roundToInt() }
-      Particles: $particleCount
+      Objectives Left: ${objectiveCount - touchedObjectiveCount}
       Splatter: $splatterCount
       Enemies: $enemyCount
-
     """.trimIndent()
         )
     }
@@ -121,15 +124,8 @@ class UserInterface(
 
     private fun setupInfo() {
         infoBoard = scene2d.table {
-            label(
-                """
-Controls and stuff:
-WASD -> Move
-Mouse -> Aim & Shoot
-      """
-            )
+
             infoLabel = label("InfoLabel")
-//            npcLabel = label("NpcInfo")
         }
 
         rootTable = scene2d.table {

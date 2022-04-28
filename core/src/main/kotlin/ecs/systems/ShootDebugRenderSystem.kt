@@ -18,7 +18,7 @@ import space.earlygrey.shapedrawer.ShapeDrawer
 import tru.Assets
 
 
-class ShootDebugRenderSystem(private val debug: Boolean = true) : IteratingSystem(
+class ShootDebugRenderSystem(private val debug: Boolean = false) : IteratingSystem(
     allOf(
         TransformComponent::class,
         PlayerControlComponent::class
@@ -38,11 +38,11 @@ class ShootDebugRenderSystem(private val debug: Boolean = true) : IteratingSyste
 
         aimVector.set(controlComponent.aimVector)
 
-        if (controlComponent.drawShot) {
-            batch.begin()
-                shapeDrawer.line(transform.position, controlComponent.latestHitPoint, Color.GREEN, 0.1f)
-            batch.end()
-        }
+//        if (controlComponent.drawShot) {
+//            batch.begin()
+//                shapeDrawer.line(transform.position, controlComponent.latestHitPoint, Color.GREEN, 0.1f)
+//            batch.end()
+//        }
         if(debug) {
             batch.begin()
                 shapeDrawer.line(transform.position, aimVector.add(transform.position), Color.BLUE, 0.2f)
