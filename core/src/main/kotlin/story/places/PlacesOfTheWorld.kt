@@ -1,16 +1,13 @@
 package story.places
 
 import data.Player
+import factories.factsOfTheWorld
 import gamestate.GameEvent
 import gamestate.GameState
 import injection.Context.inject
 import statemachine.StateMachine
-import story.FactsOfTheWorld
 import story.conversation.ConversationManager
-import story.conversation.InlineConvo
 import story.conversation.InternalConversation
-import story.convo
-import story.fact.Facts
 
 class PlacesOfTheWorld {
 
@@ -19,7 +16,7 @@ class PlacesOfTheWorld {
   val conversationManager by lazy { inject<ConversationManager>() }
 //  val mapManager by lazy { inject<IMapManager>() }
 //  val actorFactory by lazy { inject<ActorFactory>() }
-  val factsOfTheWorld by lazy { inject<FactsOfTheWorld>() }
+  val factsOfTheWorld by lazy { factsOfTheWorld() }
 
   init {
 //    val someTilesInRange = mapManager.getBandOfTiles(player.currentX, player.currentY,
@@ -37,9 +34,11 @@ class PlacesOfTheWorld {
 //
 //      actorFactory.addFeatureEntity("city_$city", randomlySelectedTile.x, randomlySelectedTile.y)
     }
-  }
+
 
   fun enterPlace(place:Place) {
+  }
+}
     /*
     show some shit for a city. For now, how about we show a little conversation?
      */
@@ -52,14 +51,14 @@ class PlacesOfTheWorld {
 //        },
 //        true,
 //        false)
-  }
+
 
 //  private fun createPlaceConvo() :InlineConvo {
 //
 ////    val antagonistLines = mutableMapOf<Int, List<String>>()
 ////
 ////    antagonistLines[0] = listOf(
-////            "Välkommen till staden ${factsOfTheWorld.getStringFact(Facts.CurrentPlace).value}!",
+////            "Välkommen till staden ${factsOfTheWorld.getStringFact(Factoids.CurrentPlace).value}!",
 ////            "Ödemarkens sanna pärla!",
 ////            "Vill du hedra oss med ett besök?"
 ////        )
@@ -69,37 +68,37 @@ class PlacesOfTheWorld {
 ////    return InlineConvo(player, antagonistLines = antagonistLines)
 //   }
 
-  private fun anotherConvo() : InternalConversation {
-    return convo {
-      startingStepKey = "start"
-      step {
-        key = "start"
-        addLine("Välkommen!")
-        addLine("Du är säkert trött sedan resan")
-        addLine("- kom in och ta ett glas")
-        positive("entered_house", "Ja tack, gärna, jag är otroligt törstig")
-        abort("abort", "Nej tack, så törstig är jag inte.")
-        rude("abort", "Nej tack, så du är jag inte att jag dricker ditt vatten.")
-      }
-      step {
-        key = "entered_house"
-        addLine("Du har säkert rest länge och väl.")
-        addLine("Ödemarken är inte snäll mot en vandrares fötter.")
-        addLine("Här, drick vatten!")
-        positive("is_poisoned", "Ja, gud så törstig jag är!")
-        abort("abort", "Nej, vid närmare eftertanke kom jag nog på att jag måste gå nu!")
-      }
-      step {
-        key = "is_poisoned"
-        addLine("Ha! HA! HAHA!")
-        addLine("Det var inte vatten, din idiot")
-        addLine("Det är gift!")
-        addLine("Men du dör inte. Oroa dig inte.")
-        addLine("Nej, du kommer bli slö. trött och dum.")
-        addLine("Du kommer lyda allt jag säger. Väldigt bra...")
-        addLine("...för en slav i gruvan")
-        rude("abort", "FAN ta dig!")
-      }
-    }
-  }
+//  private fun anotherConvo() : InternalConversation {
+//    return convo {
+//      startingStepKey = "start"
+//      step {
+//        key = "start"
+//        addLine("Välkommen!")
+//        addLine("Du är säkert trött sedan resan")
+//        addLine("- kom in och ta ett glas")
+//        positive("entered_house", "Ja tack, gärna, jag är otroligt törstig")
+//        abort("abort", "Nej tack, så törstig är jag inte.")
+//        rude("abort", "Nej tack, så du är jag inte att jag dricker ditt vatten.")
+//      }
+//      step {
+//        key = "entered_house"
+//        addLine("Du har säkert rest länge och väl.")
+//        addLine("Ödemarken är inte snäll mot en vandrares fötter.")
+//        addLine("Här, drick vatten!")
+//        positive("is_poisoned", "Ja, gud så törstig jag är!")
+//        abort("abort", "Nej, vid närmare eftertanke kom jag nog på att jag måste gå nu!")
+//      }
+//      step {
+//        key = "is_poisoned"
+//        addLine("Ha! HA! HAHA!")
+//        addLine("Det var inte vatten, din idiot")
+//        addLine("Det är gift!")
+//        addLine("Men du dör inte. Oroa dig inte.")
+//        addLine("Nej, du kommer bli slö. trött och dum.")
+//        addLine("Du kommer lyda allt jag säger. Väldigt bra...")
+//        addLine("...för en slav i gruvan")
+//        rude("abort", "FAN ta dig!")
+//      }
+//    }
+//  }
 //}

@@ -23,7 +23,7 @@ import ktx.math.vec2
 import map.grid.Coordinate
 import map.grid.GridMapManager
 import physics.*
-import tru.Assets
+import turbofacts.NewFactsOfTheWorld
 
 
 class AmblingSystem : IteratingSystem(allOf(Amble::class, EnemyComponent::class, TransformComponent::class).get()) {
@@ -35,7 +35,7 @@ class AmblingSystem : IteratingSystem(allOf(Amble::class, EnemyComponent::class,
         val enemyComponent = entity.enemy()
         val currentPosition = entity.transform().position
 
-        if(component.firstRun || entity.hasCollidedWithObstacle()) {
+        if (component.firstRun || entity.hasCollidedWithObstacle()) {
 
             val currentSection = TileGraph.getCoordinateInstance(currentPosition.sectionX(), currentPosition.sectionY())
             //1. Randomly select a section to move to
@@ -45,38 +45,40 @@ class AmblingSystem : IteratingSystem(allOf(Amble::class, EnemyComponent::class,
             findPathFromTo(enemyComponent, currentSection, randomSection)
 
             component.firstRun = false
-            if(entity.hasCollidedWithObstacle())
+            if (entity.hasCollidedWithObstacle())
                 entity.remove<CollidedWithObstacle>()
 
-            if(entity.hasAudio()) {
-                val audio = entity.audio()
-                audio.soundEffect = Assets.newSoundEffects["zombies"]!!["groans"]!!.random()
-                audio.coolDownRange = 60f..120f
-            }
+
         }
 
         val weAreDone = progressPath(enemyComponent, currentPosition)
 
         if (component.status == Task.Status.RUNNING) {
             component.coolDown -= deltaTime
-            if (component.coolDown <= 0f)
+            if (component.coolDown <= 0f) {
                 component.status = Task.Status.SUCCEEDED
-            if(weAreDone)
+                entity.playRandomAudioFor("zombie", "groan")
+            }
+            if (weAreDone) {
                 component.status = Task.Status.SUCCEEDED
+                entity.playRandomAudioFor("zombie", "groan")
+            }
         }
     }
 }
 
-fun progressPath(enemyComponent: EnemyComponent, currentPosition: Vector2) : Boolean {
-    if(enemyComponent.needsNewNextPosition && !enemyComponent.path.isEmpty) {
+fun progressPath(enemyComponent: EnemyComponent, currentPosition: Vector2): Boolean {
+    if (enemyComponent.needsNewNextPosition && !enemyComponent.path.isEmpty) {
         enemyComponent.nextPosition = enemyComponent.path.removeFirst()
         enemyComponent.needsNewNextPosition = false
-        stateBooleanFact(false, "Enemy", enemyComponent.id.toString(),"ReachedWayPoint")
+        stateBooleanFact(false, "Enemy", enemyComponent.id.toString(), "ReachedWayPoint")
+        inject<NewFactsOfTheWorld>().setBooleanFact(false, "Enemy", enemyComponent.id.toString(), "ReachedWayPoint")
     }
-    if(currentPosition.dst(enemyComponent.nextPosition) <= 1f) {
+    if (currentPosition.dst(enemyComponent.nextPosition) <= 1f) {
         enemyComponent.nextPosition = vec2()
         enemyComponent.needsNewNextPosition = true
-        stateBooleanFact(true, "Enemy", enemyComponent.id.toString(),"ReachedWayPoint")
+        stateBooleanFact(true, "Enemy", enemyComponent.id.toString(), "ReachedWayPoint")
+        inject<NewFactsOfTheWorld>().setBooleanFact(true, "Enemy", enemyComponent.id.toString(), "ReachedWayPoint")
     }
 
     val direction = enemyComponent.nextPosition.cpy().sub(currentPosition).nor()
@@ -84,7 +86,7 @@ fun progressPath(enemyComponent: EnemyComponent, currentPosition: Vector2) : Boo
     return enemyComponent.path.isEmpty
 }
 
-fun findPathFromTo(enemyComponent: EnemyComponent, from: Coordinate, to:Coordinate) {
+fun findPathFromTo(enemyComponent: EnemyComponent, from: Coordinate, to: Coordinate) {
     enemyComponent.path.clear()
     val mapManager = inject<GridMapManager>()
     val path = mapManager.sectionGraph.findPath(from, to)
@@ -96,16 +98,16 @@ fun findPathFromTo(enemyComponent: EnemyComponent, from: Coordinate, to:Coordina
     }
 }
 
-fun avoidObstacles(position: Vector2) : Vector2 {
+fun avoidObstacles(position: Vector2): Vector2 {
     var obstacles = false
     world().query(position.x, position.y, position.x, position.y) {
-        if(it.isEntity() && it.getEntity().hasObstacle()) {
+        if (it.isEntity() && it.getEntity().hasObstacle()) {
             obstacles = true
             Query.STOP
         }
         Query.CONTINUE
     }
-    return if(obstacles) {
+    return if (obstacles) {
         position.x += (-1f..1f).random()
         position.y += (-1f..1f).random()
         avoidObstacles(position)

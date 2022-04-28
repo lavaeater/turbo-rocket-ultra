@@ -3,32 +3,31 @@ package ecs.systems.facts
 import com.badlogic.ashley.systems.IntervalSystem
 import ecs.components.enemy.BossComponent
 import ecs.components.gameplay.ObjectiveComponent
+import factories.factsOfTheWorld
 import injection.Context.inject
 import ktx.ashley.allOf
 import physics.getComponent
-import story.FactsOfTheWorld
-import story.fact.Facts
+import turbofacts.Factoids
 
 /***
  * Takes fact-setting rules and sets facts if these rules are indeed
  * fulfilled.
  */
-@OptIn(ExperimentalStdlibApi::class)
 class FactSystem : IntervalSystem(1f) {
     val rules = mutableListOf<() -> Unit>()
-    val factsOfTheWorld by lazy { inject<FactsOfTheWorld>() }
+    val factsOfTheWorld by lazy { factsOfTheWorld() }
 
     init {
         rules.add {
-            if (!factsOfTheWorld.getBoolean(Facts.BossIsDead) && engine.getEntitiesFor(allOf(BossComponent::class).get()).size() == 0) {
-                factsOfTheWorld.stateBoolFact(Facts.BossIsDead, true)
+            if (!factsOfTheWorld.getBoolean(Factoids.BossIsDead) && engine.getEntitiesFor(allOf(BossComponent::class).get()).size() == 0) {
+                factsOfTheWorld.setBooleanFact(true, Factoids.BossIsDead)
             }
         }
         rules.add {
-            if (!factsOfTheWorld.getBoolean(Facts.AllObjectivesAreTouched) && engine.getEntitiesFor(allOf(ObjectiveComponent::class).get())
+            if (!factsOfTheWorld.getBoolean(Factoids.AllObjectivesAreTouched) && engine.getEntitiesFor(allOf(ObjectiveComponent::class).get())
                     .all { it.getComponent<ObjectiveComponent>().touched }
             ) {
-                factsOfTheWorld.stateBoolFact(Facts.AllObjectivesAreTouched, true)
+                factsOfTheWorld.setBooleanFact(true, Factoids.AllObjectivesAreTouched)
             }
 
         }

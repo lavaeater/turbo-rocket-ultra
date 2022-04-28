@@ -22,6 +22,8 @@ import ecs.components.intent.IntentComponent
 import ecs.components.intent.CalculatedPositionComponent
 import ecs.components.intent.FunctionsComponent
 import ktx.ashley.mapperFor
+import tru.Assets
+import tru.getRandomSoundFor
 import ui.UiThingComponent
 import kotlin.reflect.KType
 import kotlin.reflect.typeOf
@@ -140,6 +142,14 @@ fun Entity.audio(): AudioComponent {
 
 fun Entity.hasAudio() : Boolean {
     return AshleyMappers.audio.has(this)
+}
+
+fun Entity.playRandomAudioFor(category:String, subCategory:String, once: Boolean = true) {
+    if (this.hasAudio()) {
+        val audio = this.audio()
+        audio.playSound(Assets.newSoundEffects.getRandomSoundFor("zombies", "groans"), once)
+        audio.coolDownRange = 60f..120f
+    }
 }
 
 fun Entity.enemy(): EnemyComponent {

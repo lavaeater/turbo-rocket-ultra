@@ -1,19 +1,19 @@
 package gamestate
 
 import data.Players
+import factories.factsOfTheWorld
 import injection.Context
 import ktx.app.KtxGame
 import ktx.app.KtxScreen
 import ktx.inject.register
 import screens.*
 import statemachine.StateMachine
-import story.StoryHelper.factsOfTheWorld
-import story.fact.Facts
 import tru.Assets
+import turbofacts.Factoids
 
 class MainGame : KtxGame<KtxScreen>() {
 
-    val gameState : StateMachine<GameState, GameEvent> by lazy {
+    val gameState: StateMachine<GameState, GameEvent> by lazy {
         val stateMachine = StateMachine.buildStateMachine<GameState, GameEvent>(GameState.Splash, ::stateChanged) {
             state(GameState.Splash) {
                 action { setScreen<SplashScreen>() }
@@ -61,10 +61,10 @@ class MainGame : KtxGame<KtxScreen>() {
     }
 
     private fun resetPlayers() {
-        factsOfTheWorld.stateIntFact(Facts.LivingPlayerCount, 0)
+        factsOfTheWorld().setIntFact(0, Factoids.LivingPlayerCount)
         for (player in Players.players.values) {
             player.reset()
-            factsOfTheWorld.addToIntFact(Facts.LivingPlayerCount, 1)
+            factsOfTheWorld().addToInt(1, Factoids.LivingPlayerCount)
         }
     }
 
