@@ -26,17 +26,18 @@ kanban-plugin: basic
 - [ ] [[Zombies throwing projectiles]]
 - [ ] [[Zombies with guns]]
 - [ ] [[BehaviorTree Facts]]
-- [ ] [[New Facts]]
+- [ ] [[A Nice Logo]]
 
 
 ## Doing
 
-- [ ] [[Nicer Setup UI]]
+- [ ] [[New Fact System]]
 
 
 ## Done
 
 **Complete**
+- [x] [[Nicer Setup UI]]
 - [x] [[Enemies and walls]]
 
 

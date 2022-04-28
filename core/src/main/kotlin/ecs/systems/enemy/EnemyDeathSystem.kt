@@ -6,19 +6,21 @@ import com.badlogic.ashley.systems.IteratingSystem
 import ecs.components.AudioChannels
 import ecs.components.enemy.EnemyComponent
 import ecs.components.gameplay.DestroyComponent
+import factories.factsOfTheWorld
 import factories.gibs
 import factories.lootBox
 import injection.Context.inject
 import ktx.ashley.allOf
 import physics.AshleyMappers
 import physics.addComponent
-import story.FactsOfTheWorld
-import story.fact.Facts
 import tru.Assets
+import turbofacts.Factoids
+import turbofacts.NewFactsOfTheWorld
 
 class EnemyDeathSystem(
     private val audioPlayer: AudioPlayer,
-    private val factsOfTheWorld: FactsOfTheWorld) : IteratingSystem(allOf(EnemyComponent::class).get()) {
+    private val factsOfTheWorld: NewFactsOfTheWorld
+) : IteratingSystem(allOf(EnemyComponent::class).get()) {
 
     override fun processEntity(entity: Entity, deltaTime: Float) {
         val enemyComponent = AshleyMappers.enemy.get(entity)
@@ -37,25 +39,22 @@ class EnemyDeathSystem(
             enemyComponent.lastHitBy.kills++
 
             addToIntStat(1, "Player", enemyComponent.lastHitBy.playerId, "KillCount")
-            addToIntStat(1, Facts.EnemyKillCount)
+            addToIntStat(1, Factoids.EnemyKillCount)
 
             gibs(transformComponent.position, enemyComponent.lastShotAngle)
             entity.addComponent<DestroyComponent>()
         }
     }
 }
-fun subFact(factKey: String, subKey: String): String {
-    return "$factKey.$subKey"
-}
 
 fun multiKey(vararg key: String): String {
     return key.joinToString(".")
 }
 
-fun stateBooleanFact(toSet: Boolean, vararg key: String) {
-    return inject<FactsOfTheWorld>().stateBoolFact(multiKey(*key), toSet)
+fun stateBooleanFact(toSet: Boolean, vararg key: String) : Boolean{
+    return factsOfTheWorld().setBooleanFact(toSet, *key).value
 }
 
 fun addToIntStat(toAdd: Int, vararg key: String): Int {
-    return inject<FactsOfTheWorld>().addToIntFact(multiKey(*key), toAdd)
+    return factsOfTheWorld().addToInt(toAdd, *key)
 }

@@ -1,2 +1,2 @@
 ## Hierarchical Facts
-Not sure if this is needed, but perhaps it would be cool if we could chain or objectify facts so that they are represented in the game as some kind of cool tree where they then would be represented as data in the for of "Player.1.Random.Facts.LootCount" or something. Could that be useful?
+Not sure if this is needed, but perhaps it would be cool if we could chain or objectify facts so that they are represented in the game as some kind of cool tree where they then would be represented as data in the for of "Player.1.Random.Factoids.LootCount" or something. Could that be useful?

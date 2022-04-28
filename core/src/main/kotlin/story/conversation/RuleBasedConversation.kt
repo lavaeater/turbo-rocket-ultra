@@ -1,10 +1,10 @@
 package story.conversation
 
 import data.IAgent
-import story.rule.Rule
+import turbofacts.TurboRule
 
 class RuleBasedConversation : IConversation {
-  val rules = mutableSetOf<Rule>()
+  val rules = mutableSetOf<TurboRule>()
   override val protagonist: IAgent get()= TODO()
   override val antagonist: IAgent get()= TODO()
   override val antagonistCanSpeak: Boolean

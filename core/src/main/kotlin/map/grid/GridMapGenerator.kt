@@ -18,10 +18,8 @@ import injection.Context.inject
 import map.snake.MapDirection
 import map.snake.random
 import map.snake.randomPoint
-import org.w3c.dom.css.Counter
 import screens.CounterObject
-import story.FactsOfTheWorld
-import story.fact.Facts
+import turbofacts.Factoids
 
 class GridMapGenerator {
     companion object {
@@ -46,7 +44,7 @@ class GridMapGenerator {
             //boss(position, 1)
         }
 
-        private val factsOfTheWorld by lazy { inject<FactsOfTheWorld>() }
+        private val factsOfTheWorld by lazy { factsOfTheWorld() }
 
         fun generateFromMapFile(mapFile: MapFile): Pair<Map<Coordinate, GridMapSection>, TileGraph> {
             //TODO: Move this somewhere
@@ -57,10 +55,10 @@ class GridMapGenerator {
             rayHandler.setAmbientLight(.5f)
             rayHandler.setBlurNum(3)
 
-            factsOfTheWorld.stateStringFact(Facts.CurrentMapName, mapFile.name)
-            factsOfTheWorld.stateStringFact(Facts.MapStartMessage, mapFile.startMessage)
-            factsOfTheWorld.stateStringFact(Facts.MapSuccessMessage, mapFile.successMessage)
-            factsOfTheWorld.stateStringFact(Facts.MapFailMessage, mapFile.failMessage)
+            factsOfTheWorld.setStringFact(mapFile.name, Factoids.CurrentMapName)
+            factsOfTheWorld.setStringFact(mapFile.startMessage, Factoids.MapStartMessage)
+            factsOfTheWorld.setStringFact(mapFile.successMessage, Factoids.MapSuccessMessage)
+            factsOfTheWorld.setStringFact(mapFile.failMessage, Factoids.MapFailMessage)
             //Embed stories in level files...
             return generateFromDefintion(mapFile.mapDefinition)
         }

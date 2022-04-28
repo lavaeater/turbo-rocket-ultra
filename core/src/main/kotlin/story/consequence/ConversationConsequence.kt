@@ -1,16 +1,14 @@
 package story.consequence
 
 import com.bladecoder.ink.runtime.Story
-import data.Player
+import factories.factsOfTheWorld
 import gamestate.GameEvent
 import gamestate.GameState
 import injection.Context.inject
 import statemachine.StateMachine
-import story.FactsOfTheWorld
 import story.conversation.ConversationManager
-import story.conversation.InkConversation
-import story.fact.IFact
-import story.rule.Rule
+import turbofacts.Factoid
+import turbofacts.TurboRule
 
 class ConversationConsequence (
     val story: Story,
@@ -20,7 +18,7 @@ class ConversationConsequence (
 
   private val gameState by lazy { inject<StateMachine<GameState, GameEvent>>() }
   private val conversationManager by lazy { inject<ConversationManager>()}
-  private val factsOfTheWorld by lazy { inject<FactsOfTheWorld>() }
+  private val factsOfTheWorld by lazy { factsOfTheWorld() }
 
   override fun apply() {
 
@@ -49,7 +47,7 @@ class ConversationConsequence (
   need. First some testing of my actual job, though.
    */
 
-  override lateinit var rule: Rule
-  override lateinit var facts: Set<IFact<*>>
-  override val consequenceType = ConsequenceType.ConversationLoader
+  override lateinit var rule: TurboRule
+  override lateinit var facts: Set<Factoid>
+    override val consequenceType = ConsequenceType.ConversationLoader
 }

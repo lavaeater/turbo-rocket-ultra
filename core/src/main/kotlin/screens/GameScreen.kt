@@ -5,7 +5,6 @@ import audio.AudioPlayer
 import com.badlogic.ashley.core.Engine
 import com.badlogic.gdx.Gdx
 import com.badlogic.gdx.controllers.Controllers
-import com.badlogic.gdx.graphics.GL20
 import com.badlogic.gdx.graphics.OrthographicCamera
 import com.badlogic.gdx.graphics.g2d.PolygonSpriteBatch
 import com.badlogic.gdx.physics.box2d.World
@@ -23,6 +22,7 @@ import ecs.systems.graphics.RenderSystem
 import ecs.systems.input.GamepadInputSystem
 import ecs.systems.input.KeyboardInputSystem
 import ecs.systems.player.GameOverSystem
+import factories.factsOfTheWorld
 import factories.player
 import gamestate.GameEvent
 import gamestate.GameState
@@ -34,11 +34,11 @@ import map.grid.*
 import map.snake.randomPoint
 import physics.AshleyMappers
 import statemachine.StateMachine
-import story.FactsOfTheWorld
-import story.StoryHelper
-import story.StoryManager
-import story.fact.Facts
+import turbofacts.StoryHelper
 import tru.Assets
+import turbofacts.Factoids
+import turbofacts.NewFactsOfTheWorld
+import turbofacts.TurboStoryManager
 import ui.IUserInterface
 import kotlin.math.pow
 import kotlin.math.roundToInt
@@ -54,8 +54,8 @@ class GameScreen(private val gameState: StateMachine<GameState, GameEvent>) : Kt
     private val batch: PolygonSpriteBatch by lazy { inject() }
     private val ui: IUserInterface by lazy { inject() }
     private val audioPlayer: AudioPlayer by lazy { inject() }
-    private val storyManager: StoryManager by lazy { inject() }
-    private val factsOfTheWorld: FactsOfTheWorld by lazy { inject() }
+    private val storyManager: TurboStoryManager by lazy { inject() }
+    private val factsOfTheWorld: NewFactsOfTheWorld by lazy { factsOfTheWorld() }
     private val console by lazy { inject<GUIConsole>() }
     private val vfxManager by lazy { inject<VfxManager>() }
     private var running = true
@@ -88,7 +88,6 @@ class GameScreen(private val gameState: StateMachine<GameState, GameEvent>) : Kt
 
             Assets.music.first().isLooping = true
             Assets.music.first().play()
-            storyManager.activate()
 
             //And then we pause and show intro text, wait for any input at all.
             //That will be a total pain in the ass
@@ -96,6 +95,7 @@ class GameScreen(private val gameState: StateMachine<GameState, GameEvent>) : Kt
             Maybe
             How would we want this to work, ideally?
              */
+            storyManager.activate()
         }
     }
 
@@ -160,8 +160,9 @@ D1B67A
         engine.update(delta)
         ui.update(delta)
         audioPlayer.update(delta)
-        storyManager.checkStoriesIfNeeded()
+        turboStoryManager.checkIfNeeded()
     }
+    private val turboStoryManager by lazy { inject<TurboStoryManager>() }
 
     private val velIters = 8
     private val posIters = 3
@@ -205,7 +206,7 @@ D1B67A
 
         ui.resume()
         running = true
-        if (factsOfTheWorld.getBoolean(Facts.GotoNextLevel))
+        if (factsOfTheWorld.getBoolean(Factoids.GotoNextLevel))
             nextLevel()
     }
 
@@ -250,10 +251,10 @@ D1B67A
         for (player in Players.players.values) {
             player.touchedObjectives.clear()
         }
-//        factsOfTheWorld.stateBoolFact(Facts.BossIsDead, false)
-//        factsOfTheWorld.stateBoolFact(Facts.AllObjectivesAreTouched, false)
-//        factsOfTheWorld.stateBoolFact(Facts.LevelComplete, false)
-//        factsOfTheWorld.stateBoolFact(Facts.ShowEnemyKillCount, false)
+//        factsOfTheWorld.stateBoolFact(Factoids.BossIsDead, false)
+//        factsOfTheWorld.stateBoolFact(Factoids.AllObjectivesAreTouched, false)
+//        factsOfTheWorld.stateBoolFact(Factoids.LevelComplete, false)
+//        factsOfTheWorld.stateBoolFact(Factoids.ShowEnemyKillCount, false)
 
 
         CounterObject.currentLevel++

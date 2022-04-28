@@ -68,7 +68,7 @@ object Assets : Disposable {
         )
     }
 
-    val newSoundEffects by lazy {
+    val newSoundEffects: Map<String, Map<String, List<TurboSound>>> by lazy {
         mapOf(
             "zombies" to mapOf(
                 "groans" to listOf(
@@ -494,6 +494,10 @@ object Assets : Disposable {
     override fun dispose() {
 
     }
+}
+
+fun Map<String, Map<String, List<TurboSound>>>.getRandomSoundFor(category: String, subCategory: String) : TurboSound {
+    return this[category]!![subCategory]!!.random()
 }
 
 fun Map<String, Map<AnimState, LpcCharacterAnim<Sprite>>>.getFirstFor(anim: AnimState, direction: SpriteDirection) : Animation<Sprite> {
