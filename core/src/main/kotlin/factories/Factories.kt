@@ -408,8 +408,8 @@ fun player(player: Player, mapper: ControlMapper, at: Vector2, debug: Boolean) {
                 weapons.add(weapon)
             }
         }
-        with<WeaponComponent> {
-            currentWeapon = weapon
+        with<WeaponEntityComponent> {
+            weaponEntity = playerWeapon(this@entity.entity)
         }
         with<FiredShotsComponent>()
         with<FlashlightComponent>()
@@ -431,8 +431,8 @@ fun player(player: Player, mapper: ControlMapper, at: Vector2, debug: Boolean) {
     playerWeapon(entity, "green")
 }
 
-fun playerWeapon(playerEntity: Entity, anchor: String = "green") {
-    engine().entity {
+fun playerWeapon(playerEntity: Entity, anchor: String = "green") : Entity {
+    return engine().entity {
         with<TransformComponent>()
         with<SpriteComponent> {
             rotateWithTransform = true

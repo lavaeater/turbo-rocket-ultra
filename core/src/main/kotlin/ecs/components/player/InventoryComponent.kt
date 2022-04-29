@@ -19,3 +19,7 @@ class InventoryComponent: Component, Pool.Poolable {
         val ammo = mutableMapOf<AmmoType, Int>()
     }
 }
+
+fun AmmoType.doWeHaveAny() : Boolean {
+    return InventoryComponent.ammo.containsKey(this) && InventoryComponent.ammo[this]!! > 0
+}

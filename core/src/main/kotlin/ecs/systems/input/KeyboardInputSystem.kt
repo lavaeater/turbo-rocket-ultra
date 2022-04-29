@@ -10,7 +10,6 @@ import ecs.components.intent.IntendsTo
 import gamestate.GameEvent
 import gamestate.GameState
 import injection.Context.inject
-import input.InputIndicator
 import input.KeyboardControl
 import ktx.app.KtxInputAdapter
 import ktx.ashley.allOf
@@ -96,9 +95,9 @@ class KeyboardInputSystem :
     override fun scrolled(amountX: Float, amountY: Float): Boolean {
         if (::keyboardControl.isInitialized) {
             if (amountY > 0f) {
-                keyboardControl.needToChangeGun = InputIndicator.Next
+                keyboardEntity.intendTo(IntendsTo.SelectNextWeapon)
             } else if (amountY < 0f) {
-                keyboardControl.needToChangeGun = InputIndicator.Previous
+                keyboardEntity.intendTo(IntendsTo.SelectPreviousWeapon)
             }
         }
         return true
@@ -117,7 +116,7 @@ class KeyboardInputSystem :
                     Input.Keys.S -> keyboardControl.thrust = 0f
                     Input.Keys.A -> keyboardControl.turning = 0f
                     Input.Keys.D -> keyboardControl.turning = 0f
-                    Input.Keys.R -> keyboardControl.needsReload = true
+                    Input.Keys.R -> keyboardEntity.intendTo(IntendsTo.Reload)
                     Input.Keys.B -> toggleBuildMode()
                     Input.Keys.LEFT -> handleLeft() //keyboardControl.uiControl.left()
                     Input.Keys.RIGHT -> handleRight() //keyboardControl.uiControl.right()
@@ -149,7 +148,6 @@ class KeyboardInputSystem :
     private fun toggleBuildMode() {
         //Fucking finally
         keyboardEntity.intendTo(IntendsTo.ToggleBuildMode)
-        //keyboardControl.isInBuildMode = !keyboardControl.isInBuildMode
     }
 
     override fun touchDown(screenX: Int, screenY: Int, pointer: Int, button: Int): Boolean {

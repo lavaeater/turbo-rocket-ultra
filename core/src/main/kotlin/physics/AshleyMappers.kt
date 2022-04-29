@@ -86,7 +86,31 @@ object AshleyMappers {
     val obstacleCollision = mapperFor<CollidedWithObstacle>()
     val uiThing = mapperFor<UiThingComponent>()
     val effect = mapperFor<ParticleEffectComponent>()
+    val weaponEntity = mapperFor<WeaponEntityComponent>()
+    val inventory = mapperFor<InventoryComponent>()
+    val reloading = mapperFor<IsReloadingComponent>()
 }
+
+fun Entity.isReloading() : Boolean {
+    return AshleyMappers.reloading.has(this)
+}
+
+fun Entity.startReloading() {
+    this.addComponent<IsReloadingComponent> {  }
+}
+
+fun Entity.reloader() : IsReloadingComponent {
+    return AshleyMappers.reloading.get(this)
+}
+
+fun Entity.inventory(): InventoryComponent {
+    return AshleyMappers.inventory.get(this)
+}
+
+fun Entity.weaponEntity(): Entity {
+    return AshleyMappers.weaponEntity.get(this).weaponEntity
+}
+
 
 fun Entity.hasSplatter(): Boolean {
     return AshleyMappers.splatter.has(this)
