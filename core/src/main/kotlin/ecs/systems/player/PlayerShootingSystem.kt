@@ -11,6 +11,7 @@ import ecs.components.gameplay.TransformComponent
 import ecs.components.player.*
 import factories.splatterParticles
 import injection.Context.inject
+import isometric.toCartesian
 import ktx.ashley.allOf
 import ktx.ashley.get
 import ktx.ashley.mapperFor
@@ -68,11 +69,11 @@ class PlayerShootingSystem(private val audioPlayer: AudioPlayer) : IteratingSyst
 
             controlComponent.latestHitPoint
                 .set(transform.position)
-                .add(controlComponent.aimVector)
+                .add(controlComponent.aimVector.toCartesian())
                 .sub(transform.position)
                 .scl(50f)
                 .add(transform.position)
-                .add(controlComponent.aimVector)
+                .add(controlComponent.aimVector.toCartesian())
 
             val start = transform.position
 

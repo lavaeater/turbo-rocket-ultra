@@ -36,6 +36,8 @@ object Assets : Disposable {
         SpriteLoader.initCharachterAnims()
     }
 
+    val tower by lazy { TextureRegion(Texture(Gdx.files.internal("sprites/towers/tower.png"))) }
+
     val playerCharacters by lazy { characters.filterNot { it.key == "enemy" } }
 
     val splashTexture: Texture by lazy {

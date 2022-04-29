@@ -5,7 +5,6 @@ import com.badlogic.gdx.Gdx
 import com.badlogic.gdx.controllers.Controller
 import com.badlogic.gdx.controllers.ControllerListener
 import com.badlogic.gdx.controllers.Controllers
-import com.badlogic.gdx.controllers.PovDirection
 import com.badlogic.gdx.graphics.GL20
 import com.badlogic.gdx.graphics.OrthographicCamera
 import com.badlogic.gdx.graphics.g2d.PolygonSpriteBatch
@@ -58,22 +57,6 @@ abstract class BasicScreen(val gameState: StateMachine<GameState, GameEvent>) : 
     }
 
     override fun axisMoved(controller: Controller, axisCode: Int, value: Float): Boolean {
-        return true
-    }
-
-    override fun povMoved(controller: Controller, povCode: Int, value: PovDirection?): Boolean {
-        return true
-    }
-
-    override fun xSliderMoved(controller: Controller, sliderCode: Int, value: Boolean): Boolean {
-        return true
-    }
-
-    override fun ySliderMoved(controller: Controller, sliderCode: Int, value: Boolean): Boolean {
-        return true
-    }
-
-    override fun accelerometerMoved(controller: Controller, accelerometerCode: Int, value: Vector3?): Boolean {
         return true
     }
 }

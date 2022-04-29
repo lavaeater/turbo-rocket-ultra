@@ -3,6 +3,7 @@ package physics
 import com.badlogic.ashley.core.Component
 import com.badlogic.ashley.core.Engine
 import com.badlogic.ashley.core.Entity
+import com.badlogic.gdx.graphics.Texture
 import com.badlogic.gdx.graphics.g2d.Batch
 import com.badlogic.gdx.graphics.g2d.TextureRegion
 import com.badlogic.gdx.math.MathUtils
@@ -171,7 +172,6 @@ fun Batch.drawScaled(
         scale,
         rotation)
 }
-
 
 inline fun<reified T: Component>Entity.addComponent(block: T.() -> Unit = {}) {
     this.add(component(block))

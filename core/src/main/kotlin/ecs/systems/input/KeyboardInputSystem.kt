@@ -33,14 +33,6 @@ class KeyboardInputSystem:
         return true
     }
 
-//    private fun toggleVehicle() {
-//        if (player.entity.hasNot(mapperFor<IsInVehicleComponent>())) {
-//            player.entity.add(EnterVehicleComponent())
-//        } else {
-//            player.entity.add(LeaveVehicleComponent())
-//        }
-//    }
-
     override fun keyUp(keycode: Int): Boolean {
         when (keycode) {
             Input.Keys.W -> keyboardControl.thrust = 0f

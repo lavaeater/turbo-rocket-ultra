@@ -5,13 +5,18 @@ import com.badlogic.gdx.graphics.Color
 import com.badlogic.gdx.graphics.g2d.Batch
 import com.badlogic.gdx.math.Vector2
 import com.badlogic.gdx.utils.Pool
-import ecs.components.graphics.Renderable
+import ecs.components.graphics.renderables.Renderable
+import ecs.components.graphics.renderables.RenderableType
+import isometric.toIsometric
+import ktx.math.vec2
 import space.earlygrey.shapedrawer.ShapeDrawer
 
 class SplatterComponent(
     var life: Float = 20f,
     var color: Color = Color.RED,
     var radius: Float = 1f) : Renderable, Component, Pool.Poolable {
+    override val renderableType: RenderableType
+        get() = RenderableType.Splatter
 
     override fun render(
         position: Vector2,
@@ -21,7 +26,12 @@ class SplatterComponent(
         batch: Batch,
         shapeDrawer: ShapeDrawer
     ) {
-        shapeDrawer.filledCircle(position, radius, color)
+        val isoPos = position.toIsometric()
+        val radii = vec2(radius).toIsometric()
+
+        shapeDrawer.setColor(color)
+        //This might, just might, actually work
+        shapeDrawer.filledEllipse(isoPos.x, isoPos.y, radii.x, radii.y)
     }
 
     override fun reset() {

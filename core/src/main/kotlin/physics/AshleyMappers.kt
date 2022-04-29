@@ -7,7 +7,6 @@ import ecs.components.player.PlayerControlComponent
 import ecs.components.VehicleComponent
 import ecs.components.VehicleControlComponent
 import ecs.components.gameplay.TransformComponent
-import ecs.components.graphics.CharacterSpriteComponent
 import ktx.ashley.mapperFor
 import kotlin.reflect.KType
 import kotlin.reflect.typeOf
@@ -23,7 +22,6 @@ object AshleyMappers {
     val mappers = mutableMapOf<KType, ComponentMapper<*>>()
 
     val transformMapper = mapperFor<TransformComponent>()
-    val characterSpriteComponentMapper = mapperFor<CharacterSpriteComponent>()
     val playerControlMapper = mapperFor<PlayerControlComponent>()
     val bodyMapper = mapperFor<BodyComponent>()
     val vehicleMapper = mapperFor<VehicleComponent>()

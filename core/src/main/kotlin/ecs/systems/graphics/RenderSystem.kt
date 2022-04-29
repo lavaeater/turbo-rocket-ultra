@@ -3,11 +3,10 @@ package ecs.systems.graphics
 import com.badlogic.ashley.core.Entity
 import com.badlogic.ashley.systems.SortedIteratingSystem
 import com.badlogic.gdx.graphics.g2d.Batch
-import ecs.components.gameplay.TransformComponent
-import ecs.components.graphics.CharacterSpriteComponent
-import ecs.components.graphics.RenderLayerComponent
 import ecs.components.fx.SplatterComponent
-import ecs.components.graphics.BoxComponent
+import ecs.components.gameplay.TransformComponent
+import ecs.components.graphics.RenderLayerComponent
+import ecs.components.graphics.RenderableComponent
 import ktx.ashley.allOf
 import ktx.ashley.get
 import ktx.ashley.mapperFor
@@ -24,6 +23,7 @@ class RenderSystem(
     ).get(), object : Comparator<Entity> {
         val renderableMapper = mapperFor<RenderLayerComponent>()
         val transformMapper = mapperFor<TransformComponent>()
+
         override fun compare(p0: Entity, p1: Entity): Int {
             val layer0 = renderableMapper.get(p0).layer
             val layer1 = renderableMapper.get(p1).layer
@@ -42,13 +42,13 @@ class RenderSystem(
     private val scale = 1 / pixelsPerMeter
     private var animationStateTime = 0f
 
-    private val tMapper = mapperFor<TransformComponent>()
-    private val sMapper = mapperFor<CharacterSpriteComponent>()
-    private val pMapper = mapperFor<SplatterComponent>()
-    private val bMapper = mapperFor<BoxComponent>()
+    private val transformMapper = mapperFor<TransformComponent>()
+    private val renderableMapper = mapperFor<RenderableComponent>()
+    private val splatterMapper = mapperFor<SplatterComponent>()
 
     override fun update(deltaTime: Float) {
         animationStateTime += deltaTime
+        forceSort()
         batch.use {
             super.update(deltaTime)
         }
@@ -56,9 +56,9 @@ class RenderSystem(
 
     override fun processEntity(entity: Entity, deltaTime: Float) {
         //1. Just render the texture without animation
-        val transform = tMapper.get(entity)
+        val transform = transformMapper.get(entity)
 
-        entity[sMapper]?.render(
+        entity[renderableMapper]?.renderable?.render(
             transform.position,
             transform.rotation,
             scale,
@@ -66,16 +66,7 @@ class RenderSystem(
             batch,
             shapeDrawer
         )
-
-        entity[pMapper]?.render(
-            transform.position,
-            transform.rotation,
-            scale,
-            animationStateTime,
-            batch,
-            shapeDrawer
-        )
-        entity[bMapper]?.render(
+        entity[splatterMapper]?.render(
             transform.position,
             transform.rotation,
             scale,

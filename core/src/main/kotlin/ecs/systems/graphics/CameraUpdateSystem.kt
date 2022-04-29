@@ -9,6 +9,7 @@ import com.badlogic.gdx.utils.viewport.ExtendViewport
 import ecs.components.graphics.CameraFollowComponent
 import ecs.components.gameplay.TransformComponent
 import injection.Context.inject
+import isometric.toIsometric
 import ktx.ashley.allOf
 import ktx.math.vec2
 import ktx.math.vec3
@@ -41,7 +42,7 @@ class CameraUpdateSystem(
         cameraPosition.set(transformComponents.map { it.position.x }.sum() /transformComponents.count().toFloat(), transformComponents.map { it.position.y }.sum() /transformComponents.count().toFloat() )
 
         camera.position.lerp(
-            vec3(cameraPosition, 0f), 0.5f)
+            vec3(cameraPosition.toIsometric(), 0f), 0.5f)
 
         viewport.minWorldWidth = (transformComponents.maxOf { it.position.x } - transformComponents.minOf { it.position.x } + 30f).coerceIn(GameScreen.GAMEWIDTH, GameScreen.GAMEWIDTH * 30)
         viewport.minWorldHeight = (transformComponents.maxOf { it.position.y } - transformComponents.minOf { it.position.y } + 30f).coerceIn(GameScreen.GAMEHEIGHT, GameScreen.GAMEHEIGHT * 30)
