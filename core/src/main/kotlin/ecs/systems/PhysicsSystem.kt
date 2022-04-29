@@ -5,9 +5,7 @@ import com.badlogic.ashley.systems.IteratingSystem
 import com.badlogic.gdx.physics.box2d.World
 import ecs.components.*
 import ecs.components.gameplay.TransformComponent
-import ecs.components.graphics.ParticleComponent
 import ktx.ashley.allOf
-import ktx.ashley.mapperFor
 import physics.AshleyMappers
 
 class PhysicsSystem(private val world: World, private val timeStep : Float = 1/60f) :
@@ -17,7 +15,6 @@ class PhysicsSystem(private val world: World, private val timeStep : Float = 1/6
     private val posIters = 2
     private val tMapper = AshleyMappers.transformMapper
     private val bMapper = AshleyMappers.bodyMapper
-    private val pMapper = mapperFor<ParticleComponent>()
 
     var accumulator = 0f
 
@@ -41,23 +38,6 @@ class PhysicsSystem(private val world: World, private val timeStep : Float = 1/6
             transformComponent.position.set(bodyPosition)
             transformComponent.rotation = bodyRotation
 
-//                if(entity.has(pMapper)) {
-//                    val pC = pMapper.get(entity)
-//                    val bloodEntity = engine.createEntity().apply {
-//                        add(engine.createComponent(TransformComponent::class.java).apply {
-//                            position.set(transformComponent.position)
-//                            rotation = transformComponent.rotation
-//                        })
-//                        add(engine.createComponent(SplatterComponent::class.java).apply {
-//                            radius = .1f
-//                            color = pC.color
-//                            life = pC.life / 2f
-//                        })
-//                        add(engine.createComponent(RenderableComponent::class.java))
-//                    }
-//                    engine.addEntity(bloodEntity)
-//                }
-//        }
     }
 
 }

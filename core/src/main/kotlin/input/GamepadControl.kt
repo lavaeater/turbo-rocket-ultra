@@ -6,20 +6,21 @@ import com.badlogic.gdx.math.Vector2
 import ecs.components.player.PlayerMode
 import ktx.math.vec2
 
-class GamepadControl(val controller: Controller) : ControlMapper, Component {
+class GamepadControl(val controller: Controller): ControlMapper, Component {
+    override var needsReload = false
     override val aimVector = vec2()
+    override var aiming: Boolean get() = aimVector.len2() > .3f
+        set(value) {}
     override val mousePosition = vec2()
     override var firing = false
     override var turning = 0f
     override var thrust = 0f
+    override var needToChangeGun: Boolean = false
     override val isKeyboard = false
     override val isGamepad = true
     override val walkVector: Vector2 = vec2(turning, thrust)
         get() = field.set(turning, -thrust)
-    override val controllerId: String
-        get() {
-            return controller.toString()
-        }
+    override val controllerId: String get() = controller.toString()
     override var playerMode: PlayerMode = PlayerMode.Control
 
     override fun setAimVector(screenX: Int, screenY: Int, position: Vector2) {

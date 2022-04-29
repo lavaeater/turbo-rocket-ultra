@@ -6,6 +6,8 @@ import com.badlogic.gdx.graphics.g2d.Batch
 import com.badlogic.gdx.utils.viewport.ExtendViewport
 import ecs.components.graphics.renderables.AnimatedCharacterSprite
 import ecs.components.graphics.RenderableComponent
+import ecs.components.graphics.TextureComponent
+import ecs.components.graphics.renderables.AnimatedCharacterComponent
 import gamestate.Players
 import ktx.graphics.use
 import ktx.math.vec2
@@ -57,7 +59,7 @@ class UserInterface(
 
     @ExperimentalStdlibApi
     private val newUi by lazy {
-        SpacedContainer(vec2(100f, 0f), vec2(20f, hudViewPort.worldHeight / 6), true).apply {
+        SpacedContainer(vec2(100f, 0f), vec2(20f, hudViewPort.worldHeight / 4), true).apply {
             for ((i, p) in players.values.withIndex()) {
                 children.add(
                     SpacedContainer(vec2(0f, 25f), vec2()).apply {
@@ -74,6 +76,9 @@ class UserInterface(
                             BoundTextActor({ "Score: ${p.score}" })
                         )
                         children.add(
+                            BoundTextActor({ "Ammo: ${p.ammoLeft} / ${p.totalAmmo}"})
+                        )
+                        children.add(
                             DataBoundMeter(
                                 { p.health },
                                 p.startingHealth,
@@ -86,7 +91,7 @@ class UserInterface(
                                 { p.lives },
                                 vec2(20f, 0f),
                                 (p.entity
-                                    .getComponent<RenderableComponent>().renderable as AnimatedCharacterSprite)
+                                    .getComponent<AnimatedCharacterComponent>())
                                     .currentAnim
                                     .keyFrames
                                     .first(),

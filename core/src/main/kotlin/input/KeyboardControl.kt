@@ -11,13 +11,16 @@ import ktx.math.vec3
 class KeyboardControl: ControlMapper, Component {
     private val camera by lazy { Context.inject<OrthographicCamera>() }
     private val mousePosition3D = vec3()
+    override var needsReload = false
     override val isKeyboard = true
     override val isGamepad = false
     override val aimVector = vec2()
+    override var aiming: Boolean = false
     override val mousePosition = vec2()
     override var firing = false
     override var turning = 0f
     override var thrust = 0f
+    override var needToChangeGun: Boolean = false
     override val walkVector: Vector2 = vec2(turning, thrust)
         get() = field.set(turning, -thrust)
     override val controllerId: String

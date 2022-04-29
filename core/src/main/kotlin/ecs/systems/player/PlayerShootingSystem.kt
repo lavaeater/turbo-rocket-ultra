@@ -23,12 +23,14 @@ import tru.Assets
 class PlayerShootingSystem(private val audioPlayer: AudioPlayer) : IteratingSystem(
     allOf(
         PlayerControlComponent::class,
+        WeaponComponent::class,
         TransformComponent::class
     ).get()
 ) {
     private val controlMapper = mapperFor<PlayerControlComponent>()
     private val transformMapper = mapperFor<TransformComponent>()
     private val shotsFiredMapper = mapperFor<FiredShotsComponent>()
+    private val weaponsMapper = mapperFor<WeaponComponent>()
     private val world: World by lazy { inject() }
 
     @ExperimentalStdlibApi
@@ -36,8 +38,12 @@ class PlayerShootingSystem(private val audioPlayer: AudioPlayer) : IteratingSyst
 
         val controlComponent = controlMapper[entity]
         controlComponent.coolDown(deltaTime)
+        val weapon = weaponsMapper.get(entity).currentGun
 
-        if (controlComponent.firing && !(entity.hasComponent<PlayerRespawning>() || entity.hasComponent<PlayerWaitsForRespawn>())) {
+        if (
+            controlComponent.firing &&
+            weapon.ammoRemaining > 0 &&
+            !(entity.hasComponent<PlayerRespawning>() || entity.hasComponent<PlayerWaitsForRespawn>())) {
             val transform = transformMapper[entity]
             shotsFiredMapper[entity].queue.addFirst(transform.position)
             /*
@@ -47,7 +53,7 @@ class PlayerShootingSystem(private val audioPlayer: AudioPlayer) : IteratingSyst
 
             //create raycast to find some targets
             controlComponent.shoot()
-            if((1..5).random() == 1)
+            if ((1..5).random() == 1)
                 audioPlayer.playSounds(mapOf("gunshot" to 0f, "shellcasing" to (0.1f..1f).random()))
             else
                 audioPlayer.playSound("gunshot")
@@ -57,45 +63,75 @@ class PlayerShootingSystem(private val audioPlayer: AudioPlayer) : IteratingSyst
             The players position PLUS the aimVector (if aiming left, it is negative, and so on. This is the
 
             https://www.debugcn.com/en/article/63417562.html
+
+            Adding different weapons to fuck shit up!
              */
 
-            controlComponent.latestHitPoint
-                .set(transform.position)
-                .add(controlComponent.aimVector)
-                .sub(transform.position)
-                .scl(50f)
-                .add(transform.position)
-                .add(controlComponent.aimVector)
-
-            val start = transform.position
-
-            var lowestFraction = 1f
-
-            lateinit var closestFixture: Fixture
-
-            val pointOfHit = vec2(0f, 0f)
-            val hitNormal = vec2(0f, 0f)
-
-            world.rayCast(start, controlComponent.latestHitPoint) { fixture, point, normal, fraction ->
-
-                if (fraction < lowestFraction && !fixture.isSensor) {
-                    lowestFraction = fraction
-                    closestFixture = fixture
-                    pointOfHit.set(point)
-                    hitNormal.set(normal)
-                }
-                RayCast.CONTINUE
-            }
-            if (lowestFraction < 1f) {
-                controlComponent.latestHitPoint.set(pointOfHit)
-                //we have a hit!
-                if (closestFixture.isEntity() && closestFixture.body.isEnemy()) {
-                    val enemyEntity = closestFixture.getEntity()
-                    enemyEntity.getComponent<EnemyComponent>().takeDamage(10..25)
-                    if(enemyEntity.getComponent<EnemyComponent>().health < 0) {
-                        entity.getComponent<PlayerComponent>().player.kills++
+            //DO a ray-cast for every projectile in the shot
+            //But first, reduce ammo by one
+            weapon.ammoRemaining--
+            val aimVector = controlComponent.aimVector.cpy()
+            val angle = aimVector.angleDeg()
+            val angleVariation = (-weapon.accuracy..weapon.accuracy).random()
+            aimVector.setAngleDeg(angle + angleVariation)
+            for (projectile in 0..weapon.numberOfProjectiles) {
+                // If only one projectile, it is simple, else, there is trouble
+                /*
+                For multi-projectile guns with spread (shotguns)
+                We will calculate a starting aimvector based on spread / 2
+                and then add increments of angle based on spread / numberOf projectiles
+                The accuracy will be done by creating local aimVector varied by the
+                accuracy of the gun, ONCE
+                 */
+                if(weapon.numberOfProjectiles != 1) {
+                    if(projectile == 0) {
+                        aimVector.setAngleDeg(aimVector.angleDeg() - weapon.maxSpread / 2)
+                    } else {
+                        aimVector.setAngleDeg(aimVector.angleDeg() + weapon.maxSpread / weapon.numberOfProjectiles)
                     }
-                    splatterEntity(closestFixture.body.worldCenter, controlComponent.aimVector.cpy().nor().angleDeg())
+                }
+
+                controlComponent.latestHitPoint
+                    .set(transform.position)
+                    .add(aimVector)
+                    .sub(transform.position)
+                    .scl(50f)
+                    .add(transform.position)
+                    .add(aimVector)
+
+                val start = transform.position
+
+                var lowestFraction = 1f
+
+                lateinit var closestFixture: Fixture
+
+                val pointOfHit = vec2(0f, 0f)
+                val hitNormal = vec2(0f, 0f)
+
+                world.rayCast(start, controlComponent.latestHitPoint) { fixture, point, normal, fraction ->
+
+                    if (fraction < lowestFraction && !fixture.isSensor) {
+                        lowestFraction = fraction
+                        closestFixture = fixture
+                        pointOfHit.set(point)
+                        hitNormal.set(normal)
+                    }
+                    RayCast.CONTINUE
+                }
+                if (lowestFraction < 1f) {
+                    controlComponent.latestHitPoint.set(pointOfHit)
+                    //we have a hit!
+                    if (closestFixture.isEntity() && closestFixture.body.isEnemy()) {
+                        val enemyEntity = closestFixture.getEntity()
+                        enemyEntity.getComponent<EnemyComponent>().takeDamage(10..25)
+                        if (enemyEntity.getComponent<EnemyComponent>().health < 0) {
+                            entity.getComponent<PlayerComponent>().player.kills++
+                        }
+                        splatterEntity(
+                            closestFixture.body.worldCenter,
+                            controlComponent.aimVector.cpy().nor().angleDeg()
+                        )
+                    }
                 }
             }
         }

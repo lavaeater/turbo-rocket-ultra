@@ -19,15 +19,16 @@ To make the graphics and environment easy I am currently working with the concep
 
 ### MVP
 
-* Objectives for maps <- doing
-* Far Off Map Rendering <- done
-* Lights and particles <- done
-* Auto-generated Snake-maps <- done
+* Weapons 2 <- doing
 * Interactable Components in-the-game
 * Player graphics made from components / parts etc.
 * Different weapons to shoot with
 * Vehicles <- nice to have
 * Build Towers <- Paused
+* Objectives for maps <- done
+* Far Off Map Rendering <- done
+* Lights and particles <- done
+* Auto-generated Snake-maps <- done
 * Basic Sprite Editor <- done, kinda?
 * IsoMetric Projection <- done!
 * Towers <- Done
@@ -46,6 +47,10 @@ To make the graphics and environment easy I am currently working with the concep
 * Enemies <- Done
 * Blood Splatter <- Done
 * MiniMap <- Done
+
+## Weapons 2 <- doing
+
+This, by nature, needs to consist of a **ton** of things, all very small, preferrably. But what is it that we want for our game?
 
 ## Objectives for maps
 
@@ -529,11 +534,11 @@ Det här gör vi på det gamla vanliga sättet. Vi bygger en box2d-värld, vi kl
 
 Oj oj oj,  vad roligt. Vi kan göra en box2d-kropp med leder, per tutorials etc. Superkul ju.
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbMTk0MjU4NzAwMSwtNzI4NTU3OTk0LC0yNT
-g5ODY5NzksLTEzNjkwOTAwMjEsMTQyNjY0OTg4NSwtMzc3MTg5
-MzQzLC0xODM3MjI3MDk4LC0xNDM1ODYzNzIxLDI3OTk0NTU3NS
-wtMzg0OTU4NjYwLDExMTkxNDg5OTMsLTE5MDY3NTEzMzMsLTg1
-MTQ4MzU5MCwxNzAzNDYzNDkyLDE0ODA4Nzg4MzEsMTMzMzU3MD
-c3OSwtMzk1NDUzODIzLC05MTM1MjI5NTYsMzYyMDYwMTc4LDUx
-NDI3NDI2OV19
+eyJoaXN0b3J5IjpbMTc2MTM0NzM1OSwxNzMwOTAyODcyLC0xND
+gxMDI4NjI2LDE5NDI1ODcwMDEsLTcyODU1Nzk5NCwtMjU4OTg2
+OTc5LC0xMzY5MDkwMDIxLDE0MjY2NDk4ODUsLTM3NzE4OTM0My
+wtMTgzNzIyNzA5OCwtMTQzNTg2MzcyMSwyNzk5NDU1NzUsLTM4
+NDk1ODY2MCwxMTE5MTQ4OTkzLC0xOTA2NzUxMzMzLC04NTE0OD
+M1OTAsMTcwMzQ2MzQ5MiwxNDgwODc4ODMxLDEzMzM1NzA3Nzks
+LTM5NTQ1MzgyM119
 -->

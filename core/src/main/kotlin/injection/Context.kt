@@ -24,8 +24,6 @@ import ktx.box2d.createWorld
 import ktx.inject.Context
 import ktx.inject.register
 import map.grid.GridMapManager
-import map.snake.SnakeMapGenerator
-import map.snake.SnakeMapManager
 import physics.ContactManager
 import screens.GameScreen
 import ui.IUserInterface
@@ -68,7 +66,7 @@ object Context {
     private fun getEngine(): Engine {
         return PooledEngine().apply {
             addSystem(PhysicsSystem(inject()))
-            //addSystem(PhysicsDebugRendererSystem(inject(), inject()))
+//            addSystem(PhysicsDebugRendererSystem(inject(), inject()))
             addSystem(CameraUpdateSystem())
             addSystem(PlayerMoveSystem())
             addSystem(PlayerBuildModeSystem())
@@ -76,7 +74,6 @@ object Context {
             addSystem(GamepadInputSystem())
             addSystem(BodyDestroyerSystem(inject())) //world
             addSystem(CharacterWalkAndShootDirectionSystem())
-  //          addSystem(ShootDebugRenderSystem())
             addSystem(PlayerShootingSystem(inject()))
             addSystem(EnemyDeathSystem())
             addSystem(EnemyMovementSystem())
@@ -88,14 +85,17 @@ object Context {
             addSystem(EnemyDirectionSystem())
             addSystem(EnemyHearsShotsSystem())
             addSystem(InvestigateSystem())
-//            addSystem(EnemyDebugRenderSystem(false, false))
             addSystem(PlayerDeathSystem())
             addSystem(EnemySpawnSystem())
             addSystem(EnemyOptimizerSystem())
             addSystem(TowerTargetFinderSystem())
             addSystem(TowerShootSystem())
+            addSystem(AnimationSystem())
+            addSystem(WeaponUpdateSystem())
+            addSystem(WeaponChangeAndReloadSystem())
+            addSystem(UpdatePlayerStatsSystem())
             addSystem(RenderMapSystem(inject<PolygonSpriteBatch>() as Batch, inject<OrthographicCamera>() as Camera, inject()))
-            addSystem(RenderSystem(inject<PolygonSpriteBatch>() as Batch))
+            addSystem(SimpleRenderSystem(inject<PolygonSpriteBatch>() as Batch))
             addSystem(RenderUserInterfaceSystem(inject<PolygonSpriteBatch>() as Batch))
             addSystem(RenderMiniMapSystem())
             addSystem(PlayerFlashlightSystem())

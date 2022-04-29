@@ -17,12 +17,13 @@ import map.snake.randomPoint
 class GridMapGenerator {
     companion object {
         val engine by lazy { inject<Engine>() }
-        val rayHandler by lazy { Context.inject<RayHandler>() }
+        val rayHandler by lazy { inject<RayHandler>() }
         fun addObjective(bounds: Rectangle) {
-            val position = bounds.randomPoint()
+            var position = bounds.randomPoint()
             objective(position.x, position.y)
 
-            val emitter = obstacle(position.x + 10f, position.y + 10f)
+            position = bounds.randomPoint()
+            val emitter = obstacle(position.x, position.y)
             emitter.add(engine.createComponent(EnemySpawnerComponent::class.java))
         }
 
@@ -31,7 +32,7 @@ class GridMapGenerator {
                 Box2dCategories.light,
                 0, Box2dCategories.allButSensors
             )
-            rayHandler.setAmbientLight(.01f)
+            rayHandler.setAmbientLight(.1f)
             rayHandler.setBlurNum(3)
 
             val width = length

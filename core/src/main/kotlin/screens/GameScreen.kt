@@ -4,11 +4,9 @@ import audio.AudioPlayer
 import com.badlogic.ashley.core.Engine
 import com.badlogic.gdx.Gdx
 import com.badlogic.gdx.controllers.Controllers
-import com.badlogic.gdx.graphics.Color
 import com.badlogic.gdx.graphics.GL20
 import com.badlogic.gdx.graphics.OrthographicCamera
 import com.badlogic.gdx.graphics.g2d.PolygonSpriteBatch
-import com.badlogic.gdx.math.Vector2
 import com.badlogic.gdx.physics.box2d.World
 import com.badlogic.gdx.utils.viewport.ExtendViewport
 import ecs.components.BodyComponent
@@ -19,7 +17,7 @@ import ecs.components.gameplay.TransformComponent
 import ecs.components.player.PlayerComponent
 import ecs.systems.graphics.CameraUpdateSystem
 import ecs.systems.graphics.RenderMiniMapSystem
-import ecs.systems.graphics.RenderSystem
+import ecs.systems.graphics.SimpleRenderSystem
 import ecs.systems.input.GamepadInputSystem
 import injection.Context.inject
 import ecs.systems.input.KeyboardInputSystem
@@ -33,8 +31,6 @@ import ktx.ashley.allOf
 import ktx.ashley.getSystem
 import ktx.ashley.mapperFor
 import ktx.ashley.remove
-import ktx.math.random
-import ktx.math.vec2
 import map.grid.GridMapGenerator
 import map.grid.GridMapManager
 import map.snake.*
@@ -142,7 +138,7 @@ D1B67A
             system.setProcessing(false)
 
         //Continue to render, though
-        engine.getSystem<RenderSystem>().setProcessing(true)
+        engine.getSystem<SimpleRenderSystem>().setProcessing(true)
         engine.getSystem<RenderMiniMapSystem>().setProcessing(true)
     }
 

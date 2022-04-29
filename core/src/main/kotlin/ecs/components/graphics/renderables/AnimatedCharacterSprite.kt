@@ -5,14 +5,17 @@ import com.badlogic.gdx.graphics.g2d.Animation
 import com.badlogic.gdx.graphics.g2d.Batch
 import com.badlogic.gdx.graphics.g2d.TextureRegion
 import com.badlogic.gdx.math.Vector2
-import ktx.math.vec2
 import physics.drawScaled
 import space.earlygrey.shapedrawer.ShapeDrawer
 import tru.AnimState
 import tru.LpcCharacterAnim
 import tru.SpriteDirection
 
-class AnimatedCharacterSprite(private val anims: Map<AnimState, LpcCharacterAnim>, val scale: Float = 1f, val offsetX: Float = 0f, val offsetY: Float = 0f) : Renderable {
+class AnimatedCharacterSprite(
+    val anims: Map<AnimState, LpcCharacterAnim<TextureRegion>>,
+    val scale: Float = 1f,
+    val offsetX: Float = 0f,
+    val offsetY: Float = 0f) : Renderable {
 
     var currentAnimState : AnimState = anims.values.first().state
     var currentDirection: SpriteDirection = SpriteDirection.South
@@ -36,17 +39,6 @@ class AnimatedCharacterSprite(private val anims: Map<AnimState, LpcCharacterAnim
         shapeDrawer: ShapeDrawer) {
 
         val currentTextureRegion = currentTextureRegion(animationStateTime)
-
-//        batch.color = shadowColor
-//
-//        batch.drawScaled(currentTextureRegion(animationStateTime),
-//            (position.x + (currentTextureRegion.regionWidth / 2 * scale) + (offsetX * scale * this.scale)),
-//            (position.y + (currentTextureRegion.regionHeight / 2 * scale) + (offsetY * scale * this.scale / 2)),
-//            1f * scale * this.scale,
-//            0.5f * scale * this.scale,
-//            -135f)
-//        batch.color = Color.WHITE
-
 
         batch.drawScaled(
             currentTextureRegion,

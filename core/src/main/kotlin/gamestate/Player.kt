@@ -34,6 +34,9 @@ class Player() {
         }
     }
 
+    var ammoLeft = 0
+    var totalAmmo = 0
+
     val isDead : Boolean
         get() = health < 1
 

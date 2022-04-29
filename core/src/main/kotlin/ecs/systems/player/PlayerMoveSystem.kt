@@ -4,6 +4,7 @@ import com.badlogic.ashley.core.Entity
 import com.badlogic.ashley.systems.IteratingSystem
 import ecs.components.BodyComponent
 import ecs.components.graphics.RenderableComponent
+import ecs.components.graphics.renderables.AnimatedCharacterComponent
 import ecs.components.graphics.renderables.AnimatedCharacterSprite
 import ecs.components.player.PlayerControlComponent
 import ktx.ashley.allOf
@@ -14,25 +15,24 @@ class PlayerMoveSystem(
     allOf(
         PlayerControlComponent::class,
         BodyComponent::class,
-        RenderableComponent::class).get(), 10) {
+        AnimatedCharacterComponent::class).get(), 10) {
 
     private val pccMapper = mapperFor<PlayerControlComponent>()
     private val bcMapper = mapperFor<BodyComponent>()
-    private val anMapper = mapperFor<RenderableComponent>()
+    private val anMapper = mapperFor<AnimatedCharacterComponent>()
 
     override fun processEntity(entity: Entity, deltaTime: Float) {
         val pcc = pccMapper.get(entity)
         val bc = bcMapper.get(entity)
         val csc = anMapper.get(entity)
-        if(csc.renderable is AnimatedCharacterSprite)
-            executeMove(pcc, bc, csc.renderable as AnimatedCharacterSprite)
+        executeMove(pcc, bc, csc)
     }
 
     private var speedFactor = 1f
     private fun executeMove(
         playerControlComponent: PlayerControlComponent,
         bodyComponent: BodyComponent,
-        animatedCharacterSprite: AnimatedCharacterSprite
+        animatedCharacterComponent: AnimatedCharacterComponent
     ) {
         speedFactor = if(playerControlComponent.triggerPulled) 0.2f else 1f
 
@@ -40,6 +40,6 @@ class PlayerMoveSystem(
         val vY = playerControlComponent.walkVector.y * speed * speedFactor
         bodyComponent.body.setLinearVelocity(vX, vY)
 
-        animatedCharacterSprite.currentAnimState = playerControlComponent.playerAnimState
+        animatedCharacterComponent.currentAnimState = playerControlComponent.playerAnimState
     }
 }

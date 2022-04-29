@@ -6,17 +6,22 @@ import com.badlogic.gdx.Gdx
 import com.badlogic.gdx.Input
 import com.badlogic.gdx.math.Vector2
 import ecs.components.gameplay.TransformComponent
+import features.weapons.GunFrames
 import ecs.components.player.PlayerMode
+import ecs.components.player.WeaponComponent
 import input.*
 import ktx.app.KtxInputAdapter
 import ktx.ashley.allOf
 import ktx.ashley.mapperFor
+import physics.getComponent
 
-class KeyboardInputSystem:
+class KeyboardInputSystem :
     KtxInputAdapter, IteratingSystem(
     allOf(
         KeyboardControl::class,
-        TransformComponent::class).get()) {
+        TransformComponent::class
+    ).get()
+) {
 
     lateinit var keyboardControl: KeyboardControl
     private val pccMapper = mapperFor<KeyboardControl>()
@@ -41,6 +46,7 @@ class KeyboardInputSystem:
             Input.Keys.A -> keyboardControl.turning = 0f
             Input.Keys.D -> keyboardControl.turning = 0f
             Input.Keys.SPACE -> keyboardControl.firing = false
+            Input.Keys.R -> keyboardControl.needsReload = true
             Input.Keys.B -> toggleBuildMode()
             Input.Keys.LEFT -> keyboardControl.uiControl.left()
             Input.Keys.RIGHT -> keyboardControl.uiControl.right()
@@ -51,7 +57,7 @@ class KeyboardInputSystem:
     }
 
     private fun toggleBuildMode() {
-        when(keyboardControl.playerMode) {
+        when (keyboardControl.playerMode) {
             PlayerMode.Control -> keyboardControl.playerMode = PlayerMode.Building
             PlayerMode.Building -> {
                 keyboardControl.uiControl.cancel()
@@ -61,10 +67,17 @@ class KeyboardInputSystem:
     }
 
     override fun touchDown(screenX: Int, screenY: Int, pointer: Int, button: Int): Boolean {
-        return if (button == Input.Buttons.LEFT) {
-            keyboardControl.firing = true
-            true
-        } else false
+        return when (button) {
+            Input.Buttons.LEFT -> {
+                keyboardControl.firing = true
+                keyboardControl.aiming = true
+                true
+            }
+            Input.Buttons.RIGHT -> {
+                true
+            }
+            else -> false
+        }
     }
 
     override fun touchDragged(screenX: Int, screenY: Int, pointer: Int): Boolean {
@@ -76,16 +89,30 @@ class KeyboardInputSystem:
     }
 
     override fun touchUp(screenX: Int, screenY: Int, pointer: Int, button: Int): Boolean {
-        return if (button == Input.Buttons.LEFT) {
-            keyboardControl.firing = false
-            true
-        } else false
+        return when (button) {
+            Input.Buttons.LEFT -> {
+                keyboardControl.firing = false
+                keyboardControl.aiming = false
+                true
+            }
+            Input.Buttons.RIGHT -> {
+                keyboardControl.firing = false
+                keyboardControl.aiming = false
+                changeGun()
+                true
+            }
+            else -> false
+        }
     }
 
+    private fun changeGun() {
+        keyboardControl.needToChangeGun = true
+    }
+
+    @OptIn(ExperimentalStdlibApi::class)
     override fun processEntity(entity: Entity, deltaTime: Float) {
         keyboardControl = pccMapper[entity]
         updateMouseInput(tcMapper[entity].position)
-
     }
 
     private fun updateMouseInput(position: Vector2) {
