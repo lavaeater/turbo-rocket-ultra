@@ -1,5 +1,39 @@
 # turbo-rocket-ultra
 
+## NEWEST THOUGHTS
+
+The next feature in the game must be more robust, more additive to the concept and gameplay. No more diddly-daddling of adding bits and pieces, what we need next is that thing that makes it feel like a *story* or *proper game*, whatever that means.
+
+Yes, what does that actually mean? What should be added from here on out? Well, it's obvious, ain't it? We need **story beats**. Story beats are "scripted events", "quests", shit to get done to move to the next level.
+
+It could be killing the boss, finding the orbs, getting to a certain spot on the map, anything. Yes, this is it. This is the big one. And I know exactly the thing to get it done: Stories and quests from Kids From The Wasteland, of course. What on earth do I mean by that? Well, I simply mean that we need to keep track of *Facts* in this game world of ours. These facts could be anything, like, have player A been to room 18, or how many zombies of type 1A have we actually killed, etc.
+
+These *facts* can then be used to trigger any number of things to happen. 
+
+And we have it all done, ready to go out of the box. Sort of. We just need to dust it off and understand it again. 
+
+Oooh, and fucking voice acting. Hows about that!?
+
+So, what we are talking about is the most important MVP feature of them all: **STORY MODE!!** 
+
+## STORY MODE - the story continues
+
+Random thoughts: Story mode should be able to design a room or level entirely - or provide more input for the generator. 
+
+So, what are we actually going to do? 
+
+I want to use Scene2D for the UI, rolling my own is just to confusing, even for me. And too much work. 
+
+### MVP for now
+
+- [x] *Put level end requirements in a Story*
+	- [x] Put level end requirements in story (like special pickups, touching objectives etc)
+	- [x] Put boss kill requirement in story
+- [ ] Use Scene2D stuff to show ui Stuff perhaps?
+- [ ] Show a splash from the story system
+
+
+
 ## What's up with the name, anyways?
 
 The name of this repository is an homage to the first game I made with libgdx / kotlin and that game was an homage to the classic Amiga game Turbo Raketti (https://en.wikipedia.org/wiki/Turboraketti) that me and some friends played back in the 90s on our Amigas. It's a simple enough Thrust-clone with racing modes and fantastic dog fights. Endless replayability. It represents the holy grail, a fun game that should be *doable*, you know, for a person with no knowledge of how to code or do games. However, the game that I am currently working on in this repository is absolutely not a Turbo Raketti clone. It's just a name.
@@ -21,6 +55,7 @@ To make the graphics and environment easy I am currently working with the concep
 
 Lets try to prioritize these into what would make the game seem "done" the fastest.
 
+- [ ] **STORY MODE**
 - [ ] More Enemy Sprites (generate them)
 - [ ] Lightmaps for sprites
 - [ ] Soundscape II - the Moaning
@@ -580,11 +615,11 @@ Det här gör vi på det gamla vanliga sättet. Vi bygger en box2d-värld, vi kl
 
 Oj oj oj,  vad roligt. Vi kan göra en box2d-kropp med leder, per tutorials etc. Superkul ju.
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbMTE0MDYzODM1NywxODk1MTEyMjY2LC01Mz
-k0NjAxOTAsNjU2MzMyNTI3LC0xMTAwMTc2NDU2LDM0MDk3OTUy
-LDEwMzIyMzI1NzQsMTI4MDQ5MjE1MiwtMzY5MjM4NTI5LDMzMT
-E1MDY3MSwyMDk2NjEyODUxLC0xMDg0NjkwODYzLC0yMzg3NjIw
-NCwtMTUyODMxMTQ0NCwtMTQyOTUzMDk0MCwtMTk1NDM2NDA3OC
-wxNzYxMzQ3MzU5LDE3MzA5MDI4NzIsLTE0ODEwMjg2MjYsMTk0
-MjU4NzAwMV19
+eyJoaXN0b3J5IjpbMjM5NDQwMDg3LDU2MjQzMDMzLC0xMjExMj
+cwMzcwLC0yMTE5MTU5NDcxLDMzNTk1NzQ1NiwxMTQwNjM4MzU3
+LDE4OTUxMTIyNjYsLTUzOTQ2MDE5MCw2NTYzMzI1MjcsLTExMD
+AxNzY0NTYsMzQwOTc5NTIsMTAzMjIzMjU3NCwxMjgwNDkyMTUy
+LC0zNjkyMzg1MjksMzMxMTUwNjcxLDIwOTY2MTI4NTEsLTEwOD
+Q2OTA4NjMsLTIzODc2MjA0LC0xNTI4MzExNDQ0LC0xNDI5NTMw
+OTQwXX0=
 -->

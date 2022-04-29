@@ -2,7 +2,7 @@ package ecs.components.ai
 
 import com.badlogic.ashley.core.Component
 import com.badlogic.gdx.utils.Pool
-import gamestate.Player
+import data.Player
 
 class TrackingPlayer : Component, Pool.Poolable {
     var player: Player? = null

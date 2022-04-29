@@ -6,8 +6,8 @@ import com.badlogic.gdx.graphics.OrthographicCamera
 import com.badlogic.gdx.utils.viewport.ExtendViewport
 import gamestate.GameEvent
 import gamestate.GameState
-import gamestate.Player
-import gamestate.Players
+import data.Player
+import data.Players
 import input.Button
 import input.ControlMapper
 import input.GamepadControl

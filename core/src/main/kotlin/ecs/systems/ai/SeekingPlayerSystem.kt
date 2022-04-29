@@ -14,7 +14,7 @@ import ecs.components.enemy.EnemyComponent
 import ecs.components.gameplay.TransformComponent
 import ecs.components.player.PlayerComponent
 import factories.world
-import gamestate.Players
+import data.Players
 import ktx.ashley.allOf
 import ktx.box2d.RayCast
 import ktx.box2d.rayCast
@@ -26,9 +26,8 @@ import physics.has
 import physics.isPlayer
 import tru.Assets
 
-class SeekPlayerSystem : IteratingSystem(allOf(SeekPlayer::class).get(), 100) {
+class SeekPlayerSystem(val debug: Boolean = false) : IteratingSystem(allOf(SeekPlayer::class).get(), 100) {
     val players by lazy { Players.players.values.map { it.entity } }
-    val debug = true
     val shapeDrawer by lazy { Assets.shapeDrawer }
 
     @OptIn(ExperimentalStdlibApi::class)
@@ -61,10 +60,6 @@ class SeekPlayerSystem : IteratingSystem(allOf(SeekPlayer::class).get(), 100) {
                 seekComponent.scanResolution
             )
             seekComponent.needsScanVector = false
-
-            // We shall now build a SCAN POLYGON
-            //And to be honest, the easiest way is to make like five smaller triangles, because
-
         }
 
         if (!seekComponent.foundAPlayer && seekComponent.coolDown > 0f) {
@@ -78,48 +73,6 @@ class SeekPlayerSystem : IteratingSystem(allOf(SeekPlayer::class).get(), 100) {
             for (player in playersInRange) {
                 if (!seekComponent.foundAPlayer) {
                     val playerPosition = player.getComponent<TransformComponent>().position
-
-//                    seekComponent.scanVectorStart.set(enemyPosition)
-//
-//                    val scanVectorRotated = seekComponent.scanVector.cpy()
-//                        .setAngleDeg(seekComponent.scanVector.angleDeg() - seekComponent.fieldOfView / 2)
-//
-//                    seekComponent.scanVectorEnd.set(seekComponent.scanVectorStart)
-//                        .add(scanVectorRotated)
-//                        .sub(seekComponent.scanVectorStart)
-//                        .scl(seekComponent.viewDistance)
-//                        .add(seekComponent.scanVectorStart)
-//                        .add(scanVectorRotated)
-//
-//                    scanVectorRotated.setAngleDeg(scanVectorRotated.angleDeg() + seekComponent.fieldOfView)
-//
-//                    val end2 = vec2().set(seekComponent.scanVectorStart)
-//                        .add(scanVectorRotated)
-//                        .sub(seekComponent.scanVectorStart)
-//                        .scl(seekComponent.viewDistance)
-//                        .add(seekComponent.scanVectorStart)
-//                        .add(scanVectorRotated)
-
-
-//                    val triangle = Polygon(
-//                        arrayOf(
-//                            seekComponent.scanVectorStart.x,
-//                            seekComponent.scanVectorStart.y,
-//                            seekComponent.scanVectorEnd.x,
-//                            seekComponent.scanVectorEnd.y,
-//                            end2.x,
-//                            end2.y
-//                        ).toFloatArray()
-//                    )
-
-//                    shapeDrawer.batch.use {
-//                        shapeDrawer.filledTriangle(
-//                            seekComponent.scanVectorStart,
-//                            seekComponent.scanVectorEnd,
-//                            end2,
-//                            Color(0f, 1f, 0f, .5f)
-//                        )
-//                    }
 
                     if (seekComponent.scanPolygon.contains(playerPosition)) {
                         world().rayCast(
@@ -135,14 +88,15 @@ class SeekPlayerSystem : IteratingSystem(allOf(SeekPlayer::class).get(), 100) {
                             RayCast.CONTINUE
                         }
 
-                        shapeDrawer.batch.use {
-                            shapeDrawer.setColor(Color(0f, 1f, 0f, 0.5f))
-                            shapeDrawer.filledPolygon(seekComponent.scanPolygon.vertices)
-                            shapeDrawer.line(enemyPosition, pointOfHit, Color.RED, .5f)
+                        if (debug) {
+                            shapeDrawer.batch.use {
+                                shapeDrawer.setColor(Color(0f, 1f, 0f, 0.1f))
+                                shapeDrawer.filledPolygon(seekComponent.scanPolygon.vertices)
+                                shapeDrawer.line(enemyPosition, pointOfHit, Color(1f, 0f, 0f, 0.1f), .2f)
+                            }
                         }
                         if (closestFixture.isPlayer()) {
                             seekComponent.foundAPlayer = true
-//                            seekComponent.foundPlayer = player
                             entity.add(
                                 engine.createComponent(TrackingPlayer::class.java)
                                     .apply { this.player = player.getComponent<PlayerComponent>().player })
@@ -150,11 +104,6 @@ class SeekPlayerSystem : IteratingSystem(allOf(SeekPlayer::class).get(), 100) {
                             return
                         }
                     }
-//
-//                    val relativePosNormalized = playerPosition.cpy().sub(enemyPosition).nor()
-//                    val dotProduct = seekComponent.scanVector.dot(relativePosNormalized)
-//                    val acos = acos(dotProduct)
-//                    if (acos < seekComponent.fieldOfView / 2
                 }
             }
         }
@@ -169,6 +118,12 @@ class SeekPlayerSystem : IteratingSystem(allOf(SeekPlayer::class).get(), 100) {
             Task.Status.FAILED
     }
 
+    /**
+     * Creates a polygon starting at the entity and creating a semi-circle, or sector
+     * that corresponds to field of view. More efficient than raycasting every degree
+     * but probably less efficient than doing the cross or dot product thing that I just
+     * dont understand currently - I will need to set up a small test for that one.
+     */
     fun createScanPolygon(
         start: Vector2,
         viewDirection: Vector2,

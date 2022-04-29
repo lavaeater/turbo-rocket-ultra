@@ -4,6 +4,7 @@ import audio.AudioPlayer
 import box2dLight.RayHandler
 import com.badlogic.ashley.core.Engine
 import com.badlogic.ashley.core.PooledEngine
+import com.badlogic.gdx.Gdx
 import com.badlogic.gdx.graphics.Camera
 import com.badlogic.gdx.graphics.OrthographicCamera
 import com.badlogic.gdx.graphics.g2d.Batch
@@ -15,6 +16,7 @@ import ecs.systems.ai.boss.RushPlayerSystem
 import ecs.systems.ai.towers.TowerShootSystem
 import ecs.systems.ai.towers.TowerTargetFinderSystem
 import ecs.systems.enemy.*
+import ecs.systems.facts.FactSystem
 import ecs.systems.fx.BloodSplatterEffectRenderSystem
 import ecs.systems.input.KeyboardInputSystem
 import ecs.systems.fx.RenderBox2dLightSystem
@@ -27,7 +29,9 @@ import ktx.inject.Context
 import ktx.inject.register
 import map.grid.GridMapManager
 import physics.ContactManager
-import screens.GameScreen
+import screens.*
+import story.FactsOfTheWorld
+import story.StoryManager
 import ui.IUserInterface
 import ui.UserInterface
 
@@ -47,7 +51,7 @@ object Context {
         context.register {
             bindSingleton(PolygonSpriteBatch())
             bindSingleton(OrthographicCamera())
-            bind<IUserInterface> { UserInterface(inject<PolygonSpriteBatch>() as Batch)}
+            bind<IUserInterface> { UserInterface(inject<PolygonSpriteBatch>() as Batch) }
             bindSingleton(
                 ExtendViewport(
                     GameScreen.GAMEWIDTH,
@@ -61,6 +65,9 @@ object Context {
             bindSingleton(AudioPlayer())
             bindSingleton(GridMapManager())
             bindSingleton(RayHandler(inject(), 500, 500))
+
+            bindSingleton(FactsOfTheWorld(Gdx.app.getPreferences("TurboRocket")))
+            bindSingleton(StoryManager())
             bindSingleton(getEngine())
         }
     }
@@ -113,6 +120,7 @@ object Context {
             addSystem(LootDropSystem())
             addSystem(AimingAidSystem(true, true))
             addSystem(GibSystem())
+            addSystem(FactSystem())
         }
     }
 }
