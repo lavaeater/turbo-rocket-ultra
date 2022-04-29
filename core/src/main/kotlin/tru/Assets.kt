@@ -218,8 +218,27 @@ object Assets : Disposable {
         )
     }
 
-    private val handgunTexture by lazy {
-        Texture(Gdx.files.internal("sprites/weapons/handgun.png"))
+    private val handgunSprite by lazy {
+        Sprite(Texture(Gdx.files.internal("sprites/weapons/pistol.png"))).apply {
+            this.setOrigin(
+                0f, this.regionHeight / 2f
+            )
+        }
+    }
+
+    private val handgunTopSprite by lazy {
+        Sprite(Texture(Gdx.files.internal("sprites/weapons/pistol-top.png"))).apply {
+            this.setOrigin(
+                0f, this.regionHeight / 2f
+            )
+        }
+    }
+    private val handgunBottomSprite by lazy {
+        Sprite(Texture(Gdx.files.internal("sprites/weapons/pistol-bottom.png"))).apply {
+            this.setOrigin(
+                0f, this.regionHeight / 2f
+            )
+        }
     }
 
     private val spas12Sprite by lazy {
@@ -245,13 +264,13 @@ object Assets : Disposable {
             GunFrames.handGun to
                     mapOf(
                         SpriteDirection.North to
-                                Sprite(handgunTexture, 0, 0, 64, 64),
+                                handgunTopSprite,
                         SpriteDirection.West to
-                                Sprite(handgunTexture, 0, 64, 64, 64),
+                                handgunSprite,
                         SpriteDirection.South to
-                                Sprite(handgunTexture, 0, 128, 64, 64),
+                                handgunBottomSprite,
                         SpriteDirection.East to
-                                Sprite(handgunTexture, 0, 192, 64, 64)
+                                handgunSprite
                     ),
             GunFrames.spas12 to
                     mapOf(

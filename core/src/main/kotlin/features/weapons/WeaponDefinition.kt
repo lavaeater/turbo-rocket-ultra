@@ -97,26 +97,28 @@ class WeaponDefinition(
             "rifle"
 
         )
+        val glock17 = WeaponDefinition(
+            "Glock 17",
+            WeaponType.Projectile,
+            17,
+            120f,
+            3f,
+            1,
+            .125f,
+            GunFrames.handGun,
+            AmmoType.NineMilliMeters,
+            8f..16f,
+            2f,
+            ReloadType.EntireMag,
+            Assets.gunAudio["glock17"]!!,
+            50f,
+            true
+        )
         val weapons = listOf(
             baseballBat,
             molotov,
             grenade,
-            WeaponDefinition(
-                "Glock 17",
-                WeaponType.Projectile,
-                17,
-                120f,
-                3f,
-                1,
-                .125f,
-                GunFrames.handGun,
-                AmmoType.NineMilliMeters,
-                8f..16f,
-                2f,
-                ReloadType.EntireMag,
-                Assets.gunAudio["glock17"]!!,
-                50f
-            ),
+            glock17,
             spas12,
             WeaponDefinition(
                 "FN P90",

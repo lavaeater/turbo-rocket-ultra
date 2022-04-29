@@ -64,6 +64,7 @@ import map.grid.GridMapSection
 import physics.*
 import screens.CounterObject
 import tru.Assets
+import tru.SpriteDirection
 import tru.getSpriteFor
 import turbofacts.NewFactsOfTheWorld
 import ui.IUserInterface
@@ -394,7 +395,7 @@ fun player(player: Player, mapper: ControlMapper, at: Vector2, debug: Boolean) {
         with<FlashlightComponent>()
         with<WeaponLaserComponent>()
         with<AnchorPointsComponent> {
-            points["green"] = vec2(0f, -1f).rotate90(1)
+            points["green"] = vec2(0f, -0.5f).rotate90(1)
             points["blue"] = vec2(-0.5f, -0.5f)
             points["red"] = vec2(-0.5f, -0.5f)
             points["yellow"] = vec2(0f, -2f)
@@ -418,7 +419,7 @@ fun playerWeapon(playerEntity: Entity, anchor: String = "green" ) {
             rotateWithTransform = true
             isVisible = true
         }
-        val weapon = WeaponDefinition.spas12.getWeapon()
+        val weapon = WeaponDefinition.glock17.getWeapon()
         with<WeaponComponent> {
             currentWeapon = weapon
         }
@@ -437,8 +438,14 @@ fun playerWeapon(playerEntity: Entity, anchor: String = "green" ) {
                 w.sprite().isVisible = playerEntity.playerControl().aiming
             }
             functions["UpdateWeaponSprite"] = { w ->
-                w.sprite().sprite = Assets.weapons.getSpriteFor(w.weapon().currentWeapon, playerEntity.animation().currentDirection)
-//                w.sprite().sprite.setOrigin(-1f, 0.5f)
+                val direction = playerEntity.animation().currentDirection
+                w.sprite().sprite = Assets.weapons.getSpriteFor(w.weapon().currentWeapon, direction)
+                when(direction) {
+                    SpriteDirection.East -> w.sprite().sprite.setFlip(false, false)
+                    SpriteDirection.North -> w.sprite().sprite.setFlip(false, false)
+                    SpriteDirection.South -> w.sprite().sprite.setFlip(false, false)
+                    SpriteDirection.West -> w.sprite().sprite.setFlip(false, true)
+                }
             }
         }
     }

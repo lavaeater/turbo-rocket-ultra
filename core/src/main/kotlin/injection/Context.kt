@@ -136,7 +136,7 @@ object Context {
             addSystem(TowerTargetFinderSystem())
             addSystem(TowerShootSystem())
             addSystem(AnimationSystem())
-            addSystem(WeaponUpdateSystem())
+            //addSystem(WeaponUpdateSystem())
             addSystem(WeaponChangeAndReloadSystem())
             addSystem(UpdatePlayerStatsSystem())
             //addSystem(PhysicsDebugRendererSystem(inject(), inject()))
