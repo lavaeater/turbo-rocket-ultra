@@ -1,4 +1,4 @@
-package ui
+package ui.new
 
 import com.badlogic.gdx.graphics.g2d.Animation
 import com.badlogic.gdx.graphics.g2d.Batch
@@ -14,13 +14,14 @@ open class TextureElement(
     position: Vector2 = vec2(),
     var rotation: Float = 0f,
     val scale: Float = 1f,
-    parent: AbstractElement? = null) : AbstractElement(position, parent = parent) {
+    parent: AbstractElement? = null
+) : AbstractElement(position, parent = parent) {
     override val bounds: Rectangle
         get() = Rectangle(actualPosition.x, actualPosition.y, texture.regionWidth * scale, texture.regionHeight * scale)
 
     var regionWidth = 32
     var regionHeight = 32
-    val frameCount get() =  4//texture.regionWidth / regionWidth
+    val frameCount get() = 4//texture.regionWidth / regionWidth
     val animCount get() = texture.regionHeight / regionHeight
     val anims = mutableListOf<Animation<TextureRegion>>()
 
@@ -45,8 +46,8 @@ open class TextureElement(
 
     var stateTime = 0f
 
-    override fun render(batch: Batch, delta: Float, debug: Boolean) {
-        super.render(batch, delta, debug)
+    override fun render(batch: Batch, delta: Float, scale: Float, debug: Boolean) {
+        super.render(batch, delta, scale, debug)
         stateTime += delta
         batch.drawScaled(
             texture,

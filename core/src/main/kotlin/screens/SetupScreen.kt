@@ -18,9 +18,9 @@ import statemachine.StateMachine
 import tru.AnimState
 import tru.Assets
 import tru.SpriteDirection
-import ui.BoundAnimationElement
-import ui.BoundTextElement
-import ui.CollectionContainerElement
+import ui.new.BoundAnimationElement
+import ui.new.BoundTextElement
+import ui.new.CollectionContainerElement
 
 class SetupScreen(gameState: StateMachine<GameState, GameEvent>) : BasicScreen(gameState) {
 
@@ -57,7 +57,7 @@ class SetupScreen(gameState: StateMachine<GameState, GameEvent>) : BasicScreen(g
     override fun render(delta: Float) {
         super.render(delta)
         batch.use {
-            altUi.render(batch, delta, debug)
+            altUi.render(batch, delta, 1f, debug)
         }
 
     }
@@ -75,9 +75,15 @@ class SetupScreen(gameState: StateMachine<GameState, GameEvent>) : BasicScreen(g
             Input.Keys.LEFT -> changeSpriteKeyboard(-1)
             Input.Keys.RIGHT -> changeSpriteKeyboard(1)
             Input.Keys.ENTER -> startGame()
+            Input.Keys.C -> startConceptScreen()
             Input.Keys.E -> startEditor()
             else -> super.keyUp(keycode)
         }
+    }
+
+    private fun startConceptScreen(): Boolean {
+        gameState.acceptEvent(GameEvent.StartConcept)
+        return true
     }
 
     private fun changeSpriteKeyboard(indexChange: Int): Boolean {

@@ -21,6 +21,7 @@ class MainGame : KtxGame<Screen>() {
                     }
                 }
                 edge(GameEvent.StartEditor, GameState.Editor) {}
+                edge(GameEvent.StartConcept, GameState.Concept) {}
             }
             state(GameState.Running) {
                 action {
@@ -42,6 +43,10 @@ class MainGame : KtxGame<Screen>() {
             action { setScreen<AnimEditorScreen>() }
             edge(GameEvent.StopEditor, GameState.Setup ) {}
         }
+        state(GameState.Concept) {
+            action { setScreen<ConceptScreen>() }
+            edge(GameEvent.StopConcept, GameState.Setup ) {}
+        }
         }
 
     private fun resetPlayers() {
@@ -62,6 +67,7 @@ class MainGame : KtxGame<Screen>() {
         addScreen(PauseScreen(gameState))
         addScreen(GameOverScreen(gameState))
         addScreen(AnimEditorScreen(gameState))
+        addScreen(ConceptScreen(gameState))
         gameState.initialize()
     }
 }

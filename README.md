@@ -19,8 +19,10 @@ To make the graphics and environment easy I am currently working with the concep
 
 ### MVP
 
-* Basic Sprite Editor <- doing
-* Towers <- paused
+* Build Towers <- Doing
+* Basic Sprite Editor <- done, kinda?
+* IsoMetric Projection <- done!
+* Towers <- Done
 * Interactable Components in-the-game
 * Player graphics made from components / parts etc.
 * "Levels" or "Maps" in a more structured way
@@ -46,7 +48,32 @@ To make the graphics and environment easy I am currently working with the concep
 
 The most important thing in game development is to not do what you have decided to do, but something else entirely - in this case particle effects. Thing is, it's not on the docket. This is an MVP, this is a proof of concept of a playable game, so we should focus on just doing towers.
 
-## Doing now: Sprite Editor
+## Building Towers
+Towers is a rather large feature, I've come to realize. Break it down! So, in this case, this means focusing strictly on the building part of the Tower concept. 
+
+How are towers supposed to work, really? Well, I propose that a player at any time can press a "build" button, which brings up a small interface to build a tower. The interface could be overlayed over that players HUD-spot, to not interfere with the gameplay, perhaps. We need a nice mechanism for that. There might be some limitation on how many, how fast and what type of towers a player can build.
+
+* Build interface <- doing
+* Tower sprites <- done
+* Build actions <- done, kinda
+
+### How 'bout some polish, eh?
+I am against polish. Not *the* polish, they are some fine folks (having worked with a few), but the kind of polish that makes things shiny and new. Or rather, I know that polish takes a **ton** of time, the kind of time I don't have. But for this feature to *work*, it could use some polish.
+
+### Different types of towers, eh?
+
+So, to build towers, it would be cool to actually have different types of towers. I have made a very poor graphic of three different towers that could be used.
+
+### Bring up Small interface to build towers
+That shit will take all day, ALL DAY!
+
+I've been fiddling with "simple" UI components and stuff, it would be really cool to be able to use something *very simple* to display a UI element. We'll see if it is actually possible. Scene2D isn't "bad" - but it's way too complicated and "complete" for what I need. So, game should still play, but the player should be immobilized when entering "build mode". Oh, and we need two types of towers so we can select what to build.
+
+How to handle the "build mode" - well, the player could very well have a state machine or a state stack (as in game programming patterns), but do we *really* need to refactor "everything" for that purpose right now? Maybe - we'll see. For now, we will have a method somewhere that says if we are in "control mode" or "build mode".
+
+Looking through the code, I find a remnant of the old vehicle code (removed since) that allows me to set a stationary flag. Fantastic. That will do for now, perhaps. But also perhaps, we need some kind of nifty mode.
+
+## Done: Sprite Editor
 I am not doing a sprite editor. Thing is, I use free resources for characters and animations and I just got a bit fed up with available anims and stuff, so I actually went out and bought some assets on itch.io - but then I have to set up the textures and stuff to actually use them.
 
 So, when you use textures and stuff and you have some kind of actual operation up and running, you can just decide that all spritesheets should be structured in a specific way, like just the way it is structured - so that you can structure your animations and stuff properly.
@@ -63,7 +90,7 @@ Here's what I want:
 * allow specifying sprite dimensions <- done
 * draw lines over texture for sprites <- done
 * iterate over lines and tag them with some kind of metadata <- not done
-* save this data so it can be loaded later <- not done
+* save this data so it can be loaded later <- done
 
 That's what we should do now.
 
@@ -76,7 +103,7 @@ I will skip this step because it is not important.
 
 So, this should be easy, right? ;-)
 
-## Paused: Towers!!
+## Done: Towers!!
 
 This is going to be FUN!
 
@@ -91,9 +118,6 @@ Todo:
 * Tower Types and Variants
 * Tower entities <- done
 * Tower AI <- done
-
-#### Building Towers
-How are towers supposed to work, really? Well, I propose that a player at any time can press a "build" button, which brings up a small interface to build a tower. The interface could be overlayed over that players HUD-spot, to not interfere with the gameplay, perhaps. We need a nice mechanism for that. There might be some limitation on how many, how fast and what type of towers a player can build.
 
 #### Towers
 
@@ -458,11 +482,11 @@ Det här gör vi på det gamla vanliga sättet. Vi bygger en box2d-värld, vi kl
 
 Oj oj oj,  vad roligt. Vi kan göra en box2d-kropp med leder, per tutorials etc. Superkul ju.
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbLTE2NDAxNDEwMDIsLTEwODgxODI5MzIsLT
-k1NjQwMjAwNSwzMTk2MjM0MDIsLTE0MTIyNTk4OTYsNDQ1Njkz
-ODIxLDU0MjcxNjg0NywtMTA5NzA0NzI3NywxMzg2NTQ3MTAsLT
-EyOTQxODA5MTAsLTgwNTkwNzExMCwxNTMxNzg4MTMxLDYwNTg4
-MDEzNCwyNDQ1NjU4MDQsMTc0NzAwMzU2NSwtOTk4NjY4MDY0LC
-05ODM2NzYxMTMsMTI2NDI0MzQyMSw3Mjg5Mjk3MDYsMTM1ODE4
-NzMxNF19
+eyJoaXN0b3J5IjpbLTkxMzUyMjk1NiwzNjIwNjAxNzgsNTE0Mj
+c0MjY5LC0xMjg3NzE1Njg5LDI5MjU1MTI2LC0xNjQwMTQxMDAy
+LC0xMDg4MTgyOTMyLC05NTY0MDIwMDUsMzE5NjIzNDAyLC0xND
+EyMjU5ODk2LDQ0NTY5MzgyMSw1NDI3MTY4NDcsLTEwOTcwNDcy
+NzcsMTM4NjU0NzEwLC0xMjk0MTgwOTEwLC04MDU5MDcxMTAsMT
+UzMTc4ODEzMSw2MDU4ODAxMzQsMjQ0NTY1ODA0LDE3NDcwMDM1
+NjVdfQ==
 -->

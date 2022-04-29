@@ -89,9 +89,21 @@ class GameScreen(private val gameState: StateMachine<GameState, GameEvent>) : Kt
     private fun addTower() {
          tower(vec2(-2f,2f))
     }
+    /*
+    4E4048
+A4AE76
+F1E1B5
+D1B67A
+82503A
+    #a4ae76
+     */
+
+    val red = 164f/255f
+    val green = 174f/255f
+    val blue = 118f/255f
 
     override fun render(delta: Float) {
-        Gdx.gl.glClearColor(.4f, .4f, .4f, 1f)
+        Gdx.gl.glClearColor(red, green, blue, 1f)
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT)
         //Update viewport and camera here and nowhere else...
 

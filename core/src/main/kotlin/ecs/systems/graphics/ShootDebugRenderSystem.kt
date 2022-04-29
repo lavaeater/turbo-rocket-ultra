@@ -8,7 +8,6 @@ import com.badlogic.gdx.graphics.g2d.PolygonSpriteBatch
 import ecs.components.player.PlayerControlComponent
 import ecs.components.gameplay.TransformComponent
 import injection.Context.inject
-import isometric.toIsometric
 import ktx.ashley.allOf
 import ktx.ashley.mapperFor
 import ktx.graphics.use
@@ -49,7 +48,7 @@ class ShootDebugRenderSystem(private val debug: Boolean = true, private val rend
 //            batch.end()
 //        }
         if (renderRedDot) {
-                shapeDrawer.line(transform.position.toIsometric(), aimVector.setLength(50f).add(transform.position.toIsometric()), Color.RED, .1f)
+                shapeDrawer.line(transform.position, aimVector.setLength(50f).add(transform.position), Color.RED, .1f)
         }
 
             endPoint.set(controlComponent.mousePosition)
@@ -61,7 +60,7 @@ class ShootDebugRenderSystem(private val debug: Boolean = true, private val rend
 //            .toIsometric()
 
         if (debug) {
-            shapeDrawer.line(transform.position.toIsometric(), endPoint, Color.BLUE, 0.2f)
+            shapeDrawer.line(transform.position, endPoint, Color.BLUE, 0.2f)
 //            shapeDrawer.line(transform.position.toIsometric(), controlComponent.mousePosition, Color.GREEN, 0.15f)
         }
     }

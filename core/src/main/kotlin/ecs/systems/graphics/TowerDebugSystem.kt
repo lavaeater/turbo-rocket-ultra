@@ -9,7 +9,6 @@ import ecs.components.gameplay.TransformComponent
 import ecs.components.towers.TargetInRange
 import ecs.components.towers.TowerComponent
 import injection.Context.inject
-import isometric.toIsometric
 import ktx.ashley.allOf
 import ktx.graphics.use
 import physics.getComponent
@@ -41,8 +40,8 @@ class TowerDebugSystem() :
             val targetPosition = entity.getComponent<TargetInRange>().targetPosition
             val aimTarget = entity.getComponent<TargetInRange>().aimTarget
 
-            shapeDrawer.line(transform.position.toIsometric(), targetPosition.toIsometric(), Color.BLUE, 0.2f)
-            shapeDrawer.line(transform.position.toIsometric(), aimTarget.toIsometric(), Color.RED, 0.05f)
+            shapeDrawer.line(transform.position, targetPosition, Color.BLUE, 0.2f)
+            shapeDrawer.line(transform.position, aimTarget, Color.RED, 0.05f)
         }
     }
 

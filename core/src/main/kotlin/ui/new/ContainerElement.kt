@@ -1,4 +1,4 @@
-package ui
+package ui.new
 
 import com.badlogic.gdx.graphics.g2d.Batch
 import com.badlogic.gdx.math.Rectangle
@@ -27,10 +27,10 @@ open class ContainerElement(position: Vector2, parent: AbstractElement? = null):
         }
     }
 
-    override fun render(batch: Batch, delta: Float, debug: Boolean) {
-        super.render(batch, delta, debug)
+    override fun render(batch: Batch, delta: Float, scale: Float, debug: Boolean) {
+        super.render(batch, delta, scale, debug)
         for (child in childActors) {
-            child.render(batch, delta, debug)
+            child.render(batch, delta, scale, debug)
         }
     }
 }

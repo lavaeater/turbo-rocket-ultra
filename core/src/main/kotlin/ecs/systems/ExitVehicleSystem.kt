@@ -4,6 +4,7 @@ import com.badlogic.ashley.core.Entity
 import com.badlogic.ashley.systems.IteratingSystem
 import ecs.components.IsInVehicleComponent
 import ecs.components.LeaveVehicleComponent
+import ecs.components.player.PlayerMode
 import ktx.ashley.allOf
 import ktx.ashley.remove
 import physics.playerControlComponent
@@ -19,6 +20,6 @@ class ExitVehicleSystem : IteratingSystem(
     override fun processEntity(entity: Entity, deltaTime: Float) {
         entity.remove<IsInVehicleComponent>()
         entity.remove<LeaveVehicleComponent>()
-        entity.playerControlComponent().stationary = false
+        entity.playerControlComponent().playerMode = PlayerMode.Control
     }
 }

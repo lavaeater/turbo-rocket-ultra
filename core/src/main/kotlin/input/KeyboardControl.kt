@@ -3,8 +3,8 @@ package input
 import com.badlogic.ashley.core.Component
 import com.badlogic.gdx.graphics.OrthographicCamera
 import com.badlogic.gdx.math.Vector2
+import ecs.components.player.PlayerMode
 import injection.Context
-import isometric.toIsometric
 import ktx.math.vec2
 import ktx.math.vec3
 
@@ -22,12 +22,15 @@ class KeyboardControl: ControlMapper, Component {
         get() = field.set(turning, -thrust)
     override val controllerId: String
         get() = "Keyboard and mouse"
+    override var playerMode: PlayerMode = PlayerMode.Control
 
 
     override fun setAimVector(screenX: Int, screenY: Int, position: Vector2) {
         mousePosition3D.set(screenX.toFloat(), screenY.toFloat(), 0f)
         camera.unproject(mousePosition3D)
         mousePosition.set(mousePosition3D.x, mousePosition3D.y)
-        aimVector.set(mousePosition).sub(position.toIsometric()).nor().toIsometric()
+        aimVector.set(mousePosition).sub(position).nor()
     }
+
+    override var uiControl: UserInterfaceControl = NoOpUserInterfaceControl.control
 }

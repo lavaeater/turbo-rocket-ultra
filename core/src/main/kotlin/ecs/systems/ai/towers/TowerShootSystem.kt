@@ -68,10 +68,11 @@ the desired angle
                     if (closestFixture.isEntity() && closestFixture.body.isEnemy()) {
                         val enemyEntity = closestFixture.getEntity()
                         enemyEntity.getComponent<EnemyComponent>().takeDamage(3..8)
-                        splatterParticles(
-                            closestFixture.body, targetInRange.aimTarget.cpy().nor(),
-                            color = Color((0.5f..0.7f).random(), 0f, 0f, (.5f..1f).random())
-                        )
+                        //TODO: Fix better blood splatter particles, somehow
+//                        splatterParticles(
+//                            closestFixture.body, targetInRange.aimTarget.cpy().nor(),
+//                            color = Color((0.5f..0.7f).random(), 0f, 0f, (.5f..1f).random())
+//                        )
                     }
                     shootComponent.status = Task.Status.SUCCEEDED
                 } else {

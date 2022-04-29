@@ -1,4 +1,4 @@
-package ui
+package ui.new
 
 import com.badlogic.gdx.graphics.g2d.Animation
 import com.badlogic.gdx.graphics.g2d.Batch
@@ -18,8 +18,8 @@ open class BoundAnimationElement<T: Any>(valueFunc: (T) -> Animation<TextureRegi
     private var animationStateTime: Float = 0f
     private var changeAnimCooldown = 5f
 
-    override fun render(batch: Batch, delta: Float, debug: Boolean) {
-        super.render(batch, delta, debug)
+    override fun render(batch: Batch, delta: Float, scale: Float, debug: Boolean) {
+        super.render(batch, delta, scale, debug)
         animationStateTime += delta
         changeAnimCooldown -= delta
         if(changeAnimCooldown <= 0f) {

@@ -10,4 +10,6 @@ sealed class GameEvent {
     object RestartGame : GameEvent()
     object StartEditor : GameEvent()
     object StopEditor : GameEvent()
+    object StartConcept : GameEvent()
+    object StopConcept : GameEvent()
 }

@@ -3,7 +3,6 @@ package ecs.components.graphics.renderables
 import com.badlogic.gdx.graphics.Color
 import com.badlogic.gdx.graphics.g2d.Batch
 import com.badlogic.gdx.math.Vector2
-import isometric.polygonFromPos
 import space.earlygrey.shapedrawer.ShapeDrawer
 
 class RenderableBox: Renderable {
@@ -23,6 +22,6 @@ class RenderableBox: Renderable {
         shapeDrawer: ShapeDrawer
     ) {
         shapeDrawer.setColor(color)
-        shapeDrawer.filledPolygon(position.polygonFromPos(width, height))
+        shapeDrawer.filledRectangle(position.x, position.y, width, height)
     }
 }

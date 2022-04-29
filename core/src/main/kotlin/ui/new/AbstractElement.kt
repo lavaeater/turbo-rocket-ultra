@@ -1,4 +1,4 @@
-package ui
+package ui.new
 
 import com.badlogic.gdx.graphics.Color
 import com.badlogic.gdx.graphics.g2d.Batch
@@ -43,19 +43,19 @@ abstract class AbstractElement(
         get() = _bounds
     val shapeDrawer by lazy { Assets.shapeDrawer }
 
-    open fun renderBounds() {
-        shapeDrawer.rectangle(bounds)
-        shapeDrawer.filledCircle(centerVector.set(bounds.x, bounds.y), 3f, Color.RED)
-        shapeDrawer.filledCircle(centerVector.set(bounds.x + bounds.width, bounds.y), 3f, Color.GREEN)
-        shapeDrawer.filledCircle(centerVector.set(bounds.x + bounds.width, bounds.y + bounds.height), 3f, Color.BLUE)
-        shapeDrawer.filledCircle(centerVector.set(bounds.x, bounds.y + bounds.height), 3f, Color.BLACK)
+    open fun renderBounds(scale: Float = 1f) {
+        shapeDrawer.rectangle(bounds.x, bounds.y, bounds.width * scale, bounds.height * scale)
+        shapeDrawer.filledCircle(centerVector.set(bounds.x , bounds.y), 3f, Color.RED)
+        shapeDrawer.filledCircle(centerVector.set(bounds.x + bounds.width * scale, bounds.y), 3f, Color.GREEN)
+        shapeDrawer.filledCircle(centerVector.set(bounds.x + bounds.width * scale, bounds.y + bounds.height * scale), 3f, Color.BLUE)
+        shapeDrawer.filledCircle(centerVector.set(bounds.x, bounds.y + bounds.height * scale), 3f, Color.BLACK)
     }
 
     private val centerVector = vec2()
 
-    open fun render(batch: Batch, delta: Float, debug: Boolean = false) {
+    open fun render(batch: Batch, delta: Float, scale: Float = 1f, debug: Boolean = false) {
         if (debug)
-            renderBounds()
+            renderBounds(scale)
     }
 }
 

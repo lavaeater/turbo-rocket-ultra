@@ -11,8 +11,6 @@ import ecs.components.enemy.EnemySensorComponent
 import ecs.components.gameplay.DestroyComponent
 import ecs.components.gameplay.ObjectiveComponent
 import ecs.components.gameplay.ShotComponent
-import ecs.components.graphics.renderables.RenderableBox
-import ecs.components.graphics.RenderableComponent
 import injection.Context.inject
 
 class ContactManager: ContactListener {

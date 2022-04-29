@@ -8,5 +8,6 @@ sealed class GameState {
     object Paused: GameState()
     object Ended: GameState()
     object Editor: GameState()
+    object Concept: GameState()
 }
 

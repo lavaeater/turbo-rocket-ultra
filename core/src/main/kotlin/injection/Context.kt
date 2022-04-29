@@ -19,6 +19,7 @@ import ecs.systems.fx.SplatterRemovalSystem
 import ecs.systems.graphics.*
 import ecs.systems.input.GamepadInputSystem
 import ecs.systems.input.VehicleControlSystem
+import ecs.systems.player.PlayerBuildModeSystem
 import ecs.systems.player.PlayerDeathSystem
 import ecs.systems.player.PlayerMoveSystem
 import ecs.systems.player.PlayerShootingSystem
@@ -65,9 +66,10 @@ object Context {
     private fun getEngine(): Engine {
         return PooledEngine().apply {
             addSystem(PhysicsSystem(inject()))
-//            addSystem(PhysicsDebugRendererSystem(inject(), inject()))
+            addSystem(PhysicsDebugRendererSystem(inject(), inject()))
             addSystem(CameraUpdateSystem())
             addSystem(PlayerMoveSystem())
+            addSystem(PlayerBuildModeSystem())
             addSystem(KeyboardInputSystem())
             addSystem(GamepadInputSystem())
             addSystem(BodyDestroyerSystem(inject())) //world
@@ -82,18 +84,19 @@ object Context {
             addSystem(SeekingPlayerSystem())
             addSystem(AttackPlayerSystem())
             addSystem(EnemyDirectionSystem())
-            addSystem(AddSplatterSystem())
-            addSystem(SplatterRemovalSystem())
+//            addSystem(AddSplatterSystem())
+//            addSystem(SplatterRemovalSystem())
             addSystem(EnemyHearsShotsSystem())
             addSystem(InvestigateSystem())
             addSystem(EnemyDebugRenderSystem(false, false))
             addSystem(PlayerDeathSystem())
             addSystem(EnemySpawnSystem())
             addSystem(EnemyOptimizerSystem())
-            addSystem(TowerDebugSystem())
+            //addSystem(TowerDebugSystem())
             addSystem(TowerTargetFinderSystem())
             addSystem(TowerShootSystem())
             addSystem(RenderSystem(inject<PolygonSpriteBatch>() as Batch))
+            addSystem(RenderUserInterfaceSystem(inject<PolygonSpriteBatch>() as Batch))
             addSystem(RenderMiniMapSystem())
         }
     }

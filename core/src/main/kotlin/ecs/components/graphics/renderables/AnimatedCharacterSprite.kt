@@ -1,11 +1,9 @@
 package ecs.components.graphics.renderables
 
-import com.badlogic.gdx.graphics.Color
 import com.badlogic.gdx.graphics.g2d.Animation
 import com.badlogic.gdx.graphics.g2d.Batch
 import com.badlogic.gdx.graphics.g2d.TextureRegion
 import com.badlogic.gdx.math.Vector2
-import isometric.toIsometric
 import ktx.math.vec2
 import physics.drawScaled
 import space.earlygrey.shapedrawer.ShapeDrawer
@@ -13,7 +11,7 @@ import tru.AnimState
 import tru.LpcCharacterAnim
 import tru.SpriteDirection
 
-class AnimatedCharacterSprite(private val anims: Map<AnimState, LpcCharacterAnim>) : Renderable {
+class AnimatedCharacterSprite(private val anims: Map<AnimState, LpcCharacterAnim>, val scale: Float = 1f, val offsetX: Float = 0f, val offsetY: Float = 0f) : Renderable {
 
     var currentAnimState : AnimState = anims.values.first().state
     var currentDirection: SpriteDirection = SpriteDirection.South
@@ -26,8 +24,6 @@ class AnimatedCharacterSprite(private val anims: Map<AnimState, LpcCharacterAnim
     override val renderableType: RenderableType
         get() = RenderableType.AnimatedCharacterSprite
 
-    val isoPos = vec2()
-
     override fun render(
         position: Vector2,
         rotation:Float,
@@ -36,15 +32,13 @@ class AnimatedCharacterSprite(private val anims: Map<AnimState, LpcCharacterAnim
         batch: Batch,
         shapeDrawer: ShapeDrawer) {
 
-        position.toIsometric(isoPos)
-
         val currentTextureRegion = currentTextureRegion(animationStateTime)
 
         batch.drawScaled(
             currentTextureRegion(animationStateTime),
-            (isoPos.x + (currentTextureRegion.regionWidth / 2 * scale)),
-            (isoPos.y + (currentTextureRegion.regionHeight * scale / 2)),
-            scale
+            (position.x + (currentTextureRegion.regionWidth / 2 * scale) + (offsetX * scale * this.scale)),
+            (position.y + (currentTextureRegion.regionHeight / 2 * scale) + (offsetY * scale * this.scale)),
+            scale * this.scale
         )
         //Debug thing
         //shapeDrawer.filledCircle(isoPos, .2f, Color.GREEN)

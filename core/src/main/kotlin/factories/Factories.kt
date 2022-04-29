@@ -19,8 +19,8 @@ import ecs.components.gameplay.ObstacleComponent
 import ecs.components.gameplay.TransformComponent
 import ecs.components.graphics.*
 import ecs.components.graphics.renderables.AnimatedCharacterSprite
-import ecs.components.graphics.renderables.RenderableBox
 import ecs.components.graphics.renderables.RenderableTextureRegion
+import ecs.components.graphics.renderables.RenderableTextureRegions
 import ecs.components.player.FiredShotsComponent
 import ecs.components.player.PlayerComponent
 import ecs.components.player.PlayerControlComponent
@@ -127,11 +127,18 @@ fun splatterParticles(
     }
 }
 
-fun tower(at: Vector2 = vec2()) {
+fun tower(at: Vector2 = vec2(), towerType: String = "machinegun") {
+
+    /*
+    There should be an abstract "bounds" concept that defines the actual
+    width and height of the object (i.e. the sprite). This height and
+    width can then be used to create the projection on the floor of the sprite object,
+    given a proper anchor etc.
+     */
     val towerBody = world().body {
         type = BodyDef.BodyType.StaticBody
         position.set(at)
-        box(2f, 2f) {}
+        box(3f, 1.5f) {}
     }
 
     val towerEntity = engine().entity {
@@ -139,7 +146,7 @@ fun tower(at: Vector2 = vec2()) {
             body = towerBody
         }
         with<TransformComponent>()
-        with<RenderableComponent>() { renderable = RenderableTextureRegion(Assets.tower) }
+        with<RenderableComponent> { renderable = RenderableTextureRegion(Assets.towers[towerType]!!, 4f, 0f, -5f) }
         with<RenderLayerComponent>()
         with<TowerComponent>()
     }
@@ -149,16 +156,22 @@ fun tower(at: Vector2 = vec2()) {
 }
 
 fun player(player: Player, mapper: ControlMapper) {
+    /*
+    The player should be two bodies, one for collision detection for
+    movement, like a projection of the characters body on "the floor"
+    whereas the other one symbolizes the characters actual body and is for hit detection
+    from shots etc. Nice.
+     */
     val box2dBody = world().body {
         type = BodyDef.BodyType.DynamicBody
         position.setZero()
-        circle(1f) {
+        fixedRotation = true
+        box(2f, 1f) {
             density = GameScreen.PLAYER_DENSITY
             filter {
                 categoryBits = Box2dCategories.player
             }
         }
-
         linearDamping = GameScreen.SHIP_LINEAR_DAMPING
         angularDamping = GameScreen.SHIP_ANGULAR_DAMPING
     }
@@ -168,8 +181,14 @@ fun player(player: Player, mapper: ControlMapper) {
         addComponent<BodyComponent> { body = box2dBody }
         addComponent<TransformComponent>()
         add(mapper)
-        addComponent<PlayerControlComponent> { controlMapper = mapper }//We will have multiple components later
-        addComponent<RenderableComponent> { renderable = AnimatedCharacterSprite(Assets.characters[player.selectedCharacterSpriteName]!!) }
+        add(PlayerControlComponent(mapper))
+        addComponent<RenderableComponent> {
+            renderable = AnimatedCharacterSprite(
+                Assets.characters[player.selectedCharacterSpriteName]!!,
+                1f,
+                0f, -20f
+            )
+        }
         addComponent<RenderLayerComponent>()// { layer = 1 }
         addComponent<PlayerComponent> { this.player = player }
         addComponent<FiredShotsComponent>()
@@ -198,10 +217,11 @@ fun enemy(at: Vector2) {
     val box2dBody = world().body {
         type = BodyDef.BodyType.DynamicBody
         position.set(at)
-        circle(1f) {
-            density = GameScreen.ENEMY_DENSITY
+        fixedRotation = true
+        box(2f, 1f) {
+            density = GameScreen.PLAYER_DENSITY
             filter {
-                categoryBits = Box2dCategories.enemy
+                categoryBits = Box2dCategories.player
             }
         }
         circle(10f) {
@@ -216,7 +236,12 @@ fun enemy(at: Vector2) {
         addComponent<EnemySensorComponent>()
         addComponent<EnemyComponent>()
         addComponent<RenderableComponent> {
-            renderable = AnimatedCharacterSprite(Assets.characters["enemy"]!!) }
+            renderable = AnimatedCharacterSprite(
+                Assets.characters["enemy"]!!,
+                1f,
+                0f, -20f
+            )
+        }
         addComponent<RenderLayerComponent>()// { layer = 1 }
     }
     entity.addComponent<BehaviorComponent> { tree = Tree.getEnemyBehaviorTree().apply { `object` = entity } }
@@ -271,7 +296,7 @@ fun enemy(at: Vector2) {
 fun obstacle(
     x: Float = 0f,
     y: Float = 0f,
-    width: Float = 2f,
+    width: Float = 4f,
     height: Float = 2f
 ): Entity {
     val box2dBody = world().body {
@@ -288,7 +313,9 @@ fun obstacle(
         addComponent<BodyComponent> { body = box2dBody }
         addComponent<TransformComponent> { position.set(box2dBody.position) }
         addComponent<ObstacleComponent>()
-        addComponent<RenderableComponent> { renderable = RenderableTextureRegion(Assets.tower) }
+        addComponent<RenderableComponent> {
+            renderable = RenderableTextureRegion(Assets.towers["obstacle"]!!, 4f, 0f, -6f)
+        }
         addComponent<RenderLayerComponent>()
     }
     box2dBody.userData = entity
@@ -299,7 +326,7 @@ fun obstacle(
 fun objective(
     x: Float = (-100f..100f).random(),
     y: Float = (-100f..100f).random(),
-    width: Float = 2f,
+    width: Float = 4f,
     height: Float = 2f
 ): Body {
     val box2dBody = world().body {
@@ -316,7 +343,14 @@ fun objective(
     val entity = engine().createEntity().apply {
         addComponent<BodyComponent> { body = box2dBody }
         addComponent<TransformComponent> { position.set(box2dBody.position) }
-        addComponent<RenderableComponent> { renderable = RenderableTextureRegion(Assets.tower) }
+        addComponent<RenderableComponent> {
+            renderable = RenderableTextureRegions(
+                listOf(
+                    RenderableTextureRegion(Assets.towerShadow, 4f, 6f, -6f),
+                    RenderableTextureRegion(Assets.towers["objective"]!!, 4f, 0f, -6f)
+                )
+            )
+        }
         addComponent<ObjectiveComponent>()
         addComponent<RenderLayerComponent>()
     }

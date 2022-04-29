@@ -3,8 +3,8 @@ package ecs.systems.player
 import com.badlogic.ashley.core.Entity
 import com.badlogic.ashley.systems.IteratingSystem
 import ecs.components.BodyComponent
-import ecs.components.graphics.renderables.AnimatedCharacterSprite
 import ecs.components.graphics.RenderableComponent
+import ecs.components.graphics.renderables.AnimatedCharacterSprite
 import ecs.components.player.PlayerControlComponent
 import ktx.ashley.allOf
 import ktx.ashley.mapperFor
@@ -20,7 +20,6 @@ class PlayerMoveSystem(
     private val pccMapper = mapperFor<PlayerControlComponent>()
     private val bcMapper = mapperFor<BodyComponent>()
     private val anMapper = mapperFor<RenderableComponent>()
-    private val rotatedWalkVector = vec2()
 
     override fun processEntity(entity: Entity, deltaTime: Float) {
         val pcc = pccMapper.get(entity)
@@ -37,9 +36,7 @@ class PlayerMoveSystem(
         animatedCharacterSprite: AnimatedCharacterSprite
     ) {
         speedFactor = if(playerControlComponent.triggerPulled) 0.2f else 1f
-        rotatedWalkVector.set(playerControlComponent.walkVector)
-        rotatedWalkVector.rotateDeg(-45f)
-        bodyComponent.body.setLinearVelocity(rotatedWalkVector.x * speed * speedFactor, rotatedWalkVector.y * speed * speedFactor)
+        bodyComponent.body.setLinearVelocity(playerControlComponent.walkVector.x * speed * speedFactor, playerControlComponent.walkVector.y * speed * speedFactor)
 
         animatedCharacterSprite.currentAnimState = playerControlComponent.playerAnimState
     }

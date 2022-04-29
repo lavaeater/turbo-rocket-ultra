@@ -14,3 +14,4 @@ class TransformComponent() : Component, Pool.Poolable {
         rotation = 0f
     }
 }
+
