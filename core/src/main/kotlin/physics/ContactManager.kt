@@ -2,7 +2,6 @@ package physics
 
 import audio.AudioPlayer
 import com.badlogic.ashley.core.Engine
-import com.badlogic.ashley.core.Entity
 import com.badlogic.gdx.Input
 import com.badlogic.gdx.graphics.OrthographicCamera
 import com.badlogic.gdx.math.Vector2
@@ -20,7 +19,10 @@ import ecs.components.fx.ParticleEffectComponent
 import ecs.components.gameplay.*
 import ecs.components.pickups.LootComponent
 import ecs.components.player.*
-import factories.*
+import factories.delayedFireEntity
+import factories.engine
+import factories.explosionEffectEntity
+import factories.splatterEntity
 import features.pickups.AmmoLoot
 import features.pickups.WeaponLoot
 import injection.Context.inject
@@ -30,9 +32,9 @@ import ktx.ashley.remove
 import ktx.math.random
 import ktx.scene2d.label
 import ktx.scene2d.table
-import tru.Assets
 import messaging.Message
 import messaging.MessageHandler
+import tru.Assets
 
 /*
 How to handle contacts in the absolutely smashingly BEST
@@ -55,123 +57,6 @@ contact, which is one of the superpowers of sealed classes, that become availabl
 
 
  */
-
-
-sealed class ContactType {
-    object Unknown : ContactType()
-    class EnemyAndDamage(val damageEntity: Entity, val enemy: Entity) : ContactType()
-    class PlayerAndDamage(val damageEntity: Entity, val player: Entity) : ContactType()
-    class SomeEntityAndDamage(val damageEntity: Entity, val otherThing: Entity) : ContactType()
-    class DamageAndWall(val damageEntity: Entity) : ContactType()
-    class PlayerCloseToPlayer(val playerOne: Entity, val playerTwo: Entity) : ContactType()
-    class PlayerAndLoot(val player: Entity, val lootEntity: Entity) : ContactType()
-    class PlayerAndProjectile(val player: Entity, val shotEntity: Entity) : ContactType()
-    class EnemySensesPlayer(val enemy: Entity, val player: Entity) : ContactType()
-    class PlayerAndObjective(val player: Entity, val objective: Entity) : ContactType()
-    class PlayerAndDeadPlayer(val livingPlayer: Entity, val deadPlayer: Entity) : ContactType()
-    class PlayerAndComplexAction(val player: Entity, val other: Entity) : ContactType()
-    class PlayerAndSomeoneWhoTackles(val player: Entity, val tackler: Entity) : ContactType()
-    class TwoEnemySensors(val enemyOne: Entity, val enemyTwo: Entity) : ContactType()
-    class EnemyAndBullet(val enemy: Entity, val bullet: Entity) : ContactType()
-    class MolotovHittingAnything(val molotov: Entity) : ContactType()
-    class GrenadeHittingAnything(val grenade: Entity) : ContactType()
-
-}
-
-@ExperimentalStdlibApi
-fun Contact.thisIsAContactBetween(): ContactType {
-    if (this.justOneHas<DamageEffectComponent>()) {
-        val damageEffectEntity = this.getEntityFor<DamageEffectComponent>()
-        if (this.bothAreEntities()) {
-            val otherEntity = this.getOtherEntity(damageEffectEntity)
-            return if (otherEntity.has<PlayerComponent>()) {
-                ContactType.PlayerAndDamage(damageEffectEntity, otherEntity)
-            } else if (otherEntity.has<EnemyComponent>()) {
-                ContactType.EnemyAndDamage(damageEffectEntity, otherEntity)
-            } else {
-                ContactType.SomeEntityAndDamage(damageEffectEntity, otherEntity)
-            }
-        } else {
-            ContactType.DamageAndWall(damageEffectEntity)
-        }
-    }
-
-    if (this.isPlayerByPlayerContact()) {
-        return if (this.justOneHas<PlayerWaitsForRespawn>()) {
-            val deadPlayer = this.getEntityFor<PlayerWaitsForRespawn>()
-            val otherPlayer = this.getOtherEntity(deadPlayer)
-            ContactType.PlayerAndDeadPlayer(otherPlayer, deadPlayer)
-        } else {
-            ContactType.PlayerCloseToPlayer(this.fixtureA.getEntity(), this.fixtureB.getEntity())
-        }
-    }
-
-    if (this.isPlayerContact()) {
-        if (this.atLeastOneHas<LootComponent>()) {
-            val playerEntity = this.getPlayerFor().entity
-            val lootEntity = this.getEntityFor<LootComponent>()
-
-            return ContactType.PlayerAndLoot(playerEntity, lootEntity)
-        }
-        if(this.atLeastOneHas<ComplexActionComponent>()) {
-            val playerEntity = this.getPlayerFor().entity
-            val other = this.getEntityFor<ComplexActionComponent>()
-            return ContactType.PlayerAndComplexAction(playerEntity, other)
-        }
-        if (this.atLeastOneHas<ShotComponent>()) {
-            val playerEntity = this.getPlayerFor().entity
-            return ContactType.PlayerAndProjectile(this.getPlayerFor().entity, this.getOtherEntity(playerEntity))
-        }
-        if (this.atLeastOneHas<EnemySensorComponent>()) {
-            val enemy = this.getEntityFor<EnemySensorComponent>()
-            val player = this.getOtherEntity(enemy)
-            return ContactType.EnemySensesPlayer(enemy, player)
-        }
-        if (this.atLeastOneHas<ObjectiveComponent>()) {
-            val cEntity = this.getEntityFor<ObjectiveComponent>()
-            return ContactType.PlayerAndObjective(this.getPlayerFor().entity, cEntity)
-        }
-        if (this.noSensors() && this.atLeastOneHas<TackleComponent>()) {
-            val enemy = this.getEntityFor<TackleComponent>()
-            val player = this.getOtherEntity(enemy)
-            return ContactType.PlayerAndSomeoneWhoTackles(player, enemy)
-        }
-    }
-
-    if (this.bothHaveComponent<EnemySensorComponent>()) {
-        /*
-        This is an enemy noticing an enemy - if that enemy is chasing the player, then both should do that!
-         */
-        val enemyAEntity = this.fixtureA.getEntity()
-        val enemyBEntity = this.fixtureB.getEntity()
-        return ContactType.TwoEnemySensors(enemyAEntity, enemyBEntity)
-    }
-
-    if (this.atLeastOneHas<EnemyComponent>() && this.atLeastOneHas<BulletComponent>()) {
-
-        val enemy = this.getEntityFor<EnemyComponent>()
-        val bulletEntity = this.getEntityFor<BulletComponent>()
-        return ContactType.EnemyAndBullet(enemy, bulletEntity)
-    }
-
-    if (this.atLeastOneHas<MolotovComponent>()) {
-        /*
-        Lets not add a new entity, let's modify the one we have
-         */
-        val molotov = this.getEntityFor<MolotovComponent>()
-        return ContactType.MolotovHittingAnything(molotov)
-    }
-    if (this.atLeastOneHas<GrenadeComponent>()) {
-        /*
-        Lets not add a new entity, let's modify the one we have
-         */
-        val grenade = this.getEntityFor<GrenadeComponent>()
-        return ContactType.GrenadeHittingAnything(grenade)
-    }
-    return ContactType.Unknown
-}
-
-
 class ContactManager : ContactListener {
     private val engine by lazy { inject<Engine>() }
     private val messageHandler by lazy { inject<MessageHandler>() }

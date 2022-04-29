@@ -1,0 +1,2 @@
+## Transitions
+It uses nested framebuffers and a separate SpriteBatch (instead of generic batch) so I couldn't make myself bother. Will try something else instead. Maybe I will simply clone his project and update the code and rewrite it in Kotlin.

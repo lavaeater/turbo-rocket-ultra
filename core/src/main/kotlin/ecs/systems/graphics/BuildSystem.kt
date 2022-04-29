@@ -4,14 +4,12 @@ import com.badlogic.ashley.core.Entity
 import com.badlogic.ashley.systems.IteratingSystem
 import com.badlogic.gdx.graphics.Color
 import com.badlogic.gdx.graphics.g2d.PolygonSpriteBatch
-import com.badlogic.gdx.math.Vector2
 import com.badlogic.gdx.physics.box2d.Fixture
 import ecs.components.gameplay.TransformComponent
 import ecs.components.player.PlayerControlComponent
 import ecs.systems.tileWorldX
 import ecs.systems.tileWorldY
 import factories.blockade
-import factories.tower
 import factories.world
 import injection.Context.inject
 import ktx.ashley.allOf
@@ -25,8 +23,6 @@ import map.grid.GridMapSection.Companion.tileScale
 import map.grid.GridMapSection.Companion.tileWidth
 import physics.*
 import tru.Assets
-import tru.SpriteDirection
-
 
 
 //Should render after map, before entities, that's the best...
@@ -37,29 +33,52 @@ class BuildSystem(private val debug: Boolean) : IteratingSystem(
     ).get()) {
     val batch by lazy { inject<PolygonSpriteBatch>() }
     val shapeDrawer by lazy { Assets.shapeDrawer }
-    private val cursorColor = Color(0f, 1f, 0f, 0.3f)
-    private val otherColor = Color(1f, 0f, 0f, 0.3f)
+    private val cursorColor = Color(0f, 1f, 0f, 1f)
+    private val otherColor = Color(1f, 0f, 0f, 1f)
 
     private val buildables by lazy { Assets.buildables }
 
 
+    /*
+    This doesn't work because we are rendering this after everything else is rendered and we have
+    like the fx system that needs to capture this stuff to be able to render it.
+
+    For the time being we could remove fx, but we want to be able to use frame buffer stuff for FX, so
+    ALL rendering should probably be baked into the rendering pipeline. But what would THIS then do?
+
+    Well, this could in fact just control the position of an entity with a sprite that is set by this code,
+    making the rendering pipeline render that particular entity and having the position simply set by this code.
+
+    That would take the "specialness" out of that rendering pipeline, which would help in many cases.
+
+     */
+
     @OptIn(ExperimentalStdlibApi::class)
     override fun processEntity(entity: Entity, deltaTime: Float) {
         val controlComponent = entity.playerControl()
+        val buildComponent = entity.build()
+
         if (controlComponent.isInBuildMode) {
-            val buildComponent = entity.build()
-            val position = entity.transform().position
-            val offset = CompassDirection.directionOffsets[controlComponent.compassDirection]!!
+            val cursorEntity = buildComponent.buildCursorEntity!!
+            cursorEntity.sprite().sprite = buildComponent.buildables.selectedItem.sprite
+
+            /*
+            Now all we have to fix is simply... setting the position of the sprite
+            AND removing the entity if build mode is not relevant any more.
+             */
+
+            val builderPosition = entity.transform().position
+            val cursorOffset = CompassDirection.directionOffsets[controlComponent.compassDirection]!!
 
             val texture = buildables.first()
-            val textureX = position.tileWorldX() + (offset.x * scaledWidth)
-            val textureY = position.tileWorldY() + (offset.y * scaledHeight)
+            val textureX = builderPosition.tileWorldX() + (cursorOffset.x * scaledWidth)
+            val textureY = builderPosition.tileWorldY() + (cursorOffset.y * scaledHeight)
 
-            val cursorX = position.tileWorldX() + (offset.x * scaledWidth)// + texture.offsetX * tileScale / 2
-            val cursorY = position.tileWorldY() + (offset.y * scaledHeight)// + texture.offsetY * tileScale / 2
+            val cursorX = builderPosition.tileWorldX() + (cursorOffset.x * scaledWidth)// + texture.offsetX * tileScale / 2
+            val cursorY = builderPosition.tileWorldY() + (cursorOffset.y * scaledHeight)// + texture.offsetY * tileScale / 2
 
-            val bodyX = position.tileWorldX() + (offset.x * scaledWidth)
-            val bodyY = position.tileWorldY() + (offset.y * scaledHeight)
+            val bodyX = builderPosition.tileWorldX() + (cursorOffset.x * scaledWidth)
+            val bodyY = builderPosition.tileWorldY() + (cursorOffset.y * scaledHeight)
 
             val pWidth = tileWidth * tileScale
             val pHeight = tileHeight * tileScale
@@ -90,8 +109,8 @@ class BuildSystem(private val debug: Boolean) : IteratingSystem(
 
             if (debug) {
                shapeDrawer.filledRectangle(
-                        position.tileWorldX(),
-                        position.tileWorldY(),
+                        builderPosition.tileWorldX(),
+                        builderPosition.tileWorldY(),
                         pWidth,
                         pHeight,
                         otherColor
@@ -127,16 +146,5 @@ class BuildSystem(private val debug: Boolean) : IteratingSystem(
                 }
             }
         }
-    }
-}
-
-fun Vector2.spriteDirection(): SpriteDirection {
-    return when (this.angleDeg()) {
-        in 150f..209f -> SpriteDirection.East
-        in 210f..329f -> SpriteDirection.North
-        in 330f..360f -> SpriteDirection.West
-        in 0f..29f -> SpriteDirection.West
-        in 30f..149f -> SpriteDirection.South
-        else -> SpriteDirection.South
     }
 }

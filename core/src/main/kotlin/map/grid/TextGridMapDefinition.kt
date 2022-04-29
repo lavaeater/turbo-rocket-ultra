@@ -37,15 +37,14 @@ data class MapFile(val name: String, val startMessage: String, val successMessag
 }
 
 object MapLoader {
-    fun loadMap(fileName: String) : MapFile {
+    fun loadMap(fileName: String): MapFile {
         val jsonString = Gdx.files.local(fileName).readString()
-        val mapFile = Json.decodeFromString<MapFile>(jsonString)
-        return mapFile
+        return Json.decodeFromString(jsonString)
     }
 
     fun saveMap(mapFile: MapFile)  {
         val jsonString = Json.encodeToString(mapFile)
-        val fileHandle = Gdx.files.local(mapFile.name)
+        val fileHandle = Gdx.files.local("${mapFile.name.lowercase().toCharArray().filterNot { it.isWhitespace() }.joinToString("")}.json")
         fileHandle.writeString(jsonString, false)
     }
 }
@@ -105,18 +104,56 @@ class TextGridMapDefinition(val def: List<String>) : IGridMapDefinition {
 object NewMaps {
     val levelOne by lazy {
         MapFile("Level One", """
-            This is the first map
-            It will be a harsh mistress
+            
+            You are entering the forbidden sewers, filled with degenerate mutants.
+            
+            This is your chance to prove yourself. 
+            
+            Kill 100 enemies to advance.
+            
         """.trimIndent(),
         """
-            You managed to do what no one has done before you
-            You will now move on to the next level
+            
+            You did it! 
+            
+            100 dead, indeed. Your clothes are stained by their blood and your memories
+
+            haunted by their screams, but there is glory in killing, so you are pleased
+            
+            You are ready for your next mission
+            
         """.trimIndent(),
         """
+            
+            Awww, that didn't go to well
+            
+            Not to worry, you will have more opportunities
+            
+        """.trimIndent(),
+            "maps/level-one.png")
+    }
+    val levelTwo by lazy {
+        MapFile("Level Two", """
+
+            Destroy all the Mutato-Emitters, they are turning these hapless and mindless 
+            
+            creatures into blood-thirsty monsters craving flesh!
+            
+        """.trimIndent(),
+            """
+            
+            Well done.
+            
+            We are all very pleased with your performance, keep this up and you will notice
+            
+            our pleasure on your paycheck.
+
+        """.trimIndent(),
+            """
             Awww, that didn't go to well
             Not to worry, you will have more opportunities
         """.trimIndent(),
-            "maps/level-one.png")
+            "maps/level-two.png")
     }
     fun saveMap(mapFile: MapFile) {
         MapLoader.saveMap(mapFile)
