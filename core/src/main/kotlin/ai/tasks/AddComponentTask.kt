@@ -13,4 +13,8 @@ class AddComponentTask<T: Component>(private val componentClass: Class<T>) : Ent
         entity.add(engine.createComponent(componentClass))
         return Status.SUCCEEDED
     }
+
+    override fun toString(): String {
+        return "Add Componnent"
+    }
 }

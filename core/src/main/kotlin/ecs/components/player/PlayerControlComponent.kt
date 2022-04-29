@@ -3,13 +3,20 @@ package ecs.components.player
 import com.badlogic.ashley.core.Component
 import com.badlogic.gdx.math.Vector2
 import com.badlogic.gdx.utils.Pool
-import features.weapons.Gun
 import input.ControlMapper
 import ktx.math.vec2
-import ktx.math.vec3
 import tru.AnimState
 
+/**
+ * Make this into the one-stop shop of player state data.
+ *
+ * I have previously quite often done data by having different components and small components, I think that is actually
+ * not the best idea anymore, but we learn as we go. So, Components can be slightly fatter, but still just data, and
+ * the systems can be quite small and specific, but it is the data that is truly hard to keep track of. Having it in
+ * the same place makes at least some things easier.
+ */
 class PlayerControlComponent(var controlMapper: ControlMapper) : Component, Pool.Poolable {
+    var waitsForRespawn = false
     private var cooldownRemaining = 0f
     var rof: Float = 3f
 
@@ -19,6 +26,7 @@ class PlayerControlComponent(var controlMapper: ControlMapper) : Component, Pool
     val playerAnimState: AnimState
         get() {
             return when {
+                waitsForRespawn -> AnimState.Death
                 aiming -> AnimState.Aiming
                 triggerPulled -> AnimState.Aiming
                 moving -> AnimState.Walk
@@ -31,9 +39,16 @@ class PlayerControlComponent(var controlMapper: ControlMapper) : Component, Pool
         set(value) {
             controlMapper.needToChangeGun = value
         }
-    var needsReload
+    var reloadStarted
     get() = controlMapper.needsReload
     set(value) { controlMapper.needsReload = value}
+
+    var doContextAction
+    get() = controlMapper.doContextAction
+    set(value) {
+        controlMapper.doContextAction = value
+    }
+
     val triggerPulled get() = controlMapper.firing
     val firing get() = controlMapper.firing && cooldownRemaining <= 0f
     val aiming get() = controlMapper.aiming

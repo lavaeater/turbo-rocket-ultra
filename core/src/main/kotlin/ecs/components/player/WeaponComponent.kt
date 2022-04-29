@@ -24,9 +24,12 @@ class InventoryComponent: Component, Pool.Poolable {
 }
 
 class WeaponComponent: Component, Pool.Poolable {
+    var reloading = false
+    var reloadCoolDown: Float = GunDefinition.guns.first().reloadDelay
     var currentGun = GunDefinition.guns.first().getGun()
     override fun reset() {
         currentGun = GunDefinition.guns.first().getGun()
+        reloadCoolDown = GunDefinition.guns.first().reloadDelay
         //No-op
     }
 }

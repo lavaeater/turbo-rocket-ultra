@@ -7,11 +7,14 @@ import com.badlogic.gdx.graphics.Color
 import com.badlogic.gdx.graphics.Pixmap
 import com.badlogic.gdx.graphics.Texture
 import com.badlogic.gdx.graphics.g2d.*
+import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator
+import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator.FreeTypeFontParameter
 import com.badlogic.gdx.scenes.scene2d.ui.Skin
 import com.badlogic.gdx.utils.Disposable
 import ecs.components.graphics.OffsetTextureRegion
 import features.weapons.GunFrames
 import injection.Context.inject
+import ktx.freetype.registerFreeTypeFontLoaders
 import ktx.scene2d.Scene2DSkin
 import map.snake.MapDirection
 import space.earlygrey.shapedrawer.ShapeDrawer
@@ -74,6 +77,9 @@ object Assets : Disposable {
             "noise" to OffsetTextureRegion(Texture(Gdx.files.internal("sprites/towers/tower-1.png")))
         )
     }
+    val lootBox by lazy {
+        OffsetTextureRegion(Texture(Gdx.files.internal("sprites/loot/lootbox.png")))
+    }
 
     val arrowTexture by lazy {
         Texture(Gdx.files.internal("sprites/arrows.png"))
@@ -108,12 +114,12 @@ object Assets : Disposable {
                         when (xTile) {
                             0 -> ts["wall$xTile"] = OffsetTextureRegion(tileTexture, xTile * 16, yTile * 16, 16, 16)
                             1 -> ts["wall$xTile"] = OffsetTextureRegion(tileTexture, xTile * 16, yTile * 16, 16, 16)
-                            2 -> ts["wall_end"] = OffsetTextureRegion(tileTexture, xTile * 16, yTile * 16, 16, 16)
+                            2 -> {} //ts["wall_end"] = OffsetTextureRegion(tileTexture, xTile * 16, yTile * 16, 16, 16)
                         }
                     }
                     2 -> {
-                        if (xTile in 0..1)
-                            ts["wall_shadow$xTile"] = OffsetTextureRegion(tileTexture, xTile * 16, yTile * 16, 16, 16)
+                        if (xTile in 0 until 1)
+                            ts["wall_end"] = OffsetTextureRegion(tileTexture, xTile * 16, yTile * 16, 16, 16)
                     }
                 }
             }
@@ -129,6 +135,28 @@ object Assets : Disposable {
     }
     val wallEndTile by lazy {
         tiles.filterKeys { it == "wall_end" }.values.first()
+    }
+
+    val aiDebugBadges by lazy {
+        val texture = Texture(Gdx.files.internal("sprites/bt_labels/bt_labels.png"))
+        mapOf(
+            "amble" to OffsetTextureRegion(texture, 0,0, 64, 12, 0f,0f),
+            "attack" to OffsetTextureRegion(texture, 0,12, 64, 12, 0f,0f),
+            "chase" to OffsetTextureRegion(texture, 0,24, 64, 12, 0f,0f),
+            "check" to OffsetTextureRegion(texture, 0,36, 64, 12, 0f,0f),
+            "seek" to OffsetTextureRegion(texture, 0,48, 64, 12, 0f,0f))
+    }
+
+    val ps4Buttons by lazy {
+        val texture = Texture(Gdx.files.internal("controllers/PS4.png"))
+        val y=  48
+        val x = 32
+        mapOf(
+            "cross" to OffsetTextureRegion(texture, 32, 48, 16,16),
+            "square" to OffsetTextureRegion(texture, 32, 64, 16,16),
+            "triangle" to OffsetTextureRegion(texture, 32, 80, 16,16),
+            "circle" to OffsetTextureRegion(texture, 32, 96, 16,16),
+        )
     }
 
     val playerCharacters by lazy { characters.filterNot { it.key == "enemy" } }
@@ -172,8 +200,23 @@ object Assets : Disposable {
         BitmapFont(Gdx.files.internal("font/arial-15.fnt"))
     }
 
+    val debugFont by lazy {
+        val generator = FreeTypeFontGenerator(Gdx.files.internal("font/a-goblin-appears.ttf"))
+        val parameter = FreeTypeFontParameter()
+        parameter.size = 12
+        parameter.magFilter = Texture.TextureFilter.Linear
+        parameter.minFilter = Texture.TextureFilter.Linear
+        parameter.flip = true
+        val font32 = generator.generateFont(parameter) // font size 32 pixels
+
+        font32.data.setScale(0.1f)
+        generator.dispose()
+        font32
+    }
+
     fun load(): AssetManager {
         am = AssetManager()
+//        am.registerFreeTypeFontLoaders()
         fixScene2dSkin()
         fixFlip()
         return am
@@ -182,8 +225,10 @@ object Assets : Disposable {
     private fun fixFlip() {
         for (t in towers.values)
             t.flip(true, false)
-    }
 
+        for(t in aiDebugBadges.values)
+            t.flip(true, false)
+    }
 
     private fun fixScene2dSkin() {
         Scene2DSkin.defaultSkin = Skin(Gdx.files.internal("ui/uiskin.json"))

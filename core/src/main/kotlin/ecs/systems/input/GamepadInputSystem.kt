@@ -5,8 +5,6 @@ import com.badlogic.ashley.systems.IteratingSystem
 import com.badlogic.gdx.controllers.Controller
 import com.badlogic.gdx.controllers.ControllerListener
 import com.badlogic.gdx.math.MathUtils
-import features.weapons.GunFrames
-import ecs.components.player.WeaponComponent
 import input.Axis
 import input.Axis.Companion.valueOK
 import input.Button
@@ -14,7 +12,7 @@ import input.GamepadControl
 import ktx.ashley.allOf
 import ktx.ashley.mapperFor
 import gamestate.Players
-import physics.getComponent
+import input.InputIndicator
 
 /**
  * Controllers will be handled by a polling system
@@ -38,12 +36,16 @@ class GamepadInputSystem() : IteratingSystem(allOf(GamepadControl::class).get())
         val actualController = controllers.firstOrNull { it.controller == controller }
         if(actualController != null) {
             when (Button.getButton(buttonCode)) {
-                Button.Green -> {
-                    actualController.needToChangeGun = true
+                Button.Cross -> {
+                    actualController.doContextAction = true
                 }
-                Button.Red -> {}
-                Button.Blue -> {}
-                Button.Yellow -> {}
+                Button.Ring -> {}
+                Button.Square -> {
+                    actualController.needsReload = true
+                }
+                Button.DPadLeft -> actualController.needToChangeGun = InputIndicator.Previous
+                Button.DPadRight -> actualController.needToChangeGun = InputIndicator.Next
+                Button.Triangle -> {}
                 Button.Unknown -> {}
             }
         }

@@ -1,8 +1,10 @@
 package map.grid
 
+import box2dLight.DirectionalLight
 import box2dLight.Light
 import box2dLight.RayHandler
 import com.badlogic.ashley.core.Engine
+import com.badlogic.gdx.graphics.Color
 import com.badlogic.gdx.math.Rectangle
 import ecs.components.enemy.EnemySpawnerComponent
 import factories.Box2dCategories
@@ -32,7 +34,7 @@ class GridMapGenerator {
                 Box2dCategories.light,
                 0, Box2dCategories.allButSensors
             )
-            rayHandler.setAmbientLight(.1f)
+            rayHandler.setAmbientLight(.7f)
             rayHandler.setBlurNum(3)
 
             val width = length

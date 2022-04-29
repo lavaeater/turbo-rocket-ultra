@@ -21,8 +21,13 @@ import ecs.components.gameplay.TransformComponent
 import ecs.components.graphics.*
 import ecs.components.graphics.renderables.AnimatedCharacterComponent
 import ecs.components.graphics.renderables.RenderableTextureRegion
+import ecs.components.pickups.LootComponent
+import ecs.components.pickups.LootDropComponent
 import ecs.components.player.*
 import ecs.components.towers.TowerComponent
+import features.pickups.AmmoLoot
+import features.pickups.ILoot
+import features.pickups.NullValue
 import features.weapons.AmmoType
 import features.weapons.GunDefinition
 import gamestate.Player
@@ -51,15 +56,18 @@ fun enemy(x: Float = 0f, y: Float = 0f) {
 }
 
 object Box2dCategories {
+    const val none: Short = 0x00
     const val player: Short = 0x01
     const val enemy: Short = 0x02
     const val objective: Short = 0x04
     const val obstacle: Short = 0x08
     const val sensor: Short = 0x10
     const val light: Short = 0x20
-    val all = player or enemy or objective or obstacle or sensor or light
-    val allButSensors = player or enemy or objective or obstacle or light
-    val allButLights = player or enemy or objective or obstacle or sensor
+    const val loot: Short = 0x40
+    const val indicator: Short = 0x80
+    val all = player or enemy or objective or obstacle or sensor or light or loot
+    val allButSensors = player or enemy or objective or obstacle or light or loot
+    val allButLights = player or enemy or objective or obstacle or sensor or loot
 }
 
 fun splatterEntity(at: Vector2, angle: Float) {
@@ -106,7 +114,7 @@ fun tower(at: Vector2 = vec2(), towerType: String = "machinegun") {
 
 }
 
-fun player(player: Player, mapper: ControlMapper,at: Vector2) {
+fun player(player: Player, mapper: ControlMapper, at: Vector2) {
     /*
     The player should be two bodies, one for collision detection for
     movement, like a projection of the characters body on "the floor"
@@ -117,10 +125,24 @@ fun player(player: Player, mapper: ControlMapper,at: Vector2) {
         type = BodyDef.BodyType.DynamicBody
         position.set(at)
         fixedRotation = true
-        box(2f, 1f) {
+        box(1f, 1f) {
             density = GameScreen.PLAYER_DENSITY
             filter {
                 categoryBits = Box2dCategories.player
+            }
+        }
+        box(1f, 2f, vec2(0f, -1.5f)) {
+            isSensor = true
+            filter {
+                categoryBits = Box2dCategories.sensor
+                maskBits = Box2dCategories.allButLights
+            }
+        }
+        circle(2f, vec2(0f, -1f)) {
+            isSensor = true
+            filter {
+                categoryBits = Box2dCategories.sensor
+                maskBits = Box2dCategories.allButLights
             }
         }
         linearDamping = GameScreen.SHIP_LINEAR_DAMPING
@@ -148,7 +170,8 @@ fun player(player: Player, mapper: ControlMapper,at: Vector2) {
         }
         with<WeaponComponent>()
         with<FiredShotsComponent>()
-        with<FlashlightComponent>()
+//        with<FlashlightComponent>()
+        with<WeaponLaserComponent>()
     }
     //TODO: Fix this hot mess
     entity.add(mapper)
@@ -170,13 +193,40 @@ fun semicircle(): List<Vector2> {
     return vs
 }
 
+fun lootBox(at: Vector2, lootDrop: List<ILoot>) {
+    val box2dBody = world().body {
+        type = BodyDef.BodyType.StaticBody
+        position.set(at)
+        fixedRotation = true
+        box(1f, 1f) {
+            density = 1f
+            filter {
+                categoryBits = Box2dCategories.loot
+                maskBits = Box2dCategories.player or Box2dCategories.light
+            }
+        }
+    }
+    val entity = engine().entity {
+        with<BodyComponent> { body = box2dBody }
+        with<TransformComponent> { position.set(box2dBody.position) }
+        with<TextureComponent> {
+            texture = Assets.lootBox
+            layer = 1
+        }
+        with<LootComponent> {
+            loot = lootDrop
+        }
+    }
+    box2dBody.userData = entity
+}
+
 fun enemy(at: Vector2) {
 
     val box2dBody = world().body {
         type = BodyDef.BodyType.DynamicBody
         position.set(at)
         fixedRotation = true
-        box(2f, 1f) {
+        box(1f, 1f) {
             density = GameScreen.PLAYER_DENSITY
             filter {
                 categoryBits = Box2dCategories.enemy
@@ -200,6 +250,15 @@ fun enemy(at: Vector2) {
         with<EnemyComponent>()
         with<AnimatedCharacterComponent> {
             anims = Assets.characters["enemy"]!!
+        }
+        with<LootDropComponent> {
+            lootTable.contents.add(
+                AmmoLoot(AmmoType.nineMilliMeters, 6..17, 30f)
+            )
+            lootTable.contents.add(
+                AmmoLoot(AmmoType.twelveGaugeShotgun, 4..10, 10f)
+            )
+            //lootTable.contents.add(NullValue(10f))
         }
         with<TextureComponent> {
             layer = 1

@@ -106,9 +106,9 @@ class SetupScreen(gameState: StateMachine<GameState, GameEvent>) : BasicScreen(g
 
     override fun buttonUp(controller: Controller, buttonCode: Int): Boolean {
         return when(Button.getButton(buttonCode)) {
-            Button.Green -> addIfNotAdded(controller)
-            Button.Blue -> startGame()
-            Button.Red -> removeIfAdded(controller)
+            Button.Cross -> addIfNotAdded(controller)
+            Button.Square -> startGame()
+            Button.Ring -> removeIfAdded(controller)
             Button.DPadLeft -> changeSprite(controller, -1)
             Button.DPadRight -> changeSprite(controller, 1)
             else -> super.buttonUp(controller, buttonCode)

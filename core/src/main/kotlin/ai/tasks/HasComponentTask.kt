@@ -15,8 +15,7 @@ class HasComponentTask<T: Component>(private val componentClass: Class<T>) : Ent
     override fun execute(): Status {
         return if(mapper.has(entity)) Status.SUCCEEDED else Status.FAILED
     }
-    private val classInfo = componentClass.toString()
     override fun toString(): String {
-        return classInfo
+        return "EntityHasComponent?"
     }
 }

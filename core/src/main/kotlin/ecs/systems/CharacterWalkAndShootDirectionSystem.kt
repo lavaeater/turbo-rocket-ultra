@@ -2,8 +2,6 @@ package ecs.systems
 
 import com.badlogic.ashley.core.Entity
 import com.badlogic.ashley.systems.IteratingSystem
-import ecs.components.graphics.renderables.AnimatedCharacterSprite
-import ecs.components.graphics.RenderableComponent
 import ecs.components.graphics.renderables.AnimatedCharacterComponent
 import ecs.components.player.PlayerControlComponent
 import ktx.ashley.allOf
@@ -35,14 +33,17 @@ class CharacterWalkAndShootDirectionSystem :
         val characterComponent = renderableMapper.get(entity)
         val controlComponet = AshleyMappers.playerControlMapper.get(entity)
         characterAngle = if(controlComponet.aiming) controlComponet.aimVector.angleDeg() else controlComponet.walkVector.angleDeg()
-
-        when (characterAngle) {
-            in 150f..209f -> characterComponent.currentDirection = SpriteDirection.East
-            in 210f..329f -> characterComponent.currentDirection = SpriteDirection.North
-            in 330f..360f -> characterComponent.currentDirection = SpriteDirection.West
-            in 0f..29f -> characterComponent.currentDirection = SpriteDirection.West
-            in 30f..149f -> characterComponent.currentDirection = SpriteDirection.South
-            else -> characterComponent.currentDirection = SpriteDirection.South
+        if(controlComponet.waitsForRespawn) {
+            characterComponent.currentDirection = SpriteDirection.South
+        } else {
+            when (characterAngle) {
+                in 150f..209f -> characterComponent.currentDirection = SpriteDirection.East
+                in 210f..329f -> characterComponent.currentDirection = SpriteDirection.North
+                in 330f..360f -> characterComponent.currentDirection = SpriteDirection.West
+                in 0f..29f -> characterComponent.currentDirection = SpriteDirection.West
+                in 30f..149f -> characterComponent.currentDirection = SpriteDirection.South
+                else -> characterComponent.currentDirection = SpriteDirection.South
+            }
         }
     }
 }

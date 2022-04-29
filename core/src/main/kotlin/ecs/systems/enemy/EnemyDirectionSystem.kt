@@ -26,15 +26,17 @@ class EnemyDirectionSystem : IteratingSystem(
         val enemyComponent = enemyMapper.get(entity)
         characterAngle = if(entity.hasComponent<SeekPlayer>()) entity.getComponent<SeekPlayer>().scanVector.angleDeg() else enemyComponent.directionVector.angleDeg()
 
-        characterSpriteComponent.currentAnimState = if(entity.hasComponent<SeekPlayer>()) AnimState.Idle else AnimState.Walk
-
-        when (characterAngle) {
-            in 150f..209f -> characterSpriteComponent.currentDirection = SpriteDirection.East
-            in 210f..329f -> characterSpriteComponent.currentDirection = SpriteDirection.North
-            in 330f..360f -> characterSpriteComponent.currentDirection = SpriteDirection.West
-            in 0f..29f -> characterSpriteComponent.currentDirection = SpriteDirection.West
-            in 30f..149f -> characterSpriteComponent.currentDirection = SpriteDirection.South
-            else -> characterSpriteComponent.currentDirection = SpriteDirection.South
-        }
+        characterSpriteComponent.currentAnimState = if(enemyComponent.isDead) AnimState.Death else if(entity.hasComponent<SeekPlayer>()) AnimState.Idle else AnimState.Walk
+        if(enemyComponent.isDead)
+            characterSpriteComponent.currentDirection = SpriteDirection.South
+        else
+            when (characterAngle) {
+                in 150f..209f -> characterSpriteComponent.currentDirection = SpriteDirection.East
+                in 210f..329f -> characterSpriteComponent.currentDirection = SpriteDirection.North
+                in 330f..360f -> characterSpriteComponent.currentDirection = SpriteDirection.West
+                in 0f..29f -> characterSpriteComponent.currentDirection = SpriteDirection.West
+                in 30f..149f -> characterSpriteComponent.currentDirection = SpriteDirection.South
+                else -> characterSpriteComponent.currentDirection = SpriteDirection.South
+            }
     }
 }

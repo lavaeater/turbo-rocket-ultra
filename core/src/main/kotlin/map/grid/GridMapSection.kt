@@ -65,11 +65,11 @@ class GridMapSection(val coordinate: Coordinate, val connections: Set<MapDirecti
                 rayHandler,
                 64,
                 directionColorMap[lightDirection]!!,//Color(.05f, .05f, .05f, 1f),
-                20f,
+                15f,
                 lightPosition.x,
                 lightPosition.y,
                 MapDirection.directionDegrees[lightDirection]!!,
-                90f
+                45f
             ).apply {
                 isStaticLight = false
                 isSoft = true

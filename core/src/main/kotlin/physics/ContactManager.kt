@@ -1,7 +1,6 @@
 package physics
 
 import com.badlogic.ashley.core.Engine
-import com.badlogic.gdx.graphics.Color
 import com.badlogic.gdx.physics.box2d.Contact
 import com.badlogic.gdx.physics.box2d.ContactImpulse
 import com.badlogic.gdx.physics.box2d.ContactListener
@@ -11,22 +10,80 @@ import ecs.components.enemy.EnemySensorComponent
 import ecs.components.gameplay.DestroyComponent
 import ecs.components.gameplay.ObjectiveComponent
 import ecs.components.gameplay.ShotComponent
+import ecs.components.pickups.LootComponent
+import ecs.components.player.*
+import features.pickups.AmmoLoot
+import gamestate.Player
 import injection.Context.inject
+import ktx.ashley.remove
+import tru.Assets
 
 class ContactManager: ContactListener {
     private val engine by lazy {inject<Engine>()}
 
     @ExperimentalStdlibApi
     override fun beginContact(contact: Contact) {
-        //Ship colliding with something
+        if(contact.isPlayerByPlayerContact()) {
+            /*
+            This means they are close to each other and can do healing and stuff
+            Is this dependent on something?
+             */
+            if(contact.hasComponent<PlayerWaitsForRespawn>()) {
+                val deadPlayer = contact.getEntityFor<PlayerWaitsForRespawn>()
+                val livingPlayer = contact.getOtherEntity(deadPlayer)
+                if(!livingPlayer.hasComponent<PlayerWaitsForRespawn>()) {
+                    val playerControlComponent = deadPlayer.getComponent<PlayerControlComponent>()
+                    val player = deadPlayer.getComponent<PlayerComponent>().player
+
+                    if(livingPlayer.hasComponent<ContextActionComponent>()) {
+                        livingPlayer.getComponent<ContextActionComponent>().apply {
+                            texture = Assets.ps4Buttons["cross"]!!
+                            contextAction = {
+                                player.health += (50..85).random()
+                                deadPlayer.remove<PlayerWaitsForRespawn>()
+                                playerControlComponent.waitsForRespawn = false
+                            }
+                        }
+                    } else {
+                        livingPlayer.addComponent<ContextActionComponent> {
+                            texture = Assets.ps4Buttons["cross"]!!
+                            contextAction = {
+                                player.health += (50..85).random()
+                                deadPlayer.remove<PlayerWaitsForRespawn>()
+                                playerControlComponent.waitsForRespawn = false
+                            }
+                        }
+                    }
+                }
+            }
+        }
         if (contact.isPlayerContact()) {
+            if(contact.hasComponent<LootComponent>()) {
+                val inventory = contact.getPlayerFor().entity.getComponent<InventoryComponent>()
+                val lootEntity = contact.getEntityFor<LootComponent>()
+                val lootComponent = lootEntity.getComponent<LootComponent>()
+                for(loot in lootComponent.loot) {
+                    if(loot is AmmoLoot) {
+                        if(!inventory.ammo.containsKey(loot.ammoType))
+                            inventory.ammo[loot.ammoType] = 0
+
+                        inventory.ammo[loot.ammoType] = inventory.ammo[loot.ammoType]!! + loot.amount
+                    }
+                }
+                lootEntity.addComponent<DestroyComponent>()
+            }
             if (contact.hasComponent<ShotComponent>()) {
                 //A shot does 20 damage
                 contact.getPlayerFor().health -= 20
             }
-            if(contact.hasComponent<EnemySensorComponent>()) {//this is an enemy noticing the player - no system needed
-                val enemy = contact.getEntityFor<EnemySensorComponent>()
-                enemy.add(engine.createComponent(TrackingPlayerComponent::class.java).apply { player = contact.getPlayerFor() })
+            if(contact.hasComponent<EnemySensorComponent>()) {
+                //this is an enemy noticing the player - no system needed
+                if(!contact.hasComponent<PlayerWaitsForRespawn>() && !contact.hasComponent<PlayerIsRespawning>() ) {
+                    val enemy = contact.getEntityFor<EnemySensorComponent>()
+                    enemy.add(
+                        engine.createComponent(TrackingPlayerComponent::class.java)
+                            .apply { player = contact.getPlayerFor() })
+                }
             }
             if(contact.hasComponent<ObjectiveComponent>()) {
                 val cEntity = contact.getEntityFor<ObjectiveComponent>()
@@ -60,12 +117,16 @@ class ContactManager: ContactListener {
     }
 
     override fun endContact(contact: Contact) {
-//        if(contact.isPlayerContact()) {
-//            if(contact.hasComponent<EnemySensorComponent>()) {
-//                val enemy = contact.getEntityFor<EnemySensorComponent>()
-//                enemy.remove<NoticedSomething>()
-//            }
-//        }
+        if(contact.isPlayerByPlayerContact()) {
+            /*
+            This means they are close to each other and can do healing and stuff
+            Is this dependent on something?
+             */
+            if(contact.hasComponent<ContextActionComponent>()) {
+                contact.fixtureA.getEntity().remove<ContextActionComponent>()
+                contact.fixtureB.getEntity().remove<ContextActionComponent>()
+            }
+        }
     }
 
     override fun preSolve(contact: Contact, oldManifold: Manifold?) {

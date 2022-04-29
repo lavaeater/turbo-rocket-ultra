@@ -19,6 +19,7 @@ import ecs.systems.input.KeyboardInputSystem
 import ecs.systems.fx.RenderBox2dLightSystem
 import ecs.systems.graphics.*
 import ecs.systems.input.GamepadInputSystem
+import ecs.systems.pickups.LootDropSystem
 import ecs.systems.player.*
 import ktx.box2d.createWorld
 import ktx.inject.Context
@@ -99,8 +100,12 @@ object Context {
             addSystem(RenderUserInterfaceSystem(inject<PolygonSpriteBatch>() as Batch))
             addSystem(RenderMiniMapSystem())
             addSystem(PlayerFlashlightSystem())
+            addSystem(WeaponLaserSystem())
+            addSystem(AiDebugSystem())
+            addSystem(PlayerContextActionSystem())
             addSystem(RenderBox2dLightSystem(inject(), inject()))
             addSystem(BloodSplatterEffectRenderSystem(inject<PolygonSpriteBatch>() as Batch))
+            addSystem(LootDropSystem())
         }
     }
 }

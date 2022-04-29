@@ -1,5 +1,7 @@
 package tru
 
+import com.badlogic.gdx.graphics.g2d.Animation
+
 /**
  * Animations START on one row and have the following three rows included
  * First row is north, second west, third south and fourth is of course east.
@@ -12,14 +14,16 @@ class LpcCharacterAnimDefinition(
     var frames: IntRange,
     val directions: List<SpriteDirection> = SpriteDirection.spriteDirections,
     val itemWidth: Int = 64,
-    val itemHeight: Int = 64) {
+    val itemHeight: Int = 64,
+    val playMode: Animation.PlayMode = Animation.PlayMode.LOOP
+) {
     companion object {
         val definitions = listOf(
-            LpcCharacterAnimDefinition(AnimState.Idle, 8, 0..0),
-            LpcCharacterAnimDefinition(AnimState.Walk, 8, 0..8),
-            LpcCharacterAnimDefinition(AnimState.StartAim, 16, 0..4),
-            LpcCharacterAnimDefinition(AnimState.Aiming, 16, 12..12),
-            LpcCharacterAnimDefinition(AnimState.Death, 20, 0..5, listOf(SpriteDirection.South))
+            LpcCharacterAnimDefinition(AnimState.Idle, 8, 0..0,),
+            LpcCharacterAnimDefinition(AnimState.Walk, 8, 0..8,),
+            LpcCharacterAnimDefinition(AnimState.StartAim, 16, 0..4,),
+            LpcCharacterAnimDefinition(AnimState.Aiming, 16, 12..12,),
+            LpcCharacterAnimDefinition(AnimState.Death, 20, 0..5, listOf(SpriteDirection.South), playMode =  Animation.PlayMode.NORMAL)
         )
     }
 }

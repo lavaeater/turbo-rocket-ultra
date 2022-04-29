@@ -19,36 +19,56 @@ To make the graphics and environment easy I am currently working with the concep
 
 ### MVP
 
-* Weapons 2 <- doing
-* Interactable Components in-the-game
-* Player graphics made from components / parts etc.
-* Different weapons to shoot with
-* Vehicles <- nice to have
-* Build Towers <- Paused
-* Objectives for maps <- done
-* Far Off Map Rendering <- done
-* Lights and particles <- done
-* Auto-generated Snake-maps <- done
-* Basic Sprite Editor <- done, kinda?
-* IsoMetric Projection <- done!
-* Towers <- Done
-* Game Over Screen that does *anything* <- DONE!
-* Start Screen that does *anything* <- done
-* Scoring and Objectives <- done
-* Game over man <-Doing
-* Player death <- Done
-* Fix enemy sensors / noticing <- advanced behaviors
-* Fix enemy direction systems <- done?
-* Controller support <- Done
-* Twin Stick shooting <- done
-* Multiplayer <- done
-* Player damage / Enemy attacks <- Done
-* Objectives <- Done!
-* Enemies <- Done
-* Blood Splatter <- Done
-* MiniMap <- Done
+- [ ] Gibs and body parts
+- [ ] Pickups 2 (on-screen blurb indicating what you got)
+- [x] Reloading 2 (shot-by-shot for shotguns)
+- [ ] Multi-body-bodies for players and enemies (one for collision in game, one for hit detection for damage)
+- [ ] Interactable Components in-the-game
+- [ ] Player graphics made from components / parts etc.
+- [ ] Perma-gibs
+- [ ] Fixa mini-map
+- [ ] Smarta vektorer (eller nåt) - byt utspridd vektormattekod mot små, lokala, scengrafer. 
+- [x] Player Death 2
+- [x] Different weapons to shoot with <- done
+- [x] Vehicles <- nice to have
+- [x] Build Towers <- Paused
+- [x] Weapons 2 <- done
+- [x] Objectives for maps <- done
+- [x] Far Off Map Rendering <- done
+- [x] Lights and particles <- done
+- [x] Auto-generated Snake-maps <- done
+- [x] Basic Sprite Editor <- done, kinda?
+- [x] IsoMetric Projection <- done!
+- [x] Towers <- Done
+- [x] Game Over Screen that does *anything* <- DONE!
+- [x] Start Screen that does *anything* <- done
+- [x] Scoring and Objectives <- done
+- [x] Game over man <-Doing
+- [x] Player death <- Done
+- [x] Fix enemy sensors / noticing <- advanced behaviors
+- [x] Fix enemy direction systems <- done?
+- [x] Controller support <- Done
+- [x] Twin Stick shooting <- done
+- [x] Multiplayer <- done
+- [x] Player damage / Enemy attacks <- Done
+- [x] Objectives <- Done!
+- [x] Enemies <- Done
+- [x] Blood Splatter <- Done
+- [x] MiniMap <- Done
 
-## Weapons 2 <- doing
+## Player Death 2
+
+So, what should happen when a player dies?
+- [x] Restart Amble Task for enemies so that they go about in random directions
+- [x] Indicated by something on screen, perhaps also blinking
+- [x] Revival by being helped by friends?
+- [x] Where do we revive a person?
+- [x] Not able to move
+- [x] Clear all hunting by enemies when dead, as well
+
+## Weapons 2
+
+All I had to do was obviously to rewrite the entire rendering system. It is way more compact now and better in all ways...
 
 This, by nature, needs to consist of a **ton** of things, all very small, preferrably. But what is it that we want for our game?
 
@@ -534,11 +554,11 @@ Det här gör vi på det gamla vanliga sättet. Vi bygger en box2d-värld, vi kl
 
 Oj oj oj,  vad roligt. Vi kan göra en box2d-kropp med leder, per tutorials etc. Superkul ju.
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbMTc2MTM0NzM1OSwxNzMwOTAyODcyLC0xND
-gxMDI4NjI2LDE5NDI1ODcwMDEsLTcyODU1Nzk5NCwtMjU4OTg2
-OTc5LC0xMzY5MDkwMDIxLDE0MjY2NDk4ODUsLTM3NzE4OTM0My
-wtMTgzNzIyNzA5OCwtMTQzNTg2MzcyMSwyNzk5NDU1NzUsLTM4
-NDk1ODY2MCwxMTE5MTQ4OTkzLC0xOTA2NzUxMzMzLC04NTE0OD
-M1OTAsMTcwMzQ2MzQ5MiwxNDgwODc4ODMxLDEzMzM1NzA3Nzks
-LTM5NTQ1MzgyM119
+eyJoaXN0b3J5IjpbLTIzODc2MjA0LC0xNTI4MzExNDQ0LC0xND
+I5NTMwOTQwLC0xOTU0MzY0MDc4LDE3NjEzNDczNTksMTczMDkw
+Mjg3MiwtMTQ4MTAyODYyNiwxOTQyNTg3MDAxLC03Mjg1NTc5OT
+QsLTI1ODk4Njk3OSwtMTM2OTA5MDAyMSwxNDI2NjQ5ODg1LC0z
+NzcxODkzNDMsLTE4MzcyMjcwOTgsLTE0MzU4NjM3MjEsMjc5OT
+Q1NTc1LC0zODQ5NTg2NjAsMTExOTE0ODk5MywtMTkwNjc1MTMz
+MywtODUxNDgzNTkwXX0=
 -->
