@@ -419,7 +419,7 @@ fun playerWeapon(playerEntity: Entity, anchor: String = "green" ) {
             rotateWithTransform = true
             isVisible = true
         }
-        val weapon = WeaponDefinition.glock17.getWeapon()
+        val weapon = WeaponDefinition.spas12.getWeapon()
         with<WeaponComponent> {
             currentWeapon = weapon
         }
