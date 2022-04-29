@@ -66,13 +66,10 @@ class GameScreen(private val gameState: StateMachine<GameState, GameEvent>) : Kt
     private val ui: IUserInterface by lazy { inject() }
     private val audioPlayer: AudioPlayer by lazy { inject() }
     private val transformMapper = mapperFor<TransformComponent>()
-    private val player by lazy { Players.players.values.first() }
 
     override fun show() {
         initializeIfNeeded()
         camera.setToOrtho(true, viewPort.maxWorldWidth, viewPort.maxWorldHeight)
-        ui.reset()
-        ui.show()
         Gdx.input.inputProcessor = engine.getSystem(KeyboardInputSystem::class.java)
         Controllers.addListener(engine.getSystem(GamepadInputSystem::class.java))
 
@@ -86,6 +83,8 @@ class GameScreen(private val gameState: StateMachine<GameState, GameEvent>) : Kt
 
         addPlayers()
         generateMap()
+        ui.reset()
+        ui.show()
     }
 
     override fun render(delta: Float) {
@@ -98,7 +97,7 @@ class GameScreen(private val gameState: StateMachine<GameState, GameEvent>) : Kt
         engine.update(delta)
         ui.update(delta)
         audioPlayer.update(delta)
-        if(player.touchedObjectives.count() == numberOfObjectives) //Add check if we killed all enemies
+        if(Players.players.values.sumOf { it.touchedObjectives.count() } == numberOfObjectives) //Add check if we killed all enemies
             nextLevel()
     }
 

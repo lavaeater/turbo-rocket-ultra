@@ -15,7 +15,7 @@ class CharacterSpriteComponent(
     private val anims: Map<AnimState, LpcCharacterAnim>) : Renderable, Component {
     var currentAnimState : AnimState = anims.values.first().state
     var currentDirection: SpriteDirection = SpriteDirection.South
-    private val currentAnim : Animation<TextureRegion> get() = anims[currentAnimState]!!.animations[currentDirection]!!
+    val currentAnim : Animation<TextureRegion> get() = anims[currentAnimState]!!.animations[currentDirection]!!
 
     override fun render(
         position: Vector2,

@@ -7,14 +7,12 @@ import com.badlogic.gdx.graphics.Color
 import com.badlogic.gdx.physics.box2d.Fixture
 import com.badlogic.gdx.physics.box2d.World
 import ecs.components.enemy.EnemyComponent
-import ecs.components.player.PlayerControlComponent
 import ecs.components.gameplay.TransformComponent
-import ecs.components.player.FiredShotsComponent
-import ecs.components.player.PlayerRespawning
-import ecs.components.player.PlayerWaitsForRespawn
+import ecs.components.player.*
 import factories.splatterParticles
 import injection.Context.inject
 import ktx.ashley.allOf
+import ktx.ashley.get
 import ktx.ashley.mapperFor
 import ktx.box2d.RayCast
 import ktx.box2d.rayCast
@@ -101,6 +99,9 @@ class PlayerShootingSystem(private val audioPlayer: AudioPlayer) : IteratingSyst
                 if (closestFixture.isEntity() && closestFixture.body.isEnemy()) {
                     val enemyEntity = closestFixture.getEntity()
                     enemyEntity.getComponent<EnemyComponent>().takeDamage(10..25)
+                    if(enemyEntity.getComponent<EnemyComponent>().health < 0) {
+                        entity.getComponent<PlayerComponent>().player.kills++
+                    }
                     splatterParticles(closestFixture.body, controlComponent.aimVector.cpy(),
                         color = Color((0.5f..0.7f).random(), 0f, 0f, (.5f..1f).random()))
                 }

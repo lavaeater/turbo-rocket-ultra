@@ -2,8 +2,7 @@ package ecs.systems.player
 
 import com.badlogic.ashley.core.Entity
 import com.badlogic.ashley.systems.IteratingSystem
-import ecs.components.*
-import ecs.components.gameplay.TransformComponent
+import ecs.components.BodyComponent
 import ecs.components.graphics.CharacterSpriteComponent
 import ecs.components.player.PlayerControlComponent
 import ktx.ashley.allOf

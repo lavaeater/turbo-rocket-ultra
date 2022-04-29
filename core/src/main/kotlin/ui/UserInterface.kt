@@ -1,137 +1,98 @@
 package ui
 
-import com.badlogic.ashley.core.Engine
-import com.badlogic.ashley.core.Entity
 import com.badlogic.gdx.Gdx
-import com.badlogic.gdx.ai.btree.BehaviorTree
-import com.badlogic.gdx.ai.btree.Task
 import com.badlogic.gdx.graphics.OrthographicCamera
 import com.badlogic.gdx.graphics.g2d.Batch
-import com.badlogic.gdx.scenes.scene2d.Stage
-import com.badlogic.gdx.scenes.scene2d.ui.Label
-import com.badlogic.gdx.utils.Align
 import com.badlogic.gdx.utils.Queue
 import com.badlogic.gdx.utils.viewport.ExtendViewport
-import ecs.components.ai.BehaviorComponent
-import ecs.components.enemy.EnemyComponent
-import factories.engine
-import gamestate.Player
-import ktx.scene2d.KTableWidget
-import ktx.scene2d.label
-import ktx.scene2d.scene2d
-import ktx.scene2d.table
+import ecs.components.graphics.CharacterSpriteComponent
 import gamestate.Players
-import injection.Context.inject
-import ktx.ashley.allOf
+import ktx.graphics.use
+import ktx.math.vec2
+import physics.getComponent
 
 class UserInterface(
     private val batch: Batch,
-    debug: Boolean = false
+    debug: Boolean = true
 ) : IUserInterface {
 
     private val players get() = Players.players
-    private val engine by lazy { inject<Engine>() }
+    private val camera = OrthographicCamera()
+    override val hudViewPort = ExtendViewport(uiWidth, uiHeight, camera)
 
-    private lateinit var rootTable: KTableWidget
-    private lateinit var infoBoard: KTableWidget
-
-
-    override val hudViewPort = ExtendViewport(uiWidth, uiHeight, OrthographicCamera())
+    @ExperimentalStdlibApi
     override fun show() {
-        setup()
+        hudViewPort.update(Gdx.graphics.width, Gdx.graphics.height, true)
     }
 
     override fun hide() {
         //setup clears everything, not needed.
     }
 
-    override val stage = Stage(hudViewPort, batch)
-        .apply {
-            isDebugAll = debug
-        }
-
     companion object {
         private const val aspectRatio = 16 / 9
-        const val uiWidth = 720f
+        const val uiWidth = 800f
         const val uiHeight = uiWidth * aspectRatio
     }
 
     @ExperimentalStdlibApi
     override fun update(delta: Float) {
-        batch.projectionMatrix = stage.camera.combined
-
-        updateInfo(delta)
-        stage.act(delta)
-        stage.draw()
-    }
-
-    var accumulator = 0f
-
-    @ExperimentalStdlibApi
-    private fun updateInfo(delta: Float) {
-        var index = 1
-        for ((l, p) in playerLabels) {
-            l.setText(
-                """
-Player $index                    
-Health: ${p.health}
-Lives: ${p.lives}
-""".trimIndent()
-            )
-            index++
+        camera.update()
+        batch.projectionMatrix = camera.combined
+        batch.use {
+            newUi.render(batch)
         }
-        accumulator += delta
-        if (enemyInfo.notEmpty()) {
-            currentInfo = enemyInfo.removeFirst()
-        }
-        enemyLabel.setText("""
-            Enemies: ${engine.getEntitiesFor(allOf(EnemyComponent::class).get()).count()}
-            FPS: ${Gdx.graphics.framesPerSecond}
-            """)
     }
-
-    var currentInfo = ""
 
     override fun dispose() {
-        stage.dispose()
     }
 
     override fun clear() {
-        stage.clear()
     }
 
+    @ExperimentalStdlibApi
     override fun reset() {
-        setup()
     }
 
-    val enemyInfo = Queue<String>()
-
-    private fun setup() {
-        stage.clear()
-        playerLabels.clear()
-        setupInfo()
-    }
-
-    private val playerLabels = mutableMapOf<Label, Player>()
-    private lateinit var enemyLabel: Label
-    private fun setupInfo() {
-
-        infoBoard = scene2d.table {
-            for ((_, p) in players) {
-                val l = label("PlayerLabel")
-                playerLabels[l] = p
+    @ExperimentalStdlibApi
+    private val newUi by lazy {
+        SpacedContainer(vec2(100f, 0f), vec2(20f, hudViewPort.worldHeight / 6), true).apply {
+            for ((i, p) in players.values.withIndex()) {
+                children.add(
+                    SpacedContainer(vec2(0f, 25f), vec2()).apply {
+                        children.add(
+                            TextActor("Player ${i + 1}")
+                        )
+                        children.add(
+                            BoundTextActor( {"Kills: ${p.kills}"} )
+                        )
+                        children.add(
+                            BoundTextActor( {"Objectives: ${p.touchedObjectives.count()}"} )
+                        )
+                        children.add(
+                            DataBoundMeter(
+                                { p.health },
+                                p.startingHealth,
+                                50f,
+                                10f
+                            )
+                        )
+                        children.add(
+                            DataBoundRepeatingTextureActor(
+                                { p.lives },
+                                vec2(20f, 0f),
+                                p.entity
+                                    .getComponent<CharacterSpriteComponent>()
+                                    .currentAnim
+                                    .keyFrames
+                                    .first(),
+                                0.5f
+                            )
+                        )
+                    }
+                )
             }
-            enemyLabel = label("nuthin")
         }
-
-        rootTable = scene2d.table {
-            setFillParent(true)
-            bottom()
-            left()
-            add(infoBoard).expand().align(Align.bottomLeft)
-            pad(10f)
-        }
-
-        stage.addActor(rootTable)
     }
 }
+

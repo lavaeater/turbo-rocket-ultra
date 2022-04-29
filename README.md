@@ -19,10 +19,12 @@ To make the graphics and environment easy I am currently working with the concep
 
 ### MVP
 
-* Objective counting in multiplayer
+* Start Screen that does *anything*
+* Game Over Screen that does *anything*
+* Towers
+* Scoring and Objectives <- done
 * Game over man <-Doing
 * Player death <- Done
-* Towers
 * Fix enemy sensors / noticing <- advanced behaviors
 * Fix enemy direction systems <- done?
 * Vehicles <- nice to have
@@ -36,7 +38,11 @@ To make the graphics and environment easy I am currently working with the concep
 * Blood Splatter <- Done
 * MiniMap <- Done
 
-## Doing now: Game Over, Man!
+## Notes on getting caught up in drama
+
+What do I even mean by that? Well, I am of course talking about game-altering ideas about new mechanics. Here's the thing: I want to make the game isometric, I have always wanted that. But now is not the time, keep the eye on the prize and keep chugging along - isometric is several levels of confusion added upon confusion. We can deal with that in another game at a later stage, when we have "all" things figured out for this game.
+
+## Done: Game Over, Man! - v0.1
 
 ### Mechanics
 
@@ -328,11 +334,11 @@ Next should probably be the feature that requires the least work to make it a "g
 
 So the next feature will be ship collisions.
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbNzI4OTI5NzA2LDEzNTgxODczMTQsMzAzNT
-gxMzA3LC0yMTA2MjU1MDE3LDE5NjA2OTUyMTMsMTc2OTY4Mzk3
-NywzMzU1MDMzNDEsMTAyNzA4NDAxLDE1NzE0MTYwODUsLTIxND
-YwNDE1NzksLTkwMzY2NTkyNSw5NTQ0NDIzNDUsMTg1MTcwOTMy
-NSwtMTY5ODIxMzc0MywtMTY0MTE0MDI4NywxMzE1MzE3NzM2LC
-0zNjg4NTM1MTIsMjEzNTgxOTAwNCwtMjExODg5MDEwOSwxNzA0
-OTQ2MTk4XX0=
+eyJoaXN0b3J5IjpbLTk5ODY2ODA2NCwtOTgzNjc2MTEzLDEyNj
+QyNDM0MjEsNzI4OTI5NzA2LDEzNTgxODczMTQsMzAzNTgxMzA3
+LC0yMTA2MjU1MDE3LDE5NjA2OTUyMTMsMTc2OTY4Mzk3NywzMz
+U1MDMzNDEsMTAyNzA4NDAxLDE1NzE0MTYwODUsLTIxNDYwNDE1
+NzksLTkwMzY2NTkyNSw5NTQ0NDIzNDUsMTg1MTcwOTMyNSwtMT
+Y5ODIxMzc0MywtMTY0MTE0MDI4NywxMzE1MzE3NzM2LC0zNjg4
+NTM1MTJdfQ==
 -->

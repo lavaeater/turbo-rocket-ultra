@@ -23,7 +23,7 @@ class BoxComponent: Renderable,
         batch: Batch,
         shapeDrawer: ShapeDrawer
     ) {
-        shapeDrawer.filledRectangle(position.x, position.y, width, height, color)
+        shapeDrawer.filledRectangle(position.x - width / 2 , position.y  - height / 2, width, height, color)
     }
 
     override fun reset() {
