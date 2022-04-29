@@ -3,24 +3,28 @@ package ecs.systems.ai
 import com.badlogic.ashley.core.Entity
 import com.badlogic.ashley.systems.IteratingSystem
 import com.badlogic.gdx.ai.btree.Task
-import ecs.components.EnemyComponent
-import ecs.components.TransformComponent
+import ecs.components.enemy.EnemyComponent
+import ecs.components.gameplay.TransformComponent
 import ecs.components.ai.AttackPlayer
-import gamestate.Player
-import injection.Context
+import ecs.components.ai.PlayerTrackComponent
 import ktx.ashley.allOf
 import ktx.ashley.mapperFor
 import ktx.math.random
 import ktx.math.vec2
 
-class AttackPlayerSystem : IteratingSystem(allOf(AttackPlayer::class, EnemyComponent::class, TransformComponent::class).get()) {
+class AttackPlayerSystem : IteratingSystem(allOf(
+    AttackPlayer::class,
+    EnemyComponent::class,
+    TransformComponent::class,
+    PlayerTrackComponent::class).get()) {
     private val mapper = mapperFor<AttackPlayer>()
-    private val player by lazy { Context.inject<Player>() }
     private val tMapper = mapperFor<TransformComponent>()
+    private val trackerMapper = mapperFor<PlayerTrackComponent>()
 
     override fun processEntity(entity: Entity, deltaTime: Float) {
         val attackPlayer = mapper[entity]
         val transformComponent = tMapper[entity]
+        val player = trackerMapper[entity].player!!
         if(attackPlayer.status == Task.Status.RUNNING) {
             if(attackPlayer.coolDown <= 0f) {
                 attackPlayer.coolDown = (.1f..0.5f).random() //This guy needs to wait a little before attacking again.

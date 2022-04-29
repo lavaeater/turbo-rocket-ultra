@@ -1,6 +1,5 @@
 package ecs.systems.ai
 
-import ai.enemy.EnemyState
 import ecs.components.ai.SeekPlayer
 import com.badlogic.ashley.core.Entity
 import com.badlogic.ashley.systems.IteratingSystem
@@ -8,8 +7,9 @@ import com.badlogic.gdx.ai.btree.Task
 import com.badlogic.gdx.math.Vector2
 import com.badlogic.gdx.physics.box2d.Fixture
 import ecs.components.BodyComponent
-import ecs.components.EnemyComponent
+import ecs.components.enemy.EnemyComponent
 import ecs.components.ai.ChasePlayer
+import ecs.components.ai.PlayerTrackComponent
 import factories.world
 import ktx.ashley.allOf
 import ktx.ashley.mapperFor
@@ -29,12 +29,12 @@ class SeekingPlayerSystem : IteratingSystem(allOf(SeekPlayer::class).get()) {
         val component = mapper.get(entity)
         if (component.status == Task.Status.RUNNING) {
             eMapper[entity].directionVector.set(Vector2.Zero)
-            seek(component, bodyMapper[entity])
+            seek(entity, component, bodyMapper[entity])
         }
     }
 
     @ExperimentalStdlibApi
-    private fun seek(seekComponent: SeekPlayer, bodyComponent: BodyComponent) {
+    private fun seek(entity: Entity, seekComponent: SeekPlayer, bodyComponent: BodyComponent) {
         //Pick a random direction
         if (seekComponent.needsScanVector) {
             val unitVectorRange = -1f..1f
@@ -86,6 +86,7 @@ class SeekingPlayerSystem : IteratingSystem(allOf(SeekPlayer::class).get()) {
             if (lowestFraction < 1f) {
                 if (closestFixture.isEntity() && closestFixture.body.isPlayer()) {
                     seekComponent.keepScanning = false
+                    entity.add(engine.createComponent(PlayerTrackComponent::class.java).apply { player = closestFixture.body.player()  })
                     foundPlayer = true
                     seekComponent.status = Task.Status.SUCCEEDED
 
@@ -93,6 +94,7 @@ class SeekingPlayerSystem : IteratingSystem(allOf(SeekPlayer::class).get()) {
                     closestFixture.isEntity() &&
                     closestFixture.body.isEnemy() &&
                     closestFixture.getEntity().hasComponent<ChasePlayer>()) {
+                    entity.add(engine.createComponent(PlayerTrackComponent::class.java).apply { player = closestFixture.getEntity().getComponent<PlayerTrackComponent>().player   })
                     seekComponent.keepScanning = false
                     foundPlayer = true
                     seekComponent.status = Task.Status.SUCCEEDED
@@ -101,8 +103,10 @@ class SeekingPlayerSystem : IteratingSystem(allOf(SeekPlayer::class).get()) {
             seekComponent.scanVector.setAngleDeg(seekComponent.scanVector.angleDeg() + seekComponent.scanResolution)
         }
         if (!foundPlayer && !seekComponent.keepScanning) {
+            entity.remove(PlayerTrackComponent::class.java)
             seekComponent.status = Task.Status.FAILED
         }
     }
 
 }
+

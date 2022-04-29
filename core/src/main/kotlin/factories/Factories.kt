@@ -11,13 +11,20 @@ import com.badlogic.gdx.physics.box2d.BodyDef
 import com.badlogic.gdx.physics.box2d.World
 import ecs.components.*
 import ecs.components.ai.BehaviorComponent
+import ecs.components.enemy.EnemyComponent
+import ecs.components.enemy.EnemySensorComponent
+import ecs.components.gameplay.ObjectiveComponent
+import ecs.components.gameplay.ObstacleComponent
+import ecs.components.gameplay.TransformComponent
+import ecs.components.graphics.*
 import gamestate.Player
 import injection.Context.inject
+import input.ControlMapper
 import ktx.box2d.*
 import ktx.math.random
 import ktx.math.vec2
 import tru.Assets
-import tru.FirstScreen
+import screens.GameScreen
 
 fun world(): World {
     return inject()
@@ -31,11 +38,9 @@ fun enemy(x: Float = 0f, y: Float = 0f) {
     enemy(vec2(x, y))
 }
 
-val colors = listOf(Color.RED, Color.BLUE, Color.GREEN, Color.BROWN, Color.CYAN)
-
 val colorRange = 0f..1f
 
-object categories {
+object Box2dCategories {
     const val splatter : Short = 0x0002
     const val player: Short  = 0x0003
     const val enemy: Short = 0x0004
@@ -43,9 +48,9 @@ object categories {
     const val obstacle: Short = 0x0006
 }
 
-object collisionMasks {
-    const val splatter = categories.splatter
-    const val players = categories.player
+object Box2dCollisionMasks {
+    const val splatter = Box2dCategories.splatter
+    const val players = Box2dCategories.player
 }
 
 fun splatterParticles(
@@ -87,8 +92,8 @@ fun splatterParticles(
                     density = 0.1f
                     restitution = 1f
                     filter {
-                        categoryBits = categories.splatter
-                        maskBits = collisionMasks.splatter
+                        categoryBits = Box2dCategories.splatter
+                        maskBits = Box2dCollisionMasks.splatter
                     }
                 }
             linearDamping = (25f..125f).random()
@@ -110,35 +115,37 @@ forceVector,
     }
 }
 
-fun player(): Player {
+fun player(player: Player, controlMapper: ControlMapper) {
     val body = world().body {
         type = BodyDef.BodyType.DynamicBody
         position.setZero()
         circle(1f) {
-            density = FirstScreen.PLAYER_DENSITY
+            density = GameScreen.PLAYER_DENSITY
             filter {
-                categoryBits = categories.player
+                categoryBits = Box2dCategories.player
             }
         }
 
-        linearDamping = FirstScreen.SHIP_LINEAR_DAMPING
-        angularDamping = FirstScreen.SHIP_ANGULAR_DAMPING
+        linearDamping = GameScreen.SHIP_LINEAR_DAMPING
+        angularDamping = GameScreen.SHIP_ANGULAR_DAMPING
     }
 
     val entity = engine().createEntity().apply {
         add(CameraFollowComponent())
         add(BodyComponent(body))
         add(TransformComponent())
-        add(PlayerControlComponent(inject())) //We will have multiple components later
+        add(controlMapper)
+        add(PlayerControlComponent(controlMapper)) //We will have multiple components later
         add(CharacterSpriteComponent(Assets.characters["player"]!!))
         add(RenderableComponent(1))
-        add(PlayerComponent())
+        add(PlayerComponent(player))
     }
 
     body.userData = entity
 
     engine().addEntity(entity)
-    return Player(body, entity)
+    player.body = body
+    player.entity = entity
 }
 
 fun semicircle(): List<Vector2> {
@@ -158,9 +165,9 @@ fun enemy(at: Vector2) {
         type = BodyDef.BodyType.DynamicBody
         position.set(at)
         circle(1f) {
-            density = FirstScreen.ENEMY_DENSITY
+            density = GameScreen.ENEMY_DENSITY
             filter {
-                categoryBits = categories.enemy
+                categoryBits = Box2dCategories.enemy
             }
         }
         circle(10f) {
@@ -192,7 +199,7 @@ fun vehicle(at: Vector2): Body {
         type = BodyDef.BodyType.DynamicBody
         position.set(at)
         box(2f, 4f) {
-            density = FirstScreen.CAR_DENSITY
+            density = GameScreen.CAR_DENSITY
         }
     }
 
@@ -212,7 +219,7 @@ fun shot(from: Vector2, towards: Vector2): Body {
         type = BodyDef.BodyType.DynamicBody
         position.set(from)
         circle(radius = .2f) {
-            density = FirstScreen.SHOT_DENSITY
+            density = GameScreen.SHOT_DENSITY
         }
     }
     val entity = engine().createEntity().apply {
@@ -238,7 +245,7 @@ fun obstacle(
         box(width, height) {
             restitution = 0f
             filter {
-                categoryBits = categories.obstacle
+                categoryBits = Box2dCategories.obstacle
             }
         }
     }
@@ -266,8 +273,8 @@ fun objective(
         box(width, height) {
             restitution = 0f
             filter {
-                categoryBits = categories.objective
-                maskBits = collisionMasks.players
+                categoryBits = Box2dCategories.objective
+                maskBits = Box2dCollisionMasks.players
             }
         }
     }

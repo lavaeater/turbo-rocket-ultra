@@ -4,7 +4,7 @@ import com.badlogic.ashley.core.Entity
 import com.badlogic.ashley.systems.IteratingSystem
 import com.badlogic.gdx.ai.btree.Task
 import com.badlogic.gdx.math.Vector2
-import ecs.components.EnemyComponent
+import ecs.components.enemy.EnemyComponent
 import ecs.components.ai.Amble
 import ktx.ashley.allOf
 import ktx.ashley.mapperFor

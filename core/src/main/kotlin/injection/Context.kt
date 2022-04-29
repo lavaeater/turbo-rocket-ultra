@@ -8,15 +8,27 @@ import com.badlogic.gdx.graphics.OrthographicCamera
 import com.badlogic.gdx.graphics.g2d.Batch
 import com.badlogic.gdx.graphics.g2d.PolygonSpriteBatch
 import com.badlogic.gdx.utils.viewport.ExtendViewport
-import ecs.components.ControlMapper
 import ecs.systems.*
 import ecs.systems.ai.*
-import factories.player
+import ecs.systems.input.KeyboardInputSystem
+import ecs.systems.enemy.EnemyDeathSystem
+import ecs.systems.enemy.EnemyDirectionSystem
+import ecs.systems.enemy.EnemyMovementSystem
+import ecs.systems.fx.AddSplatterSystem
+import ecs.systems.fx.SplatterRemovalSystem
+import ecs.systems.graphics.CameraUpdateSystem
+import ecs.systems.graphics.RenderMiniMapSystem
+import ecs.systems.graphics.RenderSystem
+import ecs.systems.graphics.ShootDebugRenderSystem
+import ecs.systems.input.GamepadInputSystem
+import ecs.systems.input.VehicleControlSystem
+import ecs.systems.player.PlayerMoveSystem
+import ecs.systems.player.PlayerShootingSystem
 import ktx.box2d.createWorld
 import ktx.inject.Context
 import ktx.inject.register
 import physics.ContactManager
-import tru.FirstScreen
+import screens.GameScreen
 import ui.IUserInterface
 import ui.UserInterface
 
@@ -27,39 +39,39 @@ object Context {
         buildContext()
     }
 
-    inline fun <reified T>inject():T {
+    inline fun <reified T> inject(): T {
         return context.inject()
     }
 
 
-
     private fun buildContext() {
         context.register {
-            bindSingleton(ControlMapper())
             bindSingleton(PolygonSpriteBatch())
             bindSingleton(OrthographicCamera())
-            bindSingleton<IUserInterface>(UserInterface(inject<PolygonSpriteBatch>() as Batch))
+            bind<IUserInterface> { UserInterface(inject<PolygonSpriteBatch>() as Batch)}
             bindSingleton(
                 ExtendViewport(
-                    FirstScreen.GAMEWIDTH,
-                    FirstScreen.GAMEHEIGHT,
+                    GameScreen.GAMEWIDTH,
+                    GameScreen.GAMEHEIGHT,
                     inject<OrthographicCamera>() as Camera
-                ))
+                )
+            )
             bindSingleton(createWorld().apply {
                 setContactListener(ContactManager())
             })
             bindSingleton(AudioPlayer())
             bindSingleton(getEngine())
-            bindSingleton(player())
         }
     }
 
     private fun getEngine(): Engine {
         return PooledEngine().apply {
             addSystem(PhysicsSystem(inject()))
-       //     addSystem(PhysicsDebugRendererSystem(inject(), inject()))
+            //     addSystem(PhysicsDebugRendererSystem(inject(), inject()))
             addSystem(CameraUpdateSystem())
-            addSystem(PlayerControlSystem())
+            addSystem(PlayerMoveSystem())
+            addSystem(KeyboardInputSystem())
+            addSystem(GamepadInputSystem())
             addSystem(BodyDestroyerSystem(inject())) //world
             addSystem(EnterVehicleSystem())
             addSystem(ExitVehicleSystem())
@@ -77,7 +89,6 @@ object Context {
             addSystem(EnemyDirectionSystem())
             addSystem(AddSplatterSystem())
             addSystem(SplatterRemovalSystem())
-            addSystem(EnemyDebugRenderSystem(true, true))
             addSystem(RenderSystem(inject<PolygonSpriteBatch>() as Batch))
             addSystem(RenderMiniMapSystem())
         }

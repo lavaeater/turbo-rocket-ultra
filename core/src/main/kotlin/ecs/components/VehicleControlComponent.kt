@@ -1,6 +1,7 @@
 package ecs.components
 
 import com.badlogic.ashley.core.Component
+import input.ControlMapper
 
 class VehicleControlComponent(
     private val controlMapper: ControlMapper,

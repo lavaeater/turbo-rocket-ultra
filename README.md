@@ -18,19 +18,42 @@ Inspirations off the bat for this game are:
 To make the graphics and environment easy I am currently working with the concept of "zombie tower defense", which is obviously lame and very boring, but hey... it's easy to find art for.
 
 ### MVP
-* Controller support
-* Twin Stick shooting
-* Multiplayer
 * Towers
 * Fix enemy direction systems
 * Fix enemy sensors / noticing
 * Vehicles <- nice to have
 * Different weapons to shoot with
+* Controller support <- Done
+* Twin Stick shooting
+* Multiplayer
 * Player damage / Enemy attacks <- Done
 * Objectives <- Done!
 * Enemies <- Done
 * Blood Splatter <- Done
 * MiniMap <- Done
+
+## Done: Multiplayer v0.1
+
+### Mechanics
+
+This feature will add about 20 sub-features. To have multiplayer, we must now have a way of starting the game, pausing the game, adding players, removing players, etc. And of course the most important one of them all: selecting the player character. So I will add:
+* A FSM for the Game state <- this is where these are actually **very** useful
+* A game setup screen
+* A pause screen
+* A game over screen
+* Ways to move between these etc.
+
+After that, we can actually use the multiplayer functionality, shouldn't be too difficult.
+
+## Done: Twin Stick v0.1
+
+Needs tweaking of the aiming, it is by far not perfected. We need to move to a polling system for the axes, to enable fiddling with the aim, but using lerp was a boon.
+
+
+## Done: Controller Support v0.1
+### Mechanics
+
+Controllers will be used in the classic Twin-Stick-Shooter manner. The only thing needed is basically just implementing it. 
 
 ## Done: Player Damage / Enemy Attacks v0.1
 
@@ -267,11 +290,11 @@ Next should probably be the feature that requires the least work to make it a "g
 
 So the next feature will be ship collisions.
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbLTkwMzY2NTkyNSw5NTQ0NDIzNDUsMTg1MT
-cwOTMyNSwtMTY5ODIxMzc0MywtMTY0MTE0MDI4NywxMzE1MzE3
-NzM2LC0zNjg4NTM1MTIsMjEzNTgxOTAwNCwtMjExODg5MDEwOS
-wxNzA0OTQ2MTk4LDQ0Mzg0OTM2NCwxNDg3Nzg0NDQ2LC0xNDcy
-NDgxMjk5LC03Njc3MTI3NzEsLTQwMDg5MjA5MCwxMDYxNDgyNT
-M2LDIxMTc5NzU5NjEsMTk0MDI2NDc3LC0xMDcxNDA5NTg0LDc0
-MTAwNzUzMV19
+eyJoaXN0b3J5IjpbMzM1NTAzMzQxLDEwMjcwODQwMSwxNTcxND
+E2MDg1LC0yMTQ2MDQxNTc5LC05MDM2NjU5MjUsOTU0NDQyMzQ1
+LDE4NTE3MDkzMjUsLTE2OTgyMTM3NDMsLTE2NDExNDAyODcsMT
+MxNTMxNzczNiwtMzY4ODUzNTEyLDIxMzU4MTkwMDQsLTIxMTg4
+OTAxMDksMTcwNDk0NjE5OCw0NDM4NDkzNjQsMTQ4Nzc4NDQ0Ni
+wtMTQ3MjQ4MTI5OSwtNzY3NzEyNzcxLC00MDA4OTIwOTAsMTA2
+MTQ4MjUzNl19
 -->

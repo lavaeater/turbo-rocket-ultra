@@ -1,5 +1,6 @@
 package ai.builders
 
+import com.badlogic.ashley.core.Component
 import com.badlogic.gdx.ai.btree.Task
 import com.badlogic.gdx.ai.btree.decorator.*
 import com.badlogic.gdx.ai.utils.random.IntegerDistribution
@@ -16,10 +17,7 @@ fun <T> selector(block: SelectorBuilder<T>.() -> Unit) = SelectorBuilder<T>().ap
 fun <T> sequence(block: SequenceBuilder<T>.() -> Unit) = SequenceBuilder<T>().apply(block).build()
 fun <T> parallel(block: ParallelBuilder<T>.() -> Unit) = ParallelBuilder<T>().apply(block).build()
 
-inline fun <reified T : TaskComponent> isEntity() = HasComponentBuilder(T::class.java).build()
-inline fun <reified T : TaskComponent> start() = AddComponentBuilder(T::class.java).build()
-inline fun <reified T : TaskComponent> stop() = RemoveComponentBuilder(T::class.java).build()
-inline fun <reified T: TaskComponent> execute() = CheckComponentStatusBuilder(T::class.java).build()
+inline fun <reified T : Component> doesEntityHave() = HasComponentBuilder(T::class.java).build()
 
-inline fun <reified T: TaskComponent> entityDo() = EntityComponentTaskBuilder(T::class.java).build()
+inline fun <reified T: TaskComponent> entityDo(block: EntityComponentTaskBuilder<T>.() -> Unit = {}) = EntityComponentTaskBuilder(T::class.java).apply(block).build()
 

@@ -2,4 +2,4 @@ package ecs.components
 
 import com.badlogic.ashley.core.Component
 
-class PlayerIsInSensorRangeComponent():Component
+class PlayerIsInSensorRangeComponent:Component
