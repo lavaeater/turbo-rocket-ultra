@@ -12,8 +12,13 @@ import com.badlogic.gdx.math.MathUtils
 import com.badlogic.gdx.utils.viewport.Viewport
 import com.crashinvaders.vfx.VfxManager
 import com.crashinvaders.vfx.effects.ChainVfxEffect
+import ecs.components.fx.ParticleEffectComponent
+import ecs.components.fx.SplatterComponent
+import ecs.components.gameplay.DestroyComponent
 import ecs.components.gameplay.TransformComponent
+import ecs.components.graphics.RenderableComponent
 import ecs.components.graphics.SpriteComponent
+import ecs.components.graphics.renderables.RenderableType
 import ecs.systems.graphics.GameConstants.scale
 import injection.Context.inject
 import ktx.ashley.allOf
@@ -33,13 +38,13 @@ class RenderSystem(
     priority: Int
 ) : SortedIteratingSystem(
     allOf(
-        TransformComponent::class,
-        SpriteComponent::class
+        RenderableComponent::class,
+        TransformComponent::class
     ).get(),
     object : Comparator<Entity> {
         override fun compare(p0: Entity, p1: Entity): Int {
-            val layer0 = p0.sprite().layer
-            val layer1 = p1.sprite().layer
+            val layer0 = p0.renderable().layer
+            val layer1 = p1.renderable().layer
             return if (layer0 == layer1) {
                 val y0 = p0.transform().position.y
                 val y1 = p1.transform().position.y
@@ -92,7 +97,7 @@ class RenderSystem(
         rayHandler.updateAndRender()
     }
 
-    override fun processEntity(entity: Entity, deltaTime: Float) {
+    fun renderSpriteEntity(entity: Entity) {
         val transform = entity.transform()
         val spriteComponent = entity.sprite()
 
@@ -102,18 +107,10 @@ class RenderSystem(
                 sprite.rotation = transform.rotation * MathUtils.radiansToDegrees
             sprite.setOriginBasedPosition(transform.position.x, transform.position.y)
             sprite.draw(batch)
-//
-//            batch.drawScaled(
-//                spriteComponent.sprite,
-//                transform.position.x + (spriteComponent.sprite.regionWidth / 2 + spriteComponent.offsetX) * scale * spriteComponent.scale,
-//                transform.position.y + (spriteComponent.sprite.regionHeight / 2 + spriteComponent.offsetY) * scale * spriteComponent.scale,
-//                scale * spriteComponent.scale,
-//                if (spriteComponent.rotateWithTransform) transform.rotation * MathUtils.radiansToDegrees else 180f
-//            )
             if (debug) {
                 shapeDrawer.filledCircle(
                     sprite.originX,
-                    sprite.originY,.5f,
+                    sprite.originY, .5f,
                     Color.GREEN
 
                 )
@@ -131,43 +128,13 @@ class RenderSystem(
                 )
             }
         }
+    }
 
-        /*
-        Comment out this, for the time being
-        for ((key, sprite) in spriteComponent.extraSprites) {
-            if (spriteComponent.extraSpriteAnchors.contains(key)) {
-                val anchors = entity.anchors()
-                val drawPosition = anchors.transformedPoints[spriteComponent.extraSpriteAnchors[key]!!]!!
-
-                sprite.setOriginBasedPosition(drawPosition.x, drawPosition.y)
-                sprite.rotation =
-                    if (anchors.useDirectionVector) entity.playerControl().directionVector.angleDeg() else transform.rotation * MathUtils.radiansToDegrees
-                sprite.setScale(scale * spriteComponent.scale)
-                sprite.draw(batch)
-
-            } else {
-                batch.drawScaled(
-                    sprite,
-                    transform.position.x + (spriteComponent.sprite.regionWidth / 2 + spriteComponent.offsetX) * scale * spriteComponent.scale,
-                    transform.position.y + (spriteComponent.sprite.regionHeight / 2 + spriteComponent.offsetY) * scale * spriteComponent.scale,
-                    scale * spriteComponent.scale,
-                    if (spriteComponent.rotateWithTransform) transform.rotation else 180f
-                )
-            }
+    override fun processEntity(entity: Entity, deltaTime: Float) {
+        when (entity.renderable().renderableType) {
+            is ecs.components.graphics.RenderableType.Sprite -> renderSpriteEntity(entity)
+            is ecs.components.graphics.RenderableType.Effect -> renderEffect(entity, deltaTime)
         }
-         */
-//        if (debug) {
-//            shapeDrawer.filledCircle(transform.position, .2f, Color.RED)
-//        }
-//        if (debug && entity.hasAnchors()) {
-//            val anchors = entity.anchors()
-//            for ((key, point) in anchors.transformedPoints) {
-//                if (!colorMap.containsKey(key))
-//                    colorMap[key] = Color(r.random(), r.random(), r.random(), 1f)
-//
-//                shapeDrawer.filledCircle(point, 0.2f, colorMap[key]!!)
-//            }
-//        }
 
         if (enemyDebug && entity.isEnemy()) {
             val ec = entity.enemy()
@@ -188,6 +155,55 @@ class RenderSystem(
                     }
                 }
                 previous.set(node)
+            }
+        }
+    }
+
+    private fun renderEffect(entity: Entity, deltaTime: Float) {
+        if (entity.hasSplatter()) {
+            val component = entity.splatterEffect()
+            val effect = component.splatterEffect
+            if (effect.isComplete) {
+                engine.removeEntity(entity)
+            }
+            if (!component.started) {
+                component.started = true
+                val emitter = effect.emitters.first()
+                emitter.setPosition(component.at.x, component.at.y)
+                val amplitude: Float = (emitter.angle.getHighMax() - emitter.angle.getHighMin()) / 2f
+                emitter.angle.setHigh(component.rotation + amplitude, component.rotation - amplitude)
+                emitter.angle.setLow(component.rotation)
+                emitter.start()
+            }
+            effect.update(deltaTime)
+            effect.draw(batch)
+        }
+
+        if (entity.hasEffect()) {
+            val effectComponent = entity.effect()
+            if (effectComponent.ready) {
+                val transform = entity.transform()
+                val effect = effectComponent.effect
+                if (effect.isComplete) {
+                    entity.addComponent<DestroyComponent>()
+                }
+                for (emitter in effect.emitters) {
+                    emitter.setPosition(transform.position.x, transform.position.y)
+                    if (!effectComponent.started) {
+                        val amplitude: Float = (emitter.angle.getHighMax() - emitter.angle.getHighMin()) / 2f
+                        emitter.angle.setHigh(
+                            effectComponent.rotation + amplitude,
+                            effectComponent.rotation - amplitude
+                        )
+                        emitter.angle.setLow(effectComponent.rotation)
+                        emitter.start()
+                    }
+                }
+                if (!effectComponent.started) {
+                    effectComponent.started = true
+                }
+                effect.update(deltaTime)
+                effect.draw(batch)
             }
         }
     }
