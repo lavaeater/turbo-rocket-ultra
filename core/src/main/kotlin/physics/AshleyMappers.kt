@@ -17,10 +17,7 @@ import ecs.components.pickups.LootComponent
 import ecs.components.pickups.LootDropComponent
 import ecs.components.player.*
 import ecs.components.AudioComponent
-import ecs.components.intent.IntendsTo
-import ecs.components.intent.IntentComponent
-import ecs.components.intent.CalculatedPositionComponent
-import ecs.components.intent.FunctionsComponent
+import ecs.components.intent.*
 import ktx.ashley.mapperFor
 import tru.Assets
 import tru.getRandomSoundFor
@@ -75,7 +72,6 @@ object AshleyMappers {
     val weapon = mapperFor<WeaponComponent>()
     val respawn = mapperFor<PlayerIsRespawning>()
     val waitsForRespawn = mapperFor<PlayerWaitsForRespawn>()
-    val frustum = mapperFor<OnScreenComponent>()
     val sprite = mapperFor<SpriteComponent>()
     val anchors = mapperFor<AnchorPointsComponent>()
     val build = mapperFor<BuildModeComponent>()
@@ -83,6 +79,7 @@ object AshleyMappers {
     val light = mapperFor<LightComponent>()
     val intent = mapperFor<IntentComponent>()
     val calculatedPosition = mapperFor<CalculatedPositionComponent>()
+    val calculatedRotation = mapperFor<CalculatedRotationComponent>()
     val functions = mapperFor<FunctionsComponent>()
     val obstacleCollision = mapperFor<CollidedWithObstacle>()
     val uiThing = mapperFor<UiThingComponent>()
@@ -102,20 +99,21 @@ fun Entity.hasUiThing() : Boolean {
 fun Entity.hasCollidedWithObstacle() : Boolean {
     return AshleyMappers.obstacleCollision.has(this)
 }
-fun Entity.onScreen() : Boolean {
-    return AshleyMappers.frustum.has(this)
-}
 
 fun Entity.getCalculatedPosition(): Vector2 {
     return AshleyMappers.calculatedPosition.get(this).calculate()
 }
 
+fun Entity.getCalculatedRotation(): Float {
+    return AshleyMappers.calculatedRotation.get(this).calculate()
+}
+
 fun Entity.runFunctions() {
-    for(f in AshleyMappers.functions.get(this).functions.values) f()
+    for(f in AshleyMappers.functions.get(this).functions.values) f(this)
 }
 
 fun Entity.runFunction(key: String) {
-    AshleyMappers.functions.get(this).functions[key]!!()
+    AshleyMappers.functions.get(this).functions[key]!!(this)
 }
 
 fun Entity.intendsTo(intendsTo: IntendsTo): Boolean {

@@ -7,11 +7,9 @@
         "id": "9210143da10edeee",
         "type": "leaf",
         "state": {
-          "type": "markdown",
+          "type": "kanban",
           "state": {
-            "file": "docs/todo/Guns as Entities.md",
-            "mode": "source",
-            "source": false
+            "file": "docs/KANBAN.md"
           }
         }
       }
@@ -69,7 +67,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "docs/todo/Guns as Entities.md",
+                "file": "docs/KANBAN.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -89,15 +87,15 @@
   },
   "active": "9210143da10edeee",
   "lastOpenFiles": [
-    "docs/todo/Guns as Entities.md",
     "docs/KANBAN.md",
+    "docs/todo/New Gun Sprites.md",
     "docs/todo/New Look and Feel.md",
+    "docs/done/New Fact System.md",
+    "docs/done/Enemies and walls.md",
+    "docs/done/Nicer Setup UI.md",
+    "docs/done/Guns as Entities.md",
     "docs/todo/Thought Bubbles.md",
     "docs/todo/Hierarchical Facts.md",
-    "docs/todo/Facts for Gameplay.md",
-    "docs/todo/A Nice Logo.md",
-    "docs/devlog/2022-04-28.md",
-    "docs/todo/New Fact System.md",
-    "docs/todo/New Facts.md"
+    "docs/todo/Facts for Gameplay.md"
   ]
 }

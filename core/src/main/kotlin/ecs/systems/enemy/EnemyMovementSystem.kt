@@ -14,6 +14,7 @@ import ktx.ashley.allOf
 import ktx.math.vec2
 import physics.AshleyMappers
 import physics.enemy
+import physics.sprite
 import physics.transform
 import tru.Assets
 
@@ -40,7 +41,7 @@ class EnemyMovementSystem(private val flocking: Boolean) : IteratingSystem(
         val enemyComponent = entity.enemy()
         if (enemyComponent.cooldownPropertyCheckIfDone(enemyComponent::stunned, deltaTime)) {
             val bodyComponent = AshleyMappers.body.get(entity)
-            if (flocking && enemyComponent.flock && AshleyMappers.frustum.has(entity)) {
+            if (flocking && enemyComponent.flock && entity.sprite().isVisible) {
                 fixFlocking(bodyComponent.body!!)
             }
             avoidObstacles(bodyComponent.body!!.position)

@@ -37,6 +37,7 @@ import ecs.systems.input.ActionHandler
 import ecs.systems.input.GamepadInputSystem
 import ecs.systems.input.KeyboardInputSystem
 import ecs.systems.intent.CalculatePositionSystem
+import ecs.systems.intent.CalculateRotationSystem
 import ecs.systems.intent.IntentionSystem
 import ecs.systems.intent.RunFunctionsSystem
 import ecs.systems.pickups.LootDropSystem
@@ -138,8 +139,18 @@ object Context {
             addSystem(WeaponUpdateSystem())
             addSystem(WeaponChangeAndReloadSystem())
             addSystem(UpdatePlayerStatsSystem())
-//            addSystem(PhysicsDebugRendererSystem(inject(), inject()))
-            addSystem(RenderSystem(inject<PolygonSpriteBatch>() as Batch, false, inject(), inject(), inject<ExtendViewport>(), true,1))
+            //addSystem(PhysicsDebugRendererSystem(inject(), inject()))
+            addSystem(
+                RenderSystem(
+                    inject<PolygonSpriteBatch>() as Batch,
+                    false,
+                    inject(),
+                    inject(),
+                    inject<ExtendViewport>(),
+                    false,
+                    1
+                )
+            )
             addSystem(RenderMiniMapSystem(3))
             addSystem(PlayerFlashlightSystem())
             //lets NOT write debug badges
@@ -158,6 +169,7 @@ object Context {
 //            addSystem(BuildSystem(true))
             addSystem(IntentionSystem())
             addSystem(CalculatePositionSystem())
+            addSystem(CalculateRotationSystem())
             addSystem(RunFunctionsSystem())
 
         }

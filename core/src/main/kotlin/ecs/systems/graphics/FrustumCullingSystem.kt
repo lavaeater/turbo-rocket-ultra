@@ -4,12 +4,10 @@ import com.badlogic.ashley.core.Entity
 import com.badlogic.ashley.systems.IteratingSystem
 import com.badlogic.gdx.graphics.OrthographicCamera
 import ecs.components.gameplay.TransformComponent
-import ecs.components.graphics.OnScreenComponent
 import ecs.components.graphics.SpriteComponent
 import injection.Context
 import ktx.ashley.allOf
-import ktx.ashley.remove
-import physics.addComponent
+import physics.sprite
 import physics.transform
 
 /**
@@ -22,11 +20,7 @@ class FrustumCullingSystem : IteratingSystem(allOf(TransformComponent::class, Sp
 
     override fun processEntity(entity: Entity, deltaTime: Float) {
         val position = entity.transform().position
-        if (camera.frustum.pointInFrustum(position.x, position.y, 0f)) {
-            entity.addComponent<OnScreenComponent> { }
-        } else {
-            entity.remove<OnScreenComponent>()
-        }
+        //entity.sprite().isVisible = camera.frustum.pointInFrustum(position.x, position.y, 0f)
     }
 
 }

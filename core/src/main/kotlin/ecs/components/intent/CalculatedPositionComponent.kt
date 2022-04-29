@@ -1,6 +1,7 @@
 package ecs.components.intent
 
 import com.badlogic.ashley.core.Component
+import com.badlogic.ashley.core.Entity
 import com.badlogic.gdx.math.Vector2
 import com.badlogic.gdx.utils.Pool
 import ktx.math.vec2
@@ -19,8 +20,16 @@ class CalculatedPositionComponent : Component, Pool.Poolable {
     }
 }
 
+class CalculatedRotationComponent: Component, Pool.Poolable {
+    var calculate: ()-> Float = { 0f }
+    override fun reset() {
+        calculate = { 0f }
+    }
+
+}
+
 class FunctionsComponent: Component, Pool.Poolable {
-    var functions = mutableMapOf<String, ()->Unit>()
+    var functions = mutableMapOf<String, (Entity)->Unit>()
     override fun reset() {
         functions.clear()
     }

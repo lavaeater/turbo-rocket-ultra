@@ -15,5 +15,5 @@ object GameConstants {
     const val MAX_ENEMIES = 2000
 
     const val GAMEWIDTH = 48f
-    const val GAMEHEIGHT = 40f
+    const val GAMEHEIGHT = 32f
 }

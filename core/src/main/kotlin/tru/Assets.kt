@@ -13,6 +13,7 @@ import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator.FreeTypeFont
 import com.badlogic.gdx.scenes.scene2d.ui.Skin
 import com.badlogic.gdx.utils.Disposable
 import features.weapons.GunFrames
+import features.weapons.Weapon
 import injection.Context.inject
 import ktx.scene2d.Scene2DSkin
 import map.snake.MapDirection
@@ -239,7 +240,7 @@ object Assets : Disposable {
         }
     }
 
-    val weapons by lazy {
+    val weapons: Map<String, Map<SpriteDirection, Sprite>> by lazy {
         mapOf(
             GunFrames.handGun to
                     mapOf(
@@ -481,10 +482,26 @@ object Assets : Disposable {
 
     private fun fixFlip() {
         for (t in towers.values)
-            t.flip(true, false)
+            t.setFlip(true, true)
+
+        newTower.setFlip(true, true)
 
         for (t in aiDebugBadges.values)
             t.flip(true, false)
+
+        for (c in playerCharacters.values)
+            for (a in c.values)
+                for (b in a.animations.values)
+                    for (d in b.keyFrames) {
+                        d.setFlip(true, true)
+
+                    }
+        for (c in enemies.values)
+            for (a in c.values)
+                for (b in a.animations.values)
+                    for (d in b.keyFrames) {
+                        d.setFlip(true, true)
+                    }
     }
 
     private fun fixScene2dSkin() {
@@ -496,14 +513,26 @@ object Assets : Disposable {
     }
 }
 
-fun Map<String, Map<String, List<TurboSound>>>.getRandomSoundFor(category: String, subCategory: String) : TurboSound {
+fun Map<String, Map<String, List<TurboSound>>>.getRandomSoundFor(category: String, subCategory: String): TurboSound {
     return this[category]!![subCategory]!!.random()
 }
 
-fun Map<String, Map<AnimState, LpcCharacterAnim<Sprite>>>.getFirstFor(anim: AnimState, direction: SpriteDirection) : Animation<Sprite> {
+fun Map<String, Map<AnimState, LpcCharacterAnim<Sprite>>>.getFirstFor(
+    anim: AnimState,
+    direction: SpriteDirection
+): Animation<Sprite> {
     return this.values.first()[anim]!!.animations[direction]!!
 }
-fun Map<String, Map<AnimState, LpcCharacterAnim<Sprite>>>.getAnimationFor(character:String, anim: AnimState, direction: SpriteDirection) : Animation<Sprite> {
+
+fun Map<String, Map<AnimState, LpcCharacterAnim<Sprite>>>.getAnimationFor(
+    character: String,
+    anim: AnimState,
+    direction: SpriteDirection
+): Animation<Sprite> {
     return this[character]!![anim]!!.animations[direction]!!
+}
+
+fun Map<String, Map<SpriteDirection, Sprite>>.getSpriteFor(weapon: Weapon, direction: SpriteDirection): Sprite {
+    return this[weapon.textureName]!![direction]!!
 }
 

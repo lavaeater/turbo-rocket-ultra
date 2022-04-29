@@ -26,17 +26,18 @@ kanban-plugin: basic
 - [ ] [[BehaviorTree Facts]]
 - [ ] [[A Nice Logo]]
 - [ ] [[Hierarchical Facts]]
+- [ ] [[New Look and Feel]]
 
 
 ## Doing
 
-- [ ] [[Guns as Entities]]
-- [ ] [[New Look and Feel]]
+- [ ] [[New Gun Sprites]]
 
 
 ## Done
 
 **Complete**
+- [x] [[Guns as Entities]]
 - [x] [[Nicer Setup UI]]
 - [x] [[Enemies and walls]]
 - [x] [[New Fact System]]

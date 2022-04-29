@@ -78,6 +78,25 @@ class WeaponDefinition(
             true,
             "melee"
         )
+        val spas12 = WeaponDefinition(
+            "Franchi Spas 12",
+            WeaponType.Projectile,
+            8,
+            60f,
+            5f,
+            16,
+            15f,
+            GunFrames.spas12,
+            AmmoType.TwelveGaugeShotgun,
+            12f..24f,
+            1f,
+            ReloadType.SingleShot,
+            Assets.gunAudio["spas12"]!!,
+            150f,
+            true,
+            "rifle"
+
+        )
         val weapons = listOf(
             baseballBat,
             molotov,
@@ -98,25 +117,7 @@ class WeaponDefinition(
                 Assets.gunAudio["glock17"]!!,
                 50f
             ),
-            WeaponDefinition(
-                "Franchi Spas 12",
-                WeaponType.Projectile,
-                8,
-                60f,
-                5f,
-                16,
-                15f,
-                GunFrames.spas12,
-                AmmoType.TwelveGaugeShotgun,
-                12f..24f,
-                1f,
-                ReloadType.SingleShot,
-                Assets.gunAudio["spas12"]!!,
-                150f,
-                true,
-                "rifle"
-
-            ),
+            spas12,
             WeaponDefinition(
                 "FN P90",
                 WeaponType.Projectile,
