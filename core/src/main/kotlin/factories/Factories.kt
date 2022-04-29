@@ -14,10 +14,7 @@ import data.Player
 import ecs.components.BodyComponent
 import ecs.components.ai.BehaviorComponent
 import ecs.components.ai.GibComponent
-import ecs.components.enemy.BossComponent
-import ecs.components.enemy.EnemyComponent
-import ecs.components.enemy.EnemySensorComponent
-import ecs.components.enemy.TackleComponent
+import ecs.components.enemy.*
 import ecs.components.fx.CreateEntityComponent
 import ecs.components.fx.ParticleEffectComponent
 import ecs.components.fx.SplatterComponent
@@ -570,6 +567,7 @@ fun boss(at: Vector2, level: Int) {
         with<EnemyComponent> {
             fieldOfView = 270f
             rushSpeed = 15f + level * 1.5f
+            speed = 10f
             viewDistance = 40f + 5f * level
             health = 1000f * level
         }
@@ -631,7 +629,7 @@ fun blockade(
     box2dBody.userData = entity
 }
 
-fun obstacle(
+fun spawner(
     tileX: Float = 0f,
     tileY: Float = 0f,
     width: Float = 4f,
@@ -666,6 +664,7 @@ fun obstacle(
             offsetY = -4f//-(widthInMeters * 2) - projectedHeightInMeters
             layer = 1
         }
+        with<EnemySpawnerComponent>{}
         with<MiniMapComponent> {
             color = Color.PINK
         }

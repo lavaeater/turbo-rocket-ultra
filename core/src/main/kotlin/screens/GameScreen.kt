@@ -82,18 +82,22 @@ class GameScreen(private val gameState: StateMachine<GameState, GameEvent>) : Kt
 
     private fun loadMapOne() {
         //For debuggin we will swarm with enemies
-        CounterObject.numberOfEnemies = 15
+        CounterObject.numberOfEnemies = 50
 
-        mapManager.gridMap = GridMapGenerator.generateFromDefintion(SimpleGridMapDef.levelOne)
+        val map = GridMapGenerator.generateFromDefintion(SimpleGridMapDef.levelOne)
+        mapManager.gridMap = map.first
+        mapManager.sectionGraph = map.second
         CounterObject.numberOfObjectives = engine.getEntitiesFor(allOf(ObjectiveComponent::class).get()).count()
         movePlayersToStart()
     }
 
     private fun loadMapTwo() {
         //For debuggin we will swarm with enemies
-        CounterObject.numberOfEnemies = 30
+        CounterObject.numberOfEnemies = 100
 
-        mapManager.gridMap = GridMapGenerator.generateFromDefintion(SimpleGridMapDef.levelTwo)
+        val map = GridMapGenerator.generateFromDefintion(SimpleGridMapDef.levelTwo)
+        mapManager.gridMap = map.first
+        mapManager.sectionGraph = map.second
         CounterObject.numberOfObjectives = engine.getEntitiesFor(allOf(ObjectiveComponent::class).get()).count()
         movePlayersToStart()
     }
@@ -245,7 +249,9 @@ D1B67A
         //For debuggin we will swarm with enemies
         CounterObject.numberOfEnemies = (8f.pow(CounterObject.currentLevel).roundToInt() * 2).coerceAtMost(MAX_ENEMIES)
 
-        mapManager.gridMap = GridMapGenerator.generate(CounterObject.currentLength, level)
+        val map =  GridMapGenerator.generate(CounterObject.currentLength, level)
+        mapManager.gridMap = map.first
+        mapManager.sectionGraph = map.second
         CounterObject.numberOfObjectives = engine.getEntitiesFor(allOf(ObjectiveComponent::class).get()).count()
         movePlayersToStart()
     }

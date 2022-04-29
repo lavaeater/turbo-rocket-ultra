@@ -1,5 +1,9 @@
 # turbo-rocket-ultra
 
+## Thursday the twentyfifth of November 2021
+
+So, I just made the molotov logic work. I managed to load map number two, which is significantly larger. Should we add a "density of enemies" to be sprinkled about the map, somehow?
+
 ## Sixteenth of November 2021
 
 Aah, the slog. It's great when the fire burns bright and you just *get things done* because there is a clarity in what you want to do. But I almost fell into the trap of "make vectors work better in the engine" and other things that drive me towards coding and doing things that have no benefit to the game. The game that isn't a game, is it? What makes a game a game? 
@@ -20,27 +24,43 @@ Ah! We can have the first level just be like ten zombies, everyone has one gun w
 Nice little todo you got there. Would be a shame if anyone actually did something with it? 
 
 So, what do we need for act one? Well, tons of fun stuff to implement:
-- [ ] Molotov cocktails (grenades and area effect weapons)
-- [ ] Zoom in, slightly, and perhaps implement line-of-sight for players?
-- [ ] More AI-mode-badges
 - [ ] Slower zombies at start of game
 - [ ] Enemies sprinkled out over the map from the start
-- [ ] No spawn points for enemis from the start
-- [ ] New player sprites inspired by Death Road to Canada - I never do this, just hire an artist already
+- [ ] No spawn points for enemies from the start
+- [ ] New player sprites inspired by Death Road to Canada - never do this, just hire an artist already
+- [x] Fix minimap after level one
+- [x] Fix the seek system
+- [x] Better Ambling System - using pathfinding
+- [x] Also implement minimap that actually only shows parts you have visited, perhaps?
+- [x] More AI-mode-badges
+- [x] Zoom in, slightly
+- [x] Molotov cocktails
 - [x] Build blockades
 - [x] Hand-to-hand combat part I
 - [x] Culling. Only draw stuff that is actually on-screen and visible? The visible part might have to wait
 - [x] Designed levels - how about a fudging overworld, mate? A larger map, like in Overcooked, perhaps?
 - [x] Weapons as pickups
 
+#### Fix the seek system
+So, the seek system is "improved" as in I am using faster methods to do it. But it seems that it could use some improvement, the raycasting seems way off, for instance, and sometimes it appears that the enemies do absolutely nothing. Some good changes would be if they when seeking could simply turn around a little to make stuff creepier, and also, if, for instance, a player enters the sensor range, the enemy doesn't notice immediately, rather it starts turning towards that position and is seeking while doing so.
+- [ ] Turn while seeking
+- [x] Check raycasting
+
+
+#### Better Ambling
+So, what should the enemies be doing. Perhaps there should be one more thing the AI could do, something like "explore", where the enemies move about to check the entire map out. We could consider the entire map as a graph of nodes, where the center of each section is the nexus for any node. Or we could, indeed, have five nodes per section, just to make it look more dynamic, then we could use A* to find our way in that hot mess. So, like the corners and then the center of the section. Perhaps that would suffice.
+
+The node could in fact contain a RANDOM point, to make it seem even more random, but reducing the number of vertices in the graph.
+
+
 #### Area Effect Weapons
 This is easy. They are slow projectiles that should, preferrably, wobble or spin through the air somehow. They should then stop after some time, or when hitting something, and explode into a fire or explosions. If they are exploding, they should deal damage and push everything outwards. 
 
 So, what I am doing now is a fire particle effect and on top of that I will add some "catch fire logic". This will have to wait, though.
 
-- [ ] Catch Fire Logic
-- [ ] Refactor contact logic
-- [ ] Fire particle effect
+- [x] Catch Fire Logic
+- [x] Refactor contact logic
+- [x] Fire particle effect
 
 ##### Blockades, swinging
 Lets start with hand-to-hand combat. How will that work? Well, the player aims in some direction and if an enemy is within range for strikes and within a fov for the strike (a 120 degree arc), the enemy can get hit. The enemy will signal this by blinking, I think would be cool. This could strike multiple enemies, perhaps.
@@ -693,11 +713,11 @@ Det här gör vi på det gamla vanliga sättet. Vi bygger en box2d-värld, vi kl
 
 Oj oj oj,  vad roligt. Vi kan göra en box2d-kropp med leder, per tutorials etc. Superkul ju.
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbMjAxMzI2MTQ2LC02NDIyNDU3LC0xNTQ5OD
-U4NTk1LC0xMDI0NjUzNTM5LDIwNTExMDIxOTksLTc0MjQxMjM1
-MCwtNjY1MDk1MjcyLDE2ODMxMTMxODIsLTcwMTA1MzI3MSwtOT
-M4ODUxNzAwLC04NzI3MzE4NjgsMjAwNzMzNTE2NCwxNzg4NTM5
-MTEzLC0xOTkxNDA0Njg1LDIzOTQ0MDA4Nyw1NjI0MzAzMywtMT
-IxMTI3MDM3MCwtMjExOTE1OTQ3MSwzMzU5NTc0NTYsMTE0MDYz
-ODM1N119
+eyJoaXN0b3J5IjpbMTIyMzEyOTA1OSwtMTMwNDYyMzk4MCwtMT
+k0NjY1Njc0OCw2ODg0ODQ1MDQsMTEwMTE0MDgxNywtNDE3MTIy
+MzcyLC05NTI1MTY0NzcsLTgyOTM1MjIzNiwtMjA4MTQ3MzAxNy
+wtMzU0MDM4NTQwLC05NzY0MzUwNjIsMjAxMzI2MTQ2LC02NDIy
+NDU3LC0xNTQ5ODU4NTk1LC0xMDI0NjUzNTM5LDIwNTExMDIxOT
+ksLTc0MjQxMjM1MCwtNjY1MDk1MjcyLDE2ODMxMTMxODIsLTcw
+MTA1MzI3MV19
 -->

@@ -1,5 +1,7 @@
 package map.grid
 
+import ai.pathfinding.TileGraph
+import com.badlogic.gdx.graphics.Color
 import com.badlogic.gdx.graphics.g2d.Batch
 import com.badlogic.gdx.physics.box2d.Body
 import com.badlogic.gdx.physics.box2d.BodyDef
@@ -15,6 +17,7 @@ import physics.drawScaled
 import space.earlygrey.shapedrawer.ShapeDrawer
 
 class GridMapManager {
+    lateinit var sectionGraph: TileGraph
     var gridMap: Map<Coordinate, GridMapSection> = mapOf()
     set(value) {
         field = value
@@ -23,11 +26,30 @@ class GridMapManager {
 
     val bodies = mutableListOf<Body>()
 
+    fun getRandomSection(except: Coordinate, maxDistance: Int = 5): Coordinate {
+        val minX = except.x - maxDistance
+        val maxX = except.x + maxDistance
+        val minY = except.y - maxDistance
+        val maxY = except.y + maxDistance
+        return gridMap.keys.filter { it != except && it.x > minX && it.x < maxX && it.y > minY && it.y < maxY } .random()
+    }
+
     fun canWeBuildAt(x: Int, y:Int) : Boolean {
         return buildableMap.containsKey(x) && buildableMap[x]!!.containsKey(y) && buildableMap[x]!![y]!!
     }
 
+    fun haveWeVisited(x: Int, y:Int) : Boolean {
+        return visitedMap.containsKey(x) && visitedMap[x]!!.containsKey(y) && visitedMap[x]!![y]!!
+    }
+
     private val buildableMap = mutableMapOf<Int, MutableMap<Int, Boolean>>()
+    private val visitedMap = mutableMapOf<Int, MutableMap<Int, Boolean>>()
+
+    fun visit(sectionX: Int, sectionY: Int) {
+        if(!visitedMap.containsKey(sectionX))
+            visitedMap[sectionX] = mutableMapOf()
+        visitedMap[sectionX]!![sectionY] = true
+    }
 
 
     fun fixBodies() {
@@ -40,10 +62,14 @@ class GridMapManager {
             for ((x, column) in section.tiles.withIndex()) {
                 for ((y, tile) in column.withIndex()) {
                     val actualX = section.x * GridMapSection.width + x
-                    val actualY = section.y * GridMapSection.width + y
+                    val actualY = section.y * GridMapSection.height + y
                     if(!buildableMap.containsKey(actualX))
                         buildableMap[actualX] = mutableMapOf()
                     buildableMap[actualX]!![actualY] = tile.passable
+                    if(!visitedMap.containsKey(actualX))
+                        visitedMap[actualX] = mutableMapOf()
+                    visitedMap[actualX]!![actualY] = false
+
                     if (!tile.passable) {
                         val body = world().body {
                             type = BodyDef.BodyType.StaticBody
@@ -65,16 +91,29 @@ class GridMapManager {
         }
     }
 
-    var needsDirectionalLight = true
-
     var animationStateTime = 0f
+    private val miniMapColor = Color(0.6f, 0.6f, 0.6f, 1f)
+
+    fun renderMiniMap(shapeDrawer: ShapeDrawer, xOffset: Float, yOffset:Float, scale: Float = 1/100f) {
+        for (section in gridMap.values) {
+            val actualX = section.x
+            val actualY = section.y
+            if(haveWeVisited(actualX, actualY)) {
+                val sectionOffsetX = section.x * section.sectionWidth * scale
+                val sectionOffsetY = section.y * section.sectionHeight * scale
+                shapeDrawer.filledRectangle(
+                    sectionOffsetX + xOffset,
+                    sectionOffsetY + yOffset,
+                    section.sectionWidth * scale,
+                    section.sectionHeight * scale,
+                    miniMapColor
+                )
+            }
+            section.lights.forEach { it.isActive = true }
+        }
+    }
+
     fun render(batch: Batch, shapeDrawer: ShapeDrawer, delta: Float, scale: Float = 1f) {
-//        if(needsDirectionalLight) {
-//            needsDirectionalLight = false
-//            val light = DirectionalLight(inject<RayHandler>(), 128, Color(.05f,.05f,.05f,.5f), 45f).apply {
-//
-//            }
-//        }
         animationStateTime += delta
         for (section in gridMap.values) {
             val sectionOffsetX = section.x * section.sectionWidth * scale
@@ -96,9 +135,6 @@ class GridMapManager {
                     }
                 }
             }
-//            shapeDrawer.rectangle(section.bounds, Color.BLUE)
-//            shapeDrawer.rectangle(section.innerBounds, Color.RED)
-//            shapeDrawer.rectangle(section.safeBounds, Color.GREEN)
             section.lights.forEach { it.isActive = true }
         }
     }

@@ -1,5 +1,6 @@
 package map.grid
 
+import ai.pathfinding.TileGraph
 import box2dLight.Light
 import box2dLight.RayHandler
 import com.badlogic.ashley.core.Engine
@@ -27,13 +28,13 @@ class GridMapGenerator {
             objective(position.x, position.y)
 
             position = bounds.randomPoint()
-            val emitter = obstacle(position.x, position.y)
+            val emitter = spawner(position.x, position.y)
             emitter.add(engine.createComponent(EnemySpawnerComponent::class.java))
         }
 
         fun addObstacle(bounds: Rectangle) {
             var position = bounds.randomPoint()
-            obstacle(position.tileWorldX(), position.tileWorldY())
+            spawner(position.tileWorldX(), position.tileWorldY())
         }
 
         fun addBoss(bounds: Rectangle) {
@@ -41,7 +42,7 @@ class GridMapGenerator {
             boss(position, 1)
         }
 
-        fun generateFromDefintion(def: SimpleGridMapDef): Map<Coordinate, GridMapSection> {
+        fun generateFromDefintion(def: SimpleGridMapDef): Pair<Map<Coordinate, GridMapSection>, TileGraph> {
             //TODO: Move this somewhere
             Light.setGlobalContactFilter(
                 Box2dCategories.lights,
@@ -51,17 +52,29 @@ class GridMapGenerator {
             rayHandler.setBlurNum(3)
 
             val tileMap = mutableMapOf<Coordinate, GridMapSection>()
+            val graph = TileGraph()
 
             var index = 0
             for ((x, column) in def.booleanSections.withIndex()) {
-                for ((y, tile) in column.withIndex())
-                    if (tile) {
+                for ((y, aSectionIsHere) in column.withIndex())
+                    if (aSectionIsHere) {
                         index++
                         //1. Check neighbours - if they are true, we will add them as connections
-                        val coordinate = Coordinate(x, y)
+                        val coordinate = TileGraph.createCoordinate(x, y)
+                        val connections = getConnections(x, y, def.booleanSections)
+                        //graph.addCoordinate(coordinate)
+                        for (direction in connections) {
+                            val connectionCoordinate = TileGraph.createCoordinate(
+                                coordinate.x + MapDirection.xIndex[direction]!!,
+                                coordinate.y + MapDirection.yIndex[direction]!!
+                            )
+
+                            graph.connectCoordinates(coordinate, connectionCoordinate)
+                        }
+
                         val section = GridMapSection(
                             coordinate,
-                            getConnections(x, y, def.booleanSections),
+                            connections,
                             def.hasStart(coordinate)
                         )
 
@@ -80,18 +93,19 @@ class GridMapGenerator {
                                 LootTable(
                                     mutableListOf(
                                         *WeaponDefinition.weapons.map { WeaponLoot(it, 5f) }.toTypedArray(),
-                                         AmmoLoot(AmmoType.NineMilliMeters, 17..51, 10f),
-                                         AmmoLoot(AmmoType.FnP90Ammo, 25..150, 10f),
-                                         AmmoLoot(AmmoType.TwelveGaugeShotgun, 4..18, 10f),
-                                ), (3..5).random())
+                                        AmmoLoot(AmmoType.NineMilliMeters, 17..51, 10f),
+                                        AmmoLoot(AmmoType.FnP90Ammo, 25..150, 10f),
+                                        AmmoLoot(AmmoType.TwelveGaugeShotgun, 4..18, 10f),
+                                    ), (3..5).random()
+                                )
                             )
                         }
                     }
             }
-            return tileMap
+            return Pair(tileMap, graph)
         }
 
-        fun generate(length: Int, level: Int): Map<Coordinate, GridMapSection> {
+        fun generate(length: Int, level: Int): Pair<Map<Coordinate, GridMapSection>, TileGraph> {
             //TODO: Move this somewhere
             Light.setGlobalContactFilter(
                 Box2dCategories.lights,
@@ -181,16 +195,23 @@ class GridMapGenerator {
             we can simply say that certain directions are wall and others not.
              */
             val tileMap = mutableMapOf<Coordinate, GridMapSection>()
-
+            val graph = TileGraph()
             var index = 0
             for ((x, column) in map.withIndex()) {
                 for ((y, tile) in column.withIndex())
                     if (tile) {
                         index++
                         //1. Check neighbours - if they are true, we will add them as connections
-                        val coordinate = Coordinate(x, y)
-                        val section = GridMapSection(coordinate, getConnections(x, y, map), coordinate == startCoord)
-
+                        val coordinate = TileGraph.createCoordinate(x, y)
+                        val connections = getConnections(x, y, map)
+                        val section = GridMapSection(coordinate, connections, coordinate == startCoord)
+                        for (direction in connections) {
+                            val connectionCoordinate = TileGraph.createCoordinate(
+                                coordinate.x + MapDirection.xIndex[direction]!!,
+                                coordinate.y + MapDirection.yIndex[direction]!!
+                            )
+                            graph.connectCoordinates(coordinate, connectionCoordinate)
+                        }
                         tileMap[coordinate] = section
                         if (objectives.contains(coordinate)) {
                             addObjective(section.innerBounds)
@@ -198,17 +219,16 @@ class GridMapGenerator {
 
                         if ((1..20).random() <= level) {
                             val position = section.innerBounds.randomPoint()
-                            val emitter = obstacle(position.x, position.y)
-                            emitter.add(engine.createComponent(EnemySpawnerComponent::class.java))
+                            val emitter = spawner(position.x, position.y)
+                            //emitter.add(engine.createComponent(EnemySpawnerComponent::class.java))
                         }
-
 
                         if (coordinate == bossCoordinate) {
                             boss(section.innerBounds.randomPoint(), level)
                         }
                     }
             }
-            return tileMap
+            return Pair(tileMap,graph)
 
         }
 
@@ -225,83 +245,6 @@ class GridMapGenerator {
             }
             return returnSet
         }
-    }
-}
-
-class SimpleGridMapDef(val def: List<String>) {
-
-    fun hasLoot(coordinate: Coordinate): Boolean {
-        return sections[coordinate.x][coordinate.y] == 'l'
-    }
-
-    fun hasStart(coordinate: Coordinate): Boolean {
-        return sections[coordinate.x][coordinate.y] == 's'
-    }
-
-    fun hasGoal(coordinate: Coordinate): Boolean {
-        return sections[coordinate.x][coordinate.y] == 'g'
-    }
-
-    fun hasObstacle(coordinate: Coordinate) : Boolean {
-        return sections[coordinate.x][coordinate.y] == 'o'
-    }
-    fun hasBoss(coordinate: Coordinate) : Boolean {
-        return sections[coordinate.x][coordinate.y] == 'b'
-    }
-
-    val booleanSections
-        get() : Array<Array<Boolean>> {
-            return sections.map { column -> column.toCharArray().map { it != 'e' }.toTypedArray() }.toTypedArray()
-        }
-
-    val sections
-        get(): Array<Array<Char>> {
-            val mapWidth = def.map { it.length }.maxOf { it }
-            val mapHeight = def.size
-            val s = Array(mapWidth) { x ->
-                Array(mapHeight) { y ->
-                    def[y][x]
-                }
-            }
-            return s
-        }
-
-    companion object {
-        val levelOne = SimpleGridMapDef(
-            """
-            xxxxgxxxb
-            xeeeexeee
-            xeeeexxxl
-            xxlxxxeex
-            xxxeelxxx
-            xxeeeeeex
-            sxxxxxxxx
-        """.trimIndent().lines()
-        )
-        val levelTwo = SimpleGridMapDef(
-            """
-                xxxxxxxxxxxxxxxxxxxxxx
-                xeeeeeeeeeeeeeeeeeeeex
-                xexxxxxxxxoxxxxxxxxxxx
-                xexeeeeeeeeeeeeeeeeeee
-                xexexxxxxxxxxxxxxxxxxx
-                xexexeeeeeeeeeeeeeeeex
-                xexexexxxxxxxxxxxxxxxx
-                xexexexeeeeeeeeeeeeeee
-                xexexexxexxxxxxxxxxxxe
-                xexxxegbexboxeeeeeeexe
-                xeeeeeeeexooxexxxxoexe
-                xxxxxxxxxxooxeoeexxexe
-                eoeleoelexxxxxxeebgexe
-                eeeeeeeeeeeeeeeeeeeexe
-                eexxxxxxxxxxxxxxxxxxxe
-                exxeeeeeeeeeeeeeeeeeee
-                exeeeeeeeeeeexooeeeeee
-                exxxxxxxxxxxxlooeeeeee
-                exeeeeeeeeeeexxxeeeeee
-                sxeeeeeeeeeeeeeeeeeeee
-            """.trimIndent().lines()
-        )
     }
 }
 

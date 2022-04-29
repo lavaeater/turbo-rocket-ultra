@@ -16,5 +16,7 @@ class RushPlayer : TaskComponent() {
         previousDistance = 0f
         rushPoint.setZero()
     }
-
+    override fun toString(): String {
+        return "rush"
+    }
 }
