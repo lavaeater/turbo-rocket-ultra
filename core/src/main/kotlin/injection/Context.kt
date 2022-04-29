@@ -10,10 +10,8 @@ import com.badlogic.gdx.graphics.g2d.PolygonSpriteBatch
 import com.badlogic.gdx.utils.viewport.ExtendViewport
 import ecs.systems.*
 import ecs.systems.ai.*
+import ecs.systems.enemy.*
 import ecs.systems.input.KeyboardInputSystem
-import ecs.systems.enemy.EnemyDeathSystem
-import ecs.systems.enemy.EnemyDirectionSystem
-import ecs.systems.enemy.EnemyMovementSystem
 import ecs.systems.fx.AddSplatterSystem
 import ecs.systems.fx.SplatterRemovalSystem
 import ecs.systems.graphics.CameraUpdateSystem
@@ -22,6 +20,7 @@ import ecs.systems.graphics.RenderSystem
 import ecs.systems.graphics.ShootDebugRenderSystem
 import ecs.systems.input.GamepadInputSystem
 import ecs.systems.input.VehicleControlSystem
+import ecs.systems.player.PlayerDeathSystem
 import ecs.systems.player.PlayerMoveSystem
 import ecs.systems.player.PlayerShootingSystem
 import ktx.box2d.createWorld
@@ -67,15 +66,11 @@ object Context {
     private fun getEngine(): Engine {
         return PooledEngine().apply {
             addSystem(PhysicsSystem(inject()))
-            //     addSystem(PhysicsDebugRendererSystem(inject(), inject()))
             addSystem(CameraUpdateSystem())
             addSystem(PlayerMoveSystem())
             addSystem(KeyboardInputSystem())
             addSystem(GamepadInputSystem())
             addSystem(BodyDestroyerSystem(inject())) //world
-            addSystem(EnterVehicleSystem())
-            addSystem(ExitVehicleSystem())
-            addSystem(VehicleControlSystem())
             addSystem(CharacterWalkAndShootDirectionSystem())
             addSystem(ShootDebugRenderSystem())
             addSystem(PlayerShootingSystem(inject()))
@@ -89,6 +84,11 @@ object Context {
             addSystem(EnemyDirectionSystem())
             addSystem(AddSplatterSystem())
             addSystem(SplatterRemovalSystem())
+            addSystem(EnemyHearsShotsSystem())
+            addSystem(InvestigateSystem())
+            addSystem(EnemyDebugRenderSystem(false, true))
+            addSystem(PlayerDeathSystem())
+            addSystem(EnemySpawnSystem())
             addSystem(RenderSystem(inject<PolygonSpriteBatch>() as Batch))
             addSystem(RenderMiniMapSystem())
         }

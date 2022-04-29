@@ -5,7 +5,7 @@ import com.badlogic.ashley.systems.IteratingSystem
 import com.badlogic.gdx.graphics.Color
 import com.badlogic.gdx.graphics.g2d.Batch
 import com.badlogic.gdx.graphics.g2d.PolygonSpriteBatch
-import ecs.components.PlayerControlComponent
+import ecs.components.player.PlayerControlComponent
 import ecs.components.gameplay.TransformComponent
 import injection.Context.inject
 import ktx.ashley.allOf

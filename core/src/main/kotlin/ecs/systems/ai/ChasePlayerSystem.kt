@@ -6,7 +6,8 @@ import com.badlogic.gdx.ai.btree.Task
 import ecs.components.enemy.EnemyComponent
 import ecs.components.gameplay.TransformComponent
 import ecs.components.ai.ChasePlayer
-import ecs.components.ai.PlayerTrackComponent
+import ecs.components.ai.PlayerIsInRange
+import ecs.components.ai.TrackingPlayerComponent
 import ktx.ashley.allOf
 import ktx.ashley.mapperFor
 import ktx.math.vec2
@@ -15,25 +16,36 @@ class ChasePlayerSystem: IteratingSystem(allOf(
     ChasePlayer::class,
     EnemyComponent::class,
     TransformComponent::class,
-    PlayerTrackComponent::class).get()) {
+    TrackingPlayerComponent::class).get()) {
     private val mapper = mapperFor<ChasePlayer>()
     private val eMapper = mapperFor<EnemyComponent>()
     private val tMapper = mapperFor<TransformComponent>()
-    private val trackerMapper = mapperFor<PlayerTrackComponent>()
+    private val trackerMapper = mapperFor<TrackingPlayerComponent>()
 
     override fun processEntity(entity: Entity, deltaTime: Float) {
         val chasePlayer = mapper[entity]
         if(chasePlayer.status == Task.Status.RUNNING) {
+            chasePlayer.coolDown -= deltaTime
+
+
             val enemyComponent = eMapper[entity]
             val transformComponent = tMapper[entity]
             val playerPosition = tMapper.get(trackerMapper[entity].player!!.entity).position
             val distance = vec2().set(transformComponent.position).sub(playerPosition).len2()
-            if (distance < 5f)
-                chasePlayer.status = Task.Status.SUCCEEDED
-            else {
-                enemyComponent.speed = 3.5f
-                enemyComponent.directionVector.set(playerPosition).sub(transformComponent.position)
-                    .nor()
+            when {
+                distance < 5f -> {
+                    entity.add(engine.createComponent(PlayerIsInRange::class.java))
+                    chasePlayer.status = Task.Status.SUCCEEDED
+                }
+                chasePlayer.coolDown > 0f -> {
+                    enemyComponent.speed = 5f
+                    enemyComponent.directionVector.set(playerPosition).sub(transformComponent.position)
+                        .nor()
+                }
+                else -> {
+                    enemyComponent.speed = 1f
+                    chasePlayer.status = Task.Status.FAILED
+                }
             }
         }
     }

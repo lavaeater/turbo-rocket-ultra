@@ -1,12 +1,11 @@
 package ecs.components.ai
 
-import com.badlogic.ashley.core.Component
 import com.badlogic.gdx.ai.btree.Task
-import com.badlogic.gdx.utils.Pool
 
-abstract class TaskComponent : Component, Pool.Poolable {
+abstract class TaskComponent : CoolDownComponent() {
     var status : Task.Status = Task.Status.RUNNING
     override fun reset() {
+        super.reset()
         status = Task.Status.RUNNING
     }
 }

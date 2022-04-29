@@ -11,6 +11,8 @@ import com.badlogic.gdx.physics.box2d.Contact
 import com.badlogic.gdx.physics.box2d.Fixture
 import ecs.components.*
 import ecs.components.enemy.EnemyComponent
+import ecs.components.player.PlayerComponent
+import ecs.components.player.PlayerControlComponent
 import gamestate.Player
 import ktx.ashley.has
 import ktx.ashley.mapperFor
@@ -114,7 +116,7 @@ inline fun <reified T: Component>Contact.bothHaveComponent(): Boolean {
 }
 
 @ExperimentalStdlibApi
-inline fun Contact.getPlayerFor(): Player {
+fun Contact.getPlayerFor(): Player {
     return this.getEntityFor<PlayerComponent>().getComponent<PlayerComponent>().player
 }
 

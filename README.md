@@ -18,19 +18,47 @@ Inspirations off the bat for this game are:
 To make the graphics and environment easy I am currently working with the concept of "zombie tower defense", which is obviously lame and very boring, but hey... it's easy to find art for.
 
 ### MVP
+
+* Objective counting in multiplayer
+* Player death and game over man
 * Towers
-* Fix enemy direction systems
-* Fix enemy sensors / noticing
+* Fix enemy sensors / noticing <- advanced behaviors
+* Fix enemy direction systems <- done?
 * Vehicles <- nice to have
 * Different weapons to shoot with
 * Controller support <- Done
-* Twin Stick shooting
-* Multiplayer
+* Twin Stick shooting <- done
+* Multiplayer <- done
 * Player damage / Enemy attacks <- Done
 * Objectives <- Done!
 * Enemies <- Done
 * Blood Splatter <- Done
 * MiniMap <- Done
+
+## Done: Interrupted Tasks v0.1
+
+### Notes
+So, what I wanted to achieve as a proof-of-concept was the idea of zombies hearing stuff, getting distracted and the like. So if you run around shooting zombies, they might be attracted to the noise. Hypothetically this could be a play strategy, like putting out "thumpers" that make noise and attract zombies, etc. We'll see. This is done by simply adding a component to the zombie from some other part of the game (a noticing system, or contact manager), which interrupts what the zombie is doing right now and sends it away to investigate the noise for some time. It took way too much effort because I misunderstood decorators and guards completely. Decorator wraps tasks and adds special behavior to them, Guards are tasks that evaluate to success or fail - and depending on that the actual task is executed or not.
+
+### Mechanics
+
+How do I implement guards and interruption of actions being performed? As it is now, these types of tasks I have implemented simply return success or failure OR running - but it would be cool to add some kind of guard / interruption of these tasks using some kind of "simple" mechanic - which of course could be done in several ways.
+
+How about messages? A message from the ContactManager to the behaviorsystem (yes probably)? Or the contact manager adds a component and that component is marked as a "failcurrent task"-component? An interrupt-component, if you will? So, that could be super simple, to make some kind of "guard" system happen. An interrupt occurs... more on this later.
+
+Implement my own Interrupt-decorator. Basically "Interrupted if has" - same as I already did, of course. What is the change? No change... damn. Add Interrupt-component to all entitycomponent-tasks, could work, all these systems could look for some particular component and say "fail" if it shows up, we will try that, won't we?
+
+Decorator aren't guards. What .. the .. hell.
+
+Why didn't it work before, then? Make it work this time...
+
+So, an important PSA about Guards - I for some reason got it into my head that guards = decorators, but that is absolutely not the case. Instead it is more like, well, guards could be any task. It could be an entire subtree of the behavior tree, or an imported tree, or whatever. 
+
+So, if I understand correctly, the dynamic guard selector evaluates the childrens guards and it picks the FIRST child whose guard evaluates to true. So our investigate-task should only be run when the enemy has noticed something, and the noticing function is there again. 
+
+So I will try to set up the tree to have like "HasComponentTask" as guard - but the task can't then be inverted, or can it? Yes it can. The inverter inverts the result of the child task, which means we have to take that into account when doing this logic. It will work.
+
+
 
 ## Done: Multiplayer v0.1
 
@@ -38,10 +66,10 @@ To make the graphics and environment easy I am currently working with the concep
 
 This feature will add about 20 sub-features. To have multiplayer, we must now have a way of starting the game, pausing the game, adding players, removing players, etc. And of course the most important one of them all: selecting the player character. So I will add:
 * A FSM for the Game state <- this is where these are actually **very** useful
-* A game setup screen
-* A pause screen
-* A game over screen
-* Ways to move between these etc.
+* A game setup screen <- not done
+* A pause screen <- "done"
+* A game over screen <- "done"
+* Ways to move between these etc. <- done
 
 After that, we can actually use the multiplayer functionality, shouldn't be too difficult.
 
@@ -290,11 +318,11 @@ Next should probably be the feature that requires the least work to make it a "g
 
 So the next feature will be ship collisions.
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbMzM1NTAzMzQxLDEwMjcwODQwMSwxNTcxND
-E2MDg1LC0yMTQ2MDQxNTc5LC05MDM2NjU5MjUsOTU0NDQyMzQ1
-LDE4NTE3MDkzMjUsLTE2OTgyMTM3NDMsLTE2NDExNDAyODcsMT
-MxNTMxNzczNiwtMzY4ODUzNTEyLDIxMzU4MTkwMDQsLTIxMTg4
-OTAxMDksMTcwNDk0NjE5OCw0NDM4NDkzNjQsMTQ4Nzc4NDQ0Ni
-wtMTQ3MjQ4MTI5OSwtNzY3NzEyNzcxLC00MDA4OTIwOTAsMTA2
-MTQ4MjUzNl19
+eyJoaXN0b3J5IjpbMTM1ODE4NzMxNCwzMDM1ODEzMDcsLTIxMD
+YyNTUwMTcsMTk2MDY5NTIxMywxNzY5NjgzOTc3LDMzNTUwMzM0
+MSwxMDI3MDg0MDEsMTU3MTQxNjA4NSwtMjE0NjA0MTU3OSwtOT
+AzNjY1OTI1LDk1NDQ0MjM0NSwxODUxNzA5MzI1LC0xNjk4MjEz
+NzQzLC0xNjQxMTQwMjg3LDEzMTUzMTc3MzYsLTM2ODg1MzUxMi
+wyMTM1ODE5MDA0LC0yMTE4ODkwMTA5LDE3MDQ5NDYxOTgsNDQz
+ODQ5MzY0XX0=
 -->

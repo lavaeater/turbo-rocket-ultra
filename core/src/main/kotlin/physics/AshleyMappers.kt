@@ -3,7 +3,7 @@ package physics
 import com.badlogic.ashley.core.Component
 import com.badlogic.ashley.core.ComponentMapper
 import ecs.components.BodyComponent
-import ecs.components.PlayerControlComponent
+import ecs.components.player.PlayerControlComponent
 import ecs.components.VehicleComponent
 import ecs.components.VehicleControlComponent
 import ecs.components.gameplay.TransformComponent
