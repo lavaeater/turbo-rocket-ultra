@@ -482,10 +482,26 @@ object Assets : Disposable {
 
     private fun fixFlip() {
         for (t in towers.values)
-            t.flip(true, false)
+            t.setFlip(true, true)
+
+        newTower.setFlip(true, true)
 
         for (t in aiDebugBadges.values)
             t.flip(true, false)
+
+        for (c in playerCharacters.values)
+            for (a in c.values)
+                for (b in a.animations.values)
+                    for (d in b.keyFrames) {
+                        d.setFlip(true, true)
+
+                    }
+        for (c in enemies.values)
+            for (a in c.values)
+                for (b in a.animations.values)
+                    for (d in b.keyFrames) {
+                        d.setFlip(true, true)
+                    }
     }
 
     private fun fixScene2dSkin() {
@@ -497,14 +513,22 @@ object Assets : Disposable {
     }
 }
 
-fun Map<String, Map<String, List<TurboSound>>>.getRandomSoundFor(category: String, subCategory: String) : TurboSound {
+fun Map<String, Map<String, List<TurboSound>>>.getRandomSoundFor(category: String, subCategory: String): TurboSound {
     return this[category]!![subCategory]!!.random()
 }
 
-fun Map<String, Map<AnimState, LpcCharacterAnim<Sprite>>>.getFirstFor(anim: AnimState, direction: SpriteDirection) : Animation<Sprite> {
+fun Map<String, Map<AnimState, LpcCharacterAnim<Sprite>>>.getFirstFor(
+    anim: AnimState,
+    direction: SpriteDirection
+): Animation<Sprite> {
     return this.values.first()[anim]!!.animations[direction]!!
 }
-fun Map<String, Map<AnimState, LpcCharacterAnim<Sprite>>>.getAnimationFor(character:String, anim: AnimState, direction: SpriteDirection) : Animation<Sprite> {
+
+fun Map<String, Map<AnimState, LpcCharacterAnim<Sprite>>>.getAnimationFor(
+    character: String,
+    anim: AnimState,
+    direction: SpriteDirection
+): Animation<Sprite> {
     return this[character]!![anim]!!.animations[direction]!!
 }
 

@@ -80,15 +80,15 @@ class RenderSystem(
         forceSort()
         rayHandler.setCombinedMatrix(camera)
 
-//        vfxManager.cleanUpBuffers()
-//        vfxManager.beginInputCapture()
+        vfxManager.cleanUpBuffers()
+        vfxManager.beginInputCapture()
         batch.use {
             mapManager.render(batch, shapeDrawer, deltaTime)
             super.update(deltaTime)
         }
-//        vfxManager.endInputCapture()
-//        vfxManager.applyEffects()
-//        vfxManager.renderToScreen()
+        vfxManager.endInputCapture()
+        vfxManager.applyEffects()
+        vfxManager.renderToScreen()
         rayHandler.updateAndRender()
     }
 
@@ -98,9 +98,6 @@ class RenderSystem(
 
         if (spriteComponent.isVisible) {
             val sprite = spriteComponent.sprite
-            val actualScale = scale * spriteComponent.scale
-            sprite.setScale(actualScale, actualScale)
-            sprite.setFlip(true, true)
             if (spriteComponent.rotateWithTransform)
                 sprite.rotation = transform.rotation * MathUtils.radiansToDegrees
             sprite.setOriginBasedPosition(transform.position.x, transform.position.y)

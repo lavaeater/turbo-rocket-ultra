@@ -139,15 +139,15 @@ object Context {
             addSystem(WeaponUpdateSystem())
             addSystem(WeaponChangeAndReloadSystem())
             addSystem(UpdatePlayerStatsSystem())
-            addSystem(PhysicsDebugRendererSystem(inject(), inject()))
+            //addSystem(PhysicsDebugRendererSystem(inject(), inject()))
             addSystem(
                 RenderSystem(
                     inject<PolygonSpriteBatch>() as Batch,
-                    true,
+                    false,
                     inject(),
                     inject(),
                     inject<ExtendViewport>(),
-                    true,
+                    false,
                     1
                 )
             )
