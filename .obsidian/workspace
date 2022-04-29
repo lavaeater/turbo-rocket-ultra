@@ -7,11 +7,9 @@
         "id": "9210143da10edeee",
         "type": "leaf",
         "state": {
-          "type": "markdown",
+          "type": "kanban",
           "state": {
-            "file": "docs/todo/Intent-based Weapon Select.md",
-            "mode": "source",
-            "source": false
+            "file": "docs/KANBAN.md"
           }
         }
       }
@@ -69,7 +67,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "docs/todo/Intent-based Weapon Select.md",
+                "file": "docs/KANBAN.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -89,8 +87,8 @@
   },
   "active": "9210143da10edeee",
   "lastOpenFiles": [
-    "docs/todo/Intent-based Weapon Select.md",
     "docs/KANBAN.md",
+    "docs/done/Intent-based Weapon Select.md",
     "docs/Facts of The World.md",
     "docs/Done things.md",
     "docs/done/New Gun Sprites.md",

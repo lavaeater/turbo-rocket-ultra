@@ -30,12 +30,12 @@ kanban-plugin: basic
 
 ## Doing
 
-- [ ] [[Intent-based Weapon Select]]
 
 
 ## Done
 
 **Complete**
+- [x] [[Intent-based Weapon Select]]
 - [x] [[New Gun Sprites]]
 - [x] [[Guns as Entities]]
 - [x] [[Nicer Setup UI]]
