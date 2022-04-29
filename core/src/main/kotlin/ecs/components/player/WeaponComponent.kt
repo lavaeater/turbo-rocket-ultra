@@ -4,9 +4,8 @@ import com.badlogic.ashley.core.Component
 import com.badlogic.gdx.utils.Pool
 import ecs.systems.player.SelectedItemList
 import features.weapons.AmmoType
-import features.weapons.Gun
-import features.weapons.GunDefinition
-import features.weapons.GunFrames
+import features.weapons.Weapon
+import features.weapons.WeaponDefinition
 
 inline fun<T> selectedItemListOf(vararg items: T): SelectedItemList<T> {
     val list = SelectedItemList<T>()
@@ -15,21 +14,21 @@ inline fun<T> selectedItemListOf(vararg items: T): SelectedItemList<T> {
 }
 
 class InventoryComponent: Component, Pool.Poolable {
-    val guns = selectedItemListOf<Gun>()
+    val weapons = selectedItemListOf<Weapon>()
     val ammo = mutableMapOf<AmmoType, Int>()
     override fun reset() {
-        guns.clear()
+        weapons.clear()
         ammo.clear()
     }
 }
 
 class WeaponComponent: Component, Pool.Poolable {
     var reloading = false
-    var reloadCoolDown: Float = GunDefinition.guns.first().reloadDelay
-    var currentGun = GunDefinition.guns.first().getGun()
+    var reloadCoolDown: Float = WeaponDefinition.weapons.first().reloadDelay
+    var currentWeapon = WeaponDefinition.weapons.first().getWeapon()
     override fun reset() {
-        currentGun = GunDefinition.guns.first().getGun()
-        reloadCoolDown = GunDefinition.guns.first().reloadDelay
+        currentWeapon = WeaponDefinition.weapons.first().getWeapon()
+        reloadCoolDown = WeaponDefinition.weapons.first().reloadDelay
         //No-op
     }
 }

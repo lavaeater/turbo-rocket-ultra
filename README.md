@@ -1,5 +1,81 @@
 # turbo-rocket-ultra
 
+## Sixteenth of November 2021
+
+Aah, the slog. It's great when the fire burns bright and you just *get things done* because there is a clarity in what you want to do. But I almost fell into the trap of "make vectors work better in the engine" and other things that drive me towards coding and doing things that have no benefit to the game. The game that isn't a game, is it? What makes a game a game? 
+
+What would make this game a game? What would make it a game that I, and or the rest of the family or some of my friends would want to play?
+
+This is already a repetition of what I wrote under "newest thougts" below, but I kind of lost the spark after implementing the working dot product fov algorithm, now I need to find what it is I want to add to the game next. Perhaps it is like this: having the ability to add something in the game, like a mini-story, does not mean that it automatically exists a bunch of stories or that it becomes easy to do it. 
+
+What the game needs is polish in the long run, but to keep me going I must not get caught up in doing too much polish right now. It also needs fun things to do. So, perhaps we should try to make some cool new way of having a level? Perhaps we need to do the three act structure and six questions about the game?
+
+### Three acts of terror
+
+#### Act one - a small beginning
+The game I have built so far is a very basic zombie survival top-down twin-stick shooter. To make it more game-like, I think we need to make the beginning smaller. Perhaps we could start with the players only having close-combat weapons? That would mean implementing melee combat, which could be cool. So, the gameplay would progress over the ten first levels with small-ish levels (the physical size of the level might be large, just not epic numbers of zombies etc) where the players get to test all their skills and tools, in preparation for the second act, where they are prepared but the hordes are larger. Also, Zombies? They are stand-ins for something properly funny to have as enemies. But that can be changed later. And also, we don't need to plan for the entirety of the three acts, because we can simply work on them as we progress. But the start of the game should be (perhaps) hand-to-hand combat, handguns, molotovs and building barricades if there is a horde coming. We could put some actual level-design to use as well, using some kind of simple format for that. Also, we need UI blurs and speech bubbles to signal stuff in a cool way. Zombies need to be waay slower in the beginning, as well, and we need to add more AI-debug stuff in a nicer way. A nice little nine-patcher would be cool.
+
+Ah! We can have the first level just be like ten zombies, everyone has one gun with 17 bullets in, that's it. 
+
+Nice little todo you got there. Would be a shame if anyone actually did something with it? 
+
+So, what do we need for act one? Well, tons of fun stuff to implement:
+- [ ] Molotov cocktails (grenades and area effect weapons)
+- [ ] Zoom in, slightly, and perhaps implement line-of-sight for players?
+- [ ] More AI-mode-badges
+- [ ] Slower zombies at start of game
+- [ ] Enemies sprinkled out over the map from the start
+- [ ] No spawn points for enemis from the start
+- [ ] New player sprites inspired by Death Road to Canada - I never do this, just hire an artist already
+- [x] Build blockades
+- [x] Hand-to-hand combat part I
+- [x] Culling. Only draw stuff that is actually on-screen and visible? The visible part might have to wait
+- [x] Designed levels - how about a fudging overworld, mate? A larger map, like in Overcooked, perhaps?
+- [x] Weapons as pickups
+
+#### Area Effect Weapons
+This is easy. They are slow projectiles that should, preferrably, wobble or spin through the air somehow. They should then stop after some time, or when hitting something, and explode into a fire or explosions. If they are exploding, they should deal damage and push everything outwards. 
+
+So, what I am doing now is a fire particle effect and on top of that I will add some "catch fire logic". This will have to wait, though.
+
+- [ ] Catch Fire Logic
+- [ ] Refactor contact logic
+- [ ] Fire particle effect
+
+##### Blockades, swinging
+Lets start with hand-to-hand combat. How will that work? Well, the player aims in some direction and if an enemy is within range for strikes and within a fov for the strike (a 120 degree arc), the enemy can get hit. The enemy will signal this by blinking, I think would be cool. This could strike multiple enemies, perhaps.
+
+How will building work? Well, to effectively build blockades the player should be able to direct his building marker to a specific tile, which will be marked in transparent green and then just push build, then walk and there should be blockades built in the correct place while walking. 
+
+This comes back to control for the aiming, actually. I think I just realized something and that is that the players aim should not be changing unless touching the controls. I think they basically reset, which is wrong. They should be modified by the movement of the controls, not exactly move them otherwise, and this is a good opportunity to test that out. We could use the concept screen to work on this, actually. The concept screen could then consist of the player and then just some useful markers. We could set it up to just use the systems I want it to.
+
+How are the systems activated in the game screen, really? I think all systems are there, but we add no entities, so that's why nothing happens in the concept screen. 
+
+We will try to do this on the regular game screen instead, because I can't handle hassles right now.
+
+So, the issue right now is the one of alignment. Above all else, alignment between physical bodies and textures and so on. I have "willfully" ignored the issue and have solved it using offsets and whatnot, but finally, it broke down. We have to modify the code so that a world coordinate IS in the center of a tile, and then a world coordinate IS in the center of a physical box2d body, etc. This will require a massive refactoring effort, but it will be worth it in the end. I will branch out for this.
+
+##### Line of sight for players
+To make it scarier, perhaps the player shouldn't be able to see what's behind him? This goes hand in hand with culling. So for the render system, we should only draw enemies... hmm. Only draw entities which the player can actually see. We won't raycast to each and everyone, dot product is fine enough for this.
+We need to project camera bounds to world coordinates, then 
+
+##### Our first level
+What we want to do is design a level. The first one. It should represent learning the game by playing it. The player(s) start in one end of the level and need to... kill all enemies, collect particularily important loot (a gun) and get to the van. The map could look something like this:
+
+xxxxxxg
+x
+x
+xxxxxl
+x
+x
+xxxxs
+
+The x markers are simply sections of map, the s is for spawn-section, l is for loot-section and then g is for goal / end, whatever. So a map definition could consist of that information, which can be easily translated into instructions for making a map, I think. The map itself is in fact an array of arrays. Or a one-dimensional array, I don't remember right now. No, when we construct it all, we do array of array of booleans, where true is "this is a section". So, we need to translate that into an array of arrays of boolean, easily done, I think.  
+
+### Act two - in the thick of it
+
+### Act three - for all the marbles
+
 ## NEWEST THOUGHTS
 
 The next feature in the game must be more robust, more additive to the concept and gameplay. No more diddly-daddling of adding bits and pieces, what we need next is that thing that makes it feel like a *story* or *proper game*, whatever that means.
@@ -24,14 +100,16 @@ So, what are we actually going to do?
 
 I want to use Scene2D for the UI, rolling my own is just to confusing, even for me. And too much work. 
 
+### Use Scene2D again
+
+My god I hate scene 2d - unfairly. What I want to do is build a simple system AROUND scene2d, making it much easier for me to use scene2d for what I think is important and cool. So what is that, really?
+
+
 ### MVP for now
 
 - [x] *Put level end requirements in a Story*
 	- [x] Put level end requirements in story (like special pickups, touching objectives etc)
 	- [x] Put boss kill requirement in story
-- [ ] Use Scene2D stuff to show ui Stuff perhaps?
-- [ ] Show a splash from the story system
-
 
 
 ## What's up with the name, anyways?
@@ -55,21 +133,21 @@ To make the graphics and environment easy I am currently working with the concep
 
 Lets try to prioritize these into what would make the game seem "done" the fastest.
 
-- [ ] **STORY MODE**
+- [ ] HUD II, Header Upper Displayer <- rediscover MVVM pattern, two-way binding
 - [ ] More Enemy Sprites (generate them)
 - [ ] Lightmaps for sprites
 - [ ] Soundscape II - the Moaning
 - [ ] Fix the MiniMap
-- [ ] HUD II, Header Upper Displayer <- rediscover MVVM pattern, two-way binding
 - [ ] Enemy AI II, with avoiding walls
 - [ ] Objectives II, the sequel
 - [ ] Pickups 2 (on-screen blurb indicating what you got)
 - [ ] Interactable Components in-the-game
 - [ ] Player graphics made from components / parts etc.
-- [ ] Smarta vektorer (eller nåt) - byt utspridd vektormattekod mot små, lokala, scengrafer. 
 - [ ] Vehicles would be cool
 - [ ] Build Towers
 - [ ] Gibs and Body Parts II - blood trails and audio
+- [x] Smart Transforms - collect all vector stuff pertaining to position, rotation, direction, into one collected class 
+- [x] Story Mode
 - [x] Boss fight
 - [x] More character sprites
 - [x] Gibs and body parts
@@ -615,11 +693,11 @@ Det här gör vi på det gamla vanliga sättet. Vi bygger en box2d-värld, vi kl
 
 Oj oj oj,  vad roligt. Vi kan göra en box2d-kropp med leder, per tutorials etc. Superkul ju.
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbMjM5NDQwMDg3LDU2MjQzMDMzLC0xMjExMj
-cwMzcwLC0yMTE5MTU5NDcxLDMzNTk1NzQ1NiwxMTQwNjM4MzU3
-LDE4OTUxMTIyNjYsLTUzOTQ2MDE5MCw2NTYzMzI1MjcsLTExMD
-AxNzY0NTYsMzQwOTc5NTIsMTAzMjIzMjU3NCwxMjgwNDkyMTUy
-LC0zNjkyMzg1MjksMzMxMTUwNjcxLDIwOTY2MTI4NTEsLTEwOD
-Q2OTA4NjMsLTIzODc2MjA0LC0xNTI4MzExNDQ0LC0xNDI5NTMw
-OTQwXX0=
+eyJoaXN0b3J5IjpbMjAxMzI2MTQ2LC02NDIyNDU3LC0xNTQ5OD
+U4NTk1LC0xMDI0NjUzNTM5LDIwNTExMDIxOTksLTc0MjQxMjM1
+MCwtNjY1MDk1MjcyLDE2ODMxMTMxODIsLTcwMTA1MzI3MSwtOT
+M4ODUxNzAwLC04NzI3MzE4NjgsMjAwNzMzNTE2NCwxNzg4NTM5
+MTEzLC0xOTkxNDA0Njg1LDIzOTQ0MDA4Nyw1NjI0MzAzMywtMT
+IxMTI3MDM3MCwtMjExOTE1OTQ3MSwzMzU5NTc0NTYsMTE0MDYz
+ODM1N119
 -->

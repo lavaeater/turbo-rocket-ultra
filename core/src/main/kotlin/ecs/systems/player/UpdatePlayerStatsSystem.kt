@@ -7,6 +7,7 @@ import ecs.components.player.PlayerComponent
 import ecs.components.player.WeaponComponent
 import ktx.ashley.allOf
 import physics.getComponent
+import physics.has
 
 class UpdatePlayerStatsSystem : IteratingSystem(
     allOf(PlayerComponent::class, WeaponComponent::class, InventoryComponent::class).get()
@@ -15,8 +16,10 @@ class UpdatePlayerStatsSystem : IteratingSystem(
     override fun processEntity(entity: Entity, deltaTime: Float) {
         val player = entity.getComponent<PlayerComponent>().player
         val inventoryComponent = entity.getComponent<InventoryComponent>()
-        val weaponComponent = entity.getComponent<WeaponComponent>()
-        player.ammoLeft = weaponComponent.currentGun.ammoRemaining
-        player.totalAmmo = inventoryComponent.ammo[weaponComponent.currentGun.ammoType]!!
+        if(entity.has<WeaponComponent>()) {
+            val weaponComponent = entity.getComponent<WeaponComponent>()
+            player.ammoLeft = weaponComponent.currentWeapon.ammoRemaining
+            player.totalAmmo = if(inventoryComponent.ammo.containsKey(weaponComponent.currentWeapon.ammoType)) inventoryComponent.ammo[weaponComponent.currentWeapon.ammoType]!! else 0
+        }
     }
 }

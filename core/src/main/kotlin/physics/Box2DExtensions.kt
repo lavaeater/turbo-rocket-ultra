@@ -124,6 +124,27 @@ inline fun <reified T : Component> Contact.atLeastOneHas(): Boolean {
 }
 
 @OptIn(ExperimentalStdlibApi::class)
+inline fun <reified T : Component> Contact.justOneHas(): Boolean {
+
+        val fOne = this.fixtureA.isEntity() && this.fixtureA.getEntity()
+            .has<T>()
+    val fTwo = this.fixtureB.isEntity() && this.fixtureB.getEntity().has<T>()
+    return fOne xor fTwo
+}
+
+
+
+@ExperimentalStdlibApi
+inline fun <reified T: Component> doesEitherOneHave(entityOne: Entity, entityTwo: Entity): Boolean {
+    return entityOne.has<T>() || entityTwo.has<T>()
+}
+
+@ExperimentalStdlibApi
+inline fun<reified T: Component> getEntityThatHas(entityOne: Entity, entityTwo: Entity): Entity {
+    return if(entityOne.has<T>()) entityOne else entityTwo
+}
+
+@OptIn(ExperimentalStdlibApi::class)
 inline fun <reified T : Component> Contact.bothHaveComponent(): Boolean {
     if (this.bothAreEntities()) {
         val mapper = AshleyMappers.getMapper<T>()
@@ -150,6 +171,10 @@ inline fun <reified T : Component> Contact.getEntityFor(): Entity {
 
 fun Contact.isPlayerByPlayerContact(): Boolean {
     return this.bothAreEntities() && this.bothHaveComponent<PlayerComponent>()
+}
+
+fun Contact.eitherIsSensor() : Boolean {
+    return this.fixtureA.isSensor || this.fixtureB.isSensor
 }
 
 fun Contact.isPlayerContact(): Boolean {

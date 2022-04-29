@@ -2,7 +2,7 @@ package mvvm
 
 abstract class ViewModelBase : NotifyPropertyChanged {
 
-	private val propertyChangedHandlers = mutableListOf<(String, Any)->Unit>()
+	private val propertyChangedHandlers = mutableListOf<(String, Any) -> Unit>()
 
 	override fun addPropertyChangedHandler(handler: (propertyName: String, newValue: Any) -> Unit) {
 		propertyChangedHandlers.add(handler)

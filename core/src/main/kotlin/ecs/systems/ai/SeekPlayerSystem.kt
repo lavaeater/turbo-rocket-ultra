@@ -4,6 +4,7 @@ import com.badlogic.ashley.core.Entity
 import com.badlogic.ashley.systems.IteratingSystem
 import com.badlogic.gdx.ai.btree.Task
 import com.badlogic.gdx.graphics.Color
+import com.badlogic.gdx.math.MathUtils.degreesToRadians
 import com.badlogic.gdx.math.Polygon
 import com.badlogic.gdx.math.Vector2
 import com.badlogic.gdx.physics.box2d.Fixture
@@ -15,6 +16,7 @@ import ecs.components.gameplay.TransformComponent
 import ecs.components.player.PlayerComponent
 import factories.world
 import data.Players
+import input.canISeeYouFromHere
 import ktx.ashley.allOf
 import ktx.box2d.RayCast
 import ktx.box2d.rayCast
@@ -26,13 +28,15 @@ import physics.has
 import physics.isPlayer
 import tru.Assets
 
-class SeekPlayerSystem(val debug: Boolean = false) : IteratingSystem(allOf(SeekPlayer::class).get(), 100) {
+class SeekPlayerSystem(val debug: Boolean) : IteratingSystem(allOf(SeekPlayer::class).get(), 100) {
     val players by lazy { Players.players.values.map { it.entity } }
     val shapeDrawer by lazy { Assets.shapeDrawer }
+    lateinit var closestFixture: Fixture
 
     @OptIn(ExperimentalStdlibApi::class)
     override fun processEntity(entity: Entity, deltaTime: Float) {
         val seekComponent = entity.getComponent<SeekPlayer>()
+        val debugColor = Color(0f, 1f, 0f, 0.1f)
 
         val enemyComponent = entity.getComponent<EnemyComponent>()
         val enemyPosition = entity.getComponent<TransformComponent>().position
@@ -52,20 +56,12 @@ class SeekPlayerSystem(val debug: Boolean = false) : IteratingSystem(allOf(SeekP
                 seekComponent.scanVector.set(unitVectorRange.random(), unitVectorRange.random()).nor()
             }
 
-            seekComponent.scanPolygon = createScanPolygon(
-                enemyPosition,
-                seekComponent.scanVector,
-                seekComponent.viewDistance,
-                seekComponent.fieldOfView,
-                seekComponent.scanResolution
-            )
             seekComponent.needsScanVector = false
         }
 
         if (!seekComponent.foundAPlayer && seekComponent.coolDown > 0f) {
 
             var lowestFraction = 1f
-            lateinit var closestFixture: Fixture
             val pointOfHit = vec2()
             val hitNormal = vec2()
 
@@ -74,7 +70,13 @@ class SeekPlayerSystem(val debug: Boolean = false) : IteratingSystem(allOf(SeekP
                 if (!seekComponent.foundAPlayer) {
                     val playerPosition = player.getComponent<TransformComponent>().position
 
-                    if (seekComponent.scanPolygon.contains(playerPosition)) {
+                    if (canISeeYouFromHere(
+                            enemyPosition,
+                            seekComponent.scanVector,
+                            playerPosition,
+                            seekComponent.fieldOfView
+                        )
+                    ) {
                         world().rayCast(
                             enemyPosition,
                             playerPosition
@@ -90,12 +92,15 @@ class SeekPlayerSystem(val debug: Boolean = false) : IteratingSystem(allOf(SeekP
 
                         if (debug) {
                             shapeDrawer.batch.use {
-                                shapeDrawer.setColor(Color(0f, 1f, 0f, 0.1f))
-                                shapeDrawer.filledPolygon(seekComponent.scanPolygon.vertices)
+                                shapeDrawer.sector(
+                                    enemyPosition.x,
+                                    enemyPosition.y,
+                                    seekComponent.viewDistance,
+                                    seekComponent.scanVector.angleRad() - seekComponent.fieldOfView / 2 * degreesToRadians, seekComponent.fieldOfView * degreesToRadians, debugColor, debugColor)
                                 shapeDrawer.line(enemyPosition, pointOfHit, Color(1f, 0f, 0f, 0.1f), .2f)
                             }
                         }
-                        if (closestFixture.isPlayer()) {
+                        if (::closestFixture.isInitialized && closestFixture.isPlayer()) {
                             seekComponent.foundAPlayer = true
                             entity.add(
                                 engine.createComponent(TrackingPlayer::class.java)
@@ -124,31 +129,6 @@ class SeekPlayerSystem(val debug: Boolean = false) : IteratingSystem(allOf(SeekP
      * but probably less efficient than doing the cross or dot product thing that I just
      * dont understand currently - I will need to set up a small test for that one.
      */
-    fun createScanPolygon(
-        start: Vector2,
-        viewDirection: Vector2,
-        viewDistance: Float,
-        fov: Float,
-        step: Float
-    ): Polygon {
-        val numberOfSteps = (fov / step).toInt()
 
-        val direction = viewDirection.cpy().setAngleDeg(viewDirection.angleDeg() - (fov / 2) - step)
-        val points = mutableListOf<Vector2>()
-        points.add(start)
-        for (i in 0..numberOfSteps) {
-            direction.setAngleDeg(direction.angleDeg() + step)
-            val pointToAdd = vec2(start.x, start.y)
-                .add(direction)
-                .sub(start)
-                .scl(viewDistance)
-                .add(start)
-                .add(direction)
-            points.add(pointToAdd)
-        }
-        val floatArray = points.map { listOf(it.x, it.y) }.flatten().toFloatArray()
-        val returnPolygon = Polygon(floatArray)
-        return returnPolygon
-    }
 
 }

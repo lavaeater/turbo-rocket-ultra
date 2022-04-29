@@ -5,6 +5,7 @@ import ai.enemy.EnemyState
 import com.badlogic.gdx.math.Vector2
 import com.badlogic.gdx.utils.Pool
 import ecs.components.gameplay.TransformComponent
+import ktx.math.random
 import ktx.math.vec2
 
 class BossComponent : Component, Pool.Poolable {
@@ -19,17 +20,18 @@ class EnemyComponent : Component, Pool.Poolable {
     var speed = 1f
 
     val directionVector = vec2()
-    var health = 100
+    var health = 100f
 
-    val isDead get() = health <= 0
+    val isDead get() = health <= 0f
 
     var timeRemaining = 0f
     private set
 
-    fun takeDamage(damage: Int) {
+    fun takeDamage(damage: Float) {
         health -= damage
     }
-    fun takeDamage(range: IntRange) {
+
+    fun takeDamage(range: ClosedFloatingPointRange<Float>) {
         health -= range.random()
     }
 
@@ -43,7 +45,7 @@ class EnemyComponent : Component, Pool.Poolable {
         speed = 2.5f
         viewDistance = 30f
         directionVector.set(Vector2.Zero)
-        health = 100
+        health = 100f
         timeRemaining = 0f
     }
 }

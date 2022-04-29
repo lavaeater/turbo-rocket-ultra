@@ -23,6 +23,13 @@ class GridMapManager {
 
     val bodies = mutableListOf<Body>()
 
+    fun canWeBuildAt(x: Int, y:Int) : Boolean {
+        return buildableMap.containsKey(x) && buildableMap[x]!!.containsKey(y) && buildableMap[x]!![y]!!
+    }
+
+    private val buildableMap = mutableMapOf<Int, MutableMap<Int, Boolean>>()
+
+
     fun fixBodies() {
         for(body in bodies)
             world().destroyBody(body)
@@ -32,6 +39,11 @@ class GridMapManager {
         for(section in gridMap.values) {
             for ((x, column) in section.tiles.withIndex()) {
                 for ((y, tile) in column.withIndex()) {
+                    val actualX = section.x * GridMapSection.width + x
+                    val actualY = section.y * GridMapSection.width + y
+                    if(!buildableMap.containsKey(actualX))
+                        buildableMap[actualX] = mutableMapOf()
+                    buildableMap[actualX]!![actualY] = tile.passable
                     if (!tile.passable) {
                         val body = world().body {
                             type = BodyDef.BodyType.StaticBody

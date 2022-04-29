@@ -1,7 +1,7 @@
 package features.pickups
 
 import features.weapons.AmmoType
-import java.io.Console
+import features.weapons.WeaponDefinition
 
 class AmmoLoot(
     val ammoType: AmmoType,
@@ -14,11 +14,16 @@ class AmmoLoot(
     }
 }
 
+class WeaponLoot(
+    val weaponDefinition: WeaponDefinition,
+    probability: Float
+) : Loot(probability)
+
     fun main() {
         val lootList = mutableListOf<ILoot>()
-        lootList.add(AmmoLoot(AmmoType.nineMilliMeters, 6..32, 30f))
+        lootList.add(AmmoLoot(AmmoType.NineMilliMeters, 6..32, 30f))
         //lootList.add(NullValue(60f))
-        lootList.add(AmmoLoot(AmmoType.twelveGaugeShotgun, 4..16, 10f))
+        lootList.add(AmmoLoot(AmmoType.TwelveGaugeShotgun, 4..16, 10f))
 
         val lootTable = LootTable(lootList, 1)
 

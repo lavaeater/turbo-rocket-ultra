@@ -4,7 +4,6 @@ import com.badlogic.ashley.core.Entity
 import com.badlogic.ashley.systems.IteratingSystem
 import com.badlogic.gdx.controllers.Controller
 import com.badlogic.gdx.controllers.ControllerListener
-import com.badlogic.gdx.math.MathUtils
 import data.Players
 import input.Axis
 import input.Axis.Companion.valueOK
@@ -12,6 +11,7 @@ import input.Button
 import input.GamepadControl
 import input.InputIndicator
 import ktx.ashley.allOf
+import ktx.math.vec2
 import physics.getComponent
 
 /**
@@ -29,6 +29,18 @@ class GamepadInputSystem() : IteratingSystem(allOf(GamepadControl::class).get())
     }
 
     override fun buttonDown(controller: Controller, buttonCode: Int): Boolean {
+        val actualController = controllers.firstOrNull { it.controller == controller }
+        if (actualController != null) {
+            when (Button.getButton(buttonCode)) {
+                Button.Cross -> if(actualController.isInBuildMode) actualController.buildIfPossible = true else actualController.doContextAction = true
+                Button.Ring -> {}
+                Button.Square -> {}
+                Button.DPadLeft -> {}
+                Button.DPadRight -> {}
+                Button.Triangle -> {}
+                Button.Unknown -> {}
+            }
+        }
         return true
     }
 
@@ -36,20 +48,13 @@ class GamepadInputSystem() : IteratingSystem(allOf(GamepadControl::class).get())
         val actualController = controllers.firstOrNull { it.controller == controller }
         if (actualController != null) {
             when (Button.getButton(buttonCode)) {
-                Button.Cross -> {
-                    actualController.doContextAction = true
-                }
-                Button.Ring -> {
-                }
-                Button.Square -> {
-                    actualController.needsReload = true
-                }
+                Button.Cross -> if(actualController.isInBuildMode) actualController.buildIfPossible = false else actualController.doContextAction = false
+                Button.Ring -> {}
+                Button.Square -> actualController.needsReload = true
                 Button.DPadLeft -> actualController.needToChangeGun = InputIndicator.Previous
                 Button.DPadRight -> actualController.needToChangeGun = InputIndicator.Next
-                Button.Triangle -> {
-                }
-                Button.Unknown -> {
-                }
+                Button.Triangle -> actualController.isInBuildMode = !actualController.isInBuildMode
+                Button.Unknown -> {}
             }
         }
         return true
@@ -67,21 +72,21 @@ class GamepadInputSystem() : IteratingSystem(allOf(GamepadControl::class).get())
 
             Axis.LeftY -> if (valueOK(value)) controller.thrust = -value
             else controller.thrust = 0f
-
-            Axis.RightX -> if (valueOK(value)) controller.aimVector.set(
-                MathUtils.lerp(controller.aimVector.x, value, 0.1f),
-                controller.aimVector.y
-            )
-
-            Axis.RightY -> if (valueOK(value)) controller.aimVector.set(
-                controller.aimVector.x,
-                MathUtils.lerp(controller.aimVector.y, value, 0.1f)
-            )
+            Axis.RightX -> if (valueOK(value)) controller.aimVector.set(value, controller.aimVector.y).nor()
+            Axis.RightY -> if (valueOK(value)) controller.aimVector.set(controller.aimVector.x, value).nor()
             Axis.Unknown -> {
             }
         }
         return true
     }
+
+    val steeringMap = mapOf(
+        2 to Axis.RightX,
+        3 to Axis.RightY
+    )
+    val axisMap = steeringMap.map { it.value to it.key }.toMap()
+
+    val deadZone = -0.2f..0.2f
 
     @OptIn(ExperimentalStdlibApi::class)
     override fun processEntity(entity: Entity, deltaTime: Float) {
@@ -91,6 +96,24 @@ class GamepadInputSystem() : IteratingSystem(allOf(GamepadControl::class).get())
         for (axis in Axis.axisMap.keys) {
             axisMoved(controlComponent, axis, controller.getAxis(axis))
         }
+        var rightX = controller.getAxis(axisMap[Axis.RightX]!!)
+        var rightY = controller.getAxis(axisMap[Axis.RightY]!!)
+
+//        if (deadZone.contains(rightX))
+//            rightX = 0f
+//        if (deadZone.contains(rightY))
+//            rightY = 0f
+
+        controlComponent.aimVector.set(vec2(rightX, rightY)).nor()
+
+        /*
+        it should obviously work on axeses in PAIRS, like leftx + lefty and rightx and righty in  tandem, because then
+        we can set the aimvector to the values, straight up, and normalize it.
+
+        But that isn't completely correct either. The aimvector should be nudged to it's correct value, kinda
+        THis needs testing in the CONCEPT SCREEN!
+         */
+
     }
 
 }

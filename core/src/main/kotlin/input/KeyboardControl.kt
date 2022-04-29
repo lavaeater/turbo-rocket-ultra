@@ -14,7 +14,7 @@ class KeyboardControl: ControlMapper, Component {
     override var needsReload = false
     override val isKeyboard = true
     override val isGamepad = false
-    override val aimVector = vec2()
+    override val aimVector = vec2(1f,0f) //always have length 1
     override var aiming: Boolean = false
     override val mousePosition = vec2()
     override var firing = false
@@ -26,9 +26,9 @@ class KeyboardControl: ControlMapper, Component {
         get() = field.set(turning, -thrust)
     override val controllerId: String
         get() = "Keyboard and mouse"
-    override var playerMode: PlayerMode = PlayerMode.Control
 
-
+    override var isInBuildMode: Boolean = false
+    override var buildIfPossible: Boolean = false
     override fun setAimVector(screenX: Int, screenY: Int, position: Vector2) {
         mousePosition3D.set(screenX.toFloat(), screenY.toFloat(), 0f)
         camera.unproject(mousePosition3D)

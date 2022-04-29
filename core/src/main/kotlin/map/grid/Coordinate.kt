@@ -1,3 +1,3 @@
 package map.grid
 
-data class Coordinate(val x: Int, val y: Int)
+data class Coordinate(var x: Int, var y: Int)

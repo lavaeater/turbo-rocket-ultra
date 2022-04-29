@@ -42,6 +42,7 @@ class StoryBuilder: Builder<Story> {
 	var initializer : () -> Unit = {}
 	private val rules = mutableListOf<Rule>()
 	private var consequence: Consequence = EmptyConsequence()
+	var neverEnding = false
 
 	fun storyBeat(block: RuleBuilder.() -> Unit) {
 		rules.add(RuleBuilder().apply(block).build())
@@ -52,7 +53,7 @@ class StoryBuilder: Builder<Story> {
 		consequence = ConsequenceBuilder().apply(block).build()
 	}
 
-	override fun build() : Story = Story(name, rules, consequence, initializer)
+	override fun build() : Story = Story(name, rules, consequence, initializer, neverEnding = neverEnding)
 }
 
 class CriteriaBuilder:Builder<Criterion> {

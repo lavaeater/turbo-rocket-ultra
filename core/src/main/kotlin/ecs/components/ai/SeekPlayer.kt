@@ -22,11 +22,9 @@ class SeekPlayer: TaskComponent() {
     var needsScanVector = true
     val scanVectorStart = vec2()
     val scanVectorEnd = vec2()
-    var scanPolygon = Polygon()
-    //var foundPlayer: Entity? = null
+
     override fun reset() {
         super.reset()
-        scanPolygon = Polygon()
         scanCount = 0
         keepScanning = true
         scanVector.set(Vector2.Zero)

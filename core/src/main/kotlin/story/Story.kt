@@ -42,9 +42,14 @@ import story.rule.Rule
  * class that handles messages
  *
  */
-class Story(val name:String, val rules: List<Rule>, val consequence: Consequence, val activate: () -> Unit, var active: Boolean = true) {
+class Story(val name:String, val rules: List<Rule>, val consequence: Consequence, val activate: () -> Unit, var active: Boolean = true, val neverEnding: Boolean = false) {
 	val finishedRules = mutableSetOf<String>()
 
 	val storyFinished get() = finishedRules.containsAll(rules.map { it.name })
 	var matchingRule: Rule? = null
+	fun reset() {
+		active = true
+		finishedRules.clear()
+
+	}
 }

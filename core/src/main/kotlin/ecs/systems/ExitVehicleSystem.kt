@@ -20,6 +20,5 @@ class ExitVehicleSystem : IteratingSystem(
     override fun processEntity(entity: Entity, deltaTime: Float) {
         entity.remove<IsInVehicleComponent>()
         entity.remove<LeaveVehicleComponent>()
-        entity.playerControlComponent().playerMode = PlayerMode.Control
     }
 }

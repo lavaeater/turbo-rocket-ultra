@@ -3,6 +3,7 @@ package ecs.components.player
 import com.badlogic.ashley.core.Component
 import com.badlogic.gdx.math.Vector2
 import com.badlogic.gdx.utils.Pool
+import ecs.systems.graphics.CompassDirection
 import input.ControlMapper
 import ktx.math.vec2
 import tru.AnimState
@@ -40,37 +41,38 @@ class PlayerControlComponent(var controlMapper: ControlMapper) : Component, Pool
             controlMapper.needToChangeGun = value
         }
     var reloadStarted
-    get() = controlMapper.needsReload
-    set(value) { controlMapper.needsReload = value}
+        get() = controlMapper.needsReload
+        set(value) {
+            controlMapper.needsReload = value
+        }
 
     var doContextAction
-    get() = controlMapper.doContextAction
-    set(value) {
-        controlMapper.doContextAction = value
-    }
+        get() = controlMapper.doContextAction
+        set(value) {
+            controlMapper.doContextAction = value
+        }
 
     val triggerPulled get() = controlMapper.firing
     val firing get() = controlMapper.firing && cooldownRemaining <= 0f
     val aiming get() = controlMapper.aiming
     val aimVector get() = controlMapper.aimVector
+    val compassDirection get() = aimVector.compassDirection()
     val mousePosition get() = controlMapper.mousePosition
     var latestHitPoint = vec2(0f, 0f)
     val walkVector: Vector2 = vec2(turning, thrust)
         get() = field.set(turning, -thrust).nor()
     val turning: Float
         get() {
-            return if (playerMode != PlayerMode.Control) 0f else controlMapper.turning
+            return controlMapper.turning
         }
     val thrust: Float
         get() {
-            return if (playerMode != PlayerMode.Control) 0f else controlMapper.thrust
+            return controlMapper.thrust
         }
     val moving get() = walkVector.len2() != 0f
-    var playerMode
-        get() = controlMapper.playerMode
-        set(value) {
-            controlMapper.playerMode = value
-        }
+
+    val isInBuildMode get() = controlMapper.isInBuildMode
+    val buildIfPossible get() = controlMapper.buildIfPossible
 
     fun coolDown(deltaTime: Float) {
         cooldownRemaining -= deltaTime
@@ -90,6 +92,21 @@ class PlayerControlComponent(var controlMapper: ControlMapper) : Component, Pool
         cooldownRemaining = 0f
         shotsFired = 0
         latestHitPoint.setZero()
+    }
+}
+
+fun Vector2.compassDirection(): CompassDirection {
+    return when (this.angleDeg()) {
+        in 248f..293f -> CompassDirection.North
+        in 293f..338f -> CompassDirection.NorthWest
+        in 338f..360f -> CompassDirection.West
+        in 0f..23f -> CompassDirection.West
+        in 23f..68f -> CompassDirection.SouthWest
+        in 68f..113f -> CompassDirection.South
+        in 113f..158f -> CompassDirection.SouthEast
+        in 158f..203f -> CompassDirection.East
+        in 203f..248f -> CompassDirection.NorthEast
+        else -> CompassDirection.South
     }
 }
 

@@ -12,10 +12,10 @@ sealed class Axis {
         val axisMap = mapOf(
             5 to TriggerPull,
             0 to LeftX,
-            1 to LeftY,
-            2 to RightX,
-            3 to RightY
+            1 to LeftY
         )
+
+        val axisToKeys: Map<Axis, Int> = axisMap.map { it.value to it.key }.toMap()
 
         fun valueOK(value: Float): Boolean {
             return value > 0.3f || value < -0.3f

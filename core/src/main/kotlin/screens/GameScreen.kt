@@ -9,34 +9,35 @@ import com.badlogic.gdx.graphics.OrthographicCamera
 import com.badlogic.gdx.graphics.g2d.PolygonSpriteBatch
 import com.badlogic.gdx.physics.box2d.World
 import com.badlogic.gdx.utils.viewport.ExtendViewport
+import com.strongjoshua.console.GUIConsole
+import data.Players
 import ecs.components.BodyComponent
 import ecs.components.enemy.EnemyComponent
-import ecs.components.enemy.EnemySpawnerComponent
 import ecs.components.gameplay.ObjectiveComponent
 import ecs.components.gameplay.ObstacleComponent
 import ecs.components.player.PlayerComponent
 import ecs.systems.graphics.CameraUpdateSystem
+import ecs.systems.graphics.GameConstants.MAX_ENEMIES
 import ecs.systems.graphics.RenderMiniMapSystem
-import ecs.systems.graphics.SimpleRenderSystem
+import ecs.systems.graphics.RenderSystem
 import ecs.systems.input.GamepadInputSystem
-import injection.Context.inject
 import ecs.systems.input.KeyboardInputSystem
 import ecs.systems.player.GameOverSystem
-import factories.*
+import factories.player
 import gamestate.GameEvent
 import gamestate.GameState
-import data.Players
+import injection.Context.inject
 import ktx.app.KtxScreen
 import ktx.ashley.allOf
 import ktx.ashley.getSystem
 import ktx.ashley.remove
 import map.grid.GridMapGenerator
 import map.grid.GridMapManager
+import map.grid.SimpleGridMapDef
 import map.snake.*
 import physics.getComponent
 import statemachine.StateMachine
 import story.FactsOfTheWorld
-import story.StoryHelper
 import story.StoryManager
 import story.fact.Facts
 import ui.IUserInterface
@@ -45,20 +46,6 @@ import kotlin.math.roundToInt
 
 
 class GameScreen(private val gameState: StateMachine<GameState, GameEvent>) : KtxScreen {
-
-    companion object {
-        const val ENEMY_DENSITY = .1f
-        const val SHOT_DENSITY = .01f
-        const val SHIP_DENSITY = .1f
-        const val PLAYER_DENSITY = 1f
-        const val CAR_DENSITY = .3f
-        const val SHIP_LINEAR_DAMPING = 20f
-        const val SHIP_ANGULAR_DAMPING = 20f
-        const val MAX_ENEMIES = 512
-
-        const val GAMEWIDTH = 64f
-        const val GAMEHEIGHT = 48f
-    }
 
     private var firstRun = true
     private val camera: OrthographicCamera by lazy { inject() }
@@ -70,6 +57,7 @@ class GameScreen(private val gameState: StateMachine<GameState, GameEvent>) : Kt
     private val audioPlayer: AudioPlayer by lazy { inject() }
     private val storyManager: StoryManager by lazy { inject() }
     private val factsOfTheWorld: FactsOfTheWorld by lazy { inject() }
+    private val console by lazy { inject<GUIConsole>() }
 
     override fun show() {
         initializeIfNeeded()
@@ -84,12 +72,30 @@ class GameScreen(private val gameState: StateMachine<GameState, GameEvent>) : Kt
         for (system in engine.systems) {
             system.setProcessing(true)
         }
-        generateMap(1)
+        loadMapOne()
         addPlayers()
 
         addTower()
         ui.reset()
         ui.show()
+    }
+
+    private fun loadMapOne() {
+        //For debuggin we will swarm with enemies
+        CounterObject.numberOfEnemies = 15
+
+        mapManager.gridMap = GridMapGenerator.generateFromDefintion(SimpleGridMapDef.levelOne)
+        CounterObject.numberOfObjectives = engine.getEntitiesFor(allOf(ObjectiveComponent::class).get()).count()
+        movePlayersToStart()
+    }
+
+    private fun loadMapTwo() {
+        //For debuggin we will swarm with enemies
+        CounterObject.numberOfEnemies = 30
+
+        mapManager.gridMap = GridMapGenerator.generateFromDefintion(SimpleGridMapDef.levelTwo)
+        CounterObject.numberOfObjectives = engine.getEntitiesFor(allOf(ObjectiveComponent::class).get()).count()
+        movePlayersToStart()
     }
 
     private fun addTower() {
@@ -116,6 +122,7 @@ D1B67A
         batch.projectionMatrix = camera.combined
         engine.update(delta)
         ui.update(delta)
+        console.draw()
         audioPlayer.update(delta)
         storyManager.checkStories()
 
@@ -133,7 +140,7 @@ D1B67A
             system.setProcessing(false)
 
         //Continue to render, though
-        engine.getSystem<SimpleRenderSystem>().setProcessing(true)
+        engine.getSystem<RenderSystem>().setProcessing(true)
         engine.getSystem<RenderMiniMapSystem>().setProcessing(true)
     }
 
@@ -187,7 +194,11 @@ D1B67A
         factsOfTheWorld.stateBoolFact(Facts.LevelComplete, false)
 
         CounterObject.currentLevel++
-        generateMap(CounterObject.currentLevel)
+        if(CounterObject.currentLevel == 2) {
+            loadMapTwo()
+        } else {
+            generateMap(CounterObject.currentLevel)
+        }
     }
 
     private val mapManager by lazy { inject<GridMapManager>() }
@@ -244,11 +255,3 @@ D1B67A
     }
 }
 
-object CounterObject {
-    var enemyCount = 0
-    var bulletCount = 0
-    var currentLevel = 1
-    val currentLength get() = currentLevel * 8
-    var numberOfObjectives = 1
-    var numberOfEnemies = 1
-}

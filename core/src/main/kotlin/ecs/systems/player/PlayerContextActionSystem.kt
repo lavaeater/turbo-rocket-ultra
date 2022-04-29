@@ -14,7 +14,7 @@ class PlayerContextActionSystem : IteratingSystem(allOf(ContextActionComponent::
     override fun processEntity(entity: Entity, deltaTime: Float) {
         val contextActionComponent = entity.getComponent<ContextActionComponent>()
         val textureComponent = entity.getComponent<TextureComponent>()
-        textureComponent.extraTextures["contextaction"] = contextActionComponent.texture
+        textureComponent.extraTextures["contextaction"] = Pair(contextActionComponent.texture, 1.0f)
         val playerControlComponent = entity.getComponent<PlayerControlComponent>()
         if(playerControlComponent.doContextAction) {
             contextActionComponent.contextAction()
