@@ -18,4 +18,7 @@ class Weapon(val weaponDefinition: WeaponDefinition) {
     val audio = weaponDefinition.audio
     val rotate = weaponDefinition.rotate
     val handleKey = weaponDefinition.handleKey
+    override fun toString(): String {
+        return "$name: $weaponType"
+    }
 }

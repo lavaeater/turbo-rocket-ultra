@@ -44,12 +44,7 @@ class PlayerControlComponent(var controlMapper: ControlMapper, val player: Playe
                 else -> AnimState.Idle
             }
         }
-
-    var needToChangeGun
-        get() = controlMapper.needToChangeGun
-        set(value) {
-            controlMapper.needToChangeGun = value
-        }
+    
     var reloadStarted
         get() = controlMapper.needsReload
         set(value) {

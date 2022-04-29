@@ -27,7 +27,6 @@ import ecs.systems.enemy.*
 import ecs.systems.facts.FactSystem
 import ecs.systems.facts.PerimeterObjectiveSystem
 import ecs.systems.fx.DelayedEntityCreationSystem
-import ecs.systems.fx.EffectRenderSystem
 import ecs.systems.graphics.*
 import ecs.systems.graphics.GameConstants.GAMEHEIGHT
 import ecs.systems.graphics.GameConstants.GAMEWIDTH
@@ -135,7 +134,7 @@ object Context {
             addSystem(TowerShootSystem())
             addSystem(AnimationSystem())
             //addSystem(WeaponUpdateSystem())
-            addSystem(WeaponChangeAndReloadSystem())
+            addSystem(WeaponReloadSystem())
             addSystem(UpdatePlayerStatsSystem())
             //addSystem(PhysicsDebugRendererSystem(inject(), inject()))
             addSystem(

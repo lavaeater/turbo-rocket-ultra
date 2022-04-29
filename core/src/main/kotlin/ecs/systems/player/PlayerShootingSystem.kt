@@ -18,13 +18,16 @@ import ktx.ashley.allOf
 import ktx.math.random
 import ktx.math.vec2
 import physics.AshleyMappers
+import physics.playerControlComponent
+import physics.weapon
+import physics.weaponEntity
 import tru.Assets
 
 
 class PlayerShootingSystem(private val audioPlayer: AudioPlayer) : IteratingSystem(
     allOf(
         PlayerControlComponent::class,
-        WeaponComponent::class,
+        WeaponEntityComponent::class,
         TransformComponent::class
     ).get()
 ) {
@@ -34,9 +37,9 @@ class PlayerShootingSystem(private val audioPlayer: AudioPlayer) : IteratingSyst
         These will be represented by some simple sprite, perhaps just a pixel wide
         Yes yes, they could even be drawn by the shapedrawer?
          */
-        val controlComponent = AshleyMappers.playerControl.get(entity)
+        val controlComponent = entity.playerControlComponent()
         controlComponent.coolDown(deltaTime)
-        val weapon = AshleyMappers.weapon.get(entity).currentWeapon
+        val weapon = entity.weaponEntity().weapon().currentWeapon
         when (weapon.weaponType) {
             WeaponType.Melee -> swingMeleeWeapon(controlComponent, weapon, entity)
             WeaponType.Projectile -> fireProjectileWeapon(controlComponent, weapon, entity)
@@ -103,7 +106,7 @@ class PlayerShootingSystem(private val audioPlayer: AudioPlayer) : IteratingSyst
     }
 
     private fun playSound(playerId: String) {
-        if((1..5).random() == 1)
+        if ((1..5).random() == 1)
             audioPlayer.playOnChannel(playerId, "players", "one-liners")
     }
 
