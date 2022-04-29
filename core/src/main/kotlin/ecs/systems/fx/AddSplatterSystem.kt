@@ -1,18 +1,15 @@
 package ecs.systems.fx
 
-import com.badlogic.ashley.core.Component
-import com.badlogic.ashley.core.Engine
 import com.badlogic.ashley.core.Entity
 import com.badlogic.ashley.systems.IteratingSystem
+import ecs.components.fx.SplatterComponent
 import ecs.components.gameplay.DestroyComponent
 import ecs.components.gameplay.TransformComponent
 import ecs.components.graphics.ParticleComponent
 import ecs.components.graphics.RenderableComponent
-import ecs.components.fx.SplatterComponent
-import factories.engine
 import ktx.ashley.allOf
-import ktx.ashley.create
 import ktx.ashley.mapperFor
+import physics.addComponent
 
 class AddSplatterSystem: IteratingSystem(allOf(ParticleComponent::class, TransformComponent::class).get()) {
     private val particleMapper = mapperFor<ParticleComponent>()
@@ -39,16 +36,4 @@ class AddSplatterSystem: IteratingSystem(allOf(ParticleComponent::class, Transfo
         if(particleComponent.life < 0f)
             entity.addComponent<DestroyComponent>()
     }
-}
-
-inline fun<reified T: Component>Entity.addComponent(block: T.() -> Unit = {}) {
-    this.add(component(block))
-}
-
-inline fun<reified T: Component>component(block: T.()-> Unit = {}) :T {
-    return engine().createComponent(block)
-}
-
-inline fun<reified T: Component> Engine.createComponent(block: T.() -> Unit = {}): T {
-    return this.createComponent(T::class.java).apply(block)
 }

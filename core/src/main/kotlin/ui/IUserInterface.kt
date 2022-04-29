@@ -12,4 +12,5 @@ interface IUserInterface : Disposable {
   fun update(delta: Float)
   override fun dispose()
   fun clear()
+  fun reset()
 }

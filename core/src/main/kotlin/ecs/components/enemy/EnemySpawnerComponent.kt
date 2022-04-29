@@ -4,7 +4,7 @@ import ecs.components.ai.CoolDownComponent
 
 class EnemySpawnerComponent : CoolDownComponent() {
     init {
-        coolDownRange = (0.5f..5f)
+        coolDownRange = (1f..5f)
         reset()
     }
 }

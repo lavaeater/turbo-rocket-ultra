@@ -21,13 +21,13 @@ import ecs.components.graphics.*
 import ecs.components.player.FiredShotsComponent
 import ecs.components.player.PlayerComponent
 import ecs.components.player.PlayerControlComponent
-import ecs.systems.fx.addComponent
 import gamestate.Player
 import injection.Context.inject
 import input.ControlMapper
 import ktx.box2d.*
 import ktx.math.random
 import ktx.math.vec2
+import physics.addComponent
 import tru.Assets
 import screens.GameScreen
 

@@ -12,20 +12,36 @@ class MainGame : KtxGame<Screen>() {
             state(GameState.Splash) {
                 action { setScreen<SplashScreen>() }
                 edge(GameEvent.LeftSplash, GameState.Setup) {}
-                edge(GameEvent.StartedGame, GameState.Running) {}
+                edge(GameEvent.StartedGame, GameState.Running) {
+                    action {
+                        resetPlayers()
+                    }
+                }
             }
             state(GameState.Setup) {
                 action { setScreen<SetupScreen>() }
-                edge(GameEvent.StartedGame, GameState.Running) {}
+                edge(GameEvent.StartedGame, GameState.Running) {
+                    action {
+                        resetPlayers()
+                    }
+                }
             }
             state(GameState.Running) {
-                action { setScreen<GameScreen>() }
-                edge(GameEvent.PausedGame, GameState.Paused) {}
-                edge(GameEvent.GameOver, GameState.Ended) {}
+                action {
+                    setScreen<GameScreen>()
+                }
+                edge(GameEvent.PausedGame, GameState.Paused) {
+
+                }
+                edge(GameEvent.GameOver, GameState.Splash) {
+
+                }
             }
             state(GameState.Paused) {
                 action { setScreen<PauseScreen>() }
-                edge(GameEvent.ResumedGame, GameState.Running) {}
+                edge(GameEvent.ResumedGame, GameState.Running) {
+                    action {  }
+                }
                 edge(GameEvent.ExitedGame, GameState.Setup) {}
             }
             state(GameState.Ended) {
@@ -35,18 +51,22 @@ class MainGame : KtxGame<Screen>() {
             }
         }
 
+    private fun resetPlayers() {
+        for (player in Players.players.values) {
+            player.reset()
+        }
+    }
+
     private fun stateChanged(gameState: GameState) {
 
     }
 
     override fun create() {
-
         Assets.load()
         addScreen(SplashScreen(gameState))
-        addScreen(GameScreen())
+        addScreen(GameScreen(gameState))
         addScreen(PauseScreen(gameState))
         addScreen(GameOverScreen(gameState))
         gameState.initialize()
-//        setScreen<SplashScreen>()
     }
 }
