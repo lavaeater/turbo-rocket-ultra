@@ -23,10 +23,7 @@ import ecs.components.fx.CreateEntityComponent
 import ecs.components.fx.ParticleEffectComponent
 import ecs.components.fx.SplatterComponent
 import ecs.components.gameplay.*
-import ecs.components.graphics.AnimatedCharacterComponent
-import ecs.components.graphics.CameraFollowComponent
-import ecs.components.graphics.MiniMapComponent
-import ecs.components.graphics.SpriteComponent
+import ecs.components.graphics.*
 import ecs.components.intent.CalculatedPositionComponent
 import ecs.components.intent.CalculatedRotationComponent
 import ecs.components.intent.FunctionsComponent
@@ -127,11 +124,9 @@ fun gibs(at: Vector2, gibAngle: Float = 1000f) {
         val gibBody = world().body {
             type = BodyDef.BodyType.DynamicBody
             position.set(at.x - 2f, at.y - 2f)
-            //angularVelocity = 180f * degreesToRadians
             linearDamping = 5f
             box(.3f, .1f) {
                 friction = 10f //Tune
-                // density = 1f //tune
                 filter {
                     categoryBits = Box2dCategories.gibs
                     maskBits = Box2dCategories.whatGibsHit
@@ -145,6 +140,8 @@ fun gibs(at: Vector2, gibAngle: Float = 1000f) {
             with<SpriteComponent> {
                 rotateWithTransform = true
                 sprite = i
+            }
+            with<RenderableComponent> {
             }
             with<TransformComponent> {
                 position.set(at)
@@ -166,8 +163,15 @@ fun gibs(at: Vector2, gibAngle: Float = 1000f) {
 fun splatterEntity(at: Vector2, angle: Float) {
     engine().entity {
         with<SplatterComponent> {
-            this.at = at.cpy()
+            this.at.set(at)
             rotation = angle
+        }
+        with<TransformComponent> {
+            position.set(at)
+        }
+        with<RenderableComponent> {
+            renderableType = RenderableType.Effect
+            layer = 5
         }
     }
 }
@@ -190,6 +194,10 @@ fun explosionEffectEntity(at: Vector2) {
         with<ParticleEffectComponent> {
             effect = Assets.explosionEffectPool.obtain()
             rotation = 0f
+        }
+        with<RenderableComponent> {
+            layer = 5
+            renderableType = RenderableType.Effect
         }
         with<DestroyAfterCoolDownComponent> {
             coolDown = 2f
@@ -229,6 +237,10 @@ fun fireEntity(at: Vector2, linearVelocity: Vector2, player: Player) {
             effect = Assets.fireEffectPool.obtain()
             rotation = 270f
         }
+        with<RenderableComponent> {
+            layer = 5
+            renderableType = RenderableType.Effect
+        }
         with<DamageEffectComponent> {
             this.player = player
         }
@@ -265,7 +277,10 @@ fun tower(
         with<SpriteComponent> {
             sprite = Assets.newTower
             scale = 4f
+        }
+        with<RenderableComponent> {
             layer = 1
+            renderableType = RenderableType.Sprite
         }
         with<MiniMapComponent> {
             color = Color.GREEN
@@ -341,7 +356,10 @@ fun buildCursor(): Entity {
     val entity = engine().entity {
         with<TransformComponent>()
         with<SpriteComponent> {
+        }
+        with<RenderableComponent> {
             layer = 2
+            renderableType = RenderableType.Sprite
         }
     }
     return entity
@@ -372,8 +390,10 @@ fun player(player: Player, mapper: ControlMapper, at: Vector2, debug: Boolean) {
             anims = Assets.characters[player.selectedCharacterSpriteName]!!
         }
         with<SpriteComponent> {
+        }
+        with<RenderableComponent> {
             layer = 1
-//            offsetY = -7f
+            renderableType = RenderableType.Sprite
         }
         with<MiniMapComponent> {
             color = Color.GREEN
@@ -411,13 +431,16 @@ fun player(player: Player, mapper: ControlMapper, at: Vector2, debug: Boolean) {
     playerWeapon(entity, "green")
 }
 
-fun playerWeapon(playerEntity: Entity, anchor: String = "green" ) {
+fun playerWeapon(playerEntity: Entity, anchor: String = "green") {
     engine().entity {
         with<TransformComponent>()
         with<SpriteComponent> {
-            layer = 1
             rotateWithTransform = true
             isVisible = true
+        }
+        with<RenderableComponent> {
+            layer = 1
+            renderableType = RenderableType.Sprite
         }
         val weapon = WeaponDefinition.spas12.getWeapon()
         with<WeaponComponent> {
@@ -430,7 +453,8 @@ fun playerWeapon(playerEntity: Entity, anchor: String = "green" ) {
         }
         with<CalculatedRotationComponent> {
             calculate = {
-                playerEntity.anchors().transformedPoints[anchor]!!.cpy().sub(playerEntity.transform().position).angleRad()
+                playerEntity.anchors().transformedPoints[anchor]!!.cpy().sub(playerEntity.transform().position)
+                    .angleRad()
             }
         }
         with<FunctionsComponent> {
@@ -440,7 +464,7 @@ fun playerWeapon(playerEntity: Entity, anchor: String = "green" ) {
             functions["UpdateWeaponSprite"] = { w ->
                 val direction = playerEntity.animation().currentDirection
                 w.sprite().sprite = Assets.weapons.getSpriteFor(w.weapon().currentWeapon, direction)
-                when(direction) {
+                when (direction) {
                     SpriteDirection.East -> w.sprite().sprite.setFlip(false, false)
                     SpriteDirection.North -> w.sprite().sprite.setFlip(false, false)
                     SpriteDirection.South -> w.sprite().sprite.setFlip(false, false)
@@ -486,7 +510,10 @@ fun randomLoot(at: Vector2, lootTable: LootTable) {
         with<TransformComponent> { position.set(box2dBody.position) }
         with<SpriteComponent> {
             sprite = Assets.lootBox
+        }
+        with<RenderableComponent> {
             layer = 1
+            renderableType = RenderableType.Sprite
         }
         with<LootComponent> {
             this.lootTable = lootTable
@@ -519,7 +546,10 @@ fun lootBox(at: Vector2, lootDrop: List<ILoot>) {
         with<TransformComponent> { position.set(box2dBody.position) }
         with<SpriteComponent> {
             sprite = Assets.lootBox
+        }
+        with<RenderableComponent> {
             layer = 1
+            renderableType = RenderableType.Sprite
         }
         with<LootComponent> {
             loot = lootDrop
@@ -558,9 +588,12 @@ fun throwGrenade(
             verticalSpeed = 5f
         }
         with<SpriteComponent> {
-            layer = 1
             sprite = Assets.molotov //Fix a burning bottle sprite
             rotateWithTransform = true
+        }
+        with<RenderableComponent> {
+            layer = 1
+            renderableType = RenderableType.Sprite
         }
     }
     box2dBody.userData = entity
@@ -600,9 +633,12 @@ fun throwMolotov(
             verticalSpeed = 5f
         }
         with<SpriteComponent> {
-            layer = 1
             sprite = Assets.molotov //Fix a burning bottle sprite
             rotateWithTransform = true
+        }
+        with<RenderableComponent> {
+            layer = 1
+            renderableType = RenderableType.Sprite
         }
     }
     box2dBody.userData = entity
@@ -631,8 +667,11 @@ fun bullet(at: Vector2, towards: Vector2, speed: Float, damage: Float, player: P
         }
         with<TransformComponent> { position.set(box2dBody.position) }
         with<SpriteComponent> {
-            layer = 1
             sprite = Assets.bullet
+        }
+        with<RenderableComponent> {
+            layer = 1
+            renderableType = RenderableType.Sprite
         }
     }
     box2dBody.userData = entity
@@ -673,7 +712,10 @@ fun enemy(at: Vector2) {
             lootTable.count = (1..5).random()
         }
         with<SpriteComponent> {
+        }
+        with<RenderableComponent> {
             layer = 1
+            renderableType = RenderableType.Sprite
         }
         with<MiniMapComponent> {
             color = Color.RED
@@ -688,7 +730,7 @@ fun enemy(at: Vector2) {
 
         val moveAction = object : Action() {
             override fun act(delta: Float): Boolean {
-                if(entity.hasTransform()) {
+                if (entity.hasTransform()) {
                     val coordinate = hud.worldToHudPosition(entity.transform().position.cpy().add(.5f, -.5f))
                     actor.setPosition(coordinate.x, coordinate.y)
                 }
@@ -697,7 +739,7 @@ fun enemy(at: Vector2) {
         }.repeatForever()
 
         stage.actors {
-            label("TreeStatus" ) { actor ->
+            label("TreeStatus") { actor ->
                 widget = this
                 actor += moveAction
                 btComponent.tree.addListener(object : Listener<Entity> {
@@ -706,6 +748,7 @@ fun enemy(at: Vector2) {
                         if (!taskString.contains("@"))
                             this@label.setText("""$taskString - $previousStatus""".trimMargin())
                     }
+
                     override fun childAdded(task: Task<Entity>?, index: Int) {
 
                     }
@@ -749,9 +792,11 @@ fun hackingStation(
         }
         with<SpriteComponent> {
             sprite = Assets.towers["objective"]!!
-//            offsetY = -4f
             scale = 4f
+        }
+        with<RenderableComponent> {
             layer = 1
+            renderableType = RenderableType.Sprite
         }
         with<MiniMapComponent> {
             color = Color.GREEN
@@ -811,10 +856,11 @@ fun boss(at: Vector2, level: Int) {
             lootTable.count = (3..8).random()
         }
         with<SpriteComponent> {
-            layer = 1
             scale = 4f
-
-//            offsetY = -7f
+        }
+        with<RenderableComponent> {
+            layer = 1
+            renderableType = RenderableType.Sprite
         }
         with<MiniMapComponent> {
             color = Color.RED
@@ -850,7 +896,10 @@ fun blockade(
         with<SpriteComponent> {
             sprite = Assets.buildables.first()
             scale = 4f
+        }
+        with<RenderableComponent> {
             layer = 1
+            renderableType = RenderableType.Sprite
         }
     }
     box2dBody.userData = entity
@@ -878,7 +927,10 @@ fun spawner(
             sprite = Assets.towers["obstacle"]!!
 //            offsetY = -4f
             scale = 4f
+        }
+        with<RenderableComponent> {
             layer = 1
+            renderableType = RenderableType.Sprite
         }
         with<EnemySpawnerComponent> {
             waveSize = 1
@@ -916,7 +968,10 @@ fun objective(
             sprite = Assets.towers["objective"]!!
 //            offsetY = -4f
             scale = 4f
+        }
+        with<RenderableComponent> {
             layer = 1
+            renderableType = RenderableType.Sprite
         }
         with<MiniMapComponent> {
             color = Color.GREEN

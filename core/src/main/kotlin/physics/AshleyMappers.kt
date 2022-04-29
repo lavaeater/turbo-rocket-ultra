@@ -17,6 +17,7 @@ import ecs.components.pickups.LootComponent
 import ecs.components.pickups.LootDropComponent
 import ecs.components.player.*
 import ecs.components.AudioComponent
+import ecs.components.fx.ParticleEffectComponent
 import ecs.components.intent.*
 import ktx.ashley.mapperFor
 import tru.Assets
@@ -73,6 +74,7 @@ object AshleyMappers {
     val respawn = mapperFor<PlayerIsRespawning>()
     val waitsForRespawn = mapperFor<PlayerWaitsForRespawn>()
     val sprite = mapperFor<SpriteComponent>()
+    val renderable = mapperFor<RenderableComponent>()
     val anchors = mapperFor<AnchorPointsComponent>()
     val build = mapperFor<BuildModeComponent>()
     val complexAction = mapperFor<ComplexActionComponent>()
@@ -83,6 +85,23 @@ object AshleyMappers {
     val functions = mapperFor<FunctionsComponent>()
     val obstacleCollision = mapperFor<CollidedWithObstacle>()
     val uiThing = mapperFor<UiThingComponent>()
+    val effect = mapperFor<ParticleEffectComponent>()
+}
+
+fun Entity.hasSplatter(): Boolean {
+    return AshleyMappers.splatter.has(this)
+}
+
+fun Entity.splatterEffect() : SplatterComponent {
+    return AshleyMappers.splatter.get(this)
+}
+
+fun Entity.hasEffect(): Boolean {
+    return AshleyMappers.effect.has(this)
+}
+
+fun Entity.effect() : ParticleEffectComponent {
+    return AshleyMappers.effect.get(this)
 }
 
 fun Entity.bullet(): BulletComponent {
@@ -196,6 +215,10 @@ fun Entity.hasBehavior(): Boolean {
 
 fun Entity.sprite(): SpriteComponent {
     return AshleyMappers.sprite.get(this)
+}
+
+fun Entity.renderable(): RenderableComponent {
+    return AshleyMappers.renderable.get(this)
 }
 
 fun Entity.hasSprite(): Boolean {

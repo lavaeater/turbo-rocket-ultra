@@ -5,6 +5,7 @@ import com.badlogic.ashley.systems.SortedIteratingSystem
 import com.badlogic.gdx.graphics.OrthographicCamera
 import ecs.components.gameplay.TransformComponent
 import ecs.components.graphics.MiniMapComponent
+import ecs.components.graphics.RenderableComponent
 import ecs.components.graphics.Shape
 import ecs.components.graphics.SpriteComponent
 import injection.Context.inject
@@ -13,11 +14,12 @@ import ktx.graphics.use
 import ktx.math.vec2
 import map.grid.GridMapManager
 import physics.AshleyMappers
+import physics.renderable
 import physics.sprite
 import tru.Assets
 
-class RenderMiniMapSystem(priority: Int): SortedIteratingSystem(allOf(SpriteComponent::class, TransformComponent::class, MiniMapComponent::class).get(),
-    Comparator<Entity> { p0, p1 -> p1.sprite().layer.compareTo(p0.sprite().layer) }, priority) {
+class RenderMiniMapSystem(priority: Int): SortedIteratingSystem(allOf(RenderableComponent::class, TransformComponent::class, MiniMapComponent::class).get(),
+    Comparator<Entity> { p0, p1 -> p1.renderable().layer.compareTo(p0.renderable().layer) }, priority) {
     private val shapeDrawer by lazy { Assets.shapeDrawer }
     private val scale = 1/50f
     private val center = vec2()

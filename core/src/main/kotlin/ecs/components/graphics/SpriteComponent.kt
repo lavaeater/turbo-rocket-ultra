@@ -5,8 +5,22 @@ import com.badlogic.gdx.graphics.g2d.Sprite
 import com.badlogic.gdx.utils.Pool
 import ecs.systems.graphics.GameConstants
 
-class SpriteComponent: Component, Pool.Poolable {
+sealed class RenderableType {
+    object Effect: RenderableType()
+    object Sprite: RenderableType()
+}
+
+class RenderableComponent: Component, Pool.Poolable {
+
     var layer = 0
+    var renderableType: RenderableType = RenderableType.Sprite
+    override fun reset() {
+        layer = 0
+        renderableType = RenderableType.Sprite
+    }
+}
+
+class SpriteComponent: Component, Pool.Poolable {
     var updateSprite: ()->Unit = {}
     var sprite = Sprite().apply { setScale(actualScale) }
         get() {
@@ -23,7 +37,6 @@ class SpriteComponent: Component, Pool.Poolable {
     var isVisible = true
     override fun reset() {
         isVisible = true
-        layer = 0
         sprite = Sprite()
         extraSprites.clear()
         extraSpriteAnchors.clear()

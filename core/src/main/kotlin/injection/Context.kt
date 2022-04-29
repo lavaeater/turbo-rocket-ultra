@@ -4,7 +4,6 @@ import audio.AudioPlayer
 import box2dLight.RayHandler
 import com.badlogic.ashley.core.Engine
 import com.badlogic.ashley.core.PooledEngine
-import com.badlogic.gdx.Gdx
 import com.badlogic.gdx.Input
 import com.badlogic.gdx.graphics.Camera
 import com.badlogic.gdx.graphics.OrthographicCamera
@@ -27,7 +26,6 @@ import ecs.systems.ai.towers.TowerTargetFinderSystem
 import ecs.systems.enemy.*
 import ecs.systems.facts.FactSystem
 import ecs.systems.facts.PerimeterObjectiveSystem
-import ecs.systems.fx.BloodSplatterEffectRenderSystem
 import ecs.systems.fx.DelayedEntityCreationSystem
 import ecs.systems.fx.EffectRenderSystem
 import ecs.systems.graphics.*
@@ -156,9 +154,7 @@ object Context {
             //lets NOT write debug badges
 //            addSystem(AiDebugSystem())
             addSystem(PlayerContextActionSystem())
-            addSystem(BloodSplatterEffectRenderSystem(inject<PolygonSpriteBatch>() as Batch))
             addSystem(DelayedEntityCreationSystem())
-            addSystem(EffectRenderSystem(inject<PolygonSpriteBatch>() as Batch, 2))
             addSystem(LootDropSystem())
             addSystem(AimingAidSystem(debug = true, renderRedDot = true))
             addSystem(GibSystem())
@@ -166,7 +162,6 @@ object Context {
             addSystem(FrustumCullingSystem())
             addSystem(AnchorPointTransformationSystem(true))
             addSystem(ComplexActionSystem())
-//            addSystem(BuildSystem(true))
             addSystem(IntentionSystem())
             addSystem(CalculatePositionSystem())
             addSystem(CalculateRotationSystem())
