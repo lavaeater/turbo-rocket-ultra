@@ -9,7 +9,7 @@
         "state": {
           "type": "markdown",
           "state": {
-            "file": "docs/todo/New Gun Sprites.md",
+            "file": "docs/todo/Intent-based Weapon Select.md",
             "mode": "source",
             "source": false
           }
@@ -69,7 +69,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "docs/todo/New Gun Sprites.md",
+                "file": "docs/todo/Intent-based Weapon Select.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -89,15 +89,15 @@
   },
   "active": "9210143da10edeee",
   "lastOpenFiles": [
-    "docs/todo/New Gun Sprites.md",
+    "docs/todo/Intent-based Weapon Select.md",
     "docs/KANBAN.md",
+    "docs/Facts of The World.md",
+    "docs/Done things.md",
+    "docs/done/New Gun Sprites.md",
     "docs/todo/New Look and Feel.md",
     "docs/done/New Fact System.md",
     "docs/done/Enemies and walls.md",
     "docs/done/Nicer Setup UI.md",
-    "docs/done/Guns as Entities.md",
-    "docs/todo/Thought Bubbles.md",
-    "docs/todo/Hierarchical Facts.md",
-    "docs/todo/Facts for Gameplay.md"
+    "docs/done/Guns as Entities.md"
   ]
 }

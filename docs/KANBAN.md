@@ -7,7 +7,6 @@ kanban-plugin: basic
 ## Todo
 
 - [ ] [[Enemy Aggression]]
-- [ ] [[Intent-based Weapon Select]]
 - [ ] [[Intent-based Context Action]]
 - [ ] [[Tower Mechanics]]
 - [ ] [[Zombies throwing projectiles]]
@@ -31,12 +30,13 @@ kanban-plugin: basic
 
 ## Doing
 
-- [ ] [[New Gun Sprites]]
+- [ ] [[Intent-based Weapon Select]]
 
 
 ## Done
 
 **Complete**
+- [x] [[New Gun Sprites]]
 - [x] [[Guns as Entities]]
 - [x] [[Nicer Setup UI]]
 - [x] [[Enemies and walls]]
