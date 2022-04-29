@@ -1,6 +1,7 @@
 package features.weapons
 
 class Weapon(weaponDefinition: WeaponDefinition) {
+    val soundRadius = weaponDefinition.soundRadius
     val name = weaponDefinition.name
     val weaponType = weaponDefinition.weaponType
     val ammoCap = weaponDefinition.ammoCap
@@ -15,4 +16,6 @@ class Weapon(weaponDefinition: WeaponDefinition) {
     val reloadDelay = weaponDefinition.reloadDelay
     val reloadType = weaponDefinition.reloadType
     val audio = weaponDefinition.audio
+    val rotate = weaponDefinition.rotate
+    val handleKey = weaponDefinition.handleKey
 }

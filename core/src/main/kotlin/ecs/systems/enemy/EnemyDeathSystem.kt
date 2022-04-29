@@ -9,23 +9,27 @@ import ecs.components.pickups.LootDropComponent
 import factories.gibs
 import factories.lootBox
 import ktx.ashley.allOf
+import physics.AshleyMappers
+import physics.addComponent
 import physics.getComponent
 import physics.has
 
 class EnemyDeathSystem : IteratingSystem(allOf(EnemyComponent::class).get()) {
 
-    @ExperimentalStdlibApi
     override fun processEntity(entity: Entity, deltaTime: Float) {
-        if(entity.getComponent<EnemyComponent>().health < 0) {
-            val transformComponent = entity.getComponent<TransformComponent>()
-            if(entity.has<LootDropComponent>()) {
-                val result = entity.getComponent<LootDropComponent>().lootTable.result
-                if(result.any()) {
+        val enemyComponent = AshleyMappers.enemy.get(entity)
+        if (enemyComponent.isDead) {
+            val transformComponent = AshleyMappers.transform.get(entity)
+            if (AshleyMappers.lootDrop.has(entity)) {
+                val result = AshleyMappers.lootDrop.get(entity).lootTable.result
+                if (result.any()) {
                     lootBox(transformComponent.position, result)
                 }
             }
-            gibs(transformComponent.position, 0f)
-            entity.add(DestroyComponent())
+            enemyComponent.lastHitBy.kills++
+
+            gibs(transformComponent.position, enemyComponent.lastShotAngle)
+            entity.addComponent<DestroyComponent>()
         }
     }
 }

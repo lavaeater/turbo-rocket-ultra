@@ -21,7 +21,7 @@ class GamepadControl(val controller: Controller): ControlMapper, Component {
     override val isGamepad = true
     override val walkVector: Vector2 = vec2(turning, thrust)
         get() = field.set(turning, -thrust)
-    override val controllerId: String get() = controller.toString()
+    override val controllerId: String get() = "Controller ${controller.playerIndex + 1}"
     override var isInBuildMode: Boolean = false
     override var buildIfPossible: Boolean = false
 

@@ -44,7 +44,7 @@ class PlayerDeathSystem: IteratingSystem(allOf(PlayerComponent::class).get()) {
             if(dc.coolDown < 0f) {
                 entity.remove(PlayerWaitsForRespawn::class.java)
                 entity.add(engine.createComponent(PlayerIsRespawning::class.java))
-                pc.player.health = 100
+                pc.player.health = pc.player.startingHealth
             }
         }
         if(entity.has<PlayerIsRespawning>()) {

@@ -3,6 +3,7 @@ package ecs.components.player
 import com.badlogic.ashley.core.Component
 import com.badlogic.gdx.math.Vector2
 import com.badlogic.gdx.utils.Pool
+import data.Player
 import ecs.systems.graphics.CompassDirection
 import input.ControlMapper
 import ktx.math.vec2
@@ -16,7 +17,8 @@ import tru.AnimState
  * the systems can be quite small and specific, but it is the data that is truly hard to keep track of. Having it in
  * the same place makes at least some things easier.
  */
-class PlayerControlComponent(var controlMapper: ControlMapper) : Component, Pool.Poolable {
+
+class PlayerControlComponent(var controlMapper: ControlMapper, val player: Player) : Component, Pool.Poolable {
     var waitsForRespawn = false
     private var cooldownRemaining = 0f
     var rof: Float = 3f
@@ -56,6 +58,9 @@ class PlayerControlComponent(var controlMapper: ControlMapper) : Component, Pool
     val firing get() = controlMapper.firing && cooldownRemaining <= 0f
     val aiming get() = controlMapper.aiming
     val aimVector get() = controlMapper.aimVector
+
+    val directionVector: Vector2 get() { return if(aiming) aimVector else walkVector }
+
     val compassDirection get() = aimVector.compassDirection()
     val mousePosition get() = controlMapper.mousePosition
     var latestHitPoint = vec2(0f, 0f)

@@ -19,10 +19,7 @@ import ecs.components.fx.CreateEntityComponent
 import ecs.components.fx.ParticleEffectComponent
 import ecs.components.fx.SplatterComponent
 import ecs.components.gameplay.*
-import ecs.components.graphics.AnimatedCharacterComponent
-import ecs.components.graphics.CameraFollowComponent
-import ecs.components.graphics.MiniMapComponent
-import ecs.components.graphics.TextureComponent
+import ecs.components.graphics.*
 import ecs.components.pickups.LootComponent
 import ecs.components.pickups.LootDropComponent
 import ecs.components.player.*
@@ -79,28 +76,31 @@ object Box2dCategories {
     val all =
         players or enemies or objectives or obstacles or enemySensors or lights or loot or bullets or walls or gibs or molotov
     val allButSensors = players or enemies or objectives or obstacles or lights or loot or bullets or walls or gibs
-    val allButLights = players or enemies or objectives or obstacles or enemySensors or loot or bullets or walls or gibs or molotov
-    val whatGibsHit = players or enemies or walls
-    val whatEnemiesHit = players or enemies or objectives or obstacles or walls or lights or bullets or gibs or sensors
+    val allButLights =
+        players or enemies or objectives or obstacles or enemySensors or loot or bullets or walls or gibs or molotov
+    val whatGibsHit = players or enemies or walls or obstacles or loot or objectives
+    val whatEnemiesHit = players or objectives or obstacles or walls or lights or bullets or gibs or sensors
     val whatPlayersHit =
         players or enemies or objectives or obstacles or walls or lights or gibs or enemySensors or indicators or loot
     val whatMolotovsHit = walls or obstacles or objectives or molotov
     val whatSensorsSense = players or enemies
+
     /**
      * Will this show up when hovering?
      */
     val thingsBulletsHit = objectives or obstacles or walls or enemies
 }
 
-fun gibs(at: Vector2, angle: Float) {
+fun gibs(at: Vector2, gibAngle: Float = 1000f) {
     for (i in Assets.enemyGibs) {
-        val angle = (1f..359f).random()
-        val force = vec2(40f,0f).setAngleDeg(angle)
+        val angle = if (gibAngle == 1000f) (1f..359f).random() else gibAngle
+        val force = vec2(80f, 0f).setAngleDeg(angle + (-25..25).random())
         val gibBody = world().body {
             type = BodyDef.BodyType.DynamicBody
-            position.set(at)
+            position.set(at.x - 2f, at.y - 2f)
+            linearDamping = 5f
             box(.3f, .3f) {
-                friction = 50f //Tune
+                friction = 1f //Tune
                 density = 10f //tune
                 filter {
                     categoryBits = Box2dCategories.gibs
@@ -108,12 +108,12 @@ fun gibs(at: Vector2, angle: Float) {
                 }
             }
         }
-        gibBody.applyLinearImpulse(force, vec2(gibBody.worldCenter.x -0.2f, gibBody.worldCenter.y - 0.2f),true)
+        gibBody.applyLinearImpulse(force, vec2(gibBody.worldCenter.x + (-1f..1f).random(), gibBody.worldCenter.y + (-1f..1f).random()), true)
 
         val gibEntity = engine().entity {
-            with<TextureComponent> {
+            with<SpriteComponent> {
                 rotateWithTransform = true
-                texture = i
+                sprite = i
             }
             with<TransformComponent> {
                 position.set(at)
@@ -139,17 +139,17 @@ fun splatterEntity(at: Vector2, angle: Float) {
     }
 }
 
-fun delayedFireEntity(at: Vector2, linearVelocity: Vector2) {
+fun delayedFireEntity(at: Vector2, linearVelocity: Vector2, player: Player) {
     engine().entity {
         with<CreateEntityComponent> {
             creator = {
-                fireEntity(at, linearVelocity)
+                fireEntity(at, linearVelocity, player)
             }
         }
     }
 }
 
-fun fireEntity(at: Vector2, linearVelocity: Vector2) {
+fun fireEntity(at: Vector2, linearVelocity: Vector2, player: Player) {
     val box2dBody = world().body {
         type = BodyDef.BodyType.DynamicBody
         position.set(at)
@@ -172,7 +172,7 @@ fun fireEntity(at: Vector2, linearVelocity: Vector2) {
         }
     }
     box2dBody.applyLinearImpulse(linearVelocity.cpy().scl(.5f), at, true)
-    box2dBody.userData =  engine().entity {
+    box2dBody.userData = engine().entity {
         with<TransformComponent>()
         with<BodyComponent> {
             body = box2dBody
@@ -181,7 +181,9 @@ fun fireEntity(at: Vector2, linearVelocity: Vector2) {
             effect = Assets.fireEffectPool.obtain()
             rotation = 270f
         }
-        with<DamageEffectComponent>()
+        with<DamageEffectComponent> {
+            this.player = player
+        }
         with<DestroyAfterCoolDownComponent> {
             coolDown = (5f..25f).random()
         }
@@ -206,9 +208,10 @@ fun tower(at: Vector2 = vec2(), towerType: String = "machinegun") {
             body = towerBody
         }
         with<TransformComponent>()
-        with<TextureComponent> {
-            texture = Assets.towers["obstacle"]!!
+        with<SpriteComponent> {
+            sprite = Assets.towers["obstacle"]!!
             scale = 4f
+
             layer = 1
         }
         with<MiniMapComponent> {
@@ -280,7 +283,7 @@ fun bodyForSprite(
     return box2dBody
 }
 
-fun player(player: Player, mapper: ControlMapper, at: Vector2, pixelWidth: Int = 24, pixelHeight: Int = 48) {
+fun player(player: Player, mapper: ControlMapper, at: Vector2, debug: Boolean = false) {
     /*
     The player should be two bodies, one for collision detection for
     movement, like a projection of the characters body on "the floor"
@@ -304,31 +307,40 @@ fun player(player: Player, mapper: ControlMapper, at: Vector2, pixelWidth: Int =
         with<AnimatedCharacterComponent> {
             anims = Assets.characters[player.selectedCharacterSpriteName]!!
         }
-        with<TextureComponent> {
+        with<SpriteComponent> {
             layer = 1
-            offsetY = -7f
+//            offsetY = -7f
         }
         with<MiniMapComponent> {
             color = Color.GREEN
         }
         with<PlayerComponent> { this.player = player }
-        val weapon = WeaponDefinition.weapons.first().getWeapon()
+        val weapon = WeaponDefinition.baseballBat.getWeapon()
         with<InventoryComponent> {
-            WeaponDefinition.weapons.forEach {
-                weapons.add(it.getWeapon())
+            if(debug) {
+                WeaponDefinition.weapons.forEach { weapons.add(it.getWeapon().apply { ammoRemaining = 10000 }) }
+                AmmoType.ammoTypes.forEach { ammo[it] = 1000 }
+            } else {
+                weapons.add(weapon)
             }
         }
         with<WeaponComponent> {
             currentWeapon = weapon
-
         }
         with<FiredShotsComponent>()
         with<FlashlightComponent>()
         with<WeaponLaserComponent>()
+        with<AnchorPointsComponent> {
+            points["green"] = vec2(0f,2f)
+            points["bat"] = vec2(-0.5f,-0.5f)
+            points["blue"] = vec2(-0.5f,0.5f)
+            points["yellow"] = vec2(0f,-2f)
+            useDirectionVector = true
+        }
     }
     //TODO: Fix this hot mess
     entity.add(mapper)
-    entity.add(PlayerControlComponent(mapper))
+    entity.add(PlayerControlComponent(mapper, player))
     box2dBody.userData = entity
 
     player.body = box2dBody
@@ -368,8 +380,8 @@ fun randomLoot(at: Vector2, lootTable: LootTable) {
     val entity = engine().entity {
         with<BodyComponent> { body = box2dBody }
         with<TransformComponent> { position.set(box2dBody.position) }
-        with<TextureComponent> {
-            texture = Assets.lootBox
+        with<SpriteComponent> {
+            sprite = Assets.lootBox
             layer = 1
         }
         with<LootComponent> {
@@ -401,8 +413,8 @@ fun lootBox(at: Vector2, lootDrop: List<ILoot>) {
     val entity = engine().entity {
         with<BodyComponent> { body = box2dBody }
         with<TransformComponent> { position.set(box2dBody.position) }
-        with<TextureComponent> {
-            texture = Assets.lootBox
+        with<SpriteComponent> {
+            sprite = Assets.lootBox
             layer = 1
         }
         with<LootComponent> {
@@ -412,7 +424,7 @@ fun lootBox(at: Vector2, lootDrop: List<ILoot>) {
     box2dBody.userData = entity
 }
 
-fun thrownProjectile(at: Vector2, towards: Vector2, speed: Float) {
+fun thrownProjectile(at: Vector2, towards: Vector2, speed: Float, player: Player) {
     val box2dBody = world().body {
         type = BodyDef.BodyType.DynamicBody
         position.set(at)
@@ -428,18 +440,20 @@ fun thrownProjectile(at: Vector2, towards: Vector2, speed: Float) {
     }
     val entity = engine().entity {
         with<BodyComponent> { body = box2dBody }
-        with<MolotovComponent> {}
+        with<MolotovComponent> {
+            this.player = player
+        }
         with<TransformComponent> { position.set(box2dBody.position) }
-        with<TextureComponent> {
+        with<SpriteComponent> {
             layer = 1
-            texture = Assets.bullet //Fix a burning bottle sprite
+            sprite = Assets.bullet //Fix a burning bottle sprite
         }
     }
     box2dBody.userData = entity
     CounterObject.bulletCount++
 }
 
-fun bullet(at: Vector2, towards: Vector2, speed: Float, damage: Float) {
+fun bullet(at: Vector2, towards: Vector2, speed: Float, damage: Float, player: Player) {
     val box2dBody = world().body {
         type = BodyDef.BodyType.DynamicBody
         position.set(at)
@@ -457,11 +471,12 @@ fun bullet(at: Vector2, towards: Vector2, speed: Float, damage: Float) {
         with<BodyComponent> { body = box2dBody }
         with<BulletComponent> {
             this.damage = damage
+            this.player = player
         }
         with<TransformComponent> { position.set(box2dBody.position) }
-        with<TextureComponent> {
+        with<SpriteComponent> {
             layer = 1
-            texture = Assets.bullet
+            sprite = Assets.bullet
         }
     }
     box2dBody.userData = entity
@@ -477,7 +492,7 @@ fun enemy(at: Vector2) {
         Box2dCategories.enemies,
         Box2dCategories.bullets,
         Box2dCategories.enemies,
-        Box2dCategories.enemies
+        Box2dCategories.players
     )
 
     val entity = engine().entity {
@@ -489,24 +504,17 @@ fun enemy(at: Vector2) {
             anims = Assets.enemies.values.random()
         }
         with<LootDropComponent> {
-            for(weapDef in WeaponDefinition.weapons) {
-                lootTable.contents.add(WeaponLoot(weapDef, 5f))
-            }
-            lootTable.contents.add(
-                AmmoLoot(AmmoType.NineMilliMeters, 6..17, 30f)
-            )
-            lootTable.contents.add(
-                AmmoLoot(AmmoType.TwelveGaugeShotgun, 4..10, 20f)
-            )
-            lootTable.contents.add(
-                AmmoLoot(AmmoType.FnP90Ammo, 50..150, 10f)
-            )
+            WeaponDefinition.weapons.forEach { lootTable.contents.add(WeaponLoot(it, 5f)) }
+            lootTable.contents.add(AmmoLoot(AmmoType.NineMilliMeters, 17..51, 10f))
+            lootTable.contents.add(AmmoLoot(AmmoType.FnP90Ammo, 25..150, 10f))
+            lootTable.contents.add(AmmoLoot(AmmoType.TwelveGaugeShotgun, 4..18, 10f))
+            lootTable.contents.add(AmmoLoot(AmmoType.Molotov, 4..18, 10f))
             lootTable.contents.add(
                 NullValue(40f)
             )
-            //lootTable.contents.add(NullValue(10f))
+            lootTable.count = (1..2).random()
         }
-        with<TextureComponent> {
+        with<SpriteComponent> {
             layer = 1
         }
         with<MiniMapComponent> {
@@ -585,10 +593,11 @@ fun boss(at: Vector2, level: Int) {
                 AmmoLoot(AmmoType.FnP90Ammo, 50..150, 10f)
             )
         }
-        with<TextureComponent> {
-            scale = 3f
+        with<SpriteComponent> {
             layer = 1
-            offsetY = -7f
+            scale = 4f
+
+//            offsetY = -7f
         }
         with<MiniMapComponent> {
             color = Color.RED
@@ -620,8 +629,8 @@ fun blockade(
         with<BodyComponent> { body = box2dBody }
         with<TransformComponent> { position.set(box2dBody.position) }
         with<BlockadeComponent>()
-        with<TextureComponent> {
-            texture = Assets.buildables.first()
+        with<SpriteComponent> {
+            sprite = Assets.buildables.first()
             scale = 4f
             layer = 1
         }
@@ -631,22 +640,12 @@ fun blockade(
 
 fun spawner(
     tileX: Float = 0f,
-    tileY: Float = 0f,
-    width: Float = 4f,
-    height: Float = 4f
+    tileY: Float = 0f
 ): Entity {
-
-    val pixelWidth = 64
-    val pixelHeight = 64
-    val projectedHeight = 64
-
-    val widthInMeters = pixelWidth / pixelsPerMeter
-    val projectedHeightInMeters = projectedHeight / pixelsPerMeter
-
     val box2dBody = world().body {
         type = BodyDef.BodyType.StaticBody
         position.set(tileX, tileY)
-        box(4f,4f,) {//widthInMeters, projectedHeightInMeters, vec2(widthInMeters / 2, -projectedHeightInMeters / 2)) {
+        box(4f, 4f) {//widthInMeters, projectedHeightInMeters, vec2(widthInMeters / 2, -projectedHeightInMeters / 2)) {
             restitution = 0f
             filter {
                 categoryBits = Box2dCategories.obstacles
@@ -657,14 +656,13 @@ fun spawner(
         with<BodyComponent> { body = box2dBody }
         with<TransformComponent> { position.set(box2dBody.position) }
         with<ObstacleComponent>()
-        with<TextureComponent> {
-            texture = Assets.towers["obstacle"]!!
+        with<SpriteComponent> {
+            sprite  = Assets.towers["obstacle"]!!
+//            offsetY = -4f
             scale = 4f
-//            offsetX = widthInMeters * 2
-            offsetY = -4f//-(widthInMeters * 2) - projectedHeightInMeters
             layer = 1
         }
-        with<EnemySpawnerComponent>{}
+        with<EnemySpawnerComponent> {}
         with<MiniMapComponent> {
             color = Color.PINK
         }
@@ -693,9 +691,9 @@ fun objective(
     val entity = engine().entity() {
         with<BodyComponent> { body = box2dBody }
         with<TransformComponent> { position.set(box2dBody.position) }
-        with<TextureComponent> {
-            texture = Assets.towers["objective"]!!
-            offsetY = -4f
+        with<SpriteComponent> {
+            sprite = Assets.towers["objective"]!!
+//            offsetY = -4f
             scale = 4f
             layer = 1
         }

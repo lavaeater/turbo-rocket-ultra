@@ -13,9 +13,10 @@ import com.badlogic.gdx.graphics.g2d.PolygonSpriteBatch
 import com.badlogic.gdx.utils.viewport.ExtendViewport
 import com.strongjoshua.console.CommandExecutor
 import com.strongjoshua.console.GUIConsole
-import ecs.components.gameplay.DamageEffectComponent
-import ecs.components.gameplay.DestroyAfterCoolDownComponent
-import ecs.systems.*
+import ecs.systems.AnchorPointTransformationSystem
+import ecs.systems.BodyDestroyerSystem
+import ecs.systems.CharacterWalkAndShootDirectionSystem
+import ecs.systems.PhysicsSystem
 import ecs.systems.ai.*
 import ecs.systems.ai.boss.RushPlayerSystem
 import ecs.systems.ai.towers.TowerShootSystem
@@ -25,12 +26,12 @@ import ecs.systems.facts.FactSystem
 import ecs.systems.fx.BloodSplatterEffectRenderSystem
 import ecs.systems.fx.DelayedEntityCreationSystem
 import ecs.systems.fx.EffectRenderSystem
-import ecs.systems.input.KeyboardInputSystem
 import ecs.systems.fx.RenderBox2dLightSystem
 import ecs.systems.graphics.*
 import ecs.systems.graphics.GameConstants.GAMEHEIGHT
 import ecs.systems.graphics.GameConstants.GAMEWIDTH
 import ecs.systems.input.GamepadInputSystem
+import ecs.systems.input.KeyboardInputSystem
 import ecs.systems.pickups.LootDropSystem
 import ecs.systems.player.*
 import ktx.box2d.createWorld
@@ -38,10 +39,11 @@ import ktx.inject.Context
 import ktx.inject.register
 import map.grid.GridMapManager
 import physics.ContactManager
-import screens.*
 import story.FactsOfTheWorld
 import story.StoryManager
+import ui.Hud
 import ui.IUserInterface
+import ui.MessageHandler
 import ui.UserInterface
 
 object Context {
@@ -60,7 +62,8 @@ object Context {
         context.register {
             bindSingleton(PolygonSpriteBatch())
             bindSingleton(OrthographicCamera())
-            bind<IUserInterface> { UserInterface(inject<PolygonSpriteBatch>() as Batch, false) }
+//            bind<IUserInterface> { UserInterface(inject<PolygonSpriteBatch>() as Batch, false) }
+            bind<IUserInterface> { Hud(inject<PolygonSpriteBatch>() as Batch) }
             bindSingleton(
                 ExtendViewport(
                     GAMEWIDTH,
@@ -80,14 +83,15 @@ object Context {
             bindSingleton(RayHandler(inject(), 500, 500))
             bindSingleton(FactsOfTheWorld(Gdx.app.getPreferences("TurboRocket")))
             bindSingleton(StoryManager())
+            bindSingleton(MessageHandler())
             bindSingleton(getEngine())
         }
     }
 
     private fun getEngine(): Engine {
         return PooledEngine().apply {
-            addSystem(PhysicsSystem(inject()))
-            //addSystem(PhysicsDebugRendererSystem(inject(), inject()))
+            addSystem(PhysicsSystem())
+            addSystem(PhysicsDebugRendererSystem(inject(), inject()))
             addSystem(CameraUpdateSystem())
             addSystem(PlayerMoveSystem())
             addSystem(PlayerHasBeenHereSystem())
@@ -96,7 +100,6 @@ object Context {
             addSystem(BodyDestroyerSystem(inject())) //world
             addSystem(CharacterWalkAndShootDirectionSystem())
             addSystem(PlayerShootingSystem(inject()))
-            //addSystem(BulletSpeedSystem())
             addSystem(EnemyDeathSystem())
             addSystem(EnemyMovementSystem())
             // Ai Systems Start
@@ -129,8 +132,8 @@ object Context {
             addSystem(RenderUserInterfaceSystem(inject<PolygonSpriteBatch>() as Batch))
             addSystem(RenderMiniMapSystem())
             addSystem(PlayerFlashlightSystem())
-            //addSystem(WeaponLaserSystem())
-            addSystem(AiDebugSystem())
+            //lets NOT write debug badges
+//            addSystem(AiDebugSystem())
             addSystem(PlayerContextActionSystem())
             addSystem(RenderBox2dLightSystem(inject(), inject()))
             addSystem(BloodSplatterEffectRenderSystem(inject<PolygonSpriteBatch>() as Batch))
@@ -142,6 +145,7 @@ object Context {
             addSystem(FactSystem())
             addSystem(FrustumCullingSystem())
             addSystem(BuildSystem(false))
+            addSystem(AnchorPointTransformationSystem())
         }
     }
 }

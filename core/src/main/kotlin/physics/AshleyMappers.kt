@@ -2,10 +2,8 @@ package physics
 
 import com.badlogic.ashley.core.Component
 import com.badlogic.ashley.core.ComponentMapper
+import com.badlogic.ashley.core.Entity
 import ecs.components.BodyComponent
-import ecs.components.player.PlayerControlComponent
-import ecs.components.VehicleComponent
-import ecs.components.VehicleControlComponent
 import ecs.components.ai.*
 import ecs.components.enemy.EnemyComponent
 import ecs.components.enemy.EnemySensorComponent
@@ -16,7 +14,7 @@ import ecs.components.gameplay.*
 import ecs.components.graphics.*
 import ecs.components.pickups.LootComponent
 import ecs.components.pickups.LootDropComponent
-import ecs.components.player.ContextActionComponent
+import ecs.components.player.*
 import ktx.ashley.mapperFor
 import kotlin.reflect.KType
 import kotlin.reflect.typeOf
@@ -29,6 +27,8 @@ object AshleyMappers {
             mappers[type] = mapperFor<T>()
         return mappers[type] as ComponentMapper<T>
     }
+
+    val body = mapperFor<BodyComponent>()
     val mappers = mutableMapOf<KType, ComponentMapper<*>>()
     val transform = mapperFor<TransformComponent>()
     val amble = mapperFor<Amble>()
@@ -55,10 +55,87 @@ object AshleyMappers {
     val animatedCharacter = mapperFor<AnimatedCharacterComponent>()
     val cameraFollow = mapperFor<CameraFollowComponent>()
     val miniMap = mapperFor<MiniMapComponent>()
-    val texture = mapperFor<TextureComponent>()
     val loot = mapperFor<LootComponent>()
     val lootDrop = mapperFor<LootDropComponent>()
     val contextAction = mapperFor<ContextActionComponent>()
-    
+    val firedShots = mapperFor<FiredShotsComponent>()
+    val playerControl = mapperFor<PlayerControlComponent>()
+    val weapon = mapperFor<WeaponComponent>()
+    val respawn = mapperFor<PlayerIsRespawning>()
+    val waitsForRespawn = mapperFor<PlayerWaitsForRespawn>()
+    val frustum = mapperFor<OnScreenComponent>()
+    val sprite = mapperFor<SpriteComponent>()
+    val anchors = mapperFor<AnchorPointsComponent>()
+}
 
+fun Entity.transform(): TransformComponent {
+    return AshleyMappers.transform.get(this)
+}
+
+fun Entity.hasTransform(): Boolean {
+    return AshleyMappers.transform.has(this)
+}
+
+fun Entity.anchors(): AnchorPointsComponent {
+    return AshleyMappers.anchors.get(this)
+}
+
+fun Entity.hasAnchors(): Boolean {
+    return AshleyMappers.anchors.has(this)
+}
+
+fun Entity.behavior(): BehaviorComponent {
+    return AshleyMappers.behavior.get(this)
+}
+
+fun Entity.hasBehavior(): Boolean {
+    return AshleyMappers.behavior.has(this)
+}
+
+fun Entity.sprite(): SpriteComponent {
+    return AshleyMappers.sprite.get(this)
+}
+
+fun Entity.hasSprite(): Boolean {
+    return AshleyMappers.sprite.has(this)
+}
+
+fun Entity.weapon(): WeaponComponent {
+    return AshleyMappers.weapon.get(this)
+}
+
+fun Entity.hasWeapon(): Boolean {
+    return AshleyMappers.weapon.has(this)
+}
+
+fun Entity.animation(): AnimatedCharacterComponent {
+    return AshleyMappers.animatedCharacter.get(this)
+}
+
+fun Entity.hasAnimation(): Boolean {
+    return AshleyMappers.animatedCharacter.has(this)
+}
+
+fun Entity.contextAction(): ContextActionComponent {
+    return AshleyMappers.contextAction.get(this)
+}
+
+fun Entity.hasContextAction(): Boolean {
+    return AshleyMappers.contextAction.has(this)
+}
+
+inline fun Entity.addContextAction(block: ContextActionComponent.() -> Unit = {}) {
+    this.addComponent(block)
+}
+
+fun Entity.playerControl(): PlayerControlComponent {
+    return AshleyMappers.playerControl.get(this)
+}
+
+fun Entity.hasPlayerControl(): Boolean {
+    return AshleyMappers.playerControl.has(this)
+}
+
+fun Entity.safeDestroy() {
+    this.addComponent<DestroyComponent>()
 }

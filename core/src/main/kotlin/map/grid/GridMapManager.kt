@@ -24,14 +24,14 @@ class GridMapManager {
         fixBodies()
     }
 
-    val bodies = mutableListOf<Body>()
+    private val bodies = mutableListOf<Body>()
 
     fun getRandomSection(except: Coordinate, maxDistance: Int = 5): Coordinate {
         val minX = except.x - maxDistance
         val maxX = except.x + maxDistance
         val minY = except.y - maxDistance
         val maxY = except.y + maxDistance
-        return gridMap.keys.filter { it != except && it.x > minX && it.x < maxX && it.y > minY && it.y < maxY } .random()
+        return gridMap.keys.filter { it != except && it.x > minX && it.x < maxX && it.y > minY && it.y < maxY }.random()
     }
 
     fun canWeBuildAt(x: Int, y:Int) : Boolean {
@@ -39,7 +39,8 @@ class GridMapManager {
     }
 
     fun haveWeVisited(x: Int, y:Int) : Boolean {
-        return visitedMap.containsKey(x) && visitedMap[x]!!.containsKey(y) && visitedMap[x]!![y]!!
+        return true
+//        return visitedMap.containsKey(x) && visitedMap[x]!!.containsKey(y) && visitedMap[x]!![y]!!
     }
 
     private val buildableMap = mutableMapOf<Int, MutableMap<Int, Boolean>>()

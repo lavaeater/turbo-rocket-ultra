@@ -1,10 +1,10 @@
 package screens
 
 import com.badlogic.gdx.Input
+import com.badlogic.gdx.controllers.Controller
 import com.badlogic.gdx.controllers.Controllers
 import com.badlogic.gdx.graphics.Color
 import com.badlogic.gdx.graphics.OrthographicCamera
-import com.badlogic.gdx.math.MathUtils
 import com.badlogic.gdx.math.MathUtils.*
 import com.badlogic.gdx.math.Vector2
 import com.badlogic.gdx.utils.viewport.ExtendViewport
@@ -18,9 +18,13 @@ import ktx.math.vec2
 import ktx.math.vec3
 import statemachine.StateMachine
 import tru.Assets
-import kotlin.math.pow
 
 class ConceptScreen(gameState: StateMachine<GameState, GameEvent>) : BasicScreen(gameState) {
+    /*
+    Controllers exist by themselves. They might be connected or not connected
+    This system we are making should handle all input, at least from controllers
+    and how do we do that independent of entity systems etc?
+     */
     override val camera = OrthographicCamera()
     override val viewport = ExtendViewport(200f, 200f, camera)
     val shapeDrawer by lazy { Assets.shapeDrawer }
@@ -36,7 +40,7 @@ class ConceptScreen(gameState: StateMachine<GameState, GameEvent>) : BasicScreen
     var rotation = 45f
     val viewDistance = 100f
 
-    val controller = Controllers.getCurrent()
+    val controller: Controller by lazy { Controllers.getCurrent() }
     val gamepadControl by lazy { GamepadControl(controller) }
 
 

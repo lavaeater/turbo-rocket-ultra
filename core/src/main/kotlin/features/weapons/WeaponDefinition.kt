@@ -20,13 +20,16 @@ class WeaponDefinition(
     val damageRange: ClosedFloatingPointRange<Float>,
     val reloadDelay: Float,
     val reloadType: ReloadType,
-    val audio: Map<String, Sound>
+    val audio: Map<String, Sound>,
+    val soundRadius: Float,
+    val rotate: Boolean = false,
+    val handleKey: String = "",
 ) {
     companion object {
         val molotov = WeaponDefinition(
             "Molotov Cocktail",
             WeaponType.ThrownArea,
-            1000,
+            1,
             30f,
             15f, //
             1,
@@ -35,25 +38,30 @@ class WeaponDefinition(
             AmmoType.Molotov,
             5f..15f,
             0f,
+            ReloadType.SingleShot,
+            Assets.gunAudio["glock17"]!!,
+            0f
+        )
+        val baseballBat = WeaponDefinition(
+            "Baseball Bat",
+            WeaponType.Melee,
+            -1,
+            60f,
+            45f, //
+            -1,
+            5f,
+            GunFrames.bat,
+            AmmoType.MeleeWeapon,
+            5f..15f,
+            0f,
             ReloadType.MeleeWeapon,
-            Assets.gunAudio["glock17"]!!
+            Assets.gunAudio["glock17"]!!,//TODO exhange for bat or something
+            0f,
+            true,
+            "bat"
         )
         val weapons = listOf(
-            WeaponDefinition(
-                "Baseball Bat",
-                WeaponType.Melee,
-                -1,
-                60f,
-                45f, //
-                -1,
-                5f,
-                GunFrames.handGun, //TODO exhange for bat or something
-                AmmoType.MeleeWeapon,
-                5f..15f,
-                0f,
-                ReloadType.MeleeWeapon,
-                Assets.gunAudio["glock17"]!!//TODO exhange for bat or something
-            ),
+            baseballBat,
             molotov,
             WeaponDefinition(
                 "Glock 17",
@@ -68,7 +76,8 @@ class WeaponDefinition(
                 8f..16f,
                 2f,
                 ReloadType.EntireMag,
-                Assets.gunAudio["glock17"]!!
+                Assets.gunAudio["glock17"]!!,
+                50f
             ),
             WeaponDefinition(
                 "Franchi Spas 12",
@@ -83,7 +92,8 @@ class WeaponDefinition(
                 12f..24f,
                 1f,
                 ReloadType.SingleShot,
-                Assets.gunAudio["spas12"]!!
+                Assets.gunAudio["spas12"]!!,
+                150f
             ),
             WeaponDefinition(
                 "FN P90",
@@ -98,7 +108,8 @@ class WeaponDefinition(
                 6f..14f,
                 2f,
                 ReloadType.EntireMag,
-                Assets.gunAudio["fnp90"]!!
+                Assets.gunAudio["fnp90"]!!,
+                100f
             )
         )
     }

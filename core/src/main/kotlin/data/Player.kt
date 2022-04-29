@@ -6,11 +6,13 @@ import ecs.components.gameplay.ObjectiveComponent
 import tru.*
 
 class Player() {
+    var currentWeapon = ""
     var kills = 0
     set(value) {
         field = value
         score += value * 10
     }
+    val index = 0
     var score = 0
     lateinit var body: Body
     lateinit var entity: Entity
@@ -18,13 +20,13 @@ class Player() {
     val selectedSprite get() = Assets.playerCharacters[selectedCharacterSpriteName]!!
     var currentAnimState: AnimState = AnimState.Idle
     var currentSpriteDirection : SpriteDirection = SpriteDirection.South
-    val startingHealth = 100
+    val startingHealth = 100f
     private val startingLives = 3
 
     var lives = startingLives
-    var health: Int = startingHealth
+    var health: Float = startingHealth
     set(value) {
-        field = value.coerceAtLeast(0)
+        field = value.coerceAtLeast(0f)
     }
 
     val touchedObjectives = mutableSetOf<ObjectiveComponent>()

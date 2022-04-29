@@ -3,10 +3,10 @@ package ecs.systems.player
 import com.badlogic.ashley.core.Entity
 import com.badlogic.ashley.systems.IteratingSystem
 import ecs.components.graphics.AnimatedCharacterComponent
-import ecs.components.graphics.TextureComponent
+import ecs.components.graphics.SpriteComponent
 import ecs.components.player.WeaponComponent
 import ktx.ashley.allOf
-import physics.getComponent
+import physics.*
 import tru.AnimState
 import tru.Assets
 
@@ -15,17 +15,21 @@ class WeaponUpdateSystem: IteratingSystem(
     allOf(
         WeaponComponent::class,
         AnimatedCharacterComponent::class,
-        TextureComponent::class).get()) {
+        SpriteComponent::class).get()) {
 
-    @OptIn(ExperimentalStdlibApi::class)
     override fun processEntity(entity: Entity, deltaTime: Float) {
-        val weaponComponent = entity.getComponent<WeaponComponent>()
-        val animatedCharacterComponent = entity.getComponent<AnimatedCharacterComponent>()
-        val textureComponent = entity.getComponent<TextureComponent>()
+        val weaponComponent =entity.weapon()
+        val weapon = weaponComponent.currentWeapon
+        val animatedCharacterComponent = entity.animation()
+        val spriteComponent = entity.sprite()
         if(animatedCharacterComponent.currentAnimState == AnimState.Aiming)  {
-            textureComponent.extraTextures["gun"] = Pair(Assets.weapons[weaponComponent.currentWeapon.textureName]!![animatedCharacterComponent.currentDirection]!!, 1.0f)
+            spriteComponent.extraSprites["gun"] = Assets.weapons[weapon.textureName]!![animatedCharacterComponent.currentDirection]!!
+            if(weapon.handleKey != "") {
+                spriteComponent.extraSpriteAnchors["gun"] = weapon.handleKey
+            }
         } else {
-            textureComponent.extraTextures.remove("gun")
+            spriteComponent.extraSprites.remove("gun")
+            spriteComponent.extraSpriteAnchors.remove("gun")
         }
     }
 }

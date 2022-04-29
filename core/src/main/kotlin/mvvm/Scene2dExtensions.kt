@@ -27,15 +27,6 @@ class BindableLabel(override val propertyName: String,
 	}
 }
 
-/**
- * @param text will be displayed on the label.
- * @param style name of the widget style. Defaults to [defaultStyle].
- * @param skin [Skin] instance that contains the widget style. Defaults to [Scene2DSkin.defaultSkin].
- * @param init will be invoked with the widget as "this". Consumes actor container (usually a [Cell] or [Node]) that
- * contains the widget. Might consume the actor itself if this group does not keep actors in dedicated containers.
- * Inlined.
- * @return a [Label] instance added to this group.
- */
 inline fun <S> KWidget<S>.bindableLabel(
 		propertyName: String,
 		skin: Skin = Scene2DSkin.defaultSkin,

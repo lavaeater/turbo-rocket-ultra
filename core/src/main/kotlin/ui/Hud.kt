@@ -1,0 +1,170 @@
+package ui
+
+import com.badlogic.gdx.graphics.OrthographicCamera
+import com.badlogic.gdx.graphics.g2d.Batch
+import com.badlogic.gdx.math.Vector2
+import com.badlogic.gdx.math.Vector3
+import com.badlogic.gdx.scenes.scene2d.Stage
+import com.badlogic.gdx.scenes.scene2d.actions.Actions.*
+import com.badlogic.gdx.scenes.scene2d.ui.Label
+import com.badlogic.gdx.utils.Align
+import com.badlogic.gdx.utils.Queue
+import com.badlogic.gdx.utils.viewport.ExtendViewport
+import data.Players
+import injection.Context.inject
+import ktx.math.vec2
+import ktx.math.vec3
+import ktx.scene2d.*
+import physics.AshleyMappers
+import ui.customactors.boundLabel
+import ui.customactors.boundProgressBar
+import ui.customactors.repeatingTexture
+import kotlin.reflect.KClass
+import ktx.actors.*
+
+
+class Hud(private val batch: Batch) : IUserInterface, MessageReceiver {
+    private val aspectRatio = 14f / 9f
+    private val hudWidth = 1280f
+    private val hudHeight = hudWidth * aspectRatio
+    private val camera = OrthographicCamera()
+    override val hudViewPort = ExtendViewport(hudWidth, hudHeight, camera)
+
+    private val projectionVector = vec3()
+    private val _projectionVector = vec2()
+    private val projection2d : Vector2 get() {
+        _projectionVector.set(projectionVector.x, projectionVector.y)
+        return _projectionVector
+    }
+
+    override fun hide() {
+    }
+
+    lateinit var toastLabel: Label
+
+    private val stage by lazy {
+        val aStage = Stage(hudViewPort, batch)
+        aStage.actors {
+//            toastLabel = label()
+            table {
+                setFillParent(true)
+                left()
+                bottom()
+                for((control, player) in Players.players) {
+                    table {
+                        width = aStage.width / 8
+                        label("${control.controllerId}").inCell.align(Align.right).width(aStage.width / 8)
+                        row()
+                        boundLabel({"Kills: ${player.kills}"}).inCell.align(Align.right)
+                        row()
+                        boundLabel({"Objectives: ${player.touchedObjectives.count()}"}).inCell.align(Align.right)
+                        row()
+                        boundLabel({"Score: ${player.score}"}).inCell.align(Align.right)
+                        row()
+                        boundLabel({"${player.currentWeapon}: ${player.ammoLeft}|${player.totalAmmo}"}).inCell.align(Align.right)
+                        row()
+                        boundProgressBar({player.health}, 0f, player.startingHealth, 0.1f) {  }.inCell.align(Align.right)
+                        row()
+                        repeatingTexture(
+                            {player.lives},
+                            5f,
+                            AshleyMappers.animatedCharacter.get(player.entity).currentAnim.keyFrames.first()) {}
+                    }
+
+
+                }
+            }
+        }
+        aStage
+    }
+
+    override fun show() {
+        //Set up this as receiver for messages with messagehandler
+        inject<MessageHandler>().apply{
+            this.receivers.add(this@Hud)
+        }
+        //I won't use the UI for input at this stage, right?
+        /*
+        To use both the UI and my stuff, we could multiplex it or something.
+         */
+//        Gdx.input.inputProcessor = stage
+    }
+
+    override fun update(delta: Float) {
+        showToasts(delta)
+        stage.act(delta)
+        stage.draw()
+    }
+
+    override fun dispose() {
+        stage.dispose()
+    }
+
+    override fun clear() {
+    }
+
+    override fun reset() {
+    }
+
+    override val messageTypes: Set<KClass<*>> = setOf(Message.ShowToast::class)
+
+    fun screenToHud(screenCoordinate: Vector3): Vector2 {
+        projectionVector.set(screenCoordinate)
+        camera.unproject(projectionVector)
+        return projection2d
+    }
+
+    /*
+    Show toasts in order received, for one second each, using a specific style for the
+    label - and also scale it to twice the size or add some kind of anim to it.
+     */
+    private val toastQueue = Queue<Message.ShowToast>()
+    private var toastCooldown = 0.0f
+
+    fun showToasts(delta: Float) {
+        toastCooldown -= delta
+        if(toastQueue.any() && toastCooldown <= 0f) {
+            toastCooldown = 1f
+            val toastToShow = toastQueue.removeFirst()
+            camera.unproject(toastToShow.screenCoordinate)
+            val sequence = delay(1f) + removeActor()
+            stage.actors {
+                label(toastToShow.toast, "title") {
+                    actor -> actor += sequence
+                }.setPosition(toastToShow.screenCoordinate.x, toastToShow.screenCoordinate.y)
+            }
+        }
+    }
+
+    override fun recieveMessage(message: Message) {
+        when (message) {
+            is Message.ShowToast -> {
+                toastQueue.addLast(message)
+            }
+        }
+    }
+}
+
+
+
+
+interface MessageReceiver {
+    val messageTypes: Set<KClass<*>>
+    fun recieveMessage(message: Message)
+}
+
+class MessageHandler {
+    // QUeue not used for now, but perhaps later, much later?
+    val messageQueue = Queue<Message>()
+    val receivers = mutableListOf<MessageReceiver>()
+    fun sendMessage(message: Message) {
+        val validReceivers = receivers.filter { it.messageTypes.contains<KClass<out Any>>(message::class) }
+        for(receiver in validReceivers) {
+            receiver.recieveMessage(message)
+        }
+    }
+}
+
+sealed class Message() {
+    class ShowToast(val toast: String, val screenCoordinate: Vector3): Message()
+}

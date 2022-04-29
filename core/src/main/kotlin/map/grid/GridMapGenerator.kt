@@ -42,7 +42,7 @@ class GridMapGenerator {
             boss(position, 1)
         }
 
-        fun generateFromDefintion(def: SimpleGridMapDef): Pair<Map<Coordinate, GridMapSection>, TileGraph> {
+        fun generateFromDefintion(def: TextGridMapDefinition): Pair<Map<Coordinate, GridMapSection>, TileGraph> {
             //TODO: Move this somewhere
             Light.setGlobalContactFilter(
                 Box2dCategories.lights,
@@ -60,11 +60,11 @@ class GridMapGenerator {
                     if (aSectionIsHere) {
                         index++
                         //1. Check neighbours - if they are true, we will add them as connections
-                        val coordinate = TileGraph.createCoordinate(x, y)
+                        val coordinate = TileGraph.getCoordinateInstance(x, y)
                         val connections = getConnections(x, y, def.booleanSections)
                         //graph.addCoordinate(coordinate)
                         for (direction in connections) {
-                            val connectionCoordinate = TileGraph.createCoordinate(
+                            val connectionCoordinate = TileGraph.getCoordinateInstance(
                                 coordinate.x + MapDirection.xIndex[direction]!!,
                                 coordinate.y + MapDirection.yIndex[direction]!!
                             )
@@ -96,6 +96,7 @@ class GridMapGenerator {
                                         AmmoLoot(AmmoType.NineMilliMeters, 17..51, 10f),
                                         AmmoLoot(AmmoType.FnP90Ammo, 25..150, 10f),
                                         AmmoLoot(AmmoType.TwelveGaugeShotgun, 4..18, 10f),
+                                        AmmoLoot(AmmoType.Molotov, 4..18, 10f),
                                     ), (3..5).random()
                                 )
                             )
@@ -156,9 +157,6 @@ class GridMapGenerator {
                         directionsToFilter.add(MapDirection.South)
 
                     directionsToFilter.add(MapDirection.opposing[currentDirection]!!)
-                    if (directionsToFilter.size == 4) {
-                        val waht = "wwwaaat"
-                    }
 
                     currentDirection = MapDirection.directions.filter { !directionsToFilter.contains(it) }.random()
                 }
@@ -197,16 +195,16 @@ class GridMapGenerator {
             val tileMap = mutableMapOf<Coordinate, GridMapSection>()
             val graph = TileGraph()
             var index = 0
-            for ((x, column) in map.withIndex()) {
-                for ((y, tile) in column.withIndex())
+            for ((sectionX, column) in map.withIndex()) {
+                for ((sectionY, tile) in column.withIndex())
                     if (tile) {
                         index++
                         //1. Check neighbours - if they are true, we will add them as connections
-                        val coordinate = TileGraph.createCoordinate(x, y)
-                        val connections = getConnections(x, y, map)
+                        val coordinate = TileGraph.getCoordinateInstance(sectionX, sectionY)
+                        val connections = getConnections(sectionX, sectionY, map)
                         val section = GridMapSection(coordinate, connections, coordinate == startCoord)
                         for (direction in connections) {
-                            val connectionCoordinate = TileGraph.createCoordinate(
+                            val connectionCoordinate = TileGraph.getCoordinateInstance(
                                 coordinate.x + MapDirection.xIndex[direction]!!,
                                 coordinate.y + MapDirection.yIndex[direction]!!
                             )
@@ -219,8 +217,7 @@ class GridMapGenerator {
 
                         if ((1..20).random() <= level) {
                             val position = section.innerBounds.randomPoint()
-                            val emitter = spawner(position.x, position.y)
-                            //emitter.add(engine.createComponent(EnemySpawnerComponent::class.java))
+                            spawner(position.x, position.y)
                         }
 
                         if (coordinate == bossCoordinate) {

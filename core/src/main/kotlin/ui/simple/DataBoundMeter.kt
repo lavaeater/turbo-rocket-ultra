@@ -7,8 +7,8 @@ import ktx.math.vec2
 import tru.Assets
 
 class DataBoundMeter(
-    val valueFunction: () -> Int,
-    maxValue: Int,
+    val valueFunction: () -> Float,
+    maxValue: Float,
     val width: Float,
     val height: Float,
     val position: Vector2 = vec2()

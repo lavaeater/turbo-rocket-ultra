@@ -1,40 +1,49 @@
 package ecs.systems.ai
 
+import ai.pathfinding.TileGraph
 import com.badlogic.ashley.core.Entity
 import com.badlogic.ashley.systems.IteratingSystem
 import com.badlogic.gdx.ai.btree.Task
-import com.badlogic.gdx.math.Vector2
 import ecs.components.ai.Investigate
 import ecs.components.ai.NoticedSomething
 import ecs.components.enemy.EnemyComponent
 import ecs.components.gameplay.TransformComponent
+import ecs.systems.sectionX
+import ecs.systems.sectionY
+import injection.Context.inject
 import ktx.ashley.allOf
+import map.grid.GridMapManager
 import physics.getComponent
 
 class InvestigateSystem : IteratingSystem(allOf(Investigate::class, EnemyComponent::class, NoticedSomething::class).get()) {
 
+    private val mapManager by lazy { inject<GridMapManager>() }
+
     @OptIn(ExperimentalStdlibApi::class)
     override fun processEntity(entity: Entity, deltaTime: Float) {
         val component = entity.getComponent<Investigate>()
-        component.coolDown -= deltaTime
+        val enemyComponent = entity.getComponent<EnemyComponent>()
+        val currentPosition = entity.getComponent<TransformComponent>().position
+
+        if(component.firstRun) {
+            val notice = entity.getComponent<NoticedSomething>()
+            val currentSection = TileGraph.getCoordinateInstance(currentPosition.sectionX(), currentPosition.sectionY())
+            val noticeSection = TileGraph.getCoordinateInstance(notice.noticedWhere.sectionX(), notice.noticedWhere.sectionY())
+
+            findPathFromTo(enemyComponent, currentSection, noticeSection)
+            component.firstRun = false
+        }
+
+        enemyComponent.speed = 5f
+
+        val weAreDone = progressPath(enemyComponent, currentPosition)
 
         if (component.status == Task.Status.RUNNING) {
-            val enemyComponent = entity.getComponent<EnemyComponent>()
-            val notice = entity.getComponent<NoticedSomething>()
-            val transformComponent = entity.getComponent<TransformComponent>()
-
-            if(transformComponent.position.dst(notice.noticedWhere) > 2f) {
-                val directionVector = notice.noticedWhere.cpy().sub(transformComponent.position).nor()
-                enemyComponent.directionVector.set(directionVector)
-                enemyComponent.speed = 3.5f
-            } else {
-                enemyComponent.speed = 1f
-                enemyComponent.directionVector.set(Vector2.Zero)
-                entity.remove(NoticedSomething::class.java)
-            }
-        }
-        if(component.coolDown <= 0f) {
-            component.status = Task.Status.FAILED
+            component.coolDown -= deltaTime
+            if (component.coolDown <= 0f)
+                component.status = Task.Status.FAILED
+            if(weAreDone)
+                component.status = Task.Status.FAILED
         }
     }
 }

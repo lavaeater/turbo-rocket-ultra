@@ -1,5 +1,6 @@
 package screens
 
+import ai.pathfinding.TileGraph
 import audio.AudioPlayer
 import com.badlogic.ashley.core.Engine
 import com.badlogic.gdx.Gdx
@@ -17,6 +18,7 @@ import ecs.components.gameplay.ObjectiveComponent
 import ecs.components.gameplay.ObstacleComponent
 import ecs.components.player.PlayerComponent
 import ecs.systems.graphics.CameraUpdateSystem
+import ecs.systems.graphics.GameConstants
 import ecs.systems.graphics.GameConstants.MAX_ENEMIES
 import ecs.systems.graphics.RenderMiniMapSystem
 import ecs.systems.graphics.RenderSystem
@@ -31,10 +33,9 @@ import ktx.app.KtxScreen
 import ktx.ashley.allOf
 import ktx.ashley.getSystem
 import ktx.ashley.remove
-import map.grid.GridMapGenerator
-import map.grid.GridMapManager
-import map.grid.SimpleGridMapDef
-import map.snake.*
+import map.grid.*
+import map.snake.randomPoint
+import physics.AshleyMappers
 import physics.getComponent
 import statemachine.StateMachine
 import story.FactsOfTheWorld
@@ -72,37 +73,38 @@ class GameScreen(private val gameState: StateMachine<GameState, GameEvent>) : Kt
         for (system in engine.systems) {
             system.setProcessing(true)
         }
-        loadMapOne()
+        generateMap(CounterObject.currentLevel)
         addPlayers()
 
-        addTower()
         ui.reset()
         ui.show()
     }
 
-    private fun loadMapOne() {
-        //For debuggin we will swarm with enemies
+    private fun loadMapOne() : Pair<Map<Coordinate, GridMapSection>, TileGraph> {
         CounterObject.numberOfEnemies = 50
+        CounterObject.maxSpawnedEnemies = 1024
 
-        val map = GridMapGenerator.generateFromDefintion(SimpleGridMapDef.levelOne)
-        mapManager.gridMap = map.first
-        mapManager.sectionGraph = map.second
-        CounterObject.numberOfObjectives = engine.getEntitiesFor(allOf(ObjectiveComponent::class).get()).count()
-        movePlayersToStart()
+        return GridMapGenerator.generateFromDefintion(TextGridMapDefinition.levelOne)
     }
 
-    private fun loadMapTwo() {
-        //For debuggin we will swarm with enemies
+    private fun loadMapTwo(): Pair<Map<Coordinate, GridMapSection>, TileGraph>  {
         CounterObject.numberOfEnemies = 100
+        CounterObject.maxSpawnedEnemies= 1024
 
-        val map = GridMapGenerator.generateFromDefintion(SimpleGridMapDef.levelTwo)
-        mapManager.gridMap = map.first
-        mapManager.sectionGraph = map.second
-        CounterObject.numberOfObjectives = engine.getEntitiesFor(allOf(ObjectiveComponent::class).get()).count()
-        movePlayersToStart()
+        return GridMapGenerator.generateFromDefintion(TextGridMapDefinition.levelTwo)
     }
 
-    private fun addTower() {
+    private fun loadMapThree(): Pair<Map<Coordinate, GridMapSection>, TileGraph>  {
+        CounterObject.numberOfEnemies = 300
+        CounterObject.maxSpawnedEnemies= 1024
+
+        return GridMapGenerator.generateFromDefintion(TextGridMapDefinition.levelThree)
+    }
+    private fun loadMapFour(): Pair<Map<Coordinate, GridMapSection>, TileGraph>  {
+        CounterObject.numberOfEnemies = 512
+        CounterObject.maxSpawnedEnemies= 1024
+
+        return GridMapGenerator.generateFromDefintion(TextGridMapDefinition.levelFour)
     }
     /*
     4E4048
@@ -124,6 +126,7 @@ D1B67A
 
         camera.update(true)
         batch.projectionMatrix = camera.combined
+        updatePhysics(delta)
         engine.update(delta)
         ui.update(delta)
         console.draw()
@@ -132,6 +135,21 @@ D1B67A
 
         if (factsOfTheWorld.getBooleanFact(Facts.LevelComplete).value)
             nextLevel()
+    }
+
+    private val velIters = 8
+    private val posIters = 3
+    private val timeStep = 1/60f
+
+    var accumulator = 0f
+
+    private fun updatePhysics(delta:Float) {
+        val ourTime = delta.coerceAtMost(timeStep * 2)
+        accumulator += ourTime
+        while (accumulator > timeStep) {
+            world.step(timeStep, velIters, posIters)
+            accumulator -= ourTime
+        }
     }
 
     override fun resize(width: Int, height: Int) {
@@ -172,24 +190,21 @@ D1B67A
 
     private fun addPlayers() {
         val startBounds = mapManager.gridMap.values.first { it.startSection }.innerBounds
-        val xRange = startBounds.left()..startBounds.right()
-        val yRange = startBounds.bottom()..startBounds.top()
         for ((controlComponent, player) in Players.players) {
             player(player, controlComponent, startBounds.randomPoint())
         }
     }
 
-    @OptIn(ExperimentalStdlibApi::class)
     private fun movePlayersToStart() {
         val startBounds = mapManager.gridMap.values.first { it.startSection }.innerBounds
         val players = engine.getEntitiesFor(allOf(PlayerComponent::class).get())
-        for(player in players) {
-            val body = player.getComponent<BodyComponent>().body!!
+        for (player in players) {
+            val body = AshleyMappers.body.get(player).body!!
             body.setTransform(startBounds.randomPoint(), body.angle)
         }
     }
 
-    fun nextLevel() {
+    private fun nextLevel() {
         for (player in Players.players.values) {
             player.touchedObjectives.clear()
         }
@@ -198,15 +213,11 @@ D1B67A
         factsOfTheWorld.stateBoolFact(Facts.LevelComplete, false)
 
         CounterObject.currentLevel++
-        if(CounterObject.currentLevel == 2) {
-            loadMapTwo()
-        } else {
-            generateMap(CounterObject.currentLevel)
-        }
+        generateMap(CounterObject.currentLevel)
     }
 
     private val mapManager by lazy { inject<GridMapManager>() }
-    @OptIn(ExperimentalStdlibApi::class)
+
     private fun generateMap(level: Int) {
         /*
         We start the game with a map already generated. But when, how, will we create
@@ -224,7 +235,7 @@ D1B67A
          */
 
         for (enemy in engine.getEntitiesFor(allOf(EnemyComponent::class).get())) {
-            val bodyComponent = enemy.getComponent<BodyComponent>()
+            val bodyComponent = AshleyMappers.body.get(enemy)
             world.destroyBody(bodyComponent.body)
             enemy.remove<BodyComponent>()
         }
@@ -233,23 +244,29 @@ D1B67A
         CounterObject.enemyCount = 0
 
         for (objective in engine.getEntitiesFor(allOf(ObjectiveComponent::class).get())) {
-            val bodyComponent = objective.getComponent<BodyComponent>()
+            val bodyComponent = AshleyMappers.body.get(objective)
             world.destroyBody(bodyComponent.body)
             objective.remove<BodyComponent>()
         }
         engine.removeAllEntities(allOf(ObjectiveComponent::class).get())
 
-        for(obstacle in engine.getEntitiesFor(allOf(ObstacleComponent::class).get())) {
-            val bodyComponent = obstacle.getComponent<BodyComponent>()
+        for (obstacle in engine.getEntitiesFor(allOf(ObstacleComponent::class).get())) {
+            val bodyComponent = AshleyMappers.body.get(obstacle)
             world.destroyBody(bodyComponent.body)
             obstacle.remove<BodyComponent>()
         }
         engine.removeAllEntities(allOf(ObstacleComponent::class).get())
 
         //For debuggin we will swarm with enemies
-        CounterObject.numberOfEnemies = (8f.pow(CounterObject.currentLevel).roundToInt() * 2).coerceAtMost(MAX_ENEMIES)
-
-        val map =  GridMapGenerator.generate(CounterObject.currentLength, level)
+        CounterObject.numberOfEnemies =  (8f.pow(CounterObject.currentLevel).roundToInt() * 2).coerceAtMost(MAX_ENEMIES)
+        CounterObject.maxSpawnedEnemies = CounterObject.numberOfEnemies * 2
+        val map = when(level) {
+            1 -> loadMapOne()
+            2 -> loadMapTwo()
+            3 -> loadMapThree()
+            4 -> loadMapFour()
+            else -> GridMapGenerator.generate(CounterObject.currentLength, level)
+        }
         mapManager.gridMap = map.first
         mapManager.sectionGraph = map.second
         CounterObject.numberOfObjectives = engine.getEntitiesFor(allOf(ObjectiveComponent::class).get()).count()

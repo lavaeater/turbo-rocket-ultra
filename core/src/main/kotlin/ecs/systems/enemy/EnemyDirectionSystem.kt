@@ -7,6 +7,7 @@ import ecs.components.ai.SeekPlayer
 import ecs.components.enemy.EnemyComponent
 import ecs.components.graphics.AnimatedCharacterComponent
 import ktx.ashley.allOf
+import physics.AshleyMappers
 import physics.getComponent
 import physics.has
 import tru.AnimState
@@ -16,13 +17,13 @@ class EnemyDirectionSystem : IteratingSystem(
     allOf(
         AnimatedCharacterComponent::class, EnemyComponent::class).get()) {
     var characterAngle = 0f
-    @ExperimentalStdlibApi
     override fun processEntity(entity: Entity, deltaTime: Float) {
-        val characterSpriteComponent = entity.getComponent<AnimatedCharacterComponent>()
-        val enemyComponent = entity.getComponent<EnemyComponent>()
-        characterAngle = if(entity.has<SeekPlayer>()) entity.getComponent<SeekPlayer>().scanVector.angleDeg() else enemyComponent.directionVector.angleDeg()
+        val characterSpriteComponent = AshleyMappers.animatedCharacter.get(entity)
+        val enemyComponent = AshleyMappers.enemy.get(entity)
+        val hasSeek = AshleyMappers.seekPlayer.has(entity)
+        characterAngle = if(hasSeek) AshleyMappers.seekPlayer.get(entity).scanVector.angleDeg() else enemyComponent.directionVector.angleDeg()
 
-        characterSpriteComponent.currentAnimState = if(enemyComponent.isDead) AnimState.Death else if(entity.has<SeekPlayer>()) AnimState.Idle else if(entity.has<AttackPlayer>()) AnimState.Slash else AnimState.Walk
+        characterSpriteComponent.currentAnimState = if(enemyComponent.isDead) AnimState.Death else if(hasSeek) AnimState.Idle else if(AshleyMappers.attackPlayer.has(entity)) AnimState.Slash else AnimState.Walk
         if(enemyComponent.isDead)
             characterSpriteComponent.currentDirection = SpriteDirection.South
         else

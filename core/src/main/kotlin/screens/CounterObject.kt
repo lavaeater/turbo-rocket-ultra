@@ -7,4 +7,5 @@ object CounterObject {
     val currentLength get() = currentLevel * 8
     var numberOfObjectives = 1
     var numberOfEnemies = 1
+    var maxSpawnedEnemies = 2
 }

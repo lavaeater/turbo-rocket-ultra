@@ -16,6 +16,57 @@ What the game needs is polish in the long run, but to keep me going I must not g
 
 ### Three acts of terror
 
+#### There will be three acts
+And three they shall be. Act one will have five levels, act Two will have ten, act three will have twenty, so it is written. Now for ideas for the levels, because I thoroughly like making levels... not...
+
+Level colors:
+BLACK - Normal section
+BLUE - Boss
+GREEN - Objective
+RED - Enemy Spawner
+YELLOW - Loot
+WHITE - Start
+
+
+#### Act One
+##### Level One
+Players can only punch. However, they can find weapons and ammo
+
+But how does weapons and ammo work when playing multiplayer? Communal inventory of course!
+
+- [x] Update swing / bat mechanic
+- [x] Communal Inventory
+- [x] Also the level
+##### Level Two
+- [x] Also the level
+##### Level Three
+Use amble system's pathfinding to find path for enemy to follow when checking out noises like gun shots, more likely to not get stuck that way.
+- [x] Pathfinding when checking out stuff
+- [x] Also, the level
+
+##### Level Four
+Fuck hotswapping for now. Let's add a pickup toast and work on towers and building again.
+
+Try to make the simplest possible Streets of Rogue-like sprite you can. 
+
+Lets call the branch level-four, for this one.
+
+- [x] Pickup Toast - could be a nice ui element, right?
+	- [x] So, lets do the HUD using Scene2d or VisUI or something reusable
+	- [x] Show some kind of graphical element using vis-ui
+	- [x] Simplify building a userinterface
+	- [x] But with databinding in them, for sure
+- [x] The actual level
+- [x] Add actual bat 
+
+
+##### Level Five
+- [ ] Add actual bat swing
+	- [ ] Animate bat-swing? Is this fun? <- steps taken
+- [ ] Re-introduce TOWERS
+
+
+
 #### Act one - a small beginning
 The game I have built so far is a very basic zombie survival top-down twin-stick shooter. To make it more game-like, I think we need to make the beginning smaller. Perhaps we could start with the players only having close-combat weapons? That would mean implementing melee combat, which could be cool. So, the gameplay would progress over the ten first levels with small-ish levels (the physical size of the level might be large, just not epic numbers of zombies etc) where the players get to test all their skills and tools, in preparation for the second act, where they are prepared but the hordes are larger. Also, Zombies? They are stand-ins for something properly funny to have as enemies. But that can be changed later. And also, we don't need to plan for the entirety of the three acts, because we can simply work on them as we progress. But the start of the game should be (perhaps) hand-to-hand combat, handguns, molotovs and building barricades if there is a horde coming. We could put some actual level-design to use as well, using some kind of simple format for that. Also, we need UI blurs and speech bubbles to signal stuff in a cool way. Zombies need to be waay slower in the beginning, as well, and we need to add more AI-debug stuff in a nicer way. A nice little nine-patcher would be cool.
 
@@ -24,10 +75,6 @@ Ah! We can have the first level just be like ten zombies, everyone has one gun w
 Nice little todo you got there. Would be a shame if anyone actually did something with it? 
 
 So, what do we need for act one? Well, tons of fun stuff to implement:
-- [ ] Slower zombies at start of game
-- [ ] Enemies sprinkled out over the map from the start
-- [ ] No spawn points for enemies from the start
-- [ ] New player sprites inspired by Death Road to Canada - never do this, just hire an artist already
 - [x] Fix minimap after level one
 - [x] Fix the seek system
 - [x] Better Ambling System - using pathfinding
@@ -43,7 +90,6 @@ So, what do we need for act one? Well, tons of fun stuff to implement:
 
 #### Fix the seek system
 So, the seek system is "improved" as in I am using faster methods to do it. But it seems that it could use some improvement, the raycasting seems way off, for instance, and sometimes it appears that the enemies do absolutely nothing. Some good changes would be if they when seeking could simply turn around a little to make stuff creepier, and also, if, for instance, a player enters the sensor range, the enemy doesn't notice immediately, rather it starts turning towards that position and is seeking while doing so.
-- [ ] Turn while seeking
 - [x] Check raycasting
 
 
@@ -713,11 +759,11 @@ Det här gör vi på det gamla vanliga sättet. Vi bygger en box2d-värld, vi kl
 
 Oj oj oj,  vad roligt. Vi kan göra en box2d-kropp med leder, per tutorials etc. Superkul ju.
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbMTIyMzEyOTA1OSwtMTMwNDYyMzk4MCwtMT
-k0NjY1Njc0OCw2ODg0ODQ1MDQsMTEwMTE0MDgxNywtNDE3MTIy
-MzcyLC05NTI1MTY0NzcsLTgyOTM1MjIzNiwtMjA4MTQ3MzAxNy
-wtMzU0MDM4NTQwLC05NzY0MzUwNjIsMjAxMzI2MTQ2LC02NDIy
-NDU3LC0xNTQ5ODU4NTk1LC0xMDI0NjUzNTM5LDIwNTExMDIxOT
-ksLTc0MjQxMjM1MCwtNjY1MDk1MjcyLDE2ODMxMTMxODIsLTcw
-MTA1MzI3MV19
+eyJoaXN0b3J5IjpbLTk3ODAxODM1LC03NTAzNTg4NzksLTYwMj
+EyNTk3MiwxNjA4Mzc0NTU2LDM4NzE5MzE2OCwtOTg0NjQyMTU1
+LDE1MDg1MTcyODQsLTE5NDMzNDEyMDgsLTE3NzAwNTYwMTEsLT
+UxNzk3MTQzNyw1Nzg0OTUzOSw1ODYxNTI1MTEsLTExNzk3MTc5
+NDQsLTE1MTE0MjE3MDMsLTM2ODM3NDU3NiwtNzkxMzIwMjEwLC
+04NTI5MzIzODYsODg1MTE2NzM5LDM0Mjc0NDEzNiwtOTQ2OTQz
+OTldfQ==
 -->

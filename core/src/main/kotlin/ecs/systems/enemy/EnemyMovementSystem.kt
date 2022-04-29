@@ -2,32 +2,94 @@ package ecs.systems.enemy
 
 import com.badlogic.ashley.core.Entity
 import com.badlogic.ashley.systems.IteratingSystem
+import com.badlogic.gdx.graphics.Color
+import com.badlogic.gdx.math.Vector2
+import com.badlogic.gdx.physics.box2d.Body
 import ecs.components.BodyComponent
 import ecs.components.enemy.EnemyComponent
 import ecs.components.gameplay.TransformComponent
 import ktx.ashley.allOf
-import physics.getComponent
+import ktx.math.vec2
+import physics.AshleyMappers
+import tru.Assets
 
-class EnemyMovementSystem : IteratingSystem(
+class EnemyMovementSystem(private val flocking: Boolean = true) : IteratingSystem(
     allOf(
         EnemyComponent::class,
         BodyComponent::class,
         TransformComponent::class
-    ).get()
+    ).get(),
+    98
 ) {
+    private val separationRange = 10f
+    private val enemyFamily = allOf(EnemyComponent::class).get()
+    private val allEnemies get() = engine.getEntitiesFor(enemyFamily)
+    private val alignment = vec2()
+    private val cohesion = vec2()
+    private val separation = vec2()
+    private val shapeDrawer by lazy { Assets.shapeDrawer }
 
-    @ExperimentalStdlibApi
     override fun processEntity(entity: Entity, deltaTime: Float) {
-        val enemyComponent = entity.getComponent<EnemyComponent>()
-        val bodyComponent = entity.getComponent<BodyComponent>()
+        val enemyComponent = AshleyMappers.enemy.get(entity)
+        val bodyComponent = AshleyMappers.body.get(entity)
+        if (flocking && AshleyMappers.frustum.has(entity)) {
+            fixFlocking(bodyComponent.body!!)
+        }
         moveEnemy(enemyComponent, bodyComponent)
     }
 
+    private fun fixFlocking(body: Body) {
+        computeFlocking(body.worldCenter)
+    }
+
+    private fun computeFlocking(enemyPosition: Vector2) {
+        val sep = vec2()
+        val coh = vec2()
+        val ali = vec2()
+        var count = 0
+        for (enemy in allEnemies) {
+            val position = AshleyMappers.transform.get(enemy).position
+            if (position.dst(enemyPosition) < separationRange) {
+                sep.x += position.x - enemyPosition.x
+                sep.y += position.y - enemyPosition.y
+                coh.x += position.x
+                coh.y += position.y
+                val velocity = AshleyMappers.body.get(enemy).body!!.linearVelocity
+                ali.x += velocity.x
+                ali.y += velocity.y
+                count++
+            }
+        }
+        if (count > 0) {
+            sep.x /= count
+            sep.y /= count
+            sep.x *= -1
+            sep.y *= -1
+            separation.set(sep.nor())
+            coh.x /= count
+            coh.y /= count
+            coh.set(coh.sub(enemyPosition))
+            cohesion.set(coh.nor())
+            ali.x /= count
+            ali.y /= count
+            alignment.set(ali.nor())
+        }
+    }
+
+    private val actualDirectionVector = vec2()
+    private val circleColor = Color(1f, 0f, 0f, 0.1f)
+
     private fun moveEnemy(enemyComponent: EnemyComponent, bodyComponent: BodyComponent) {
-        bodyComponent.body!!.setLinearVelocity(
-            enemyComponent.directionVector.x * enemyComponent.speed,
-            enemyComponent.directionVector.y * enemyComponent.speed
-        )
+        actualDirectionVector.set(enemyComponent.directionVector).add(cohesion.scl(.3f)).add(separation.scl(0.7f)).add(alignment.scl(.5f)).nor()
+        bodyComponent.body!!.linearVelocity = actualDirectionVector.scl(enemyComponent.speed)
+//        shapeDrawer.batch.use {
+//            shapeDrawer.filledCircle(
+//                bodyComponent.body!!.worldCenter.x,
+//                bodyComponent.body!!.worldCenter.y,
+//                separationRange,
+//                circleColor
+//            )
+//        }
     }
 }
 
