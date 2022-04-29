@@ -1,32 +1,28 @@
 package ecs.systems.ai
 
-import com.badlogic.ashley.core.Component
 import com.badlogic.ashley.core.Entity
 import com.badlogic.ashley.systems.IteratingSystem
 import com.badlogic.gdx.ai.btree.Task
-import com.badlogic.gdx.math.Vector2
-import ecs.components.enemy.EnemyComponent
 import ecs.components.ai.Amble
+import ecs.components.enemy.EnemyComponent
 import ktx.ashley.allOf
-import ktx.ashley.mapperFor
 import ktx.math.random
+import physics.getComponent
 
 class AmblingSystem : IteratingSystem(allOf(Amble::class, EnemyComponent::class).get()) {
 
-    private val mapper = mapperFor<Amble>()
-    private val eMapper = mapperFor<EnemyComponent>()
-
+    @OptIn(ExperimentalStdlibApi::class)
     override fun processEntity(entity: Entity, deltaTime: Float) {
-        val component = mapper.get(entity)
-        if(component.needsInit) {
-            component.needsInit = false
+        val component = entity.getComponent<Amble>()
+        if(component.firstRun) {
+            component.firstRun = false
             val directionRange = -1f..1f
-            eMapper[entity].directionVector.set(directionRange.random(), directionRange.random()).nor()
+            entity.getComponent<EnemyComponent>().directionVector.set(directionRange.random(), directionRange.random()).nor()
         }
         if (component.status == Task.Status.RUNNING) {
             component.coolDown -= deltaTime
             if (component.coolDown <= 0f)
-                component.status = Task.Status.FAILED
+                component.status = Task.Status.SUCCEEDED
         }
     }
 }

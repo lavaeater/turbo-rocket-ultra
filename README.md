@@ -21,12 +21,11 @@ To make the graphics and environment easy I am currently working with the concep
 
 Lets try to prioritize these into what would make the game seem "done" the fastest.
 
-- [ ] **More character sprites**
-- [ ] Enemy attack animation
+- [ ] More Enemy Sprites (generate them)
 - [ ] Lightmaps for sprites
-- [ ] Perma-gibs
+- [ ] Soundscape II - the Moaning
 - [ ] Fix the MiniMap
-- [ ] HUD II, Header Upper Displayer
+- [ ] HUD II, Header Upper Displayer <- rediscover MVVM pattern, two-way binding
 - [ ] Enemy AI II, with avoiding walls
 - [ ] Objectives II, the sequel
 - [ ] Pickups 2 (on-screen blurb indicating what you got)
@@ -36,6 +35,8 @@ Lets try to prioritize these into what would make the game seem "done" the faste
 - [ ] Vehicles would be cool
 - [ ] Build Towers
 - [ ] Gibs and Body Parts II - blood trails and audio
+- [x] Boss fight
+- [x] More character sprites
 - [x] Gibs and body parts
 - [x] Reloading 2 (shot-by-shot for shotguns)
 - [x] Multi-body-bodies for players and enemies (one for collision in game, one for hit detection for damage)
@@ -64,7 +65,11 @@ Lets try to prioritize these into what would make the game seem "done" the faste
 - [x] Blood Splatter
 - [x] MiniMap
 
+## Boss Fight
 
+What is a boss fight? In the simplest form, a boss fight is simply a fight against an enemy that has more health and more abilities than the normal enemies. Fighting it would take time and effort and is dangerous. So, our boss fight needs a special graphic and a special behavior tree. Very cool. We can also scale the boss up a bit.
+- [x] Boss sprite
+- [x] Behavior tree
 
 ## Gibs and body parts
 
@@ -575,11 +580,11 @@ Det här gör vi på det gamla vanliga sättet. Vi bygger en box2d-värld, vi kl
 
 Oj oj oj,  vad roligt. Vi kan göra en box2d-kropp med leder, per tutorials etc. Superkul ju.
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbMTI4MDQ5MjE1MiwtMzY5MjM4NTI5LDMzMT
+eyJoaXN0b3J5IjpbMTE0MDYzODM1NywxODk1MTEyMjY2LC01Mz
+k0NjAxOTAsNjU2MzMyNTI3LC0xMTAwMTc2NDU2LDM0MDk3OTUy
+LDEwMzIyMzI1NzQsMTI4MDQ5MjE1MiwtMzY5MjM4NTI5LDMzMT
 E1MDY3MSwyMDk2NjEyODUxLC0xMDg0NjkwODYzLC0yMzg3NjIw
 NCwtMTUyODMxMTQ0NCwtMTQyOTUzMDk0MCwtMTk1NDM2NDA3OC
 wxNzYxMzQ3MzU5LDE3MzA5MDI4NzIsLTE0ODEwMjg2MjYsMTk0
-MjU4NzAwMSwtNzI4NTU3OTk0LC0yNTg5ODY5NzksLTEzNjkwOT
-AwMjEsMTQyNjY0OTg4NSwtMzc3MTg5MzQzLC0xODM3MjI3MDk4
-LC0xNDM1ODYzNzIxXX0=
+MjU4NzAwMV19
 -->

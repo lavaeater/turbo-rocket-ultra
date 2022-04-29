@@ -12,7 +12,7 @@ import injection.Context.inject
 import ktx.ashley.allOf
 import ktx.graphics.use
 import physics.getComponent
-import physics.hasComponent
+import physics.has
 import tru.Assets
 
 
@@ -35,7 +35,7 @@ class TowerDebugSystem() :
 
     @OptIn(ExperimentalStdlibApi::class)
     override fun processEntity(entity: Entity, deltaTime: Float) {
-        if(entity.hasComponent<TargetInRange>()) {
+        if(entity.has<TargetInRange>()) {
             val transform = entity.getComponent<TransformComponent>()
             val targetPosition = entity.getComponent<TargetInRange>().targetPosition
             val aimTarget = entity.getComponent<TargetInRange>().aimTarget

@@ -10,19 +10,16 @@ import com.badlogic.gdx.math.Vector2
 import com.badlogic.gdx.physics.box2d.Body
 import com.badlogic.gdx.physics.box2d.BodyDef
 import com.badlogic.gdx.physics.box2d.World
-import ecs.components.*
+import ecs.components.BodyComponent
 import ecs.components.ai.BehaviorComponent
 import ecs.components.ai.GibComponent
 import ecs.components.enemy.EnemyComponent
 import ecs.components.enemy.EnemySensorComponent
+import ecs.components.enemy.TackleComponent
 import ecs.components.fx.SplatterComponent
-import ecs.components.gameplay.BulletComponent
-import ecs.components.gameplay.ObjectiveComponent
-import ecs.components.gameplay.ObstacleComponent
-import ecs.components.gameplay.TransformComponent
+import ecs.components.gameplay.*
 import ecs.components.graphics.*
-import ecs.components.graphics.renderables.AnimatedCharacterComponent
-import ecs.components.graphics.renderables.RenderableTextureRegion
+import ecs.components.graphics.AnimatedCharacterComponent
 import ecs.components.pickups.LootComponent
 import ecs.components.pickups.LootDropComponent
 import ecs.components.player.*
@@ -37,12 +34,16 @@ import injection.Context.inject
 import input.ControlMapper
 import ktx.ashley.entity
 import ktx.ashley.with
-import ktx.box2d.*
+import ktx.box2d.body
+import ktx.box2d.box
+import ktx.box2d.circle
+import ktx.box2d.filter
 import ktx.math.random
 import ktx.math.vec2
 import physics.addComponent
-import tru.Assets
+import screens.CounterObject
 import screens.GameScreen
+import tru.Assets
 import kotlin.experimental.or
 
 fun world(): World {
@@ -59,24 +60,32 @@ fun enemy(x: Float = 0f, y: Float = 0f) {
 
 object Box2dCategories {
     const val none: Short = 0x0000
-    const val player: Short = 0x0001
-    const val enemy: Short = 0x0002
-    const val objective: Short = 0x0004
-    const val obstacle: Short = 0x0008
-    const val sensor: Short = 0x0010
-    const val light: Short = 0x0020
+    const val players: Short = 0x0001
+    const val enemies: Short = 0x0002
+    const val objectives: Short = 0x0004
+    const val obstacles: Short = 0x0008
+    const val enemySensors: Short = 0x0010
+    const val lights: Short = 0x0020
     const val loot: Short = 0x0040
-    const val indicator: Short = 0x0080
-    const val bullet: Short = 0x0100
-    const val wall: Short = 0x0200
-    const val gib: Short = 0x0400
-    val all = player or enemy or objective or obstacle or sensor or light or loot or bullet or wall or gib
-    val allButSensors = player or enemy or objective or obstacle or light or loot or bullet or wall or gib
-    val allButLights = player or enemy or objective or obstacle or sensor or loot or bullet or wall or gib
-    val allButLightsOrLoot = player or enemy or objective or obstacle or sensor or bullet or wall or gib
-    val allButLoot = player or enemy or objective or obstacle or sensor or wall or gib
-    val allButLootAndPlayer = enemy or objective or obstacle or wall or gib
-    val environmentOnly = objective or obstacle or wall
+    const val indicators: Short = 0x0080
+    const val bullets: Short = 0x0100
+    const val walls: Short = 0x0200
+    const val gibs: Short = 0x0400
+    const val towerSensors: Short = 0x0800
+    val all = players or enemies or objectives or obstacles or enemySensors or lights or loot or bullets or walls or gibs
+    val allButSensors = players or enemies or objectives or obstacles or lights or loot or bullets or walls or gibs
+    val allButLights = players or enemies or objectives or obstacles or enemySensors or loot or bullets or walls or gibs
+    val allButLightsOrLoot = players or enemies or objectives or obstacles or enemySensors or bullets or walls or gibs
+    val allButLoot = players or enemies or objectives or obstacles or enemySensors or walls or gibs
+    val allButLootAndPlayer = enemies or objectives or obstacles or walls or gibs
+    val environmentOnly = objectives or obstacles or walls
+    val whatGibsHit = players or enemies or walls
+    val whatEnemiesHit = players or enemies or objectives or obstacles or walls or lights or bullets
+
+    /**
+     * Will this show up when hovering?
+     */
+    val thingsBulletsHit = objectives or obstacles or walls or enemies
 }
 
 fun gibs(at: Vector2, angle:Float) {
@@ -91,8 +100,8 @@ fun gibs(at: Vector2, angle:Float) {
                 friction = 50f //Tune
                 density = 10f //tune
                 filter {
-                    categoryBits = Box2dCategories.gib
-                    maskBits = Box2dCategories.allButLightsOrLoot
+                    categoryBits = Box2dCategories.gibs
+                    maskBits = Box2dCategories.whatGibsHit
                 }
             }
         }
@@ -108,8 +117,8 @@ fun gibs(at: Vector2, angle:Float) {
                 body = gibBody
             }
             with<GibComponent> {
-                coolDownRange = .5f..1f
-                coolDown = (.5f..1f).random()
+                coolDownRange = 1f..3f
+                coolDown = coolDownRange.random()
             }
         }
         gibBody.userData = gibEntity
@@ -143,8 +152,6 @@ fun tower(at: Vector2 = vec2(), towerType: String = "machinegun") {
             body = towerBody
         }
         with<TransformComponent>()
-        with<RenderableComponent> { renderable = RenderableTextureRegion(Assets.towers[towerType]!!, 4f, 0f, -5f) }
-        with<RenderLayerComponent>()
         with<TextureComponent> {
             texture = Assets.towers["obstacle"]!!
             scale = 4f
@@ -174,20 +181,20 @@ fun player(player: Player, mapper: ControlMapper, at: Vector2) {
         box(1f, 1f) {
             density = GameScreen.PLAYER_DENSITY
             filter {
-                categoryBits = Box2dCategories.player
+                categoryBits = Box2dCategories.players
             }
         }
         box(1f, 2f, vec2(0f, -1.5f)) {
             isSensor = true
             filter {
-                categoryBits = Box2dCategories.sensor
+                categoryBits = Box2dCategories.enemySensors
                 maskBits = Box2dCategories.allButLights
             }
         }
         circle(2f, vec2(0f, -1f)) {
             isSensor = true
             filter {
-                categoryBits = Box2dCategories.sensor
+                categoryBits = Box2dCategories.enemySensors
                 maskBits = Box2dCategories.allButLights
             }
         }
@@ -213,10 +220,11 @@ fun player(player: Player, mapper: ControlMapper, at: Vector2) {
             GunDefinition.guns.forEach { guns.add(it.getGun()) }
             ammo[AmmoType.nineMilliMeters] = 51
             ammo[AmmoType.twelveGaugeShotgun] = 40
+            ammo[AmmoType.fnP90Ammo] = 200
         }
         with<WeaponComponent>()
         with<FiredShotsComponent>()
-//        with<FlashlightComponent>()
+        with<FlashlightComponent>()
         with<WeaponLaserComponent>()
     }
     //TODO: Fix this hot mess
@@ -248,7 +256,13 @@ fun lootBox(at: Vector2, lootDrop: List<ILoot>) {
             density = 1f
             filter {
                 categoryBits = Box2dCategories.loot
-                maskBits = Box2dCategories.player or Box2dCategories.light
+                maskBits = Box2dCategories.players or Box2dCategories.lights
+            }
+        }
+        circle(2f) {
+            filter {
+                categoryBits = Box2dCategories.loot
+                maskBits = Box2dCategories.players
             }
         }
     }
@@ -276,8 +290,8 @@ fun bullet(at: Vector2, towards: Vector2, speed:Float, damage: Int) {
         circle(.2f) {
             density = .1f
             filter {
-                categoryBits = Box2dCategories.bullet
-                maskBits = Box2dCategories.allButLootAndPlayer
+                categoryBits = Box2dCategories.bullets
+                maskBits = Box2dCategories.thingsBulletsHit
             }
         }
     }
@@ -293,6 +307,7 @@ fun bullet(at: Vector2, towards: Vector2, speed:Float, damage: Int) {
         }
     }
     box2dBody.userData = entity
+    CounterObject.bulletCount++
 }
 
 fun enemy(at: Vector2) {
@@ -304,22 +319,29 @@ fun enemy(at: Vector2) {
         box(1f, 1f) {
             density = GameScreen.PLAYER_DENSITY
             filter {
-                categoryBits = Box2dCategories.enemy
-                maskBits = Box2dCategories.all
+                categoryBits = Box2dCategories.enemies
+                maskBits = Box2dCategories.whatEnemiesHit
             }
         }
         box(1f, 2f, vec2(0f, -1.5f)) {
             filter {
-                categoryBits = Box2dCategories.enemy
-                maskBits = Box2dCategories.bullet
+                categoryBits = Box2dCategories.enemies
+                maskBits = Box2dCategories.bullets
             }
+        }
+        circle(1f, vec2(0f, -2f)) {
+            filter {
+                categoryBits = Box2dCategories.enemies
+                maskBits = Box2dCategories.enemies
+            }
+
         }
         circle(10f) {
             density = .1f
             isSensor = true
             filter {
-                categoryBits = Box2dCategories.sensor
-                maskBits = Box2dCategories.allButLights
+                categoryBits = Box2dCategories.enemySensors
+                maskBits = Box2dCategories.players
             }
         }
     }
@@ -330,14 +352,20 @@ fun enemy(at: Vector2) {
         with<EnemySensorComponent>()
         with<EnemyComponent>()
         with<AnimatedCharacterComponent> {
-            anims = Assets.characters["enemy"]!!
+            anims = Assets.enemies.values.random()
         }
         with<LootDropComponent> {
             lootTable.contents.add(
                 AmmoLoot(AmmoType.nineMilliMeters, 6..17, 30f)
             )
             lootTable.contents.add(
-                AmmoLoot(AmmoType.twelveGaugeShotgun, 4..10, 10f)
+                AmmoLoot(AmmoType.twelveGaugeShotgun, 4..10, 20f)
+            )
+            lootTable.contents.add(
+                AmmoLoot(AmmoType.fnP90Ammo, 50..150, 10f)
+            )
+            lootTable.contents.add(
+                NullValue(40f)
             )
             //lootTable.contents.add(NullValue(10f))
         }
@@ -350,6 +378,74 @@ fun enemy(at: Vector2) {
     }
     entity.addComponent<BehaviorComponent> { tree = Tree.getEnemyBehaviorTree().apply { `object` = entity } }
     box2dBody.userData = entity
+    CounterObject.enemyCount++
+}
+
+fun boss(at: Vector2, level: Int) {
+
+    val box2dBody = world().body {
+        type = BodyDef.BodyType.DynamicBody
+        position.set(at)
+        fixedRotation = true
+        box(3f, 3f) {
+            density = GameScreen.PLAYER_DENSITY
+            filter {
+                categoryBits = Box2dCategories.enemies
+                maskBits = Box2dCategories.all
+            }
+        }
+        box(3f, 6f, vec2(0f, -1.5f)) {
+            filter {
+                categoryBits = Box2dCategories.enemies
+                maskBits = Box2dCategories.bullets
+            }
+        }
+        circle(10f) {
+            density = .1f
+            isSensor = true
+            filter {
+                categoryBits = Box2dCategories.enemySensors
+                maskBits = Box2dCategories.allButLights
+            }
+        }
+    }
+
+    val entity = engine().entity {
+        with<BodyComponent> { body = box2dBody }
+        with<TransformComponent> { position.set(box2dBody.position) }
+        with<EnemySensorComponent>()
+        with<TackleComponent>()
+        with<EnemyComponent> {
+            fieldOfView = 270f
+            rushSpeed = 15f + level * 1.5f
+            viewDistance = 40f + 5f* level
+            health = 1000 * level
+        }
+        with<AnimatedCharacterComponent> {
+            anims = Assets.bosses.values.random()
+        }
+        with<LootDropComponent> {
+            lootTable.contents.add(
+                AmmoLoot(AmmoType.nineMilliMeters, 6..17, 30f)
+            )
+            lootTable.contents.add(
+                AmmoLoot(AmmoType.twelveGaugeShotgun, 4..10, 20f)
+            )
+            lootTable.contents.add(
+                AmmoLoot(AmmoType.fnP90Ammo, 50..150, 10f)
+            )
+        }
+        with<TextureComponent> {
+            scale = 3f
+            layer = 1
+        }
+        with<MiniMapComponent> {
+            color = Color.RED
+        }
+    }
+    entity.addComponent<BehaviorComponent> { tree = Tree.bossOne().apply { `object` = entity } }
+    box2dBody.userData = entity
+    CounterObject.enemyCount++
 }
 
 fun obstacle(
@@ -364,7 +460,7 @@ fun obstacle(
         box(width, height) {
             restitution = 0f
             filter {
-                categoryBits = Box2dCategories.obstacle
+                categoryBits = Box2dCategories.obstacles
             }
         }
     }
@@ -399,8 +495,8 @@ fun objective(
         box(width, height) {
             restitution = 0f
             filter {
-                categoryBits = Box2dCategories.objective
-                maskBits = Box2dCategories.player or Box2dCategories.light
+                categoryBits = Box2dCategories.objectives
+                maskBits = Box2dCategories.players or Box2dCategories.lights
             }
         }
     }
@@ -418,6 +514,10 @@ fun objective(
             color = Color.GREEN
         }
         with<ObjectiveComponent>()
+        with<LightComponent> {
+            light.position = box2dBody.position
+            light.isStaticLight = true
+        }
     }
     box2dBody.userData = entity
     return box2dBody

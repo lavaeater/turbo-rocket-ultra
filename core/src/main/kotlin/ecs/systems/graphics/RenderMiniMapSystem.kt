@@ -2,24 +2,21 @@ package ecs.systems.graphics
 
 import com.badlogic.ashley.core.Entity
 import com.badlogic.ashley.systems.SortedIteratingSystem
-import com.badlogic.gdx.graphics.Color
 import com.badlogic.gdx.graphics.OrthographicCamera
 import ecs.components.gameplay.TransformComponent
-import ecs.components.graphics.*
+import ecs.components.graphics.MiniMapComponent
+import ecs.components.graphics.Shape
+import ecs.components.graphics.TextureComponent
 import injection.Context.inject
 import ktx.ashley.allOf
-import ktx.ashley.mapperFor
 import ktx.graphics.use
 import ktx.math.vec2
 import physics.getComponent
 import tru.Assets
 
-class RenderMiniMapSystem : SortedIteratingSystem(allOf(TextureComponent::class, TransformComponent::class, MiniMapComponent::class).get(), object :
-    Comparator<Entity> {
-    val mapper = mapperFor<TextureComponent>()
-    override fun compare(p0: Entity, p1: Entity): Int {
-        return mapper.get(p1).layer.compareTo(mapper.get(p0).layer)
-    }}, 20) {
+@OptIn(ExperimentalStdlibApi::class)
+class RenderMiniMapSystem : SortedIteratingSystem(allOf(TextureComponent::class, TransformComponent::class, MiniMapComponent::class).get(),
+    Comparator<Entity> { p0, p1 -> p1.getComponent<TextureComponent>().layer.compareTo(p0.getComponent<TextureComponent>().layer) }, 20) {
     private val shapeDrawer by lazy { Assets.shapeDrawer }
     private val scale = 100f
     private val center = vec2()

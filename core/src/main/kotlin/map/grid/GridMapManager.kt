@@ -1,14 +1,10 @@
 package map.grid
 
-import box2dLight.DirectionalLight
-import box2dLight.RayHandler
-import com.badlogic.gdx.graphics.Color
 import com.badlogic.gdx.graphics.g2d.Batch
 import com.badlogic.gdx.physics.box2d.Body
 import com.badlogic.gdx.physics.box2d.BodyDef
 import factories.Box2dCategories
 import factories.world
-import injection.Context.inject
 import ktx.box2d.body
 import ktx.box2d.box
 import ktx.box2d.filter
@@ -45,7 +41,7 @@ class GridMapManager {
                             )
                             box(tileWidth * tileScale, tileHeight * tileScale) {
                                 filter {
-                                    categoryBits = Box2dCategories.wall
+                                    categoryBits = Box2dCategories.walls
                                     maskBits = Box2dCategories.allButLights
                                 }
                             }

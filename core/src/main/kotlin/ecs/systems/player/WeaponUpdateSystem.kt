@@ -2,34 +2,14 @@ package ecs.systems.player
 
 import com.badlogic.ashley.core.Entity
 import com.badlogic.ashley.systems.IteratingSystem
+import ecs.components.graphics.AnimatedCharacterComponent
 import ecs.components.graphics.TextureComponent
-import ecs.components.graphics.renderables.AnimatedCharacterComponent
 import ecs.components.player.WeaponComponent
 import ktx.ashley.allOf
 import physics.getComponent
 import tru.AnimState
 import tru.Assets
 
-
-class SelectedItemList<T> : ArrayList<T>() {
-    var selectedIndex: Int = 0
-        private set(value) {
-            field = when {
-                value < 0 -> this.lastIndex
-                value > this.lastIndex -> 0
-                else -> value
-            }
-        }
-    val selectedItem get () = this[selectedIndex]
-    fun nextItem() : T {
-        selectedIndex++
-        return selectedItem
-    }
-    fun previousItem() : T {
-        selectedIndex--
-        return selectedItem
-    }
-}
 
 class WeaponUpdateSystem: IteratingSystem(
     allOf(

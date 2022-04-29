@@ -1,3 +1,5 @@
 package audio
 
-data class QueuedSound(val sound: String, val delay: Float, var delta:Float = 0f)
+import com.badlogic.gdx.audio.Sound
+
+data class QueuedSound(val sound: Sound, val delay: Float, var delta:Float = 0f)

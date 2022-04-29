@@ -10,7 +10,7 @@ import factories.gibs
 import factories.lootBox
 import ktx.ashley.allOf
 import physics.getComponent
-import physics.hasComponent
+import physics.has
 
 class EnemyDeathSystem : IteratingSystem(allOf(EnemyComponent::class).get()) {
 
@@ -18,7 +18,7 @@ class EnemyDeathSystem : IteratingSystem(allOf(EnemyComponent::class).get()) {
     override fun processEntity(entity: Entity, deltaTime: Float) {
         if(entity.getComponent<EnemyComponent>().health < 0) {
             val transformComponent = entity.getComponent<TransformComponent>()
-            if(entity.hasComponent<LootDropComponent>()) {
+            if(entity.has<LootDropComponent>()) {
                 val result = entity.getComponent<LootDropComponent>().lootTable.result
                 if(result.any()) {
                     lootBox(transformComponent.position, result)

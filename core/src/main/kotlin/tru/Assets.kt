@@ -31,8 +31,33 @@ object Assets : Disposable {
         SpriteLoader.initCharachterAnims()
     }
 
+    val enemies by lazy {
+        SpriteLoader.initEnemyAnims()
+    }
+
+    val bosses by lazy {
+        SpriteLoader.initBossAnims()
+    }
+
+    val gunAudio by lazy {
+        mapOf(
+            "fnp90" to mapOf(
+                "shot" to Gdx.audio.newSound(Gdx.files.internal("audio/fnp90-shot.ogg")),
+                "reload" to Gdx.audio.newSound(Gdx.files.internal("audio/fnp90-reload.ogg"))
+            ),
+            "spas12" to mapOf(
+                "shot" to Gdx.audio.newSound(Gdx.files.internal("audio/spas12-shot.ogg")),
+                "reload" to Gdx.audio.newSound(Gdx.files.internal("audio/spas12-reload.ogg"))
+            ),
+            "glock17" to mapOf(
+                "shot" to Gdx.audio.newSound(Gdx.files.internal("audio/glock17-shot.ogg")),
+                "reload" to Gdx.audio.newSound(Gdx.files.internal("audio/glock17-reload.ogg"))
+            )
+        )
+    }
+
     val enemyGibs by lazy {
-        val texture = Texture(Gdx.files.internal("sprites/enemy/enemy_gibs.png"))
+        val texture = Texture(Gdx.files.internal("sprites/enemies/enemy_gibs.png"))
         listOf(
             OffsetTextureRegion(texture,0,0,24,24),
             OffsetTextureRegion(texture,24,0,24,24),
@@ -96,7 +121,6 @@ object Assets : Disposable {
     val lootBox by lazy {
         OffsetTextureRegion(Texture(Gdx.files.internal("sprites/loot/lootbox.png")))
     }
-
     val arrowTexture by lazy {
         Texture(Gdx.files.internal("sprites/arrows.png"))
     }
@@ -178,7 +202,7 @@ object Assets : Disposable {
         OffsetTextureRegion(Texture(Gdx.files.internal("sprites/bullets/bullet.png")))
     }
 
-    val playerCharacters by lazy { characters.filterNot { it.key == "enemy" } }
+    val playerCharacters by lazy { characters }
 
     val splashTexture: Texture by lazy {
         Texture(Gdx.files.internal("splash/splash_1.png"))

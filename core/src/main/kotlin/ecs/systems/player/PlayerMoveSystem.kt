@@ -3,10 +3,10 @@ package ecs.systems.player
 import com.badlogic.ashley.core.Entity
 import com.badlogic.ashley.systems.IteratingSystem
 import ecs.components.BodyComponent
-import ecs.components.graphics.renderables.AnimatedCharacterComponent
+import ecs.components.graphics.AnimatedCharacterComponent
 import ecs.components.player.PlayerControlComponent
 import ktx.ashley.allOf
-import ktx.ashley.mapperFor
+import physics.getComponent
 
 class PlayerMoveSystem(
     private var speed: Float = 25f): IteratingSystem(
@@ -15,14 +15,11 @@ class PlayerMoveSystem(
         BodyComponent::class,
         AnimatedCharacterComponent::class).get(), 10) {
 
-    private val pccMapper = mapperFor<PlayerControlComponent>()
-    private val bcMapper = mapperFor<BodyComponent>()
-    private val anMapper = mapperFor<AnimatedCharacterComponent>()
-
+    @OptIn(ExperimentalStdlibApi::class)
     override fun processEntity(entity: Entity, deltaTime: Float) {
-        val pcc = pccMapper.get(entity)
-        val bc = bcMapper.get(entity)
-        val csc = anMapper.get(entity)
+        val pcc = entity.getComponent<PlayerControlComponent>()
+        val bc = entity.getComponent<BodyComponent>()
+        val csc = entity.getComponent<AnimatedCharacterComponent>()
         executeMove(pcc, bc, csc)
     }
 
@@ -36,7 +33,7 @@ class PlayerMoveSystem(
 
         val vX = playerControlComponent.walkVector.x * speed * speedFactor
         val vY = playerControlComponent.walkVector.y * speed * speedFactor
-        bodyComponent.body.setLinearVelocity(vX, vY)
+        bodyComponent.body!!.setLinearVelocity(vX, vY)
 
         animatedCharacterComponent.currentAnimState = playerControlComponent.playerAnimState
     }

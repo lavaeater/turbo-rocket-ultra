@@ -8,7 +8,7 @@ import ecs.components.gameplay.TransformComponent
 import factories.enemy
 import ktx.ashley.allOf
 import physics.getComponent
-import screens.GameScreen
+import screens.CounterObject
 
 class EnemySpawnSystem : IteratingSystem(allOf(EnemySpawnerComponent::class, TransformComponent::class).get()) {
     val enemyCount get() = engine.getEntitiesFor(allOf(EnemyComponent::class).get()).count()
@@ -17,7 +17,7 @@ class EnemySpawnSystem : IteratingSystem(allOf(EnemySpawnerComponent::class, Tra
     override fun processEntity(entity: Entity, deltaTime: Float) {
         val spawnerComponent = entity.getComponent<EnemySpawnerComponent>()
         spawnerComponent.coolDown -= deltaTime
-        if(spawnerComponent.coolDown <= 0f && enemyCount < GameScreen.MAX_ENEMIES) {
+        if(spawnerComponent.coolDown <= 0f && enemyCount < CounterObject.numberOfEnemies) {
             spawnerComponent.reset()
             enemy(entity.getComponent<TransformComponent>().position)
         }

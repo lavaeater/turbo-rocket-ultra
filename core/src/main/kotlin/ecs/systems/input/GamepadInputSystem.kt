@@ -5,22 +5,22 @@ import com.badlogic.ashley.systems.IteratingSystem
 import com.badlogic.gdx.controllers.Controller
 import com.badlogic.gdx.controllers.ControllerListener
 import com.badlogic.gdx.math.MathUtils
+import gamestate.Players
 import input.Axis
 import input.Axis.Companion.valueOK
 import input.Button
 import input.GamepadControl
-import ktx.ashley.allOf
-import ktx.ashley.mapperFor
-import gamestate.Players
 import input.InputIndicator
+import ktx.ashley.allOf
+import physics.getComponent
 
 /**
  * Controllers will be handled by a polling system
  */
 class GamepadInputSystem() : IteratingSystem(allOf(GamepadControl::class).get()), ControllerListener {
+    private val controllers: List<GamepadControl>
+        get() = Players.players.keys.filterIsInstance<GamepadControl>().map { it }
 
-    private val gcMapper = mapperFor<GamepadControl>()
-    private val controllers: List<GamepadControl> get() = Players.players.keys.filterIsInstance<GamepadControl>().map { it }
     override fun connected(controller: Controller) {
 
     }
@@ -34,19 +34,22 @@ class GamepadInputSystem() : IteratingSystem(allOf(GamepadControl::class).get())
 
     override fun buttonUp(controller: Controller, buttonCode: Int): Boolean {
         val actualController = controllers.firstOrNull { it.controller == controller }
-        if(actualController != null) {
+        if (actualController != null) {
             when (Button.getButton(buttonCode)) {
                 Button.Cross -> {
                     actualController.doContextAction = true
                 }
-                Button.Ring -> {}
+                Button.Ring -> {
+                }
                 Button.Square -> {
                     actualController.needsReload = true
                 }
                 Button.DPadLeft -> actualController.needToChangeGun = InputIndicator.Previous
                 Button.DPadRight -> actualController.needToChangeGun = InputIndicator.Next
-                Button.Triangle -> {}
-                Button.Unknown -> {}
+                Button.Triangle -> {
+                }
+                Button.Unknown -> {
+                }
             }
         }
         return true
@@ -67,23 +70,25 @@ class GamepadInputSystem() : IteratingSystem(allOf(GamepadControl::class).get())
 
             Axis.RightX -> if (valueOK(value)) controller.aimVector.set(
                 MathUtils.lerp(controller.aimVector.x, value, 0.1f),
-                controller.aimVector.y)
+                controller.aimVector.y
+            )
 
             Axis.RightY -> if (valueOK(value)) controller.aimVector.set(
                 controller.aimVector.x,
                 MathUtils.lerp(controller.aimVector.y, value, 0.1f)
             )
-            Axis.Unknown -> {}
+            Axis.Unknown -> {
+            }
         }
         return true
     }
 
     @OptIn(ExperimentalStdlibApi::class)
     override fun processEntity(entity: Entity, deltaTime: Float) {
-        val controlComponent = gcMapper[entity]
+        val controlComponent = entity.getComponent<GamepadControl>()
 
         val controller = controlComponent.controller
-        for(axis in Axis.axisMap.keys) {
+        for (axis in Axis.axisMap.keys) {
             axisMoved(controlComponent, axis, controller.getAxis(axis))
         }
     }

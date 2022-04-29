@@ -1,16 +1,14 @@
 package map.grid
 
-import box2dLight.DirectionalLight
 import box2dLight.Light
 import box2dLight.RayHandler
 import com.badlogic.ashley.core.Engine
-import com.badlogic.gdx.graphics.Color
 import com.badlogic.gdx.math.Rectangle
 import ecs.components.enemy.EnemySpawnerComponent
 import factories.Box2dCategories
+import factories.boss
 import factories.objective
 import factories.obstacle
-import injection.Context
 import injection.Context.inject
 import map.snake.MapDirection
 import map.snake.random
@@ -29,18 +27,16 @@ class GridMapGenerator {
             emitter.add(engine.createComponent(EnemySpawnerComponent::class.java))
         }
 
-        fun generate(length: Int, objectiveDensity: Int = 4): Map<Coordinate, GridMapSection> {
+        fun generate(length: Int, level: Int): Map<Coordinate, GridMapSection> {
             Light.setGlobalContactFilter(
-                Box2dCategories.light,
+                Box2dCategories.lights,
                 0, Box2dCategories.allButSensors
             )
-            rayHandler.setAmbientLight(.1f)
+            rayHandler.setAmbientLight(.5f)
             rayHandler.setBlurNum(3)
 
-
-
-            val width = length
-            val height = length
+            val width = length * 3
+            val height = length * 3
             var map = Array(width) {
                 Array(height) {
                     false
@@ -57,6 +53,10 @@ class GridMapGenerator {
             val maxY = y
             map[x][y] = true
             val startCoord = Coordinate(x, y)
+
+            var numberOfObjectivesLeftToDealOut = level * 2 - 1
+            val objectives = mutableListOf<Coordinate>()
+            lateinit var bossCoordinate: Coordinate
 
             for (index in 0 until length) {
                 /*
@@ -94,6 +94,15 @@ class GridMapGenerator {
                 if (y > maxY)
                     y = maxY
 
+                if(numberOfObjectivesLeftToDealOut > 1 && index < (length - 4) && (0..9).random() == 0) {
+                    numberOfObjectivesLeftToDealOut--
+                    objectives.add(Coordinate(x,y))
+                } else if(index > (length - 4 ) && numberOfObjectivesLeftToDealOut > 0) {
+                    numberOfObjectivesLeftToDealOut--
+                    objectives.add(Coordinate(x,y))
+                    bossCoordinate = Coordinate(x,y)
+                }
+
                 map[x][y] = true
 
             }
@@ -109,6 +118,7 @@ class GridMapGenerator {
             val tileMap = mutableMapOf<Coordinate, GridMapSection>()
 
             var index = 0
+            val numberOfObjectivs = level * 2 - 1
             for ((x, column) in map.withIndex()) {
                 for ((y, tile) in column.withIndex())
                     if (tile) {
@@ -118,8 +128,20 @@ class GridMapGenerator {
                         val section = GridMapSection(coordinate, getConnections(x, y, map), coordinate == startCoord)
 
                         tileMap[coordinate] = section
-                        if (index % objectiveDensity == 0)
+                        if(objectives.contains(coordinate)) {
                             addObjective(section.innerBounds)
+                        }
+
+                        if((1..20).random() <= level) {
+                            val position = section.innerBounds.randomPoint()
+                            val emitter = obstacle(position.x, position.y)
+                            emitter.add(engine.createComponent(EnemySpawnerComponent::class.java))
+                        }
+
+
+                        if(coordinate == bossCoordinate) {
+                            boss(section.innerBounds.randomPoint(), level)
+                        }
                     }
             }
             return tileMap

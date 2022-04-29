@@ -55,6 +55,6 @@ dependencies {
 	api "org.jetbrains.kotlinx:kotlinx-coroutines-core:$kotlinxCoroutinesVersion"
 	api "space.earlygrey:shapedrawer:$shapeDrawerVersion"
 	api "com.badlogicgames.box2dlights:box2dlights:1.4"
-	implementation "org.jetbrains.kotlinx:kotlinx-serialization-json:1.2.1"
-
+	api "org.jetbrains.kotlin:kotlin-reflect:$kotlinVersion"
+	api "org.jetbrains.kotlinx:kotlinx-serialization-json:1.2.1"
 }

@@ -6,33 +6,31 @@ import ecs.components.ai.*
 import ecs.components.enemy.EnemyComponent
 import ecs.components.player.*
 import ktx.ashley.allOf
-import ktx.ashley.mapperFor
 import ktx.ashley.remove
 import physics.getComponent
-import physics.hasComponent
+import physics.has
 
 
 class PlayerDeathSystem: IteratingSystem(allOf(PlayerComponent::class).get()) {
-    val mapper = mapperFor<PlayerComponent>()
     @ExperimentalStdlibApi
     override fun processEntity(entity: Entity, deltaTime: Float) {
-        val pc = mapper[entity]
-        if(pc.player.isDead && pc.player.lives > 0 && !entity.hasComponent<PlayerWaitsForRespawn>() && !entity.hasComponent<PlayerIsRespawning>()) {
+        val pc = entity.getComponent<PlayerComponent>()
+        if(pc.player.isDead && pc.player.lives > 0 && !entity.has<PlayerWaitsForRespawn>() && !entity.has<PlayerIsRespawning>()) {
             pc.player.lives -= 1
             entity.add(engine.createComponent(PlayerWaitsForRespawn::class.java))
         } else if(pc.player.isDead && pc.player.lives <= 0){
             entity.add(engine.createComponent(PlayerIsDead::class.java))
         }
 
-        if(entity.hasComponent<PlayerIsDead>() || entity.hasComponent<PlayerWaitsForRespawn>()) {
+        if(entity.has<PlayerIsDead>() || entity.has<PlayerWaitsForRespawn>()) {
             val controlComponent = entity.getComponent<PlayerControlComponent>()
             controlComponent.waitsForRespawn = true
 //            entity.getComponent<AnimatedCharacterComponent>().currentAnim =
             for(enemy in engine.getEntitiesFor(allOf(EnemyComponent::class).get())) {
-                if(enemy.hasComponent<TrackingPlayerComponent>() && enemy.getComponent<TrackingPlayerComponent>().player == pc.player) {
+                if(enemy.has<TrackingPlayer>() && enemy.getComponent<TrackingPlayer>().player == pc.player) {
                     enemy.remove<ChasePlayer>()
                     enemy.remove<AttackPlayer>()
-                    enemy.remove<TrackingPlayerComponent>()
+                    enemy.remove<TrackingPlayer>()
                     enemy.remove<PlayerIsInRange>()
                     enemy.remove<NoticedSomething>()
 
@@ -40,7 +38,7 @@ class PlayerDeathSystem: IteratingSystem(allOf(PlayerComponent::class).get()) {
             }
         }
 
-        if(entity.hasComponent<PlayerWaitsForRespawn>()) {
+        if(entity.has<PlayerWaitsForRespawn>()) {
             val dc = entity.getComponent<PlayerWaitsForRespawn>()
             dc.coolDown-= deltaTime
             if(dc.coolDown < 0f) {
@@ -49,7 +47,7 @@ class PlayerDeathSystem: IteratingSystem(allOf(PlayerComponent::class).get()) {
                 pc.player.health = 100
             }
         }
-        if(entity.hasComponent<PlayerIsRespawning>()) {
+        if(entity.has<PlayerIsRespawning>()) {
             val rc = entity.getComponent<PlayerIsRespawning>()
             rc.coolDown-= deltaTime
             if(rc.coolDown < 0f) {

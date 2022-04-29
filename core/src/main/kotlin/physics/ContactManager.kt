@@ -6,18 +6,16 @@ import com.badlogic.gdx.physics.box2d.ContactImpulse
 import com.badlogic.gdx.physics.box2d.ContactListener
 import com.badlogic.gdx.physics.box2d.Manifold
 import ecs.components.BodyComponent
-import ecs.components.ai.TrackingPlayerComponent
+import ecs.components.ai.TrackingPlayer
 import ecs.components.enemy.EnemyComponent
 import ecs.components.enemy.EnemySensorComponent
+import ecs.components.enemy.TackleComponent
 import ecs.components.gameplay.*
 import ecs.components.pickups.LootComponent
 import ecs.components.player.*
-import factories.bullet
 import factories.splatterEntity
 import features.pickups.AmmoLoot
-import gamestate.Player
 import injection.Context.inject
-import ktx.ashley.get
 import ktx.ashley.remove
 import tru.Assets
 
@@ -31,14 +29,14 @@ class ContactManager: ContactListener {
             This means they are close to each other and can do healing and stuff
             Is this dependent on something?
              */
-            if(contact.hasComponent<PlayerWaitsForRespawn>()) {
+            if(contact.atLeastOneHas<PlayerWaitsForRespawn>()) {
                 val deadPlayer = contact.getEntityFor<PlayerWaitsForRespawn>()
                 val livingPlayer = contact.getOtherEntity(deadPlayer)
-                if(!livingPlayer.hasComponent<PlayerWaitsForRespawn>()) {
+                if(!livingPlayer.has<PlayerWaitsForRespawn>()) {
                     val playerControlComponent = deadPlayer.getComponent<PlayerControlComponent>()
                     val player = deadPlayer.getComponent<PlayerComponent>().player
 
-                    if(livingPlayer.hasComponent<ContextActionComponent>()) {
+                    if(livingPlayer.has<ContextActionComponent>()) {
                         livingPlayer.getComponent<ContextActionComponent>().apply {
                             texture = Assets.ps4Buttons["cross"]!!
                             contextAction = {
@@ -61,7 +59,7 @@ class ContactManager: ContactListener {
             }
         }
         if (contact.isPlayerContact()) {
-            if(contact.hasComponent<LootComponent>()) {
+            if(contact.atLeastOneHas<LootComponent>()) {
                 val inventory = contact.getPlayerFor().entity.getComponent<InventoryComponent>()
                 val lootEntity = contact.getEntityFor<LootComponent>()
                 val lootComponent = lootEntity.getComponent<LootComponent>()
@@ -75,28 +73,33 @@ class ContactManager: ContactListener {
                 }
                 lootEntity.addComponent<DestroyComponent>()
             }
-            if (contact.hasComponent<ShotComponent>()) {
+            if (contact.atLeastOneHas<ShotComponent>()) {
                 //A shot does 20 damage
                 contact.getPlayerFor().health -= 20
             }
-            if(contact.hasComponent<EnemySensorComponent>()) {
+            if(contact.atLeastOneHas<EnemySensorComponent>()) {
                 //this is an enemy noticing the player - no system needed
-                if(!contact.hasComponent<PlayerWaitsForRespawn>() && !contact.hasComponent<PlayerIsRespawning>() ) {
+                if(!contact.atLeastOneHas<PlayerWaitsForRespawn>() && !contact.atLeastOneHas<PlayerIsRespawning>() ) {
                     val enemy = contact.getEntityFor<EnemySensorComponent>()
                     enemy.add(
-                        engine.createComponent(TrackingPlayerComponent::class.java)
+                        engine.createComponent(TrackingPlayer::class.java)
                             .apply { player = contact.getPlayerFor() })
                 }
             }
-            if(contact.hasComponent<ObjectiveComponent>()) {
+            if(contact.atLeastOneHas<ObjectiveComponent>()) {
                 val cEntity = contact.getEntityFor<ObjectiveComponent>()
                 val objectiveComponent = cEntity.getComponent<ObjectiveComponent>()
                 if(!objectiveComponent.touched)
                     contact.getPlayerFor().touchObjective(objectiveComponent)
-
-                //Switch texture, mate!
-                //(cEntity.getComponent<RenderableComponent>()?.renderable as RenderableBox)?.color = Color.PURPLE
                 objectiveComponent.touched = true
+                cEntity.getComponent<LightComponent>().light.isActive = true
+            }
+            if(contact.noSensors() && contact.atLeastOneHas<TackleComponent>() ) {
+                val enemy = contact.getEntityFor<TackleComponent>()
+                val player = contact.getOtherEntity(enemy)
+                val playerBody = player.body()
+                playerBody.applyLinearImpulse(enemy.getComponent<EnemyComponent>().directionVector.cpy().scl(100f), player.getComponent<TransformComponent>().position, true)
+                player.getComponent<PlayerComponent>().player.health -= (5..40).random()
             }
         }
 
@@ -106,20 +109,20 @@ class ContactManager: ContactListener {
              */
             val enemyAEntity = contact.fixtureA.getEntity()
             val enemyBEntity = contact.fixtureB.getEntity()
-            if(enemyAEntity.hasComponent<TrackingPlayerComponent>() && !enemyBEntity.hasComponent<TrackingPlayerComponent>()) {
-                enemyBEntity.addComponent<TrackingPlayerComponent> { player = enemyAEntity.getComponent<TrackingPlayerComponent>().player }
-            } else if(enemyBEntity.hasComponent<TrackingPlayerComponent>() && !enemyAEntity.hasComponent<TrackingPlayerComponent>()) {
-                enemyAEntity.addComponent<TrackingPlayerComponent> { player = enemyBEntity.getComponent<TrackingPlayerComponent>().player }
+            if(enemyAEntity.has<TrackingPlayer>() && !enemyBEntity.has<TrackingPlayer>()) {
+                enemyBEntity.addComponent<TrackingPlayer> { player = enemyAEntity.getComponent<TrackingPlayer>().player }
+            } else if(enemyBEntity.has<TrackingPlayer>() && !enemyAEntity.has<TrackingPlayer>()) {
+                enemyAEntity.addComponent<TrackingPlayer> { player = enemyBEntity.getComponent<TrackingPlayer>().player }
             }
         }
 
-        if(contact.hasComponent<EnemyComponent>() && contact.hasComponent<BulletComponent>()) {
+        if(contact.atLeastOneHas<EnemyComponent>() && contact.atLeastOneHas<BulletComponent>()) {
             val enemy = contact.getEntityFor<EnemyComponent>()
             val enemyComponent = enemy.getComponent<EnemyComponent>()
             val bulletEntity = contact.getEntityFor<BulletComponent>()
             enemyComponent.takeDamage(bulletEntity.getComponent<BulletComponent>().damage)
 
-            val bulletBody = bulletEntity.getComponent<BodyComponent>().body
+            val bulletBody = bulletEntity.getComponent<BodyComponent>().body!!
             val splatterAngle = bulletBody.linearVelocity.cpy().angleDeg()
 
             splatterEntity(
@@ -129,7 +132,7 @@ class ContactManager: ContactListener {
 
         }
 
-        if (contact.hasComponent<BulletComponent>()) {
+        if (contact.atLeastOneHas<BulletComponent>()) {
             val entity = contact.getEntityFor<BulletComponent>()
             entity.add(DestroyComponent())
         }
@@ -141,7 +144,7 @@ class ContactManager: ContactListener {
             This means they are close to each other and can do healing and stuff
             Is this dependent on something?
              */
-            if(contact.hasComponent<ContextActionComponent>()) {
+            if(contact.atLeastOneHas<ContextActionComponent>()) {
                 contact.fixtureA.getEntity().remove<ContextActionComponent>()
                 contact.fixtureB.getEntity().remove<ContextActionComponent>()
             }

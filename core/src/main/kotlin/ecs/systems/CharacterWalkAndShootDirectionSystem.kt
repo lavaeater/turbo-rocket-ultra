@@ -2,11 +2,10 @@ package ecs.systems
 
 import com.badlogic.ashley.core.Entity
 import com.badlogic.ashley.systems.IteratingSystem
-import ecs.components.graphics.renderables.AnimatedCharacterComponent
+import ecs.components.graphics.AnimatedCharacterComponent
 import ecs.components.player.PlayerControlComponent
 import ktx.ashley.allOf
-import ktx.ashley.mapperFor
-import physics.AshleyMappers
+import physics.getComponent
 import tru.SpriteDirection
 
 
@@ -18,7 +17,7 @@ class CharacterWalkAndShootDirectionSystem :
         ).get(), 10) {
 
     var characterAngle = 0f
-    val renderableMapper = mapperFor<AnimatedCharacterComponent>()
+    @OptIn(ExperimentalStdlibApi::class)
     override fun processEntity(entity: Entity, deltaTime: Float) {
         /**
          * The difficult thing here is how we know if a character is walking or not... and what the character
@@ -30,8 +29,8 @@ class CharacterWalkAndShootDirectionSystem :
          * The current anim is managed by something else... the input system, obviously
          * The current anim is managed by something else... the input system, obviously
          */
-        val characterComponent = renderableMapper.get(entity)
-        val controlComponet = AshleyMappers.playerControlMapper.get(entity)
+        val characterComponent = entity.getComponent<AnimatedCharacterComponent>()
+        val controlComponet = entity.getComponent<PlayerControlComponent>()
         characterAngle = if(controlComponet.aiming) controlComponet.aimVector.angleDeg() else controlComponet.walkVector.angleDeg()
         if(controlComponet.waitsForRespawn) {
             characterComponent.currentDirection = SpriteDirection.South
