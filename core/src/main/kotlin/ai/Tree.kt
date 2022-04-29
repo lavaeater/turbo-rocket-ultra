@@ -4,12 +4,15 @@ import ai.builders.*
 import com.badlogic.ashley.core.Entity
 import ecs.components.ai.NoticedSomething
 import ecs.components.ai.*
+import ecs.components.towers.FindTarget
+import ecs.components.towers.Shoot
+import ecs.components.towers.TargetInRange
 
 object Tree {
     fun getEnemyBehaviorTree() = tree<Entity> {
         dynamicGuardSelector {
             first(entityDo<AttackPlayer> { ifEntityHas<PlayerIsInRange>() })
-            then(entityDo<ChasePlayer> { ifEntityHas<TrackingPlayerComponent>()})
+            then(entityDo<ChasePlayer> { ifEntityHas<TrackingPlayerComponent>() })
             ifThen(
                 entityHas<NoticedSomething>(),
                 selector {
@@ -26,12 +29,10 @@ object Tree {
         }
     }
 
-    fun getEnemyBehaviorTree_old() = tree<Entity> {
-        selector<Entity> {
-            first(entityDo<Amble>())
-            then(invert(entityDo<SeekPlayer>()))
-            then(invert(entityDo<ChasePlayer>()))
-            last(entityDo<AttackPlayer>())
+    fun getTowerBehaviorTree() = tree<Entity> {
+        sequence {
+            first(entityDo<FindTarget>())
+            then(entityDo<Shoot> { ifEntityHas<TargetInRange>() })
         }
     }
 }

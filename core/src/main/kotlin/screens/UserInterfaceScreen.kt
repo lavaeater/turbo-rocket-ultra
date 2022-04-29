@@ -6,7 +6,7 @@ import ktx.actors.stage
 import statemachine.StateMachine
 
 abstract class UserInterfaceScreen(gameState: StateMachine<GameState, GameEvent>) : BasicScreen(gameState) {
-    protected val stage = stage(batch, viewPort)
+    protected val stage = stage(batch, viewport)
     override fun render(delta: Float) {
         super.render(delta)
         stage.act(delta)

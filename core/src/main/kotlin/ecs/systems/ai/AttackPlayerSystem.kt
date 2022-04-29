@@ -31,6 +31,7 @@ class AttackPlayerSystem : IteratingSystem(allOf(
         val attackPlayer = mapper[entity]
         val transformComponent = tMapper[entity]
         val player = trackerMapper[entity].player!!
+
         if(attackPlayer.status == Task.Status.RUNNING) {
             if(player.entity.hasComponent<PlayerWaitsForRespawn>()) {
                 //Can't attack invisible / dead player

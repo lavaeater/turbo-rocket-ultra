@@ -41,4 +41,6 @@ dependencies {
 	api "io.github.libktx:ktx-tiled:$ktxTiledVersion"
 	api "space.earlygrey:shapedrawer:$shapeDrawerVersion"
 	implementation "uk.co.electronstudio.sdl2gdx:sdl2gdx:1.0.4"
+	implementation "org.jetbrains.kotlinx:kotlinx-serialization-json:1.2.1"
+
 }

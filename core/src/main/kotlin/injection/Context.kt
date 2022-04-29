@@ -10,6 +10,8 @@ import com.badlogic.gdx.graphics.g2d.PolygonSpriteBatch
 import com.badlogic.gdx.utils.viewport.ExtendViewport
 import ecs.systems.*
 import ecs.systems.ai.*
+import ecs.systems.ai.towers.TowerShootSystem
+import ecs.systems.ai.towers.TowerTargetFinderSystem
 import ecs.systems.enemy.*
 import ecs.systems.input.KeyboardInputSystem
 import ecs.systems.fx.AddSplatterSystem
@@ -63,7 +65,7 @@ object Context {
     private fun getEngine(): Engine {
         return PooledEngine().apply {
             addSystem(PhysicsSystem(inject()))
-            addSystem(PhysicsDebugRendererSystem(inject(), inject()))
+//            addSystem(PhysicsDebugRendererSystem(inject(), inject()))
             addSystem(CameraUpdateSystem())
             addSystem(PlayerMoveSystem())
             addSystem(KeyboardInputSystem())
@@ -84,10 +86,13 @@ object Context {
             addSystem(SplatterRemovalSystem())
             addSystem(EnemyHearsShotsSystem())
             addSystem(InvestigateSystem())
-            addSystem(EnemyDebugRenderSystem(false, true))
+            addSystem(EnemyDebugRenderSystem(false, false))
             addSystem(PlayerDeathSystem())
             addSystem(EnemySpawnSystem())
             addSystem(EnemyOptimizerSystem())
+            addSystem(TowerDebugSystem())
+            addSystem(TowerTargetFinderSystem())
+            addSystem(TowerShootSystem())
             addSystem(RenderSystem(inject<PolygonSpriteBatch>() as Batch))
             addSystem(RenderMiniMapSystem())
         }

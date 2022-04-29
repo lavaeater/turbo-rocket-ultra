@@ -19,6 +19,8 @@ class KeyboardControl: ControlMapper, Component {
     override var thrust = 0f
     override val walkVector: Vector2 = vec2(turning, thrust)
         get() = field.set(turning, -thrust)
+    override val controllerId: String
+        get() = "Keyboard and mouse"
 
 
     override fun setAimVector(screenX: Int, screenY: Int, position: Vector2) {

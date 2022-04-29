@@ -14,6 +14,7 @@ interface ControlMapper: Component {
     var thrust: Float
 
     val walkVector: Vector2
+    val controllerId: String
 
     fun setAimVector(screenX: Int, screenY: Int, position: Vector2)
 

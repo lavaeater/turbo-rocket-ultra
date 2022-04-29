@@ -4,10 +4,10 @@ buildscript {
 		mavenCentral()
 		google()
 		maven { url 'https://oss.sonatype.org/content/repositories/snapshots/' }
-		jcenter()
 	}
 	dependencies {
 		classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlinVersion"
+		classpath "org.jetbrains.kotlin:kotlin-serialization:$kotlinVersion"
 	}
 }
 
@@ -19,6 +19,7 @@ allprojects {
 configure(subprojects) {
 	apply plugin: 'java-library'
 	apply plugin: 'kotlin'
+	apply plugin: 'kotlinx-serialization'
 	sourceCompatibility = 8.0
 	compileJava {
 		options.incremental = true
@@ -33,7 +34,6 @@ subprojects {
 		mavenCentral()
 		maven { url 'https://oss.sonatype.org/content/repositories/snapshots/' }
 		maven { url 'https://jitpack.io' }
-		jcenter()
 	}
 }
 

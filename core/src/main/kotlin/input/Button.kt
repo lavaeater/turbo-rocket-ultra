@@ -5,6 +5,8 @@ sealed class Button {
     object Red : Button()
     object Blue : Button()
     object Yellow : Button()
+    object DPadLeft : Button()
+    object DPadRight : Button()
     object Unknown : Button()
 
     companion object {
@@ -19,7 +21,9 @@ sealed class Button {
             0 to Green,
             1 to Red,
             2 to Blue,
-            3 to Yellow
+            3 to Yellow,
+            13 to DPadLeft,
+            14 to DPadRight
         )
     }
 

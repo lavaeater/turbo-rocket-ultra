@@ -2,7 +2,7 @@ package ecs.components.ai
 
 class Amble: TaskComponent() {
     init {
-        coolDownRange = (5f..10f)
+        coolDownRange = (15f..90f)
         reset()
     }
 }

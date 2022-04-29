@@ -1,16 +1,13 @@
 package ecs.systems.graphics
 
 import com.badlogic.ashley.core.Entity
-import com.badlogic.ashley.systems.IteratingSystem
 import com.badlogic.ashley.systems.SortedIteratingSystem
 import com.badlogic.gdx.graphics.Color
 import com.badlogic.gdx.graphics.OrthographicCamera
-import ecs.components.gameplay.ObjectiveComponent
-import ecs.components.gameplay.ObstacleComponent
 import ecs.components.gameplay.TransformComponent
 import ecs.components.graphics.BoxComponent
 import ecs.components.graphics.CharacterSpriteComponent
-import ecs.components.graphics.RenderableComponent
+import ecs.components.graphics.RenderLayerComponent
 import ecs.components.player.PlayerComponent
 import injection.Context.inject
 import ktx.ashley.allOf
@@ -22,11 +19,11 @@ import physics.hasComponent
 import tru.Assets
 import java.util.Comparator
 
-class RenderMiniMapSystem : SortedIteratingSystem(allOf(RenderableComponent::class, TransformComponent::class).get(), object :
+class RenderMiniMapSystem : SortedIteratingSystem(allOf(RenderLayerComponent::class, TransformComponent::class).get(), object :
     Comparator<Entity> {
-    val mapper = mapperFor<RenderableComponent>()
+    val mapper = mapperFor<RenderLayerComponent>()
     override fun compare(p0: Entity, p1: Entity): Int {
-        return mapper.get(p0).layer.compareTo(mapper.get(p1).layer)
+        return mapper.get(p1).layer.compareTo(mapper.get(p0).layer)
     }}, 20) {
     private val tMapper = mapperFor<TransformComponent>()
     private val pMapper = mapperFor<PlayerComponent>()
@@ -72,9 +69,6 @@ class RenderMiniMapSystem : SortedIteratingSystem(allOf(RenderableComponent::cla
                     box.height / (scale / 10),
                     box.color)
             }
-
-
-
         }
     }
 }

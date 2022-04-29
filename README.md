@@ -19,9 +19,13 @@ To make the graphics and environment easy I am currently working with the concep
 
 ### MVP
 
-* Start Screen that does *anything*
-* Game Over Screen that does *anything*
-* Towers
+* Basic Sprite Editor <- doing
+* Towers <- paused
+* Interactable Components in-the-game
+* Player graphics made from components / parts etc.
+* "Levels" or "Maps" in a more structured way
+* Game Over Screen that does *anything* <- DONE!
+* Start Screen that does *anything* <- done
 * Scoring and Objectives <- done
 * Game over man <-Doing
 * Player death <- Done
@@ -37,6 +41,72 @@ To make the graphics and environment easy I am currently working with the concep
 * Enemies <- Done
 * Blood Splatter <- Done
 * MiniMap <- Done
+
+### DevLog
+
+The most important thing in game development is to not do what you have decided to do, but something else entirely - in this case particle effects. Thing is, it's not on the docket. This is an MVP, this is a proof of concept of a playable game, so we should focus on just doing towers.
+
+## Doing now: Sprite Editor
+I am not doing a sprite editor. Thing is, I use free resources for characters and animations and I just got a bit fed up with available anims and stuff, so I actually went out and bought some assets on itch.io - but then I have to set up the textures and stuff to actually use them.
+
+So, when you use textures and stuff and you have some kind of actual operation up and running, you can just decide that all spritesheets should be structured in a specific way, like just the way it is structured - so that you can structure your animations and stuff properly.
+
+But when buying sprites and stuff or using free assets, you do not have that freedom. So I actually built a small tool using C# and XAML to "tag" sprites in a spritesheet in a way that I can then use to load the assets.
+
+However... that was made four years ago using C# and WPF - but I am not doing development using C# anymore and I basically hate WPF, like everyone else. But doing UI in LibGDX is absolutely awful - because it is using Scene2D which is a scenegraph and sort of doesn't simplify just doing UI presentation for you - I want to get results, not fiddle with Scene2D.
+
+So, anyways, I have started doing my OWN ui Framework, because I just love to waste time. 
+
+Here's what I want:
+* select an image from disk <- not doing
+* show that image <- done
+* allow specifying sprite dimensions <- done
+* draw lines over texture for sprites <- done
+* iterate over lines and tag them with some kind of metadata <- not done
+* save this data so it can be loaded later <- not done
+
+That's what we should do now.
+
+### Step one: select image from disk
+I will not implement a file select dialog. I will simply list all files in a pre-specified folder and then allow the user to select a file in that list.
+
+I will skip this step because it is not important.
+
+### Step two: display an image
+
+So, this should be easy, right? ;-)
+
+## Paused: Towers!!
+
+This is going to be FUN!
+
+### Mechanics
+
+Todo: 
+* Building Towers  
+* Tower Health
+* Dismantling Towers
+* Sound effects
+* Rotation speed
+* Tower Types and Variants
+* Tower entities <- done
+* Tower AI <- done
+
+#### Building Towers
+How are towers supposed to work, really? Well, I propose that a player at any time can press a "build" button, which brings up a small interface to build a tower. The interface could be overlayed over that players HUD-spot, to not interfere with the gameplay, perhaps. We need a nice mechanism for that. There might be some limitation on how many, how fast and what type of towers a player can build.
+
+#### Towers
+
+Towers are simply entities with a bucket of components. They might have behavior trees connected to them, for instance. Cool. Easy. There should be different types of towers, and I propose two basic types to begin with:
+* Distractors / Thumpers - towers that get zombies or creatures to go towards them
+* Gun Towers - towers that shoot at enemies at some distance from them
+
+It's good to start with at least two different types of towers because that forces me to make a UI for building the two types, makes me have to have factories for the two types, AI and other systems for the two types. Very cool stuff. 
+
+The behaviors of the towers should be controllable by using BTs, no issue there - and I mean the shooting towers, of course.
+
+### Graphics
+Just some kind of graphics related to towers would be nice.
 
 ## Notes on getting caught up in drama
 
@@ -267,6 +337,8 @@ So, how do we do it? Well, using box2d, we can probably link bodies to each othe
 
 So, first step is to create some kind of vehicle. Easy
 
+
+
 ## Even later,  Tuesday 29th of December
 
 Never quit while behind. No, really, an important thing is this: take a break. I played some Inside with the kids and then I managed to solve the problem when returning. I implemented some display of debug info using the old Scene2d UI from other games. What had happened was that I rationalized away a separate vector for the **direction** of new shots. It worked for a while because we were going around 0,0, but as we move away, the vector used to calculate speed and direction became more and more corrupt and weird.
@@ -294,6 +366,27 @@ OK, whatever,  but the aiming suddenly breaking down is NOT cool. That is a game
 This is my devlog.
 
 I am going to try to make some kind of AI-training in all of this. The AI will have inputs, rewards etc. I will try to make some deepq stuff or something.
+
+
+
+## Roadmap
+
+### Up next
+
+### TODO:
+* Introduce Ashley <- done
+* More variables to be able to control aspects of game, such as linear drag etc.  <- "done"
+* Better controls, as in mouse aim perhaps? <- done
+* Ability to enter vehicles and drive around / shoot from. 
+
+# Later dude
+* Draw a sprite for the character
+* Textures and sprites?
+
+## Shooting from a platform
+
+
+
 
 ## Walking is different from flying 
 
@@ -333,12 +426,43 @@ If I want the multiplayer aspect to work, I should try controller support. But p
 Next should probably be the feature that requires the least work to make it a "game". So, so far we can fly, we can shoot, but we cannot die, we cannot win. 
 
 So the next feature will be ship collisions.
+
+
+## Alla framsteg KAN ju noteras här?
+
+Hur ska jag egentligen jobba med någonting alls, egentligen? Man måste anteckna så mycket att man kan hoppa tillbaka in i projektet när som helst i någon framtid. Vart man är, vart man är på väg. Anteckningarna ska väcka ens minnen, ens känslor, och ha information så att man kan tekniskt förstå vad som behöver och kan göras.
+
+Så, det här är TurboRaketti Ultra. Eller?
+
+Jag konstaterade efter att vi spelat Lovers in a Dangerous Space Time att det jag mest av allt vill göra är att utveckla ett gameplay. Jag vill göra narrativa spel också, men jag vill också kunna göra actionspel - med kooperativ multiplayer. Det är the name of the game.
+
+Så, jag tänker inte anteckna någonting om en stor roadmap för hela spelet, utan bara börja med det som behövs och bara anteckna det som behövs.
+
+Så, det jag tänker göra härnäst är... 
+
+# WIP - skepp med styrning och framdrivning
+
+## Skjutning
+
+Jag har råkat påbörja och avsluta den grundläggande skjutningen. Poängen här var litegrann att få till riktningen och hastigheten 100% korrekt. Det gör man genom att stanna vid ett givet koncept och verkligen satsa på att få det rätt, innan man går vidare till nästa del. 
+
+## Styrning
+
+Styrning implementeras med en ShipControl-klass som ska agera mellanhand mellan input-system (tangentbord, handkontroll) och kroppen i världen. Vad vi behöver göra härnäst är att ta emot input från tangentbordet, sen handkontroller, om möjligt i linux, förstås.
+
+Styrning är samma sak som att ta input från något vad som helst och göra om det till kommandon eller liknande som t.ex. gasar eller annat på vårat skepp. Vi vill stödja handkontroller såsom Xbox360-kontrollers (fungerar det på linux? Eller, what what? Fan också.), så vi behöver något slags *abstraktion* för kontrollen. 
+
+Vår kontroll ska vara thrust-rotation-baserad. Så spelaren använder någon kontroll för att "gasa" och en annan kontroll för att rotera skeppet med- eller motsols. 
+
+Det här gör vi på det gamla vanliga sättet. Vi bygger en box2d-värld, vi klistrar på texturer på de objekten, allt blir bra. Men hur fungerar det då...
+
+Oj oj oj,  vad roligt. Vi kan göra en box2d-kropp med leder, per tutorials etc. Superkul ju.
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbLTk5ODY2ODA2NCwtOTgzNjc2MTEzLDEyNj
-QyNDM0MjEsNzI4OTI5NzA2LDEzNTgxODczMTQsMzAzNTgxMzA3
-LC0yMTA2MjU1MDE3LDE5NjA2OTUyMTMsMTc2OTY4Mzk3NywzMz
-U1MDMzNDEsMTAyNzA4NDAxLDE1NzE0MTYwODUsLTIxNDYwNDE1
-NzksLTkwMzY2NTkyNSw5NTQ0NDIzNDUsMTg1MTcwOTMyNSwtMT
-Y5ODIxMzc0MywtMTY0MTE0MDI4NywxMzE1MzE3NzM2LC0zNjg4
-NTM1MTJdfQ==
+eyJoaXN0b3J5IjpbLTE2NDAxNDEwMDIsLTEwODgxODI5MzIsLT
+k1NjQwMjAwNSwzMTk2MjM0MDIsLTE0MTIyNTk4OTYsNDQ1Njkz
+ODIxLDU0MjcxNjg0NywtMTA5NzA0NzI3NywxMzg2NTQ3MTAsLT
+EyOTQxODA5MTAsLTgwNTkwNzExMCwxNTMxNzg4MTMxLDYwNTg4
+MDEzNCwyNDQ1NjU4MDQsMTc0NzAwMzU2NSwtOTk4NjY4MDY0LC
+05ODM2NzYxMTMsMTI2NDI0MzQyMSw3Mjg5Mjk3MDYsMTM1ODE4
+NzMxNF19
 -->

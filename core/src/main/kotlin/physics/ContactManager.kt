@@ -33,7 +33,7 @@ class ContactManager: ContactListener {
                 val cEntity = contact.getEntityFor<ObjectiveComponent>()
                 val objectiveComponent = cEntity.getComponent<ObjectiveComponent>()
                 if(!objectiveComponent.touched)
-                    contact.getPlayerFor().touchedObjectives.add(objectiveComponent)
+                    contact.getPlayerFor().touchObjective(objectiveComponent)
 
                 cEntity.getComponent<BoxComponent>().color = Color.PURPLE
                 objectiveComponent.touched = true

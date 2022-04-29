@@ -3,13 +3,13 @@ package ui
 import com.badlogic.gdx.Gdx
 import com.badlogic.gdx.graphics.OrthographicCamera
 import com.badlogic.gdx.graphics.g2d.Batch
-import com.badlogic.gdx.utils.Queue
 import com.badlogic.gdx.utils.viewport.ExtendViewport
 import ecs.components.graphics.CharacterSpriteComponent
 import gamestate.Players
 import ktx.graphics.use
 import ktx.math.vec2
 import physics.getComponent
+import ui.simple.*
 
 class UserInterface(
     private val batch: Batch,
@@ -68,6 +68,9 @@ class UserInterface(
                         )
                         children.add(
                             BoundTextActor( {"Objectives: ${p.touchedObjectives.count()}"} )
+                        )
+                        children.add(
+                            BoundTextActor({ "Score: ${p.score}" })
                         )
                         children.add(
                             DataBoundMeter(
