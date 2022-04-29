@@ -10,6 +10,7 @@ import com.badlogic.gdx.physics.box2d.Contact
 import com.badlogic.gdx.physics.box2d.ContactImpulse
 import com.badlogic.gdx.physics.box2d.ContactListener
 import com.badlogic.gdx.physics.box2d.Manifold
+import ecs.components.AudioChannels
 import ecs.components.BodyComponent
 import ecs.components.ai.TrackingPlayer
 import ecs.components.enemy.EnemyComponent
@@ -30,8 +31,8 @@ import ktx.math.random
 import ktx.scene2d.label
 import ktx.scene2d.table
 import tru.Assets
-import ui.Message
-import ui.MessageHandler
+import messaging.Message
+import messaging.MessageHandler
 
 /*
 How to handle contacts in the absolutely smashingly BEST
@@ -229,12 +230,13 @@ class ContactManager : ContactListener {
                 //No op for now
             }
             is ContactType.PlayerAndLoot -> {
-                audioPlayer.playSound("players", "loot-found")
+
                 val playerEntity = contactType.player
                 val lootEntity = contactType.lootEntity
                 val inventory = playerEntity.getComponent<InventoryComponent>()
                 val lootComponent = lootEntity.getComponent<LootComponent>()
                 val lootPosition = lootEntity.getComponent<TransformComponent>().position
+                audioPlayer.playOnChannel(playerEntity.playerControl().player.playerId, "players", "loot-found")
 
                 val looted =
                     if (lootComponent.lootTable != null) lootComponent.lootTable!!.result else lootComponent.loot
@@ -384,7 +386,7 @@ class ContactManager : ContactListener {
     @OptIn(ExperimentalStdlibApi::class)
     fun handleGrenadeHittingAnything(contactType: ContactType.GrenadeHittingAnything) {
 //This should be timed using cooldown, not this way
-        audioPlayer.playSound(Assets.newSoundEffects["weapons"]!!["grenade"]!!.random())
+        audioPlayer.playOnChannel(AudioChannels.simultaneous, Assets.newSoundEffects["weapons"]!!["grenade"]!!.random())
         val grenade = contactType.grenade
         val grenadeComponent = grenade.getComponent<GrenadeComponent>()
         val body = grenade.getComponent<BodyComponent>().body!!
@@ -420,7 +422,7 @@ class ContactManager : ContactListener {
 
     @OptIn(ExperimentalStdlibApi::class)
     fun handleMolotovHittingAnything(contactType: ContactType.MolotovHittingAnything) {
-        audioPlayer.playSound(Assets.newSoundEffects["weapons"]!!["molotov"]!!.random())
+        audioPlayer.playOnChannel(AudioChannels.simultaneous, Assets.newSoundEffects["weapons"]!!["molotov"]!!.random())
         val molotov = contactType.molotov
         val molotovComponent = molotov.getComponent<MolotovComponent>()
         val body = molotov.getComponent<BodyComponent>().body!!

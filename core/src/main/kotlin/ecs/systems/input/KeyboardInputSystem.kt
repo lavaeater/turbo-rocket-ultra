@@ -6,11 +6,15 @@ import com.badlogic.gdx.Gdx
 import com.badlogic.gdx.Input
 import com.badlogic.gdx.math.Vector2
 import ecs.components.gameplay.TransformComponent
+import gamestate.GameEvent
+import gamestate.GameState
+import injection.Context.inject
 import input.InputIndicator
 import input.KeyboardControl
 import ktx.app.KtxInputAdapter
 import ktx.ashley.allOf
 import physics.getComponent
+import statemachine.StateMachine
 
 class KeyboardInputSystem :
     KtxInputAdapter, IteratingSystem(
@@ -20,6 +24,7 @@ class KeyboardInputSystem :
     ).get()
 ) {
     lateinit var keyboardControl: KeyboardControl
+    val gameState by lazy { inject<StateMachine<GameState, GameEvent>>()}
 
     override fun keyDown(keycode: Int): Boolean {
         keyboardControl.aiming = false
@@ -31,6 +36,7 @@ class KeyboardInputSystem :
                 Input.Keys.D -> keyboardControl.turning = 1f
                 Input.Keys.SPACE -> if (keyboardControl.isInBuildMode) keyboardControl.buildIfPossible =
                     true else keyboardControl.doContextAction = true
+                Input.Keys.P -> if(gameState.currentState.state == GameState.Running) gameState.acceptEvent(GameEvent.PausedGame) else gameState.acceptEvent(GameEvent.ResumedGame)
                 else -> return false
             }
         }

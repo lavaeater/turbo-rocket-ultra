@@ -1,5 +1,8 @@
 # turbo-rocket-ultra
 
+## Friday the 21st of January
+
+
 ## Tuesday the 21st of december
 So, I am hesitating when it comes to the oblique projection work. I think it has to be something done in the background, so I will simply decide on a thing to do, for instance half all heights on box2d static bodies in the game (all characters have passable top halves, so they are good so far) and thereby shrinking the maps. But I also have to change all tiles etc, I think I could be well off sitting for 24 hours straight with this and perhaps then I would like to rework some other stuff. I don't know what to do. I will explore the todo-list and see what jumps out, and add things that I come up with.
 
@@ -9,21 +12,25 @@ I have now prioritized this list according to how much I think it adds to the ga
 
 It also appears that the mouse position thing was so low hanging that I had already fixed it.
 
+- [ ] Text Crawl
+- [ ] Build Towers
+- [ ] Fix some warnings
 - [x] Add explosion particle effect to grenade collision
 - [x] Fix mouse position by polling position instead of event-driven system
 - [x] Flip weapon sprites when facing west
-- [ ] Soundscape II - the Moaning
-- [ ] Objectives II, the sequel
-- [ ] Fix some warnings
+- [x] Soundscape II - the Moaning
+- [x] Objectives II, the sequel
 --------
+- [ ] Transitions schmanzitions
+- [ ] Enemy AI II, with avoiding walls
+- [ ] Objectives III - now with players all over the map
+- [ ] Split Screen
 - [ ] Bat swing
 - [ ] HUD II, Header Upper Displayer <- rediscover MVVM pattern, two-way binding
 - [ ] More Enemy Sprites (generate them)
 - [ ] Lightmaps for sprites
-- [ ] Enemy AI II, with avoiding walls
 - [ ] Player graphics made from components / parts etc.
 - [ ] Vehicles would be cool
-- [ ] Build Towers
 - [ ] Gibs and Body Parts II - blood trails and audio
 - [ ] Zombies throwing projectiles
 - [ ] Some other type of enemy
@@ -32,21 +39,66 @@ It also appears that the mouse position thing was so low hanging that I had alre
 - [ ] Puzzle obstacles / machines
 - [ ] Oblique Projection
 
+## Text Crawl
+This could be combined with the transition concept. Here's what I want to do:
+- [ ] Show a dialog or crawl with paused game before level starts (what to do etc)
+- [ ] A working pause mode
+- [ ] Pause game when level is done and show stats or something
+
+More thoughts: there is more to this than meets the eye. It comes down to a few very important points, namely: how do we do these things? How do we control the flow of the game, the exchange of information in the game and where is this information stored. Right now, it is something of a "hot mess", but that is to be expected. This particular feature shines a light on a deficiency of the game and changes need to be made.
+
+For instance, previously we worked under the assumption that pausing would be its own screen, that's not the case right now, I think I like the way it is now much better. We just need to slow down and think about it for a minute or two, away from the code. 
+
+It's like there are all these different ways of doing things. Like, I can actually control the game using my *Story* concept, which allows me to create rules and apply consequences. I have done some alterations to that because, well, it only cared about one story before and that might be wrong, I don't know...
+
+
+## Transitions
+It uses nested framebuffers and a separate SpriteBatch (instead of generic batch) so I couldn't make myself bother. Will try something else instead. Maybe I will simply clone his project and update the code and rewrite it in Kotlin.
+
+### Objectives II - Quirkier
+Examples: Kill n enemies. Hold an area for n minutes. Come up with something really fun, oooh, I got it, every player has to be in a separate place at the same time!
+- [x] Kill n enemies
+- [x] Hold area for n seconds 
+- [ ] All players in different place at the same time
+
+#### Kill N Enemies
+This could be saved in some kind of setting for the map or something (check the story stuff). However, we also want to be able to add rules making spawning go faster and faster for this, would be real cool.
+
+#### Hold an area for n seconds
+So, a timer starts counting down, or a progress bar starts going up or whatever, like in Helldivers, and at the same time the spawners go haywire and spawn lots of enemies, perhaps in waves? So, like they spawn one per update for 10 updates, or stuff like that. Some cool settings for each
+
+#### Different places
+Slightly harder, but not that hard. Every player has to go to some specific place on the map, could be a cool time to implement split-screen so that the player that is the farthest from the center of the group is split off, temporarily, to enable better controls. This would be so fucking cool I piss my pants. 
+
+- [x] Enemy Kill Counter
+- [x] Faster and Faster Spawning
+- [x] Area Hold Timer (when is area not holding? Distance)
+- [x] Area Hold Timer in Map Def
+- [ ] Enemy wave spawning (perhaps ten at a time etc for spawn component)
+- [ ] Dynamic split screen <- coolest feature ever
+
 ### Soundscape II - the Moaning
+To make audio effects working nicely, we need a way of controlling how many are playing at any one time, their duration, and queueing. I have managed to implement some of these things, but we need a few more.
+- [x] Debug View for Audio Channels
+
+#### Debug View For Audio Channels
+This should be simple - just add some properties to channel, like name, name of sound being played, if it is played. Should be easy enough.
+
+
 So, some ambient sound effects, some zombie sound effects, explosions, screaming, burning, etc.
 Make a list of sound effects that we absolutely need and then tick them off as you find them
-- [x] Moans
 - [ ] Shuffling feet
 - [ ] Screaming Boss
+- [ ] Zombie being spawned
+- [ ] Objective Reached
+- [x] Magazine empty - is now one-liner
+- [x] Cool one-liners said by players
 - [x] Burning flames
 - [x] Gasoline explosion
 - [x] Grenade impact
 - [x] Limbs being torn
-- [ ] Screaming, panicky Zombies
-- [ ] Zombie being spawned
-- [ ] Objective Reached
-- [ ] Magazine empty (empty click)
-- [ ] Cool one-liners said by players
+- [x] Screaming, panicky Zombies
+- [x] Moans
 
 ### Hud II
 Make the HUD pretty and useful and legible. Work on more simple databinding stuff and Scene2D extensions etc.
@@ -59,9 +111,6 @@ To really make use of the box2d light stuff we could use some lightmaps for the 
 
 ### Enemy AI II
 Make the enemy handle walls and obstacles better. It shouldn't be that hard. In fact, we could make a goddamned A* graph of the entire map space that is passable terrain and that would in fact solve the problem. Or at least make a graph of points that makes sure the enemy does not walk into walls, it could be done. Hey, every section could have a "get valid points"-method. Also, make enemies more aggressive towards players, now they seem to ignore them quite a bit, perhaps sensors are turned off or something.
-
-### Objectives II - Quirkier
-Examples: Kill n enemies. Hold an area for n minutes. Come up with something really fun, oooh, I got it, every player has to be in a separate place at the same time!
 
 ### Player Graphics
 This is what categorizes as a FUN task, it should be FUN! But it also requires lots of work, mainly in making art happen. Making heads, bodies, hair, stuff like that, and enabling generating characters and sprite sheets from that. Lots of work, but there could be great payoffs in the end.
@@ -915,11 +964,11 @@ Det här gör vi på det gamla vanliga sättet. Vi bygger en box2d-värld, vi kl
 
 Oj oj oj,  vad roligt. Vi kan göra en box2d-kropp med leder, per tutorials etc. Superkul ju.
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbLTE4Mzk1MTgyNzAsLTExNDUzODMxNDIsLT
-UzMDU4MTg5NiwxNTQ4NjQ3MzY4LC01OTcyMzg0OTYsMTg1MTE0
-MjU1MCwtNTY3OTUwNzI0LC0zNDU4NDI2NTIsLTE0NTY3MjY1MD
-gsLTExNzEyNjE3MjQsMTIzMzA4NDEwNSwtMTI5OTc4OTg4OCwx
-Njc0OTc3ODE5LC0xNDU2Mzg2MjE1LDE3NDc3NjExMDQsLTE1Mj
-M4Mzg4MCwtODc4NTIxNTM2LDE4MTk2MDc1NzAsLTcwMjQ1MTY0
-NSwtODM5MDIxMzc3XX0=
+eyJoaXN0b3J5IjpbLTIxOTQ1OTM3NiwxMzE5MzMxNDM4LC0xOD
+g2MjcxNjQyLDIxMDA4MDM4NTIsNTUzMjQ0OTgzLDIwNTAzMDE2
+MDMsLTE1ODEyNzI3NDYsLTE0OTYyNTY1MTcsLTE2MjQ2NjUyNj
+EsLTEzNjQ4MTY4OTMsNDE4NzgxNjIzLC0xNDM4NjA4MjQ5LC02
+MzM5NzAyNjQsLTE4Mzk1MTgyNzAsLTExNDUzODMxNDIsLTUzMD
+U4MTg5NiwxNTQ4NjQ3MzY4LC01OTcyMzg0OTYsMTg1MTE0MjU1
+MCwtNTY3OTUwNzI0XX0=
 -->

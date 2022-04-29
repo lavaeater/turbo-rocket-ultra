@@ -7,11 +7,13 @@ import ktx.app.KtxScreen
 import ktx.inject.register
 import screens.*
 import statemachine.StateMachine
+import story.StoryHelper.factsOfTheWorld
+import story.fact.Facts
 import tru.Assets
 
 class MainGame : KtxGame<KtxScreen>() {
 
-    val gameState by lazy {
+    val gameState : StateMachine<GameState, GameEvent> by lazy {
         val stateMachine = StateMachine.buildStateMachine<GameState, GameEvent>(GameState.Splash, ::stateChanged) {
             state(GameState.Splash) {
                 action { setScreen<SplashScreen>() }
@@ -30,13 +32,16 @@ class MainGame : KtxGame<KtxScreen>() {
             state(GameState.Running) {
                 action {
                     setScreen<GameScreen>()
+                    gameScreen.resume()
                 }
                 edge(GameEvent.PausedGame, GameState.Paused) {}
                 edge(GameEvent.GameOver, GameState.Setup) {}
                 edge(GameEvent.LevelComplete, GameState.Setup) {}
             }
             state(GameState.Paused) {
-                action { setScreen<PauseScreen>() }
+                action {
+                    gameScreen.pause()
+                }
                 edge(GameEvent.ResumedGame, GameState.Running) {}
                 edge(GameEvent.ExitedGame, GameState.Setup) {}
             }
@@ -56,8 +61,10 @@ class MainGame : KtxGame<KtxScreen>() {
     }
 
     private fun resetPlayers() {
+        factsOfTheWorld.stateIntFact(Facts.LivingPlayerCount, 0)
         for (player in Players.players.values) {
             player.reset()
+            factsOfTheWorld.addToIntFact(Facts.LivingPlayerCount, 1)
         }
     }
 
@@ -65,11 +72,15 @@ class MainGame : KtxGame<KtxScreen>() {
 
     }
 
+    private val gameScreen by lazy {
+        GameScreen(gameState)
+    }
+
     override fun create() {
         Assets.load()
         addScreen(SplashScreen(gameState))
         addScreen(SetupScreen(gameState))
-        addScreen(GameScreen(gameState))
+        addScreen(gameScreen)
         addScreen(PauseScreen(gameState))
         addScreen(GameOverScreen(gameState))
         addScreen(AnimEditorScreen(gameState))

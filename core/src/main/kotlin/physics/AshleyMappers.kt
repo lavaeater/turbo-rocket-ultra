@@ -35,6 +35,7 @@ object AshleyMappers {
     val body = mapperFor<BodyComponent>()
     val mappers = mutableMapOf<KType, ComponentMapper<*>>()
     val transform = mapperFor<TransformComponent>()
+    val perimeter = mapperFor<PerimeterObjectiveComponent>()
     val amble = mapperFor<Amble>()
     val attackPlayer = mapperFor<AttackPlayer>()
     val behavior = mapperFor<BehaviorComponent>()
@@ -72,6 +73,7 @@ object AshleyMappers {
     val anchors = mapperFor<AnchorPointsComponent>()
     val build = mapperFor<BuildComponent>()
     val complexAction = mapperFor<ComplexActionComponent>()
+    val light = mapperFor<LightComponent>()
 }
 
 fun Entity.audio(): AudioComponent {
@@ -96,6 +98,10 @@ fun Entity.transform(): TransformComponent {
 
 fun Entity.hasTransform(): Boolean {
     return AshleyMappers.transform.has(this)
+}
+
+fun Entity.perimeter() : PerimeterObjectiveComponent {
+    return AshleyMappers.perimeter.get(this)
 }
 
 fun Entity.build(): BuildComponent {
@@ -176,6 +182,10 @@ fun Entity.complexAction(): ComplexActionComponent {
 
 fun Entity.objective(): ObjectiveComponent {
     return AshleyMappers.objective.get(this)
+}
+
+fun Entity.light(): LightComponent {
+    return AshleyMappers.light.get(this)
 }
 
 fun Entity.hasObjective(): Boolean {

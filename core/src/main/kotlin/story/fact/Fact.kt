@@ -1,10 +1,18 @@
 package story.fact
 
-class StringFact(override val key: String, override var value: String) : IFact<String>
+abstract class AbstractFact<T>:IFact<T> {
+  override fun toString(): String {
+    return "$key: ${value.toString()}"
+  }
+}
 
-class IntFact(override val key: String, override var value: Int) : IFact<Int>
+class StringFact(override val key: String, override var value: String) : AbstractFact<String>()
 
-class BooleanFact(override val key: String, override var value: Boolean) : IFact<Boolean>
+class IntFact(override val key: String, override var value: Int) : AbstractFact<Int>()
+
+class FloatFact(override val key: String, override var value: Float): AbstractFact<Float>()
+
+class BooleanFact(override val key: String, override var value: Boolean) : AbstractFact<Boolean>()
 
 class ListFact(override val key: String, override var value: MutableSet<String> = mutableSetOf()) : IListFact<String> {
   override fun contains(v: String): Boolean {
@@ -24,6 +32,10 @@ fun Boolean.serializeToString(): String {
   return "Boolean:$this"
 }
 
+fun Float.serializeToString() : String {
+  return "Float:$this"
+}
+
 fun String.serializeToString(): String {
   return "String:$this"
 }
@@ -40,13 +52,20 @@ fun String.isInt() : Boolean {
   return this.contains("Int:")
 }
 
+fun String.isFloat(): Boolean {
+  return this.contains("Float:")
+}
+
 fun String.parseToBoolean() : Boolean {
   return this.replace("Boolean:", "").toBoolean()
 }
 
 fun String.parseToInt() : Int {
-  val int = this.replace("Int:", "").toIntOrNull()
-  return if (int == null) 0 else int
+  return replace("Int:", "").toIntOrNull() ?: 0
+}
+
+fun String.parseToFloat(): Float {
+  return replace("Float:", "").toFloatOrNull() ?: 0f
 }
 
 fun String.parseToString() : String {

@@ -1,31 +1,37 @@
 package ui
 
+import audio.AudioPlayer
 import com.badlogic.gdx.Gdx
 import com.badlogic.gdx.graphics.OrthographicCamera
 import com.badlogic.gdx.graphics.g2d.Batch
 import com.badlogic.gdx.math.Vector2
-import com.badlogic.gdx.math.Vector3
 import com.badlogic.gdx.scenes.scene2d.Action
 import com.badlogic.gdx.scenes.scene2d.Stage
 import com.badlogic.gdx.scenes.scene2d.actions.Actions.*
 import com.badlogic.gdx.scenes.scene2d.ui.Label
-import com.badlogic.gdx.scenes.scene2d.ui.Table
 import com.badlogic.gdx.utils.Align
 import com.badlogic.gdx.utils.Queue
 import com.badlogic.gdx.utils.viewport.ExtendViewport
+import com.rafaskoberg.gdx.typinglabel.TypingLabel
 import data.Players
-import ecs.components.player.ComplexActionComponent
-import ecs.components.player.PlayerControlComponent
 import injection.Context.inject
+import ktx.actors.along
+import ktx.actors.plusAssign
+import ktx.actors.then
 import ktx.math.vec2
 import ktx.math.vec3
 import ktx.scene2d.*
+import messaging.Message
+import messaging.MessageHandler
+import messaging.MessageReceiver
 import physics.AshleyMappers
+import story.FactsOfTheWorld
+import story.fact.Facts
 import ui.customactors.boundLabel
 import ui.customactors.boundProgressBar
 import ui.customactors.repeatingTexture
+import ui.customactors.typingLabel
 import kotlin.reflect.KClass
-import ktx.actors.*
 
 
 class Hud(private val batch: Batch) : IUserInterface, MessageReceiver {
@@ -35,6 +41,9 @@ class Hud(private val batch: Batch) : IUserInterface, MessageReceiver {
     private val camera = OrthographicCamera()
     override val hudViewPort = ExtendViewport(hudWidth, hudHeight, camera)
     private val worldCamera by lazy { inject<OrthographicCamera>() }
+    private val audioPlayer by lazy { inject<AudioPlayer>() }
+    private val factsOfTheWorld by lazy { inject<FactsOfTheWorld>() }
+
 
     private val projectionVector = vec3()
     private val _projectionVector = vec2()
@@ -47,68 +56,82 @@ class Hud(private val batch: Batch) : IUserInterface, MessageReceiver {
     override fun hide() {
     }
 
-    lateinit var toastLabel: Label
+    lateinit var killCountLabel: Label
 
     private val stage by lazy {
         val aStage = Stage(hudViewPort, batch)
+        aStage.isDebugAll = true
         aStage.actors {
-//            toastLabel = label()
             table {
                 setFillParent(true)
+                top()
+                table {
+                    setFillParent(true)
+                    killCountLabel =
+                        boundLabel({
+                            "Kill Count: ${factsOfTheWorld.getIntValue(Facts.EnemyKillCount)} / ${
+                                factsOfTheWorld.getIntValue(
+                                    Facts.TargetEnemyKillCount
+                                )
+                            }"
+                        }) {
+                            isVisible = factsOfTheWorld.getBooleanFact(Facts.ShowEnemyKillCount).value
+                        }
+                }
+                row()
+                table {
+                    for ((control, player) in Players.players) {
+                        table {
+                            width = aStage.width / 8
+                            label("${control.controllerId}").inCell.align(Align.right).width(aStage.width / 8)
+                            row()
+                            boundLabel({ "Kills: ${player.kills}" }).inCell.align(Align.right)
+                            row()
+                            boundLabel({ "Objectives: ${player.touchedObjectives.count()}" }).inCell.align(Align.right)
+                            row()
+                            boundLabel({ "Score: ${player.score}" }).inCell.align(Align.right)
+                            row()
+                            boundLabel({ "${player.currentWeapon}: ${player.ammoLeft}|${player.totalAmmo}" }).inCell.align(
+                                Align.right
+                            )
+                            row()
+                            boundProgressBar(
+                                { player.health },
+                                0f,
+                                player.startingHealth,
+                                0.1f
+                            ) { }.inCell.align(Align.right)
+                            row()
+                            repeatingTexture(
+                                { player.lives },
+                                5f,
+                                AshleyMappers.animatedCharacter.get(player.entity).currentAnim.keyFrames.first()
+                            ) {}
+                        }
+                    }
+                }
                 left()
                 bottom()
-                for ((control, player) in Players.players) {
-                    table {
-                        width = aStage.width / 8
-                        label("${control.controllerId}").inCell.align(Align.right).width(aStage.width / 8)
-                        row()
-                        boundLabel({ "Kills: ${player.kills}" }).inCell.align(Align.right)
-                        row()
-                        boundLabel({ "Objectives: ${player.touchedObjectives.count()}" }).inCell.align(Align.right)
-                        row()
-                        boundLabel({ "Score: ${player.score}" }).inCell.align(Align.right)
-                        row()
-                        boundLabel({ "${player.currentWeapon}: ${player.ammoLeft}|${player.totalAmmo}" }).inCell.align(
-                            Align.right
-                        )
-                        row()
-                        boundProgressBar(
-                            { player.health },
-                            0f,
-                            player.startingHealth,
-                            0.1f
-                        ) { }.inCell.align(Align.right)
-                        row()
-                        repeatingTexture(
-                            { player.lives },
-                            5f,
-                            AshleyMappers.animatedCharacter.get(player.entity).currentAnim.keyFrames.first()
-                        ) {}
-                    }
-
-
-                }
             }
         }
         aStage
     }
 
+
+    var isReady = false
     override fun show() {
         //Set up this as receiver for messages with messagehandler
         inject<MessageHandler>().apply {
             this.receivers.add(this@Hud)
         }
-        //I won't use the UI for input at this stage, right?
-        /*
-        To use both the UI and my stuff, we could multiplex it or something.
-         */
-//        Gdx.input.inputProcessor = stage
     }
 
     override fun update(delta: Float) {
         showToasts(delta)
         stage.act(delta)
         stage.draw()
+        killCountLabel.isVisible = factsOfTheWorld.getBooleanFact(Facts.ShowEnemyKillCount).value
+        isReady = true
     }
 
     override fun dispose() {
@@ -121,7 +144,59 @@ class Hud(private val batch: Batch) : IUserInterface, MessageReceiver {
     override fun reset() {
     }
 
-    override val messageTypes: Set<KClass<*>> = setOf(Message.ShowToast::class, Message.ShowUiForComplexAction::class)
+    private lateinit var pauseLabel: TypingLabel
+    private lateinit var pauseDialog: KDialog
+
+    private val pauseBlurb by lazy {
+        val dialogWidth = 800f
+        val dialogHeight = 800f
+        val x = stage.width / 2 - dialogWidth / 2
+        val y = stage.height / 4 + dialogHeight / 2
+        val text = """
+""".trimIndent()
+
+        pauseDialog = scene2d.dialog("Paused") {
+            contentTable.add(
+                scene2d.table {
+                    setFillParent(true)
+                    left()
+                    top()
+                    pauseLabel = typingLabel(text)//.inCell.expand()
+                })
+            width = dialogWidth
+            height = dialogHeight
+            //contentTable.pack()
+            pack()
+            setPosition(x, y)
+        }
+        stage.addActor(pauseDialog)
+        pauseDialog
+    }
+
+    override fun pause() {
+        pauseBlurb.isVisible = true
+        pauseLabel.setText("Game Paused")
+        pauseLabel.pack()
+    }
+
+    override fun resume() {
+        if (isReady)
+            pauseBlurb.isVisible = false
+    }
+
+    /***
+     * This is a story method, this should be generalized to support more
+     * dynamic stuff.
+     */
+    override val messageTypes: Set<KClass<*>> =
+        setOf(
+            Message.ShowToast::class,
+            Message.ShowUiForComplexAction::class,
+            Message.ShowProgressBar::class,
+            Message.LevelStarting::class,
+            Message.LevelComplete::class,
+            Message.LevelFailed::class
+        )
 
     fun worldToHudPosition(worldPosition: Vector2): Vector2 {
         projectionVector.set(worldPosition.x, worldPosition.y, 0f)
@@ -160,6 +235,23 @@ class Hud(private val batch: Batch) : IUserInterface, MessageReceiver {
         }
     }
 
+    fun addProgressBar(progressBar: Message.ShowProgressBar) {
+        val coordinate = worldToHudPosition(progressBar.worldPosition)
+        val moveAction = object : Action() {
+            override fun act(delta: Float): Boolean {
+                val c = worldToHudPosition(progressBar.worldPosition)
+                actor.setPosition(c.x, c.y)
+                return true
+            }
+        }
+        val sequence = (delay(progressBar.maxTime).along(moveAction)).then(removeActor())
+        stage.actors {
+            boundProgressBar(progressBar.progress, 0f, progressBar.maxTime) {
+                this += sequence
+            }.setPosition(coordinate.x, coordinate.y)
+        }
+    }
+
     override fun recieveMessage(message: Message) {
         when (message) {
             is Message.ShowToast -> {
@@ -183,33 +275,22 @@ class Hud(private val batch: Batch) : IUserInterface, MessageReceiver {
                     this.setPosition(coordinate.x, coordinate.y)
                 })
             }
+            is Message.ShowProgressBar -> {
+                addProgressBar(message)
+            }
+            is Message.FactUpdated -> TODO() //We don't subscribe to this type of messages so this won't happen
+            is Message.LevelComplete -> { setPauseLabelText(message.completeMessage) }
+            is Message.LevelFailed -> { setPauseLabelText(message.failMessage) }
+            is Message.LevelStarting -> { setPauseLabelText(message.beforeStartMessage) }
+        }
+    }
+
+    fun setPauseLabelText(text: String) {
+        if(this::pauseLabel.isInitialized) {
+            pauseLabel.setText(text)
+            pauseDialog.pack()
         }
     }
 }
 
 
-interface MessageReceiver {
-    val messageTypes: Set<KClass<*>>
-    fun recieveMessage(message: Message)
-}
-
-class MessageHandler {
-    // QUeue not used for now, but perhaps later, much later?
-    val messageQueue = Queue<Message>()
-    val receivers = mutableListOf<MessageReceiver>()
-    fun sendMessage(message: Message) {
-        val validReceivers = receivers.filter { it.messageTypes.contains<KClass<out Any>>(message::class) }
-        for (receiver in validReceivers) {
-            receiver.recieveMessage(message)
-        }
-    }
-}
-
-sealed class Message() {
-    class ShowToast(val toast: String, val worldPosition: Vector2) : Message()
-    class ShowUiForComplexAction(
-        val complexActionComponent: ComplexActionComponent,
-        val controlComponent: PlayerControlComponent,
-        val worldPosition: Vector2
-    ) : Message()
-}

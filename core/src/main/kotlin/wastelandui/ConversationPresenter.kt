@@ -22,7 +22,6 @@ import ktx.scene2d.textButton
 import statemachine.StateMachine
 import story.conversation.IConversation
 import tru.Assets
-import ui.UserInterface
 
 class ConversationPresenter(
 		override val s: Stage,

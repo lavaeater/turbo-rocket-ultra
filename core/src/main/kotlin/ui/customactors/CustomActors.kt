@@ -7,11 +7,9 @@ import com.badlogic.gdx.scenes.scene2d.ui.Label
 import com.badlogic.gdx.scenes.scene2d.ui.ProgressBar
 import com.badlogic.gdx.scenes.scene2d.ui.Skin
 import com.badlogic.gdx.scenes.scene2d.utils.TransformDrawable
+import com.rafaskoberg.gdx.typinglabel.TypingLabel
 import ktx.actors.txt
-import ktx.scene2d.KWidget
-import ktx.scene2d.Scene2DSkin
-import ktx.scene2d.Scene2dDsl
-import ktx.scene2d.actor
+import ktx.scene2d.*
 import kotlin.contracts.ExperimentalContracts
 import kotlin.contracts.InvocationKind
 import kotlin.contracts.contract
@@ -93,4 +91,16 @@ inline fun <S> KWidget<S>.boundLabel(
 ): Label {
     contract { callsInPlace(init, InvocationKind.EXACTLY_ONCE) }
     return actor(BoundLabel(textFunction, skin), init)
+}
+
+@Scene2dDsl
+@OptIn(ExperimentalContracts::class)
+inline fun <S> KWidget<S>.typingLabel(
+    text: CharSequence,
+    style: String = defaultStyle,
+    skin: Skin = Scene2DSkin.defaultSkin,
+    init: (@Scene2dDsl TypingLabel).(S) -> Unit = {}
+): TypingLabel {
+    contract { callsInPlace(init, InvocationKind.EXACTLY_ONCE) }
+    return actor(TypingLabel(text, skin, style), init)
 }

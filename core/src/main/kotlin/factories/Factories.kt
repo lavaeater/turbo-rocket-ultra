@@ -770,7 +770,9 @@ fun spawner(
             scale = 4f
             layer = 1
         }
-        with<EnemySpawnerComponent> {}
+        with<EnemySpawnerComponent> {
+            waveSize = 1
+        }
         with<MiniMapComponent> {
             color = Color.PINK
         }
@@ -782,6 +784,7 @@ fun spawner(
 fun objective(
     x: Float = (-100f..100f).random(),
     y: Float = (-100f..100f).random(),
+    perimeterObjective: Boolean,
     width: Float = 4f,
     height: Float = 4f
 ): Body {
@@ -815,6 +818,8 @@ fun objective(
             light.position = box2dBody.position
             light.isStaticLight = true
         }
+        if(perimeterObjective)
+            with<PerimeterObjectiveComponent>()
     }
     box2dBody.userData = entity
     return box2dBody

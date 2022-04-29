@@ -48,7 +48,9 @@ class WeaponChangeAndReloadSystem : IteratingSystem(
                     controlComponent.resetSound(Sfx.outofAmmo)
                     when (gun.reloadType) {
                         ReloadType.SingleShot -> {
-                            audioPlayer.playSound(reloadSound)
+                            //TODO: FIX Reload audio
+                            reloadSound.play()
+//                            audioPlayer.playSound(reloadSound)
                             gun.ammoRemaining += 1
                             inventoryComponent.ammo[ammoType] = inventoryComponent.ammo[ammoType]!! - 1
                             if (gun.ammoRemaining == gun.ammoCap || inventoryComponent.ammo[ammoType]!! <= 0) {
@@ -56,7 +58,8 @@ class WeaponChangeAndReloadSystem : IteratingSystem(
                             }
                         }
                         ReloadType.EntireMag -> {
-                            audioPlayer.playSound(reloadSound)
+                            reloadSound.play()
+//                            audioPlayer.playSound(reloadSound)
                             var ammoLeft = inventoryComponent.ammo[ammoType]!!
                             if (ammoLeft > gun.ammoCap) {
                                 gun.ammoRemaining = gun.ammoCap

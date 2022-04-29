@@ -4,8 +4,13 @@ import com.badlogic.ashley.core.Entity
 import com.badlogic.gdx.physics.box2d.Body
 import ecs.components.gameplay.ObjectiveComponent
 import tru.*
+import java.util.*
 
-class Player() {
+class Player {
+    init {
+        playerIndex++
+    }
+    val playerId = "P$playerIndex"
     var currentWeapon = ""
     var kills = 0
     set(value) {
@@ -47,5 +52,8 @@ class Player() {
         health = startingHealth
         kills = 0
         touchedObjectives.clear()
+    }
+    companion object {
+        var playerIndex = 0
     }
 }

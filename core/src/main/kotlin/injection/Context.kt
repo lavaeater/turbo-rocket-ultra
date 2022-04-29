@@ -26,6 +26,7 @@ import ecs.systems.ai.towers.TowerShootSystem
 import ecs.systems.ai.towers.TowerTargetFinderSystem
 import ecs.systems.enemy.*
 import ecs.systems.facts.FactSystem
+import ecs.systems.facts.PerimeterObjectiveSystem
 import ecs.systems.fx.BloodSplatterEffectRenderSystem
 import ecs.systems.fx.DelayedEntityCreationSystem
 import ecs.systems.fx.EffectRenderSystem
@@ -45,7 +46,7 @@ import story.FactsOfTheWorld
 import story.StoryManager
 import ui.Hud
 import ui.IUserInterface
-import ui.MessageHandler
+import messaging.MessageHandler
 
 object Context {
     val context = Context()
@@ -103,8 +104,9 @@ object Context {
             addSystem(BodyDestroyerSystem(inject())) //world
             addSystem(CharacterWalkAndShootDirectionSystem())
             addSystem(PlayerShootingSystem(inject()))
-            addSystem(EnemyDeathSystem(audioPlayer = inject()))
+            addSystem(EnemyDeathSystem(audioPlayer = inject(), factsOfTheWorld = inject()))
             addSystem(EnemyMovementSystem(true))
+            addSystem(PerimeterObjectiveSystem())
             // Ai Systems Start
             addSystem(AmblingSystem())
             addSystem(PanicSystem())
@@ -132,7 +134,7 @@ object Context {
             addSystem(WeaponChangeAndReloadSystem())
             addSystem(UpdatePlayerStatsSystem())
 //            addSystem(PhysicsDebugRendererSystem(inject(), inject()))
-            addSystem(RenderSystem(inject<PolygonSpriteBatch>() as Batch, false, inject(), inject(),1))
+            addSystem(RenderSystem(inject<PolygonSpriteBatch>() as Batch, false, inject(), inject(), inject<ExtendViewport>(),1))
             addSystem(RenderMiniMapSystem(3))
             addSystem(PlayerFlashlightSystem())
             //lets NOT write debug badges

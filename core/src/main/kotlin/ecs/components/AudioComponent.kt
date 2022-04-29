@@ -1,15 +1,22 @@
 package ecs.components
 
-import com.badlogic.gdx.audio.Sound
+import audio.TurboSound
 import ecs.components.ai.CoolDownComponent
-import ecs.systems.ai.EmptySound
+
+object AudioChannels {
+    const val enemyDeath = "ENEMYDEATH"
+    const val default = "DEFAULT"
+    const val simultaneous = "SIMULTANEOUS"
+}
 
 class AudioComponent: CoolDownComponent() {
     var takeDistanceIntoAccount = true
-    var soundEffect: Sound = EmptySound()
+    var channel = AudioChannels.simultaneous
+    var soundEffect: TurboSound? = null
+
     override fun reset() {
         takeDistanceIntoAccount = true
-        soundEffect = EmptySound()
+        soundEffect = null
         super.reset()
     }
 }

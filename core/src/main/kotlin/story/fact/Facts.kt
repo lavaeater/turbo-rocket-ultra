@@ -7,21 +7,8 @@ class Facts {
         }
 
         const val Context = "Context"
-        const val NpcsPlayerHasMet = "NpcsPlayerHasMet"
-        const val CurrentNpc = "CurrentNpc"
-        const val CurrentPlace = "CurrentPlace"
         const val MetNumberOfNpcs = "MetNumberOfNpcs"
-        const val VisitedPlaces = "VisitedPlaces"
-        const val FoundKey = "FoundKey"
-        const val MetOrcs = "MetOrcs"
-        const val NumberOfVisitedPlaces = "NumberOfVisitedPlaces"
-        const val CurrentNpcName = "CurrentNpcName"
         const val Score = "Score"
-        const val KnownNames = "KnownNames"
-        const val GameWon = "GameWon"
-
-        const val StoryStep = "StoryStep" //subfact
-        const val NpcReactionScore = "ReactionScore" //subfact
         const val PlayerTileX = "PlayerTileX"
         const val PlayerTileY = "PlayerTileY"
 
@@ -30,5 +17,22 @@ class Facts {
         const val BossIsDead = "BossIsDead"
         const val AllObjectivesAreTouched = "AllObjectivesAreTouched"
         const val LevelComplete = "LevelComplete"
+        const val GotoNextLevel = "GotoNextLevel"
+        const val LevelFailed = "LevelFailed"
+        const val EnemyKillCount = "EnemyKillCount"
+        const val TargetEnemyKillCount = "TargetEnemyKillCount"
+        const val ShowEnemyKillCount = "ShowEnemyKillCount"
+        const val AcceleratingSpawns = "AcceleratingSpawns"
+        const val AcceleratingSpawnsFactor = "AcceleratingSpawnsFactor"
+
+        //Map Facts
+        const val CurrentMapName = "CurrentMapName"
+        const val MapStartMessage = "MapStartMessage"
+        const val MapSuccessMessage = "MapSuccessMessage"
+        const val MapFailMessage = "MapFailMessage"
+        const val LevelStarted = "LevelStarted"
+
+        //PlayerFacts
+        const val LivingPlayerCount = "LivingPlayerCount"
     }
 }

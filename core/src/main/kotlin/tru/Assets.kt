@@ -1,5 +1,6 @@
 package tru
 
+import audio.TurboSound
 import com.badlogic.gdx.Gdx
 import com.badlogic.gdx.assets.AssetManager
 import com.badlogic.gdx.audio.Sound
@@ -67,52 +68,127 @@ object Assets : Disposable {
         mapOf(
             "zombies" to mapOf(
                 "groans" to listOf(
-                    Gdx.audio.newSound(Gdx.files.internal("audio/zombies/zombie-groan-1.wav")),
-                    Gdx.audio.newSound(Gdx.files.internal("audio/zombies/zombie-groan-1.wav")),
-                    Gdx.audio.newSound(Gdx.files.internal("audio/zombies/zombie-groan-2.wav"))
+                    TurboSound(
+                        Gdx.audio.newSound(Gdx.files.internal("audio/zombies/zombie-groan-1.wav")),
+                        3026f
+                    ),
+                    TurboSound(
+                        Gdx.audio.newSound(Gdx.files.internal("audio/zombies/zombie-groan-2.wav")),
+                        866f
+                    )
                 ),
                 "panic" to listOf(
-                    Gdx.audio.newSound(Gdx.files.internal("audio/zombies/panic-1.wav")),
-                    Gdx.audio.newSound(Gdx.files.internal("audio/zombies/panic-2.wav"))
+                    TurboSound(
+                        Gdx.audio.newSound(Gdx.files.internal("audio/zombies/panic-1.wav")),
+                        1256f
+                    ),
+                    TurboSound(
+                        Gdx.audio.newSound(Gdx.files.internal("audio/zombies/panic-2.wav")),
+                        10703f
+                    )
                 ),
                 "attacks" to listOf(
-                    Gdx.audio.newSound(Gdx.files.internal("audio/zombies/zombie-attack.wav"))
+                    TurboSound(
+                        Gdx.audio.newSound(Gdx.files.internal("audio/zombies/zombie-attack.wav")),
+                        8010f
+                    )
                 )
             ),
             "weapons" to mapOf(
                 "molotov" to listOf(
-                    Gdx.audio.newSound(Gdx.files.internal("audio/molotov/molotov-1.wav")),
+                    TurboSound(
+                        Gdx.audio.newSound(Gdx.files.internal("audio/molotov/molotov-1.wav")),
+                        5885f
+                    )
                 ),
                 "grenade" to listOf(
-                    Gdx.audio.newSound(Gdx.files.internal("audio/grenade/grenade-1.wav")),
+                    TurboSound(
+                        Gdx.audio.newSound(Gdx.files.internal("audio/grenade/grenade-1.wav")),
+                        1176f
+                    )
                 )
             ),
             "misc" to mapOf(
                 "flesh" to listOf(
-                    Gdx.audio.newSound(Gdx.files.internal("audio/misc/flesh-1.wav")),
-                    Gdx.audio.newSound(Gdx.files.internal("audio/misc/flesh-2.wav")),
+                    TurboSound(
+                        Gdx.audio.newSound(Gdx.files.internal("audio/misc/flesh-1.wav")),
+                        1323f
+                    ),
+                    TurboSound(
+                        Gdx.audio.newSound(Gdx.files.internal("audio/misc/flesh-2.wav")),
+                        280f
+                    )
                 )
             ),
             "players" to mapOf(
                 "out-of-ammo" to listOf(
-                    Gdx.audio.newSound(Gdx.files.internal("audio/players/out-of-ammo-1.wav")),
-                    Gdx.audio.newSound(Gdx.files.internal("audio/players/out-of-ammo-2.wav")),
+                    TurboSound(
+                        Gdx.audio.newSound(Gdx.files.internal("audio/players/out-of-ammo-1.wav")),
+                        835f
+                    ),
+                    TurboSound(
+                        Gdx.audio.newSound(Gdx.files.internal("audio/players/out-of-ammo-2.wav")),
+                        1915f
+                    )
                 ),
                 "death" to listOf(
-                    Gdx.audio.newSound(Gdx.files.internal("audio/players/death-1.wav")),
-                    Gdx.audio.newSound(Gdx.files.internal("audio/players/death-2.wav")),
+                    TurboSound(
+                        Gdx.audio.newSound(Gdx.files.internal("audio/players/death-1.wav")),
+                        1691f
+                    ),
+                    TurboSound(
+                        Gdx.audio.newSound(Gdx.files.internal("audio/players/death-2.wav")),
+                        2450f
+                    )
                 ),
                 "loot-found" to listOf(
-                    Gdx.audio.newSound(Gdx.files.internal("audio/players/loot-1.wav")),
-                    Gdx.audio.newSound(Gdx.files.internal("audio/players/loot-2.wav")),
-                    Gdx.audio.newSound(Gdx.files.internal("audio/players/loot-3.wav")),
-                    Gdx.audio.newSound(Gdx.files.internal("audio/players/loot-4.wav")),
+                    TurboSound(
+                        Gdx.audio.newSound(Gdx.files.internal("audio/players/loot-1.wav")),
+                        2530f
+                    ),
+                    TurboSound(
+                        Gdx.audio.newSound(Gdx.files.internal("audio/players/loot-2.wav")),
+                        1288f
+                    ),
+                    TurboSound(
+                        Gdx.audio.newSound(Gdx.files.internal("audio/players/loot-3.wav")),
+                        1603f
+                    ),
+                    TurboSound(
+                        Gdx.audio.newSound(
+                            Gdx.files.internal(
+                                "audio/players/loot-4.wav"
+                            )
+                        ),
+                        1706f
+                    )
                 ),
                 "one-liners" to listOf(
-                    Gdx.audio.newSound(Gdx.files.internal("audio/players/groovy.wav")),
-                    Gdx.audio.newSound(Gdx.files.internal("audio/players/lets-dance.wav")),
-                    Gdx.audio.newSound(Gdx.files.internal("audio/players/there-u-go.wav")),
-                ),
+                    TurboSound(
+                        Gdx.audio.newSound(
+                            Gdx.files.internal(
+                                "audio/players/groovy.wav"
+                            )
+                        ),
+                        824f
+                    ),
+                    TurboSound(
+                        Gdx.audio.newSound(
+                            Gdx.files.internal(
+                                "audio/players/lets-dance.wav"
+                            )
+                        ),
+                        963f
+                    ),
+                    TurboSound(
+                        Gdx.audio.newSound(
+                            Gdx.files.internal(
+                                "audio/players/there-u-go.wav"
+                            )
+                        ),
+                        661f
+                    )
+                )
             )
         )
     }

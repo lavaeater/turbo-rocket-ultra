@@ -7,23 +7,16 @@ import com.badlogic.gdx.Gdx
 import com.badlogic.gdx.controllers.Controllers
 import com.badlogic.gdx.graphics.GL20
 import com.badlogic.gdx.graphics.OrthographicCamera
-import com.badlogic.gdx.graphics.Pixmap
 import com.badlogic.gdx.graphics.g2d.PolygonSpriteBatch
 import com.badlogic.gdx.physics.box2d.World
 import com.badlogic.gdx.utils.viewport.ExtendViewport
 import com.crashinvaders.vfx.VfxManager
 import com.crashinvaders.vfx.effects.ChainVfxEffect
-import com.crashinvaders.vfx.effects.OldTvEffect
-import com.crashinvaders.vfx.effects.VfxEffect
 import com.strongjoshua.console.GUIConsole
 import data.Players
-import ecs.components.BodyComponent
-import ecs.components.enemy.EnemyComponent
 import ecs.components.gameplay.ObjectiveComponent
-import ecs.components.gameplay.ObstacleComponent
 import ecs.components.player.PlayerComponent
 import ecs.systems.graphics.CameraUpdateSystem
-import ecs.systems.graphics.GameConstants
 import ecs.systems.graphics.GameConstants.MAX_ENEMIES
 import ecs.systems.graphics.RenderMiniMapSystem
 import ecs.systems.graphics.RenderSystem
@@ -37,14 +30,12 @@ import injection.Context.inject
 import ktx.app.KtxScreen
 import ktx.ashley.allOf
 import ktx.ashley.getSystem
-import ktx.ashley.remove
 import map.grid.*
 import map.snake.randomPoint
-import org.w3c.dom.css.Counter
 import physics.AshleyMappers
-import physics.getComponent
 import statemachine.StateMachine
 import story.FactsOfTheWorld
+import story.StoryHelper
 import story.StoryManager
 import story.fact.Facts
 import tru.Assets
@@ -67,66 +58,85 @@ class GameScreen(private val gameState: StateMachine<GameState, GameEvent>) : Kt
     private val factsOfTheWorld: FactsOfTheWorld by lazy { inject() }
     private val console by lazy { inject<GUIConsole>() }
     private val vfxManager by lazy { inject<VfxManager>() }
+    private var running = true
 
     override fun show() {
         initializeIfNeeded()
-        camera.setToOrtho(true, viewPort.maxWorldWidth, viewPort.maxWorldHeight)
-        Gdx.input.inputProcessor = engine.getSystem(KeyboardInputSystem::class.java)
-        Controllers.addListener(engine.getSystem(GamepadInputSystem::class.java))
+        if(running) {
+            camera.setToOrtho(true, viewPort.maxWorldWidth, viewPort.maxWorldHeight)
+            Gdx.input.inputProcessor = engine.getSystem(KeyboardInputSystem::class.java)
+            Controllers.addListener(engine.getSystem(GamepadInputSystem::class.java))
 
-        engine.getSystem<CameraUpdateSystem>().reset()
-        engine.removeAllEntities()
-        CounterObject.currentLevel = 1
+            engine.getSystem<CameraUpdateSystem>().reset()
+            engine.removeAllEntities()
+            CounterObject.currentLevel = 1
 
-        for (system in engine.systems) {
-            system.setProcessing(true)
+            for (system in engine.systems) {
+                system.setProcessing(true)
+            }
+            generateMap(CounterObject.currentLevel)
+            addPlayers()
+
+            if (Players.players.keys.any { it.isKeyboard }) {
+                engine.getSystem<KeyboardInputSystem>().setProcessing(true)
+            } else {
+                engine.getSystem<KeyboardInputSystem>().setProcessing(false)
+            }
+
+            ui.reset()
+            ui.show()
+
+            Assets.music.first().isLooping = true
+            Assets.music.first().play()
+            storyManager.activate()
+
+            //And then we pause and show intro text, wait for any input at all.
+            //That will be a total pain in the ass
+            /*
+            Maybe
+            How would we want this to work, ideally?
+             */
         }
-        generateMap(CounterObject.currentLevel)
-        addPlayers()
-
-        if(Players.players.keys.any { it.isKeyboard }) {
-            engine.getSystem<KeyboardInputSystem>().setProcessing(true)
-        } else {
-            engine.getSystem<KeyboardInputSystem>().setProcessing(false)
-        }
-
-        ui.reset()
-        ui.show()
-
-        Assets.music.first().isLooping = true
-        Assets.music.first().play()
     }
 
     private fun loadMapZero() : Pair<Map<Coordinate, GridMapSection>, TileGraph> {
-        CounterObject.numberOfEnemies = 0
+        CounterObject.maxEnemies = 0
         CounterObject.maxSpawnedEnemies = 0
-        return GridMapGenerator.generateFromDefintion(TextGridMapDefinition.levelZero)
+        return GridMapGenerator.generateFromDefintion(TextGridMapDefinition.levelZero, true)
     }
 
     private fun loadMapOne() : Pair<Map<Coordinate, GridMapSection>, TileGraph> {
-        CounterObject.numberOfEnemies = 50
+        CounterObject.maxEnemies = 64
         CounterObject.maxSpawnedEnemies = 1024
 
-        return GridMapGenerator.generateFromDefintion(TextGridMapDefinition.levelOne)
+        storyManager.addStories(*StoryHelper.baseStories)
+        storyManager.addStory(StoryHelper.enemyKillCountStory)
+        MapLoader.saveMap(NewMaps.levelOne) //One-off
+        return GridMapGenerator.generateFromMapFile(NewMaps.levelOne)
     }
 
     private fun loadMapTwo(): Pair<Map<Coordinate, GridMapSection>, TileGraph>  {
-        CounterObject.numberOfEnemies = 100
+        CounterObject.maxEnemies = 100
         CounterObject.maxSpawnedEnemies= 1024
-
+        storyManager.addStories(*StoryHelper.baseStories)
+        storyManager.addStory(StoryHelper.basicStory)
         return GridMapGenerator.generateFromDefintion(TextGridMapDefinition.levelTwo)
     }
 
     private fun loadMapThree(): Pair<Map<Coordinate, GridMapSection>, TileGraph>  {
-        CounterObject.numberOfEnemies = 300
+        CounterObject.maxEnemies = 300
         CounterObject.maxSpawnedEnemies= 1024
 
+        storyManager.addStories(*StoryHelper.baseStories)
+        storyManager.addStory(StoryHelper.basicStory)
         return GridMapGenerator.generateFromDefintion(TextGridMapDefinition.levelThree)
     }
     private fun loadMapFour(): Pair<Map<Coordinate, GridMapSection>, TileGraph>  {
-        CounterObject.numberOfEnemies = 512
+        CounterObject.maxEnemies = 512
         CounterObject.maxSpawnedEnemies= 1024
 
+        storyManager.addStories(*StoryHelper.baseStories)
+        storyManager.addStory(StoryHelper.basicStory)
         return GridMapGenerator.generateFromDefintion(TextGridMapDefinition.levelFour)
     }
     /*
@@ -143,20 +153,15 @@ D1B67A
     val blue = 118f / 255f
 
     override fun render(delta: Float) {
-        Gdx.gl.glClearColor(0f, 0f, 0f, 1f)
-        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT)
+
         //Update viewport and camera here and nowhere else...
-        camera.update(true)
-        batch.projectionMatrix = camera.combined
+
         updatePhysics(delta)
 
         engine.update(delta)
         ui.update(delta)
         audioPlayer.update(delta)
         storyManager.checkStories()
-
-        if (factsOfTheWorld.getBooleanFact(Facts.LevelComplete).value)
-            nextLevel()
     }
 
     private val velIters = 8
@@ -187,6 +192,10 @@ D1B67A
         //Continue to render, though
         engine.getSystem<RenderSystem>().setProcessing(true)
         engine.getSystem<RenderMiniMapSystem>().setProcessing(true)
+
+        ui.pause()
+
+        running = false
     }
 
     override fun resume() {
@@ -194,6 +203,11 @@ D1B67A
         Controllers.addListener(engine.getSystem(GamepadInputSystem::class.java))
         for (system in engine.systems)
             system.setProcessing(true)
+
+        ui.resume()
+        running = true
+        if (factsOfTheWorld.getBoolean(Facts.GotoNextLevel))
+            nextLevel()
     }
 
     override fun hide() {
@@ -228,12 +242,20 @@ D1B67A
     }
 
     private fun nextLevel() {
+        /*
+        Needs to load the stories for the level, they might all
+        need to be loaded again, which is probably better.
+         */
+
+
         for (player in Players.players.values) {
             player.touchedObjectives.clear()
         }
-        factsOfTheWorld.stateBoolFact(Facts.BossIsDead, false)
-        factsOfTheWorld.stateBoolFact(Facts.AllObjectivesAreTouched, false)
-        factsOfTheWorld.stateBoolFact(Facts.LevelComplete, false)
+//        factsOfTheWorld.stateBoolFact(Facts.BossIsDead, false)
+//        factsOfTheWorld.stateBoolFact(Facts.AllObjectivesAreTouched, false)
+//        factsOfTheWorld.stateBoolFact(Facts.LevelComplete, false)
+//        factsOfTheWorld.stateBoolFact(Facts.ShowEnemyKillCount, false)
+
 
         CounterObject.currentLevel++
         generateMap(CounterObject.currentLevel)
@@ -242,6 +264,7 @@ D1B67A
         } else {
             engine.getSystem<KeyboardInputSystem>().setProcessing(false)
         }
+        storyManager.activate()
     }
 
     private val mapManager by lazy { inject<GridMapManager>() }
@@ -278,8 +301,8 @@ D1B67A
         CounterObject.enemyCount = 0
 
         //For debuggin we will swarm with enemies
-        CounterObject.numberOfEnemies =  (8f.pow(CounterObject.currentLevel).roundToInt() * 2).coerceAtMost(MAX_ENEMIES)
-        CounterObject.maxSpawnedEnemies = CounterObject.numberOfEnemies * 2
+        CounterObject.maxEnemies =  (8f.pow(CounterObject.currentLevel).roundToInt() * 2).coerceAtMost(MAX_ENEMIES)
+        CounterObject.maxSpawnedEnemies = CounterObject.maxEnemies * 2
         val map = when(level) {
             1 -> loadMapOne()
             2 -> loadMapTwo()

@@ -52,4 +52,8 @@ class Story(val name:String, val rules: List<Rule>, val consequence: Consequence
 		finishedRules.clear()
 
 	}
+
+	override fun toString(): String {
+		return name
+	}
 }
