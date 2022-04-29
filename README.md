@@ -19,42 +19,63 @@ To make the graphics and environment easy I am currently working with the concep
 
 ### MVP
 
-- [ ] Gibs and body parts
+Lets try to prioritize these into what would make the game seem "done" the fastest.
+
+- [ ] **More character sprites**
+- [ ] Enemy attack animation
+- [ ] Lightmaps for sprites
+- [ ] Perma-gibs
+- [ ] Fix the MiniMap
+- [ ] HUD II, Header Upper Displayer
+- [ ] Enemy AI II, with avoiding walls
+- [ ] Objectives II, the sequel
 - [ ] Pickups 2 (on-screen blurb indicating what you got)
-- [x] Reloading 2 (shot-by-shot for shotguns)
-- [ ] Multi-body-bodies for players and enemies (one for collision in game, one for hit detection for damage)
 - [ ] Interactable Components in-the-game
 - [ ] Player graphics made from components / parts etc.
-- [ ] Perma-gibs
-- [ ] Fixa mini-map
 - [ ] Smarta vektorer (eller nåt) - byt utspridd vektormattekod mot små, lokala, scengrafer. 
+- [ ] Vehicles would be cool
+- [ ] Build Towers
+- [ ] Gibs and Body Parts II - blood trails and audio
+- [x] Gibs and body parts
+- [x] Reloading 2 (shot-by-shot for shotguns)
+- [x] Multi-body-bodies for players and enemies (one for collision in game, one for hit detection for damage)
 - [x] Player Death 2
-- [x] Different weapons to shoot with <- done
-- [x] Vehicles <- nice to have
-- [x] Build Towers <- Paused
-- [x] Weapons 2 <- done
-- [x] Objectives for maps <- done
-- [x] Far Off Map Rendering <- done
-- [x] Lights and particles <- done
-- [x] Auto-generated Snake-maps <- done
-- [x] Basic Sprite Editor <- done, kinda?
-- [x] IsoMetric Projection <- done!
-- [x] Towers <- Done
-- [x] Game Over Screen that does *anything* <- DONE!
-- [x] Start Screen that does *anything* <- done
-- [x] Scoring and Objectives <- done
-- [x] Game over man <-Doing
-- [x] Player death <- Done
-- [x] Fix enemy sensors / noticing <- advanced behaviors
-- [x] Fix enemy direction systems <- done?
-- [x] Controller support <- Done
-- [x] Twin Stick shooting <- done
-- [x] Multiplayer <- done
-- [x] Player damage / Enemy attacks <- Done
-- [x] Objectives <- Done!
-- [x] Enemies <- Done
-- [x] Blood Splatter <- Done
-- [x] MiniMap <- Done
+- [x] Different weapons to shoot with
+- [x] Weapons 2
+- [x] Objectives for maps
+- [x] Far Off Map Rendering
+- [x] Lights and particles
+- [x] Auto-generated Snake-maps
+- [x] Basic Sprite Editor
+- [x] IsoMetric Projection
+- [x] Towers
+- [x] Game Over Screen that does *anything*
+- [x] Start Screen that does *anything*
+- [x] Scoring and Objectives
+- [x] Game over man
+- [x] Player death
+- [x] Fix enemy direction systems
+- [x] Controller support
+- [x] Twin Stick shooting
+- [x] Multiplayer
+- [x] Player damage / Enemy attacks
+- [x] Objectives
+- [x] Enemies
+- [x] Blood Splatter
+- [x] MiniMap
+
+
+
+## Gibs and body parts
+
+I will take the low road for this. Take the sprite, split it up into parts, put them in a particle emitter, spray them about with blood or something. That should do it, right?
+- [x] Split sprite
+- [x] Fiddle with particle editor
+- [x] Emit body parts when enemy dies
+
+## Multi-body for players and enemies
+
+Since the game uses not an isometric projection, but a flat projection, our enemies and players have a box2d body corresponding to the area on the ground they occupy, but to make shooting seem more realistic, we need to have additional physics bodies for everything else.
 
 ## Player Death 2
 
@@ -554,11 +575,11 @@ Det här gör vi på det gamla vanliga sättet. Vi bygger en box2d-värld, vi kl
 
 Oj oj oj,  vad roligt. Vi kan göra en box2d-kropp med leder, per tutorials etc. Superkul ju.
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbLTIzODc2MjA0LC0xNTI4MzExNDQ0LC0xND
-I5NTMwOTQwLC0xOTU0MzY0MDc4LDE3NjEzNDczNTksMTczMDkw
-Mjg3MiwtMTQ4MTAyODYyNiwxOTQyNTg3MDAxLC03Mjg1NTc5OT
-QsLTI1ODk4Njk3OSwtMTM2OTA5MDAyMSwxNDI2NjQ5ODg1LC0z
-NzcxODkzNDMsLTE4MzcyMjcwOTgsLTE0MzU4NjM3MjEsMjc5OT
-Q1NTc1LC0zODQ5NTg2NjAsMTExOTE0ODk5MywtMTkwNjc1MTMz
-MywtODUxNDgzNTkwXX0=
+eyJoaXN0b3J5IjpbMTI4MDQ5MjE1MiwtMzY5MjM4NTI5LDMzMT
+E1MDY3MSwyMDk2NjEyODUxLC0xMDg0NjkwODYzLC0yMzg3NjIw
+NCwtMTUyODMxMTQ0NCwtMTQyOTUzMDk0MCwtMTk1NDM2NDA3OC
+wxNzYxMzQ3MzU5LDE3MzA5MDI4NzIsLTE0ODEwMjg2MjYsMTk0
+MjU4NzAwMSwtNzI4NTU3OTk0LC0yNTg5ODY5NzksLTEzNjkwOT
+AwMjEsMTQyNjY0OTg4NSwtMzc3MTg5MzQzLC0xODM3MjI3MDk4
+LC0xNDM1ODYzNzIxXX0=
 -->

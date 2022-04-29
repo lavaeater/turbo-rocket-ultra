@@ -28,8 +28,10 @@ class TextureComponent: Component, Pool.Poolable {
     var offsetX: Float = 0f
     var offsetY: Float = 0f
     var scale: Float = 1f
+    var rotateWithTransform = false
 
     override fun reset() {
+        rotateWithTransform = false
         scale = 1f
         layer = 0
         offsetX = 0f

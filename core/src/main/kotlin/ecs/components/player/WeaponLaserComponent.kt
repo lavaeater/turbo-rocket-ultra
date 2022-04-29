@@ -11,7 +11,7 @@ import injection.Context
 class WeaponLaserComponent: Component, Pool.Poolable {
     val rayHandler by lazy { Context.inject<RayHandler>() }
     // To make them not collide with lights, simply make sure they are not lights.
-    val weaponlaser = ConeLight(rayHandler, 12, Color(1f, 0f, 0f, .8f), 60f, 0f, 0f, 30f, 15f).apply {
+    val weaponlaser = ConeLight(rayHandler, 12, Color(1f, 0f, 0f, .2f), 60f, 0f, 0f, 30f, 15f).apply {
         setContactFilter(
             Box2dCategories.indicator,
             0x00,
