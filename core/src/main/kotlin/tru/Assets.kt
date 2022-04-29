@@ -83,8 +83,8 @@ object Assets : Disposable {
         Texture(Gdx.files.internal("sprites/weapons/handgun.png"))
     }
 
-    private val spas12Texture by lazy {
-        Texture(Gdx.files.internal("sprites/weapons/spas-12.png"))
+    private val spas12Sprite by lazy {
+        Sprite(Texture(Gdx.files.internal("sprites/weapons/shotgun.png"))).apply { this.setOrigin(0f, this.regionHeight / 2f) }
     }
 
     private val batSprite by lazy {
@@ -108,13 +108,13 @@ object Assets : Disposable {
             GunFrames.spas12 to
                     mapOf(
                         SpriteDirection.North to
-                                Sprite(spas12Texture, 0, 0,64, 64),
+                                spas12Sprite,
                         SpriteDirection.West to
-                                Sprite(spas12Texture, 0, 64, 64, 64),
+                                spas12Sprite,
                         SpriteDirection.South to
-                                Sprite(spas12Texture, 0, 128, 64, 64),
+                                spas12Sprite,
                         SpriteDirection.East to
-                                Sprite(spas12Texture, 0, 192, 64,64)
+                                spas12Sprite
                     ),
             GunFrames.bat to
                     mapOf(
@@ -140,6 +140,11 @@ object Assets : Disposable {
             "noise" to Sprite(Texture(Gdx.files.internal("sprites/towers/tower-1.png"))).apply { scale(4f) }
         )
     }
+
+    val newTower by lazy {
+        Sprite(Texture(Gdx.files.internal("sprites/towers/tower-template.png")))
+    }
+
     val lootBox by lazy {
         Sprite(Texture(Gdx.files.internal("sprites/loot/lootbox.png")))
     }
@@ -235,10 +240,17 @@ object Assets : Disposable {
             "square" to Sprite(texture, 32, 64, 16,16),
             "triangle" to Sprite(texture, 32, 80, 16,16),
             "circle" to Sprite(texture, 32, 96, 16,16),
-        )
+            "dpadup" to Sprite(texture, 0, 16, 16,16),
+            "dpadright" to Sprite(texture, 0, 32, 16,16),
+            "dpaddown" to Sprite(texture, 0, 48, 16,16),
+            "dpadleft" to Sprite(texture, 0, 64, 16,16))
     }
     val bullet by lazy {
         Sprite(Texture(Gdx.files.internal("sprites/bullets/bullet.png")))
+    }
+
+    val molotov by lazy {
+        Sprite(Texture(Gdx.files.internal("sprites/weapons/molotov.png"))).apply { this.setOrigin(0f, this.regionHeight / 2f) }
     }
 
     val playerCharacters by lazy { characters }

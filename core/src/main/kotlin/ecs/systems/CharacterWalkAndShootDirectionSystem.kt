@@ -6,7 +6,7 @@ import ecs.components.graphics.AnimatedCharacterComponent
 import ecs.components.player.PlayerControlComponent
 import ecs.systems.graphics.spriteDirection
 import ktx.ashley.allOf
-import physics.getComponent
+import physics.AshleyMappers
 import tru.SpriteDirection
 
 
@@ -15,10 +15,8 @@ class CharacterWalkAndShootDirectionSystem :
         allOf(
             AnimatedCharacterComponent::class,
             PlayerControlComponent::class
-        ).get(), 10) {
+        ).get()) {
 
-    var characterAngle = 0f
-    @OptIn(ExperimentalStdlibApi::class)
     override fun processEntity(entity: Entity, deltaTime: Float) {
         /**
          * The difficult thing here is how we know if a character is walking or not... and what the character
@@ -30,8 +28,8 @@ class CharacterWalkAndShootDirectionSystem :
          * The current anim is managed by something else... the input system, obviously
          * The current anim is managed by something else... the input system, obviously
          */
-        val characterComponent = entity.getComponent<AnimatedCharacterComponent>()
-        val controlComponet = entity.getComponent<PlayerControlComponent>()
+        val characterComponent = AshleyMappers.animatedCharacter.get(entity)
+        val controlComponet = AshleyMappers.playerControl.get(entity)
         if(controlComponet.waitsForRespawn) {
             characterComponent.currentDirection = SpriteDirection.South
         } else {

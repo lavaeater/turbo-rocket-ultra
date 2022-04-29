@@ -25,7 +25,7 @@ object StoryHelper {
                 booleanCriteria(Facts.AllObjectivesAreTouched, true)
                 consequence {
                     apply = {
-                        factsOfTheWorld.stateBoolFact(Facts.LevelComplete, true)
+                        //factsOfTheWorld.stateBoolFact(Facts.LevelComplete, true)
                     }
                 }
             }

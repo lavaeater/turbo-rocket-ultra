@@ -1,16 +1,21 @@
 package ui
 
+import com.badlogic.gdx.Gdx
 import com.badlogic.gdx.graphics.OrthographicCamera
 import com.badlogic.gdx.graphics.g2d.Batch
 import com.badlogic.gdx.math.Vector2
 import com.badlogic.gdx.math.Vector3
+import com.badlogic.gdx.scenes.scene2d.Action
 import com.badlogic.gdx.scenes.scene2d.Stage
 import com.badlogic.gdx.scenes.scene2d.actions.Actions.*
 import com.badlogic.gdx.scenes.scene2d.ui.Label
+import com.badlogic.gdx.scenes.scene2d.ui.Table
 import com.badlogic.gdx.utils.Align
 import com.badlogic.gdx.utils.Queue
 import com.badlogic.gdx.utils.viewport.ExtendViewport
 import data.Players
+import ecs.components.player.ComplexActionComponent
+import ecs.components.player.PlayerControlComponent
 import injection.Context.inject
 import ktx.math.vec2
 import ktx.math.vec3
@@ -25,17 +30,19 @@ import ktx.actors.*
 
 class Hud(private val batch: Batch) : IUserInterface, MessageReceiver {
     private val aspectRatio = 14f / 9f
-    private val hudWidth = 1280f
+    private val hudWidth = 960f
     private val hudHeight = hudWidth * aspectRatio
     private val camera = OrthographicCamera()
     override val hudViewPort = ExtendViewport(hudWidth, hudHeight, camera)
+    private val worldCamera by lazy { inject<OrthographicCamera>() }
 
     private val projectionVector = vec3()
     private val _projectionVector = vec2()
-    private val projection2d : Vector2 get() {
-        _projectionVector.set(projectionVector.x, projectionVector.y)
-        return _projectionVector
-    }
+    private val projection2d: Vector2
+        get() {
+            _projectionVector.set(projectionVector.x, projectionVector.y)
+            return _projectionVector
+        }
 
     override fun hide() {
     }
@@ -50,25 +57,33 @@ class Hud(private val batch: Batch) : IUserInterface, MessageReceiver {
                 setFillParent(true)
                 left()
                 bottom()
-                for((control, player) in Players.players) {
+                for ((control, player) in Players.players) {
                     table {
                         width = aStage.width / 8
                         label("${control.controllerId}").inCell.align(Align.right).width(aStage.width / 8)
                         row()
-                        boundLabel({"Kills: ${player.kills}"}).inCell.align(Align.right)
+                        boundLabel({ "Kills: ${player.kills}" }).inCell.align(Align.right)
                         row()
-                        boundLabel({"Objectives: ${player.touchedObjectives.count()}"}).inCell.align(Align.right)
+                        boundLabel({ "Objectives: ${player.touchedObjectives.count()}" }).inCell.align(Align.right)
                         row()
-                        boundLabel({"Score: ${player.score}"}).inCell.align(Align.right)
+                        boundLabel({ "Score: ${player.score}" }).inCell.align(Align.right)
                         row()
-                        boundLabel({"${player.currentWeapon}: ${player.ammoLeft}|${player.totalAmmo}"}).inCell.align(Align.right)
+                        boundLabel({ "${player.currentWeapon}: ${player.ammoLeft}|${player.totalAmmo}" }).inCell.align(
+                            Align.right
+                        )
                         row()
-                        boundProgressBar({player.health}, 0f, player.startingHealth, 0.1f) {  }.inCell.align(Align.right)
+                        boundProgressBar(
+                            { player.health },
+                            0f,
+                            player.startingHealth,
+                            0.1f
+                        ) { }.inCell.align(Align.right)
                         row()
                         repeatingTexture(
-                            {player.lives},
+                            { player.lives },
                             5f,
-                            AshleyMappers.animatedCharacter.get(player.entity).currentAnim.keyFrames.first()) {}
+                            AshleyMappers.animatedCharacter.get(player.entity).currentAnim.keyFrames.first()
+                        ) {}
                     }
 
 
@@ -80,7 +95,7 @@ class Hud(private val batch: Batch) : IUserInterface, MessageReceiver {
 
     override fun show() {
         //Set up this as receiver for messages with messagehandler
-        inject<MessageHandler>().apply{
+        inject<MessageHandler>().apply {
             this.receivers.add(this@Hud)
         }
         //I won't use the UI for input at this stage, right?
@@ -106,12 +121,14 @@ class Hud(private val batch: Batch) : IUserInterface, MessageReceiver {
     override fun reset() {
     }
 
-    override val messageTypes: Set<KClass<*>> = setOf(Message.ShowToast::class)
+    override val messageTypes: Set<KClass<*>> = setOf(Message.ShowToast::class, Message.ShowUiForComplexAction::class)
 
-    fun screenToHud(screenCoordinate: Vector3): Vector2 {
-        projectionVector.set(screenCoordinate)
+    fun worldToHudPosition(worldPosition: Vector2): Vector2 {
+        projectionVector.set(worldPosition.x, worldPosition.y, 0f)
+        worldCamera.project(projectionVector)
+        projectionVector.set(projectionVector.x, Gdx.graphics.height - projectionVector.y, projectionVector.z)
         camera.unproject(projectionVector)
-        return projection2d
+        return projection2d.cpy()
     }
 
     /*
@@ -123,15 +140,22 @@ class Hud(private val batch: Batch) : IUserInterface, MessageReceiver {
 
     fun showToasts(delta: Float) {
         toastCooldown -= delta
-        if(toastQueue.any() && toastCooldown <= 0f) {
+        if (toastQueue.any() && toastCooldown <= 0f) {
             toastCooldown = 1f
             val toastToShow = toastQueue.removeFirst()
-            camera.unproject(toastToShow.screenCoordinate)
-            val sequence = delay(1f) + removeActor()
+            val coordinate = worldToHudPosition(toastToShow.worldPosition)
+            val moveAction = object : Action() {
+                override fun act(delta: Float): Boolean {
+                    val coordinate = worldToHudPosition(toastToShow.worldPosition)
+                    actor.setPosition(coordinate.x, coordinate.y)
+                    return true
+                }
+            }
+            val sequence = (delay(1f).along(moveAction)).then(removeActor())
             stage.actors {
-                label(toastToShow.toast, "title") {
-                    actor -> actor += sequence
-                }.setPosition(toastToShow.screenCoordinate.x, toastToShow.screenCoordinate.y)
+                label(toastToShow.toast, "title") { actor ->
+                    actor += sequence
+                }.setPosition(coordinate.x, coordinate.y)
             }
         }
     }
@@ -141,11 +165,27 @@ class Hud(private val batch: Batch) : IUserInterface, MessageReceiver {
             is Message.ShowToast -> {
                 toastQueue.addLast(message)
             }
+            is Message.ShowUiForComplexAction -> {
+                val moveAction = object : Action() {
+                    override fun act(delta: Float): Boolean {
+                        val coordinate = worldToHudPosition(message.worldPosition)
+                        actor.setPosition(coordinate.x, coordinate.y)
+                        return true
+                    }
+                }
+                val coordinate = worldToHudPosition(message.worldPosition)
+                message.complexActionComponent.doneCallBacks.add {
+                    stage.actors.removeValue(message.complexActionComponent.scene2dTable, true)
+                }
+                val sequence = repeat(10000, moveAction)
+                stage.addActor(message.complexActionComponent.scene2dTable.apply {
+                    this += sequence
+                    this.setPosition(coordinate.x, coordinate.y)
+                })
+            }
         }
     }
 }
-
-
 
 
 interface MessageReceiver {
@@ -159,12 +199,17 @@ class MessageHandler {
     val receivers = mutableListOf<MessageReceiver>()
     fun sendMessage(message: Message) {
         val validReceivers = receivers.filter { it.messageTypes.contains<KClass<out Any>>(message::class) }
-        for(receiver in validReceivers) {
+        for (receiver in validReceivers) {
             receiver.recieveMessage(message)
         }
     }
 }
 
 sealed class Message() {
-    class ShowToast(val toast: String, val screenCoordinate: Vector3): Message()
+    class ShowToast(val toast: String, val worldPosition: Vector2) : Message()
+    class ShowUiForComplexAction(
+        val complexActionComponent: ComplexActionComponent,
+        val controlComponent: PlayerControlComponent,
+        val worldPosition: Vector2
+    ) : Message()
 }

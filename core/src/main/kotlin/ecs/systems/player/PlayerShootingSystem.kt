@@ -9,7 +9,7 @@ import ecs.components.enemy.EnemyComponent
 import ecs.components.gameplay.TransformComponent
 import ecs.components.player.*
 import factories.bullet
-import factories.thrownProjectile
+import factories.throwMolotov
 import features.weapons.Weapon
 import features.weapons.WeaponType
 import input.canISeeYouFromHere
@@ -57,7 +57,7 @@ class PlayerShootingSystem(private val audioPlayer: AudioPlayer) : IteratingSyst
             val angleVariation = (-weapon.accuracyOrHitArcForMelee..weapon.accuracyOrHitArcForMelee).random()
             aimVector.setAngleDeg(angle + angleVariation)
 
-            for (projectile in 0..weapon.numberOfProjectiles) {
+            for (projectile in 0 until weapon.numberOfProjectiles) {
                 // If only one projectile, it is simple, else, there is trouble
                 /*
                 For multi-projectile guns with spread (shotguns)
@@ -76,7 +76,7 @@ class PlayerShootingSystem(private val audioPlayer: AudioPlayer) : IteratingSyst
                 /**
                  * Create a bullet entity at aimVector that travels very fast
                  */
-                thrownProjectile(
+                throwMolotov(
                     vec2(
                         transformComponent.position.x + aimVector.x,
                         transformComponent.position.y - 1 + aimVector.y

@@ -23,13 +23,16 @@ class KeyboardInputSystem :
 
     override fun keyDown(keycode: Int): Boolean {
         keyboardControl.aiming = false
-        when (keycode) {
-            Input.Keys.W -> keyboardControl.thrust = 1f
-            Input.Keys.S -> keyboardControl.thrust = -1f
-            Input.Keys.A -> keyboardControl.turning = -1f
-            Input.Keys.D -> keyboardControl.turning = 1f
-            Input.Keys.SPACE -> if(keyboardControl.isInBuildMode) keyboardControl.buildIfPossible = true else keyboardControl.doContextAction = true
-            else -> return false
+        if(!keyboardControl.requireSequencePress) {
+            when (keycode) {
+                Input.Keys.W -> keyboardControl.thrust = 1f
+                Input.Keys.S -> keyboardControl.thrust = -1f
+                Input.Keys.A -> keyboardControl.turning = -1f
+                Input.Keys.D -> keyboardControl.turning = 1f
+                Input.Keys.SPACE -> if (keyboardControl.isInBuildMode) keyboardControl.buildIfPossible =
+                    true else keyboardControl.doContextAction = true
+                else -> return false
+            }
         }
         return true
     }
@@ -43,20 +46,27 @@ class KeyboardInputSystem :
         return true
     }
 
+    val hackingKeys = listOf(Input.Keys.UP, Input.Keys.DOWN, Input.Keys.LEFT, Input.Keys.RIGHT, Input.Keys.ESCAPE)
+
     override fun keyUp(keycode: Int): Boolean {
-        keyboardControl.aiming = true
-        when (keycode) {
-            Input.Keys.W -> keyboardControl.thrust = 0f
-            Input.Keys.S -> keyboardControl.thrust = 0f
-            Input.Keys.A -> keyboardControl.turning = 0f
-            Input.Keys.D -> keyboardControl.turning = 0f
-            Input.Keys.SPACE -> if(keyboardControl.isInBuildMode) keyboardControl.buildIfPossible = false else keyboardControl.doContextAction = false
-            Input.Keys.R -> keyboardControl.needsReload = true
-            Input.Keys.B -> toggleBuildMode()
-            Input.Keys.LEFT -> keyboardControl.uiControl.left()
-            Input.Keys.RIGHT -> keyboardControl.uiControl.right()
-            Input.Keys.ENTER -> keyboardControl.uiControl.select()
-            else -> return false
+        if(keyboardControl.requireSequencePress && hackingKeys.contains(keycode)) {
+            keyboardControl.keyPressedCallback(keycode)
+        } else {
+            keyboardControl.aiming = true
+            when (keycode) {
+                Input.Keys.W -> keyboardControl.thrust = 0f
+                Input.Keys.S -> keyboardControl.thrust = 0f
+                Input.Keys.A -> keyboardControl.turning = 0f
+                Input.Keys.D -> keyboardControl.turning = 0f
+                Input.Keys.SPACE -> if (keyboardControl.isInBuildMode) keyboardControl.buildIfPossible =
+                    false else keyboardControl.doContextAction = false
+                Input.Keys.R -> keyboardControl.needsReload = true
+                Input.Keys.B -> toggleBuildMode()
+                Input.Keys.LEFT -> keyboardControl.uiControl.left()
+                Input.Keys.RIGHT -> keyboardControl.uiControl.right()
+                Input.Keys.ENTER -> keyboardControl.uiControl.select()
+                else -> return false
+            }
         }
         return true
     }

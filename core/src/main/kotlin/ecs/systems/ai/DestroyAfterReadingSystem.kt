@@ -5,13 +5,12 @@ import com.badlogic.ashley.systems.IteratingSystem
 import ecs.components.gameplay.DestroyAfterCoolDownComponent
 import ecs.components.gameplay.DestroyComponent
 import ktx.ashley.allOf
+import physics.AshleyMappers
 import physics.addComponent
-import physics.getComponent
 
-class DestroyAfterReadingSystem(): IteratingSystem(allOf(DestroyAfterCoolDownComponent::class).get()) {
-    @ExperimentalStdlibApi
+class DestroyAfterReadingSystem: IteratingSystem(allOf(DestroyAfterCoolDownComponent::class).get()) {
     override fun processEntity(entity: Entity, deltaTime: Float) {
-        val damageEffectComponent = entity.getComponent<DestroyAfterCoolDownComponent>()
+        val damageEffectComponent = AshleyMappers.destroyAfterReading.get(entity)
         damageEffectComponent.coolDown -= deltaTime
         if(damageEffectComponent.coolDown <= 0f) {
             entity.addComponent<DestroyComponent>()

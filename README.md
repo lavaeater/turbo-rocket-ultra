@@ -1,5 +1,49 @@
 # turbo-rocket-ultra
 
+## Monday the 6th of December
+So, I was thinking about maybe redoing the entire system of projection, all sprites, everything, to make the graphics look better. What was I, insane?
+No, I wasnt. I don't like the way the game looks because it isn't perfect. I would want to do it with an isometric projection, but as a compromise I've tried to make an oblique top-down projection. However, the one I am currently using is "wrong" as the y-axis being twice the length it should be. So I started a new branch with the ambition of using it to do everything on. 
+
+So, maybe not? Maybe just think that all of my objects are in fact twice the depth as they are wide, instead? If they are, that makes the projection correct again, actually.
+
+So, go back to getting the towers done instead? And make the towers look good, no matter what. 
+
+I can't let the fucking projection go. It is insanely annoying. Perhaps I should try adding aabb collisions with JBump if I am to destroy everything I have? 
+
+No, work on level five for a minute, my man. Or add other polish that will actually add to the game, my man. You want a five-player playable demo on saturday by the latest, can't fiddle around with the projection now!
+
+So, make a new MVP-todo list with the things, and only the things, to make the playable delight for saturday. And also do a playthrough video for the libgdx discord.
+
+Lets do max FIVE things that make the game feel better for fri-sat. These things should *only* be polish, that is very important.
+
+### The Hacking Station
+I just realized that what the game needs more than anything, right now, is *towers*... no, not towers. It needs more gameplay somehow. So, I was thinking about adding the **hacking station**, a special node that a player can interact with, just like in Helldivers, to open a door, perhaps? How do we even construct a door in this game?
+
+Don't make it a door at first, just make it something you have to interact with. We have the context action, we can add more features to that. So what this will be is simply an objective and when touching it, it will launch the hacking session, which could simply be pushing a certain sequence of buttons to *hack it*. Using our story system, we could implement any number of mechanisms to get this to work. Test it out on the zero-level.
+
+- [ ] Hacking station <- mini game? Triggers larger hordes of zombies
+	- [ ] Add a StoryComponent (Wh
+- [ ] Bat swing <- lets fucking do the bat swing, maaan!
+- [ ] Zombies with guns
+- [ ] Grenades
+- [ ] Nicer Setup UI, using Scene2d perhaps
+- [x] Fix the free floating corners!
+- [x] Molotov cocktail sprite
+- [x] Cool post-processing FX
+- [x] Fix map reset issue (remove all but players from engine)
+- [x] Five character sprites
+
+
+
+
+## Friday the 3rd of December
+
+Manage your energy, avoid depression.
+
+
+## Thursday 2nd of December
+Avoid burnout. Manage your energy
+
 ## Thursday the twentyfifth of November 2021
 
 So, I just made the molotov logic work. I managed to load map number two, which is significantly larger. Should we add a "density of enemies" to be sprinkled about the map, somehow?
@@ -64,6 +108,7 @@ Lets call the branch level-four, for this one.
 - [ ] Add actual bat swing
 	- [ ] Animate bat-swing? Is this fun? <- steps taken
 - [ ] Re-introduce TOWERS
+
 
 
 
@@ -759,11 +804,11 @@ Det här gör vi på det gamla vanliga sättet. Vi bygger en box2d-värld, vi kl
 
 Oj oj oj,  vad roligt. Vi kan göra en box2d-kropp med leder, per tutorials etc. Superkul ju.
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbLTk3ODAxODM1LC03NTAzNTg4NzksLTYwMj
-EyNTk3MiwxNjA4Mzc0NTU2LDM4NzE5MzE2OCwtOTg0NjQyMTU1
-LDE1MDg1MTcyODQsLTE5NDMzNDEyMDgsLTE3NzAwNTYwMTEsLT
-UxNzk3MTQzNyw1Nzg0OTUzOSw1ODYxNTI1MTEsLTExNzk3MTc5
-NDQsLTE1MTE0MjE3MDMsLTM2ODM3NDU3NiwtNzkxMzIwMjEwLC
-04NTI5MzIzODYsODg1MTE2NzM5LDM0Mjc0NDEzNiwtOTQ2OTQz
-OTldfQ==
+eyJoaXN0b3J5IjpbMjgwNzQ3NTgzLC05NzgzNjY0OTksMTA5MT
+Q3OTc0NywxMzM2Njc2OTQ1LDU5NjIyNTM0LDMyODcxODQyNCwt
+MTQ4NTM5OTc4LDExMDQyNjY4MjAsMTc2OTI2MTUxMiwyMzIwND
+c3ODksMTAxMTM1NzY2LDMyMTk3OTExOCwtMTM2MTU1NzkxNiwz
+NDM0NzY5MzgsLTE2MTk3OTM5MTksLTk3ODAxODM1LC03NTAzNT
+g4NzksLTYwMjEyNTk3MiwxNjA4Mzc0NTU2LDM4NzE5MzE2OF19
+
 -->

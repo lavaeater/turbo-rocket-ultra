@@ -37,4 +37,6 @@ class KeyboardControl: ControlMapper, Component {
     }
 
     override var uiControl: UserInterfaceControl = NoOpUserInterfaceControl.control
+    override var requireSequencePress: Boolean = false
+    override var keyPressedCallback: (Int) -> Unit = {}
 }

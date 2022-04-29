@@ -100,7 +100,6 @@ class GridMapSection(val coordinate: Coordinate, val connections: Set<MapDirecti
     val rayHandler by lazy { inject<RayHandler>() }
 
      val tiles by lazy {
-
         Array(width) { x ->
             Array(height) { y ->
                 val tileAlignment = when (x) {
@@ -131,12 +130,20 @@ class GridMapSection(val coordinate: Coordinate, val connections: Set<MapDirecti
                             listOf(RenderableTextureRegion(Assets.wallTiles.random()))
                         ), false
                     )
-                    TileAlignment.BottomLeft -> MapTile(
+                    TileAlignment.BottomLeft -> if(connectionAlignments.contains(TileAlignment.Left) && connectionAlignments.contains(TileAlignment.Bottom)) MapTile(
+                        RenderableTextureRegions(
+                            listOf(RenderableTextureRegion(Assets.floorTiles.random()))
+                        ), true
+                    ) else MapTile(
                         RenderableTextureRegions(
                             listOf(RenderableTextureRegion(Assets.wallTiles.random()))
                         ), false
                     )
-                    TileAlignment.BottomRight -> MapTile(
+                    TileAlignment.BottomRight -> if(connectionAlignments.contains(TileAlignment.Right) && connectionAlignments.contains(TileAlignment.Bottom)) MapTile(
+                        RenderableTextureRegions(
+                            listOf(RenderableTextureRegion(Assets.floorTiles.random()))
+                        ), true
+                    ) else MapTile(
                         RenderableTextureRegions(
                             listOf(RenderableTextureRegion(Assets.wallTiles.random()))
                         ), false
@@ -173,7 +180,11 @@ class GridMapSection(val coordinate: Coordinate, val connections: Set<MapDirecti
                             listOf(RenderableTextureRegion(Assets.wallEndTile))
                         ), false
                     )
-                    TileAlignment.TopLeft -> if (connectionAlignments.contains(tileAlignment)) MapTile(
+                    TileAlignment.TopLeft -> if(connectionAlignments.contains(TileAlignment.Left) && connectionAlignments.contains(TileAlignment.Top)) MapTile(
+                        RenderableTextureRegions(
+                            listOf(RenderableTextureRegion(Assets.floorTiles.random()))
+                        ), true
+                    ) else if (connectionAlignments.contains(tileAlignment)) MapTile(
                         RenderableTextureRegions(
                             listOf(RenderableTextureRegion(Assets.wallEndTile))
                         ), false
@@ -182,7 +193,11 @@ class GridMapSection(val coordinate: Coordinate, val connections: Set<MapDirecti
                             listOf(RenderableTextureRegion(Assets.wallTiles.random()))
                         ), false
                     )
-                    TileAlignment.TopRight -> if (connectionAlignments.contains(tileAlignment)) MapTile(
+                    TileAlignment.TopRight -> if(connectionAlignments.contains(TileAlignment.Right) && connectionAlignments.contains(TileAlignment.Top)) MapTile(
+                        RenderableTextureRegions(
+                            listOf(RenderableTextureRegion(Assets.floorTiles.random()))
+                        ), true
+                    ) else if (connectionAlignments.contains(tileAlignment)) MapTile(
                         RenderableTextureRegions(
                             listOf(RenderableTextureRegion(Assets.wallEndTile))
                         ), false

@@ -17,7 +17,7 @@ import physics.getComponent
 /**
  * Controllers will be handled by a polling system
  */
-class GamepadInputSystem() : IteratingSystem(allOf(GamepadControl::class).get()), ControllerListener {
+class GamepadInputSystem : IteratingSystem(allOf(GamepadControl::class).get()), ControllerListener {
     private val controllers: List<GamepadControl>
         get() = Players.players.keys.filterIsInstance<GamepadControl>().map { it }
 
@@ -31,30 +31,39 @@ class GamepadInputSystem() : IteratingSystem(allOf(GamepadControl::class).get())
     override fun buttonDown(controller: Controller, buttonCode: Int): Boolean {
         val actualController = controllers.firstOrNull { it.controller == controller }
         if (actualController != null) {
-            when (Button.getButton(buttonCode)) {
-                Button.Cross -> if(actualController.isInBuildMode) actualController.buildIfPossible = true else actualController.doContextAction = true
-                Button.Ring -> {}
-                Button.Square -> {}
-                Button.DPadLeft -> {}
-                Button.DPadRight -> {}
-                Button.Triangle -> {}
-                Button.Unknown -> {}
+            if (!actualController.requireSequencePress) {
+                when (Button.getButton(buttonCode)) {
+                    Button.Cross -> if (actualController.isInBuildMode) actualController.buildIfPossible =
+                        true else actualController.doContextAction = true
+                    Button.Ring -> {}
+                    Button.Square -> {}
+                    Button.DPadLeft -> {}
+                    Button.DPadRight -> {}
+                    Button.Triangle -> {}
+                    Button.Unknown -> {}
+                }
             }
         }
         return true
     }
 
+    val hackingButtons = listOf(Button.getButtonCode(Button.DPadLeft), Button.getButtonCode(Button.DPadRight), Button.getButtonCode(Button.DPadUp), Button.getButtonCode(Button.DPadDown), Button.getButtonCode(Button.Ring))
     override fun buttonUp(controller: Controller, buttonCode: Int): Boolean {
         val actualController = controllers.firstOrNull { it.controller == controller }
         if (actualController != null) {
-            when (Button.getButton(buttonCode)) {
-                Button.Cross -> if(actualController.isInBuildMode) actualController.buildIfPossible = false else actualController.doContextAction = false
-                Button.Ring -> {}
-                Button.Square -> actualController.needsReload = true
-                Button.DPadLeft -> actualController.needToChangeGun = InputIndicator.Previous
-                Button.DPadRight -> actualController.needToChangeGun = InputIndicator.Next
-                Button.Triangle -> actualController.isInBuildMode = !actualController.isInBuildMode
-                Button.Unknown -> {}
+            if (actualController.requireSequencePress && hackingButtons.contains(buttonCode)) {
+                actualController.keyPressedCallback(buttonCode)
+            } else {
+                when (Button.getButton(buttonCode)) {
+                    Button.Cross -> if (actualController.isInBuildMode) actualController.buildIfPossible =
+                        false else actualController.doContextAction = false
+                    Button.Ring -> {}
+                    Button.Square -> actualController.needsReload = true
+                    Button.DPadLeft -> actualController.needToChangeGun = InputIndicator.Previous
+                    Button.DPadRight -> actualController.needToChangeGun = InputIndicator.Next
+                    Button.Triangle -> actualController.isInBuildMode = !actualController.isInBuildMode
+                    else -> {}
+                }
             }
         }
         return true

@@ -19,6 +19,7 @@ fun convert(imagePath: String): TextGridMapDefinition {
                 -65281 -> 'l'
                 255 -> 'x'
                 -1 -> 's'
+                -546232577 -> 'h'
                 else -> 'e'
             }
             lines[y] = "${lines[y]}$section"
@@ -50,6 +51,10 @@ class TextGridMapDefinition(val def: List<String>) : IGridMapDefinition {
         return sections[coordinate.x][coordinate.y] == 'b'
     }
 
+    override fun hasHackingStation(coordinate: Coordinate): Boolean {
+        return sections[coordinate.x][coordinate.y] == 'h'
+    }
+
     override val booleanSections
         get() : Array<Array<Boolean>> {
             return sections.map { column -> column.toCharArray().map { it != 'e' }.toTypedArray() }.toTypedArray()
@@ -68,6 +73,7 @@ class TextGridMapDefinition(val def: List<String>) : IGridMapDefinition {
         }
 
     companion object {
+        val levelZero by lazy { convert("maps/level-0.png") }
         val levelOne by lazy { convert("maps/level-one.png") }
         val levelTwo by lazy { convert("maps/level-two.png") }
         val levelThree by lazy { convert("maps/level-3.png") }

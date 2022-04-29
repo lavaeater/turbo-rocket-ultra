@@ -18,6 +18,8 @@ import injection.Context.inject
 import map.snake.MapDirection
 import map.snake.random
 import map.snake.randomPoint
+import org.w3c.dom.css.Counter
+import screens.CounterObject
 
 class GridMapGenerator {
     companion object {
@@ -87,6 +89,9 @@ class GridMapGenerator {
                         if (def.hasBoss(coordinate))
                             addBoss(section.innerBounds)
 
+                        if(def.hasHackingStation(coordinate))
+                            addHackingStation(section.innerBounds, CounterObject.currentLevel)
+
                         if (def.hasLoot(coordinate)) {
                             randomLoot(
                                 section.innerBounds.randomPoint(),
@@ -104,6 +109,11 @@ class GridMapGenerator {
                     }
             }
             return Pair(tileMap, graph)
+        }
+
+        private fun addHackingStation(bounds: Rectangle, level: Int) {
+            var position = bounds.randomPoint()
+            hackingStation(position, level)
         }
 
         fun generate(length: Int, level: Int): Pair<Map<Coordinate, GridMapSection>, TileGraph> {

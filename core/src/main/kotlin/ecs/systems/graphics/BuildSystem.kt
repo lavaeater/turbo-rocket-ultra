@@ -10,35 +10,31 @@ import ecs.components.gameplay.TransformComponent
 import ecs.components.player.PlayerControlComponent
 import ecs.systems.tileWorldX
 import ecs.systems.tileWorldY
-import ecs.systems.tileX
-import ecs.systems.tileY
 import factories.blockade
+import factories.tower
 import factories.world
 import injection.Context.inject
 import ktx.ashley.allOf
 import ktx.box2d.KtxQueryCallback
 import ktx.box2d.query
 import ktx.graphics.use
-import map.grid.GridMapManager
 import map.grid.GridMapSection.Companion.scaledHeight
 import map.grid.GridMapSection.Companion.scaledWidth
 import map.grid.GridMapSection.Companion.tileHeight
 import map.grid.GridMapSection.Companion.tileScale
 import map.grid.GridMapSection.Companion.tileWidth
-import physics.drawScaled
-import physics.getComponent
-import physics.isEntity
-import physics.isPlayer
+import physics.*
 import tru.Assets
 import tru.SpriteDirection
+
+
 
 //Should render after map, before entities, that's the best...
 class BuildSystem(private val debug: Boolean) : IteratingSystem(
     allOf(
         TransformComponent::class,
         PlayerControlComponent::class
-    ).get(), 1
-) {
+    ).get()) {
     val batch by lazy { inject<PolygonSpriteBatch>() }
     val shapeDrawer by lazy { Assets.shapeDrawer }
     private val cursorColor = Color(0f, 1f, 0f, 0.3f)
@@ -46,19 +42,21 @@ class BuildSystem(private val debug: Boolean) : IteratingSystem(
 
     private val buildables by lazy { Assets.buildables }
 
+
     @OptIn(ExperimentalStdlibApi::class)
     override fun processEntity(entity: Entity, deltaTime: Float) {
-        val controlComponent = entity.getComponent<PlayerControlComponent>()
+        val controlComponent = entity.playerControl()
         if (controlComponent.isInBuildMode) {
-            val position = entity.getComponent<TransformComponent>().position
+            val buildComponent = entity.build()
+            val position = entity.transform().position
             val offset = CompassDirection.directionOffsets[controlComponent.compassDirection]!!
 
             val texture = buildables.first()
-            val cX = position.tileWorldX() + (offset.x * scaledWidth)
-            val cY = position.tileWorldY() + (offset.y * scaledHeight)
+            val textureX = position.tileWorldX() + (offset.x * scaledWidth)
+            val textureY = position.tileWorldY() + (offset.y * scaledHeight)
 
-            val tX = position.tileWorldX() + (offset.x * scaledWidth)// + texture.offsetX * tileScale / 2
-            val tY = position.tileWorldY() + (offset.y * scaledHeight)// + texture.offsetY * tileScale / 2
+            val cursorX = position.tileWorldX() + (offset.x * scaledWidth)// + texture.offsetX * tileScale / 2
+            val cursorY = position.tileWorldY() + (offset.y * scaledHeight)// + texture.offsetY * tileScale / 2
 
             val bodyX = position.tileWorldX() + (offset.x * scaledWidth)
             val bodyY = position.tileWorldY() + (offset.y * scaledHeight)
@@ -66,23 +64,25 @@ class BuildSystem(private val debug: Boolean) : IteratingSystem(
             val pWidth = tileWidth * tileScale
             val pHeight = tileHeight * tileScale
 
-            val qbX = tX + pWidth / 4
-            val qbY = tY + pHeight / 4
+            val qbX = cursorX + pWidth / 4
+            val qbY = cursorY + pHeight / 4
             val qtX = qbX + pWidth / 2
             val qtY = qbY + pHeight / 2
 
             batch.use {
                 batch.drawScaled(
-                    texture,
-                    cX,
-                    cY,
+                    buildComponent.buildables.selectedItem.sprite,
+                    cursorX + scaledWidth,
+                    cursorY + scaledHeight,
+//                    textureX,
+//                    textureY,
                     tileScale
                 )
             }
             shapeDrawer.batch.use {
                 shapeDrawer.filledRectangle(
-                    tX,
-                    tY,
+                    cursorX,
+                    cursorY,
                     pWidth,
                     pHeight,
                     cursorColor
@@ -96,8 +96,8 @@ class BuildSystem(private val debug: Boolean) : IteratingSystem(
                         pHeight,
                         otherColor
                     )
-                shapeDrawer.filledCircle(cX,cY,.5f, Color.RED)
-                shapeDrawer.filledCircle(tX,tY,.5f, Color.GREEN)
+                shapeDrawer.filledCircle(textureX,textureY,.5f, Color.RED)
+                shapeDrawer.filledCircle(cursorX,cursorY,.5f, Color.GREEN)
                 shapeDrawer.filledCircle(bodyX,bodyY,.5f, Color.BLUE)
                 shapeDrawer.rectangle(qbX,qbY, pWidth /2, pHeight / 2, Color.BLUE)
                 }
@@ -114,7 +114,16 @@ class BuildSystem(private val debug: Boolean) : IteratingSystem(
                     })
 
                 if(checker) {
-                    blockade(tX + 2f, tY + 2f)
+                    /*
+                    Build different things, but how? Well, by using a list of buildable things that are all of them
+                    methods with the same signature
+
+                    Also, show a label on the player that indicates what will be built!
+
+                    Also, let HUD have a reference to the WORLD camera, for easier projections!
+                     */
+
+                    blockade(cursorX + 2f, cursorY + 2f)
                 }
             }
         }

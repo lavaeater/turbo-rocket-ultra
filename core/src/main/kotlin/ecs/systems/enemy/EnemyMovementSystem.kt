@@ -13,14 +13,12 @@ import ktx.math.vec2
 import physics.AshleyMappers
 import tru.Assets
 
-class EnemyMovementSystem(private val flocking: Boolean = true) : IteratingSystem(
+class EnemyMovementSystem(private val flocking: Boolean) : IteratingSystem(
     allOf(
         EnemyComponent::class,
         BodyComponent::class,
         TransformComponent::class
-    ).get(),
-    98
-) {
+    ).get()) {
     private val separationRange = 10f
     private val enemyFamily = allOf(EnemyComponent::class).get()
     private val allEnemies get() = engine.getEntitiesFor(enemyFamily)

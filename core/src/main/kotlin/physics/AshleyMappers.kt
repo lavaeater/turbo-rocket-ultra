@@ -21,13 +21,15 @@ import kotlin.reflect.typeOf
 
 object AshleyMappers {
     @kotlin.ExperimentalStdlibApi
-    inline fun <reified T: Component>getMapper(): ComponentMapper<T> {
+    inline fun <reified T : Component> getMapper(): ComponentMapper<T> {
         val type = typeOf<T>()
-        if(!mappers.containsKey(type))
+        if (!mappers.containsKey(type))
             mappers[type] = mapperFor<T>()
         return mappers[type] as ComponentMapper<T>
     }
 
+    val hacking = mapperFor<HackingComponent>()
+    val destroyAfterReading = mapperFor<DestroyAfterCoolDownComponent>()
     val body = mapperFor<BodyComponent>()
     val mappers = mutableMapOf<KType, ComponentMapper<*>>()
     val transform = mapperFor<TransformComponent>()
@@ -66,6 +68,8 @@ object AshleyMappers {
     val frustum = mapperFor<OnScreenComponent>()
     val sprite = mapperFor<SpriteComponent>()
     val anchors = mapperFor<AnchorPointsComponent>()
+    val build = mapperFor<BuildComponent>()
+    val complexAction = mapperFor<ComplexActionComponent>()
 }
 
 fun Entity.transform(): TransformComponent {
@@ -74,6 +78,14 @@ fun Entity.transform(): TransformComponent {
 
 fun Entity.hasTransform(): Boolean {
     return AshleyMappers.transform.has(this)
+}
+
+fun Entity.build(): BuildComponent {
+    return AshleyMappers.build.get(this)
+}
+
+fun Entity.hasBuild(): Boolean {
+    return AshleyMappers.build.has(this)
 }
 
 fun Entity.anchors(): AnchorPointsComponent {
@@ -138,4 +150,24 @@ fun Entity.hasPlayerControl(): Boolean {
 
 fun Entity.safeDestroy() {
     this.addComponent<DestroyComponent>()
+}
+
+fun Entity.complexAction(): ComplexActionComponent {
+    return AshleyMappers.complexAction.get(this)
+}
+
+fun Entity.objective(): ObjectiveComponent {
+    return AshleyMappers.objective.get(this)
+}
+
+fun Entity.hasObjective(): Boolean {
+    return AshleyMappers.objective.has(this)
+}
+
+fun Entity.hacking(): HackingComponent {
+    return AshleyMappers.hacking.get(this)
+}
+
+fun Entity.hasHacking(): Boolean {
+    return AshleyMappers.hacking.has(this)
 }

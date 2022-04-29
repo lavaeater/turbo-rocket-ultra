@@ -8,9 +8,12 @@ import com.badlogic.gdx.Gdx
 import com.badlogic.gdx.Input
 import com.badlogic.gdx.graphics.Camera
 import com.badlogic.gdx.graphics.OrthographicCamera
+import com.badlogic.gdx.graphics.Pixmap
 import com.badlogic.gdx.graphics.g2d.Batch
 import com.badlogic.gdx.graphics.g2d.PolygonSpriteBatch
 import com.badlogic.gdx.utils.viewport.ExtendViewport
+import com.crashinvaders.vfx.VfxManager
+import com.crashinvaders.vfx.effects.*
 import com.strongjoshua.console.CommandExecutor
 import com.strongjoshua.console.GUIConsole
 import ecs.systems.AnchorPointTransformationSystem
@@ -26,7 +29,6 @@ import ecs.systems.facts.FactSystem
 import ecs.systems.fx.BloodSplatterEffectRenderSystem
 import ecs.systems.fx.DelayedEntityCreationSystem
 import ecs.systems.fx.EffectRenderSystem
-import ecs.systems.fx.RenderBox2dLightSystem
 import ecs.systems.graphics.*
 import ecs.systems.graphics.GameConstants.GAMEHEIGHT
 import ecs.systems.graphics.GameConstants.GAMEWIDTH
@@ -44,7 +46,6 @@ import story.StoryManager
 import ui.Hud
 import ui.IUserInterface
 import ui.MessageHandler
-import ui.UserInterface
 
 object Context {
     val context = Context()
@@ -85,15 +86,16 @@ object Context {
             bindSingleton(StoryManager())
             bindSingleton(MessageHandler())
             bindSingleton(getEngine())
+            bindSingleton(listOf(BloomEffect(), CrtEffect(), OldTvEffect()))
+            bindSingleton(VfxManager(Pixmap.Format.RGBA8888))
         }
     }
 
     private fun getEngine(): Engine {
         return PooledEngine().apply {
-            addSystem(PhysicsSystem())
-            addSystem(PhysicsDebugRendererSystem(inject(), inject()))
-            addSystem(CameraUpdateSystem())
-            addSystem(PlayerMoveSystem())
+            addSystem(PhysicsSystem(0))
+            addSystem(CameraUpdateSystem(inject(), inject()))
+            addSystem(PlayerMoveSystem(25f))
             addSystem(PlayerHasBeenHereSystem())
             addSystem(KeyboardInputSystem())
             addSystem(GamepadInputSystem())
@@ -101,7 +103,7 @@ object Context {
             addSystem(CharacterWalkAndShootDirectionSystem())
             addSystem(PlayerShootingSystem(inject()))
             addSystem(EnemyDeathSystem())
-            addSystem(EnemyMovementSystem())
+            addSystem(EnemyMovementSystem(true))
             // Ai Systems Start
             addSystem(AmblingSystem())
             addSystem(PanicSystem())
@@ -127,25 +129,24 @@ object Context {
             addSystem(WeaponUpdateSystem())
             addSystem(WeaponChangeAndReloadSystem())
             addSystem(UpdatePlayerStatsSystem())
-            addSystem(RenderMapSystem(inject<PolygonSpriteBatch>() as Batch, inject<OrthographicCamera>() as Camera, inject()))
-            addSystem(RenderSystem(inject<PolygonSpriteBatch>() as Batch, false))
-            addSystem(RenderUserInterfaceSystem(inject<PolygonSpriteBatch>() as Batch))
+//            addSystem(PhysicsDebugRendererSystem(inject(), inject()))
+            addSystem(RenderSystem(inject<PolygonSpriteBatch>() as Batch, false, inject(), inject(),1))
             addSystem(RenderMiniMapSystem())
             addSystem(PlayerFlashlightSystem())
             //lets NOT write debug badges
 //            addSystem(AiDebugSystem())
             addSystem(PlayerContextActionSystem())
-            addSystem(RenderBox2dLightSystem(inject(), inject()))
             addSystem(BloodSplatterEffectRenderSystem(inject<PolygonSpriteBatch>() as Batch))
             addSystem(DelayedEntityCreationSystem())
-            addSystem(EffectRenderSystem(inject<PolygonSpriteBatch>() as Batch))
+            addSystem(EffectRenderSystem(inject<PolygonSpriteBatch>() as Batch, 2))
             addSystem(LootDropSystem())
-            addSystem(AimingAidSystem(true, true))
+            addSystem(AimingAidSystem(debug = true, renderRedDot = true))
             addSystem(GibSystem())
             addSystem(FactSystem())
             addSystem(FrustumCullingSystem())
             addSystem(BuildSystem(false))
-            addSystem(AnchorPointTransformationSystem())
+            addSystem(AnchorPointTransformationSystem(false))
+            addSystem(ComplexActionSystem())
         }
     }
 }

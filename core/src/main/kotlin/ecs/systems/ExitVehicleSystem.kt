@@ -12,10 +12,10 @@ import physics.playerControlComponent
 /*
 Needs some info to remove the control component from the actual vehicle entity as well.
  */
-class ExitVehicleSystem : IteratingSystem(
+class ExitVehicleSystem: IteratingSystem(
     allOf(
         LeaveVehicleComponent::class,
-        IsInVehicleComponent::class).get(), 10) {
+        IsInVehicleComponent::class).get()) {
 
     override fun processEntity(entity: Entity, deltaTime: Float) {
         entity.remove<IsInVehicleComponent>()
