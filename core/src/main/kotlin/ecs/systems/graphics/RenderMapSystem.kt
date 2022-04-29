@@ -5,6 +5,7 @@ import com.badlogic.gdx.graphics.Camera
 import com.badlogic.gdx.graphics.g2d.Batch
 import ktx.graphics.use
 import ktx.math.vec2
+import map.grid.GridMapManager
 import map.snake.SnakeMapGenerator
 import map.snake.SnakeMapManager
 import tru.Assets
@@ -12,7 +13,7 @@ import tru.Assets
 class RenderMapSystem(
     private val batch: Batch,
     private val camera: Camera,
-    private val mapManager: SnakeMapManager
+    private val mapManager: GridMapManager
 ) : EntitySystem(0) {
 
     private val shapeDrawer by lazy { Assets.shapeDrawer }
@@ -32,6 +33,6 @@ class RenderMapSystem(
     }
 
     private fun drawMap(deltaTime: Float) {
-        mapManager.render(batch, shapeDrawer, deltaTime, cameraCenter)
+        mapManager.render(batch, shapeDrawer, deltaTime)
     }
 }

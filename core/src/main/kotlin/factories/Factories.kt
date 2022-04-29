@@ -65,10 +65,6 @@ object Box2dCategories {
     val allButLights = player or enemy or objective or obstacle or sensor
 }
 
-object Box2dCollisionMasks {
-    const val players = Box2dCategories.player
-}
-
 fun splatterEntity(at: Vector2, angle: Float) {
     val splatterEntity = engine().entity {
         with<SplatterComponent> {
@@ -106,7 +102,7 @@ fun tower(at: Vector2 = vec2(), towerType: String = "machinegun") {
 
 }
 
-fun player(player: Player, mapper: ControlMapper) {
+fun player(player: Player, mapper: ControlMapper,at: Vector2) {
     /*
     The player should be two bodies, one for collision detection for
     movement, like a projection of the characters body on "the floor"
@@ -115,7 +111,7 @@ fun player(player: Player, mapper: ControlMapper) {
      */
     val box2dBody = world().body {
         type = BodyDef.BodyType.DynamicBody
-        position.set(10f, 10f)
+        position.set(at)
         fixedRotation = true
         box(2f, 1f) {
             density = GameScreen.PLAYER_DENSITY
@@ -293,7 +289,7 @@ fun objective(
             restitution = 0f
             filter {
                 categoryBits = Box2dCategories.objective
-                maskBits = Box2dCollisionMasks.players
+                maskBits = Box2dCategories.player or Box2dCategories.light
             }
         }
     }

@@ -16,6 +16,7 @@ import ecs.components.enemy.EnemyComponent
 import ecs.components.enemy.EnemySpawnerComponent
 import ecs.components.gameplay.ObjectiveComponent
 import ecs.components.gameplay.TransformComponent
+import ecs.components.player.PlayerComponent
 import ecs.systems.graphics.CameraUpdateSystem
 import ecs.systems.graphics.RenderMiniMapSystem
 import ecs.systems.graphics.RenderSystem
@@ -34,8 +35,10 @@ import ktx.ashley.mapperFor
 import ktx.ashley.remove
 import ktx.math.random
 import ktx.math.vec2
-import map.snake.SnakeMapGenerator
-import map.snake.SnakeMapManager
+import map.grid.GridMapGenerator
+import map.grid.GridMapManager
+import map.snake.*
+import physics.getComponent
 import statemachine.StateMachine
 import ui.IUserInterface
 import kotlin.math.pow
@@ -78,21 +81,20 @@ class GameScreen(private val gameState: StateMachine<GameState, GameEvent>) : Kt
         engine.removeAllEntities()
         currentLevel = 1
 
-        for(system in engine.systems) {
+        for (system in engine.systems) {
             system.setProcessing(true)
         }
-
+        generateMap()
         addPlayers()
         addEnemies()
 
-        generateMap()
         addTower()
         ui.reset()
         ui.show()
     }
 
     private fun addEnemies() {
-            enemy(11f,11f)
+        enemy(11f, 11f)
 
         objective(0f, 0f)
 
@@ -101,7 +103,7 @@ class GameScreen(private val gameState: StateMachine<GameState, GameEvent>) : Kt
     }
 
     private fun addTower() {
-         //tower(vec2(-2f,2f))
+        //tower(vec2(-2f,2f))
     }
     /*
     4E4048
@@ -112,12 +114,12 @@ D1B67A
     #a4ae76
      */
 
-    val red = 164f/255f
-    val green = 174f/255f
-    val blue = 118f/255f
+    val red = 164f / 255f
+    val green = 174f / 255f
+    val blue = 118f / 255f
 
     override fun render(delta: Float) {
-        Gdx.gl.glClearColor(0f,0f,0f,1f)
+        Gdx.gl.glClearColor(0f, 0f, 0f, 1f)
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT)
         //Update viewport and camera here and nowhere else...
 
@@ -126,7 +128,7 @@ D1B67A
         engine.update(delta)
         ui.update(delta)
         audioPlayer.update(delta)
-        if(Players.players.values.sumOf { it.touchedObjectives.count() } == numberOfObjectives) //Add check if we killed all enemies
+        if (Players.players.values.sumOf { it.touchedObjectives.count() } == numberOfObjectives) //Add check if we killed all enemies
             nextLevel()
     }
 
@@ -167,8 +169,21 @@ D1B67A
     }
 
     private fun addPlayers() {
-        for(( controlComponent, player) in Players.players) {
-            player(player, controlComponent)
+        val startBounds = mapManager.gridMap.values.first { it.startSection }.innerBounds
+        val xRange = startBounds.left()..startBounds.right()
+        val yRange = startBounds.bottom()..startBounds.top()
+        for ((controlComponent, player) in Players.players) {
+            player(player, controlComponent, startBounds.randomPoint())
+        }
+    }
+
+    @OptIn(ExperimentalStdlibApi::class)
+    private fun movePlayersToStart() {
+        val startBounds = mapManager.gridMap.values.first { it.startSection }.innerBounds
+        val players = engine.getEntitiesFor(allOf(PlayerComponent::class).get())
+        for(player in players) {
+            val body = player.getComponent<BodyComponent>().body
+            body.setTransform(startBounds.randomPoint(), body.angle)
         }
     }
 
@@ -179,7 +194,7 @@ D1B67A
     val enemyRandomFactor = -15f..15f
 
     fun nextLevel() {
-        for(player in Players.players.values) {
+        for (player in Players.players.values) {
             player.touchedObjectives.clear()
         }
         currentLevel++
@@ -187,7 +202,7 @@ D1B67A
     }
 
     private val bodyMapper = mapperFor<BodyComponent>()
-    private val mapManager by lazy { inject<SnakeMapManager>() }
+    private val mapManager by lazy { inject<GridMapManager>() }
     private fun generateMap() {
         /*
         We start the game with a map already generated. But when, how, will we create
@@ -204,14 +219,6 @@ D1B67A
         Now add a goddamned  light
          */
 
-        mapManager.currentSection = SnakeMapGenerator.generate((currentLevel*4)..(currentLevel*8))
-
-        var randomAngle = (0f..360f)
-        val startVector = Vector2.X.cpy().scl(100f).setAngleDeg(randomAngle.random())
-
-        numberOfEnemies = (2f.pow(currentLevel).roundToInt() * 2).coerceAtMost(MAX_ENEMIES)
-        numberOfObjectives = 2f.pow(currentLevel).roundToInt()
-
         for (enemy in engine.getEntitiesFor(allOf(EnemyComponent::class).get())) {
             val bodyComponent = bodyMapper.get(enemy)
             world.destroyBody(bodyComponent.body)
@@ -225,30 +232,33 @@ D1B67A
             world.destroyBody(bodyComponent.body)
             objective.remove<BodyComponent>()
         }
-
         engine.removeAllEntities(allOf(ObjectiveComponent::class).get())
 
-        for (x in 1..25)
-            for (y in 1..25) {
-                obstacle(x * randomFactor.random(), y * randomFactor.random())
-            }
+        numberOfEnemies = (2f.pow(currentLevel).roundToInt() * 2).coerceAtMost(MAX_ENEMIES)
+        numberOfObjectives = 2f.pow(currentLevel).roundToInt()
 
-        val position = transformMapper.get(Players.players.values.first().entity).position.cpy()
-
-        for(i in 0 until numberOfObjectives) {
-            position.add(startVector)
-            objective(position.x, position.y)
-
-            val emitter = obstacle(position.x + 10f, position.y + 10f)
-            emitter.add(engine.createComponent(EnemySpawnerComponent::class.java))
+        mapManager.gridMap = GridMapGenerator.generate(currentLevel * 16)
+        movePlayersToStart()
 
 
+//        var randomAngle = (0f..360f)
+//        val startVector = Vector2.X.cpy().scl(100f).setAngleDeg(randomAngle.random())
+//
 
-            randomAngle = (0f..(randomAngle.endInclusive / 2f))
-            startVector.setAngleDeg(randomAngle.random())
-        }
+//
+//
+//
+//        for (x in 1..25)
+//            for (y in 1..25) {
+//                obstacle(x * randomFactor.random(), y * randomFactor.random())
+//            }
+//
+//        val position = transformMapper.get(Players.players.values.first().entity).position.cpy()
+//
+//
 
     }
+
     override fun dispose() {
         // Destroy screen's assets here.
     }
