@@ -19,7 +19,9 @@ To make the graphics and environment easy I am currently working with the concep
 
 ### MVP
 
-* "Levels" or "Maps" in a more structured way <- in spec
+* Lights and particles
+* Objectives for maps
+* Auto-generated Snake-maps <- done
 * Interactable Components in-the-game
 * Player graphics made from components / parts etc.
 * Different weapons to shoot with
@@ -44,20 +46,30 @@ To make the graphics and environment easy I am currently working with the concep
 * Blood Splatter <- Done
 * MiniMap <- Done
 
+## Lights and Particles
+
+So, we're revisiting particles, maybe, but mostly we want to use box2d lights in the game.
+
+## Objectives for maps
+
+So, next step is adding objectives and enemies on a per-map basis. We only render parts of the map, so it is not inconceivable... we could render the entirety of the map, the engine can handle it, of course, because that would make spawning of enemies easier etc... and otherwise we have to handle enemies just walking off into the sunset... Damn. I knew my cool idea was way too cool.
+
+
 ## Levels and Maps
 
 One way of doing this is obviously TILED. LibGDX supports tiled out of the box, which is nice. 
 
 But is that what I want? Do I want some kind of background, grass or something? How do I create tilesets that work the way **I** want?
 TODO: 
-- [ ] Check what tilesets / resources we have already
-- [ ] Generating a playable map from nothing?
+- [x] Check what tilesets / resources we have already
+- [x] Generating a playable map from nothing?
 
 What if we create a snaking trail, a labyrinth of sorts, that just represents the players required route from start to finish, then we add some objectives along the road, enemy spawn points and a goal. That is something we could work with and expand upon. That would be kind of cool actually. 
 
 So, each section of the snaking map represents a length of "road". Lets start by assuming that this is maximally twice the size of the screen in size. We always start with a section of that specific size. We can then either move up, left or right. Every time we move to a new section, we have a set of possible directions we can move in. Lets go north, east, south, west instead. So, we start by being able to go in any of the four directions, but if we move for instance to the south on the first, then we can't go to the north on the next one. But we dont have to consider anything else than that, the map can curl around itself however it wants, because it becomes a grazy linked list and all we need to keep track of is exits and previous / next for overlapping display purposes (seamless transitions between parts).
 
-Data structure
+### Data structure
+I made it as a linked list, type of thing. What I want to do next is some weird kind of thing where we can have branching paths in this structure, that would probably require some kind of recursive code, it also would take slightly more effort than just changing three lines, so not just now.
 
 ### DevLog
 
@@ -497,11 +509,11 @@ Det här gör vi på det gamla vanliga sättet. Vi bygger en box2d-värld, vi kl
 
 Oj oj oj,  vad roligt. Vi kan göra en box2d-kropp med leder, per tutorials etc. Superkul ju.
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbMTExOTE0ODk5MywtMTkwNjc1MTMzMywtOD
-UxNDgzNTkwLDE3MDM0NjM0OTIsMTQ4MDg3ODgzMSwxMzMzNTcw
-Nzc5LC0zOTU0NTM4MjMsLTkxMzUyMjk1NiwzNjIwNjAxNzgsNT
-E0Mjc0MjY5LC0xMjg3NzE1Njg5LDI5MjU1MTI2LC0xNjQwMTQx
-MDAyLC0xMDg4MTgyOTMyLC05NTY0MDIwMDUsMzE5NjIzNDAyLC
-0xNDEyMjU5ODk2LDQ0NTY5MzgyMSw1NDI3MTY4NDcsLTEwOTcw
-NDcyNzddfQ==
+eyJoaXN0b3J5IjpbLTE0MzU4NjM3MjEsMjc5OTQ1NTc1LC0zOD
+Q5NTg2NjAsMTExOTE0ODk5MywtMTkwNjc1MTMzMywtODUxNDgz
+NTkwLDE3MDM0NjM0OTIsMTQ4MDg3ODgzMSwxMzMzNTcwNzc5LC
+0zOTU0NTM4MjMsLTkxMzUyMjk1NiwzNjIwNjAxNzgsNTE0Mjc0
+MjY5LC0xMjg3NzE1Njg5LDI5MjU1MTI2LC0xNjQwMTQxMDAyLC
+0xMDg4MTgyOTMyLC05NTY0MDIwMDUsMzE5NjIzNDAyLC0xNDEy
+MjU5ODk2XX0=
 -->

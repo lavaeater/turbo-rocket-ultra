@@ -37,15 +37,15 @@ class AnimatedCharacterSprite(private val anims: Map<AnimState, LpcCharacterAnim
 
         val currentTextureRegion = currentTextureRegion(animationStateTime)
 
-        batch.color = shadowColor
-
-        batch.drawScaled(currentTextureRegion(animationStateTime),
-            (position.x + (currentTextureRegion.regionWidth / 2 * scale) + (offsetX * scale * this.scale)),
-            (position.y + (currentTextureRegion.regionHeight / 2 * scale) + (offsetY * scale * this.scale / 2)),
-            1f * scale * this.scale,
-            0.5f * scale * this.scale,
-            -135f)
-        batch.color = Color.WHITE
+//        batch.color = shadowColor
+//
+//        batch.drawScaled(currentTextureRegion(animationStateTime),
+//            (position.x + (currentTextureRegion.regionWidth / 2 * scale) + (offsetX * scale * this.scale)),
+//            (position.y + (currentTextureRegion.regionHeight / 2 * scale) + (offsetY * scale * this.scale / 2)),
+//            1f * scale * this.scale,
+//            0.5f * scale * this.scale,
+//            -135f)
+//        batch.color = Color.WHITE
 
 
         batch.drawScaled(

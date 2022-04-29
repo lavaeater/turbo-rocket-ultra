@@ -9,31 +9,19 @@ import ecs.components.graphics.renderables.Renderable
 import ecs.components.graphics.renderables.RenderableType
 import ktx.math.vec2
 import space.earlygrey.shapedrawer.ShapeDrawer
+import tru.Assets
 
-class SplatterComponent(
-    var life: Float = 20f,
-    var color: Color = Color.RED,
-    var radius: Float = 1f) : Renderable, Component, Pool.Poolable {
-    override val renderableType: RenderableType
-        get() = RenderableType.Splatter
-
-    override fun render(
-        position: Vector2,
-        rotation: Float,
-        scale:Float,
-        animationStateTime: Float,
-        batch: Batch,
-        shapeDrawer: ShapeDrawer
-    ) {
-        shapeDrawer.setColor(color)
-        //This might, just might, actually work
-        shapeDrawer.filledCircle(position, radius)
-    }
-
+class SplatterComponent : Component, Pool.Poolable {
+    var splatterEffect = Assets.splatterEffectPool.obtain()
+    var started = false
+    var at: Vector2 = vec2()
+    var rotation: Float = 0f
     override fun reset() {
-        life = 20f
-        color = Color.RED
-        radius = 1f
+        at.setZero()
+        rotation = 0f
+        started = false
+        splatterEffect.free()
+        splatterEffect = Assets.splatterEffectPool.obtain()
     }
 }
 

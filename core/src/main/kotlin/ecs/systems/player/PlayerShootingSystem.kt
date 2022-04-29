@@ -3,13 +3,12 @@ package ecs.systems.player
 import audio.AudioPlayer
 import com.badlogic.ashley.core.Entity
 import com.badlogic.ashley.systems.IteratingSystem
-import com.badlogic.gdx.graphics.Color
 import com.badlogic.gdx.physics.box2d.Fixture
 import com.badlogic.gdx.physics.box2d.World
 import ecs.components.enemy.EnemyComponent
 import ecs.components.gameplay.TransformComponent
 import ecs.components.player.*
-import factories.splatterParticles
+import factories.splatterEntity
 import injection.Context.inject
 import ktx.ashley.allOf
 import ktx.ashley.mapperFor
@@ -18,13 +17,8 @@ import ktx.box2d.rayCast
 import ktx.math.random
 import ktx.math.vec2
 import physics.*
+import tru.Assets
 
-
-/**
- * We need a cool-down system, which determines the rate of fire.
- *
- * This means you can always shoot if the weapon is cool.
- */
 
 class PlayerShootingSystem(private val audioPlayer: AudioPlayer) : IteratingSystem(
     allOf(
@@ -101,9 +95,7 @@ class PlayerShootingSystem(private val audioPlayer: AudioPlayer) : IteratingSyst
                     if(enemyEntity.getComponent<EnemyComponent>().health < 0) {
                         entity.getComponent<PlayerComponent>().player.kills++
                     }
-                    //TODO: Better splatter particles, mate
-//                    splatterParticles(closestFixture.body, controlComponent.aimVector.cpy(),
-//                        color = Color((0.5f..0.7f).random(), 0f, 0f, (.5f..1f).random()))
+                    splatterEntity(closestFixture.body.worldCenter, controlComponent.aimVector.cpy().nor().angleDeg())
                 }
             }
         }
