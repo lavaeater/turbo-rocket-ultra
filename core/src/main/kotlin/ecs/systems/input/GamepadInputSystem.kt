@@ -41,6 +41,10 @@ class GamepadInputSystem : IteratingSystem(allOf(GamepadControl::class).get()), 
                     Button.DPadRight -> {}
                     Button.Triangle -> {}
                     Button.Unknown -> {}
+                    else -> {
+                        //Wuut
+                        val v = "a"
+                    }
                 }
             }
         }
@@ -55,14 +59,29 @@ class GamepadInputSystem : IteratingSystem(allOf(GamepadControl::class).get()), 
                 actualController.keyPressedCallback(buttonCode)
             } else {
                 when (Button.getButton(buttonCode)) {
-                    Button.Cross -> if (actualController.isInBuildMode) actualController.buildIfPossible =
-                        false else actualController.doContextAction = false
+                    Button.Cross -> {
+                        if (actualController.isInBuildMode) actualController.buildIfPossible =
+                            false else actualController.doContextAction = false
+                    }
                     Button.Ring -> {}
                     Button.Square -> actualController.needsReload = true
-                    Button.DPadLeft -> actualController.needToChangeGun = InputIndicator.Previous
-                    Button.DPadRight -> actualController.needToChangeGun = InputIndicator.Next
+                    Button.DPadLeft -> {
+                        actualController.needToChangeGun = InputIndicator.Previous
+                    }
+                    Button.DPadRight -> {
+                        actualController.needToChangeGun = InputIndicator.Next
+                    }
                     Button.Triangle -> actualController.isInBuildMode = !actualController.isInBuildMode
-                    else -> {}
+                    Button.DPadDown -> {}
+                    Button.DPadUp -> {}
+                    Button.L1 -> actualController.needToChangeGun = InputIndicator.Previous
+                    Button.L3 -> {}
+                    Button.Options -> {}
+                    Button.PsButton -> {}
+                    Button.R1 -> actualController.needToChangeGun = InputIndicator.Next
+                    Button.R3 -> {}
+                    Button.Share -> {}
+                    Button.Unknown -> {}
                 }
             }
         }

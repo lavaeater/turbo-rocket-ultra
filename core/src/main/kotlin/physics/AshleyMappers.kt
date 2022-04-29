@@ -15,6 +15,7 @@ import ecs.components.graphics.*
 import ecs.components.pickups.LootComponent
 import ecs.components.pickups.LootDropComponent
 import ecs.components.player.*
+import ecs.components.AudioComponent
 import ktx.ashley.mapperFor
 import kotlin.reflect.KType
 import kotlin.reflect.typeOf
@@ -28,6 +29,7 @@ object AshleyMappers {
         return mappers[type] as ComponentMapper<T>
     }
 
+    val audio = mapperFor<AudioComponent>()
     val hacking = mapperFor<HackingComponent>()
     val destroyAfterReading = mapperFor<DestroyAfterCoolDownComponent>()
     val body = mapperFor<BodyComponent>()
@@ -70,6 +72,22 @@ object AshleyMappers {
     val anchors = mapperFor<AnchorPointsComponent>()
     val build = mapperFor<BuildComponent>()
     val complexAction = mapperFor<ComplexActionComponent>()
+}
+
+fun Entity.audio(): AudioComponent {
+    return AshleyMappers.audio.get(this)
+}
+
+fun Entity.hasAudio() : Boolean {
+    return AshleyMappers.audio.has(this)
+}
+
+fun Entity.enemy(): EnemyComponent {
+    return AshleyMappers.enemy.get(this)
+}
+
+fun Entity.hasEnemy(): Boolean {
+    return AshleyMappers.enemy.has(this)
 }
 
 fun Entity.transform(): TransformComponent {

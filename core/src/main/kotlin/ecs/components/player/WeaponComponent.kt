@@ -5,11 +5,6 @@ import com.badlogic.gdx.utils.Pool
 import ecs.systems.player.SelectedItemList
 import features.weapons.WeaponDefinition
 
-fun<T> selectedItemListOf(vararg items: T): SelectedItemList<T> {
-    val list = SelectedItemList<T>()
-    items.forEach { list.add(it) }
-    return list
-}
 
 class WeaponComponent: Component, Pool.Poolable {
     var reloading = false

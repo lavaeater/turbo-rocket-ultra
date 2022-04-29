@@ -1,5 +1,130 @@
 # turbo-rocket-ultra
 
+## Tuesday the 21st of december
+So, I am hesitating when it comes to the oblique projection work. I think it has to be something done in the background, so I will simply decide on a thing to do, for instance half all heights on box2d static bodies in the game (all characters have passable top halves, so they are good so far) and thereby shrinking the maps. But I also have to change all tiles etc, I think I could be well off sitting for 24 hours straight with this and perhaps then I would like to rework some other stuff. I don't know what to do. I will explore the todo-list and see what jumps out, and add things that I come up with.
+
+Write a short text of what each does and so on.
+
+I have now prioritized this list according to how much I think it adds to the games polish and / or value, then how fun it would be to actually implement (this is supposed to be fun) and then taking into account the effort I think would be involved. I will now simply do them from top to bottom until I get to the line below, then I will re-evaluate everything.
+
+It also appears that the mouse position thing was so low hanging that I had already fixed it.
+
+- [x] Add explosion particle effect to grenade collision
+- [x] Fix mouse position by polling position instead of event-driven system
+- [x] Flip weapon sprites when facing west
+- [ ] Soundscape II - the Moaning
+- [ ] Objectives II, the sequel
+- [ ] Fix some warnings
+--------
+- [ ] Bat swing
+- [ ] HUD II, Header Upper Displayer <- rediscover MVVM pattern, two-way binding
+- [ ] More Enemy Sprites (generate them)
+- [ ] Lightmaps for sprites
+- [ ] Enemy AI II, with avoiding walls
+- [ ] Player graphics made from components / parts etc.
+- [ ] Vehicles would be cool
+- [ ] Build Towers
+- [ ] Gibs and Body Parts II - blood trails and audio
+- [ ] Zombies throwing projectiles
+- [ ] Some other type of enemy
+- [ ] Zombies with guns <- this would be genuinely cool, actually
+- [ ] Nicer Setup UI, using Scene2d perhaps
+- [ ] Puzzle obstacles / machines
+- [ ] Oblique Projection
+
+### Soundscape II - the Moaning
+So, some ambient sound effects, some zombie sound effects, explosions, screaming, burning, etc.
+Make a list of sound effects that we absolutely need and then tick them off as you find them
+- [x] Moans
+- [ ] Shuffling feet
+- [ ] Screaming Boss
+- [x] Burning flames
+- [x] Gasoline explosion
+- [x] Grenade impact
+- [x] Limbs being torn
+- [ ] Screaming, panicky Zombies
+- [ ] Zombie being spawned
+- [ ] Objective Reached
+- [ ] Magazine empty (empty click)
+- [ ] Cool one-liners said by players
+
+### Hud II
+Make the HUD pretty and useful and legible. Work on more simple databinding stuff and Scene2D extensions etc.
+
+### More enemy sprites
+Go back to the character editor and make sure we have access to female bodies as well (only male now for some reason), and also enable generating a bunch of different sprites or variations using it.
+
+### Lightmaps for sprites
+To really make use of the box2d light stuff we could use some lightmaps for the sprites. This would take some learning.
+
+### Enemy AI II
+Make the enemy handle walls and obstacles better. It shouldn't be that hard. In fact, we could make a goddamned A* graph of the entire map space that is passable terrain and that would in fact solve the problem. Or at least make a graph of points that makes sure the enemy does not walk into walls, it could be done. Hey, every section could have a "get valid points"-method. Also, make enemies more aggressive towards players, now they seem to ignore them quite a bit, perhaps sensors are turned off or something.
+
+### Objectives II - Quirkier
+Examples: Kill n enemies. Hold an area for n minutes. Come up with something really fun, oooh, I got it, every player has to be in a separate place at the same time!
+
+### Player Graphics
+This is what categorizes as a FUN task, it should be FUN! But it also requires lots of work, mainly in making art happen. Making heads, bodies, hair, stuff like that, and enabling generating characters and sprite sheets from that. Lots of work, but there could be great payoffs in the end.
+
+### Vehicles
+This is like the holy grail of features. This is what all this started with, the entire game. So, players enter vehicles, control different parts of the vehicle etc. This could be combined with the concept "moving level" where the players are on a platform that is moving through some kind of river / level somehow.
+
+### Build Towers
+Well, we basically have towers, we basically can build them, this is about making that feature happen and having at least two or three types of towers with nice sprites that we can build and that do different things.
+
+### Gibs and Body Parts II - blood trails and audio
+What it sounds like. I want smeared blood and a cool sound effect to go with it.
+
+### Flip weapon sprites when facing east
+So, what it sounds like. Should be the lowest hanging fruit of the bunch.
+
+### Explosion Effect for Grenades
+Take the effect we have added to assets and add it to the game. Would make a world of difference.
+
+### Zombies throwing projectiles
+Have zombies / enemies throwing projectiles to add to the hectice nature of the game.
+
+### Some other type of enemy
+Running fast dogs, slime crawling about swallowing players, tentacles, why not tentacles? Exploding enemies? Poisonous enemies?
+
+### Zombies with guns
+Or some other enemy, obviously, but enemies that can shoot back.
+
+### Bat swing
+The bat swing is all about execution. It is an animation of a box2d object and that seems like a hassle. But it CAN obviously be done. Figure it out, champ!
+
+### Nicer Setup UI, using Scene2d
+So, just make a better setup screen, add icons, texts etc that explains what should happen etc.
+
+### Fix mouse position using polling
+Well, this might be even lower hanging than the previous fruit mentioned in that context. 
+
+### Puzzle obstacles
+Perhaps stuff where someone has to stand on a button to open a door, whatever. Also add some crushing machines and stuff. 
+
+### Oblique Projection
+This might not be as important as I want it to be.
+
+## Not replacing Box2D with JBump
+Whaat? Not for now, at least. I have Box2D working nicely and I'm very happy with performance etc. What I will do now is try to instead work on the 2D / 3D projection of the game - partly because I think that the look and feel of a game is completely central to playability. So, I have thrown items, well, they should fall to the ground. implementing that tiny, tiny feature would make the game look insanely good. Or at least better
+
+So, what do we need to do?
+- [x] Introduce height into transform
+- [x] Feed transform back into the y-coordinate of bodies by using... forces? Impulses? Something like that.
+- [x] Profit
+
+After establishing the profit, we could spend some time on re-working all the textures and sprites of the game, to make the look be more as I want it. This means that every item will be half-height etc.
+
+## Replacing Box2D with JBump
+
+So, this is my biggest and most ambitious change of the project so far. I will replace Box2D, which is fantastic, with JBump. One result is that we will have to manage all physics ourselves, but collisions and stuff will be faster, I think. 
+
+One point of all this is to make the game be a truly oblique projection game, where we will do parables for projectiles (thrown ones) and stuff like that.
+
+The reason I think we need to do this with JBump is that box2d is a 2d physics engine, but we are running in a pseudo-3D mode, where one thing we could do is of course use Bullet3d and represent everything using that in 3d to get a y-axis point up from the ground, thus better simulating the world we are actually using.
+
+However, that's not what I want to do. I want it to be 2D and I think using JBump and just some simple algorithms for everything could work out. For instance, for throwing projectiles and gibs flying, we could simply calculate their entire flight path to start with and then just progress them along this curve, perhaps by either calculating the path as they (the entity) flies along it or by saving the frame-by-frame-positions and checking for collisions along the path. All other things for the play test are done, no work needed there. 
+
 ## Monday the 6th of December
 So, I was thinking about maybe redoing the entire system of projection, all sprites, everything, to make the graphics look better. What was I, insane?
 No, I wasnt. I don't like the way the game looks because it isn't perfect. I would want to do it with an isometric projection, but as a compromise I've tried to make an oblique top-down projection. However, the one I am currently using is "wrong" as the y-axis being twice the length it should be. So I started a new branch with the ambition of using it to do everything on. 
@@ -21,20 +146,19 @@ I just realized that what the game needs more than anything, right now, is *towe
 
 Don't make it a door at first, just make it something you have to interact with. We have the context action, we can add more features to that. So what this will be is simply an objective and when touching it, it will launch the hacking session, which could simply be pushing a certain sequence of buttons to *hack it*. Using our story system, we could implement any number of mechanisms to get this to work. Test it out on the zero-level.
 
-- [ ] Hacking station <- mini game? Triggers larger hordes of zombies
-	- [ ] Add a StoryComponent (Wh
-- [ ] Bat swing <- lets fucking do the bat swing, maaan!
-- [ ] Zombies with guns
-- [ ] Grenades
-- [ ] Nicer Setup UI, using Scene2d perhaps
+
+
+- [x] Grenades <- yes, doone
+- [x] Change the fucking floor tiles, 
+- [x] get lights to work again
+- [x] Hacking station <- mini game? Triggers larger hordes of zombies
+	- [x] Add a StoryComponent (What the FUUUCK man, are you a genius? A generic fucking story component?
+	- [x] Add hacking UI using context action, perhaps combining it with the regular UI making it look nicer
 - [x] Fix the free floating corners!
 - [x] Molotov cocktail sprite
 - [x] Cool post-processing FX
 - [x] Fix map reset issue (remove all but players from engine)
 - [x] Five character sprites
-
-
-
 
 ## Friday the 3rd of December
 
@@ -108,9 +232,6 @@ Lets call the branch level-four, for this one.
 - [ ] Add actual bat swing
 	- [ ] Animate bat-swing? Is this fun? <- steps taken
 - [ ] Re-introduce TOWERS
-
-
-
 
 #### Act one - a small beginning
 The game I have built so far is a very basic zombie survival top-down twin-stick shooter. To make it more game-like, I think we need to make the beginning smaller. Perhaps we could start with the players only having close-combat weapons? That would mean implementing melee combat, which could be cool. So, the gameplay would progress over the ten first levels with small-ish levels (the physical size of the level might be large, just not epic numbers of zombies etc) where the players get to test all their skills and tools, in preparation for the second act, where they are prepared but the hordes are larger. Also, Zombies? They are stand-ins for something properly funny to have as enemies. But that can be changed later. And also, we don't need to plan for the entirety of the three acts, because we can simply work on them as we progress. But the start of the game should be (perhaps) hand-to-hand combat, handguns, molotovs and building barricades if there is a horde coming. We could put some actual level-design to use as well, using some kind of simple format for that. Also, we need UI blurs and speech bubbles to signal stuff in a cool way. Zombies need to be waay slower in the beginning, as well, and we need to add more AI-debug stuff in a nicer way. A nice little nine-patcher would be cool.
@@ -244,19 +365,9 @@ To make the graphics and environment easy I am currently working with the concep
 
 Lets try to prioritize these into what would make the game seem "done" the fastest.
 
-- [ ] HUD II, Header Upper Displayer <- rediscover MVVM pattern, two-way binding
-- [ ] More Enemy Sprites (generate them)
-- [ ] Lightmaps for sprites
-- [ ] Soundscape II - the Moaning
-- [ ] Fix the MiniMap
-- [ ] Enemy AI II, with avoiding walls
-- [ ] Objectives II, the sequel
-- [ ] Pickups 2 (on-screen blurb indicating what you got)
-- [ ] Interactable Components in-the-game
-- [ ] Player graphics made from components / parts etc.
-- [ ] Vehicles would be cool
-- [ ] Build Towers
-- [ ] Gibs and Body Parts II - blood trails and audio
+- [x] Pickups 2 (on-screen blurb indicating what you got)
+- [x] Interactable Components in-the-game
+- [x] Fix the MiniMap
 - [x] Smart Transforms - collect all vector stuff pertaining to position, rotation, direction, into one collected class 
 - [x] Story Mode
 - [x] Boss fight
@@ -804,11 +915,11 @@ Det här gör vi på det gamla vanliga sättet. Vi bygger en box2d-värld, vi kl
 
 Oj oj oj,  vad roligt. Vi kan göra en box2d-kropp med leder, per tutorials etc. Superkul ju.
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbMjgwNzQ3NTgzLC05NzgzNjY0OTksMTA5MT
-Q3OTc0NywxMzM2Njc2OTQ1LDU5NjIyNTM0LDMyODcxODQyNCwt
-MTQ4NTM5OTc4LDExMDQyNjY4MjAsMTc2OTI2MTUxMiwyMzIwND
-c3ODksMTAxMTM1NzY2LDMyMTk3OTExOCwtMTM2MTU1NzkxNiwz
-NDM0NzY5MzgsLTE2MTk3OTM5MTksLTk3ODAxODM1LC03NTAzNT
-g4NzksLTYwMjEyNTk3MiwxNjA4Mzc0NTU2LDM4NzE5MzE2OF19
-
+eyJoaXN0b3J5IjpbLTE4Mzk1MTgyNzAsLTExNDUzODMxNDIsLT
+UzMDU4MTg5NiwxNTQ4NjQ3MzY4LC01OTcyMzg0OTYsMTg1MTE0
+MjU1MCwtNTY3OTUwNzI0LC0zNDU4NDI2NTIsLTE0NTY3MjY1MD
+gsLTExNzEyNjE3MjQsMTIzMzA4NDEwNSwtMTI5OTc4OTg4OCwx
+Njc0OTc3ODE5LC0xNDU2Mzg2MjE1LDE3NDc3NjExMDQsLTE1Mj
+M4Mzg4MCwtODc4NTIxNTM2LDE4MTk2MDc1NzAsLTcwMjQ1MTY0
+NSwtODM5MDIxMzc3XX0=
 -->

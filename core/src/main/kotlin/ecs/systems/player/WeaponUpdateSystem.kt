@@ -9,6 +9,7 @@ import ktx.ashley.allOf
 import physics.*
 import tru.AnimState
 import tru.Assets
+import tru.SpriteDirection
 
 
 class WeaponUpdateSystem: IteratingSystem(
@@ -24,6 +25,12 @@ class WeaponUpdateSystem: IteratingSystem(
         val spriteComponent = entity.sprite()
         if(animatedCharacterComponent.currentAnimState == AnimState.Aiming)  {
             spriteComponent.extraSprites["gun"] = Assets.weapons[weapon.textureName]!![animatedCharacterComponent.currentDirection]!!
+            when(animatedCharacterComponent.currentDirection) {
+                SpriteDirection.East -> spriteComponent.extraSprites["gun"]?.setFlip(false, false)
+                SpriteDirection.North -> spriteComponent.extraSprites["gun"]?.setFlip(false, true)
+                SpriteDirection.South -> spriteComponent.extraSprites["gun"]?.setFlip(false, true)
+                SpriteDirection.West -> spriteComponent.extraSprites["gun"]?.setFlip(false, true)
+            }
             if(weapon.handleKey != "") {
                 spriteComponent.extraSpriteAnchors["gun"] = weapon.handleKey
             }

@@ -24,6 +24,7 @@ import ecs.components.pickups.LootComponent
 import ecs.components.pickups.LootDropComponent
 import ecs.components.player.*
 import ecs.components.towers.TowerComponent
+import ecs.components.AudioComponent
 import ecs.systems.graphics.GameConstants.PLAYER_DENSITY
 import ecs.systems.graphics.GameConstants.SHIP_ANGULAR_DAMPING
 import ecs.systems.graphics.GameConstants.SHIP_LINEAR_DAMPING
@@ -97,22 +98,23 @@ object Box2dCategories {
 fun gibs(at: Vector2, gibAngle: Float = 1000f) {
     for (i in Assets.enemyGibs) {
         val angle = if (gibAngle == 1000f) (1f..359f).random() else gibAngle
-        val force = vec2(80f, 0f).setAngleDeg(angle + (-25..25).random())
+        val force = vec2((15f..60f).random(), 0f).setAngleDeg(angle + (-25..25).random())
         val gibBody = world().body {
             type = BodyDef.BodyType.DynamicBody
             position.set(at.x - 2f, at.y - 2f)
-            angularVelocity = 180f * degreesToRadians
+            //angularVelocity = 180f * degreesToRadians
             linearDamping = 5f
-            box(.3f, .3f) {
-                friction = 1f //Tune
-                density = 10f //tune
+            box(.3f, .1f) {
+                friction = 10f //Tune
+                // density = 1f //tune
                 filter {
                     categoryBits = Box2dCategories.gibs
                     maskBits = Box2dCategories.whatGibsHit
                 }
             }
         }
-        gibBody.applyLinearImpulse(force, vec2(gibBody.worldCenter.x, gibBody.worldCenter.y), true)
+
+        val localPoint = vec2(-1f, 0f)
 
         val gibEntity = engine().entity {
             with<SpriteComponent> {
@@ -131,6 +133,8 @@ fun gibs(at: Vector2, gibAngle: Float = 1000f) {
             }
         }
         gibBody.userData = gibEntity
+        gibBody.applyLinearImpulse(force.scl(gibBody.mass), gibBody.getWorldPoint(localPoint).cpy(), true)
+        //gibBody.applyAngularImpulse(50f, true)
     }
 }
 
@@ -153,21 +157,36 @@ fun delayedFireEntity(at: Vector2, linearVelocity: Vector2, player: Player) {
     }
 }
 
+fun explosionEffectEntity(at: Vector2) {
+    engine().entity {
+        with<TransformComponent> {
+            position.set(at)
+        }
+        with<ParticleEffectComponent> {
+            effect = Assets.explosionEffectPool.obtain()
+            rotation = 0f
+        }
+        with<DestroyAfterCoolDownComponent> {
+            coolDown = 2f
+        }
+    }
+}
+
 fun fireEntity(at: Vector2, linearVelocity: Vector2, player: Player) {
     val box2dBody = world().body {
         type = BodyDef.BodyType.DynamicBody
         position.set(at)
-        linearDamping = 1f
+        linearDamping = 5f
         box(.3f, .3f) {
-            friction = 1f //Tune
-            density = 35f //tune
-            restitution = 0.5f
+            friction = 10f //Tune
+            density = 1f //tune
+            restitution = 0.9f
             filter {
                 categoryBits = Box2dCategories.molotov
                 maskBits = Box2dCategories.whatMolotovsHit
             }
         }
-        circle(.5f) {
+        box(.2f, .5f) {
             isSensor = true
             filter {
                 categoryBits = Box2dCategories.sensors
@@ -175,7 +194,7 @@ fun fireEntity(at: Vector2, linearVelocity: Vector2, player: Player) {
             }
         }
     }
-    box2dBody.applyLinearImpulse(linearVelocity.cpy().scl(.5f), at, true)
+    box2dBody.applyLinearImpulse(linearVelocity.scl(box2dBody.mass), box2dBody.getWorldPoint(Vector2.X), true)
     box2dBody.userData = engine().entity {
         with<TransformComponent>()
         with<BodyComponent> {
@@ -434,7 +453,51 @@ fun lootBox(at: Vector2, lootDrop: List<ILoot>) {
     box2dBody.userData = entity
 }
 
-fun throwMolotov(at: Vector2, towards: Vector2, speed: Float, player: Player) {
+fun throwGrenade(
+    at: Vector2,
+    towards: Vector2,
+    speed: Float,
+    player: Player
+) {
+    val box2dBody = world().body {
+        type = BodyDef.BodyType.DynamicBody
+        position.set(at)
+        linearVelocity.set(towards.cpy().setLength(speed))
+        angularVelocity = 180f * degreesToRadians
+        box(.5f, .25f) {
+            density = .1f
+            filter {
+                categoryBits = Box2dCategories.bullets
+                maskBits = Box2dCategories.thingsBulletsHit
+            }
+        }
+    }
+    val entity = engine().entity {
+        with<BodyComponent> { body = box2dBody }
+        with<GrenadeComponent> {
+            this.player = player
+        }
+        with<TransformComponent> {
+            position.set(box2dBody.position)
+            feelsGravity = true
+            verticalSpeed = 5f
+        }
+        with<SpriteComponent> {
+            layer = 1
+            sprite = Assets.molotov //Fix a burning bottle sprite
+            rotateWithTransform = true
+        }
+    }
+    box2dBody.userData = entity
+    CounterObject.bulletCount++
+}
+
+fun throwMolotov(
+    at: Vector2,
+    towards: Vector2,
+    speed: Float,
+    player: Player
+) {
     val box2dBody = world().body {
         type = BodyDef.BodyType.DynamicBody
         position.set(at)
@@ -456,7 +519,11 @@ fun throwMolotov(at: Vector2, towards: Vector2, speed: Float, player: Player) {
         with<ParticleEffectComponent> {
             effect = Assets.fireEffectPool.obtain()
         }
-        with<TransformComponent> { position.set(box2dBody.position) }
+        with<TransformComponent> {
+            position.set(box2dBody.position)
+            feelsGravity = true
+            verticalSpeed = 5f
+        }
         with<SpriteComponent> {
             layer = 1
             sprite = Assets.molotov //Fix a burning bottle sprite
@@ -513,6 +580,7 @@ fun enemy(at: Vector2) {
         with<BodyComponent> { body = box2dBody }
         with<TransformComponent> { position.set(box2dBody.position) }
         with<EnemySensorComponent>()
+        with<AudioComponent>()
         with<EnemyComponent>()
         with<AnimatedCharacterComponent> {
             anims = Assets.enemies.values.random()
@@ -520,13 +588,14 @@ fun enemy(at: Vector2) {
         with<LootDropComponent> {
             WeaponDefinition.weapons.forEach { lootTable.contents.add(WeaponLoot(it, 5f)) }
             lootTable.contents.add(AmmoLoot(AmmoType.NineMilliMeters, 17..51, 10f))
-            lootTable.contents.add(AmmoLoot(AmmoType.FnP90Ammo, 25..150, 10f))
+            lootTable.contents.add(AmmoLoot(AmmoType.FnP90Ammo, 25..75, 10f))
             lootTable.contents.add(AmmoLoot(AmmoType.TwelveGaugeShotgun, 4..18, 10f))
-            lootTable.contents.add(AmmoLoot(AmmoType.Molotov, 4..18, 10f))
+            lootTable.contents.add(AmmoLoot(AmmoType.Molotov, 1..2, 10f))
+            lootTable.contents.add(AmmoLoot(AmmoType.Grenade, 1..2, 10f))
             lootTable.contents.add(
-                NullValue(40f)
+                NullValue(200f)
             )
-            lootTable.count = (1..2).random()
+            lootTable.count = (1..5).random()
         }
         with<SpriteComponent> {
             layer = 1
@@ -563,9 +632,11 @@ fun hackingStation(
         with<HackingComponent>()
         with<ComplexActionComponent> {
             scene2dTable = scene2d.table {
-                label("""
+                label(
+                    """
                     Press the key sequence
-                    to hack the station""".trimMargin())
+                    to hack the station""".trimMargin()
+                )
             }
         }
         with<SpriteComponent> {
@@ -612,21 +683,23 @@ fun boss(at: Vector2, level: Int) {
             rushSpeed = 15f + level * 1.5f
             speed = 10f
             viewDistance = 40f + 5f * level
-            health = 1000f * level
+            health = 2000f * level
+            flock = false
         }
         with<AnimatedCharacterComponent> {
             anims = Assets.bosses.values.random()
         }
         with<LootDropComponent> {
+            WeaponDefinition.weapons.forEach { lootTable.contents.add(WeaponLoot(it, 10f)) }
+            lootTable.contents.add(AmmoLoot(AmmoType.NineMilliMeters, 34..96, 10f))
+            lootTable.contents.add(AmmoLoot(AmmoType.FnP90Ammo, 50..150, 10f))
+            lootTable.contents.add(AmmoLoot(AmmoType.TwelveGaugeShotgun, 8..36, 10f))
+            lootTable.contents.add(AmmoLoot(AmmoType.Molotov, 1..4, 10f))
+            lootTable.contents.add(AmmoLoot(AmmoType.Grenade, 1..4, 10f))
             lootTable.contents.add(
-                AmmoLoot(AmmoType.NineMilliMeters, 6..17, 30f)
+                NullValue(50f)
             )
-            lootTable.contents.add(
-                AmmoLoot(AmmoType.TwelveGaugeShotgun, 4..10, 20f)
-            )
-            lootTable.contents.add(
-                AmmoLoot(AmmoType.FnP90Ammo, 50..150, 10f)
-            )
+            lootTable.count = (3..8).random()
         }
         with<SpriteComponent> {
             layer = 1

@@ -31,11 +31,11 @@ class GibSystem : IteratingSystem(allOf(GibComponent::class).get()) {
         } else if (gibComponent.coolDown <= 0f && gibComponent.hasStopped) {
             entity.addComponent<DestroyComponent> { }
         } else {
-            if (AshleyMappers.body.has(entity)) {
-                val body = AshleyMappers.body.get(entity).body!!
-                if (body.linearVelocity.len2() > 4f)
-                    body.linearVelocity = body.linearVelocity.cpy().setLength(4f)
-            }
+//            if (AshleyMappers.body.has(entity)) {
+//                val body = AshleyMappers.body.get(entity).body!!
+//                if (body.linearVelocity.len2() > 4f)
+//                    body.linearVelocity = body.linearVelocity.cpy().setLength(4f)
+//            }
         }
     }
 }

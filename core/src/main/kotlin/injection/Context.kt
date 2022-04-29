@@ -76,8 +76,9 @@ object Context {
                 setCommandExecutor(CommandExecutor())
                 displayKeyID = Input.Keys.U
             })
+            bindSingleton(ContactManager())
             bindSingleton(createWorld().apply {
-                setContactListener(ContactManager())
+                setContactListener(inject<ContactManager>())
             })
             bindSingleton(AudioPlayer())
             bindSingleton(GridMapManager())
@@ -102,7 +103,7 @@ object Context {
             addSystem(BodyDestroyerSystem(inject())) //world
             addSystem(CharacterWalkAndShootDirectionSystem())
             addSystem(PlayerShootingSystem(inject()))
-            addSystem(EnemyDeathSystem())
+            addSystem(EnemyDeathSystem(audioPlayer = inject()))
             addSystem(EnemyMovementSystem(true))
             // Ai Systems Start
             addSystem(AmblingSystem())
@@ -115,6 +116,7 @@ object Context {
             addSystem(EnemyHearsShotsSystem())
             addSystem(InvestigateSystem())
             addSystem(RushPlayerSystem())
+            addSystem(AudioSystem())
             // Ai Systems End
             //Burning
             addSystem(BurningSystem())
@@ -131,7 +133,7 @@ object Context {
             addSystem(UpdatePlayerStatsSystem())
 //            addSystem(PhysicsDebugRendererSystem(inject(), inject()))
             addSystem(RenderSystem(inject<PolygonSpriteBatch>() as Batch, false, inject(), inject(),1))
-            addSystem(RenderMiniMapSystem())
+            addSystem(RenderMiniMapSystem(3))
             addSystem(PlayerFlashlightSystem())
             //lets NOT write debug badges
 //            addSystem(AiDebugSystem())

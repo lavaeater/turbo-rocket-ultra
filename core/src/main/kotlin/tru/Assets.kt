@@ -27,12 +27,12 @@ object Assets : Disposable {
 
 
     val speechBTexture by lazy { Texture(Gdx.files.internal("ui/graphics/speechbubble.png")) }
-    val speechBubble by lazy { NinePatch(speechBTexture, 14, 8,12,12) }
+    val speechBubble by lazy { NinePatch(speechBTexture, 14, 8, 12, 12) }
 
-    val tableNinePatch by lazy { Texture(Gdx.files.internal("ui/graphics/convobackground.png"))}
-    val tableBackGround by lazy { NinePatch(tableNinePatch, 4, 4, 4, 4 ) }
+    val tableNinePatch by lazy { Texture(Gdx.files.internal("ui/graphics/convobackground.png")) }
+    val tableBackGround by lazy { NinePatch(tableNinePatch, 4, 4, 4, 4) }
 
-    val portrait by lazy { Texture(Gdx.files.internal("portraits/portrait.png"))}
+    val portrait by lazy { Texture(Gdx.files.internal("portraits/portrait.png")) }
 
     val characters: Map<String, Map<AnimState, LpcCharacterAnim<Sprite>>> by lazy {
         SpriteLoader.initCharachterAnims()
@@ -63,19 +63,77 @@ object Assets : Disposable {
         )
     }
 
+    val newSoundEffects by lazy {
+        mapOf(
+            "zombies" to mapOf(
+                "groans" to listOf(
+                    Gdx.audio.newSound(Gdx.files.internal("audio/zombies/zombie-groan-1.wav")),
+                    Gdx.audio.newSound(Gdx.files.internal("audio/zombies/zombie-groan-1.wav")),
+                    Gdx.audio.newSound(Gdx.files.internal("audio/zombies/zombie-groan-2.wav"))
+                ),
+                "panic" to listOf(
+                    Gdx.audio.newSound(Gdx.files.internal("audio/zombies/panic-1.wav")),
+                    Gdx.audio.newSound(Gdx.files.internal("audio/zombies/panic-2.wav"))
+                ),
+                "attacks" to listOf(
+                    Gdx.audio.newSound(Gdx.files.internal("audio/zombies/zombie-attack.wav"))
+                )
+            ),
+            "weapons" to mapOf(
+                "molotov" to listOf(
+                    Gdx.audio.newSound(Gdx.files.internal("audio/molotov/molotov-1.wav")),
+                ),
+                "grenade" to listOf(
+                    Gdx.audio.newSound(Gdx.files.internal("audio/grenade/grenade-1.wav")),
+                )
+            ),
+            "misc" to mapOf(
+                "flesh" to listOf(
+                    Gdx.audio.newSound(Gdx.files.internal("audio/misc/flesh-1.wav")),
+                    Gdx.audio.newSound(Gdx.files.internal("audio/misc/flesh-2.wav")),
+                )
+            ),
+            "players" to mapOf(
+                "out-of-ammo" to listOf(
+                    Gdx.audio.newSound(Gdx.files.internal("audio/players/out-of-ammo-1.wav")),
+                    Gdx.audio.newSound(Gdx.files.internal("audio/players/out-of-ammo-2.wav")),
+                ),
+                "death" to listOf(
+                    Gdx.audio.newSound(Gdx.files.internal("audio/players/death-1.wav")),
+                    Gdx.audio.newSound(Gdx.files.internal("audio/players/death-2.wav")),
+                ),
+                "loot-found" to listOf(
+                    Gdx.audio.newSound(Gdx.files.internal("audio/players/loot-1.wav")),
+                    Gdx.audio.newSound(Gdx.files.internal("audio/players/loot-2.wav")),
+                    Gdx.audio.newSound(Gdx.files.internal("audio/players/loot-3.wav")),
+                    Gdx.audio.newSound(Gdx.files.internal("audio/players/loot-4.wav")),
+                ),
+                "one-liners" to listOf(
+                    Gdx.audio.newSound(Gdx.files.internal("audio/players/groovy.wav")),
+                    Gdx.audio.newSound(Gdx.files.internal("audio/players/lets-dance.wav")),
+                    Gdx.audio.newSound(Gdx.files.internal("audio/players/there-u-go.wav")),
+                ),
+            )
+        )
+    }
+
+    val music by lazy {
+        listOf(Gdx.audio.newMusic(Gdx.files.internal("audio/music/track-1.mp3")))
+    }
+
     val enemyGibs by lazy {
         val texture = Texture(Gdx.files.internal("sprites/enemies/enemy_gibs.png"))
         listOf(
-            Sprite(texture,0,0,24,24),
-            Sprite(texture,24,0,24,24),
-            Sprite(texture,48,0,24,24),
-            Sprite(texture,72,0,24,24),
-            Sprite(texture,96,0,24,24),
-            Sprite(texture,0,24,24,24),
-            Sprite(texture,24,24,24,24),
-            Sprite(texture,48,24,24,24),
-            Sprite(texture,72,24,24,24),
-            Sprite(texture,96,24,24,24)
+            Sprite(texture, 0, 0, 24, 24),
+            Sprite(texture, 24, 0, 24, 24),
+            Sprite(texture, 48, 0, 24, 24),
+            Sprite(texture, 72, 0, 24, 24),
+            Sprite(texture, 96, 0, 24, 24),
+            Sprite(texture, 0, 24, 24, 24),
+            Sprite(texture, 24, 24, 24, 24),
+            Sprite(texture, 48, 24, 24, 24),
+            Sprite(texture, 72, 24, 24, 24),
+            Sprite(texture, 96, 24, 24, 24)
         )
     }
 
@@ -84,11 +142,21 @@ object Assets : Disposable {
     }
 
     private val spas12Sprite by lazy {
-        Sprite(Texture(Gdx.files.internal("sprites/weapons/shotgun.png"))).apply { this.setOrigin(0f, this.regionHeight / 2f) }
+        Sprite(Texture(Gdx.files.internal("sprites/weapons/shotgun.png"))).apply {
+            this.setOrigin(
+                0f,
+                this.regionHeight / 2f
+            )
+        }
     }
 
     private val batSprite by lazy {
-        Sprite(Texture(Gdx.files.internal("sprites/weapons/bat.png")), 0, 0,32, 5).apply { this.setOrigin(0f, this.regionHeight / 2f) }
+        Sprite(Texture(Gdx.files.internal("sprites/weapons/bat.png")), 0, 0, 32, 5).apply {
+            this.setOrigin(
+                0f,
+                this.regionHeight / 2f
+            )
+        }
     }
 
 
@@ -97,14 +165,14 @@ object Assets : Disposable {
             GunFrames.handGun to
                     mapOf(
                         SpriteDirection.North to
-                                Sprite(handgunTexture, 0, 0,64, 64),
+                                Sprite(handgunTexture, 0, 0, 64, 64),
                         SpriteDirection.West to
                                 Sprite(handgunTexture, 0, 64, 64, 64),
                         SpriteDirection.South to
                                 Sprite(handgunTexture, 0, 128, 64, 64),
                         SpriteDirection.East to
-                                Sprite(handgunTexture, 0, 192, 64,64)
-                        ),
+                                Sprite(handgunTexture, 0, 192, 64, 64)
+                    ),
             GunFrames.spas12 to
                     mapOf(
                         SpriteDirection.North to
@@ -154,7 +222,10 @@ object Assets : Disposable {
 
     val splatterEffectPool: ParticleEffectPool by lazy {
         val pe = ParticleEffect()
-        pe.load(Gdx.files.internal("particles/blood_splatter/blood_splatter.effect"), Gdx.files.internal("particles/blood_splatter"))
+        pe.load(
+            Gdx.files.internal("particles/blood_splatter/blood_splatter.effect"),
+            Gdx.files.internal("particles/blood_splatter")
+        )
         pe.scaleEffect(0.025f)
         ParticleEffectPool(pe, 1000, 3000)
     }
@@ -164,6 +235,13 @@ object Assets : Disposable {
         pe.load(Gdx.files.internal("particles/flame/pp_flame.p"), Gdx.files.internal("particles/flame"))
         pe.scaleEffect(0.025f)
         ParticleEffectPool(pe, 1000, 3000)
+    }
+
+    val explosionEffectPool: ParticleEffectPool by lazy {
+        val pe = ParticleEffect()
+        pe.load(Gdx.files.internal("particles/explosion/explosion.p"), Gdx.files.internal("particles/explosion"))
+        pe.scaleEffect(0.025f)
+        ParticleEffectPool(pe, 10, 100)
     }
 
     val arrows by lazy {
@@ -199,7 +277,7 @@ object Assets : Disposable {
                     }
                 }
             }
-        for(sprite in ts.values) {
+        for (sprite in ts.values) {
             sprite.scale(4f)
         }
         ts
@@ -216,41 +294,47 @@ object Assets : Disposable {
         tiles.filterKeys { it == "wall_end" }.values.first()
     }
     val buildables by lazy {
-        tiles.filterKeys { it.contains("build")}.values.toList()
+        tiles.filterKeys { it.contains("build") }.values.toList()
     }
 
     val aiDebugBadges by lazy {
         val texture = Texture(Gdx.files.internal("sprites/bt_labels/bt_labels.png"))
         mapOf(
-            "amble" to Sprite(texture, 0,0, 64, 12),
-            "attack" to Sprite(texture, 0,12, 64, 12),
-            "chase" to Sprite(texture, 0,24, 64, 12),
-            "check" to Sprite(texture, 0,36, 64, 12),
-            "seek" to Sprite(texture, 0,48, 64, 12),
-            "grabthrow" to Sprite(texture, 0,60, 64, 12),
-            "rush" to Sprite(texture, 0,72, 64, 12),
-            "panic" to Sprite(texture, 0,84, 64, 12)
+            "amble" to Sprite(texture, 0, 0, 64, 12),
+            "attack" to Sprite(texture, 0, 12, 64, 12),
+            "chase" to Sprite(texture, 0, 24, 64, 12),
+            "check" to Sprite(texture, 0, 36, 64, 12),
+            "seek" to Sprite(texture, 0, 48, 64, 12),
+            "grabthrow" to Sprite(texture, 0, 60, 64, 12),
+            "rush" to Sprite(texture, 0, 72, 64, 12),
+            "panic" to Sprite(texture, 0, 84, 64, 12)
         )
     }
 
     val ps4Buttons by lazy {
         val texture = Texture(Gdx.files.internal("controllers/PS4.png"))
         mapOf(
-            "cross" to Sprite(texture, 32, 48, 16,16),
-            "square" to Sprite(texture, 32, 64, 16,16),
-            "triangle" to Sprite(texture, 32, 80, 16,16),
-            "circle" to Sprite(texture, 32, 96, 16,16),
-            "dpadup" to Sprite(texture, 0, 16, 16,16),
-            "dpadright" to Sprite(texture, 0, 32, 16,16),
-            "dpaddown" to Sprite(texture, 0, 48, 16,16),
-            "dpadleft" to Sprite(texture, 0, 64, 16,16))
+            "cross" to Sprite(texture, 32, 48, 16, 16),
+            "square" to Sprite(texture, 32, 64, 16, 16),
+            "triangle" to Sprite(texture, 32, 80, 16, 16),
+            "circle" to Sprite(texture, 32, 96, 16, 16),
+            "dpadup" to Sprite(texture, 0, 16, 16, 16),
+            "dpadright" to Sprite(texture, 0, 32, 16, 16),
+            "dpaddown" to Sprite(texture, 0, 48, 16, 16),
+            "dpadleft" to Sprite(texture, 0, 64, 16, 16)
+        )
     }
     val bullet by lazy {
         Sprite(Texture(Gdx.files.internal("sprites/bullets/bullet.png")))
     }
 
     val molotov by lazy {
-        Sprite(Texture(Gdx.files.internal("sprites/weapons/molotov.png"))).apply { this.setOrigin(0f, this.regionHeight / 2f) }
+        Sprite(Texture(Gdx.files.internal("sprites/weapons/molotov.png"))).apply {
+            this.setOrigin(
+                0f,
+                this.regionHeight / 2f
+            )
+        }
     }
 
     val playerCharacters by lazy { characters }
@@ -320,7 +404,7 @@ object Assets : Disposable {
         for (t in towers.values)
             t.flip(true, false)
 
-        for(t in aiDebugBadges.values)
+        for (t in aiDebugBadges.values)
             t.flip(true, false)
     }
 

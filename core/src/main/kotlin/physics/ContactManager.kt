@@ -1,5 +1,6 @@
 package physics
 
+import audio.AudioPlayer
 import com.badlogic.ashley.core.Engine
 import com.badlogic.ashley.core.Entity
 import com.badlogic.gdx.Input
@@ -23,7 +24,9 @@ import features.pickups.AmmoLoot
 import features.pickups.WeaponLoot
 import injection.Context.inject
 import input.Button
+import ktx.ashley.allOf
 import ktx.ashley.remove
+import ktx.math.random
 import ktx.scene2d.label
 import ktx.scene2d.table
 import tru.Assets
@@ -70,6 +73,7 @@ sealed class ContactType {
     class TwoEnemySensors(val enemyOne: Entity, val enemyTwo: Entity) : ContactType()
     class EnemyAndBullet(val enemy: Entity, val bullet: Entity) : ContactType()
     class MolotovHittingAnything(val molotov: Entity) : ContactType()
+    class GrenadeHittingAnything(val grenade: Entity) : ContactType()
 
 }
 
@@ -156,6 +160,13 @@ fun Contact.thisIsAContactBetween(): ContactType {
         val molotov = this.getEntityFor<MolotovComponent>()
         return ContactType.MolotovHittingAnything(molotov)
     }
+    if (this.atLeastOneHas<GrenadeComponent>()) {
+        /*
+        Lets not add a new entity, let's modify the one we have
+         */
+        val grenade = this.getEntityFor<GrenadeComponent>()
+        return ContactType.GrenadeHittingAnything(grenade)
+    }
     return ContactType.Unknown
 }
 
@@ -164,6 +175,7 @@ class ContactManager : ContactListener {
     private val engine by lazy { inject<Engine>() }
     private val messageHandler by lazy { inject<MessageHandler>() }
     private val camera by lazy { inject<OrthographicCamera>() }
+    private val audioPlayer by lazy { inject<AudioPlayer>() }
 
     @OptIn(ExperimentalStdlibApi::class)
     override fun beginContact(contact: Contact) {
@@ -208,22 +220,7 @@ class ContactManager : ContactListener {
                 }
             }
             is ContactType.MolotovHittingAnything -> {
-                val molotov = contactType.molotov
-                val molotovComponent = molotov.getComponent<MolotovComponent>()
-                val body = molotov.getComponent<BodyComponent>().body!!
-                val linearVelocity = body.linearVelocity.cpy()
-                body.linearVelocity = Vector2.Zero.cpy()
-
-                /*
-                Now, add five-ten entities / bodies that fly out in the direction of the molotov
-                and also spew fire particles.
-                 */
-
-                val numOfFireBalls = (10..25).random()
-                for (ballIndex in 0..numOfFireBalls) {
-                    delayedFireEntity(body.worldCenter, linearVelocity, molotovComponent.player)
-                }
-                molotov.addComponent<DestroyComponent>() //This entity will die and disappear now.
+                handleMolotovHittingAnything(contactType)
             }
             is ContactType.SomeEntityAndDamage -> {
                 //No op for now
@@ -232,6 +229,7 @@ class ContactManager : ContactListener {
                 //No op for now
             }
             is ContactType.PlayerAndLoot -> {
+                audioPlayer.playSound("players", "loot-found")
                 val playerEntity = contactType.player
                 val lootEntity = contactType.lootEntity
                 val inventory = playerEntity.getComponent<InventoryComponent>()
@@ -276,6 +274,11 @@ class ContactManager : ContactListener {
             is ContactType.PlayerAndSomeoneWhoTackles -> {
                 val enemy = contactType.tackler
                 val player = contactType.player
+
+                val playerComponent = contactType.player.playerControl()
+
+                playerComponent.startCooldown(playerComponent::stunned, 1f)
+
                 val playerBody = player.body()
                 playerBody.applyLinearImpulse(
                     enemy.getComponent<EnemyComponent>().directionVector.cpy().scl(100f),
@@ -341,11 +344,10 @@ class ContactManager : ContactListener {
                     playerControl.locked = true
                     if(contactType.other.hasHacking()) {
                         //create the done function, I suppose?
-                        var inputSequence = listOf(1)
-                        if(playerControl.controlMapper.isGamepad)
-                            inputSequence = listOf(Button.buttonsToCodes[Button.DPadUp]!!,Button.buttonsToCodes[Button.DPadLeft]!!)
+                        var inputSequence: List<Int> = if(playerControl.controlMapper.isGamepad)
+                            listOf(Button.buttonsToCodes[Button.DPadUp]!!,Button.buttonsToCodes[Button.DPadLeft]!!)
                         else
-                            inputSequence = listOf(Input.Keys.UP, Input.Keys.LEFT)
+                            listOf(Input.Keys.UP, Input.Keys.LEFT)
 
                         playerControl.requireSequence(inputSequence)
                         complexActionComponent.scene2dTable.table {
@@ -368,12 +370,73 @@ class ContactManager : ContactListener {
                     messageHandler.sendMessage(Message.ShowUiForComplexAction(complexActionComponent, playerControl, playerPosition))
                 }
             }
+            is ContactType.GrenadeHittingAnything -> {
+                handleGrenadeHittingAnything(contactType)
+            }
         }
 
         if (contact.atLeastOneHas<BulletComponent>()) {
             val entity = contact.getEntityFor<BulletComponent>()
             entity.add(DestroyComponent())
         }
+    }
+
+    @OptIn(ExperimentalStdlibApi::class)
+    fun handleGrenadeHittingAnything(contactType: ContactType.GrenadeHittingAnything) {
+//This should be timed using cooldown, not this way
+        audioPlayer.playSound(Assets.newSoundEffects["weapons"]!!["grenade"]!!.random())
+        val grenade = contactType.grenade
+        val grenadeComponent = grenade.getComponent<GrenadeComponent>()
+        val body = grenade.getComponent<BodyComponent>().body!!
+        body.linearVelocity.set(Vector2.Zero)
+
+        /*
+        Now, add five-ten entities / bodies that fly out in the direction of the molotov
+        and also spew fire particles.
+         */
+
+        //Add explosion effect entity
+        explosionEffectEntity(body.worldCenter)
+
+        //Find all enemies with an area
+        val enemiesInRange = engine().getEntitiesFor(allOf(EnemyComponent::class).get()).filter { it.transform().position.dst(body.worldCenter) < 50f }
+
+        for (enemy in enemiesInRange) {
+            //apply distance-related damage
+
+            //apply impulse to enemy body, hopefully sending them away
+            val enemyComponent = AshleyMappers.enemy.get(enemy)
+            enemyComponent.startCooldown(enemyComponent::stunned, 0.5f)
+            val enemyBody = enemy.body()
+            val distanceVector = enemyBody.worldCenter.cpy().sub(body.worldCenter)
+            val direction = distanceVector.cpy().nor()
+            val inverseDistance = 1 / distanceVector.len()
+            enemyComponent.takeDamage((50f..150f).random() * inverseDistance, grenadeComponent.player)
+            enemyComponent.lastShotAngle  = direction.angleDeg()
+            enemyBody.applyLinearImpulse(direction.scl(inverseDistance * (500f..1500f).random()), enemyBody.worldCenter, true)
+        }
+        grenade.addComponent<DestroyComponent>() //This entity will die and disappear now.
+    }
+
+    @OptIn(ExperimentalStdlibApi::class)
+    fun handleMolotovHittingAnything(contactType: ContactType.MolotovHittingAnything) {
+        audioPlayer.playSound(Assets.newSoundEffects["weapons"]!!["molotov"]!!.random())
+        val molotov = contactType.molotov
+        val molotovComponent = molotov.getComponent<MolotovComponent>()
+        val body = molotov.getComponent<BodyComponent>().body!!
+        val linearVelocity = body.linearVelocity.cpy()
+        body.linearVelocity = Vector2.Zero.cpy()
+
+        /*
+        Now, add five-ten entities / bodies that fly out in the direction of the molotov
+        and also spew fire particles.
+         */
+
+        val numOfFireBalls = (10..25).random()
+        for (ballIndex in 0..numOfFireBalls) {
+            delayedFireEntity(body.worldCenter, linearVelocity, molotovComponent.player)
+        }
+        molotov.addComponent<DestroyComponent>() //This entity will die and disappear now.
     }
 
     override fun endContact(contact: Contact) {

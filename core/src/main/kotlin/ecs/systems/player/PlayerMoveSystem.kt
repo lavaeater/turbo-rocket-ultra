@@ -17,9 +17,11 @@ class PlayerMoveSystem(private var speed: Float): IteratingSystem(
     @OptIn(ExperimentalStdlibApi::class)
     override fun processEntity(entity: Entity, deltaTime: Float) {
         val pcc = entity.getComponent<PlayerControlComponent>()
-        val bc = entity.getComponent<BodyComponent>()
-        val csc = entity.getComponent<AnimatedCharacterComponent>()
-        executeMove(pcc, bc, csc)
+        if(pcc.cooldownPropertyCheckIfDone(pcc::stunned, deltaTime)) {
+            val bc = entity.getComponent<BodyComponent>()
+            val csc = entity.getComponent<AnimatedCharacterComponent>()
+            executeMove(pcc, bc, csc)
+        }
     }
 
     private var speedFactor = 1f

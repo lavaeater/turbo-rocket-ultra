@@ -16,10 +16,10 @@ import physics.AshleyMappers
 import physics.sprite
 import tru.Assets
 
-class RenderMiniMapSystem: SortedIteratingSystem(allOf(SpriteComponent::class, TransformComponent::class, MiniMapComponent::class).get(),
-    Comparator<Entity> { p0, p1 -> p1.sprite().layer.compareTo(p0.sprite().layer) }) {
+class RenderMiniMapSystem(priority: Int): SortedIteratingSystem(allOf(SpriteComponent::class, TransformComponent::class, MiniMapComponent::class).get(),
+    Comparator<Entity> { p0, p1 -> p1.sprite().layer.compareTo(p0.sprite().layer) }, priority) {
     private val shapeDrawer by lazy { Assets.shapeDrawer }
-    private val scale = 1/200f
+    private val scale = 1/50f
     private val center = vec2()
     private val camera by lazy { inject<OrthographicCamera>() }
     private val xOffset get() = camera.position.x + camera.viewportWidth / 3

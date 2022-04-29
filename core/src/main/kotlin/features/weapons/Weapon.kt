@@ -1,6 +1,6 @@
 package features.weapons
 
-class Weapon(weaponDefinition: WeaponDefinition) {
+class Weapon(val weaponDefinition: WeaponDefinition) {
     val soundRadius = weaponDefinition.soundRadius
     val name = weaponDefinition.name
     val weaponType = weaponDefinition.weaponType
