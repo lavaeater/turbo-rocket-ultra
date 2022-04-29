@@ -18,6 +18,7 @@ import com.badlogic.gdx.graphics.g2d.BitmapFont
 import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator.FreeTypeFontParameter
 
 import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator
+import map.snake.MapDirection
 
 
 /**
@@ -40,6 +41,58 @@ object Assets : Disposable {
             "noise" to TextureRegion(Texture(Gdx.files.internal("sprites/towers/tower-1.png")))
         )
     }
+
+    val arrowTexture by lazy {
+        Texture(Gdx.files.internal("sprites/arrows.png"))
+    }
+
+    val arrows by lazy {
+        mapOf(
+            MapDirection.North to TextureRegion(arrowTexture, 0, 0,16,16),
+            MapDirection.West to TextureRegion(arrowTexture, 16, 0,16,16),
+            MapDirection.South to TextureRegion(arrowTexture, 16, 16,16,16),
+            MapDirection.East to TextureRegion(arrowTexture, 0, 16,16,16)
+        )
+    }
+
+    val tileTexture by lazy {
+        Texture(Gdx.files.internal("tiles/tiles.png"))
+    }
+    val tiles by lazy {
+        val ts = mutableMapOf<String, TextureRegion>()
+        for(xTile in 0..3)
+            for(yTile in 0..2) {
+                when(yTile) {
+                    0 -> ts["floor$xTile"] = TextureRegion(tileTexture,xTile * 16, yTile * 16, 16, 16)
+                    1 -> {
+                        when(xTile) {
+                            0 -> ts["wall$xTile"] = TextureRegion(tileTexture,xTile * 16, yTile * 16, 16, 16)
+                            1 -> ts["wall$xTile"] = TextureRegion(tileTexture,xTile * 16, yTile * 16, 16, 16)
+                            2 -> ts["wall_end"] = TextureRegion(tileTexture,xTile * 16, yTile * 16, 16, 16)
+                        }
+                    }
+                    2 -> {
+                        if(xTile in 0..1)
+                            ts["wall_shadow$xTile"] = TextureRegion(tileTexture,xTile * 16, yTile * 16, 16, 16)
+                    }
+                }
+            }
+        ts
+    }
+
+    val floorTiles by lazy {
+        tiles.filterKeys { it.contains("floor") }.values.toList()
+    }
+
+    val wallTiles by lazy {
+        tiles.filterKeys { it.contains("wall") && !it.contains("_end") && !it.contains("_shadow")}.values.toList()
+    }
+    val wallEndTile by lazy {
+        tiles.filterKeys { it == "wall_end" }.values.first()
+    }
+
+    val wallEndShadow by lazy { tiles["wall_shadow1"]!! }
+    val wallShadow by lazy { tiles["wall_shadow0"]!!}
 
     val towerShadow by lazy {
         TextureRegion(Texture(Gdx.files.internal("sprites/towers/tower-shadow.png")))

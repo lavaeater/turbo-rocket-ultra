@@ -8,7 +8,6 @@ import ecs.components.graphics.renderables.AnimatedCharacterSprite
 import ecs.components.player.PlayerControlComponent
 import ktx.ashley.allOf
 import ktx.ashley.mapperFor
-import ktx.math.vec2
 
 class PlayerMoveSystem(
     private var speed: Float = 25f): IteratingSystem(
@@ -36,7 +35,10 @@ class PlayerMoveSystem(
         animatedCharacterSprite: AnimatedCharacterSprite
     ) {
         speedFactor = if(playerControlComponent.triggerPulled) 0.2f else 1f
-        bodyComponent.body.setLinearVelocity(playerControlComponent.walkVector.x * speed * speedFactor, playerControlComponent.walkVector.y * speed * speedFactor)
+
+        val vX = playerControlComponent.walkVector.x * speed * speedFactor
+        val vY = playerControlComponent.walkVector.y * speed * speedFactor
+        bodyComponent.body.setLinearVelocity(vX, vY)
 
         animatedCharacterSprite.currentAnimState = playerControlComponent.playerAnimState
     }

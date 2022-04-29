@@ -157,9 +157,9 @@ fun Batch.drawScaled(
     textureRegion: TextureRegion,
     x: Float,
     y: Float,
-    scale: Float = 1f,
+    scaleX: Float = 1f,
+    scaleY: Float = 1f,
     rotation: Float = 180f) {
-
     draw(
         textureRegion,
         x,
@@ -168,9 +168,20 @@ fun Batch.drawScaled(
         0f,
         textureRegion.regionWidth.toFloat(),
         textureRegion.regionHeight.toFloat(),
-        scale,
-        scale,
+        scaleX,
+        scaleY,
         rotation)
+}
+
+fun Batch.drawScaled(
+    textureRegion: TextureRegion,
+    x: Float,
+    y: Float,
+    scale: Float = 1f,
+    rotation: Float = 180f) {
+
+    drawScaled(textureRegion, x, y, scale, scale, rotation)
+
 }
 
 inline fun<reified T: Component>Entity.addComponent(block: T.() -> Unit = {}) :T {

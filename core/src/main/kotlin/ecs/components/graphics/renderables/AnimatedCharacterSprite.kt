@@ -1,5 +1,6 @@
 package ecs.components.graphics.renderables
 
+import com.badlogic.gdx.graphics.Color
 import com.badlogic.gdx.graphics.g2d.Animation
 import com.badlogic.gdx.graphics.g2d.Batch
 import com.badlogic.gdx.graphics.g2d.TextureRegion
@@ -24,6 +25,8 @@ class AnimatedCharacterSprite(private val anims: Map<AnimState, LpcCharacterAnim
     override val renderableType: RenderableType
         get() = RenderableType.AnimatedCharacterSprite
 
+    val shadowColor = Color(.1f,.1f,.1f, 0.6f)
+
     override fun render(
         position: Vector2,
         rotation:Float,
@@ -34,8 +37,19 @@ class AnimatedCharacterSprite(private val anims: Map<AnimState, LpcCharacterAnim
 
         val currentTextureRegion = currentTextureRegion(animationStateTime)
 
+        batch.color = shadowColor
+
+        batch.drawScaled(currentTextureRegion(animationStateTime),
+            (position.x + (currentTextureRegion.regionWidth / 2 * scale) + (offsetX * scale * this.scale)),
+            (position.y + (currentTextureRegion.regionHeight / 2 * scale) + (offsetY * scale * this.scale / 2)),
+            1f * scale * this.scale,
+            0.5f * scale * this.scale,
+            -135f)
+        batch.color = Color.WHITE
+
+
         batch.drawScaled(
-            currentTextureRegion(animationStateTime),
+            currentTextureRegion,
             (position.x + (currentTextureRegion.regionWidth / 2 * scale) + (offsetX * scale * this.scale)),
             (position.y + (currentTextureRegion.regionHeight / 2 * scale) + (offsetY * scale * this.scale)),
             scale * this.scale

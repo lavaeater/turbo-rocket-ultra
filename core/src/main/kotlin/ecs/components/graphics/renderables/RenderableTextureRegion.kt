@@ -42,7 +42,7 @@ class RenderableTextureRegion(val textureRegion: TextureRegion, val scale: Float
 
         batch.drawScaled(
             this.textureRegion,
-            position.x+ (this.textureRegion.regionWidth / 2 * scale * this.scale) + (offsetX * scale * this.scale),
+            position.x + (this.textureRegion.regionWidth / 2 * scale * this.scale) + (offsetX * scale * this.scale),
             position.y + (this.textureRegion.regionHeight / 2 * scale * this.scale) + (offsetY * scale * this.scale),
             scale * this.scale
         )
