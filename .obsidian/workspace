@@ -7,9 +7,11 @@
         "id": "9210143da10edeee",
         "type": "leaf",
         "state": {
-          "type": "kanban",
+          "type": "markdown",
           "state": {
-            "file": "docs/KANBAN.md"
+            "file": "docs/todo/There's Levels to This.md",
+            "mode": "source",
+            "source": false
           }
         }
       }
@@ -51,7 +53,8 @@
       }
     ],
     "direction": "horizontal",
-    "width": 300
+    "width": 300,
+    "collapsed": true
   },
   "right": {
     "id": "1771e0d2306bf3dd",
@@ -67,7 +70,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "docs/KANBAN.md",
+                "file": "docs/todo/There's Levels to This.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -87,6 +90,7 @@
   },
   "active": "9210143da10edeee",
   "lastOpenFiles": [
+    "docs/todo/There's Levels to This.md",
     "docs/KANBAN.md",
     "docs/done/Intent-based Weapon Select.md",
     "docs/Facts of The World.md",
@@ -95,7 +99,6 @@
     "docs/todo/New Look and Feel.md",
     "docs/done/New Fact System.md",
     "docs/done/Enemies and walls.md",
-    "docs/done/Nicer Setup UI.md",
-    "docs/done/Guns as Entities.md"
+    "docs/done/Nicer Setup UI.md"
   ]
 }
