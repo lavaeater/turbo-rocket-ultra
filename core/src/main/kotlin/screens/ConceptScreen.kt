@@ -13,19 +13,21 @@ import ktx.math.vec2
 import map.grid.Coordinate
 import statemachine.StateMachine
 import tru.Assets
+import ktx.json.*
 
-sealed class SectionDefinition(val sectionColor: Color) {
-    object Boss : SectionDefinition(Color.RED)
-    object Loot : SectionDefinition(Color.WHITE)
-    object Start : SectionDefinition(Color.BLUE)
-    object Goal : SectionDefinition(Color.GREEN)
-    object Spawner : SectionDefinition(Color.CYAN)
-    object PerimeterGoal : SectionDefinition(Color.ORANGE)
-    object HackingStation : SectionDefinition(Color.PURPLE)
-    object Corridor : SectionDefinition(Color.GRAY)
+sealed class SectionDefinition(val sectionColor: Color, val key: String) {
+    object Boss : SectionDefinition(Color.RED, "b")
+    object Loot : SectionDefinition(Color.WHITE, "l")
+    object Start : SectionDefinition(Color.BLUE, "s")
+    object Goal : SectionDefinition(Color.GREEN, "g")
+    object Spawner : SectionDefinition(Color.CYAN, "w")
+    object PerimeterGoal : SectionDefinition(Color.ORANGE, "p")
+    object HackingStation : SectionDefinition(Color.PURPLE, "h")
+    object Corridor : SectionDefinition(Color.GRAY, "c")
 }
 
 class ConceptScreen(gameState: StateMachine<GameState, GameEvent>) : BasicScreen(gameState) {
+    private var cameraZoom: Float = 0f
     override val camera = OrthographicCamera().apply {
         setToOrtho(false)
 //        position.set(-0.1f, -0.1f, 0f)
@@ -49,14 +51,16 @@ class ConceptScreen(gameState: StateMachine<GameState, GameEvent>) : BasicScreen
 
     var blinkTime = 0f
     var blink = false
-    val blinkOn = Color(1f,1f,1f,0.5f)
-    val blinkOff = Color(0f,1f,0f,0.25f)
+    val blinkOn = Color(1f, 1f, 1f, 0.5f)
+    val blinkOff = Color(0f, 1f, 0f, 0.25f)
     var cameraMode = false
     var commandMode = false
+    val zoomFactor = 0.05f
 
     override fun render(delta: Float) {
         camera.position.x += cameraMove.x
         camera.position.y += cameraMove.y
+        camera.zoom += zoomFactor * cameraZoom
         super.render(delta)
         batch.use {
             for (x in minX..maxX) {
@@ -64,7 +68,13 @@ class ConceptScreen(gameState: StateMachine<GameState, GameEvent>) : BasicScreen
                     testCoordinate.x = x
                     testCoordinate.y = y
                     if (gridMap.containsKey(testCoordinate)) {
-                        shapeDrawer.filledRectangle(x * gridSz, y * gridSz, squarSz, squarSz, gridMap[testCoordinate]!!.sectionColor)
+                        shapeDrawer.filledRectangle(
+                            x * gridSz,
+                            y * gridSz,
+                            squarSz,
+                            squarSz,
+                            gridMap[testCoordinate]!!.sectionColor
+                        )
                         //Render what it contains, somehow
                     } else {
                         //This particular pixel will be black
@@ -79,26 +89,34 @@ class ConceptScreen(gameState: StateMachine<GameState, GameEvent>) : BasicScreen
             } else {
                 blink = false
             }
-            shapeDrawer.filledRectangle(cursorX * gridSz, cursorY * gridSz, squarSz, squarSz, if (blink) blinkOn else blinkOff)
+            shapeDrawer.filledRectangle(
+                cursorX * gridSz,
+                cursorY * gridSz,
+                squarSz,
+                squarSz,
+                if (blink) blinkOn else blinkOff
+            )
         }
     }
 
     override fun keyDown(keycode: Int): Boolean {
-        when(keycode) {
+        when (keycode) {
             Input.Keys.CONTROL_LEFT -> commandMode = true
             Input.Keys.SHIFT_LEFT -> cameraMode = true
             Input.Keys.SHIFT_RIGHT -> cameraMode = true
-            Input.Keys.UP -> if(cameraMode) cameraMove.y = -1f
-            Input.Keys.DOWN -> if(cameraMode) cameraMove.y = 1f
-            Input.Keys.LEFT -> if(cameraMode) cameraMove.x = -1f
-            Input.Keys.RIGHT -> if(cameraMode) cameraMove.x = 1f
+            Input.Keys.UP -> if (cameraMode) cameraMove.y = -1f
+            Input.Keys.DOWN -> if (cameraMode) cameraMove.y = 1f
+            Input.Keys.LEFT -> if (cameraMode) cameraMove.x = -1f
+            Input.Keys.RIGHT -> if (cameraMode) cameraMove.x = 1f
+            Input.Keys.Z -> cameraZoom = 1f
+            Input.Keys.X -> cameraZoom = -1f
             Input.Keys.C -> insert(SectionDefinition.Corridor)
             Input.Keys.B -> insert(SectionDefinition.Boss)
             Input.Keys.G -> insert(SectionDefinition.Goal)
             Input.Keys.L -> insert(SectionDefinition.Loot)
             Input.Keys.H -> insert(SectionDefinition.HackingStation)
             Input.Keys.P -> insert(SectionDefinition.PerimeterGoal)
-            Input.Keys.S -> if(commandMode) saveMap() else insert(SectionDefinition.Spawner)
+            Input.Keys.S -> if (commandMode) saveMap() else insert(SectionDefinition.Spawner)
             Input.Keys.FORWARD_DEL -> delete()
             Input.Keys.DEL -> delete()
             else -> return false
@@ -109,13 +127,34 @@ class ConceptScreen(gameState: StateMachine<GameState, GameEvent>) : BasicScreen
     private fun saveMap() {
         //serialize it to a file
         val json = Json()
-        val jsonMap = json.toJson(gridMap)
-        val handle = Gdx.files.external("new_map.json")
-        handle.writeString(jsonMap, false)
+
+        json.addClassTag<SectionDefinition.Start>("start")
+        json.addClassTag<SectionDefinition.Boss>("boss")
+        json.addClassTag<SectionDefinition.Goal>("goal")
+        json.addClassTag<SectionDefinition.Loot>("loot")
+        json.addClassTag<SectionDefinition.Corridor>("corr")
+        json.addClassTag<SectionDefinition.HackingStation>("hack")
+        json.addClassTag<SectionDefinition.PerimeterGoal>("peri")
+        json.addClassTag<SectionDefinition.Spawner>("spawn")
+        json.addClassTag<Coordinate>("coord")
+        var mapAsString = ""
+        val currentC = Coordinate(minX, minY)
+        for (y in maxY.downTo(minY)) {
+            for (x in minX..maxX) {
+                currentC.set(x, y)
+                mapAsString += if (gridMap.containsKey(currentC))
+                    gridMap[currentC]!!.key
+                else
+                    "*"
+            }
+            mapAsString += "\n"
+        }
+        val handle = Gdx.files.local("new_map.txt")
+        handle.writeString(mapAsString, false)
     }
 
     private fun delete() {
-        if(gridMap.count() > 1)
+        if (gridMap.count() > 1)
             gridMap.remove(Coordinate(cursorX, cursorY))
     }
 
@@ -129,12 +168,14 @@ class ConceptScreen(gameState: StateMachine<GameState, GameEvent>) : BasicScreen
     override fun keyUp(keycode: Int): Boolean {
         when (keycode) {
             Input.Keys.CONTROL_LEFT -> commandMode = false
-            Input.Keys.UP -> if(cameraMode) cameraMove.y = 0f else cursorY++
-            Input.Keys.DOWN -> if(cameraMode) cameraMove.y = 0f else cursorY--
-            Input.Keys.LEFT -> if(cameraMode) cameraMove.x = 0f else cursorX--
-            Input.Keys.RIGHT -> if(cameraMode) cameraMove.x = 0f else cursorX++
+            Input.Keys.UP -> if (cameraMode) cameraMove.y = 0f else cursorY++
+            Input.Keys.DOWN -> if (cameraMode) cameraMove.y = 0f else cursorY--
+            Input.Keys.LEFT -> if (cameraMode) cameraMove.x = 0f else cursorX--
+            Input.Keys.RIGHT -> if (cameraMode) cameraMove.x = 0f else cursorX++
             Input.Keys.SHIFT_LEFT -> cameraMode = false
             Input.Keys.SHIFT_RIGHT -> cameraMode = false
+            Input.Keys.Z -> cameraZoom = 0f
+            Input.Keys.X -> cameraZoom = 0f
             else -> return false
         }
 

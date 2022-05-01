@@ -1,4 +1,12 @@
 # There's Levels to This
+What's next?
+
+We add more features to the map editor, one by one, until we have a simple way of making maps. Then we can add automation to it, which is just very very cool. 
+
+We could also work on varying the sections, to make them not look exactly like each other.
+
+One thing that could be cool is zoom in/out for the camera.
+
 We have levels, we have stories, we have rules, we have facts.
 
 But facts are not saved, not rules either, and I'm not entirely entirely sure about the "levels as pictures"-stuff either.
