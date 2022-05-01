@@ -1,8 +1,10 @@
 package screens
 
+import com.badlogic.gdx.Gdx
 import com.badlogic.gdx.Input
 import com.badlogic.gdx.graphics.Color
 import com.badlogic.gdx.graphics.OrthographicCamera
+import com.badlogic.gdx.utils.Json
 import com.badlogic.gdx.utils.viewport.FitViewport
 import gamestate.GameEvent
 import gamestate.GameState
@@ -50,6 +52,7 @@ class ConceptScreen(gameState: StateMachine<GameState, GameEvent>) : BasicScreen
     val blinkOn = Color(1f,1f,1f,0.5f)
     val blinkOff = Color(0f,1f,0f,0.25f)
     var cameraMode = false
+    var commandMode = false
 
     override fun render(delta: Float) {
         camera.position.x += cameraMove.x
@@ -82,6 +85,7 @@ class ConceptScreen(gameState: StateMachine<GameState, GameEvent>) : BasicScreen
 
     override fun keyDown(keycode: Int): Boolean {
         when(keycode) {
+            Input.Keys.CONTROL_LEFT -> commandMode = true
             Input.Keys.SHIFT_LEFT -> cameraMode = true
             Input.Keys.SHIFT_RIGHT -> cameraMode = true
             Input.Keys.UP -> if(cameraMode) cameraMove.y = -1f
@@ -94,12 +98,20 @@ class ConceptScreen(gameState: StateMachine<GameState, GameEvent>) : BasicScreen
             Input.Keys.L -> insert(SectionDefinition.Loot)
             Input.Keys.H -> insert(SectionDefinition.HackingStation)
             Input.Keys.P -> insert(SectionDefinition.PerimeterGoal)
-            Input.Keys.S -> insert(SectionDefinition.Spawner)
+            Input.Keys.S -> if(commandMode) saveMap() else insert(SectionDefinition.Spawner)
             Input.Keys.FORWARD_DEL -> delete()
             Input.Keys.DEL -> delete()
             else -> return false
         }
         return true
+    }
+
+    private fun saveMap() {
+        //serialize it to a file
+        val json = Json()
+        val jsonMap = json.toJson(gridMap)
+        val handle = Gdx.files.external("new_map.json")
+        handle.writeString(jsonMap, false)
     }
 
     private fun delete() {
@@ -116,6 +128,7 @@ class ConceptScreen(gameState: StateMachine<GameState, GameEvent>) : BasicScreen
 
     override fun keyUp(keycode: Int): Boolean {
         when (keycode) {
+            Input.Keys.CONTROL_LEFT -> commandMode = false
             Input.Keys.UP -> if(cameraMode) cameraMove.y = 0f else cursorY++
             Input.Keys.DOWN -> if(cameraMode) cameraMove.y = 0f else cursorY--
             Input.Keys.LEFT -> if(cameraMode) cameraMove.x = 0f else cursorX--
