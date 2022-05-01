@@ -26,38 +26,224 @@ sealed class SectionDefinition(val sectionColor: Color, val key: String) {
     object Corridor : SectionDefinition(Color.GRAY, "c")
 }
 
+sealed class EditEvent {
+    object EnterPaintMode : EditEvent()
+    object ExitPaintMode : EditEvent()
+    object ExitAltMode : EditEvent()
+    object EnterAltMode : EditEvent()
+    object EnterCameraMode : EditEvent()
+    object ExitCameraMode : EditEvent()
+    object EnterCommandMode : EditEvent()
+    object ExitCommandMode : EditEvent()
+}
+
+sealed class EditState() {
+    object Normal : EditState()
+    object Paint : EditState()
+    object Alt : EditState()
+    object Camera : EditState()
+    object Command : EditState()
+}
+
+fun command(name: String, init: CommandMap.() -> Unit): CommandMap {
+    val command = CommandMap(name)
+    command.init()
+    return command
+}
+
+sealed class KeyPress {
+    object Up : KeyPress()
+    object Down : KeyPress()
+}
+
+class CommandMap(val name: String) {
+    private val commands = mutableMapOf<Int, (KeyPress) -> Unit>()
+    fun setUp(keycode: Int, up: () -> Unit) {
+        setBoth(keycode, up, {})
+    }
+
+    fun setDown(keycode: Int, down: () -> Unit) {
+        setBoth(keycode, {}, down)
+    }
+
+    fun setBoth(keycode: Int, up: () -> Unit, down: () -> Unit) {
+        commands[keycode] = {
+            when (it) {
+                KeyPress.Down -> down()
+                KeyPress.Up -> up()
+            }
+        }
+    }
+
+    fun execute(keycode: Int, keyPress: KeyPress): Boolean {
+        if (commands.containsKey(keycode)) {
+            commands[keycode]!!(keyPress)
+            return true
+        }
+        return false
+    }
+}
+
 class ConceptScreen(gameState: StateMachine<GameState, GameEvent>) : BasicScreen(gameState) {
-    private var paintMode = false
-    private var altMode = false
+    private fun stateUpdated(state: EditState) {
+        currentControlMap = when (state) {
+            EditState.Alt -> altModeMap
+            EditState.Camera -> cameraModeMap
+            EditState.Command -> commandModeMap
+            EditState.Normal -> normalCommandMap
+            EditState.Paint -> paintModeMap
+        }
+    }
+
+    private val normalCommandMap = command("Normal") {
+        setUp(Input.Keys.UP) { cursorY++ }
+        setUp(Input.Keys.DOWN) { cursorY-- }
+        setUp(Input.Keys.LEFT) { cursorX-- }
+        setUp(Input.Keys.RIGHT) { cursorX++ }
+        setBoth(Input.Keys.Z, { cameraZoom = 0f }, { cameraZoom = 1f })
+        setBoth(Input.Keys.X, { cameraZoom = 0f }, { cameraZoom = -1f })
+        setDown(Input.Keys.ALT_LEFT) { machine.acceptEvent(EditEvent.EnterAltMode) }
+        setDown(Input.Keys.CONTROL_LEFT) { machine.acceptEvent(EditEvent.EnterCommandMode) }
+        setDown(Input.Keys.SHIFT_LEFT) { machine.acceptEvent(EditEvent.EnterCameraMode) }
+        setDown(Input.Keys.C) { insert(SectionDefinition.Corridor) }
+        setDown(Input.Keys.P) { insert(SectionDefinition.Start) }
+        setDown(Input.Keys.B) { insert(SectionDefinition.Boss) }
+        setDown(Input.Keys.G) { insert(SectionDefinition.Goal) }
+        setDown(Input.Keys.L) { insert(SectionDefinition.Loot) }
+        setDown(Input.Keys.H) { insert(SectionDefinition.HackingStation) }
+        setDown(Input.Keys.A) { insert(SectionDefinition.PerimeterGoal) }
+        setDown(Input.Keys.S) { insert(SectionDefinition.Spawner) }
+    }
+
+    private val paintModeMap = command("Paint") {
+        setDown(Input.Keys.ALT_LEFT) { machine.acceptEvent(EditEvent.ExitPaintMode) }
+        setDown(Input.Keys.CONTROL_LEFT) {
+            machine.acceptEvent(EditEvent.EnterCommandMode)
+        }
+        setUp(Input.Keys.UP) {
+            cursorY++
+            insert(sectionToSet)
+        }
+        setUp(Input.Keys.DOWN) {
+            cursorY--
+            insert(sectionToSet)
+        }
+        setUp(Input.Keys.LEFT) {
+            cursorX--
+            insert(sectionToSet)
+        }
+        setUp(Input.Keys.RIGHT) {
+            cursorX++
+            insert(sectionToSet)
+        }
+    }
+
+    private val commandModeMap = command("Command") {
+        setUp(Input.Keys.CONTROL_LEFT) { machine.acceptEvent(EditEvent.ExitCommandMode) }
+        setUp(Input.Keys.S) { saveMap() }
+    }
+
+    private val cameraModeMap = command("Camera") {
+        setUp(Input.Keys.SHIFT_LEFT) {
+            cameraMove.setZero()
+            machine.acceptEvent(EditEvent.ExitCameraMode)
+        }
+        setBoth(Input.Keys.UP, { cameraMove.y = 0f }, { cameraMove.y = -1f })
+        setBoth(Input.Keys.DOWN, { cameraMove.y = 0f }, { cameraMove.y = 1f })
+        setBoth(Input.Keys.LEFT, { cameraMove.y = 0f }, { cameraMove.x = -1f })
+        setBoth(Input.Keys.RIGHT, { cameraMove.y = 0f }, { cameraMove.x = 1f })
+    }
+
+    private val altModeMap = command("Alt") {
+        setUp(Input.Keys.ALT_LEFT) { machine.acceptEvent(EditEvent.ExitAltMode) }
+        setDown(Input.Keys.C) {
+            sectionToSet = SectionDefinition.Corridor
+            machine.acceptEvent(EditEvent.EnterPaintMode)
+        }
+        setDown(Input.Keys.P) {
+            sectionToSet = SectionDefinition.Start
+            machine.acceptEvent(EditEvent.EnterPaintMode)
+        }
+        setDown(Input.Keys.B) {
+            sectionToSet = SectionDefinition.Boss
+            machine.acceptEvent(EditEvent.EnterPaintMode)
+        }
+        setDown(Input.Keys.G) {
+            sectionToSet = SectionDefinition.Goal
+            machine.acceptEvent(EditEvent.EnterPaintMode)
+        }
+        setDown(Input.Keys.L) {
+            sectionToSet = SectionDefinition.Loot
+            machine.acceptEvent(EditEvent.EnterPaintMode)
+        }
+        setDown(Input.Keys.H) {
+            sectionToSet = SectionDefinition.HackingStation
+            machine.acceptEvent(EditEvent.EnterPaintMode)
+        }
+        setDown(Input.Keys.A) {
+            sectionToSet = SectionDefinition.PerimeterGoal
+            machine.acceptEvent(EditEvent.EnterPaintMode)
+        }
+        setDown(Input.Keys.S) {
+            sectionToSet = SectionDefinition.Spawner
+            machine.acceptEvent(EditEvent.EnterPaintMode)
+        }
+    }
+
+    private var currentControlMap: CommandMap = normalCommandMap
+
+    private val machine: StateMachine<EditState, EditEvent> =
+        StateMachine.buildStateMachine<EditState, EditEvent>(EditState.Normal, ::stateUpdated) {
+            state(EditState.Normal) {
+                edge(EditEvent.EnterCameraMode, EditState.Camera) {}
+                edge(EditEvent.EnterAltMode, EditState.Alt) {}
+                edge(EditEvent.EnterCommandMode, EditState.Command) {}
+            }
+            state(EditState.Command) {
+                edge(EditEvent.ExitCommandMode, EditState.Normal) {}
+            }
+            state(EditState.Camera) {
+                edge(EditEvent.ExitCameraMode, EditState.Normal) {}
+            }
+            state(EditState.Alt) {
+                edge(EditEvent.ExitAltMode, EditState.Normal) {}
+                edge(EditEvent.EnterPaintMode, EditState.Paint) {}
+            }
+            state(EditState.Paint) {
+                edge(EditEvent.ExitPaintMode, EditState.Normal) {}
+                edge(EditEvent.EnterCommandMode, EditState.Command) {}
+            }
+        }.apply {
+            initialize()
+        }
+
+
     private var cameraZoom: Float = 0f
     override val camera = OrthographicCamera().apply {
         setToOrtho(false)
-//        position.set(-0.1f, -0.1f, 0f)
     }
     override val viewport = FitViewport(32f, 32f, camera)
-    var gridMap: MutableMap<Coordinate, SectionDefinition> = mutableMapOf(Coordinate(0, 0) to SectionDefinition.Start)
+    private var gridMap: MutableMap<Coordinate, SectionDefinition> = mutableMapOf(Coordinate(0, 0) to SectionDefinition.Start)
     val shapeDrawer by lazy { Assets.shapeDrawer }
 
-    val gridSz = 33f
-    val squarSz = gridSz - 1f
+    private val gridSz = 33f
+    private val squarSz = gridSz - 1f
 
-    val testCoordinate = Coordinate(0, 0)
+    private val testCoordinate = Coordinate(0, 0)
 
-    val minX get() = gridMap.keys.minOf { it.x }
-    val minY get() = gridMap.keys.minOf { it.y }
-    val maxX get() = gridMap.keys.maxOf { it.x }
-    val maxY get() = gridMap.keys.maxOf { it.y }
+    private val minX get() = gridMap.keys.minOf { it.x }
+    private val minY get() = gridMap.keys.minOf { it.y }
+    private val maxX get() = gridMap.keys.maxOf { it.x }
+    private val maxY get() = gridMap.keys.maxOf { it.y }
 
-    var cursorX = 0
-    var cursorY = 0
+    private var cursorX = 0
+    private var cursorY = 0
 
-    var blinkTime = 0f
-    var blink = false
-    val blinkOn = Color(1f, 1f, 1f, 0.5f)
-    val blinkOff = Color(0f, 1f, 0f, 0.25f)
-    var cameraMode = false
-    var commandMode = false
-    val zoomFactor = 0.05f
+    private var blinkTime = 0f
+    private var blink = false
+    private val blinkOn = Color(1f, 1f, 1f, 0.5f)
+    private val blinkOff = Color(0f, 1f, 0f, 0.25f)
+    private val zoomFactor = 0.05f
 
     override fun render(delta: Float) {
         camera.position.x += cameraMove.x
@@ -102,51 +288,12 @@ class ConceptScreen(gameState: StateMachine<GameState, GameEvent>) : BasicScreen
     }
 
     override fun keyDown(keycode: Int): Boolean {
-        when (keycode) {
-            Input.Keys.ALT_LEFT -> altMode = true
-            Input.Keys.CONTROL_LEFT -> commandMode = true
-            Input.Keys.SHIFT_LEFT -> cameraMode = true
-            Input.Keys.SHIFT_RIGHT -> cameraMode = true
-            Input.Keys.UP -> if (cameraMode) cameraMove.y = -1f
-            Input.Keys.DOWN -> if (cameraMode) cameraMove.y = 1f
-            Input.Keys.LEFT -> if (cameraMode) cameraMove.x = -1f
-            Input.Keys.RIGHT -> if (cameraMode) cameraMove.x = 1f
-            Input.Keys.Z -> cameraZoom = 1f
-            Input.Keys.X -> cameraZoom = -1f
-            Input.Keys.C -> if(altMode) setPaintMode(SectionDefinition.Corridor) else insert(SectionDefinition.Corridor)
-            Input.Keys.H -> if(altMode) setPaintMode(SectionDefinition.Start) else insert(SectionDefinition.Start)
-            Input.Keys.B -> if(altMode) setPaintMode(SectionDefinition.Boss) else insert(SectionDefinition.Boss)
-            Input.Keys.G -> if(altMode) setPaintMode(SectionDefinition.Goal) else insert(SectionDefinition.Goal)
-            Input.Keys.L -> if(altMode) setPaintMode(SectionDefinition.Loot) else insert(SectionDefinition.Loot)
-            Input.Keys.H -> if(altMode) setPaintMode(SectionDefinition.HackingStation) else insert(SectionDefinition.HackingStation)
-            Input.Keys.P -> if(altMode) setPaintMode(SectionDefinition.PerimeterGoal) else insert(SectionDefinition.PerimeterGoal)
-            Input.Keys.S -> if (commandMode) saveMap() else if(altMode) setPaintMode(SectionDefinition.Spawner) else insert(SectionDefinition.Spawner)
-            Input.Keys.FORWARD_DEL -> delete()
-            Input.Keys.DEL -> delete()
-            else -> return false
-        }
-        return true
+        return currentControlMap.execute(keycode, KeyPress.Down)
     }
 
-    var sectionToSet: SectionDefinition = SectionDefinition.Corridor
-    private fun setPaintMode(section: SectionDefinition) {
-        sectionToSet = section
-        paintMode = !paintMode
-    }
+    private var sectionToSet: SectionDefinition = SectionDefinition.Corridor
 
     private fun saveMap() {
-        //serialize it to a file
-        val json = Json()
-
-        json.addClassTag<SectionDefinition.Start>("start")
-        json.addClassTag<SectionDefinition.Boss>("boss")
-        json.addClassTag<SectionDefinition.Goal>("goal")
-        json.addClassTag<SectionDefinition.Loot>("loot")
-        json.addClassTag<SectionDefinition.Corridor>("corr")
-        json.addClassTag<SectionDefinition.HackingStation>("hack")
-        json.addClassTag<SectionDefinition.PerimeterGoal>("peri")
-        json.addClassTag<SectionDefinition.Spawner>("spawn")
-        json.addClassTag<Coordinate>("coord")
         var mapAsString = ""
         val currentC = Coordinate(minX, minY)
         for (y in maxY.downTo(minY)) {
@@ -173,34 +320,20 @@ class ConceptScreen(gameState: StateMachine<GameState, GameEvent>) : BasicScreen
         gridMap[coordinate] = sectionType
     }
 
-    val cameraMove = vec2()
+    private val cameraMove = vec2()
+    val maxWidth = 60
+    val maxHeight = 60
 
     override fun keyUp(keycode: Int): Boolean {
-        when (keycode) {
-            Input.Keys.ALT_LEFT -> altMode = false
-            Input.Keys.CONTROL_LEFT -> commandMode = false
-            Input.Keys.UP -> if (cameraMode) cameraMove.y = 0f else cursorY++
-            Input.Keys.DOWN -> if (cameraMode) cameraMove.y = 0f else cursorY--
-            Input.Keys.LEFT -> if (cameraMode) cameraMove.x = 0f else cursorX--
-            Input.Keys.RIGHT -> if (cameraMode) cameraMove.x = 0f else cursorX++
-            Input.Keys.SHIFT_LEFT -> cameraMode = false
-            Input.Keys.SHIFT_RIGHT -> cameraMode = false
-            Input.Keys.Z -> cameraZoom = 0f
-            Input.Keys.X -> cameraZoom = 0f
-            else -> return false
-        }
-
+        currentControlMap.execute(keycode, KeyPress.Up)
         if (cursorY < 0)
-            cursorY = 20
-        if (cursorY > 20)
+            cursorY = maxHeight
+        if (cursorY > maxHeight)
             cursorY = 0
         if (cursorX < 0)
-            cursorX = 20
-        if (cursorX > 20)
+            cursorX = maxWidth
+        if (cursorX > maxWidth)
             cursorX = 0
-
-        if(paintMode)
-            insert(sectionToSet)
 
         return true
     }
