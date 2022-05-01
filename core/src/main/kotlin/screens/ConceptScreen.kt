@@ -27,6 +27,8 @@ sealed class SectionDefinition(val sectionColor: Color, val key: String) {
 }
 
 class ConceptScreen(gameState: StateMachine<GameState, GameEvent>) : BasicScreen(gameState) {
+    private var paintMode = false
+    private var altMode = false
     private var cameraZoom: Float = 0f
     override val camera = OrthographicCamera().apply {
         setToOrtho(false)
@@ -101,6 +103,7 @@ class ConceptScreen(gameState: StateMachine<GameState, GameEvent>) : BasicScreen
 
     override fun keyDown(keycode: Int): Boolean {
         when (keycode) {
+            Input.Keys.ALT_LEFT -> altMode = true
             Input.Keys.CONTROL_LEFT -> commandMode = true
             Input.Keys.SHIFT_LEFT -> cameraMode = true
             Input.Keys.SHIFT_RIGHT -> cameraMode = true
@@ -110,18 +113,25 @@ class ConceptScreen(gameState: StateMachine<GameState, GameEvent>) : BasicScreen
             Input.Keys.RIGHT -> if (cameraMode) cameraMove.x = 1f
             Input.Keys.Z -> cameraZoom = 1f
             Input.Keys.X -> cameraZoom = -1f
-            Input.Keys.C -> insert(SectionDefinition.Corridor)
-            Input.Keys.B -> insert(SectionDefinition.Boss)
-            Input.Keys.G -> insert(SectionDefinition.Goal)
-            Input.Keys.L -> insert(SectionDefinition.Loot)
-            Input.Keys.H -> insert(SectionDefinition.HackingStation)
-            Input.Keys.P -> insert(SectionDefinition.PerimeterGoal)
-            Input.Keys.S -> if (commandMode) saveMap() else insert(SectionDefinition.Spawner)
+            Input.Keys.C -> if(altMode) setPaintMode(SectionDefinition.Corridor) else insert(SectionDefinition.Corridor)
+            Input.Keys.H -> if(altMode) setPaintMode(SectionDefinition.Start) else insert(SectionDefinition.Start)
+            Input.Keys.B -> if(altMode) setPaintMode(SectionDefinition.Boss) else insert(SectionDefinition.Boss)
+            Input.Keys.G -> if(altMode) setPaintMode(SectionDefinition.Goal) else insert(SectionDefinition.Goal)
+            Input.Keys.L -> if(altMode) setPaintMode(SectionDefinition.Loot) else insert(SectionDefinition.Loot)
+            Input.Keys.H -> if(altMode) setPaintMode(SectionDefinition.HackingStation) else insert(SectionDefinition.HackingStation)
+            Input.Keys.P -> if(altMode) setPaintMode(SectionDefinition.PerimeterGoal) else insert(SectionDefinition.PerimeterGoal)
+            Input.Keys.S -> if (commandMode) saveMap() else if(altMode) setPaintMode(SectionDefinition.Spawner) else insert(SectionDefinition.Spawner)
             Input.Keys.FORWARD_DEL -> delete()
             Input.Keys.DEL -> delete()
             else -> return false
         }
         return true
+    }
+
+    var sectionToSet: SectionDefinition = SectionDefinition.Corridor
+    private fun setPaintMode(section: SectionDefinition) {
+        sectionToSet = section
+        paintMode = !paintMode
     }
 
     private fun saveMap() {
@@ -167,6 +177,7 @@ class ConceptScreen(gameState: StateMachine<GameState, GameEvent>) : BasicScreen
 
     override fun keyUp(keycode: Int): Boolean {
         when (keycode) {
+            Input.Keys.ALT_LEFT -> altMode = false
             Input.Keys.CONTROL_LEFT -> commandMode = false
             Input.Keys.UP -> if (cameraMode) cameraMove.y = 0f else cursorY++
             Input.Keys.DOWN -> if (cameraMode) cameraMove.y = 0f else cursorY--
@@ -187,6 +198,10 @@ class ConceptScreen(gameState: StateMachine<GameState, GameEvent>) : BasicScreen
             cursorX = 20
         if (cursorX > 20)
             cursorX = 0
+
+        if(paintMode)
+            insert(sectionToSet)
+
         return true
     }
 }
