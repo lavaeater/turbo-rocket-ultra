@@ -8,6 +8,11 @@ We could also work on varying the sections, to make them not look exactly like e
 One thing that could be cool is zoom in/out for the camera.
 
 We have levels, we have stories, we have rules, we have facts.
+To make this super extra hard-on fun, we would need a simple serializer functionality like the one we have for maps but for rules and such. It shouldn't be too hard, we just needs tons and tons of code for it.
+
+And we also need to load maps (but I think it is basically done).
+
+What we had in the other thingie was standardized consequences - We could work that into this as well, which would be needed to be able to write it 100% in a text editor.
 
 But facts are not saved, not rules either, and I'm not entirely entirely sure about the "levels as pictures"-stuff either.
 
