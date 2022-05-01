@@ -3,11 +3,7 @@ package screens
 import com.badlogic.gdx.Input
 import com.badlogic.gdx.graphics.Color
 import com.badlogic.gdx.graphics.OrthographicCamera
-import com.badlogic.gdx.graphics.g2d.PolygonSpriteBatch
-import com.badlogic.gdx.scenes.scene2d.Stage
-import com.badlogic.gdx.utils.viewport.ExtendViewport
 import com.badlogic.gdx.utils.viewport.FitViewport
-import com.badlogic.gdx.utils.viewport.Viewport
 import gamestate.GameEvent
 import gamestate.GameState
 import ktx.graphics.use
@@ -25,7 +21,6 @@ sealed class SectionDefinition(val sectionColor: Color) {
     object PerimeterGoal : SectionDefinition(Color.ORANGE)
     object HackingStation : SectionDefinition(Color.PURPLE)
     object Corridor : SectionDefinition(Color.GRAY)
-
 }
 
 class ConceptScreen(gameState: StateMachine<GameState, GameEvent>) : BasicScreen(gameState) {
@@ -93,9 +88,28 @@ class ConceptScreen(gameState: StateMachine<GameState, GameEvent>) : BasicScreen
             Input.Keys.DOWN -> if(cameraMode) cameraMove.y = 1f
             Input.Keys.LEFT -> if(cameraMode) cameraMove.x = -1f
             Input.Keys.RIGHT -> if(cameraMode) cameraMove.x = 1f
+            Input.Keys.C -> insert(SectionDefinition.Corridor)
+            Input.Keys.B -> insert(SectionDefinition.Boss)
+            Input.Keys.G -> insert(SectionDefinition.Goal)
+            Input.Keys.L -> insert(SectionDefinition.Loot)
+            Input.Keys.H -> insert(SectionDefinition.HackingStation)
+            Input.Keys.P -> insert(SectionDefinition.PerimeterGoal)
+            Input.Keys.S -> insert(SectionDefinition.Spawner)
+            Input.Keys.FORWARD_DEL -> delete()
+            Input.Keys.DEL -> delete()
             else -> return false
         }
         return true
+    }
+
+    private fun delete() {
+        if(gridMap.count() > 1)
+            gridMap.remove(Coordinate(cursorX, cursorY))
+    }
+
+    private fun insert(sectionType: SectionDefinition) {
+        val coordinate = Coordinate(cursorX, cursorY)
+        gridMap[coordinate] = sectionType
     }
 
     val cameraMove = vec2()
