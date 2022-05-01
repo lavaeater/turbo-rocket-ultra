@@ -10,6 +10,7 @@ kanban-plugin: basic
 - [ ] [[Intent-based Context Action]]
 - [ ] [[Tower Mechanics]]
 - [ ] [[Zombies throwing projectiles]]
+- [ ] [[More sound FX]]
 - [ ] [[Facts for Gameplay]]
 - [ ] [[Thought Bubbles]]
 - [ ] [[Gibs and Body Parts II]]
