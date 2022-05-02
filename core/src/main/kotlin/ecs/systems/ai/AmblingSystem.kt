@@ -23,7 +23,7 @@ import ktx.math.vec2
 import map.grid.Coordinate
 import map.grid.GridMapManager
 import physics.*
-import turbofacts.NewFactsOfTheWorld
+import turbofacts.TurboFactsOfTheWorld
 
 
 class AmblingSystem : IteratingSystem(allOf(Amble::class, EnemyComponent::class, TransformComponent::class).get()) {
@@ -72,13 +72,13 @@ fun progressPath(enemyComponent: EnemyComponent, currentPosition: Vector2): Bool
         enemyComponent.nextPosition = enemyComponent.path.removeFirst()
         enemyComponent.needsNewNextPosition = false
         stateBooleanFact(false, "Enemy", enemyComponent.id.toString(), "ReachedWayPoint")
-        inject<NewFactsOfTheWorld>().setBooleanFact(false, "Enemy", enemyComponent.id.toString(), "ReachedWayPoint")
+        inject<TurboFactsOfTheWorld>().setBooleanFact(false, "Enemy", enemyComponent.id.toString(), "ReachedWayPoint")
     }
     if (currentPosition.dst(enemyComponent.nextPosition) <= 1f) {
         enemyComponent.nextPosition = vec2()
         enemyComponent.needsNewNextPosition = true
         stateBooleanFact(true, "Enemy", enemyComponent.id.toString(), "ReachedWayPoint")
-        inject<NewFactsOfTheWorld>().setBooleanFact(true, "Enemy", enemyComponent.id.toString(), "ReachedWayPoint")
+        inject<TurboFactsOfTheWorld>().setBooleanFact(true, "Enemy", enemyComponent.id.toString(), "ReachedWayPoint")
     }
 
     val direction = enemyComponent.nextPosition.cpy().sub(currentPosition).nor()

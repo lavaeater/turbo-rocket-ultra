@@ -1,6 +1,12 @@
 package turbofacts
 
 object Factoids {
+    const val MaxSpawnedEnemies = "MaxSpawnedEnemies"
+    const val MaxEnemies = "MaxEnemies"
+    const val NumberOfObjectives = "NumberOfObjectives"
+    const val CurrentLevel = "CurrentLevel"
+    const val BulletCount = "BulletCount"
+    const val EnemyCount = "EnemyCount"
     const val Context = "Context"
     const val MetNumberOfNpcs = "MetNumberOfNpcs"
     const val Score = "Score"

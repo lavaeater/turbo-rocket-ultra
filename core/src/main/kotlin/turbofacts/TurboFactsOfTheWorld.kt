@@ -2,7 +2,7 @@ package turbofacts
 
 import ecs.systems.enemy.multiKey
 
-class NewFactsOfTheWorld(private val onFactUpdated: (key: String) -> Unit = {}) {
+class TurboFactsOfTheWorld(private val onFactUpdated: (key: String) -> Unit = {}) {
     val facts = mutableMapOf<String, Factoid>()
 
     fun updated(key: String) {
@@ -210,7 +210,7 @@ class NewFactsOfTheWorld(private val onFactUpdated: (key: String) -> Unit = {}) 
 
     var silent = false
 
-    fun silent(block: NewFactsOfTheWorld.()->Unit) {
+    fun silent(block: TurboFactsOfTheWorld.()->Unit) {
         silent = true
         block()
         silent = false

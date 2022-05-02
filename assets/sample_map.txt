@@ -1,0 +1,41 @@
+ccchc****
+c*c*c**w*
+c*cccccgb
+c*c*c****
+c*ccc****
+c**l*****
+c********
+cw*******
+c********
+c********
+c********
+c********
+c********
+s********
+---------
+name
+Level Five
+start
+Destroy all the Mutato-Emitters, they are turning these hapless and mindless
+
+creatures into blood-thirsty monsters craving flesh!
+success
+Well done.
+
+We are all very pleased with your performance, keep this up and you will notice
+
+our pleasure on your paycheck.
+
+fail
+Awww, that didn't go to well
+Not to worry, you will have more opportunities
+
+max_enemies
+300
+max_spawned_enemies
+20
+stories
+start-story
+level-failed
+level-complete
+basicy-story

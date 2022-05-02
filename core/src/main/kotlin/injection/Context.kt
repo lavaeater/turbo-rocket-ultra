@@ -48,7 +48,7 @@ import physics.ContactManager
 import ui.Hud
 import ui.IUserInterface
 import messaging.MessageHandler
-import turbofacts.NewFactsOfTheWorld
+import turbofacts.TurboFactsOfTheWorld
 import turbofacts.TurboStoryManager
 
 object Context {
@@ -89,7 +89,7 @@ object Context {
             bindSingleton(RayHandler(inject(), 500, 500))
             bindSingleton(MessageHandler())
             bindSingleton(TurboStoryManager())
-            bindSingleton(NewFactsOfTheWorld { key -> inject<MessageHandler>().sendMessage(Message.FactUpdated(key)) })
+            bindSingleton(TurboFactsOfTheWorld { key -> inject<MessageHandler>().sendMessage(Message.FactUpdated(key)) })
             bindSingleton(getEngine())
             bindSingleton(listOf(BloomEffect(), CrtEffect(), OldTvEffect()))
             bindSingleton(VfxManager(Pixmap.Format.RGBA8888))

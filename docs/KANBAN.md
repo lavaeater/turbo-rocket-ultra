@@ -6,6 +6,7 @@ kanban-plugin: basic
 
 ## Todo
 
+- [ ] [[A Nice Logo]]
 - [ ] [[Enemy Aggression]]
 - [ ] [[Intent-based Context Action]]
 - [ ] [[Tower Mechanics]]
@@ -24,13 +25,13 @@ kanban-plugin: basic
 - [ ] [[Transitions]]
 - [ ] [[Zombies with guns]]
 - [ ] [[BehaviorTree Facts]]
-- [ ] [[A Nice Logo]]
 - [ ] [[Hierarchical Facts]]
 - [ ] [[New Look and Feel]]
 
 
 ## Doing
 
+- [ ] [[There's Levels to This]]
 
 
 ## Done

@@ -1,10 +1,14 @@
 package turbofacts
 
+import ai.builders.fail
 import audio.AudioPlayer
+import com.badlogic.gdx.Gdx
+import com.charleskorn.kaml.Yaml
 import factories.factsOfTheWorld
 import gamestate.GameEvent
 import gamestate.GameState
 import injection.Context.inject
+import kotlinx.serialization.encodeToString
 import messaging.Message
 import messaging.MessageHandler
 import statemachine.StateMachine
@@ -116,6 +120,16 @@ object StoryHelper {
                 }
             }
         }
+    }
+
+    val allStories: MutableMap<String, TurboStory> by lazy {
+        mutableMapOf(
+            "start-story" to levelStartStory,
+            "level-failed" to levelFailedStory,
+            "level-complete" to levelCompleteStory,
+            "enemy-killcount" to enemyKillCountStory,
+            "basicy-story" to basicStory
+        )
     }
     val baseStories by lazy {
         listOf(levelStartStory, levelFailedStory, levelCompleteStory).toTypedArray()
