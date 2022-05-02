@@ -106,6 +106,8 @@ class GameScreen(private val gameState: StateMachine<GameState, GameEvent>) : Kt
     }
 
     private fun loadSampleMap(): Pair<Map<Coordinate, GridMapSection>, TileGraph> {
+        StoryHelper.saveAllStories()
+        storyManager.addStories(*StoryHelper.baseStories)
         return GridMapGenerator.generateFromMapFile(MapLoader.loadNewMap("sample_map.txt"))
     }
 

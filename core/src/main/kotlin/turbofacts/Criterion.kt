@@ -1,11 +1,15 @@
 package turbofacts
 
 import injection.Context
+import kotlinx.serialization.SerialName
+import kotlinx.serialization.Serializable
 
-sealed class Criterion(val factKey: String) {
+@Serializable
+@SerialName("criterion")
+sealed class Criterion {
     protected val facts by lazy { Context.inject<TurboFactsOfTheWorld>() }
     abstract fun checkRule(): Boolean
-    sealed class BooleanCriteria(factKey: String) : Criterion(factKey) {
+    sealed class BooleanCriteria(val factKey: String) : Criterion() {
         sealed class All(factKey: String) : BooleanCriteria(factKey) {
             class AreTrue(factKey: String) : All(factKey) {
                 override fun checkRule(): Boolean {

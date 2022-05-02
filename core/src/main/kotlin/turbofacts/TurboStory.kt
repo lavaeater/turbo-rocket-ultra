@@ -1,5 +1,9 @@
 package turbofacts
 
+import kotlinx.serialization.SerialName
+
+@kotlinx.serialization.Serializable
+@SerialName("story")
 class TurboStory(
     val name: String,
     val description: String,

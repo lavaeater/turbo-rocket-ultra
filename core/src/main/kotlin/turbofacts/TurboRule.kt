@@ -1,7 +1,10 @@
 package turbofacts
 
 import ecs.systems.enemy.multiKey
+import kotlinx.serialization.SerialName
 
+@kotlinx.serialization.Serializable
+@SerialName("rule")
 class TurboRule(val name: String, val criteria: List<Criterion>) {
     fun checkRule(): Boolean {
         return criteria.all { it.checkRule() }

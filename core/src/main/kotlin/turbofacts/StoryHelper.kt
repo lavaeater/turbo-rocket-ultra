@@ -1,10 +1,13 @@
 package turbofacts
 
 import audio.AudioPlayer
+import com.badlogic.gdx.Gdx
+import com.charleskorn.kaml.Yaml
 import factories.factsOfTheWorld
 import gamestate.GameEvent
 import gamestate.GameState
 import injection.Context.inject
+import kotlinx.serialization.encodeToString
 import messaging.Message
 import messaging.MessageHandler
 import statemachine.StateMachine
@@ -119,5 +122,11 @@ object StoryHelper {
     }
     val baseStories by lazy {
         listOf(levelStartStory, levelFailedStory, levelCompleteStory).toTypedArray()
+    }
+
+    fun saveAllStories() {
+        val fileName = "rules.yaml"
+        val yaml = baseStories.map { Yaml.default.encodeToString(it) }.joinToString { "\n" }
+        Gdx.files.local(fileName).writeString(yaml, false)
     }
 }
