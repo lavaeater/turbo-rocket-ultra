@@ -6,11 +6,13 @@ import com.badlogic.gdx.graphics.Color
 import com.badlogic.gdx.graphics.OrthographicCamera
 import com.badlogic.gdx.scenes.scene2d.Stage
 import com.badlogic.gdx.scenes.scene2d.actions.MoveToAction
-import com.badlogic.gdx.utils.Align.center
+import com.badlogic.gdx.scenes.scene2d.ui.TextField
 import com.badlogic.gdx.utils.viewport.ExtendViewport
 import com.badlogic.gdx.utils.viewport.FitViewport
 import gamestate.GameEvent
 import gamestate.GameState
+import ktx.actors.onKeyDown
+import ktx.actors.setKeyboardFocus
 import ktx.graphics.use
 import ktx.math.vec2
 import ktx.scene2d.*
@@ -86,8 +88,53 @@ class MapEditorScreen(gameState: StateMachine<GameState, GameEvent>) : BasicScre
     private val commandModeMap = command("Command") {
         setUp(Input.Keys.CONTROL_LEFT, "Command Mode") { machine.acceptEvent(EditEvent.ExitCommandMode) }
         setUp(Input.Keys.X, "Exit Editor") { exitEditor() }
+        setUp(Input.Keys.F, "Set File Name") { setFileName() }
         setUp(Input.Keys.S, "Save Map") { saveMap() }
         setUp(Input.Keys.N, "New Map") { newMap() }
+    }
+
+    var fileName = "map"
+    lateinit var fileNameTextField: TextField
+
+    val fileNameDialog by lazy {
+        val d = scene2d.dialog("Set name of map file") {
+            label("File:")
+            fileNameTextField = textField(fileName) {
+                setKeyboardFocus(true)
+                onKeyDown {
+                    if(it == Input.Keys.ENTER) {
+                        fileName = this.text
+                    }
+                    if(it == Input.Keys.ENTER || it == Input.Keys.ESCAPE) {
+                        Gdx.input.inputProcessor = previousProcessor
+                        this@dialog.isVisible = false
+                    }
+                }
+            }
+            pack()
+            isVisible = false
+        }
+        stage.addActor(d)
+        d.setPosition(stage.width / 2 - dialog.width / 2, stage.height / 2 - dialog.height / 2)
+        d
+    }
+    private val fileNameCommandMap = command("FileName") {
+        setDown(Input.Keys.ENTER, "Set Name") {
+            fileName = fileNameTextField.text
+            fileNameDialog.isVisible = false
+            currentControlMap = commandModeMap
+        }
+        setDown(Input.Keys.ESCAPE, "Cancel") {
+            fileNameDialog.isVisible = false
+            currentControlMap = commandModeMap
+        }
+    }
+    var previousProcessor = Gdx.input.inputProcessor
+
+    private fun setFileName() {
+        fileNameDialog.isVisible = true
+        previousProcessor = Gdx.input.inputProcessor
+        Gdx.input.inputProcessor = stage
     }
 
     private val dialogModeMap = command("Dialog") {
@@ -96,7 +143,7 @@ class MapEditorScreen(gameState: StateMachine<GameState, GameEvent>) : BasicScre
     }
     var executeDialogYes: () -> Unit = {}
     var executeDialogNo: () -> Unit = {}
-    val dialog by lazy {
+    private val dialog by lazy {
         val d = scene2d.dialog("Save changes") {
             center()
             label("This map has changes,\ndo you wish to save them? (Y/N)")
@@ -230,6 +277,7 @@ class MapEditorScreen(gameState: StateMachine<GameState, GameEvent>) : BasicScre
                 right()
                 verticalGroup {
                     left()
+                    boundLabel({ "Map: $fileName" })
                     boundLabel({ currentControlMap.name })
                     boundLabel({ currentControlMap.toString() })
                 }
@@ -334,34 +382,34 @@ class MapEditorScreen(gameState: StateMachine<GameState, GameEvent>) : BasicScre
         }
         mapAsString += "\n"
         mapAsString += """name
-            
-            start
-            
-            success
-            
-            fail
-            
-            max_enemies
-            
-            max_spawned_enemies
-            
-            stories
-            start-story
-            level-failed
-            level-complete
-            basic-story            
+$fileName            
+start
+
+success
+
+fail
+
+max_enemies
+10
+max_spawned_enemies
+20
+stories
+start-story
+level-failed
+level-complete
+basic-story            
         """.trimIndent()
-        var potentialFileName = "text_maps/new_map_$mapIndex.txt"
-        var handle = Gdx.files.local(potentialFileName)
-        if(handle.exists()) {
-            var lookingForNewName = true
-            while(lookingForNewName) {
-                mapIndex++
-                potentialFileName = "text_maps/new_map_$mapIndex.txt"
-                handle = Gdx.files.local(potentialFileName)
-                lookingForNewName = handle.exists()
-            }
-        }
+        val potentialFileName = "text_maps/$fileName.txt"
+        val handle = Gdx.files.local(potentialFileName)
+//        if(handle.exists()) {
+//            var lookingForNewName = true
+//            while(lookingForNewName) {
+//                mapIndex++
+//                potentialFileName = "text_maps/new_map_$mapIndex.txt"
+//                handle = Gdx.files.local(potentialFileName)
+//                lookingForNewName = handle.exists()
+//            }
+//        }
         handle.writeString(mapAsString, false)
     }
 

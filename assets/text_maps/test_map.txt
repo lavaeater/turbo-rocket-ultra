@@ -1,0 +1,28 @@
+g
+c
+w
+w
+w
+w
+w
+w
+c
+s
+-
+name
+            
+            start
+            
+            success
+            
+            fail
+            
+            max_enemies
+            
+            max_spawned_enemies
+            
+            stories
+            start-story
+            level-failed
+            level-complete
+            basic-story            
