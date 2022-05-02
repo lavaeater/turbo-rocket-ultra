@@ -106,25 +106,11 @@ class GameScreen(private val gameState: StateMachine<GameState, GameEvent>) : Kt
     }
 
     private fun loadSampleMap(): Pair<Map<Coordinate, GridMapSection>, TileGraph> {
-        storyManager.addStories(*StoryHelper.baseStories)
-        return GridMapGenerator.generateFromMapFile(MapLoader.loadNewMap("sample_map.txt"))
-    }
-
-    private fun loadMapOne() : Pair<Map<Coordinate, GridMapSection>, TileGraph> {
-        CounterObject.maxEnemies = 120
-        CounterObject.maxSpawnedEnemies = 240
-
-        storyManager.addStories(*StoryHelper.baseStories)
-        storyManager.addStory(StoryHelper.enemyKillCountStory)
-        return GridMapGenerator.generateFromMapFile(MapLoader.loadMap("levelone.json"))
+        return GridMapGenerator.generateFromMapFile(MapLoader.loadNewMap("text_maps/newmap.txt"))
     }
 
     private fun loadMapTwo(): Pair<Map<Coordinate, GridMapSection>, TileGraph>  {
-        CounterObject.maxEnemies = 100
-        CounterObject.maxSpawnedEnemies= 1024
-        storyManager.addStories(*StoryHelper.baseStories)
-        storyManager.addStory(StoryHelper.basicStory)
-        return GridMapGenerator.generateFromMapFile(MapLoader.loadMap("leveltwo.json"))
+        return GridMapGenerator.generateFromMapFile(MapLoader.loadNewMap("text_maps/sample_map.txt"))
     }
 
     private fun loadMapThree(): Pair<Map<Coordinate, GridMapSection>, TileGraph>  {
@@ -311,7 +297,7 @@ D1B67A
         CounterObject.maxEnemies =  (8f.pow(CounterObject.currentLevel).roundToInt() * 2).coerceAtMost(MAX_ENEMIES)
         CounterObject.maxSpawnedEnemies = CounterObject.maxEnemies * 2
         val map = when(level) {
-            1 -> loadSampleMap()//loadMapOne()//loadMapZero()//
+            1 -> loadSampleMap()
             2 -> loadMapTwo()
             3 -> loadMapThree()
             4 -> loadMapFour()

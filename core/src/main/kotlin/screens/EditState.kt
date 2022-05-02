@@ -6,4 +6,5 @@ sealed class EditState {
     object Alt : EditState()
     object Camera : EditState()
     object Command : EditState()
+    object DialogMode: EditState()
 }

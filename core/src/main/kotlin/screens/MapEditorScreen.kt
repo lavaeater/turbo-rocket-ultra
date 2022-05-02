@@ -6,15 +6,16 @@ import com.badlogic.gdx.graphics.Color
 import com.badlogic.gdx.graphics.OrthographicCamera
 import com.badlogic.gdx.scenes.scene2d.Stage
 import com.badlogic.gdx.scenes.scene2d.actions.MoveToAction
+import com.badlogic.gdx.scenes.scene2d.ui.TextField
 import com.badlogic.gdx.utils.viewport.ExtendViewport
 import com.badlogic.gdx.utils.viewport.FitViewport
 import gamestate.GameEvent
 import gamestate.GameState
+import ktx.actors.onKeyDown
+import ktx.actors.setKeyboardFocus
 import ktx.graphics.use
 import ktx.math.vec2
-import ktx.scene2d.actors
-import ktx.scene2d.horizontalGroup
-import ktx.scene2d.verticalGroup
+import ktx.scene2d.*
 import map.grid.Coordinate
 import statemachine.StateMachine
 import tru.Assets
@@ -34,10 +35,12 @@ class MapEditorScreen(gameState: StateMachine<GameState, GameEvent>) : BasicScre
             EditState.Command -> commandModeMap
             EditState.Normal -> normalCommandMap
             EditState.Paint -> paintModeMap
+            EditState.DialogMode -> dialogModeMap
         }
     }
 
     private val normalCommandMap = command("Normal") {
+        setUp(Input.Keys.DEL, "Delete") { delete() }
         setUp(Input.Keys.UP, "Move Up") { cursorY++ }
         setUp(Input.Keys.DOWN, "Move Down") { cursorY-- }
         setUp(Input.Keys.LEFT, "Move Left") { cursorX-- }
@@ -56,6 +59,8 @@ class MapEditorScreen(gameState: StateMachine<GameState, GameEvent>) : BasicScre
         setDown(Input.Keys.A, "Perimeter") { insert(SectionDefinition.PerimeterGoal) }
         setDown(Input.Keys.S, "Spawner") { insert(SectionDefinition.Spawner) }
     }
+
+    private var isDirty = false
 
     private val paintModeMap = command("Paint") {
         setDown(Input.Keys.ALT_LEFT, "Paint Mode") { machine.acceptEvent(EditEvent.ExitPaintMode) }
@@ -83,11 +88,110 @@ class MapEditorScreen(gameState: StateMachine<GameState, GameEvent>) : BasicScre
     private val commandModeMap = command("Command") {
         setUp(Input.Keys.CONTROL_LEFT, "Command Mode") { machine.acceptEvent(EditEvent.ExitCommandMode) }
         setUp(Input.Keys.X, "Exit Editor") { exitEditor() }
+        setUp(Input.Keys.F, "Set File Name") { setFileName() }
         setUp(Input.Keys.S, "Save Map") { saveMap() }
+        setUp(Input.Keys.N, "New Map") { newMap() }
+    }
+
+    var fileName = "map"
+    lateinit var fileNameTextField: TextField
+
+    val fileNameDialog by lazy {
+        val d = scene2d.dialog("Set name of map file") {
+            label("File:")
+            fileNameTextField = textField(fileName) {
+                setKeyboardFocus(true)
+                onKeyDown {
+                    if(it == Input.Keys.ENTER) {
+                        fileName = this.text
+                    }
+                    if(it == Input.Keys.ENTER || it == Input.Keys.ESCAPE) {
+                        Gdx.input.inputProcessor = previousProcessor
+                        this@dialog.isVisible = false
+                    }
+                }
+            }
+            pack()
+            isVisible = false
+        }
+        stage.addActor(d)
+        d.setPosition(stage.width / 2 - dialog.width / 2, stage.height / 2 - dialog.height / 2)
+        d
+    }
+    private val fileNameCommandMap = command("FileName") {
+        setDown(Input.Keys.ENTER, "Set Name") {
+            fileName = fileNameTextField.text
+            fileNameDialog.isVisible = false
+            currentControlMap = commandModeMap
+        }
+        setDown(Input.Keys.ESCAPE, "Cancel") {
+            fileNameDialog.isVisible = false
+            currentControlMap = commandModeMap
+        }
+    }
+    var previousProcessor = Gdx.input.inputProcessor
+
+    private fun setFileName() {
+        fileNameDialog.isVisible = true
+        previousProcessor = Gdx.input.inputProcessor
+        Gdx.input.inputProcessor = stage
+    }
+
+    private val dialogModeMap = command("Dialog") {
+        setDown(Input.Keys.Y, "Yes") { executeDialogYes() }
+        setDown(Input.Keys.N, "No") { executeDialogNo() }
+    }
+    var executeDialogYes: () -> Unit = {}
+    var executeDialogNo: () -> Unit = {}
+    private val dialog by lazy {
+        val d = scene2d.dialog("Save changes") {
+            center()
+            label("This map has changes,\ndo you wish to save them? (Y/N)")
+            pack()
+            isVisible = false
+        }
+        stage.addActor(d)
+        d.setPosition(stage.width / 2 - d.width / 2, stage.height / 2 - d.height / 2)
+        d
+    }
+
+    private fun handleDirty(exit: Boolean = false) {
+        if (isDirty) {
+            executeDialogYes = {
+                dialog.isVisible = false
+                saveMap()
+                if (exit) reallyExitEditor() else reallyNewMap()
+            }
+            executeDialogNo = {
+                dialog.isVisible = false
+                if (exit) reallyExitEditor() else reallyNewMap()
+            }
+            currentControlMap = dialogModeMap
+            dialog.isVisible = true
+        }
+    }
+
+    private fun newMap() {
+        handleDirty(false)
+    }
+
+    private fun reallyNewMap() {
+        val keys = gridMap.keys.toTypedArray()
+        for ((index, key) in keys.withIndex()) {
+            if (index > 0) {
+                gridMap.remove(key)
+            }
+        }
+        isDirty = false
+        mapIndex++
+        machine.acceptEvent(EditEvent.ExitCommandMode)
     }
 
     private fun exitEditor() {
-        saveMap()
+        handleDirty(true)
+    }
+
+    private fun reallyExitEditor() {
         gameState.acceptEvent(GameEvent.ExitMapEditor)
     }
 
@@ -147,6 +251,7 @@ class MapEditorScreen(gameState: StateMachine<GameState, GameEvent>) : BasicScre
             }
             state(EditState.Command) {
                 edge(EditEvent.ExitCommandMode, EditState.Normal) {}
+                edge(EditEvent.EnterDialogMode, EditState.Normal) {}
             }
             state(EditState.Camera) {
                 edge(EditEvent.ExitCameraMode, EditState.Normal) {}
@@ -172,6 +277,7 @@ class MapEditorScreen(gameState: StateMachine<GameState, GameEvent>) : BasicScre
                 right()
                 verticalGroup {
                     left()
+                    boundLabel({ "Map: $fileName" })
                     boundLabel({ currentControlMap.name })
                     boundLabel({ currentControlMap.toString() })
                 }
@@ -257,6 +363,7 @@ class MapEditorScreen(gameState: StateMachine<GameState, GameEvent>) : BasicScre
         return currentControlMap.execute(keycode, KeyPress.Down)
     }
 
+    private var mapIndex = 0
     private fun saveMap() {
         var mapAsString = ""
         val currentC = Coordinate(minX, minY)
@@ -275,29 +382,51 @@ class MapEditorScreen(gameState: StateMachine<GameState, GameEvent>) : BasicScre
         }
         mapAsString += "\n"
         mapAsString += """name
-            
-            start
-            
-            success
-            
-            fail
-            
-            max_enemies
-            
-            max_spawned_enemies
+$fileName            
+start
+
+success
+
+fail
+
+max_enemies
+10
+max_spawned_enemies
+20
+stories
+start-story
+level-failed
+level-complete
+basic-story            
         """.trimIndent()
-        val handle = Gdx.files.local("new_map.txt")
+        val potentialFileName = "text_maps/$fileName.txt"
+        val handle = Gdx.files.local(potentialFileName)
+//        if(handle.exists()) {
+//            var lookingForNewName = true
+//            while(lookingForNewName) {
+//                mapIndex++
+//                potentialFileName = "text_maps/new_map_$mapIndex.txt"
+//                handle = Gdx.files.local(potentialFileName)
+//                lookingForNewName = handle.exists()
+//            }
+//        }
         handle.writeString(mapAsString, false)
     }
 
     private fun delete() {
-        if (gridMap.count() > 1)
+        val coordinate = Coordinate(cursorX, cursorY)
+        if (gridMap.count() > 1 && gridMap.containsKey(coordinate)) {
             gridMap.remove(Coordinate(cursorX, cursorY))
+            isDirty = true
+        }
     }
 
     private fun insert(sectionType: SectionDefinition) {
         val coordinate = Coordinate(cursorX, cursorY)
-        gridMap[coordinate] = sectionType
+        if (!gridMap.containsKey(coordinate) || gridMap[coordinate] != sectionType) {
+            gridMap[coordinate] = sectionType
+            isDirty = true
+        }
     }
 
     override fun keyUp(keycode: Int): Boolean {
