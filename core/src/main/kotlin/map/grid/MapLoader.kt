@@ -21,7 +21,7 @@ object MapLoader {
         fileHandle.writeString(jsonString, false)
     }
 
-    val keyWords = listOf("name", "start", "success", "fail", "max_enemies", "max_spawned_enemies")
+    val keyWords = listOf("name", "start", "success", "fail", "max_enemies", "max_spawned_enemies", "stories")
 
     fun loadNewMap(fileName: String): MapData {
         var lines = Gdx.files.local(fileName).readString().lines()
@@ -32,9 +32,9 @@ object MapLoader {
         val sections = mutableMapOf<String, MutableList<String>>()
         var inSection = false
         var currentSection = "name"
-        for(line in lines) {
-            if(inSection) {
-                if(!keyWords.contains(line.trim()))
+        for (line in lines) {
+            if (inSection) {
+                if (!keyWords.contains(line.trim()))
                     sections[currentSection]?.add(line.trim())
                 else {
                     currentSection = line.trim()
@@ -42,7 +42,7 @@ object MapLoader {
                 }
 
             } else {
-                if(keyWords.contains(line.trim())) {
+                if (keyWords.contains(line.trim())) {
                     inSection = true
                     currentSection = line.trim()
                     sections[currentSection] = mutableListOf()
@@ -53,12 +53,14 @@ object MapLoader {
         return MapData(
             sections["name"]!!.joinToString(""),
             sections["start"]!!.joinToString("\n"),
-        sections["success"]!!.joinToString("\n"),
-        sections["fail"]!!.joinToString("\n"),
-        "",
-        sections["max_enemies"]!!.joinToString("").trim().toInt(),
-        sections["max_spawned_enemies"]!!.joinToString("").trim().toInt(),
-        mapDefinition)
+            sections["success"]!!.joinToString("\n"),
+            sections["fail"]!!.joinToString("\n"),
+            "",
+            sections["max_enemies"]!!.joinToString("").trim().toInt(),
+            sections["max_spawned_enemies"]!!.joinToString("").trim().toInt(),
+            sections["stories"]!!.map { it.trim() },
+            mapDefinition
+        )
 
     }
 }

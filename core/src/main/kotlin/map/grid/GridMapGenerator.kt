@@ -20,6 +20,8 @@ import map.snake.random
 import map.snake.randomPoint
 import screens.CounterObject
 import turbofacts.Factoids
+import turbofacts.StoryHelper
+import turbofacts.TurboStoryManager
 
 class GridMapGenerator {
     companion object {
@@ -45,6 +47,7 @@ class GridMapGenerator {
         }
 
         private val factsOfTheWorld by lazy { factsOfTheWorld() }
+        private val storyManager: TurboStoryManager by lazy { inject() }
 
         fun generateFromMapFile(mapData: MapData): Pair<Map<Coordinate, GridMapSection>, TileGraph> {
             Light.setGlobalContactFilter(
@@ -60,7 +63,9 @@ class GridMapGenerator {
             factsOfTheWorld.setStringFact(mapData.failMessage, Factoids.MapFailMessage)
             CounterObject.maxEnemies = mapData.maxEnemies
             CounterObject.maxSpawnedEnemies = mapData.maxSpawnedEnemies
-            //Embed stories in level files...
+
+            storyManager.addStories(*StoryHelper.allStories.filterKeys { mapData.storyKeys.contains(it) }.values.toTypedArray())
+
             return generateFromDefintion(mapData.mapDefinition)
         }
 

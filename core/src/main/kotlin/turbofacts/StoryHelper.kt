@@ -1,5 +1,6 @@
 package turbofacts
 
+import ai.builders.fail
 import audio.AudioPlayer
 import com.badlogic.gdx.Gdx
 import com.charleskorn.kaml.Yaml
@@ -120,13 +121,17 @@ object StoryHelper {
             }
         }
     }
+
+    val allStories: MutableMap<String, TurboStory> by lazy {
+        mutableMapOf(
+            "start-story" to levelStartStory,
+            "level-failed" to levelFailedStory,
+            "level-complete" to levelCompleteStory,
+            "enemy-killcount" to enemyKillCountStory,
+            "basicy-story" to basicStory
+        )
+    }
     val baseStories by lazy {
         listOf(levelStartStory, levelFailedStory, levelCompleteStory).toTypedArray()
-    }
-
-    fun saveAllStories() {
-        val fileName = "rules.yaml"
-        val yaml = baseStories.map { Yaml.default.encodeToString(it) }.joinToString { "\n" }
-        Gdx.files.local(fileName).writeString(yaml, false)
     }
 }

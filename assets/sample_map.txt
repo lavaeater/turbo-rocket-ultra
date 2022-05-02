@@ -34,3 +34,8 @@ max_enemies
 300
 max_spawned_enemies
 20
+stories
+start-story
+level-failed
+level-complete
+basicy-story

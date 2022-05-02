@@ -4,7 +4,7 @@ class TurboStoryBuilder: Builder<TurboStory> {
     var name = "Story"
     var description = "Describe your story"
     val rules = mutableListOf<TurboRule>()
-    var consequence: (List<Criterion>) -> Unit = {}
+    var consequence: (TurboStory) -> Unit = {}
     var initializer: ()->Unit = {}
     var repeat = true
 
