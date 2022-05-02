@@ -8,8 +8,6 @@ kanban-plugin: basic
 
 - [ ] [[A Nice Logo]]
 - [ ] [[Enemy Aggression]]
-- [ ] [[Intent-based Context Action]]
-- [ ] [[Tower Mechanics]]
 - [ ] [[Zombies throwing projectiles]]
 - [ ] [[More sound FX]]
 - [ ] [[Facts for Gameplay]]
@@ -25,18 +23,22 @@ kanban-plugin: basic
 - [ ] [[Transitions]]
 - [ ] [[Zombies with guns]]
 - [ ] [[BehaviorTree Facts]]
+- [ ] [[Serializing Stories, Rules and Criteria]]
 - [ ] [[Hierarchical Facts]]
 - [ ] [[New Look and Feel]]
 
 
 ## Doing
 
-- [ ] [[There's Levels to This]]
+- [ ] [[Intent-based Context Action]]
+- [ ] [[Tower Mechanics]]
+- [ ] [[Enemy Aggression]]
 
 
 ## Done
 
 **Complete**
+- [x] [[There's Levels to This]]
 - [x] [[Intent-based Weapon Select]]
 - [x] [[New Gun Sprites]]
 - [x] [[Guns as Entities]]

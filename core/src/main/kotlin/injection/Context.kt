@@ -136,7 +136,6 @@ object Context {
             //addSystem(WeaponUpdateSystem())
             addSystem(WeaponReloadSystem())
             addSystem(UpdatePlayerStatsSystem())
-            //addSystem(PhysicsDebugRendererSystem(inject(), inject()))
             addSystem(
                 RenderSystem(
                     inject<PolygonSpriteBatch>() as Batch,
@@ -148,6 +147,8 @@ object Context {
                     1
                 )
             )
+            addSystem(PhysicsDebugRendererSystem(inject(), inject()))
+
             addSystem(RenderMiniMapSystem(3))
             addSystem(PlayerFlashlightSystem())
             //lets NOT write debug badges

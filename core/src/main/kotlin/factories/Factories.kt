@@ -335,7 +335,7 @@ fun bodyForSprite(
                 maskBits = detectorMaskBits
             }
         }
-        circle(2f, vec2(0f, 0f)) {
+        circle(2.5f * heightInMeters, vec2(0f, 0f)) {
             isSensor = true
             filter {
                 categoryBits = sensorBits

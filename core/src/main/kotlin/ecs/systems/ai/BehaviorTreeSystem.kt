@@ -2,14 +2,12 @@ package ecs.systems.ai
 
 import com.badlogic.ashley.core.Entity
 import com.badlogic.ashley.systems.IntervalIteratingSystem
-import com.badlogic.ashley.systems.IteratingSystem
 import ecs.components.ai.BehaviorComponent
 import ktx.ashley.allOf
-import physics.AshleyMappers
-import physics.getComponent
+import physics.behavior
 
-class BehaviorTreeSystem : IntervalIteratingSystem(allOf(BehaviorComponent::class).get(), 0.1f) {
+class BehaviorTreeSystem : IntervalIteratingSystem(allOf(BehaviorComponent::class).get(), 0.05f) {
     override fun processEntity(entity: Entity) {
-        AshleyMappers.behavior.get(entity).tree.step()
+        entity.behavior().tree.step()
     }
 }

@@ -11,7 +11,9 @@ import ecs.components.gameplay.TransformComponent
 import ktx.ashley.allOf
 import ktx.math.vec2
 import physics.addComponent
+import physics.enemy
 import physics.getComponent
+import physics.transform
 
 class ChasePlayerSystem: IteratingSystem(allOf(
     ChasePlayer::class,
@@ -23,9 +25,8 @@ class ChasePlayerSystem: IteratingSystem(allOf(
         if(chasePlayer.status == Task.Status.RUNNING) {
             chasePlayer.coolDown -= deltaTime
 
-
-            val enemyComponent = entity.getComponent<EnemyComponent>()
-            val transformComponent = entity.getComponent<TransformComponent>()
+            val enemyComponent = entity.enemy()
+            val transformComponent = entity.transform()
             val playerPosition = entity.getComponent<TrackingPlayer>().player!!.entity.getComponent<TransformComponent>().position
             val distance = vec2().set(transformComponent.position).sub(playerPosition).len2()
             when {
@@ -34,7 +35,7 @@ class ChasePlayerSystem: IteratingSystem(allOf(
                     chasePlayer.status = Task.Status.SUCCEEDED
                 }
                 chasePlayer.coolDown > 0f -> {
-                    enemyComponent.speed = 5f
+                    enemyComponent.speed = 10f
                     enemyComponent.directionVector.set(playerPosition).sub(transformComponent.position)
                         .nor()
                 }
