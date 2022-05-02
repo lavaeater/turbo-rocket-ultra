@@ -136,6 +136,7 @@ class MapEditorScreen(gameState: StateMachine<GameState, GameEvent>) : BasicScre
             }
         }
         isDirty = false
+        mapIndex++
         machine.acceptEvent(EditEvent.ExitCommandMode)
     }
 
@@ -314,6 +315,7 @@ class MapEditorScreen(gameState: StateMachine<GameState, GameEvent>) : BasicScre
         return currentControlMap.execute(keycode, KeyPress.Down)
     }
 
+    private var mapIndex = 0
     private fun saveMap() {
         var mapAsString = ""
         val currentC = Coordinate(minX, minY)
@@ -349,7 +351,17 @@ class MapEditorScreen(gameState: StateMachine<GameState, GameEvent>) : BasicScre
             level-complete
             basic-story            
         """.trimIndent()
-        val handle = Gdx.files.local("new_map.txt")
+        var potentialFileName = "text_maps/new_map_$mapIndex.txt"
+        var handle = Gdx.files.local(potentialFileName)
+        if(handle.exists()) {
+            var lookingForNewName = true
+            while(lookingForNewName) {
+                mapIndex++
+                potentialFileName = "text_maps/new_map_$mapIndex.txt"
+                handle = Gdx.files.local(potentialFileName)
+                lookingForNewName = handle.exists()
+            }
+        }
         handle.writeString(mapAsString, false)
     }
 
