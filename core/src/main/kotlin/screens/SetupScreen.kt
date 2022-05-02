@@ -180,6 +180,10 @@ class SetupScreen(gameState: StateMachine<GameState, GameEvent>) : BasicScreen(g
             Input.Keys.ENTER -> startGame()
             Input.Keys.C -> startConceptScreen()
             Input.Keys.E -> startEditor()
+            Input.Keys.M -> {
+                gameState.acceptEvent(GameEvent.StartMapEditor)
+                true
+            }
             else -> super.keyUp(keycode)
         }
     }

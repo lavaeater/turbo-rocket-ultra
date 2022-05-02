@@ -18,14 +18,14 @@ import statemachine.StateMachine
 import story.conversation.IConversation
 import tru.Assets
 import turbofacts.Factoids
-import turbofacts.NewFactsOfTheWorld
+import turbofacts.TurboFactsOfTheWorld
 
 class UserInterface(
-  private val batch: Batch,
-  private val gameState: StateMachine<GameState, GameEvent>,
-  private val inputManager: InputMultiplexer,
-  private val factsOfTheWorld: NewFactsOfTheWorld,
-  debug: Boolean = false): IUserInterface {
+    private val batch: Batch,
+    private val gameState: StateMachine<GameState, GameEvent>,
+    private val inputManager: InputMultiplexer,
+    private val factsOfTheWorld: TurboFactsOfTheWorld,
+    debug: Boolean = false): IUserInterface {
 
   override val hudViewPort = ExtendViewport(uiWidth, uiHeight, OrthographicCamera())
   override val stage = Stage(hudViewPort, batch)

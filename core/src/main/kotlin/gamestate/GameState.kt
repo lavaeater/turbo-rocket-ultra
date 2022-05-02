@@ -9,5 +9,6 @@ sealed class GameState {
     object Ended: GameState()
     object Editor: GameState()
     object Concept: GameState()
+    object MapEditor: GameState()
 }
 
