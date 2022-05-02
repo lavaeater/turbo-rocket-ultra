@@ -128,7 +128,7 @@ object StoryHelper {
             "level-failed" to levelFailedStory,
             "level-complete" to levelCompleteStory,
             "enemy-killcount" to enemyKillCountStory,
-            "basicy-story" to basicStory
+            "basic-story" to basicStory
         )
     }
     val baseStories by lazy {

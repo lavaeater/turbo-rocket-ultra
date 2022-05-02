@@ -1,6 +1,8 @@
 package screens
 
 sealed class EditEvent {
+    object EnterDialogMode : EditEvent()
+    object ExitDialogMode : EditEvent()
     object EnterPaintMode : EditEvent()
     object ExitPaintMode : EditEvent()
     object ExitAltMode : EditEvent()

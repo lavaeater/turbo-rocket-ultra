@@ -6,15 +6,14 @@ import com.badlogic.gdx.graphics.Color
 import com.badlogic.gdx.graphics.OrthographicCamera
 import com.badlogic.gdx.scenes.scene2d.Stage
 import com.badlogic.gdx.scenes.scene2d.actions.MoveToAction
+import com.badlogic.gdx.utils.Align.center
 import com.badlogic.gdx.utils.viewport.ExtendViewport
 import com.badlogic.gdx.utils.viewport.FitViewport
 import gamestate.GameEvent
 import gamestate.GameState
 import ktx.graphics.use
 import ktx.math.vec2
-import ktx.scene2d.actors
-import ktx.scene2d.horizontalGroup
-import ktx.scene2d.verticalGroup
+import ktx.scene2d.*
 import map.grid.Coordinate
 import statemachine.StateMachine
 import tru.Assets
@@ -34,10 +33,12 @@ class MapEditorScreen(gameState: StateMachine<GameState, GameEvent>) : BasicScre
             EditState.Command -> commandModeMap
             EditState.Normal -> normalCommandMap
             EditState.Paint -> paintModeMap
+            EditState.DialogMode -> dialogModeMap
         }
     }
 
     private val normalCommandMap = command("Normal") {
+        setUp(Input.Keys.DEL, "Delete") { delete() }
         setUp(Input.Keys.UP, "Move Up") { cursorY++ }
         setUp(Input.Keys.DOWN, "Move Down") { cursorY-- }
         setUp(Input.Keys.LEFT, "Move Left") { cursorX-- }
@@ -56,6 +57,8 @@ class MapEditorScreen(gameState: StateMachine<GameState, GameEvent>) : BasicScre
         setDown(Input.Keys.A, "Perimeter") { insert(SectionDefinition.PerimeterGoal) }
         setDown(Input.Keys.S, "Spawner") { insert(SectionDefinition.Spawner) }
     }
+
+    private var isDirty = false
 
     private val paintModeMap = command("Paint") {
         setDown(Input.Keys.ALT_LEFT, "Paint Mode") { machine.acceptEvent(EditEvent.ExitPaintMode) }
@@ -84,10 +87,63 @@ class MapEditorScreen(gameState: StateMachine<GameState, GameEvent>) : BasicScre
         setUp(Input.Keys.CONTROL_LEFT, "Command Mode") { machine.acceptEvent(EditEvent.ExitCommandMode) }
         setUp(Input.Keys.X, "Exit Editor") { exitEditor() }
         setUp(Input.Keys.S, "Save Map") { saveMap() }
+        setUp(Input.Keys.N, "New Map") { newMap() }
+    }
+
+    private val dialogModeMap = command("Dialog") {
+        setDown(Input.Keys.Y, "Yes") { executeDialogYes() }
+        setDown(Input.Keys.N, "No") { executeDialogNo() }
+    }
+    var executeDialogYes: () -> Unit = {}
+    var executeDialogNo: () -> Unit = {}
+    val dialog by lazy {
+        val d = scene2d.dialog("Save changes") {
+            center()
+            label("This map has changes,\ndo you wish to save them? (Y/N)")
+            pack()
+            isVisible = false
+        }
+        stage.addActor(d)
+        d.setPosition(stage.width / 2 - d.width / 2, stage.height / 2 - d.height / 2)
+        d
+    }
+
+    private fun handleDirty(exit: Boolean = false) {
+        if (isDirty) {
+            executeDialogYes = {
+                dialog.isVisible = false
+                saveMap()
+                if (exit) reallyExitEditor() else reallyNewMap()
+            }
+            executeDialogNo = {
+                dialog.isVisible = false
+                if (exit) reallyExitEditor() else reallyNewMap()
+            }
+            currentControlMap = dialogModeMap
+            dialog.isVisible = true
+        }
+    }
+
+    private fun newMap() {
+        handleDirty(false)
+    }
+
+    private fun reallyNewMap() {
+        val keys = gridMap.keys.toTypedArray()
+        for ((index, key) in keys.withIndex()) {
+            if (index > 0) {
+                gridMap.remove(key)
+            }
+        }
+        isDirty = false
+        machine.acceptEvent(EditEvent.ExitCommandMode)
     }
 
     private fun exitEditor() {
-        saveMap()
+        handleDirty(true)
+    }
+
+    private fun reallyExitEditor() {
         gameState.acceptEvent(GameEvent.ExitMapEditor)
     }
 
@@ -147,6 +203,7 @@ class MapEditorScreen(gameState: StateMachine<GameState, GameEvent>) : BasicScre
             }
             state(EditState.Command) {
                 edge(EditEvent.ExitCommandMode, EditState.Normal) {}
+                edge(EditEvent.EnterDialogMode, EditState.Normal) {}
             }
             state(EditState.Camera) {
                 edge(EditEvent.ExitCameraMode, EditState.Normal) {}
@@ -285,19 +342,31 @@ class MapEditorScreen(gameState: StateMachine<GameState, GameEvent>) : BasicScre
             max_enemies
             
             max_spawned_enemies
+            
+            stories
+            start-story
+            level-failed
+            level-complete
+            basic-story            
         """.trimIndent()
         val handle = Gdx.files.local("new_map.txt")
         handle.writeString(mapAsString, false)
     }
 
     private fun delete() {
-        if (gridMap.count() > 1)
+        val coordinate = Coordinate(cursorX, cursorY)
+        if (gridMap.count() > 1 && gridMap.containsKey(coordinate)) {
             gridMap.remove(Coordinate(cursorX, cursorY))
+            isDirty = true
+        }
     }
 
     private fun insert(sectionType: SectionDefinition) {
         val coordinate = Coordinate(cursorX, cursorY)
-        gridMap[coordinate] = sectionType
+        if (!gridMap.containsKey(coordinate) || gridMap[coordinate] != sectionType) {
+            gridMap[coordinate] = sectionType
+            isDirty = true
+        }
     }
 
     override fun keyUp(keycode: Int): Boolean {
