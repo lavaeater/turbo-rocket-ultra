@@ -28,6 +28,7 @@ class MainGame : KtxGame<KtxScreen>() {
                 }
                 edge(GameEvent.StartEditor, GameState.Editor) {}
                 edge(GameEvent.StartConcept, GameState.Concept) {}
+                edge(GameEvent.StartMapEditor, GameState.MapEditor) {}
             }
             state(GameState.Running) {
                 action {
@@ -52,6 +53,10 @@ class MainGame : KtxGame<KtxScreen>() {
             state(GameState.Concept) {
                 action { setScreen<ConceptScreen>() }
                 edge(GameEvent.StopConcept, GameState.Setup) {}
+            }
+            state(GameState.MapEditor) {
+                action { setScreen<MapEditorScreen>() }
+                edge(GameEvent.ExitMapEditor, GameState.Setup) {}
             }
         }
         Context.context.register {
@@ -86,6 +91,7 @@ class MainGame : KtxGame<KtxScreen>() {
         addScreen(AnimEditorScreen(gameState))
         addScreen(ConceptScreen(gameState))
         addScreen(CharacterEditorScreen(gameState))
+        addScreen(MapEditorScreen(gameState))
         gameState.initialize()
     }
 }

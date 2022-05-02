@@ -1,0 +1,210 @@
+{
+  Coordinate(x=0,
+  y=0): {
+    class: start
+  },
+  Coordinate(x=0,
+  y=1): {
+    class: corr
+  },
+  Coordinate(x=0,
+  y=2): {
+    class: corr
+  },
+  Coordinate(x=0,
+  y=3): {
+    class: corr
+  },
+  Coordinate(x=0,
+  y=4): {
+    class: corr
+  },
+  Coordinate(x=0,
+  y=5): {
+    class: corr
+  },
+  Coordinate(x=0,
+  y=6): {
+    class: corr
+  },
+  Coordinate(x=0,
+  y=7): {
+    class: corr
+  },
+  Coordinate(x=0,
+  y=8): {
+    class: corr
+  },
+  Coordinate(x=0,
+  y=9): {
+    class: corr
+  },
+  Coordinate(x=1,
+  y=9): {
+    class: corr
+  },
+  Coordinate(x=2,
+  y=9): {
+    class: corr
+  },
+  Coordinate(x=4,
+  y=9): {
+    class: corr
+  },
+  Coordinate(x=5,
+  y=9): {
+    class: corr
+  },
+  Coordinate(x=6,
+  y=9): {
+    class: corr
+  },
+  Coordinate(x=3,
+  y=9): {
+    class: corr
+  },
+  Coordinate(x=7,
+  y=9): {
+    class: corr
+  },
+  Coordinate(x=8,
+  y=8): {
+    class: corr
+  },
+  Coordinate(x=7,
+  y=8): {
+    class: corr
+  },
+  Coordinate(x=8,
+  y=9): {
+    class: corr
+  },
+  Coordinate(x=9,
+  y=8): {
+    class: corr
+  },
+  Coordinate(x=9,
+  y=9): {
+    class: corr
+  },
+  Coordinate(x=8,
+  y=7): {
+    class: corr
+  },
+  Coordinate(x=8,
+  y=6): {
+    class: corr
+  },
+  Coordinate(x=8,
+  y=5): {
+    class: corr
+  },
+  Coordinate(x=8,
+  y=4): {
+    class: corr
+  },
+  Coordinate(x=8,
+  y=3): {
+    class: corr
+  },
+  Coordinate(x=8,
+  y=2): {
+    class: corr
+  },
+  Coordinate(x=9,
+  y=2): {
+    class: corr
+  },
+  Coordinate(x=10,
+  y=2): {
+    class: corr
+  },
+  Coordinate(x=11,
+  y=2): {
+    class: corr
+  },
+  Coordinate(x=12,
+  y=2): {
+    class: corr
+  },
+  Coordinate(x=13,
+  y=2): {
+    class: corr
+  },
+  Coordinate(x=14,
+  y=2): {
+    class: corr
+  },
+  Coordinate(x=15,
+  y=2): {
+    class: corr
+  },
+  Coordinate(x=16,
+  y=2): {
+    class: corr
+  },
+  Coordinate(x=17,
+  y=3): {
+    class: corr
+  },
+  Coordinate(x=17,
+  y=4): {
+    class: corr
+  },
+  Coordinate(x=17,
+  y=2): {
+    class: corr
+  },
+  Coordinate(x=17,
+  y=5): {
+    class: corr
+  },
+  Coordinate(x=17,
+  y=6): {
+    class: corr
+  },
+  Coordinate(x=17,
+  y=7): {
+    class: corr
+  },
+  Coordinate(x=17,
+  y=8): {
+    class: corr
+  },
+  Coordinate(x=17,
+  y=9): {
+    class: corr
+  },
+  Coordinate(x=17,
+  y=11): {
+    class: corr
+  },
+  Coordinate(x=17,
+  y=10): {
+    class: corr
+  },
+  Coordinate(x=16,
+  y=10): {
+    class: boss
+  },
+  Coordinate(x=15,
+  y=10): {
+    class: loot
+  },
+  Coordinate(x=12,
+  y=1): {
+    class: spawn
+  },
+  Coordinate(x=12,
+  y=0): {
+    class: loot
+  },
+  Coordinate(x=17,
+  y=12): {
+    class: goal
+  },
+  Coordinate(x=17,
+  y=13): {
+    class: hack
+  }
+}

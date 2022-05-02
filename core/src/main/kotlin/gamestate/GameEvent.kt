@@ -12,6 +12,8 @@ sealed class GameEvent {
     object StopEditor : GameEvent()
     object StartConcept : GameEvent()
     object StopConcept : GameEvent()
+    object ExitMapEditor : GameEvent()
+    object StartMapEditor : GameEvent()
     object DialogEvent : GameEvent()
     object LevelComplete : GameEvent()
 }

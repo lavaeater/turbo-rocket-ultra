@@ -31,13 +31,10 @@ import ecs.components.pickups.LootComponent
 import ecs.components.pickups.LootDropComponent
 import ecs.components.player.*
 import ecs.components.towers.TowerComponent
-import ecs.systems.graphics.CompassDirection
 import ecs.systems.graphics.GameConstants.PLAYER_DENSITY
 import ecs.systems.graphics.GameConstants.SHIP_ANGULAR_DAMPING
 import ecs.systems.graphics.GameConstants.SHIP_LINEAR_DAMPING
 import ecs.systems.graphics.GameConstants.pixelsPerMeter
-import ecs.systems.tileWorldX
-import ecs.systems.tileWorldY
 import features.pickups.*
 import features.weapons.AmmoType
 import features.weapons.WeaponDefinition
@@ -57,13 +54,12 @@ import ktx.scene2d.actors
 import ktx.scene2d.label
 import ktx.scene2d.scene2d
 import ktx.scene2d.table
-import map.grid.GridMapSection
 import physics.*
 import screens.CounterObject
 import tru.Assets
 import tru.SpriteDirection
 import tru.getSpriteFor
-import turbofacts.NewFactsOfTheWorld
+import turbofacts.TurboFactsOfTheWorld
 import ui.IUserInterface
 import ui.getUiThing
 import kotlin.experimental.or
@@ -76,7 +72,7 @@ fun engine(): Engine {
     return inject()
 }
 
-fun factsOfTheWorld(): NewFactsOfTheWorld {
+fun factsOfTheWorld(): TurboFactsOfTheWorld {
     return inject()
 }
 

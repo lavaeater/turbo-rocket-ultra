@@ -4,11 +4,15 @@
     "type": "split",
     "children": [
       {
-        "id": "8e6bd7a475971157",
+        "id": "9210143da10edeee",
         "type": "leaf",
         "state": {
-          "type": "empty",
-          "state": {}
+          "type": "markdown",
+          "state": {
+            "file": "docs/todo/There's Levels to This.md",
+            "mode": "source",
+            "source": false
+          }
         }
       }
     ],
@@ -65,6 +69,7 @@
             "state": {
               "type": "backlink",
               "state": {
+                "file": "docs/todo/There's Levels to This.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -82,9 +87,10 @@
     "width": 300,
     "collapsed": true
   },
-  "active": "8e6bd7a475971157",
+  "active": "9210143da10edeee",
   "lastOpenFiles": [
     "docs/todo/There's Levels to This.md",
+    "docs/devlog/2022-05-02.md",
     "docs/KANBAN.md",
     "docs/done/Intent-based Weapon Select.md",
     "docs/Facts of The World.md",
@@ -92,7 +98,6 @@
     "docs/done/New Gun Sprites.md",
     "docs/todo/New Look and Feel.md",
     "docs/done/New Fact System.md",
-    "docs/done/Enemies and walls.md",
-    "docs/done/Nicer Setup UI.md"
+    "docs/done/Enemies and walls.md"
   ]
 }
