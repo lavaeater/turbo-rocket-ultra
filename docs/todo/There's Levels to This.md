@@ -1,4 +1,7 @@
 # There's Levels to This
+## TODO
+- [ ] Load maps
+- [ ] Add stories and rules to maps
 What's next?
 
 We add more features to the map editor, one by one, until we have a simple way of making maps. Then we can add automation to it, which is just very very cool. 
