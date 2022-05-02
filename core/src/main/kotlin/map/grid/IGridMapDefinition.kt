@@ -5,7 +5,7 @@ interface IGridMapDefinition {
     fun hasLoot(coordinate: Coordinate): Boolean
     fun hasStart(coordinate: Coordinate): Boolean
     fun hasGoal(coordinate: Coordinate): Boolean
-    fun hasObstacle(coordinate: Coordinate): Boolean
+    fun hasSpawner(coordinate: Coordinate): Boolean
     fun hasBoss(coordinate: Coordinate): Boolean
     fun hasHackingStation(coordinate: Coordinate) : Boolean
 }

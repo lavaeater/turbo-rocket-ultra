@@ -161,7 +161,7 @@ class ConceptScreen(gameState: StateMachine<GameState, GameEvent>) : BasicScreen
         }
 
     private val stage by lazy {
-        val aStage = Stage(ExtendViewport(1600f, 1200f, OrthographicCamera()), batch).apply { isDebugAll = true }
+        val aStage = Stage(ExtendViewport(1600f, 1200f, OrthographicCamera()), batch)
         aStage.actors {
             val vg = horizontalGroup {
                 setFillParent(true)
@@ -173,7 +173,6 @@ class ConceptScreen(gameState: StateMachine<GameState, GameEvent>) : BasicScreen
                     boundLabel({ currentControlMap.toString() })
                 }
             }
- //           vg += Actions.forever(boundMoveTo({ aStage.viewport.worldWidth - vg.width }, { aStage.viewport.worldHeight - vg.height }))
         }
         aStage
     }
@@ -268,6 +267,22 @@ class ConceptScreen(gameState: StateMachine<GameState, GameEvent>) : BasicScreen
             }
             mapAsString += "\n"
         }
+        for(x in minX..maxX) {
+            mapAsString += "-"
+        }
+        mapAsString +="\n"
+        mapAsString += """name
+            
+            start
+            
+            success
+            
+            fail
+            
+            max_enemies
+            
+            max_spawned_enemies
+        """.trimIndent()
         val handle = Gdx.files.local("new_map.txt")
         handle.writeString(mapAsString, false)
     }

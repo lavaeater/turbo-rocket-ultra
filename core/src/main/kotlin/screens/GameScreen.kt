@@ -37,7 +37,7 @@ import statemachine.StateMachine
 import turbofacts.StoryHelper
 import tru.Assets
 import turbofacts.Factoids
-import turbofacts.NewFactsOfTheWorld
+import turbofacts.TurboFactsOfTheWorld
 import turbofacts.TurboStoryManager
 import ui.IUserInterface
 import kotlin.math.pow
@@ -55,7 +55,7 @@ class GameScreen(private val gameState: StateMachine<GameState, GameEvent>) : Kt
     private val ui: IUserInterface by lazy { inject() }
     private val audioPlayer: AudioPlayer by lazy { inject() }
     private val storyManager: TurboStoryManager by lazy { inject() }
-    private val factsOfTheWorld: NewFactsOfTheWorld by lazy { factsOfTheWorld() }
+    private val factsOfTheWorld: TurboFactsOfTheWorld by lazy { factsOfTheWorld() }
     private val console by lazy { inject<GUIConsole>() }
     private val vfxManager by lazy { inject<VfxManager>() }
     private var running = true
@@ -75,7 +75,7 @@ class GameScreen(private val gameState: StateMachine<GameState, GameEvent>) : Kt
                 system.setProcessing(true)
             }
             generateMap(CounterObject.currentLevel)
-            addPlayers()
+            //addPlayers()
 
             if (Players.players.keys.any { it.isKeyboard }) {
                 engine.getSystem<KeyboardInputSystem>().setProcessing(true)
@@ -103,6 +103,10 @@ class GameScreen(private val gameState: StateMachine<GameState, GameEvent>) : Kt
         CounterObject.maxEnemies = 1
         CounterObject.maxSpawnedEnemies = 1
         return GridMapGenerator.generateFromMapFile(MapLoader.loadMap("levelzero.json"))
+    }
+
+    private fun loadSampleMap(): Pair<Map<Coordinate, GridMapSection>, TileGraph> {
+        return GridMapGenerator.generateFromMapFile(MapLoader.loadNewMap("sample_map.txt"))
     }
 
     private fun loadMapOne() : Pair<Map<Coordinate, GridMapSection>, TileGraph> {
@@ -224,7 +228,6 @@ D1B67A
             firstRun = false
         }
     }
-
     private fun addPlayers() {
         val startBounds = mapManager.gridMap.values.first { it.startSection }.innerBounds
         for ((controlComponent, player) in Players.players) {
@@ -235,10 +238,13 @@ D1B67A
     private fun movePlayersToStart() {
         val startBounds = mapManager.gridMap.values.first { it.startSection }.innerBounds
         val players = engine.getEntitiesFor(allOf(PlayerComponent::class).get())
-        for (player in players) {
-            val body = AshleyMappers.body.get(player).body!!
-            body.setTransform(startBounds.randomPoint(), body.angle)
-        }
+        if(players.none()) {
+            addPlayers()
+        } else
+            for (player in players) {
+                val body = AshleyMappers.body.get(player).body!!
+                body.setTransform(startBounds.randomPoint(), body.angle)
+            }
     }
 
     private fun nextLevel() {
@@ -304,7 +310,7 @@ D1B67A
         CounterObject.maxEnemies =  (8f.pow(CounterObject.currentLevel).roundToInt() * 2).coerceAtMost(MAX_ENEMIES)
         CounterObject.maxSpawnedEnemies = CounterObject.maxEnemies * 2
         val map = when(level) {
-            1 -> loadMapOne()//loadMapZero()//
+            1 -> loadSampleMap()//loadMapOne()//loadMapZero()//
             2 -> loadMapTwo()
             3 -> loadMapThree()
             4 -> loadMapFour()

@@ -34,7 +34,7 @@ class GridMapGenerator {
             emitter.add(engine.createComponent(EnemySpawnerComponent::class.java))
         }
 
-        fun addObstacle(bounds: Rectangle) {
+        fun addSpawner(bounds: Rectangle) {
             var position = bounds.randomPoint()
             spawner(position.tileWorldX(), position.tileWorldY())
         }
@@ -46,8 +46,7 @@ class GridMapGenerator {
 
         private val factsOfTheWorld by lazy { factsOfTheWorld() }
 
-        fun generateFromMapFile(mapFile: MapFile): Pair<Map<Coordinate, GridMapSection>, TileGraph> {
-            //TODO: Move this somewhere
+        fun generateFromMapFile(mapData: MapData): Pair<Map<Coordinate, GridMapSection>, TileGraph> {
             Light.setGlobalContactFilter(
                 Box2dCategories.lights,
                 0, Box2dCategories.allButSensors
@@ -55,12 +54,14 @@ class GridMapGenerator {
             rayHandler.setAmbientLight(.5f)
             rayHandler.setBlurNum(3)
 
-            factsOfTheWorld.setStringFact(mapFile.name, Factoids.CurrentMapName)
-            factsOfTheWorld.setStringFact(mapFile.startMessage, Factoids.MapStartMessage)
-            factsOfTheWorld.setStringFact(mapFile.successMessage, Factoids.MapSuccessMessage)
-            factsOfTheWorld.setStringFact(mapFile.failMessage, Factoids.MapFailMessage)
+            factsOfTheWorld.setStringFact(mapData.name, Factoids.CurrentMapName)
+            factsOfTheWorld.setStringFact(mapData.startMessage, Factoids.MapStartMessage)
+            factsOfTheWorld.setStringFact(mapData.successMessage, Factoids.MapSuccessMessage)
+            factsOfTheWorld.setStringFact(mapData.failMessage, Factoids.MapFailMessage)
+            CounterObject.maxEnemies = mapData.maxEnemies
+            CounterObject.maxSpawnedEnemies = mapData.maxSpawnedEnemies
             //Embed stories in level files...
-            return generateFromDefintion(mapFile.mapDefinition)
+            return generateFromDefintion(mapData.mapDefinition)
         }
 
         fun generateFromDefintion(def: TextGridMapDefinition, perimeterObjectives: Boolean = false): Pair<Map<Coordinate, GridMapSection>, TileGraph> {
@@ -103,8 +104,8 @@ class GridMapGenerator {
                         if (def.hasGoal(coordinate)) {
                             addObjective(section.innerBounds, perimeterObjectives)
                         }
-                        if (def.hasObstacle(coordinate))
-                            addObstacle(section.innerBounds)
+                        if (def.hasSpawner(coordinate))
+                            addSpawner(section.innerBounds)
                         if (def.hasBoss(coordinate))
                             addBoss(section.innerBounds)
 

@@ -1,10 +1,9 @@
 package turbofacts
 
 import injection.Context
-import java.util.zip.CheckedInputStream
 
 sealed class Criterion(val factKey: String) {
-    protected val facts by lazy { Context.inject<NewFactsOfTheWorld>() }
+    protected val facts by lazy { Context.inject<TurboFactsOfTheWorld>() }
     abstract fun checkRule(): Boolean
     sealed class BooleanCriteria(factKey: String) : Criterion(factKey) {
         sealed class All(factKey: String) : BooleanCriteria(factKey) {

@@ -9,17 +9,16 @@ import ecs.components.gameplay.DestroyComponent
 import factories.factsOfTheWorld
 import factories.gibs
 import factories.lootBox
-import injection.Context.inject
 import ktx.ashley.allOf
 import physics.AshleyMappers
 import physics.addComponent
 import tru.Assets
 import turbofacts.Factoids
-import turbofacts.NewFactsOfTheWorld
+import turbofacts.TurboFactsOfTheWorld
 
 class EnemyDeathSystem(
     private val audioPlayer: AudioPlayer,
-    private val factsOfTheWorld: NewFactsOfTheWorld
+    private val factsOfTheWorld: TurboFactsOfTheWorld
 ) : IteratingSystem(allOf(EnemyComponent::class).get()) {
 
     override fun processEntity(entity: Entity, deltaTime: Float) {
