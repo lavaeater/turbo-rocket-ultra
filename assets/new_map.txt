@@ -1,9 +1,13 @@
-c*****c
-c*****c
-c*****c
-c*****c
-c*****c
-c*****c
-c*****c
-ccccccc
--------
+s
+-
+name
+            
+            start
+            
+            success
+            
+            fail
+            
+            max_enemies
+            
+            max_spawned_enemies
