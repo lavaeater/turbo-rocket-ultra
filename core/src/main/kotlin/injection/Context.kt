@@ -117,7 +117,7 @@ object Context {
             addSystem(ChasePlayerSystem())
             addSystem(SeekPlayerSystem(false))
             addSystem(AttackPlayerSystem())
-            addSystem(EnemyDirectionSystem())
+            addSystem(EnemyAnimationSystem())
             addSystem(EnemyHearsShotsSystem())
             addSystem(InvestigateSystem())
             addSystem(RushPlayerSystem())

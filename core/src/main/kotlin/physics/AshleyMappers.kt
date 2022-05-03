@@ -91,6 +91,13 @@ object AshleyMappers {
     val reloading = mapperFor<IsReloadingComponent>()
 }
 
+fun Entity.isAttackingPlayer(): Boolean {
+    return AshleyMappers.attackPlayer.has(this)
+}
+fun Entity.isSeeking() : Boolean {
+    return AshleyMappers.seekPlayer.has(this)
+}
+
 fun Entity.isReloading() : Boolean {
     return AshleyMappers.reloading.has(this)
 }
