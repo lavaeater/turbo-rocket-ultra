@@ -719,7 +719,14 @@ fun enemy(at: Vector2) {
     }
 
     val btComponent =
-        entity.addComponent<BehaviorComponent> { tree = Tree.getEnemyBehaviorTree().apply { `object` = entity } }
+        entity.addComponent<BehaviorComponent>
+        {
+            if((1..5).random() == 1) {
+                tree = Tree.getEnemyBehaviorThatFindsOtherEnemies().apply { `object` = entity }
+            } else {
+                tree = Tree.getEnemyBehaviorTree().apply { `object` = entity }
+            }
+        }
     val hud = inject<IUserInterface>()
     entity.add(getUiThing {
         val startPosition = hud.worldToHudPosition(entity.transform().position.cpy().add(1f, 1f))

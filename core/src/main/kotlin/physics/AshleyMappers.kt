@@ -89,6 +89,20 @@ object AshleyMappers {
     val weaponEntity = mapperFor<WeaponEntityComponent>()
     val inventory = mapperFor<InventoryComponent>()
     val reloading = mapperFor<IsReloadingComponent>()
+    val alertFriends = mapperFor<AlertFriends>()
+    val awareOfPlayer = mapperFor<IsAwareOfPlayer>()
+}
+
+fun Entity.isAwareOfPlayer(): Boolean {
+    return AshleyMappers.awareOfPlayer.has(this)
+}
+
+fun Entity.isAlertingFriends() : Boolean {
+    return AshleyMappers.alertFriends.has(this)
+}
+
+fun Entity.alertFriends(): AlertFriends {
+    return AshleyMappers.alertFriends.get(this)
 }
 
 fun Entity.isAttackingPlayer(): Boolean {

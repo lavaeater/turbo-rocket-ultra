@@ -8,10 +8,7 @@ import ecs.components.enemy.EnemyComponent
 import ecs.components.gameplay.TransformComponent
 import ktx.ashley.allOf
 import ktx.math.vec2
-import physics.addComponent
-import physics.enemy
-import physics.getComponent
-import physics.transform
+import physics.*
 
 class AlertFriendsSystem: IteratingSystem(allOf(
     AlertFriends::class,
@@ -20,35 +17,42 @@ class AlertFriendsSystem: IteratingSystem(allOf(
     IsAwareOfPlayer::class,
     KnownPosition::class).get()) {
 
+    private val enemyComponentFamily = allOf(EnemyComponent::class).get()
+    private val allEnemies get() = engine.getEntitiesFor(enemyComponentFamily)
+
     override fun processEntity(entity: Entity, deltaTime: Float) {
 
         /*
         Alert enemies by running to them and when bumping into them handling
-        that event, somehow
+        that event, somehow - this is actually already done.
+
+        So, we want the enemy to alert N friends. To do that, it has to run to them.
          */
+        val alertFriends = entity.alertFriends()
+        if(alertFriends.status == Task.Status.RUNNING) {
+            alertFriends.coolDown-= deltaTime
+            if(alertFriends.nextToRunTo == null) {
+                val closest = allEnemies.filter { !alertFriends.alertedFriends.contains(it.enemy()) && !it.isAwareOfPlayer() }
+                    .minByOrNull { it.transform().position.dst2(entity.transform().position) }
+                if (closest != null) {
+                    alertFriends.nextToRunTo = entity
+                }
+            }
+            if(alertFriends.nextToRunTo?.isAwareOfPlayer() == true) {
+                alertFriends.alertedFriends.add(alertFriends.nextToRunTo!!.enemy())
+                alertFriends.nextToRunTo = null
+            } else {
+                val toRunTo = alertFriends.nextToRunTo!!.transform().position
+                val enemyComponent = entity.enemy()
 
-        val chasePlayer = entity.getComponent<ChasePlayer>()
-        if(chasePlayer.status == Task.Status.RUNNING) {
-            chasePlayer.coolDown -= deltaTime
-
-            val enemyComponent = entity.enemy()
-            val transformComponent = entity.transform()
-            val playerPosition = entity.getComponent<IsAwareOfPlayer>().player!!.entity.getComponent<TransformComponent>().position
-            val distance = vec2().set(transformComponent.position).sub(playerPosition).len2()
-            when {
-                distance < 5f -> {
-                    entity.addComponent<PlayerIsInRange>()
-                    chasePlayer.status = Task.Status.SUCCEEDED
-                }
-                chasePlayer.coolDown > 0f -> {
-                    enemyComponent.speed = 10f
-                    enemyComponent.directionVector.set(playerPosition).sub(transformComponent.position)
-                        .nor()
-                }
-                else -> {
-                    enemyComponent.speed = 1f
-                    chasePlayer.status = Task.Status.FAILED
-                }
+                enemyComponent.speed = 10f
+                enemyComponent.directionVector.set(toRunTo).sub(entity.transform().position)
+                    .nor()
+            }
+            if(alertFriends.alertedFriends.count() >= alertFriends.numberToAlert) {
+                alertFriends.status = Task.Status.SUCCEEDED
+            } else if(alertFriends.coolDown < 0f) {
+                alertFriends.status = Task.Status.FAILED
             }
         }
     }

@@ -204,6 +204,11 @@ class ContactManager : ContactListener {
                 }
             }
             is ContactType.EnemyAndEnemy -> {
+                /*
+                This actually kinda works for the new behavior, this is the new information sent to this particular enemy
+                 
+                 */
+
                 val enemyAEntity = contactType.enemyOne
                 val enemyBEntity = contactType.enemyTwo
                 if (enemyAEntity.has<IsAwareOfPlayer>() && !enemyBEntity.has<IsAwareOfPlayer>()) {

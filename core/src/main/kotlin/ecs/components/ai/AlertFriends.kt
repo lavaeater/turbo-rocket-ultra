@@ -1,7 +1,21 @@
 package ecs.components.ai
 
+import com.badlogic.ashley.core.Entity
+import ecs.components.enemy.EnemyComponent
+
 class AlertFriends : TaskComponent() {
+    var nextToRunTo: Entity? = null
+    val alertedFriends = mutableListOf<EnemyComponent>()
+    var alertRange = (5..15)
+    var numberToAlert = alertRange.random()
     override fun toString(): String {
         return "alert"
+    }
+
+    override fun reset() {
+        numberToAlert = alertRange.random()
+        nextToRunTo = null
+        alertedFriends.clear()
+        super.reset()
     }
 }
