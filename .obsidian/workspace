@@ -7,6 +7,16 @@
         "id": "fb14c945bca2c4f8",
         "type": "leaf",
         "state": {
+          "type": "kanban",
+          "state": {
+            "file": "docs/KANBAN.md"
+          }
+        }
+      },
+      {
+        "id": "cf8eeb91e30b345f",
+        "type": "leaf",
+        "state": {
           "type": "markdown",
           "state": {
             "file": "docs/todo/Enemy Evolution.md",
@@ -53,7 +63,8 @@
       }
     ],
     "direction": "horizontal",
-    "width": 300
+    "width": 300,
+    "collapsed": true
   },
   "right": {
     "id": "1771e0d2306bf3dd",
@@ -84,9 +95,10 @@
       }
     ],
     "direction": "horizontal",
-    "width": 300
+    "width": 300,
+    "collapsed": true
   },
-  "active": "fb14c945bca2c4f8",
+  "active": "cf8eeb91e30b345f",
   "lastOpenFiles": [
     "docs/todo/Enemy Evolution.md",
     "docs/KANBAN.md",

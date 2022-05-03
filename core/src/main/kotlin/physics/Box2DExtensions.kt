@@ -301,7 +301,7 @@ fun Contact.thisIsAContactBetween(): ContactType {
          */
         val enemyAEntity = this.fixtureA.getEntity()
         val enemyBEntity = this.fixtureB.getEntity()
-        return ContactType.TwoEnemySensors(enemyAEntity, enemyBEntity)
+        return ContactType.EnemyAndEnemy(enemyAEntity, enemyBEntity)
     }
 
     if (this.atLeastOneHas<EnemyComponent>() && this.atLeastOneHas<BulletComponent>()) {

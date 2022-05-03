@@ -1,8 +1,7 @@
 package ecs.components.ai
 
-class ChasePlayer : TaskComponent() {
+class AlertFriends : TaskComponent() {
     override fun toString(): String {
-        return "chase"
+        return "alert"
     }
-
 }

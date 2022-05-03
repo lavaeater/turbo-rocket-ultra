@@ -37,7 +37,7 @@ object Tree {
         dynamicGuardSelector {
             first(entityDo<Panic> { ifEntityHas<BurningComponent>() })
             then(entityDo<AttackPlayer> { ifEntityHas<PlayerIsInRange>() })
-            then(entityDo<ChasePlayer> { ifEntityHas<IsAwareOfPlayer>() })
+            then(entityDo<AlertFriends> { ifEntityHas<IsAwareOfPlayer>() })
             ifThen(
                 entityHas<NoticedSomething>(),
                 selector {

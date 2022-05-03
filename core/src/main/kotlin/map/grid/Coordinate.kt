@@ -7,4 +7,8 @@ data class Coordinate(var x: Int, var y: Int) {
         this.y = y
         return this
     }
+
+    override fun toString(): String {
+        return "$x,$y"
+    }
 }
