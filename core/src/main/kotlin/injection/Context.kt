@@ -115,6 +115,7 @@ object Context {
             addSystem(PanicSystem())
             addSystem(BehaviorTreeSystem())
             addSystem(ChasePlayerSystem())
+            addSystem(AlertFriendsSystem())
             addSystem(SeekPlayerSystem(false))
             addSystem(AttackPlayerSystem())
             addSystem(EnemyAnimationSystem())
