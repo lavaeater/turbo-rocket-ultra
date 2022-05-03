@@ -15,7 +15,7 @@ object Tree {
         dynamicGuardSelector {
             first(entityDo<Panic> { ifEntityHas<BurningComponent>() })
             then(entityDo<AttackPlayer> { ifEntityHas<PlayerIsInRange>() })
-            then(entityDo<ChasePlayer> { ifEntityHas<TrackingPlayer>() })
+            then(entityDo<ChasePlayer> { ifEntityHas<IsAwareOfPlayer>() })
             ifThen(
                 entityHas<NoticedSomething>(),
                 selector {
@@ -25,7 +25,29 @@ object Tree {
                 })
             last(
                 selector<Entity> {
-                    first(invert(entityDo<Amble>() { unlessEntityHas<TrackingPlayer>() }))
+                    first(invert(entityDo<Amble>() { unlessEntityHas<IsAwareOfPlayer>() }))
+                    then(invert(entityDo<SeekPlayer>()))
+                    last(invert(entityDo<ChasePlayer>()))
+                })
+        }
+    }
+
+    
+    fun getEnemyBehaviorThatFindsOtherEnemies() = tree<Entity> {
+        dynamicGuardSelector {
+            first(entityDo<Panic> { ifEntityHas<BurningComponent>() })
+            then(entityDo<AttackPlayer> { ifEntityHas<PlayerIsInRange>() })
+            then(entityDo<ChasePlayer> { ifEntityHas<IsAwareOfPlayer>() })
+            ifThen(
+                entityHas<NoticedSomething>(),
+                selector {
+                    first(entityDo<SeekPlayer>())
+                    then(entityDo<Investigate>())
+                    then(entityDo<SeekPlayer>())
+                })
+            last(
+                selector<Entity> {
+                    first(invert(entityDo<Amble>() { unlessEntityHas<IsAwareOfPlayer>() }))
                     then(invert(entityDo<SeekPlayer>()))
                     last(invert(entityDo<ChasePlayer>()))
                 })
@@ -46,7 +68,7 @@ object Tree {
      */
     fun bossOne() = tree<Entity> {
         dynamicGuardSelector {
-            first(entityDo<RushPlayer> { ifEntityHas<TrackingPlayer>() })
+            first(entityDo<RushPlayer> { ifEntityHas<IsAwareOfPlayer>() })
             ifThen(
                 entityHas<NoticedSomething>(),
                 selector {

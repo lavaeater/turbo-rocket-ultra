@@ -7,7 +7,7 @@ import ecs.components.ai.AttackPlayer
 import ecs.components.enemy.EnemyComponent
 import ecs.components.gameplay.TransformComponent
 import ecs.components.ai.PlayerIsInRange
-import ecs.components.ai.TrackingPlayer
+import ecs.components.ai.IsAwareOfPlayer
 import ecs.components.player.PlayerIsRespawning
 import ecs.components.player.PlayerWaitsForRespawn
 import ktx.ashley.allOf
@@ -21,18 +21,18 @@ class AttackPlayerSystem : IteratingSystem(allOf(
     AttackPlayer::class,
     EnemyComponent::class,
     TransformComponent::class,
-    TrackingPlayer::class).get()) {
+    IsAwareOfPlayer::class).get()) {
 
     override fun processEntity(entity: Entity, deltaTime: Float) {
         val attackPlayer = entity.getComponent<AttackPlayer>()
         val transformComponent = entity.getComponent<TransformComponent>()
-        val player = entity.getComponent<TrackingPlayer>().player!!
+        val player = entity.getComponent<IsAwareOfPlayer>().player!!
 
         if(attackPlayer.status == Task.Status.RUNNING) {
             if(player.entity.has<PlayerWaitsForRespawn>()) {
                 //Can't attack invisible / dead player
                 attackPlayer.status = Task.Status.FAILED
-                entity.remove<TrackingPlayer>()
+                entity.remove<IsAwareOfPlayer>()
                 return
             }
 

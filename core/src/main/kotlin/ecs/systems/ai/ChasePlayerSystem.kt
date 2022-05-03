@@ -5,7 +5,7 @@ import com.badlogic.ashley.systems.IteratingSystem
 import com.badlogic.gdx.ai.btree.Task
 import ecs.components.ai.ChasePlayer
 import ecs.components.ai.PlayerIsInRange
-import ecs.components.ai.TrackingPlayer
+import ecs.components.ai.IsAwareOfPlayer
 import ecs.components.enemy.EnemyComponent
 import ecs.components.gameplay.TransformComponent
 import ktx.ashley.allOf
@@ -19,7 +19,7 @@ class ChasePlayerSystem: IteratingSystem(allOf(
     ChasePlayer::class,
     EnemyComponent::class,
     TransformComponent::class,
-    TrackingPlayer::class).get()) {
+    IsAwareOfPlayer::class).get()) {
     override fun processEntity(entity: Entity, deltaTime: Float) {
         val chasePlayer = entity.getComponent<ChasePlayer>()
         if(chasePlayer.status == Task.Status.RUNNING) {
@@ -27,7 +27,7 @@ class ChasePlayerSystem: IteratingSystem(allOf(
 
             val enemyComponent = entity.enemy()
             val transformComponent = entity.transform()
-            val playerPosition = entity.getComponent<TrackingPlayer>().player!!.entity.getComponent<TransformComponent>().position
+            val playerPosition = entity.getComponent<IsAwareOfPlayer>().player!!.entity.getComponent<TransformComponent>().position
             val distance = vec2().set(transformComponent.position).sub(playerPosition).len2()
             when {
                 distance < 5f -> {

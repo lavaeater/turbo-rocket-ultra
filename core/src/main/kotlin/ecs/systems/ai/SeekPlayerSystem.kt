@@ -5,12 +5,11 @@ import com.badlogic.ashley.systems.IteratingSystem
 import com.badlogic.gdx.ai.btree.Task
 import com.badlogic.gdx.graphics.Color
 import com.badlogic.gdx.math.MathUtils.degreesToRadians
-import com.badlogic.gdx.math.Polygon
 import com.badlogic.gdx.math.Vector2
 import com.badlogic.gdx.physics.box2d.Fixture
 import ecs.components.ai.NoticedSomething
 import ecs.components.ai.SeekPlayer
-import ecs.components.ai.TrackingPlayer
+import ecs.components.ai.IsAwareOfPlayer
 import ecs.components.enemy.EnemyComponent
 import ecs.components.gameplay.TransformComponent
 import ecs.components.player.PlayerComponent
@@ -96,7 +95,7 @@ class SeekPlayerSystem(val debug: Boolean) : IteratingSystem(allOf(SeekPlayer::c
                         if (::closestFixture.isInitialized && closestFixture.isPlayer()) {
                             seekComponent.foundAPlayer = true
                             entity.add(
-                                engine.createComponent(TrackingPlayer::class.java)
+                                engine.createComponent(IsAwareOfPlayer::class.java)
                                     .apply { this.player = player.getComponent<PlayerComponent>().player })
                             seekComponent.status = Task.Status.SUCCEEDED
                             return

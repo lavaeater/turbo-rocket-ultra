@@ -11,7 +11,8 @@ import com.badlogic.gdx.physics.box2d.Manifold
 import ecs.components.AudioChannels
 import ecs.components.BodyComponent
 import ecs.components.ai.CollidedWithObstacle
-import ecs.components.ai.TrackingPlayer
+import ecs.components.ai.KnownPosition
+import ecs.components.ai.IsAwareOfPlayer
 import ecs.components.enemy.EnemyComponent
 import ecs.components.fx.ParticleEffectComponent
 import ecs.components.gameplay.*
@@ -96,8 +97,11 @@ class ContactManager : ContactListener {
                 val player = playerEntity.getComponent<PlayerComponent>().player
                 if (!contact.atLeastOneHas<PlayerWaitsForRespawn>() && !contact.atLeastOneHas<PlayerIsRespawning>()) {
                     enemy.add(
-                        engine.createComponent(TrackingPlayer::class.java)
+                        engine.createComponent(IsAwareOfPlayer::class.java)
                             .apply { this.player = player })
+                    enemy.addComponent<KnownPosition> {
+                        position.set(playerEntity.transform().position)
+                    }
                 }
             }
             is ContactType.MolotovHittingAnything -> {
@@ -201,13 +205,13 @@ class ContactManager : ContactListener {
             is ContactType.TwoEnemySensors -> {
                 val enemyAEntity = contactType.enemyOne
                 val enemyBEntity = contactType.enemyTwo
-                if (enemyAEntity.has<TrackingPlayer>() && !enemyBEntity.has<TrackingPlayer>()) {
-                    enemyBEntity.addComponent<TrackingPlayer> {
-                        player = enemyAEntity.getComponent<TrackingPlayer>().player
+                if (enemyAEntity.has<IsAwareOfPlayer>() && !enemyBEntity.has<IsAwareOfPlayer>()) {
+                    enemyBEntity.addComponent<IsAwareOfPlayer> {
+                        player = enemyAEntity.getComponent<IsAwareOfPlayer>().player
                     }
-                } else if (enemyBEntity.has<TrackingPlayer>() && !enemyAEntity.has<TrackingPlayer>()) {
-                    enemyAEntity.addComponent<TrackingPlayer> {
-                        player = enemyBEntity.getComponent<TrackingPlayer>().player
+                } else if (enemyBEntity.has<IsAwareOfPlayer>() && !enemyAEntity.has<IsAwareOfPlayer>()) {
+                    enemyAEntity.addComponent<IsAwareOfPlayer> {
+                        player = enemyBEntity.getComponent<IsAwareOfPlayer>().player
                     }
                 }
             }

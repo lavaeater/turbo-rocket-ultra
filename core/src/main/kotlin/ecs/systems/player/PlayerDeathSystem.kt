@@ -26,10 +26,10 @@ class PlayerDeathSystem: IteratingSystem(allOf(PlayerComponent::class).get()) {
             controlComponent.waitsForRespawn = true
 //            entity.getComponent<AnimatedCharacterComponent>().currentAnim =
             for(enemy in engine.getEntitiesFor(allOf(EnemyComponent::class).get())) {
-                if(enemy.has<TrackingPlayer>() && enemy.getComponent<TrackingPlayer>().player == pc.player) {
+                if(enemy.has<IsAwareOfPlayer>() && enemy.getComponent<IsAwareOfPlayer>().player == pc.player) {
                     enemy.remove<ChasePlayer>()
                     enemy.remove<AttackPlayer>()
-                    enemy.remove<TrackingPlayer>()
+                    enemy.remove<IsAwareOfPlayer>()
                     enemy.remove<PlayerIsInRange>()
                     enemy.remove<NoticedSomething>()
 

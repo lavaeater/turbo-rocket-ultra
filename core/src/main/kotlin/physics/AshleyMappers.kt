@@ -50,7 +50,7 @@ object AshleyMappers {
     val noticedSomething = mapperFor<NoticedSomething>()
     val playerIsInRange = mapperFor<PlayerIsInRange>()
     val seekPlayer = mapperFor<SeekPlayer>()
-    val trackingPlayer = mapperFor<TrackingPlayer>()
+    val isAwareOfPlayer = mapperFor<IsAwareOfPlayer>()
     val enemy = mapperFor<EnemyComponent>()
     val enemySensor = mapperFor<EnemySensorComponent>()
     val enemySpawner = mapperFor<EnemySpawnerComponent>()
