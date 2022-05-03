@@ -30,9 +30,9 @@ kanban-plugin: basic
 
 ## Doing
 
+- [ ] [[Enemy Evolution]]
 - [ ] [[Intent-based Context Action]]
 - [ ] [[Tower Mechanics]]
-- [ ] [[Enemy Aggression]]
 
 
 ## Done

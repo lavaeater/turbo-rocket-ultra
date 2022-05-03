@@ -4,7 +4,7 @@
     "type": "split",
     "children": [
       {
-        "id": "cda8b4b6b17b5740",
+        "id": "fb14c945bca2c4f8",
         "type": "leaf",
         "state": {
           "type": "markdown",
@@ -84,20 +84,19 @@
       }
     ],
     "direction": "horizontal",
-    "width": 300,
-    "collapsed": true
+    "width": 300
   },
-  "active": "cda8b4b6b17b5740",
+  "active": "fb14c945bca2c4f8",
   "lastOpenFiles": [
     "docs/todo/Enemy Evolution.md",
-    "docs/todo/Enemy Aggression.md",
     "docs/KANBAN.md",
+    "docs/todo/Enemy Aggression.md",
+    "docs/todo/BehaviorTree Facts.md",
+    "docs/devlog/2022-05-03.md",
+    "docs/todo/Serializing Stories, Rules and Criteria.md",
     "docs/todo/Tower Mechanics.md",
     "docs/todo/Intent-based Context Action.md",
     "docs/todo/Gibs and Body Parts II.md",
-    "docs/todo/Serializing Stories, Rules and Criteria.md",
-    "docs/done/There's Levels to This.md",
-    "docs/devlog/2022-05-02.md",
-    "docs/done/Intent-based Weapon Select.md"
+    "docs/done/There's Levels to This.md"
   ]
 }
