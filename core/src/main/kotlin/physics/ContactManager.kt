@@ -34,7 +34,7 @@ import ktx.scene2d.table
 import messaging.Message
 import messaging.MessageHandler
 import tru.Assets
-import kotlin.reflect.KType
+import kotlin.reflect.KClass
 
 /*
 How to handle contacts in the absolutely smashingly BEST
@@ -61,10 +61,6 @@ class ContactManager : ContactListener {
     private val engine by lazy { inject<Engine>() }
     private val messageHandler by lazy { inject<MessageHandler>() }
     private val audioPlayer by lazy { inject<AudioPlayer>() }
-
-    private val handlingMap = mutableMapOf<KClass<ContactType>, (ContactType)->Unit>(ContactType.EnemyAndEnemy::class to {
-
-    })
 
     override fun beginContact(contact: Contact) {
         when (val contactType = contact.thisIsAContactBetween()) {
