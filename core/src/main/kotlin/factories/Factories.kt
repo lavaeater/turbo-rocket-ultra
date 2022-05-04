@@ -1041,10 +1041,15 @@ fun unKryoSomeBitch(treeName: String = "regular_enemy"): BehaviorTree<Entity> {
     return TreeCache.kryo.readObject(input, BehaviorTree<Entity>().javaClass)
 }
 
-fun BehaviorTree<Entity>.kryoThisBitch(treeName: String) : ByteArray {
-    val stream = Gdx.files.local("${treeName}.tree")
+fun BehaviorTree<Entity>.kryoThisBitch() : ByteArray {
     val output = Output(100000, 10000000)
     TreeCache.kryo.writeObject(output, this)
-    stream.writeBytes(output.toBytes(), false)
     return output.toBytes()
+}
+
+fun BehaviorTree<Entity>.kryoThisBitch(treeName: String) : ByteArray {
+    val stream = Gdx.files.local("${treeName}.tree")
+    val bytes = this.kryoThisBitch()
+    stream.writeBytes(bytes, false)
+    return bytes
 }

@@ -91,6 +91,9 @@ object AshleyMappers {
     val fitness = mapperFor<Fitness>()
 }
 
+fun Entity.fitnesScore() : Int {
+    return AshleyMappers.fitness.get(this).fitness
+}
 fun Entity.fitnessUp() {
     AshleyMappers.fitness.get(this).fitness++
 }

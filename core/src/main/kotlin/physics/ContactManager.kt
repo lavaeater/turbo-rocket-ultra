@@ -68,6 +68,8 @@ class ContactManager : ContactListener {
                 val enemyEntity = contactType.enemy
                 val bulletEntity = contactType.bullet
 
+                enemyEntity.fitnessDown()
+
                 val enemyComponent = enemyEntity.enemy()
                 val bulletComponent = bulletEntity.bullet()
                 enemyComponent.takeDamage(bulletComponent.damage, bulletComponent.player)
@@ -83,6 +85,8 @@ class ContactManager : ContactListener {
             }
             is ContactType.EnemyAndDamage -> {
                 val enemy = contactType.enemy
+                enemy.fitnessDown()
+
                 enemy.addComponent<BurningComponent> {
                     player = contactType.damageEntity.getComponent<DamageEffectComponent>().player
                 }
@@ -94,6 +98,8 @@ class ContactManager : ContactListener {
             }
             is ContactType.EnemySensesPlayer -> {
                 val enemy = contactType.enemy
+                enemy.fitnessUp()
+
                 val playerEntity = contactType.player
                 val player = playerEntity.getComponent<PlayerComponent>().player
                 if (!contact.atLeastOneHas<PlayerWaitsForRespawn>() && !contact.atLeastOneHas<PlayerIsRespawning>()) {
@@ -160,6 +166,7 @@ class ContactManager : ContactListener {
             }
             is ContactType.PlayerAndSomeoneWhoTackles -> {
                 val enemy = contactType.tackler
+                enemy.fitnessUp()
                 val player = contactType.player
 
                 val playerComponent = contactType.player.playerControl()
@@ -206,16 +213,18 @@ class ContactManager : ContactListener {
             is ContactType.EnemyAndEnemy -> {
                 /*
                 This actually kinda works for the new behavior, this is the new information sent to this particular enemy
-                 
+
                  */
 
                 val enemyAEntity = contactType.enemyOne
                 val enemyBEntity = contactType.enemyTwo
                 if (enemyAEntity.has<IsAwareOfPlayer>() && !enemyBEntity.has<IsAwareOfPlayer>()) {
+                    enemyAEntity.fitnessUp()
                     enemyBEntity.addComponent<IsAwareOfPlayer> {
                         player = enemyAEntity.getComponent<IsAwareOfPlayer>().player
                     }
                 } else if (enemyBEntity.has<IsAwareOfPlayer>() && !enemyAEntity.has<IsAwareOfPlayer>()) {
+                    enemyBEntity.fitnessUp()
                     enemyAEntity.addComponent<IsAwareOfPlayer> {
                         player = enemyBEntity.getComponent<IsAwareOfPlayer>().player
                     }

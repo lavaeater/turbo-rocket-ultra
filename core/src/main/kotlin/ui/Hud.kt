@@ -14,6 +14,7 @@ import com.badlogic.gdx.utils.Queue
 import com.badlogic.gdx.utils.viewport.ExtendViewport
 import com.rafaskoberg.gdx.typinglabel.TypingLabel
 import data.Players
+import ecs.systems.enemy.FitnessTracker
 import factories.factsOfTheWorld
 import injection.Context.inject
 import ktx.actors.along
@@ -78,6 +79,18 @@ class Hud(private val batch: Batch) : IUserInterface, MessageReceiver {
                 }
                 row()
                 table {
+                    table {
+                        width = aStage.width / 8
+                        label("Top Scorers:")
+                        row()
+                        boundLabel({
+                            FitnessTracker.fitnessData.sortBy { it.fitness }
+                            if(FitnessTracker.fitnessData.any())
+                                FitnessTracker.fitnessData.subList(0, if(FitnessTracker.fitnessData.size > 10) 10 else FitnessTracker.fitnessData.lastIndex).map { "${it.enemyId} - ${it.fitness}" }.joinToString("\n")
+                            else
+                                "No scorers yet"
+                        })
+                    }
                     for ((control, player) in Players.players) {
                         table {
                             width = aStage.width / 8
