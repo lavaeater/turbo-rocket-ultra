@@ -33,6 +33,7 @@ kanban-plugin: basic
 ## Doing
 
 - [ ] [[Enemy Evolution]]
+- [ ] [[AI Refinement]]
 
 
 ## Done

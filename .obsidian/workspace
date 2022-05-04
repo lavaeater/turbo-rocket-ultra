@@ -14,6 +14,18 @@
         }
       },
       {
+        "id": "7ea48c7cb76246ce",
+        "type": "leaf",
+        "state": {
+          "type": "markdown",
+          "state": {
+            "file": "docs/todo/AI Refinement.md",
+            "mode": "source",
+            "source": false
+          }
+        }
+      },
+      {
         "id": "cf8eeb91e30b345f",
         "type": "leaf",
         "state": {
@@ -80,7 +92,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "docs/devlog/2022-05-04.md",
+                "file": "docs/todo/AI Refinement.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -98,17 +110,17 @@
     "width": 300,
     "collapsed": true
   },
-  "active": "cf8eeb91e30b345f",
+  "active": "7ea48c7cb76246ce",
   "lastOpenFiles": [
-    "docs/devlog/2022-05-04.md",
+    "docs/todo/AI Refinement.md",
     "docs/KANBAN.md",
+    "docs/devlog/2022-05-04.md",
     "docs/todo/Enemy Evolution.md",
     "docs/todo/Enemy Aggression.md",
     "docs/todo/BehaviorTree Facts.md",
     "docs/devlog/2022-05-03.md",
     "docs/todo/Serializing Stories, Rules and Criteria.md",
     "docs/todo/Tower Mechanics.md",
-    "docs/todo/Intent-based Context Action.md",
-    "docs/todo/Gibs and Body Parts II.md"
+    "docs/todo/Intent-based Context Action.md"
   ]
 }
