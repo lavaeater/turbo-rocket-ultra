@@ -13,6 +13,7 @@ import com.badlogic.gdx.physics.box2d.Body
 import com.badlogic.gdx.physics.box2d.BodyDef
 import com.badlogic.gdx.physics.box2d.World
 import com.badlogic.gdx.scenes.scene2d.Action
+import com.badlogic.gdx.utils.Json
 import data.Player
 import ecs.components.AudioComponent
 import ecs.components.BodyComponent
@@ -722,9 +723,13 @@ fun enemy(at: Vector2) {
         entity.addComponent<BehaviorComponent>
         {
             if((1..5).random() == 1) {
-                tree = Tree.getEnemyBehaviorThatFindsOtherEnemies().apply { `object` = entity }
+                val t =Tree.getEnemyBehaviorThatFindsOtherEnemies().apply { `object` = entity }
+                val json = Json().toJson(t)
+                tree = t
             } else {
-                tree = Tree.getEnemyBehaviorTree().apply { `object` = entity }
+                val t =Tree.getEnemyBehaviorTree().apply { `object` = entity }
+                val json =
+                tree = t
             }
         }
     val hud = inject<IUserInterface>()
