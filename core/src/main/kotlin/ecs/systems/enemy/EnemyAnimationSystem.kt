@@ -2,11 +2,11 @@ package ecs.systems.enemy
 
 import com.badlogic.ashley.core.Entity
 import com.badlogic.ashley.systems.IteratingSystem
-import ecs.components.enemy.EnemyComponent
+import ecs.components.enemy.AgentProperties
 import ecs.components.graphics.AnimatedCharacterComponent
 import ktx.ashley.allOf
 import physics.AshleyMappers
-import physics.enemy
+import physics.agentProps
 import physics.isAttackingPlayer
 import physics.isSeeking
 import tru.AnimState
@@ -14,7 +14,7 @@ import tru.SpriteDirection
 
 class EnemyAnimationSystem : IteratingSystem(
     allOf(
-        AnimatedCharacterComponent::class, EnemyComponent::class).get()) {
+        AnimatedCharacterComponent::class, AgentProperties::class).get()) {
     override fun processEntity(entity: Entity, deltaTime: Float) {
         val characterSpriteComponent = AshleyMappers.animatedCharacter.get(entity)
         characterSpriteComponent.currentAnimState = entity.enemyAnimState()
@@ -23,8 +23,8 @@ class EnemyAnimationSystem : IteratingSystem(
 }
 
 fun Entity.enemyDirection() : SpriteDirection {
-    val characterAngle = if(this.isSeeking()) AshleyMappers.seekPlayer.get(this).scanVector.angleDeg() else this.enemy().directionVector.angleDeg()
-    return if(this.enemy().isDead)
+    val characterAngle = if(this.isSeeking()) AshleyMappers.seekPlayer.get(this).scanVector.angleDeg() else this.agentProps().directionVector.angleDeg()
+    return if(this.agentProps().isDead)
         SpriteDirection.South
     else
         when (characterAngle) {
@@ -37,5 +37,5 @@ fun Entity.enemyDirection() : SpriteDirection {
         }
 }
 fun Entity.enemyAnimState(): AnimState {
-    return if(this.enemy().isDead) AnimState.Death else if(this.isSeeking()) AnimState.Idle else if(this.isAttackingPlayer()) AnimState.Slash else AnimState.Walk
+    return if(this.agentProps().isDead) AnimState.Death else if(this.isSeeking()) AnimState.Idle else if(this.isAttackingPlayer()) AnimState.Slash else AnimState.Walk
 }

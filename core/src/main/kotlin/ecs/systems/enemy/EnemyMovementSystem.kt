@@ -6,27 +6,26 @@ import com.badlogic.gdx.graphics.Color
 import com.badlogic.gdx.math.Vector2
 import com.badlogic.gdx.physics.box2d.Body
 import ecs.components.BodyComponent
-import ecs.components.enemy.EnemyComponent
+import ecs.components.enemy.AgentProperties
 import ecs.components.gameplay.ObstacleComponent
 import ecs.components.gameplay.TransformComponent
-import factories.enemy
 import ktx.ashley.allOf
 import ktx.math.vec2
 import physics.AshleyMappers
-import physics.enemy
+import physics.agentProps
 import physics.sprite
 import physics.transform
 import tru.Assets
 
 class EnemyMovementSystem(private val flocking: Boolean) : IteratingSystem(
     allOf(
-        EnemyComponent::class,
+        AgentProperties::class,
         BodyComponent::class,
         TransformComponent::class
     ).get()
 ) {
     private val separationRange = 10f
-    private val enemyFamily = allOf(EnemyComponent::class).get()
+    private val enemyFamily = allOf(AgentProperties::class).get()
     private val allEnemies get() = engine.getEntitiesFor(enemyFamily)
     private val obstacleFamily = allOf(ObstacleComponent::class).get()
     private val allObstacles get() = engine.getEntitiesFor(obstacleFamily)
@@ -38,7 +37,7 @@ class EnemyMovementSystem(private val flocking: Boolean) : IteratingSystem(
     private val shapeDrawer by lazy { Assets.shapeDrawer }
 
     override fun processEntity(entity: Entity, deltaTime: Float) {
-        val enemyComponent = entity.enemy()
+        val enemyComponent = entity.agentProps()
         if (enemyComponent.cooldownPropertyCheckIfDone(enemyComponent::stunned, deltaTime)) {
             val bodyComponent = AshleyMappers.body.get(entity)
             if (flocking && enemyComponent.flock && entity.sprite().isVisible) {
@@ -112,7 +111,7 @@ class EnemyMovementSystem(private val flocking: Boolean) : IteratingSystem(
     private val actualDirectionVector = vec2()
     private val circleColor = Color(1f, 0f, 0f, 0.1f)
 
-    private fun moveEnemy(enemyComponent: EnemyComponent, bodyComponent: BodyComponent) {
+    private fun moveEnemy(enemyComponent: AgentProperties, bodyComponent: BodyComponent) {
         //.
         actualDirectionVector.set(enemyComponent.directionVector)
         if(flocking)
@@ -122,7 +121,7 @@ class EnemyMovementSystem(private val flocking: Boolean) : IteratingSystem(
         bodyComponent.body!!.linearVelocity = actualDirectionVector.scl(enemyComponent.speed)
     }
 
-    private fun handleObstacles(enemyComponent: EnemyComponent, bodyComponent: BodyComponent) {
+    private fun handleObstacles(enemyComponent: AgentProperties, bodyComponent: BodyComponent) {
 
     }
 }

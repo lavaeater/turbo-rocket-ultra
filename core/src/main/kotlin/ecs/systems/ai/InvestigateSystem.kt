@@ -6,7 +6,7 @@ import com.badlogic.ashley.systems.IteratingSystem
 import com.badlogic.gdx.ai.btree.Task
 import ecs.components.ai.Investigate
 import ecs.components.ai.NoticedSomething
-import ecs.components.enemy.EnemyComponent
+import ecs.components.enemy.AgentProperties
 import ecs.components.gameplay.TransformComponent
 import ecs.systems.sectionX
 import ecs.systems.sectionY
@@ -15,13 +15,13 @@ import ktx.ashley.allOf
 import map.grid.GridMapManager
 import physics.getComponent
 
-class InvestigateSystem : IteratingSystem(allOf(Investigate::class, EnemyComponent::class, NoticedSomething::class).get()) {
+class InvestigateSystem : IteratingSystem(allOf(Investigate::class, AgentProperties::class, NoticedSomething::class).get()) {
 
     private val mapManager by lazy { inject<GridMapManager>() }
 
     override fun processEntity(entity: Entity, deltaTime: Float) {
         val component = entity.getComponent<Investigate>()
-        val enemyComponent = entity.getComponent<EnemyComponent>()
+        val agentProperties = entity.getComponent<AgentProperties>()
         val currentPosition = entity.getComponent<TransformComponent>().position
 
         if(component.firstRun) {
@@ -29,13 +29,13 @@ class InvestigateSystem : IteratingSystem(allOf(Investigate::class, EnemyCompone
             val currentSection = TileGraph.getCoordinateInstance(currentPosition.sectionX(), currentPosition.sectionY())
             val noticeSection = TileGraph.getCoordinateInstance(notice.noticedWhere.sectionX(), notice.noticedWhere.sectionY())
 
-            findPathFromTo(enemyComponent, currentSection, noticeSection)
+            findPathFromTo(agentProperties, currentSection, noticeSection)
             component.firstRun = false
         }
 
-        enemyComponent.speed = 5f
+        agentProperties.speed = 5f
 
-        val weAreDone = progressPath(enemyComponent, currentPosition)
+        val weAreDone = progressPath(agentProperties, currentPosition)
 
         if (component.status == Task.Status.RUNNING) {
             component.coolDown -= deltaTime

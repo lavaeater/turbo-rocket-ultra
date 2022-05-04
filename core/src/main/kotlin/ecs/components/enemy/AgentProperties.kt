@@ -9,7 +9,12 @@ import ktx.math.random
 import ktx.math.vec2
 import kotlin.reflect.KMutableProperty
 
-class EnemyComponent : Component, Pool.Poolable {
+class Enemy : Component, Pool.Poolable {
+    override fun reset() {
+    }
+}
+
+class AgentProperties : Component, Pool.Poolable {
     var flock = true
     var lastShotAngle = 0f
     var rushSpeed = 15f
@@ -25,7 +30,7 @@ class EnemyComponent : Component, Pool.Poolable {
     val isDead get() = health <= 0f
 
     var timeRemaining = 0f
-    private set
+        private set
 
     //PathFinding, useful everywhere
     var nextPosition = vec2()
@@ -52,11 +57,11 @@ class EnemyComponent : Component, Pool.Poolable {
         coolDowns[property] = cooldown
     }
 
-    fun cooldownPropertyCheckIfDone(property: KMutableProperty<Boolean>, delta: Float) : Boolean {
-        if(!coolDowns.containsKey(property))
+    fun cooldownPropertyCheckIfDone(property: KMutableProperty<Boolean>, delta: Float): Boolean {
+        if (!coolDowns.containsKey(property))
             return true
         coolDowns[property] = coolDowns[property]!! - delta
-        if(coolDowns[property]!! <= 0f) {
+        if (coolDowns[property]!! <= 0f) {
             property.setter.call(false)
             coolDowns.remove(property)
             return true
@@ -64,8 +69,8 @@ class EnemyComponent : Component, Pool.Poolable {
         return false
     }
 
-    fun coolDown(deltaTime: Float){
-        timeRemaining-= deltaTime
+    fun coolDown(deltaTime: Float) {
+        timeRemaining -= deltaTime
         timeRemaining.coerceAtLeast(0f)
     }
 
@@ -80,7 +85,7 @@ class EnemyComponent : Component, Pool.Poolable {
         viewDistance = 30f
         directionVector.set(Vector2.Zero)
         val randomValue = (1..100).random()
-        health = if(randomValue < 5) 1000f else 100f
+        health = if (randomValue < 5) 1000f else 100f
         timeRemaining = 0f
     }
 }

@@ -2,7 +2,7 @@ package ecs.systems.enemy
 
 import com.badlogic.ashley.core.Entity
 import com.badlogic.ashley.systems.IteratingSystem
-import ecs.components.enemy.EnemyComponent
+import ecs.components.enemy.AgentProperties
 import ecs.components.enemy.EnemySpawnerComponent
 import ecs.components.gameplay.TransformComponent
 import factories.enemy
@@ -16,7 +16,7 @@ import screens.CounterObject
 import turbofacts.Factoids
 
 class EnemySpawnSystem : IteratingSystem(allOf(EnemySpawnerComponent::class, TransformComponent::class).get()) {
-    private val enemyCount get() = engine.getEntitiesFor(allOf(EnemyComponent::class).get()).count()
+    private val enemyCount get() = engine.getEntitiesFor(allOf(AgentProperties::class).get()).count()
     private val spawnPosition = vec2()
     private val factsOfTheWorld by lazy { factsOfTheWorld() }
 

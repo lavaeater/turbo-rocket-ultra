@@ -48,7 +48,8 @@ object AshleyMappers {
     val playerIsInRange = mapperFor<PlayerIsInRange>()
     val seekPlayer = mapperFor<SeekPlayer>()
     val isAwareOfPlayer = mapperFor<IsAwareOfPlayer>()
-    val enemy = mapperFor<EnemyComponent>()
+    val agentProps = mapperFor<AgentProperties>()
+    val enemy = mapperFor<Enemy>()
     val enemySensor = mapperFor<EnemySensorComponent>()
     val enemySpawner = mapperFor<EnemySpawnerComponent>()
     val tackle = mapperFor<TackleComponent>()
@@ -223,8 +224,8 @@ fun Entity.playRandomAudioFor(category:String, subCategory:String, once: Boolean
     }
 }
 
-fun Entity.enemy(): EnemyComponent {
-    return AshleyMappers.enemy.get(this)
+fun Entity.agentProps(): AgentProperties {
+    return AshleyMappers.agentProps.get(this)
 }
 
 fun Entity.isEnemy(): Boolean {

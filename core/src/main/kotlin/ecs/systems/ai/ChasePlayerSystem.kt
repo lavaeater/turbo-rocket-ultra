@@ -6,18 +6,18 @@ import com.badlogic.gdx.ai.btree.Task
 import ecs.components.ai.ChasePlayer
 import ecs.components.ai.PlayerIsInRange
 import ecs.components.ai.IsAwareOfPlayer
-import ecs.components.enemy.EnemyComponent
+import ecs.components.enemy.AgentProperties
 import ecs.components.gameplay.TransformComponent
 import ktx.ashley.allOf
 import ktx.math.vec2
 import physics.addComponent
-import physics.enemy
+import physics.agentProps
 import physics.getComponent
 import physics.transform
 
 class ChasePlayerSystem: IteratingSystem(allOf(
     ChasePlayer::class,
-    EnemyComponent::class,
+    AgentProperties::class,
     TransformComponent::class,
     IsAwareOfPlayer::class).get()) {
     override fun processEntity(entity: Entity, deltaTime: Float) {
@@ -25,7 +25,7 @@ class ChasePlayerSystem: IteratingSystem(allOf(
         if(chasePlayer.status == Task.Status.RUNNING) {
             chasePlayer.coolDown -= deltaTime
 
-            val enemyComponent = entity.enemy()
+            val enemyComponent = entity.agentProps()
             val transformComponent = entity.transform()
             val playerPosition = entity.getComponent<IsAwareOfPlayer>().player!!.entity.getComponent<TransformComponent>().position
             val distance = vec2().set(transformComponent.position).sub(playerPosition).len2()

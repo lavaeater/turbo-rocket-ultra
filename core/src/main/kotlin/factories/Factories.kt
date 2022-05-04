@@ -690,7 +690,8 @@ fun enemy(at: Vector2) {
         with<TransformComponent> { position.set(box2dBody.position) }
         with<EnemySensorComponent>()
         with<AudioComponent>()
-        with<EnemyComponent>()
+        with<Enemy>()
+        with<AgentProperties>()
         with<AnimatedCharacterComponent> {
             anims = Assets.enemies.values.random()
         }
@@ -836,7 +837,8 @@ fun boss(at: Vector2, level: Int) {
         with<TransformComponent> { position.set(box2dBody.position) }
         with<EnemySensorComponent>()
         with<TackleComponent>()
-        with<EnemyComponent> {
+        with<Enemy>()
+        with<AgentProperties> {
             fieldOfView = 270f
             rushSpeed = 15f + level * 1.5f
             speed = 10f

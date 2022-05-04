@@ -2,16 +2,16 @@ package ecs.systems.ai
 
 import com.badlogic.ashley.core.Entity
 import com.badlogic.ashley.systems.IteratingSystem
-import ecs.components.enemy.EnemyComponent
+import ecs.components.enemy.AgentProperties
 import ecs.components.fx.ParticleEffectComponent
 import ecs.components.gameplay.BurningComponent
 import ktx.ashley.allOf
 import ktx.ashley.remove
 import physics.getComponent
 
-class BurningSystem: IteratingSystem(allOf(BurningComponent::class, EnemyComponent::class).get()) {
+class BurningSystem: IteratingSystem(allOf(BurningComponent::class, AgentProperties::class).get()) {
     override fun processEntity(entity: Entity, deltaTime: Float) {
-        val enemyComponent = entity.getComponent<EnemyComponent>()
+        val enemyComponent = entity.getComponent<AgentProperties>()
         val burningComponent = entity.getComponent<BurningComponent>()
 
         burningComponent.coolDown -= deltaTime

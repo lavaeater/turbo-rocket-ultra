@@ -4,7 +4,7 @@ import com.badlogic.ashley.core.Entity
 import com.badlogic.ashley.systems.IteratingSystem
 import com.badlogic.gdx.ai.btree.Task
 import ecs.components.ai.AttackPlayer
-import ecs.components.enemy.EnemyComponent
+import ecs.components.enemy.AgentProperties
 import ecs.components.gameplay.TransformComponent
 import ecs.components.ai.PlayerIsInRange
 import ecs.components.ai.IsAwareOfPlayer
@@ -20,7 +20,7 @@ import physics.has
 
 class AttackPlayerSystem : IteratingSystem(allOf(
     AttackPlayer::class,
-    EnemyComponent::class,
+    AgentProperties::class,
     TransformComponent::class,
     IsAwareOfPlayer::class).get()) {
 

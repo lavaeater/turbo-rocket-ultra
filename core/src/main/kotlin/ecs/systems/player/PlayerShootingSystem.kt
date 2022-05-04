@@ -5,7 +5,7 @@ import com.badlogic.ashley.core.Entity
 import com.badlogic.ashley.systems.IteratingSystem
 import com.badlogic.gdx.math.Polygon
 import com.badlogic.gdx.math.Vector2
-import ecs.components.enemy.EnemyComponent
+import ecs.components.enemy.AgentProperties
 import ecs.components.gameplay.TransformComponent
 import ecs.components.player.*
 import factories.bullet
@@ -119,7 +119,7 @@ class PlayerShootingSystem(private val audioPlayer: AudioPlayer) : IteratingSyst
             //1. Check if enemies are within distance (is this faster than the sector first?
             val playerPosition = AshleyMappers.transform.get(playerEntity).position
             val allEnemies =
-                engine.getEntitiesFor(allOf(EnemyComponent::class).get())
+                engine.getEntitiesFor(allOf(AgentProperties::class).get())
 
             val enemiesInRangeAndInHitArc = allEnemies.filter {
                 val enemyPosition = AshleyMappers.transform.get(it).position
@@ -131,7 +131,7 @@ class PlayerShootingSystem(private val audioPlayer: AudioPlayer) : IteratingSyst
                 )
             }
             enemiesInRangeAndInHitArc.forEach {
-                AshleyMappers.enemy.get(it).takeDamage(weapon.damageRange, controlComponent.player)
+                AshleyMappers.agentProps.get(it).takeDamage(weapon.damageRange, controlComponent.player)
             }
         }
     }

@@ -5,7 +5,7 @@ import com.badlogic.ashley.systems.IteratingSystem
 import com.badlogic.gdx.ai.btree.Task
 import ecs.components.ai.IsAwareOfPlayer
 import ecs.components.ai.boss.RushPlayer
-import ecs.components.enemy.EnemyComponent
+import ecs.components.enemy.AgentProperties
 import ecs.components.gameplay.TransformComponent
 import ktx.ashley.allOf
 import physics.getComponent
@@ -40,7 +40,7 @@ class RushPlayerSystem : IteratingSystem(
 
          */
         val transformComponent = entity.getComponent<TransformComponent>()
-        val enemyComponent = entity.getComponent<EnemyComponent>()
+        val enemyComponent = entity.getComponent<AgentProperties>()
         if (rushPlayer.firstRun) {
             if (entity.has<IsAwareOfPlayer>()) {
                 rushPlayer.rushPoint.set(entity.getComponent<IsAwareOfPlayer>().player!!.entity.getComponent<TransformComponent>().position)

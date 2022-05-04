@@ -12,18 +12,13 @@ import com.badlogic.gdx.math.MathUtils
 import com.badlogic.gdx.utils.viewport.Viewport
 import com.crashinvaders.vfx.VfxManager
 import com.crashinvaders.vfx.effects.ChainVfxEffect
-import ecs.components.fx.ParticleEffectComponent
-import ecs.components.fx.SplatterComponent
 import ecs.components.gameplay.DestroyComponent
 import ecs.components.gameplay.TransformComponent
 import ecs.components.graphics.RenderableComponent
-import ecs.components.graphics.SpriteComponent
-import ecs.components.graphics.renderables.RenderableType
 import ecs.systems.graphics.GameConstants.scale
 import injection.Context.inject
 import ktx.ashley.allOf
 import ktx.graphics.use
-import ktx.math.random
 import map.grid.GridMapManager
 import physics.*
 import tru.Assets
@@ -137,7 +132,7 @@ class RenderSystem(
         }
 
         if (enemyDebug && entity.isEnemy()) {
-            val ec = entity.enemy()
+            val ec = entity.agentProps()
             val previous = entity.transform().position.cpy()
             shapeDrawer.line(previous, ec.nextPosition, Color.BLUE, 0.1f)
             previous.set(ec.nextPosition)

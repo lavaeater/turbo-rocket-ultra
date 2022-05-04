@@ -4,7 +4,7 @@ import audio.AudioPlayer
 import com.badlogic.ashley.core.Entity
 import com.badlogic.ashley.systems.IteratingSystem
 import ecs.components.AudioChannels
-import ecs.components.enemy.EnemyComponent
+import ecs.components.enemy.AgentProperties
 import ecs.components.gameplay.DestroyComponent
 import factories.factsOfTheWorld
 import factories.gibs
@@ -19,7 +19,7 @@ import turbofacts.TurboFactsOfTheWorld
 object FitnessTracker {
     val fitnessData = mutableListOf<FitnessData>()
     fun saveFitnessDataFor(enemy: Entity) {
-        val key = enemy.enemy().id
+        val key = enemy.agentProps().id
         var fd = fitnessData.firstOrNull { it.enemyId == key }
         if(fd == null) {
             val bt = enemy.behavior().tree
@@ -52,10 +52,10 @@ data class FitnessData(val enemyId: Int, var fitness: Int, val bt: ByteArray) {
 class EnemyDeathSystem(
     private val audioPlayer: AudioPlayer,
     private val factsOfTheWorld: TurboFactsOfTheWorld
-) : IteratingSystem(allOf(EnemyComponent::class).get()) {
+) : IteratingSystem(allOf(AgentProperties::class).get()) {
 
     override fun processEntity(entity: Entity, deltaTime: Float) {
-        val enemyComponent = AshleyMappers.enemy.get(entity)
+        val enemyComponent = AshleyMappers.agentProps.get(entity)
         if (enemyComponent.isDead) {
             audioPlayer.playNextIfEmpty(
                 AudioChannels.enemyDeath,

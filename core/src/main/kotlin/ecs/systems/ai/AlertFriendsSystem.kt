@@ -4,20 +4,19 @@ import com.badlogic.ashley.core.Entity
 import com.badlogic.ashley.systems.IteratingSystem
 import com.badlogic.gdx.ai.btree.Task
 import ecs.components.ai.*
-import ecs.components.enemy.EnemyComponent
+import ecs.components.enemy.AgentProperties
 import ecs.components.gameplay.TransformComponent
 import ktx.ashley.allOf
-import ktx.math.vec2
 import physics.*
 
 class AlertFriendsSystem: IteratingSystem(allOf(
     AlertFriends::class,
-    EnemyComponent::class,
+    AgentProperties::class,
     TransformComponent::class,
     IsAwareOfPlayer::class,
     KnownPosition::class).get()) {
 
-    private val enemyComponentFamily = allOf(EnemyComponent::class).get()
+    private val enemyComponentFamily = allOf(AgentProperties::class).get()
     private val allEnemies get() = engine.getEntitiesFor(enemyComponentFamily)
 
     override fun processEntity(entity: Entity, deltaTime: Float) {
@@ -32,18 +31,18 @@ class AlertFriendsSystem: IteratingSystem(allOf(
         if(alertFriends.status == Task.Status.RUNNING) {
             alertFriends.coolDown-= deltaTime
             if(alertFriends.nextToRunTo == null) {
-                val closest = allEnemies.filter { !alertFriends.alertedFriends.contains(it.enemy()) && !it.isAwareOfPlayer() }
+                val closest = allEnemies.filter { !alertFriends.alertedFriends.contains(it.agentProps()) && !it.isAwareOfPlayer() }
                     .minByOrNull { it.transform().position.dst2(entity.transform().position) }
                 if (closest != null) {
                     alertFriends.nextToRunTo = entity
                 }
             }
             if(alertFriends.nextToRunTo?.isAwareOfPlayer() == true) {
-                alertFriends.alertedFriends.add(alertFriends.nextToRunTo!!.enemy())
+                alertFriends.alertedFriends.add(alertFriends.nextToRunTo!!.agentProps())
                 alertFriends.nextToRunTo = null
             } else {
                 val toRunTo = alertFriends.nextToRunTo!!.transform().position
-                val enemyComponent = entity.enemy()
+                val enemyComponent = entity.agentProps()
 
                 enemyComponent.speed = 10f
                 enemyComponent.directionVector.set(toRunTo).sub(entity.transform().position)

@@ -7,7 +7,7 @@ import com.badlogic.gdx.ai.btree.Task
 import com.badlogic.gdx.math.Vector2
 import ecs.components.ai.Amble
 import ecs.components.ai.CollidedWithObstacle
-import ecs.components.enemy.EnemyComponent
+import ecs.components.enemy.AgentProperties
 import ecs.components.gameplay.TransformComponent
 import ecs.systems.enemy.stateBooleanFact
 import ecs.systems.sectionX
@@ -26,13 +26,13 @@ import physics.*
 import turbofacts.TurboFactsOfTheWorld
 
 
-class AmblingSystem : IteratingSystem(allOf(Amble::class, EnemyComponent::class, TransformComponent::class).get()) {
+class AmblingSystem : IteratingSystem(allOf(Amble::class, AgentProperties::class, TransformComponent::class).get()) {
 
     private val mapManager by lazy { inject<GridMapManager>() }
 
     override fun processEntity(entity: Entity, deltaTime: Float) {
         val component = AshleyMappers.amble.get(entity)
-        val enemyComponent = entity.enemy()
+        val enemyComponent = entity.agentProps()
         val currentPosition = entity.transform().position
 
         if (component.firstRun || entity.hasCollidedWithObstacle()) {
@@ -67,7 +67,7 @@ class AmblingSystem : IteratingSystem(allOf(Amble::class, EnemyComponent::class,
     }
 }
 
-fun progressPath(enemyComponent: EnemyComponent, currentPosition: Vector2): Boolean {
+fun progressPath(enemyComponent: AgentProperties, currentPosition: Vector2): Boolean {
     if (enemyComponent.needsNewNextPosition && !enemyComponent.path.isEmpty) {
         enemyComponent.nextPosition = enemyComponent.path.removeFirst()
         enemyComponent.needsNewNextPosition = false
@@ -86,7 +86,7 @@ fun progressPath(enemyComponent: EnemyComponent, currentPosition: Vector2): Bool
     return enemyComponent.path.isEmpty
 }
 
-fun findPathFromTo(enemyComponent: EnemyComponent, from: Coordinate, to: Coordinate) {
+fun findPathFromTo(enemyComponent: AgentProperties, from: Coordinate, to: Coordinate) {
     enemyComponent.path.clear()
     val mapManager = inject<GridMapManager>()
     val path = mapManager.sectionGraph.findPath(from, to)

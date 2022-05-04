@@ -10,7 +10,7 @@ import com.badlogic.gdx.physics.box2d.Fixture
 import ecs.components.ai.NoticedSomething
 import ecs.components.ai.SeekPlayer
 import ecs.components.ai.IsAwareOfPlayer
-import ecs.components.enemy.EnemyComponent
+import ecs.components.enemy.AgentProperties
 import ecs.components.gameplay.TransformComponent
 import ecs.components.player.PlayerComponent
 import factories.world
@@ -36,7 +36,7 @@ class SeekPlayerSystem(val debug: Boolean) : IteratingSystem(allOf(SeekPlayer::c
         val seekComponent = entity.getComponent<SeekPlayer>()
         val debugColor = Color(0f, 1f, 0f, 0.1f)
 
-        val enemyComponent = entity.getComponent<EnemyComponent>()
+        val enemyComponent = entity.getComponent<AgentProperties>()
         val enemyPosition = entity.getComponent<TransformComponent>().position
         enemyComponent.directionVector.set(Vector2.Zero)
         val playersInRange =

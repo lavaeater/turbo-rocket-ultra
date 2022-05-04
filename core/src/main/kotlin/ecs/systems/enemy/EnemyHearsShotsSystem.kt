@@ -4,7 +4,7 @@ import com.badlogic.ashley.core.Entity
 import com.badlogic.ashley.systems.IteratingSystem
 import com.badlogic.gdx.math.Circle
 import ecs.components.ai.NoticedSomething
-import ecs.components.enemy.EnemyComponent
+import ecs.components.enemy.AgentProperties
 import ecs.components.gameplay.TransformComponent
 import ecs.components.player.FiredShotsComponent
 import ktx.ashley.allOf
@@ -15,7 +15,7 @@ import physics.has
 
 class EnemyHearsShotsSystem : IteratingSystem(allOf(FiredShotsComponent::class).get()) {
 
-    private val enemies get() = engine.getEntitiesFor(allOf(EnemyComponent::class).get())
+    private val enemies get() = engine.getEntitiesFor(allOf(AgentProperties::class).get())
     private val circle = Circle()
 
     override fun processEntity(entity: Entity, deltaTime: Float) {

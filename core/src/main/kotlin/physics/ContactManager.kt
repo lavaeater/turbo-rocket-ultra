@@ -13,7 +13,7 @@ import ecs.components.BodyComponent
 import ecs.components.ai.CollidedWithObstacle
 import ecs.components.ai.KnownPosition
 import ecs.components.ai.IsAwareOfPlayer
-import ecs.components.enemy.EnemyComponent
+import ecs.components.enemy.AgentProperties
 import ecs.components.fx.ParticleEffectComponent
 import ecs.components.gameplay.*
 import ecs.components.pickups.LootComponent
@@ -34,7 +34,6 @@ import ktx.scene2d.table
 import messaging.Message
 import messaging.MessageHandler
 import tru.Assets
-import kotlin.reflect.KClass
 
 /*
 How to handle contacts in the absolutely smashingly BEST
@@ -70,7 +69,7 @@ class ContactManager : ContactListener {
 
                 enemyEntity.fitnessDown()
 
-                val enemyComponent = enemyEntity.enemy()
+                val enemyComponent = enemyEntity.agentProps()
                 val bulletComponent = bulletEntity.bullet()
                 enemyComponent.takeDamage(bulletComponent.damage, bulletComponent.player)
                 val bulletBody = bulletEntity.body()
@@ -175,7 +174,7 @@ class ContactManager : ContactListener {
 
                 val playerBody = player.body()
                 playerBody.applyLinearImpulse(
-                    enemy.getComponent<EnemyComponent>().directionVector.cpy().scl(100f),
+                    enemy.getComponent<AgentProperties>().directionVector.cpy().scl(100f),
                     player.getComponent<TransformComponent>().position,
                     true
                 )
@@ -307,13 +306,13 @@ class ContactManager : ContactListener {
         explosionEffectEntity(body.worldCenter)
 
         //Find all enemies with an area
-        val enemiesInRange = engine().getEntitiesFor(allOf(EnemyComponent::class).get()).filter { it.transform().position.dst(body.worldCenter) < 50f }
+        val enemiesInRange = engine().getEntitiesFor(allOf(AgentProperties::class).get()).filter { it.transform().position.dst(body.worldCenter) < 50f }
 
         for (enemy in enemiesInRange) {
             //apply distance-related damage
 
             //apply impulse to enemy body, hopefully sending them away
-            val enemyComponent = AshleyMappers.enemy.get(enemy)
+            val enemyComponent = AshleyMappers.agentProps.get(enemy)
             enemyComponent.startCooldown(enemyComponent::stunned, 0.5f)
             val enemyBody = enemy.body()
             val distanceVector = enemyBody.worldCenter.cpy().sub(body.worldCenter)

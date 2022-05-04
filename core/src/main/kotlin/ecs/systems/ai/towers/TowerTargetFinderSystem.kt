@@ -3,7 +3,7 @@ package ecs.systems.ai.towers
 import com.badlogic.ashley.core.Entity
 import com.badlogic.ashley.systems.IteratingSystem
 import com.badlogic.gdx.ai.btree.Task
-import ecs.components.enemy.EnemyComponent
+import ecs.components.enemy.AgentProperties
 import ecs.components.gameplay.TransformComponent
 import ecs.components.towers.FindTarget
 import ecs.components.towers.TargetInRange
@@ -12,7 +12,7 @@ import physics.addComponent
 import physics.getComponent
 
 class TowerTargetFinderSystem : IteratingSystem(allOf(FindTarget::class, TransformComponent::class).get()) {
-    private val enemyFamily = allOf(EnemyComponent::class, TransformComponent::class).get()
+    private val enemyFamily = allOf(AgentProperties::class, TransformComponent::class).get()
     private val enemies get() = engine.getEntitiesFor(enemyFamily)
 
 

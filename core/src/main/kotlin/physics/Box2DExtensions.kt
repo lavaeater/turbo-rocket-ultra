@@ -11,7 +11,7 @@ import com.badlogic.gdx.physics.box2d.Body
 import com.badlogic.gdx.physics.box2d.Contact
 import com.badlogic.gdx.physics.box2d.Fixture
 import ecs.components.*
-import ecs.components.enemy.EnemyComponent
+import ecs.components.enemy.AgentProperties
 import ecs.components.player.PlayerComponent
 import ecs.components.player.PlayerControlComponent
 import factories.engine
@@ -69,7 +69,7 @@ fun Contact.bothAreEntities(): Boolean {
 }
 
 fun Body.isEnemy(): Boolean {
-    return (userData as Entity).has<EnemyComponent>()
+    return (userData as Entity).has<AgentProperties>()
 }
 
 fun Body.isPlayer(): Boolean {
@@ -226,8 +226,8 @@ inline fun <reified T : Component> Engine.createComponent(block: T.() -> Unit = 
 }
 
 fun Contact.thisIsAContactBetween(): ContactType {
-    if(this.justOneHas<EnemyComponent>()) {
-        val entity = this.getEntityFor<EnemyComponent>()
+    if(this.justOneHas<AgentProperties>()) {
+        val entity = this.getEntityFor<AgentProperties>()
         val otherFixture = if(this.fixtureA.isEntity() && entity == this.fixtureA.getEntity()) this.fixtureB else this.fixtureA
 
         if(!otherFixture.isEntity()) {
@@ -243,7 +243,7 @@ fun Contact.thisIsAContactBetween(): ContactType {
             val otherEntity = this.getOtherEntity(damageEffectEntity)
             return if (otherEntity.has<PlayerComponent>()) {
                 ContactType.PlayerAndDamage(damageEffectEntity, otherEntity)
-            } else if (otherEntity.has<EnemyComponent>()) {
+            } else if (otherEntity.has<AgentProperties>()) {
                 ContactType.EnemyAndDamage(damageEffectEntity, otherEntity)
             } else {
                 ContactType.SomeEntityAndDamage(damageEffectEntity, otherEntity)
@@ -304,9 +304,9 @@ fun Contact.thisIsAContactBetween(): ContactType {
         return ContactType.EnemyAndEnemy(enemyAEntity, enemyBEntity)
     }
 
-    if (this.atLeastOneHas<EnemyComponent>() && this.atLeastOneHas<BulletComponent>()) {
+    if (this.atLeastOneHas<AgentProperties>() && this.atLeastOneHas<BulletComponent>()) {
 
-        val enemy = this.getEntityFor<EnemyComponent>()
+        val enemy = this.getEntityFor<AgentProperties>()
         val bulletEntity = this.getEntityFor<BulletComponent>()
         return ContactType.EnemyAndBullet(enemy, bulletEntity)
     }

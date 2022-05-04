@@ -98,6 +98,7 @@ object Context {
 
     private fun getEngine(): Engine {
         return PooledEngine().apply {
+            addSystem(UpdateTimePieceSystem())
             addSystem(PhysicsSystem(0))
             addSystem(CameraUpdateSystem(inject(), inject()))
             addSystem(PlayerMoveSystem(25f))

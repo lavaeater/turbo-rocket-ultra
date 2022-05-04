@@ -5,7 +5,7 @@ import com.badlogic.ashley.core.EntitySystem
 import com.badlogic.ashley.systems.IntervalSystem
 import com.badlogic.ashley.systems.IteratingSystem
 import com.badlogic.gdx.Gdx
-import ecs.components.enemy.EnemyComponent
+import ecs.components.enemy.AgentProperties
 import ecs.components.gameplay.DestroyComponent
 import ecs.systems.graphics.GameConstants.MAX_ENEMIES
 import ktx.ashley.allOf
@@ -14,7 +14,7 @@ import screens.GameScreen
 
 class EnemyOptimizerSystem : IntervalSystem(5f) {
 
-    private val enemies get() = engine.getEntitiesFor(allOf(EnemyComponent::class).get())
+    private val enemies get() = engine.getEntitiesFor(allOf(AgentProperties::class).get())
     private val count get() = enemies.count()
 
     override fun updateInterval() {

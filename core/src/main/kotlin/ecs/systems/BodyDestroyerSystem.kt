@@ -27,7 +27,7 @@ class BodyDestroyerSystem(private val world: World) : IteratingSystem(
         if(AshleyMappers.bullet.has(entity)) {
             CounterObject.bulletCount--
         }
-        if(AshleyMappers.enemy.has(entity))
+        if(AshleyMappers.agentProps.has(entity))
             CounterObject.enemyCount--
         if(entity.hasUiThing()) {
             val uiThing = entity.uiThing()
