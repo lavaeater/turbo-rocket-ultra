@@ -6,10 +6,6 @@ import com.badlogic.ashley.core.Entity
 import com.badlogic.gdx.math.Vector2
 import ecs.components.BodyComponent
 import ecs.components.ai.*
-import ecs.components.enemy.EnemyComponent
-import ecs.components.enemy.EnemySensorComponent
-import ecs.components.enemy.EnemySpawnerComponent
-import ecs.components.enemy.TackleComponent
 import ecs.components.fx.SplatterComponent
 import ecs.components.gameplay.*
 import ecs.components.graphics.*
@@ -17,6 +13,7 @@ import ecs.components.pickups.LootComponent
 import ecs.components.pickups.LootDropComponent
 import ecs.components.player.*
 import ecs.components.AudioComponent
+import ecs.components.enemy.*
 import ecs.components.fx.ParticleEffectComponent
 import ecs.components.intent.*
 import ktx.ashley.mapperFor
@@ -91,6 +88,15 @@ object AshleyMappers {
     val reloading = mapperFor<IsReloadingComponent>()
     val alertFriends = mapperFor<AlertFriends>()
     val awareOfPlayer = mapperFor<IsAwareOfPlayer>()
+    val fitness = mapperFor<Fitness>()
+}
+
+fun Entity.fitnessUp() {
+    AshleyMappers.fitness.get(this).fitness++
+}
+
+fun Entity.fitnessDown() {
+    AshleyMappers.fitness.get(this).fitness--
 }
 
 fun Entity.isAwareOfPlayer(): Boolean {

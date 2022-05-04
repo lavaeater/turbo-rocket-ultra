@@ -717,6 +717,7 @@ fun enemy(at: Vector2) {
         }
         with<SpriteComponent> {
         }
+        with<Fitness>()
         with<RenderableComponent> {
             layer = 1
             renderableType = RenderableType.Sprite

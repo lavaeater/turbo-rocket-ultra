@@ -9,19 +9,6 @@ import ktx.math.random
 import ktx.math.vec2
 import kotlin.reflect.KMutableProperty
 
-class BossComponent : Component, Pool.Poolable {
-    override fun reset() {
-    }
-}
-
-object UniqueId {
-    private var id = 0
-    fun next(): Int {
-        id++
-        return id
-    }
-}
-
 class EnemyComponent : Component, Pool.Poolable {
     var flock = true
     var lastShotAngle = 0f
