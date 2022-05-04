@@ -3,6 +3,8 @@ package factories
 import ai.Tree
 import com.badlogic.ashley.core.Engine
 import com.badlogic.ashley.core.Entity
+import com.badlogic.gdx.Gdx
+import com.badlogic.gdx.ai.btree.BehaviorTree
 import com.badlogic.gdx.ai.btree.BehaviorTree.Listener
 import com.badlogic.gdx.ai.btree.Task
 import com.badlogic.gdx.graphics.Color
@@ -14,6 +16,8 @@ import com.badlogic.gdx.physics.box2d.BodyDef
 import com.badlogic.gdx.physics.box2d.World
 import com.badlogic.gdx.scenes.scene2d.Action
 import com.badlogic.gdx.utils.Json
+import com.esotericsoftware.kryo.Kryo
+import com.esotericsoftware.kryo.io.Output
 import data.Player
 import ecs.components.AudioComponent
 import ecs.components.BodyComponent
@@ -64,6 +68,7 @@ import turbofacts.TurboFactsOfTheWorld
 import ui.IUserInterface
 import ui.getUiThing
 import kotlin.experimental.or
+import kotlin.reflect.typeOf
 
 fun world(): World {
     return inject()
@@ -428,7 +433,7 @@ fun player(player: Player, mapper: ControlMapper, at: Vector2, debug: Boolean) {
     playerWeapon(entity, "green")
 }
 
-fun playerWeapon(playerEntity: Entity, anchor: String = "green") : Entity {
+fun playerWeapon(playerEntity: Entity, anchor: String = "green"): Entity {
     return engine().entity {
         with<TransformComponent>()
         with<SpriteComponent> {
@@ -722,14 +727,13 @@ fun enemy(at: Vector2) {
     val btComponent =
         entity.addComponent<BehaviorComponent>
         {
-            if((1..5).random() == 1) {
-                val t =Tree.getEnemyBehaviorThatFindsOtherEnemies().apply { `object` = entity }
-                val json = Json().toJson(t)
+            if ((1..5).random() == 1) {
+                val t = Tree.getEnemyBehaviorThatFindsOtherEnemies().apply { `object` = entity }
                 tree = t
             } else {
-                val t =Tree.getEnemyBehaviorTree().apply { `object` = entity }
-                val json =
-                tree = t
+                val t = Tree.getEnemyBehaviorTree()
+                t.kryoThisBitch()
+                tree = t.apply { `object` = entity }
             }
         }
     val hud = inject<IUserInterface>()
@@ -997,4 +1001,15 @@ fun objective(
     }
     box2dBody.userData = entity
     return box2dBody
+}
+
+fun BehaviorTree<Entity>.kryoThisBitch() {
+    val kryo = Kryo()
+    kryo.references = true
+    kryo.isRegistrationRequired = false
+//    kryo.register(this.javaClass)
+    val stream = Gdx.files.local("test.tree")
+    val output = Output(100000, 10000000)
+    kryo.writeObject(output, this)
+    stream.writeBytes(output.toBytes(), false)
 }

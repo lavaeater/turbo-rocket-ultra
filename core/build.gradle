@@ -57,4 +57,5 @@ dependencies {
 	api "space.earlygrey:shapedrawer:$shapeDrawerVersion"
 	api "org.jetbrains.kotlin:kotlin-reflect:$kotlinVersion"
 	api "com.charleskorn.kaml:kaml:$yamlSerializationVersion"
+	implementation "com.esotericsoftware:kryo:$kryoVersion"
 }
