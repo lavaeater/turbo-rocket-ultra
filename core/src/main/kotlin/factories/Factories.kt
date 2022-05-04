@@ -726,15 +726,14 @@ fun enemy(at: Vector2) {
             color = Color.RED
         }
     }
-
     val btComponent =
         entity.addComponent<BehaviorComponent>
         {
             if ((1..5).random() == 1) {
-                val t = unKryoSomeBitch("alert_enemies")
+                val t = Tree.getMutatedTree(unKryoSomeBitch("alert_enemies"))
                 tree = t.apply { `object` = entity }
             } else {
-                val t = unKryoSomeBitch("regular_enemy")
+                val t = Tree.getMutatedTree(unKryoSomeBitch("regular_enemy"))
                 tree = t.apply { `object` = entity }
             }
         }

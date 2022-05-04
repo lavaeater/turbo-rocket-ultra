@@ -6,6 +6,8 @@ kanban-plugin: basic
 
 ## Todo
 
+- [ ] [[Intent-based Context Action]]
+- [ ] [[Tower Mechanics]]
 - [ ] [[A Nice Logo]]
 - [ ] [[Enemy Aggression]]
 - [ ] [[Zombies throwing projectiles]]
@@ -31,8 +33,6 @@ kanban-plugin: basic
 ## Doing
 
 - [ ] [[Enemy Evolution]]
-- [ ] [[Intent-based Context Action]]
-- [ ] [[Tower Mechanics]]
 
 
 ## Done

@@ -39,8 +39,8 @@ class GridMapManager {
         return buildableMap.containsKey(x) && buildableMap[x]!!.containsKey(y) && buildableMap[x]!![y]!!
     }
 
-    fun haveWeVisited(x: Int, y:Int) : Boolean {
-        return true
+    private fun haveWeVisited(x: Int, y:Int) : Boolean {
+        return visitedMap[x]?.get(y) == true
 //        return visitedMap.containsKey(x) && visitedMap[x]!!.containsKey(y) && visitedMap[x]!![y]!!
     }
 
