@@ -5,8 +5,6 @@ import com.badlogic.ashley.core.Engine
 import com.badlogic.ashley.core.Entity
 import com.badlogic.gdx.Gdx
 import com.badlogic.gdx.ai.btree.BehaviorTree
-import com.badlogic.gdx.ai.btree.BehaviorTree.Listener
-import com.badlogic.gdx.ai.btree.Task
 import com.badlogic.gdx.ai.btree.Task.Status
 import com.badlogic.gdx.graphics.Color
 import com.badlogic.gdx.math.MathUtils
@@ -15,9 +13,7 @@ import com.badlogic.gdx.math.Vector2
 import com.badlogic.gdx.physics.box2d.Body
 import com.badlogic.gdx.physics.box2d.BodyDef
 import com.badlogic.gdx.physics.box2d.World
-import com.badlogic.gdx.scenes.scene2d.Action
 import com.esotericsoftware.kryo.Kryo
-import com.esotericsoftware.kryo.Serializer
 import com.esotericsoftware.kryo.io.Input
 import com.esotericsoftware.kryo.io.Output
 import com.esotericsoftware.kryo.serializers.EnumNameSerializer
@@ -48,8 +44,6 @@ import features.weapons.AmmoType
 import features.weapons.WeaponDefinition
 import injection.Context.inject
 import input.ControlMapper
-import ktx.actors.plusAssign
-import ktx.actors.repeatForever
 import ktx.ashley.entity
 import ktx.ashley.with
 import ktx.box2d.body
@@ -58,7 +52,6 @@ import ktx.box2d.circle
 import ktx.box2d.filter
 import ktx.math.random
 import ktx.math.vec2
-import ktx.scene2d.actors
 import ktx.scene2d.label
 import ktx.scene2d.scene2d
 import ktx.scene2d.table
@@ -68,8 +61,6 @@ import tru.Assets
 import tru.SpriteDirection
 import tru.getSpriteFor
 import turbofacts.TurboFactsOfTheWorld
-import ui.IUserInterface
-import ui.getUiThing
 import kotlin.experimental.or
 
 fun world(): World {
