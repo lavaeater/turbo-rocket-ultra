@@ -28,24 +28,32 @@ class TileGraph : IndexedGraph<Coordinate> {
         }
     }
 
-    fun connectCoordinates(from: Coordinate, to:Coordinate) {
+    fun connectCoordinates(from: Coordinate, to: Coordinate) {
         val connection = TileConnection(from, to)
-        if(!connectionMap.containsKey(from)) {
+        if (!connectionMap.containsKey(from)) {
             connectionMap[from] = mutableListOf()
         }
         connectionMap[from]!!.add(connection)
         connections.add(connection)
     }
 
-    fun findPath(start: Coordinate, goal: Coordinate) :  GraphPath<Coordinate> {
-        val path = DefaultGraphPath<Coordinate>()
-        val pathFinder = IndexedAStarPathFinder(this)
-        pathFinder.searchNodePath(start, goal, heuristic, path)
-        return path
+    private val pathsCache = mutableMapOf<Coordinate, MutableMap<Coordinate, GraphPath<Coordinate>>>()
+
+    fun findPath(start: Coordinate, goal: Coordinate): GraphPath<Coordinate> {
+        if (!pathsCache.containsKey(start)) {
+            pathsCache[start] = mutableMapOf()
+            if (!pathsCache[start]!!.containsKey(goal)) {
+                val path = DefaultGraphPath<Coordinate>()
+                val pathFinder = IndexedAStarPathFinder(this)
+                pathFinder.searchNodePath(start, goal, heuristic, path)
+                pathsCache[start]!![goal] = path
+            }
+        }
+        return pathsCache[start]!![goal]!!
     }
 
     override fun getConnections(fromNode: Coordinate): Array<Connection<Coordinate>> {
-        return if(connectionMap.containsKey(fromNode)) {
+        return if (connectionMap.containsKey(fromNode)) {
             connectionMap[fromNode]!!.toGdxArray()
         } else {
             emptyArray<Connection<Coordinate>>().toGdxArray()

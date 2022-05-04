@@ -19,7 +19,7 @@
         "state": {
           "type": "markdown",
           "state": {
-            "file": "docs/todo/Enemy Evolution.md",
+            "file": "docs/devlog/2022-05-04.md",
             "mode": "source",
             "source": false
           }
@@ -80,7 +80,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "docs/todo/Enemy Evolution.md",
+                "file": "docs/devlog/2022-05-04.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -100,6 +100,7 @@
   },
   "active": "cf8eeb91e30b345f",
   "lastOpenFiles": [
+    "docs/devlog/2022-05-04.md",
     "docs/todo/Enemy Evolution.md",
     "docs/KANBAN.md",
     "docs/todo/Enemy Aggression.md",
@@ -108,7 +109,6 @@
     "docs/todo/Serializing Stories, Rules and Criteria.md",
     "docs/todo/Tower Mechanics.md",
     "docs/todo/Intent-based Context Action.md",
-    "docs/todo/Gibs and Body Parts II.md",
-    "docs/done/There's Levels to This.md"
+    "docs/todo/Gibs and Body Parts II.md"
   ]
 }
