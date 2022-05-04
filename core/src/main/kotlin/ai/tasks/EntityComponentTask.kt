@@ -5,7 +5,12 @@ import com.badlogic.ashley.core.Entity
 import com.badlogic.gdx.ai.btree.Task
 import ecs.components.ai.TaskComponent
 
-class EntityComponentTask<T: TaskComponent>(private val componentClass: Class<T>) : EntityTask() {
+class EntityComponentTask<T: TaskComponent>() : EntityTask() {
+    lateinit var componentClass: Class<T>
+    constructor(componentClass: Class<T>) : this() {
+        this.componentClass = componentClass
+    }
+    @delegate: Transient
     private val mapper by lazy { ComponentMapper.getFor(componentClass) }
 
     override fun start() {

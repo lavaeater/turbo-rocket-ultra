@@ -7,6 +7,7 @@ import com.badlogic.gdx.Gdx
 import com.badlogic.gdx.ai.btree.BehaviorTree
 import com.badlogic.gdx.ai.btree.BehaviorTree.Listener
 import com.badlogic.gdx.ai.btree.Task
+import com.badlogic.gdx.ai.btree.Task.Status
 import com.badlogic.gdx.graphics.Color
 import com.badlogic.gdx.math.MathUtils
 import com.badlogic.gdx.math.MathUtils.degreesToRadians
@@ -15,9 +16,11 @@ import com.badlogic.gdx.physics.box2d.Body
 import com.badlogic.gdx.physics.box2d.BodyDef
 import com.badlogic.gdx.physics.box2d.World
 import com.badlogic.gdx.scenes.scene2d.Action
-import com.badlogic.gdx.utils.Json
 import com.esotericsoftware.kryo.Kryo
+import com.esotericsoftware.kryo.Serializer
+import com.esotericsoftware.kryo.io.Input
 import com.esotericsoftware.kryo.io.Output
+import com.esotericsoftware.kryo.serializers.EnumNameSerializer
 import data.Player
 import ecs.components.AudioComponent
 import ecs.components.BodyComponent
@@ -68,7 +71,6 @@ import turbofacts.TurboFactsOfTheWorld
 import ui.IUserInterface
 import ui.getUiThing
 import kotlin.experimental.or
-import kotlin.reflect.typeOf
 
 fun world(): World {
     return inject()
@@ -728,11 +730,10 @@ fun enemy(at: Vector2) {
         entity.addComponent<BehaviorComponent>
         {
             if ((1..5).random() == 1) {
-                val t = Tree.getEnemyBehaviorThatFindsOtherEnemies().apply { `object` = entity }
-                tree = t
+                val t = unKryoSomeBitch("alert_enemies")
+                tree = t.apply { `object` = entity }
             } else {
-                val t = Tree.getEnemyBehaviorTree()
-                t.kryoThisBitch()
+                val t = unKryoSomeBitch("regular_enemy")
                 tree = t.apply { `object` = entity }
             }
         }
@@ -1003,13 +1004,46 @@ fun objective(
     return box2dBody
 }
 
-fun BehaviorTree<Entity>.kryoThisBitch() {
-    val kryo = Kryo()
-    kryo.references = true
-    kryo.isRegistrationRequired = false
-//    kryo.register(this.javaClass)
-    val stream = Gdx.files.local("test.tree")
+object TreeCache {
+    val trees = mutableMapOf<String, ByteArray>()
+    val kryo: Kryo by lazy {
+        Kryo().apply {
+            references = true
+            isRegistrationRequired = false
+            register(Status::class.javaObjectType, EnumNameSerializer(Status::class.javaObjectType))
+            register(BehaviorTree<Entity>().javaClass)
+        }
+    }
+}
+
+fun unKryoSomeBitch(treeName: String = "regular_enemy"): BehaviorTree<Entity> {
+    var t = TreeCache.trees[treeName]
+    if(t == null) {
+        val file = Gdx.files.local("${treeName}.tree")
+        t = if (file.exists()) {
+            file.readBytes()
+        } else {
+            when (treeName) {
+                "alert_enemies" -> {
+                    val tr = Tree.getEnemyBehaviorThatFindsOtherEnemies()
+                    tr.kryoThisBitch(treeName)
+                }
+                else -> {
+                    val tr = Tree.getEnemyBehaviorTree()
+                    tr.kryoThisBitch(treeName)
+                }
+            }
+        }
+        TreeCache.trees[treeName] = t!!
+    }
+    val input = Input(t)
+    return TreeCache.kryo.readObject(input, BehaviorTree<Entity>().javaClass)
+}
+
+fun BehaviorTree<Entity>.kryoThisBitch(treeName: String) : ByteArray {
+    val stream = Gdx.files.local("${treeName}.tree")
     val output = Output(100000, 10000000)
-    kryo.writeObject(output, this)
+    TreeCache.kryo.writeObject(output, this)
     stream.writeBytes(output.toBytes(), false)
+    return output.toBytes()
 }

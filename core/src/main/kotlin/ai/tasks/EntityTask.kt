@@ -8,7 +8,9 @@ import factories.factsOfTheWorld
 import turbofacts.TurboFactsOfTheWorld
 
 abstract class EntityTask : LeafTask<Entity>() {
+    @delegate: Transient
     protected val engine: Engine by lazy { engine() }
+    @delegate: Transient
     protected val factsOfTheWorld: TurboFactsOfTheWorld by lazy { factsOfTheWorld() }
 
     protected val entity: Entity get() = `object`

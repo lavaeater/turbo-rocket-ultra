@@ -40,16 +40,19 @@ class TileGraph : IndexedGraph<Coordinate> {
     private val pathsCache = mutableMapOf<Coordinate, MutableMap<Coordinate, GraphPath<Coordinate>>>()
 
     fun findPath(start: Coordinate, goal: Coordinate): GraphPath<Coordinate> {
-        if (!pathsCache.containsKey(start)) {
-            pathsCache[start] = mutableMapOf()
+        var path = pathsCache[start]?.get(goal)
+        if (path == null) {
+            if (!pathsCache.containsKey(start)) {
+                pathsCache[start] = mutableMapOf()
+            }
             if (!pathsCache[start]!!.containsKey(goal)) {
-                val path = DefaultGraphPath<Coordinate>()
+                path = DefaultGraphPath()
                 val pathFinder = IndexedAStarPathFinder(this)
                 pathFinder.searchNodePath(start, goal, heuristic, path)
                 pathsCache[start]!![goal] = path
             }
         }
-        return pathsCache[start]!![goal]!!
+        return path!!
     }
 
     override fun getConnections(fromNode: Coordinate): Array<Connection<Coordinate>> {

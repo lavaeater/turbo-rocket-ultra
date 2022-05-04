@@ -7,6 +7,7 @@ import com.badlogic.gdx.ai.btree.Task
 
 class EntityHasComponentDecorator<T : Component>(child: Task<Entity>, private val componentClass: Class<T>) :
     EntityDecorator(child) {
+    @delegate: Transient
     private val mapper by lazy { ComponentMapper.getFor(componentClass) }
 
     override fun copyTo(task: Task<Entity>?): Task<Entity> {
