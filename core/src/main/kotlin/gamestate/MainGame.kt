@@ -1,7 +1,10 @@
 package gamestate
 
 import data.Players
+import ecs.systems.enemy.FitnessTracker
 import factories.factsOfTheWorld
+import factories.kryoThisBitchToDisk
+import factories.unKryoSomeBitch
 import injection.Context
 import ktx.app.KtxGame
 import ktx.app.KtxScreen
@@ -36,7 +39,21 @@ class MainGame : KtxGame<KtxScreen>() {
                     gameScreen.resume()
                 }
                 edge(GameEvent.PausedGame, GameState.Paused) {}
-                edge(GameEvent.GameOver, GameState.Setup) {}
+                edge(GameEvent.GameOver, GameState.Setup) {
+                    action {
+                        /*
+                        Nice stuff. So what do we do here?
+
+                         */
+                        FitnessTracker.fitnessData.sortBy { it.fitness }
+                        val lastRelevantIndex = if( FitnessTracker.fitnessData.lastIndex > 5) 5 else FitnessTracker.fitnessData.lastIndex
+                        val evolveThese = FitnessTracker.fitnessData.subList(0, lastRelevantIndex)
+                        for((index, toEvolve) in evolveThese.withIndex()) {
+                            toEvolve.bt.kryoThisBitchToDisk(index + 1)
+                        }
+                    }
+
+                }
                 edge(GameEvent.LevelComplete, GameState.Setup) {}
             }
             state(GameState.Paused) {

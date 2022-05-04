@@ -148,7 +148,7 @@ object Context {
                     1
                 )
             )
-            addSystem(PhysicsDebugRendererSystem(inject(), inject()))
+//            addSystem(PhysicsDebugRendererSystem(inject(), inject()))
 
             addSystem(RenderMiniMapSystem(3))
             addSystem(PlayerFlashlightSystem())
