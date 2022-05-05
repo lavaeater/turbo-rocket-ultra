@@ -1,7 +1,4 @@
 cch
-c*c
-c*c
-c*w
 c*l
 c*b
 c*g

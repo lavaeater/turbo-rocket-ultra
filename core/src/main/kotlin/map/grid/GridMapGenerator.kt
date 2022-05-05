@@ -30,10 +30,10 @@ class GridMapGenerator {
         fun addObjective(bounds: Rectangle, perimeterObjectives: Boolean) {
             var position = bounds.randomPoint()
             objective(position.x, position.y, perimeterObjectives)
-
-            position = bounds.randomPoint()
-            val emitter = spawner(position.x, position.y)
-            emitter.add(engine.createComponent(EnemySpawnerComponent::class.java))
+//
+//            position = bounds.randomPoint()
+//            val emitter = spawner(position.x, position.y)
+//            emitter.add(engine.createComponent(EnemySpawnerComponent::class.java))
         }
 
         fun addSpawner(bounds: Rectangle) {
