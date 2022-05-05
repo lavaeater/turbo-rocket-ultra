@@ -34,6 +34,7 @@ kanban-plugin: basic
 
 - [ ] [[Enemy Evolution]]
 - [ ] [[AI Refinement]]
+- [ ] [[Knowledge-based AI]]
 
 
 ## Done
