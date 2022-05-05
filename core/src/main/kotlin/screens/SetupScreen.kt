@@ -3,7 +3,6 @@ package screens
 import com.badlogic.gdx.Gdx
 import com.badlogic.gdx.Input
 import com.badlogic.gdx.controllers.Controller
-import com.badlogic.gdx.controllers.ControllerManager
 import com.badlogic.gdx.controllers.Controllers
 import com.badlogic.gdx.graphics.Color
 import com.badlogic.gdx.graphics.OrthographicCamera
@@ -22,9 +21,12 @@ import input.ControlMapper
 import input.GamepadControl
 import input.KeyboardControl
 import ktx.log.info
-impolwjgl3/build.gradlert ktx.scene2d.*
+import ktx.scene2d.*
 import statemachine.StateMachine
-import tru.*
+import tru.AnimState
+import tru.Assets
+import tru.SpriteDirection
+import tru.TurboCharacterAnim
 import ui.customactors.animatedSpriteImage
 import ui.customactors.boundLabel
 

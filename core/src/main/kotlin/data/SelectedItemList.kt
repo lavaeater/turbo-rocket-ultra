@@ -1,4 +1,4 @@
-package ecs.systems.player
+package data
 
 
 fun<T> selectedItemListOf(callBack: (T)-> Unit = {}, vararg items: T): SelectedItemList<T> {

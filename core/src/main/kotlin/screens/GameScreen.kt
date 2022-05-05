@@ -32,7 +32,7 @@ import ktx.ashley.allOf
 import ktx.ashley.getSystem
 import map.grid.*
 import map.snake.randomPoint
-import physics.AshleyMappers
+import physics.*
 import statemachine.StateMachine
 import turbofacts.StoryHelper
 import tru.Assets
@@ -263,9 +263,9 @@ D1B67A
 
     private fun clearAllButPlayers() {
         for(entity in engine.entities) {
-            if(!AshleyMappers.playerControl.has(entity)) {
-                if(AshleyMappers.body.has(entity)) {
-                    val body = AshleyMappers.body.get(entity).body!!
+            if(!entity.hasPlayerControl() && !entity.hasWeapon()) {
+                if(entity.hasBody()) {
+                    val body = entity.body()
                     world.destroyBody(body)
                 }
                 engine.removeEntity(entity)

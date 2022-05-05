@@ -238,7 +238,3 @@ class PlayerShootingSystem(private val audioPlayer: AudioPlayer) : IteratingSyst
     }
 }
 
-object Sfx {
-    const val outofAmmo = "out-of-ammo"
-}
-
