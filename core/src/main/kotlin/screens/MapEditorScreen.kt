@@ -102,10 +102,10 @@ class MapEditorScreen(gameState: StateMachine<GameState, GameEvent>) : BasicScre
             fileNameTextField = textField(fileName) {
                 setKeyboardFocus(true)
                 onKeyDown {
-                    if(it == Input.Keys.ENTER) {
+                    if (it == Input.Keys.ENTER) {
                         fileName = this.text
                     }
-                    if(it == Input.Keys.ENTER || it == Input.Keys.ESCAPE) {
+                    if (it == Input.Keys.ENTER || it == Input.Keys.ESCAPE) {
                         Gdx.input.inputProcessor = previousProcessor
                         this@dialog.isVisible = false
                     }
@@ -160,15 +160,14 @@ class MapEditorScreen(gameState: StateMachine<GameState, GameEvent>) : BasicScre
             executeDialogYes = {
                 dialog.isVisible = false
                 saveMap()
-                if (exit) reallyExitEditor() else reallyNewMap()
             }
             executeDialogNo = {
                 dialog.isVisible = false
-                if (exit) reallyExitEditor() else reallyNewMap()
             }
             currentControlMap = dialogModeMap
             dialog.isVisible = true
         }
+        if (exit) reallyExitEditor() else reallyNewMap()
     }
 
     private fun newMap() {
@@ -192,6 +191,7 @@ class MapEditorScreen(gameState: StateMachine<GameState, GameEvent>) : BasicScre
     }
 
     private fun reallyExitEditor() {
+        machine.acceptEvent(EditEvent.ExitCommandMode)
         gameState.acceptEvent(GameEvent.ExitMapEditor)
     }
 
@@ -277,7 +277,7 @@ class MapEditorScreen(gameState: StateMachine<GameState, GameEvent>) : BasicScre
                 right()
                 verticalGroup {
                     left()
-                    boundLabel({ "Map: $fileName ${if(isDirty) "*" else ""}" })
+                    boundLabel({ "Map: $fileName ${if (isDirty) "*" else ""}" })
                     boundLabel({ currentControlMap.name })
                     boundLabel({ currentControlMap.toString() })
                 }

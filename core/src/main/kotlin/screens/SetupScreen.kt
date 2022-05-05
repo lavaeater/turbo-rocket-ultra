@@ -34,7 +34,6 @@ import ui.customactors.boundLabel
 class SetupViewModel {
     val availableControllers: MutableList<PlayerModel> by lazy {
         val controllers = Controllers.getControllers()
-        val controllerManager = Controllers.preferredManager
         mutableListOf(
             *Controllers.getControllers().map { PlayerModel.GamePad(it) }.toTypedArray(),
             PlayerModel.Keyboard()
