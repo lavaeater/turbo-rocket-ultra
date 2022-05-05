@@ -1,11 +1,7 @@
-cccccc
-cccccc
-cccwcc
-cccccc
-cccccc
-cccccc
-sccccc
-------
+gc
+cw
+sc
+--
 name
 trainer            
 start

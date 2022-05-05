@@ -282,7 +282,7 @@ D1B67A
         CounterObject.maxSpawnedEnemies = CounterObject.maxEnemies * 2
 
         val map = when {
-            level < MapList.mapFileNames.size -> loadMap(MapList.mapFiles[level])
+            level < MapList.mapFileNames.size -> loadMap(MapList.mapFiles[level - 1])
             else -> GridMapGenerator.generate(CounterObject.currentLength, level)
         }
         mapManager.gridMap = map.first
@@ -300,7 +300,7 @@ D1B67A
 object MapList {
     val mapFileNames = mutableListOf<String>()
     val mapFiles: List<MapData> get () {
-        return mapFileNames.map { MapLoader.loadNewMap(it) }
+        return mapFileNames.map { MapLoader.loadNewMap("text_maps/$it.txt") }
     }
 }
 

@@ -78,9 +78,10 @@ class SetupScreen(gameState: StateMachine<GameState, GameEvent>) : BasicScreen(g
         val aStage = Stage(viewport, batch)
         aStage.isDebugAll = false
         aStage.actors {
-            boundLabel({mapNames.selectedItem}) {
+            boundLabel({ mapNames.selectedItem }) {
 
-        } }
+            }
+        }
         aStage.addActor(playerCards)
         aStage
     }
@@ -193,11 +194,17 @@ class SetupScreen(gameState: StateMachine<GameState, GameEvent>) : BasicScreen(g
         }
     }
 
-    var mapNames = selectedItemListOf("default")
-    fun checkMapList() {
+    var mapNames = getMapList()
+
+    fun getMapList(): SelectedItemList<String> {
         val mapFiles = Gdx.files.local("text_maps").list()
-        if(mapFiles.size > mapNames.size) {
-            mapNames = selectedItemListOf("default", *mapFiles.map { it.file().nameWithoutExtension }.toTypedArray())
+        return selectedItemListOf(*mapFiles.map { it.file().nameWithoutExtension }.toTypedArray())
+    }
+
+    fun checkMapList() {
+        val updatedList = getMapList()
+        if (updatedList.size > mapNames.size) {
+            mapNames = updatedList
         }
     }
 
@@ -229,8 +236,8 @@ class SetupScreen(gameState: StateMachine<GameState, GameEvent>) : BasicScreen(g
         /* Take players we have here and add them to the game or something.
         This is just a stop-over for later.
          */
-        for(model in availableControllers.filter { it.isSelected }) {
-            when(model) {
+        for (model in availableControllers.filter { it.isSelected }) {
+            when (model) {
                 is PlayerModel.Keyboard -> Players.players[KeyboardControl()] = Player(model.name).apply {
                     selectedCharacterSpriteName = model.selectedAbleSpriteAnims.selectedItem.key
                 }
@@ -243,7 +250,7 @@ class SetupScreen(gameState: StateMachine<GameState, GameEvent>) : BasicScreen(g
         //
 
         MapList.mapFileNames.clear()
-        for(name in mapNames.withSelectedItemFirst) {
+        for (name in mapNames.withSelectedItemFirst) {
             MapList.mapFileNames.add(name)
         }
         gameState.acceptEvent(GameEvent.StartedGame)

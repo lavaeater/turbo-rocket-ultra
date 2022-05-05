@@ -5,6 +5,7 @@ import com.badlogic.ashley.core.Engine
 import com.badlogic.ashley.core.Entity
 import com.badlogic.gdx.Gdx
 import com.badlogic.gdx.ai.btree.BehaviorTree
+import com.badlogic.gdx.ai.btree.Task
 import com.badlogic.gdx.ai.btree.Task.Status
 import com.badlogic.gdx.graphics.Color
 import com.badlogic.gdx.math.MathUtils
@@ -13,6 +14,7 @@ import com.badlogic.gdx.math.Vector2
 import com.badlogic.gdx.physics.box2d.Body
 import com.badlogic.gdx.physics.box2d.BodyDef
 import com.badlogic.gdx.physics.box2d.World
+import com.badlogic.gdx.scenes.scene2d.Action
 import com.esotericsoftware.kryo.Kryo
 import com.esotericsoftware.kryo.io.Input
 import com.esotericsoftware.kryo.io.Output
@@ -44,6 +46,8 @@ import features.weapons.AmmoType
 import features.weapons.WeaponDefinition
 import injection.Context.inject
 import input.ControlMapper
+import ktx.actors.plusAssign
+import ktx.actors.repeatForever
 import ktx.ashley.entity
 import ktx.ashley.with
 import ktx.box2d.body
@@ -52,15 +56,16 @@ import ktx.box2d.circle
 import ktx.box2d.filter
 import ktx.math.random
 import ktx.math.vec2
-import ktx.scene2d.label
-import ktx.scene2d.scene2d
-import ktx.scene2d.table
+import ktx.scene2d.*
 import physics.*
 import screens.CounterObject
 import tru.Assets
 import tru.SpriteDirection
 import tru.getSpriteFor
 import turbofacts.TurboFactsOfTheWorld
+import ui.IUserInterface
+import ui.customactors.boundLabel
+import ui.getUiThing
 import kotlin.experimental.or
 
 fun world(): World {
@@ -729,38 +734,41 @@ fun enemy(at: Vector2) {
                 tree = t.apply { `object` = entity }
             }
         }
-//    val hud = inject<IUserInterface>()
-//    entity.add(getUiThing {
-//        val startPosition = hud.worldToHudPosition(entity.transform().position.cpy().add(1f, 1f))
+    val hud = inject<IUserInterface>()
+    entity.add(getUiThing {
+        val startPosition = hud.worldToHudPosition(entity.transform().position.cpy().add(1f, 1f))
+
+        val moveAction = object : Action() {
+            override fun act(delta: Float): Boolean {
+                if (entity.hasTransform()) {
+                    val coordinate = hud.worldToHudPosition(entity.transform().position.cpy().add(.5f, -.5f))
+                    actor.setPosition(coordinate.x, coordinate.y)
+                }
+                return true
+            }
+        }.repeatForever()
+
+        stage.actors {
+            verticalGroup {
+                it += moveAction
+                boundLabel({ btComponent.tree.prettyPrint()})
+//                label("TreeStatus") { actor ->
+//                    widget = this
+//                    btComponent.tree.addListener(object : BehaviorTree.Listener<Entity> {
+//                        override fun statusUpdated(task: Task<Entity>, previousStatus: Task.Status) {
+//                            val taskString = task.toString()
+//                            if (!taskString.contains("@"))
+//                                this@label.setText("""$taskString - $previousStatus""".trimMargin())
+//                        }
 //
-//        val moveAction = object : Action() {
-//            override fun act(delta: Float): Boolean {
-//                if (entity.hasTransform()) {
-//                    val coordinate = hud.worldToHudPosition(entity.transform().position.cpy().add(.5f, -.5f))
-//                    actor.setPosition(coordinate.x, coordinate.y)
+//                        override fun childAdded(task: Task<Entity>?, index: Int) {
+//
+//                        }
+//                    })
 //                }
-//                return true
-//            }
-//        }.repeatForever()
-//
-//        stage.actors {
-//            label("TreeStatus") { actor ->
-//                widget = this
-//                actor += moveAction
-//                btComponent.tree.addListener(object : Listener<Entity> {
-//                    override fun statusUpdated(task: Task<Entity>, previousStatus: Task.Status) {
-//                        val taskString = task.toString()
-//                        if (!taskString.contains("@"))
-//                            this@label.setText("""$taskString - $previousStatus""".trimMargin())
-//                    }
-//
-//                    override fun childAdded(task: Task<Entity>?, index: Int) {
-//
-//                    }
-//                })
-//            }.setPosition(startPosition.x, startPosition.y)
-//        }
-//    })
+            }.setPosition(startPosition.x, startPosition.y)
+        }
+    })
     box2dBody.userData = entity
     CounterObject.enemyCount++
 }
@@ -1050,4 +1058,12 @@ fun BehaviorTree<Entity>.kryoThisBitch(treeName: String) : ByteArray {
     val bytes = this.kryoThisBitch()
     stream.writeBytes(bytes, false)
     return bytes
+}
+
+fun <T> Task<T>.prettyPrint(): String {
+    var aString = this::class.simpleName + "\n\t"
+    for(index in 0 until this.childCount) {
+        aString += this.getChild(0).prettyPrint()
+    }
+    return aString
 }
