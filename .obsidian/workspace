@@ -9,7 +9,7 @@
         "state": {
           "type": "markdown",
           "state": {
-            "file": "docs/devlog/2022-05-05.md",
+            "file": "Untitled.md",
             "mode": "source",
             "source": false
           }
@@ -81,7 +81,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "docs/devlog/2022-05-05.md",
+                "file": "Untitled.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -101,6 +101,7 @@
   },
   "active": "fb14c945bca2c4f8",
   "lastOpenFiles": [
+    "Untitled.md",
     "docs/devlog/2022-05-05.md",
     "docs/todo/Enemy Evolution.md",
     "docs/KANBAN.md",
@@ -109,7 +110,6 @@
     "docs/todo/AI Refinement.md",
     "docs/todo/Enemy Aggression.md",
     "docs/todo/BehaviorTree Facts.md",
-    "docs/devlog/2022-05-03.md",
-    "docs/todo/Serializing Stories, Rules and Criteria.md"
+    "docs/devlog/2022-05-03.md"
   ]
 }

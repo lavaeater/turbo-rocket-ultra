@@ -3,6 +3,7 @@ package screens
 import com.badlogic.gdx.Gdx
 import com.badlogic.gdx.Input
 import com.badlogic.gdx.controllers.Controller
+import com.badlogic.gdx.controllers.ControllerManager
 import com.badlogic.gdx.controllers.Controllers
 import com.badlogic.gdx.graphics.Color
 import com.badlogic.gdx.graphics.OrthographicCamera
@@ -20,17 +21,23 @@ import input.Button
 import input.ControlMapper
 import input.GamepadControl
 import input.KeyboardControl
+import ktx.log.info
 import ktx.scene2d.*
 import statemachine.StateMachine
 import tru.*
 import ui.customactors.animatedSpriteImage
 import ui.customactors.boundLabel
 
+
 class SetupViewModel {
-    val availableControllers: MutableList<PlayerModel> = mutableListOf(
-        *Controllers.getControllers().map { PlayerModel.GamePad(it) }.toTypedArray(),
-        PlayerModel.Keyboard()
-    )
+    val availableControllers: MutableList<PlayerModel> by lazy {
+        val controllers = Controllers.getControllers()
+        val controllerManager = Controllers.preferredManager
+        mutableListOf(
+            *Controllers.getControllers().map { PlayerModel.GamePad(it) }.toTypedArray(),
+            PlayerModel.Keyboard()
+        )
+    }
 }
 
 open class BoundHorizontalGroup : HorizontalGroup() {
@@ -48,9 +55,18 @@ sealed class PlayerModel(
         isSelectedCallback(isSelected)
     }
 
-    class Keyboard : PlayerModel("Keyboard", Assets.characterTurboAnims.first().name)
+    class Keyboard : PlayerModel("Keyboard", Assets.characterTurboAnims.first().name) {
+        init {
+            info { "Keyboard" }
+        }
+    }
     class GamePad(val controller: Controller) :
-        PlayerModel("GamePad ${controller.playerIndex + 1}", Assets.characterTurboAnims.first().name)
+        PlayerModel("GamePad ${controller.playerIndex + 1}", Assets.characterTurboAnims.first().name) {
+        init {
+            info { "Added for ${controller.uniqueId}" }
+        }
+    }
+
 }
 
 class SetupScreen(gameState: StateMachine<GameState, GameEvent>) : BasicScreen(gameState) {
