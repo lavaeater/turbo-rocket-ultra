@@ -17,10 +17,7 @@ import input.canISeeYouFromHere
 import ktx.ashley.allOf
 import ktx.math.random
 import ktx.math.vec2
-import physics.AshleyMappers
-import physics.playerControlComponent
-import physics.weapon
-import physics.weaponEntity
+import physics.*
 import tru.Assets
 
 
@@ -39,11 +36,13 @@ class PlayerShootingSystem(private val audioPlayer: AudioPlayer) : IteratingSyst
          */
         val controlComponent = entity.playerControlComponent()
         controlComponent.coolDown(deltaTime)
-        val weapon = entity.weaponEntity().weapon().currentWeapon
-        when (weapon.weaponType) {
-            WeaponType.Melee -> swingMeleeWeapon(controlComponent, weapon, entity)
-            WeaponType.Projectile -> fireProjectileWeapon(controlComponent, weapon, entity)
-            WeaponType.ThrownWeapon -> trowWeapon(controlComponent, weapon, entity)
+        if(entity.hasWeaponEntity() && entity.weaponEntity().hasWeapon()) {
+            val weapon = entity.weaponEntity().weapon().currentWeapon
+            when (weapon.weaponType) {
+                WeaponType.Melee -> swingMeleeWeapon(controlComponent, weapon, entity)
+                WeaponType.Projectile -> fireProjectileWeapon(controlComponent, weapon, entity)
+                WeaponType.ThrownWeapon -> trowWeapon(controlComponent, weapon, entity)
+            }
         }
     }
 

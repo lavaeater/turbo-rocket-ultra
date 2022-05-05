@@ -138,6 +138,10 @@ fun Entity.inventory(): InventoryComponent {
     return AshleyMappers.inventory.get(this)
 }
 
+fun Entity.hasWeaponEntity() : Boolean {
+    return AshleyMappers.weaponEntity.has(this)
+}
+
 fun Entity.weaponEntity(): Entity {
     return AshleyMappers.weaponEntity.get(this).weaponEntity
 }
