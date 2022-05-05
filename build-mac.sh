@@ -2,7 +2,7 @@
 rm -rf out-linux
 
 java -jar ../packr-all-4.0.0.jar \
-     --platform linux64 \
+     --platform mac \
      --jdk /home/tommie/.sdkman/candidates/java/current \
      --useZgcIfSupportedOs \
      --executable TurboRocketUltra \
