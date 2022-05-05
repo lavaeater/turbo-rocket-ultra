@@ -1,25 +1,26 @@
-cccccc
-cccccc
-cccwcc
-cccccc
-cccccc
-cccccc
-sccccc
-------
+cch
+c*c
+c*c
+c*w
+c*l
+c*b
+c*g
+s**
+---
 name
-map            
+kim
 start
-
+Välkommen Kim, nu jävlar!
 success
-
+Det där gick bra!
 fail
-
+Din mamma skäms för dig.
 max_enemies
-10
+100
 max_spawned_enemies
-20
+2000
 stories
 start-story
 level-failed
 level-complete
-basic-story            
+basic-story
