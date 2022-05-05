@@ -7,9 +7,19 @@
         "id": "fb14c945bca2c4f8",
         "type": "leaf",
         "state": {
+          "type": "kanban",
+          "state": {
+            "file": "docs/KANBAN.md"
+          }
+        }
+      },
+      {
+        "id": "c1ad555b72400cc7",
+        "type": "leaf",
+        "state": {
           "type": "markdown",
           "state": {
-            "file": "Untitled.md",
+            "file": "docs/todo/Release Candidate.md",
             "mode": "source",
             "source": false
           }
@@ -81,7 +91,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "Untitled.md",
+                "file": "docs/todo/Release Candidate.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -99,17 +109,17 @@
     "width": 300,
     "collapsed": true
   },
-  "active": "fb14c945bca2c4f8",
+  "active": "c1ad555b72400cc7",
   "lastOpenFiles": [
+    "docs/todo/Release Candidate.md",
+    "docs/KANBAN.md",
     "Untitled.md",
     "docs/devlog/2022-05-05.md",
     "docs/todo/Enemy Evolution.md",
-    "docs/KANBAN.md",
     "docs/todo/Knowledge-based AI.md",
     "docs/devlog/2022-05-04.md",
     "docs/todo/AI Refinement.md",
     "docs/todo/Enemy Aggression.md",
-    "docs/todo/BehaviorTree Facts.md",
-    "docs/devlog/2022-05-03.md"
+    "docs/todo/BehaviorTree Facts.md"
   ]
 }

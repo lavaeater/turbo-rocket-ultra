@@ -6,6 +6,9 @@ kanban-plugin: basic
 
 ## Todo
 
+- [ ] [[Enemy Evolution]]
+- [ ] [[Knowledge-based AI]]
+- [ ] [[AI Refinement]]
 - [ ] [[Intent-based Context Action]]
 - [ ] [[Tower Mechanics]]
 - [ ] [[A Nice Logo]]
@@ -32,9 +35,7 @@ kanban-plugin: basic
 
 ## Doing
 
-- [ ] [[Enemy Evolution]]
-- [ ] [[AI Refinement]]
-- [ ] [[Knowledge-based AI]]
+- [ ] [[Release Candidate]]
 
 
 ## Done

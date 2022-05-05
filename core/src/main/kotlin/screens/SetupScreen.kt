@@ -22,7 +22,7 @@ import input.ControlMapper
 import input.GamepadControl
 import input.KeyboardControl
 import ktx.log.info
-import ktx.scene2d.*
+impolwjgl3/build.gradlert ktx.scene2d.*
 import statemachine.StateMachine
 import tru.*
 import ui.customactors.animatedSpriteImage
