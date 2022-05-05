@@ -2,7 +2,7 @@ package ecs.components.player
 
 import com.badlogic.ashley.core.Component
 import com.badlogic.gdx.utils.Pool
-import ecs.systems.player.selectedItemListOf
+import data.selectedItemListOf
 import features.weapons.AmmoType
 import features.weapons.Weapon
 

@@ -12,8 +12,8 @@ import com.badlogic.gdx.scenes.scene2d.ui.HorizontalGroup
 import com.badlogic.gdx.utils.viewport.ExtendViewport
 import data.Player
 import data.Players
-import ecs.systems.player.SelectedItemList
-import ecs.systems.player.selectedItemListOf
+import data.SelectedItemList
+import data.selectedItemListOf
 import gamestate.GameEvent
 import gamestate.GameState
 import input.Button
