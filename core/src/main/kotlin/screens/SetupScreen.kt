@@ -1,5 +1,6 @@
 package screens
 
+import com.badlogic.gdx.Gdx
 import com.badlogic.gdx.Input
 import com.badlogic.gdx.controllers.Controller
 import com.badlogic.gdx.controllers.Controllers
@@ -78,6 +79,10 @@ class SetupScreen(gameState: StateMachine<GameState, GameEvent>) : BasicScreen(g
     private val stage by lazy {
         val aStage = Stage(viewport, batch)
         aStage.isDebugAll = false
+        aStage.actors {
+            boundLabel({mapNames.selectedItem}) {
+
+        } }
         aStage.addActor(playerCards)
         aStage
     }
@@ -180,12 +185,34 @@ class SetupScreen(gameState: StateMachine<GameState, GameEvent>) : BasicScreen(g
             Input.Keys.ENTER -> startGame()
             Input.Keys.C -> startConceptScreen()
             Input.Keys.E -> startEditor()
+            Input.Keys.A -> previousMap()
+            Input.Keys.S -> nextMap()
             Input.Keys.M -> {
                 gameState.acceptEvent(GameEvent.StartMapEditor)
                 true
             }
             else -> super.keyUp(keycode)
         }
+    }
+
+    var mapNames = selectedItemListOf("default")
+    fun checkMapList() {
+        val mapFiles = Gdx.files.local("text_maps").list()
+        if(mapFiles.size > mapNames.size) {
+            mapNames = selectedItemListOf("default", *mapFiles.map { it.file().nameWithoutExtension }.toTypedArray())
+        }
+    }
+
+    private fun nextMap(): Boolean {
+        checkMapList()
+        mapNames.nextItem()
+        return true
+    }
+
+    private fun previousMap(): Boolean {
+        checkMapList()
+        mapNames.previousItem()
+        return true
     }
 
     private fun startConceptScreen(): Boolean {

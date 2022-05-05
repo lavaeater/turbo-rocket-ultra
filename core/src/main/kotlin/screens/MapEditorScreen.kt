@@ -277,7 +277,7 @@ class MapEditorScreen(gameState: StateMachine<GameState, GameEvent>) : BasicScre
                 right()
                 verticalGroup {
                     left()
-                    boundLabel({ "Map: $fileName" })
+                    boundLabel({ "Map: $fileName ${if(isDirty) "*" else ""}" })
                     boundLabel({ currentControlMap.name })
                     boundLabel({ currentControlMap.toString() })
                 }
@@ -365,6 +365,7 @@ class MapEditorScreen(gameState: StateMachine<GameState, GameEvent>) : BasicScre
 
     private var mapIndex = 0
     private fun saveMap() {
+        isDirty = false
         var mapAsString = ""
         val currentC = Coordinate(minX, minY)
         for (y in maxY.downTo(minY)) {
