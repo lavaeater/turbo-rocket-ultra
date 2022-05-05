@@ -6,4 +6,8 @@ class GibComponent: CoolDownComponent() {
         super.reset()
         hasStopped = false
     }
+
+    override fun toString(): String {
+        return "gibs"
+    }
 }

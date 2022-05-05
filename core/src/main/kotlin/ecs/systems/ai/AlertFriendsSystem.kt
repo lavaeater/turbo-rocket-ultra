@@ -40,7 +40,7 @@ class AlertFriendsSystem: IteratingSystem(allOf(
             if(alertFriends.nextToRunTo?.isAwareOfPlayer() == true) {
                 alertFriends.alertedFriends.add(alertFriends.nextToRunTo!!.agentProps())
                 alertFriends.nextToRunTo = null
-            } else {
+            } else if(alertFriends.nextToRunTo != null) {
                 val toRunTo = alertFriends.nextToRunTo!!.transform().position
                 val enemyComponent = entity.agentProps()
 

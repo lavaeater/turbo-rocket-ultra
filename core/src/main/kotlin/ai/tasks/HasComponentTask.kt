@@ -1,5 +1,6 @@
 package ai.tasks
 
+import ai.builders.entityHas
 import com.badlogic.ashley.core.Component
 import com.badlogic.ashley.core.ComponentMapper
 import com.badlogic.ashley.core.Entity
@@ -13,13 +14,16 @@ class HasComponentTask<T: Component>() : EntityTask() {
     @delegate: Transient
     private val mapper by lazy { ComponentMapper.getFor(componentClass) }
     override fun copyTo(task: Task<Entity>?): Task<Entity> {
-        TODO("Not yet implemented")
+        return HasComponentTask(componentClass)
     }
 
     override fun execute(): Status {
         return if(mapper.has(entity)) Status.SUCCEEDED else Status.FAILED
     }
+
+    @delegate: Transient
+    private val aComponent by lazy { engine.createComponent(componentClass)}
     override fun toString(): String {
-        return "EntityHasComponent?"
+        return if(::componentClass.isInitialized) "has ${aComponent.toString()}" else "not ready"
     }
 }

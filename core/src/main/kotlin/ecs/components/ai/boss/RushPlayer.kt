@@ -17,6 +17,6 @@ class RushPlayer : TaskComponent() {
         rushPoint.setZero()
     }
     override fun toString(): String {
-        return "rush"
+        return "rush player"
     }
 }

@@ -7,4 +7,8 @@ class Shoot : TaskComponent() {
         coolDownRange = (0.1f..0.1f)
         reset()
     }
+
+    override fun toString(): String {
+        return "shoot"
+    }
 }

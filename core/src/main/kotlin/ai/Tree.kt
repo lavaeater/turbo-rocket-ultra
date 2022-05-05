@@ -41,6 +41,9 @@ object Tree {
         val possibleClasses = listOf(Selector::class, com.badlogic.gdx.ai.btree.branch.Sequence::class, RandomSelector::class, RandomSequence::class, Parallel::class, DynamicGuardSelector::class).minus(task::class)
         val c = possibleClasses.random()
         val newBranchTask = c.createInstance() as BranchTask<Entity>
+        if(task.guard != null) {
+            newBranchTask.guard = task.guard.cloneTask()
+        }
         for(index in 0 until task.childCount) {
             val newChild = mutateTask(task.getChild(index))
             newBranchTask.addChild(newChild)
@@ -56,6 +59,9 @@ object Tree {
             is Repeat -> mutateRepeat(task)
             is Invert -> task.getChild(0)
             else -> { task }
+        }
+        if(task.guard != null) {
+            newTask.guard = task.guard.cloneTask()
         }
         return newTask
     }

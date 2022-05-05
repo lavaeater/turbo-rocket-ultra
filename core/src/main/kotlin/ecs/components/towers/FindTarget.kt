@@ -7,4 +7,8 @@ class FindTarget(var radius: Float = 20f): TaskComponent(){
         super.reset()
         radius = 20f
     }
+
+    override fun toString(): String {
+        return "find target"
+    }
 }

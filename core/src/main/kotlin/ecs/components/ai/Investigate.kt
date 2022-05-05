@@ -9,7 +9,7 @@ class Investigate: TaskComponent() {
     }
 
     override fun toString(): String {
-        return "check"
+        return "investigate"
     }
 
 }

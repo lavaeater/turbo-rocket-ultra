@@ -35,7 +35,7 @@ class SeekPlayer: TaskComponent() {
         foundAPlayer = false
     }
     override fun toString(): String {
-        return "seek"
+        return "seek player"
     }
 
 }

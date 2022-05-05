@@ -11,4 +11,8 @@ class BurningComponent : CoolDownComponent() {
         coolDownRange = 3f..8f
         super.reset()
     }
+
+    override fun toString(): String {
+        return "Burning"
+    }
 }

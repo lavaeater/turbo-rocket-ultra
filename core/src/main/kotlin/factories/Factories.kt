@@ -1,6 +1,7 @@
 package factories
 
 import ai.Tree
+import ai.tasks.EntityComponentTask
 import com.badlogic.ashley.core.Engine
 import com.badlogic.ashley.core.Entity
 import com.badlogic.gdx.Gdx
@@ -727,10 +728,10 @@ fun enemy(at: Vector2) {
         entity.addComponent<BehaviorComponent>
         {
             if ((1..5).random() == 1) {
-                val t = Tree.getMutatedTree(unKryoSomeBitch("alert_enemies"))
+                val t = if((1..2).random() == 1) Tree.getMutatedTree(unKryoSomeBitch("alert_enemies")) else unKryoSomeBitch("alert_enemies")
                 tree = t.apply { `object` = entity }
             } else {
-                val t = Tree.getMutatedTree(unKryoSomeBitch("regular_enemy"))
+                val t = if((1..2).random() == 1) Tree.getMutatedTree(unKryoSomeBitch("regular_enemy")) else unKryoSomeBitch("regular_enemy")
                 tree = t.apply { `object` = entity }
             }
         }
@@ -751,7 +752,7 @@ fun enemy(at: Vector2) {
         stage.actors {
             verticalGroup {
                 it += moveAction
-                boundLabel({ btComponent.tree.prettyPrint()})
+                boundLabel({ btComponent.tree.prettyPrint() })
 //                label("TreeStatus") { actor ->
 //                    widget = this
 //                    btComponent.tree.addListener(object : BehaviorTree.Listener<Entity> {
@@ -1019,7 +1020,7 @@ object TreeCache {
 
 fun unKryoSomeBitch(treeName: String = "regular_enemy"): BehaviorTree<Entity> {
     var t = TreeCache.trees[treeName]
-    if(t == null) {
+    if (t == null) {
         val file = Gdx.files.local("${treeName}.tree")
         t = if (file.exists()) {
             file.readBytes()
@@ -1047,23 +1048,28 @@ fun ByteArray.kryoThisBitchToDisk(id: Int) {
 }
 
 
-fun BehaviorTree<Entity>.kryoThisBitch() : ByteArray {
+fun BehaviorTree<Entity>.kryoThisBitch(): ByteArray {
     val output = Output(100000, 10000000)
     TreeCache.kryo.writeObject(output, this)
     return output.toBytes()
 }
 
-fun BehaviorTree<Entity>.kryoThisBitch(treeName: String) : ByteArray {
+fun BehaviorTree<Entity>.kryoThisBitch(treeName: String): ByteArray {
     val stream = Gdx.files.local("${treeName}.tree")
     val bytes = this.kryoThisBitch()
     stream.writeBytes(bytes, false)
     return bytes
 }
 
-fun <T> Task<T>.prettyPrint(): String {
-    var aString = this::class.simpleName + "\n\t"
-    for(index in 0 until this.childCount) {
-        aString += this.getChild(0).prettyPrint()
+fun <T> Task<T>.prettyPrint(level: Int = 0): String {
+    var aString = if(guard != null) "$level: if ${guard} then - " else "$level: "
+    aString += if (this is EntityComponentTask<*> && this.status != Status.FRESH) {
+        this.toString()
+    } else {
+        this::class.simpleName
+    }
+    for (index in 0 until this.childCount) {
+        aString += "\n\t" + this.getChild(index).prettyPrint(level + 1)
     }
     return aString
 }

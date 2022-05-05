@@ -24,4 +24,8 @@ class AudioComponent: CoolDownComponent() {
         playSound = false
         super.reset()
     }
+
+    override fun toString(): String {
+        return "AudioComponent"
+    }
 }

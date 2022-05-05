@@ -9,7 +9,7 @@ class AlertFriends : TaskComponent() {
     var alertRange = (5..15)
     var numberToAlert = alertRange.random()
     override fun toString(): String {
-        return "alert"
+        return "alert friends"
     }
 
     override fun reset() {

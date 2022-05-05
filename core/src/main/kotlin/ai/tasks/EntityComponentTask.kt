@@ -41,7 +41,12 @@ class EntityComponentTask<T: TaskComponent>() : EntityTask() {
         return if(!mapper.has(entity)) Status.FAILED else mapper[entity].status
     }
 
+    @delegate:Transient
+    val aComponent: T by lazy { engine.createComponent(componentClass) }
     override fun toString(): String {
-        return if(mapper.has(entity)) mapper.get(entity).toString() else ""
+        return if(::componentClass.isInitialized)
+            aComponent.toString() //if(mapper.has(entity)) mapper.get(entity).toString() else ""
+        else
+            "Not ready to show my cards yet."
     }
 }

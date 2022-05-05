@@ -91,11 +91,13 @@ object StoryHelper {
                 name = "Level Start Rules"
                 isFalse(Factoids.LevelStarted)
                 consequence = {
+                    if(factsOfTheWorld.getString(Factoids.MapStartMessage).isNotBlank()) {
                         factsOfTheWorld.setTrue(Factoids.LevelStarted)
                         factsOfTheWorld.setFalse(Factoids.LevelComplete)
                         factsOfTheWorld.setFalse(Factoids.LevelFailed)
                         gameStateMachine.acceptEvent(GameEvent.PausedGame)
                         messageHandler.sendMessage(Message.LevelStarting(factsOfTheWorld.getString(Factoids.MapStartMessage)))
+                    }
                 }
             }
         }
