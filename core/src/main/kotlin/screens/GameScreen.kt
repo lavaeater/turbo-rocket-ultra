@@ -105,6 +105,10 @@ class GameScreen(private val gameState: StateMachine<GameState, GameEvent>) : Kt
         return GridMapGenerator.generateFromMapFile(MapLoader.loadMap("levelzero.json"))
     }
 
+    private fun loadMap(data: MapData): Pair<Map<Coordinate, GridMapSection>, TileGraph> {
+        return GridMapGenerator.generateFromMapFile(data)
+    }
+
     private fun loadSampleMap(): Pair<Map<Coordinate, GridMapSection>, TileGraph> {
         return GridMapGenerator.generateFromMapFile(MapLoader.loadNewMap("text_maps/newmap.txt"))
     }
@@ -244,11 +248,6 @@ D1B67A
         for (player in Players.players.values) {
             player.touchedObjectives.clear()
         }
-//        factsOfTheWorld.stateBoolFact(Factoids.BossIsDead, false)
-//        factsOfTheWorld.stateBoolFact(Factoids.AllObjectivesAreTouched, false)
-//        factsOfTheWorld.stateBoolFact(Factoids.LevelComplete, false)
-//        factsOfTheWorld.stateBoolFact(Factoids.ShowEnemyKillCount, false)
-
 
         CounterObject.currentLevel++
         generateMap(CounterObject.currentLevel)
@@ -275,32 +274,15 @@ D1B67A
     }
 
     private fun generateMap(level: Int) {
-        /*
-        We start the game with a map already generated. But when, how, will we create
-        all the entities and stuff? The map should and must be generated HERE, not
-        anywhere else.
-
-        And what do we do with the crazy fucking thing that the map makes no sense and
-        is all over the place? Damnit. That thing actually came back to bite me. Darn.
-
-        The absolutely easiest way to do it is to simply make the map geometrically consistent.
-
-        BORING!
-
-        Now add a goddamned  light
-         */
-
         clearAllButPlayers()
         CounterObject.enemyCount = 0
 
         //For debuggin we will swarm with enemies
         CounterObject.maxEnemies =  (8f.pow(CounterObject.currentLevel).roundToInt() * 2).coerceAtMost(MAX_ENEMIES)
         CounterObject.maxSpawnedEnemies = CounterObject.maxEnemies * 2
-        val map = when(level) {
-            1 -> loadSampleMap()
-            2 -> loadMapTwo()
-            3 -> loadMapThree()
-            4 -> loadMapFour()
+
+        val map = when {
+            level < MapList.mapFileNames.size -> loadMap(MapList.mapFiles[level])
             else -> GridMapGenerator.generate(CounterObject.currentLength, level)
         }
         mapManager.gridMap = map.first
@@ -312,6 +294,13 @@ D1B67A
     override fun dispose() {
         vfxManager.dispose()
         inject<List<ChainVfxEffect>>().forEach { it.dispose() }
+    }
+}
+
+object MapList {
+    val mapFileNames = mutableListOf<String>()
+    val mapFiles: List<MapData> get () {
+        return mapFileNames.map { MapLoader.loadNewMap(it) }
     }
 }
 

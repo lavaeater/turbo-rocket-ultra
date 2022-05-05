@@ -14,6 +14,22 @@ class SelectedItemList<T>(val listUpdatedCallback: (T)-> Unit, items: List<T>) :
     init {
         this.addAll(items)
     }
+
+    val withSelectedItemFirst: List<T> get() {
+        val newList = mutableListOf<T>()
+        var indexToAdd = selectedIndex
+        for(i in 0 until this.size) {
+            indexToAdd += i
+            indexToAdd = when {
+                indexToAdd < 0 -> lastIndex
+                indexToAdd > lastIndex -> 0
+                else -> indexToAdd
+            }
+            newList.add(this[indexToAdd])
+        }
+        return newList
+    }
+
     private var selectedIndex: Int = 0
         private set(value) {
             field = when {

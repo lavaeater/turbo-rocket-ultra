@@ -6,8 +6,6 @@ import com.badlogic.gdx.controllers.Controller
 import com.badlogic.gdx.controllers.Controllers
 import com.badlogic.gdx.graphics.Color
 import com.badlogic.gdx.graphics.OrthographicCamera
-import com.badlogic.gdx.graphics.g2d.Animation
-import com.badlogic.gdx.graphics.g2d.Sprite
 import com.badlogic.gdx.scenes.scene2d.Actor
 import com.badlogic.gdx.scenes.scene2d.Stage
 import com.badlogic.gdx.scenes.scene2d.ui.HorizontalGroup
@@ -241,6 +239,12 @@ class SetupScreen(gameState: StateMachine<GameState, GameEvent>) : BasicScreen(g
                 }
             }
 
+        }
+        //
+
+        MapList.mapFileNames.clear()
+        for(name in mapNames.withSelectedItemFirst) {
+            MapList.mapFileNames.add(name)
         }
         gameState.acceptEvent(GameEvent.StartedGame)
         return true
