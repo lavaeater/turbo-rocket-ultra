@@ -736,40 +736,40 @@ fun enemy(at: Vector2) {
             }
         }
     val hud = inject<IUserInterface>()
-    entity.add(getUiThing {
-        val startPosition = hud.worldToHudPosition(entity.transform().position.cpy().add(1f, 1f))
-
-        val moveAction = object : Action() {
-            override fun act(delta: Float): Boolean {
-                if (entity.hasTransform()) {
-                    val coordinate = hud.worldToHudPosition(entity.transform().position.cpy().add(.5f, -.5f))
-                    actor.setPosition(coordinate.x, coordinate.y)
-                }
-                return true
-            }
-        }.repeatForever()
-
-        stage.actors {
-            verticalGroup {
-                it += moveAction
-                boundLabel({ btComponent.tree.prettyPrint() })
-//                label("TreeStatus") { actor ->
-//                    widget = this
-//                    btComponent.tree.addListener(object : BehaviorTree.Listener<Entity> {
-//                        override fun statusUpdated(task: Task<Entity>, previousStatus: Task.Status) {
-//                            val taskString = task.toString()
-//                            if (!taskString.contains("@"))
-//                                this@label.setText("""$taskString - $previousStatus""".trimMargin())
-//                        }
+//    entity.add(getUiThing {
+//        val startPosition = hud.worldToHudPosition(entity.transform().position.cpy().add(1f, 1f))
 //
-//                        override fun childAdded(task: Task<Entity>?, index: Int) {
-//
-//                        }
-//                    })
+//        val moveAction = object : Action() {
+//            override fun act(delta: Float): Boolean {
+//                if (entity.hasTransform()) {
+//                    val coordinate = hud.worldToHudPosition(entity.transform().position.cpy().add(.5f, -.5f))
+//                    actor.setPosition(coordinate.x, coordinate.y)
 //                }
-            }.setPosition(startPosition.x, startPosition.y)
-        }
-    })
+//                return true
+//            }
+//        }.repeatForever()
+//
+//        stage.actors {
+//            verticalGroup {
+//                it += moveAction
+//                boundLabel({ btComponent.tree.prettyPrint() })
+////                label("TreeStatus") { actor ->
+////                    widget = this
+////                    btComponent.tree.addListener(object : BehaviorTree.Listener<Entity> {
+////                        override fun statusUpdated(task: Task<Entity>, previousStatus: Task.Status) {
+////                            val taskString = task.toString()
+////                            if (!taskString.contains("@"))
+////                                this@label.setText("""$taskString - $previousStatus""".trimMargin())
+////                        }
+////
+////                        override fun childAdded(task: Task<Entity>?, index: Int) {
+////
+////                        }
+////                    })
+////                }
+//            }.setPosition(startPosition.x, startPosition.y)
+//        }
+//    })
     box2dBody.userData = entity
     CounterObject.enemyCount++
 }

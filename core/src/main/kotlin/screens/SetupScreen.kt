@@ -95,7 +95,6 @@ class SetupScreen(gameState: StateMachine<GameState, GameEvent>) : BasicScreen(g
         aStage.isDebugAll = false
         aStage.actors {
             boundLabel({ mapNames.selectedItem }) {
-
             }
         }
         aStage.addActor(playerCards)
@@ -213,7 +212,9 @@ class SetupScreen(gameState: StateMachine<GameState, GameEvent>) : BasicScreen(g
     var mapNames = getMapList()
 
     fun getMapList(): SelectedItemList<String> {
+        info { Gdx.files.localStoragePath }
         val mapFiles = Gdx.files.local("text_maps").list()
+        info { "Have found ${mapFiles.size} files" }
         return selectedItemListOf(*mapFiles.map { it.file().nameWithoutExtension }.toTypedArray())
     }
 

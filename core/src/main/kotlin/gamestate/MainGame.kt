@@ -64,7 +64,7 @@ class MainGame : KtxGame<KtxScreen>() {
                 edge(GameEvent.ExitedGame, GameState.Setup) {}
             }
             state(GameState.Editor) {
-                action { setScreen<CharacterEditorScreen>() }
+                //action { setScreen<CharacterEditorScreen>() }
                 edge(GameEvent.StopEditor, GameState.Setup) {}
             }
             state(GameState.Concept) {
@@ -107,7 +107,7 @@ class MainGame : KtxGame<KtxScreen>() {
         addScreen(GameOverScreen(gameState))
         addScreen(AnimEditorScreen(gameState))
         addScreen(ConceptScreen(gameState))
-        addScreen(CharacterEditorScreen(gameState))
+//        addScreen(CharacterEditorScreen(gameState))
         addScreen(MapEditorScreen(gameState))
         gameState.initialize()
     }

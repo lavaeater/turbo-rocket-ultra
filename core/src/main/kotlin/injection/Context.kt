@@ -135,7 +135,6 @@ object Context {
             addSystem(TowerTargetFinderSystem())
             addSystem(TowerShootSystem())
             addSystem(AnimationSystem())
-            //addSystem(WeaponUpdateSystem())
             addSystem(WeaponReloadSystem())
             addSystem(UpdatePlayerStatsSystem())
             addSystem(
@@ -149,20 +148,17 @@ object Context {
                     1
                 )
             )
-//            addSystem(PhysicsDebugRendererSystem(inject(), inject()))
 
             addSystem(RenderMiniMapSystem(3))
             addSystem(PlayerFlashlightSystem())
-            //lets NOT write debug badges
-//            addSystem(AiDebugSystem())
             addSystem(PlayerContextActionSystem())
             addSystem(DelayedEntityCreationSystem())
             addSystem(LootDropSystem())
-            addSystem(AimingAidSystem(debug = true, renderRedDot = true))
+            addSystem(AimingAidSystem(debug = false, renderRedDot = false))
             addSystem(GibSystem())
             addSystem(FactSystem())
             addSystem(FrustumCullingSystem())
-            addSystem(AnchorPointTransformationSystem(true))
+            addSystem(AnchorPointTransformationSystem(false))
             addSystem(ComplexActionSystem())
             addSystem(IntentionSystem())
             addSystem(CalculatePositionSystem())
