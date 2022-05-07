@@ -5,11 +5,11 @@ sc
 name
 trainer            
 start
-Trainer
+This is a trainer map for you, and for the enemy.
 success
-Trainer
+Not much of a challenge, eh?
 fail
-Trainer
+Kind of amazing, really
 max_enemies
 10
 max_spawned_enemies

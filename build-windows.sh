@@ -1,5 +1,5 @@
 #!/bin/bash
-rm -rf out-linux
+rm -rf out-win
 
 java -jar ../packr-all-4.0.0.jar \
      --platform windows64 \
@@ -10,6 +10,4 @@ java -jar ../packr-all-4.0.0.jar \
      --mainclass core.lwjgl3.Lwjgl3Launcher \
      --vmargs Xmx1G \
      --resources assets/* \
-     --output out-linux
-
-./out-linux/TurboRocketUltra
+     --output out-win

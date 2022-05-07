@@ -5,13 +5,21 @@ c*g
 s**
 ---
 name
-kim
+Level One
 start
-Välkommen Kim, nu jävlar!
+Welcome to a game
+
+of DEATH!
+
+In the catacombs of Old Moscow, you, 
+the hero, tries to make 
+sense of it all
 success
-Det där gick bra!
+You have made it this far.
+
+But at what cost?
 fail
-Din mamma skäms för dig.
+Your motherland can only feel sham
 max_enemies
 100
 max_spawned_enemies
