@@ -26,7 +26,7 @@ object MapLoader {
     fun loadNewMap(fileName: String): MapData {
         var lines = Gdx.files.local(fileName).readString().lines()
 
-        val mapDefLines = lines.subList(0, lines.indexOfFirst { s -> s.contains("-") })
+        val mapDefLines = lines.subList(0, lines.indexOfFirst { s -> s.contains('-') })
         val mapDefinition = TextGridMapDefinition(mapDefLines)
         lines = lines.subList(mapDefLines.lastIndex + 2, lines.lastIndex + 1)
         val sections = mutableMapOf<String, MutableList<String>>()

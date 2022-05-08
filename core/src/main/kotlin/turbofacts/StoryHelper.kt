@@ -56,7 +56,7 @@ object StoryHelper {
                 isTrue(Factoids.LevelStarted)
                 consequence = {
                     factsOfTheWorld.setBooleanFact(true, Factoids.GotoNextLevel)
-                    gameStateMachine.acceptEvent(GameEvent.LevelComplete)
+                    gameStateMachine.acceptEvent(GameEvent.PausedGame)
                     messageHandler.sendMessage(Message.LevelComplete(factsOfTheWorld.getString(Factoids.MapSuccessMessage)))
                 }
             }
