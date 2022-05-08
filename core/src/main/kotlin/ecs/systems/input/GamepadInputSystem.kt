@@ -13,6 +13,7 @@ import ktx.ashley.allOf
 import ktx.math.vec2
 import physics.getComponent
 import physics.intendTo
+import physics.intendsTo
 
 /**
  * Controllers will be handled by a polling system
@@ -57,7 +58,14 @@ class GamepadInputSystem : IteratingSystem(allOf(GamepadControl::class).get()), 
         return true
     }
 
-    val hackingButtons = listOf(Button.getButtonCode(Button.DPadLeft), Button.getButtonCode(Button.DPadRight), Button.getButtonCode(Button.DPadUp), Button.getButtonCode(Button.DPadDown), Button.getButtonCode(Button.Ring))
+    val hackingButtons = listOf(
+        Button.getButtonCode(Button.DPadLeft),
+        Button.getButtonCode(Button.DPadRight),
+        Button.getButtonCode(Button.DPadUp),
+        Button.getButtonCode(Button.DPadDown),
+        Button.getButtonCode(Button.Ring)
+    )
+
     override fun buttonUp(controller: Controller, buttonCode: Int): Boolean {
         val actualController = controllers.firstOrNull { it.controller == controller }
         if (actualController != null) {
@@ -67,22 +75,24 @@ class GamepadInputSystem : IteratingSystem(allOf(GamepadControl::class).get()), 
                 when (Button.getButton(buttonCode)) {
                     Button.Cross -> handleAction(actualController.entityFor())
                     Button.Ring -> {}
-                    Button.Square -> actualController.needsReload = true
+                    Button.Square -> actualController.entityFor()
+                        .intendTo(IntendsTo.Reload)// actualController.needsReload = true
                     Button.DPadLeft -> {
-                        actualController.needToChangeGun = InputIndicator.Previous
+                        actualController.entityFor().intendTo(IntendsTo.SelectPreviousWeapon)
                     }
                     Button.DPadRight -> {
-                        actualController.needToChangeGun = InputIndicator.Next
+                        actualController.entityFor().intendTo(IntendsTo.SelectNextWeapon)
                     }
                     Button.Triangle -> toggleBuildMode(actualController.entityFor())
 
                     Button.DPadDown -> handleDown(actualController.entityFor())
                     Button.DPadUp -> handleUp(actualController.entityFor())
-                    Button.L1 -> actualController.needToChangeGun = InputIndicator.Previous
+                    Button.L1 -> actualController.entityFor().intendTo(IntendsTo.SelectPreviousWeapon)
+
                     Button.L3 -> {}
                     Button.Options -> {}
                     Button.PsButton -> {}
-                    Button.R1 -> actualController.needToChangeGun = InputIndicator.Next
+                    Button.R1 -> actualController.entityFor().intendTo(IntendsTo.SelectNextWeapon)
                     Button.R3 -> {}
                     Button.Share -> {}
                     Button.Unknown -> {}
