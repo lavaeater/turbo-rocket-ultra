@@ -51,7 +51,6 @@ class MainGame : KtxGame<KtxScreen>() {
                     }
 
                 }
-                edge(GameEvent.LevelComplete, GameState.Paused) {}
             }
             state(GameState.Paused) {
                 action {

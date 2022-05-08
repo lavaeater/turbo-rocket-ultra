@@ -61,8 +61,10 @@ class GridMapGenerator {
             factsOfTheWorld.setStringFact(mapData.startMessage, Factoids.MapStartMessage)
             factsOfTheWorld.setStringFact(mapData.successMessage, Factoids.MapSuccessMessage)
             factsOfTheWorld.setStringFact(mapData.failMessage, Factoids.MapFailMessage)
-            CounterObject.maxEnemies = mapData.maxEnemies
-            CounterObject.maxSpawnedEnemies = mapData.maxSpawnedEnemies
+            factsOfTheWorld.setFactsFromMap(mapData.facts)
+
+//            CounterObject.maxEnemies = mapData.maxEnemies
+//            CounterObject.maxSpawnedEnemies = mapData.maxSpawnedEnemies
 
             storyManager.addStories(*StoryHelper.allStories.filterKeys { mapData.storyKeys.contains(it) }.values.toTypedArray())
 

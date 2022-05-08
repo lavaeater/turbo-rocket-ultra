@@ -22,7 +22,7 @@ object StoryHelper {
             setBooleanFact(false, Factoids.BossIsDead)
             setIntFact(0, Factoids.EnemyKillCount)
             setIntFact(3, Factoids.TargetEnemyKillCount)
-            setBooleanFact(true, Factoids.ShowEnemyKillCount)
+            setBooleanFact(false, Factoids.ShowEnemyKillCount)
             setBooleanFact(false, Factoids.AcceleratingSpawns)
             setBooleanFact(false, Factoids.LevelStarted)
             setBooleanFact(false, Factoids.GotoNextLevel)
@@ -56,7 +56,7 @@ object StoryHelper {
                 isTrue(Factoids.LevelStarted)
                 consequence = {
                     factsOfTheWorld.setBooleanFact(true, Factoids.GotoNextLevel)
-                    gameStateMachine.acceptEvent(GameEvent.LevelComplete)
+                    gameStateMachine.acceptEvent(GameEvent.PausedGame)
                     messageHandler.sendMessage(Message.LevelComplete(factsOfTheWorld.getString(Factoids.MapSuccessMessage)))
                 }
             }

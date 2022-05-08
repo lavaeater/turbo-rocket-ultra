@@ -12,6 +12,7 @@ object Factoids {
     const val Score = "Score"
     const val PlayerTileX = "PlayerTileX"
     const val PlayerTileY = "PlayerTileY"
+    const val WaveSize = "WaveSize"
 
 
     // New keys for my new, shiny game

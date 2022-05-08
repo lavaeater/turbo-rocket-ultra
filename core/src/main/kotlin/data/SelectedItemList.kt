@@ -16,16 +16,18 @@ class SelectedItemList<T>(val listUpdatedCallback: (T)-> Unit, items: List<T>) :
     }
 
     val withSelectedItemFirst: List<T> get() {
+        val item = get(selectedIndex)
+        this.sortBy { it.toString() }
         val newList = mutableListOf<T>()
-        var indexToAdd = selectedIndex
+        var indexToAdd = indexOf(item)
         for(i in 0 until this.size) {
-            indexToAdd += i
             indexToAdd = when {
                 indexToAdd < 0 -> lastIndex
                 indexToAdd > lastIndex -> 0
                 else -> indexToAdd
             }
             newList.add(this[indexToAdd])
+            indexToAdd += i
         }
         return newList
     }

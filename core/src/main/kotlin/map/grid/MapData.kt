@@ -6,8 +6,7 @@ data class MapData(
     val successMessage: String,
     val failMessage: String,
     val mapFile: String,
-    val maxEnemies: Int = 240,
-    val maxSpawnedEnemies: Int = 120,
+    val facts: Map<String, Any>,
     val storyKeys: List<String>,
     val mapDefinition: TextGridMapDefinition
 )

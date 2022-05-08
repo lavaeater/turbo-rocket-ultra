@@ -29,7 +29,7 @@ class EnemySpawnSystem : IteratingSystem(allOf(EnemySpawnerComponent::class, Tra
                 spawnerComponent.coolDownRange = (spawnerComponent.coolDownRange.start / factor)..(spawnerComponent.coolDownRange.endInclusive / factor)
             }
             spawnerComponent.reset()
-            for(i in 0 until spawnerComponent.waveSize) {
+            for(i in 0 until (1..spawnerComponent.waveSize).random()) {
                 spawnPosition.set(AshleyMappers.transform.get(entity).position)
                 spawnPosition.set(spawnPosition.x + (-2f..2f).random(), spawnPosition.y + (-2f..2f).random())
                 enemy(spawnPosition)
