@@ -64,6 +64,7 @@ import screens.CounterObject
 import tru.Assets
 import tru.SpriteDirection
 import tru.getSpriteFor
+import turbofacts.Factoids
 import turbofacts.TurboFactsOfTheWorld
 import ui.IUserInterface
 import kotlin.experimental.or
@@ -910,7 +911,7 @@ fun spawner(
             renderableType = RenderableType.Sprite
         }
         with<EnemySpawnerComponent> {
-            waveSize = 1
+            waveSize = factsOfTheWorld().getInt(Factoids.WaveSize)
         }
         with<MiniMapComponent> {
             color = Color.PINK

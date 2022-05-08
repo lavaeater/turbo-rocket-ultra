@@ -40,6 +40,7 @@ AcceleratingSpawnsFactor:1.25:f
 EnemyKillCount:0:i
 TargetEnemyKillCount:0:i
 ShowEnemyKillCount:false:b
+WaveSize:15:i
 
 stories
 start-story
