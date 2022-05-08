@@ -218,7 +218,14 @@ class TurboFactsOfTheWorld(private val onFactUpdated: (key: String) -> Unit = {}
     }
 
     fun setFactsFromMap(facts: Map<String, Any>) {
-        TODO("Not yet implemented")
+        for((key, value) in facts) {
+            when(value) {
+                Int -> setIntFact(value as Int, key)
+                Boolean -> setBooleanFact(value as Boolean, key)
+                Float -> setFloatFact(value as Float, key)
+                else -> setStringFact(value as String, key)
+            }
+        }
     }
 
 }

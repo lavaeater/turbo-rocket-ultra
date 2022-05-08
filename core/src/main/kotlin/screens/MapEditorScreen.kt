@@ -385,19 +385,20 @@ class MapEditorScreen(gameState: StateMachine<GameState, GameEvent>) : BasicScre
         mapAsString += """name
 $fileName            
 start
-
+Replace this with a start-of-level
+message to inspire the players
 success
-
+Shows this when players win the level
 fail
-
+This is when they fail
 facts
-max-enemies:10:i
-max-spawned-enemies:20:i
-accelerating-spawns:false:b
-accelerating-spawns-factor:1.25:f
-enemy-kill-count:0:i
-target-enemy-kill-count:0:i
-show-enemy-kill-count:false:b
+MaxEnemies:10:i
+MaxSpawnedEnemies:20:i
+AcceleratingSpawns:false:b
+AcceleratingSpawnsFactor:1.25:f
+EnemyKillCount:0:i
+TargetEnemyKillCount:0:i
+ShowEnemyKillCount:false:b
 
 stories
 start-story

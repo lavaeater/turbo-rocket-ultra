@@ -56,11 +56,29 @@ object MapLoader {
             sections["success"]!!.joinToString("\n"),
             sections["fail"]!!.joinToString("\n"),
             "",
-            sections["facts"]!!.joinToString("").trim().toInt(),
-            sections["max_spawned_enemies"]!!.joinToString("").trim().toInt(),
+            sections["facts"]!!.toFacts(),
             sections["stories"]!!.map { it.trim() },
             mapDefinition
         )
 
     }
+}
+
+fun List<String>.toFacts() : Map<String, Any> {
+    val map = mutableMapOf<String, Any>()
+    for(row in this) {
+        //Row must be splittable into threes with : as separator, otherwise we skip and log
+        val split = row.split(":")
+        if(split.size != 3) {
+            ktx.log.error { "$row is faulty" }
+            break
+        }
+        map[split[0]] = when(split[2]) {
+            "i" -> split[1].toInt()
+            "b" -> split[1].toBoolean()
+            "f" -> split[1].toFloat()
+            else -> split[1]
+        }
+    }
+    return map
 }
