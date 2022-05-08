@@ -21,7 +21,7 @@ object MapLoader {
         fileHandle.writeString(jsonString, false)
     }
 
-    val keyWords = listOf("name", "start", "success", "fail", "max_enemies", "max_spawned_enemies", "stories")
+    val keyWords = listOf("name", "start", "success", "fail", "stories", "facts")
 
     fun loadNewMap(fileName: String): MapData {
         var lines = Gdx.files.local(fileName).readString().lines()
@@ -56,7 +56,7 @@ object MapLoader {
             sections["success"]!!.joinToString("\n"),
             sections["fail"]!!.joinToString("\n"),
             "",
-            sections["max_enemies"]!!.joinToString("").trim().toInt(),
+            sections["facts"]!!.joinToString("").trim().toInt(),
             sections["max_spawned_enemies"]!!.joinToString("").trim().toInt(),
             sections["stories"]!!.map { it.trim() },
             mapDefinition

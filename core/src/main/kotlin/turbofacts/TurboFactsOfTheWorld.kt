@@ -217,4 +217,8 @@ class TurboFactsOfTheWorld(private val onFactUpdated: (key: String) -> Unit = {}
 
     }
 
+    fun setFactsFromMap(facts: Map<String, Any>) {
+        TODO("Not yet implemented")
+    }
+
 }

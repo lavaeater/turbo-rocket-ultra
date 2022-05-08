@@ -390,10 +390,15 @@ success
 
 fail
 
-max_enemies
-10
-max_spawned_enemies
-20
+facts
+max-enemies:10:i
+max-spawned-enemies:20:i
+accelerating-spawns:false:b
+accelerating-spawns-factor:1.25:f
+enemy-kill-count:0:i
+target-enemy-kill-count:0:i
+show-enemy-kill-count:false:b
+
 stories
 start-story
 level-failed
