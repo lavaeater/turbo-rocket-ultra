@@ -100,7 +100,11 @@ class RenderSystem(
             val sprite = spriteComponent.sprite
             if (spriteComponent.rotateWithTransform)
                 sprite.rotation = transform.rotation * MathUtils.radiansToDegrees
-            sprite.setOriginBasedPosition(transform.position.x, transform.position.y)
+            sprite.setOriginBasedPosition(transform.position.x + spriteComponent.actualOffsetX, transform.position.y + spriteComponent.actualOffsetY)
+            //And re-introduce offset?
+
+
+
             sprite.draw(batch)
             if (debug) {
                 shapeDrawer.filledCircle(
