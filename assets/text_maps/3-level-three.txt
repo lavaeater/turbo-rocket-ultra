@@ -22,16 +22,16 @@ Shows this when players win the level
 fail
 This is when they fail
 facts
-MaxEnemies:10:i
-MaxSpawnedEnemies:20:i
-AcceleratingSpawns:false:b
+MaxEnemies:500:i
+MaxSpawnedEnemies:2000:i
+AcceleratingSpawns:true:b
 AcceleratingSpawnsFactor:1.25:f
 EnemyKillCount:0:i
-TargetEnemyKillCount:0:i
-ShowEnemyKillCount:false:b
+TargetEnemyKillCount:1000:i
+ShowEnemyKillCount:true:b
 
 stories
 start-story
 level-failed
 level-complete
-basic-story            
+enemy-killcount
