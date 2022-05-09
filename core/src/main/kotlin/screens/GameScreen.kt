@@ -263,7 +263,7 @@ D1B67A
 
     private fun clearAllButPlayers() {
         for(entity in engine.entities) {
-            if(!entity.hasPlayerControl() && !entity.hasWeapon()) {
+            if(!entity.isPlayer() && !entity.hasWeapon()) {
                 if(entity.hasBody()) {
                     val body = entity.body()
                     world.destroyBody(body)

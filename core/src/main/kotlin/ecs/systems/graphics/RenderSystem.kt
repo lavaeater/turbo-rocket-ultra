@@ -30,7 +30,8 @@ class RenderSystem(
     private val camera: OrthographicCamera,
     private val mainViewPort: Viewport,
     private val enemyDebug: Boolean,
-    priority: Int
+    priority: Int,
+    val playerDebug: Boolean
 ) : SortedIteratingSystem(
     allOf(
         RenderableComponent::class,
@@ -101,9 +102,6 @@ class RenderSystem(
             if (spriteComponent.rotateWithTransform)
                 sprite.rotation = transform.rotation * MathUtils.radiansToDegrees
             sprite.setOriginBasedPosition(transform.position.x + spriteComponent.actualOffsetX, transform.position.y + spriteComponent.actualOffsetY)
-            //And re-introduce offset?
-
-
 
             sprite.draw(batch)
             if (debug) {
@@ -154,6 +152,12 @@ class RenderSystem(
                     }
                 }
                 previous.set(node)
+            }
+        }
+
+        if(playerDebug && entity.isPlayer() && entity.hasAnchors()) {
+            for((key, point) in entity.anchors().transformedPoints) {
+                shapeDrawer.filledCircle(point, 0.2f, if(colorMap.containsKey(key)) colorMap[key] else Color.WHITE)
             }
         }
     }

@@ -145,7 +145,8 @@ object Context {
                     inject(),
                     inject<ExtendViewport>(),
                     false,
-                    1
+                    1,
+                    true
                 )
             )
 

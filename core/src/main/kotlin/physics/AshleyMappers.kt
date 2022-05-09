@@ -320,7 +320,7 @@ fun Entity.playerControl(): PlayerControlComponent {
     return AshleyMappers.playerControl.get(this)
 }
 
-fun Entity.hasPlayerControl(): Boolean {
+fun Entity.isPlayer(): Boolean {
     return AshleyMappers.playerControl.has(this)
 }
 

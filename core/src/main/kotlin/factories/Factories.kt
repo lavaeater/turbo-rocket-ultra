@@ -383,7 +383,7 @@ fun player(player: Player, mapper: ControlMapper, at: Vector2, debug: Boolean) {
         with<FlashlightComponent>()
         with<WeaponLaserComponent>()
         with<AnchorPointsComponent> {
-            points["green"] = vec2(0f, -0.5f).rotate90(1)
+            points["green"] = vec2(0.5f, 0f)
             points["blue"] = vec2(-0.5f, -0.5f)
             points["red"] = vec2(-0.5f, -0.5f)
             points["yellow"] = vec2(0f, -2f)
@@ -396,7 +396,7 @@ fun player(player: Player, mapper: ControlMapper, at: Vector2, debug: Boolean) {
 
     player.body = box2dBody
     player.entity = entity
-    playerWeapon(entity, "green")
+//    playerWeapon(entity, "green")
 }
 
 fun playerWeapon(playerEntity: Entity, anchor: String = "green"): Entity {
