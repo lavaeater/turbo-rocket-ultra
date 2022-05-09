@@ -6,9 +6,41 @@ class TurboFactsOfTheWorld(private val onFactUpdated: (key: String) -> Unit = {}
     val facts = mutableMapOf<String, Factoid>()
 
     fun updated(key: String) {
-        if(!silent) {
+        if (!silent) {
             onFactUpdated(key)
         }
+    }
+
+    fun intOrDefault(default: Int, vararg key: String): Int {
+        val k = multiKey(*key)
+        if (!facts.containsKey(k)) {
+            setIntFact(default, *key)
+        }
+        return getInt(*key)
+    }
+
+    fun boolOrDefault(default: Boolean, vararg key: String): Boolean {
+        val k = multiKey(*key)
+        if (!facts.containsKey(k)) {
+            setBooleanFact(default, *key)
+        }
+        return getBoolean(*key)
+    }
+
+    fun floatOrDefault(default: Float, vararg key: String): Float {
+        val k =  multiKey(*key)
+        if(!facts.containsKey(k)) {
+            setFloatFact(default, *key)
+        }
+        return getFloat(*key)
+    }
+
+    fun stringOrDefault(default: String, vararg key: String): String {
+        val k =  multiKey(*key)
+        if(!facts.containsKey(k)) {
+            setStringFact(default, *key)
+        }
+        return getString(*key)
     }
 
     fun factsFor(vararg key: String): List<Factoid> {
@@ -32,7 +64,7 @@ class TurboFactsOfTheWorld(private val onFactUpdated: (key: String) -> Unit = {}
         return fs
     }
 
-    fun setBooleanFact(value: Boolean, vararg key: String) : Factoid.Fact.BooleanFact {
+    fun setBooleanFact(value: Boolean, vararg key: String): Factoid.Fact.BooleanFact {
         val mk = multiKey(*key)
         var fact = Factoid.Fact.BooleanFact(mk, value)
         if (!facts.containsKey(mk)) {
@@ -62,11 +94,11 @@ class TurboFactsOfTheWorld(private val onFactUpdated: (key: String) -> Unit = {}
         return facts[mk] as Factoid.Fact.BooleanFact? ?: setBooleanFact(false, *key)
     }
 
-    fun getBoolean(vararg key: String) : Boolean {
+    fun getBoolean(vararg key: String): Boolean {
         return getBooleanFact(*key).value
     }
 
-    fun setIntFact(value: Int, vararg key: String):Factoid.Fact.IntFact {
+    fun setIntFact(value: Int, vararg key: String): Factoid.Fact.IntFact {
         val mk = multiKey(*key)
         if (!facts.containsKey(mk)) {
             val fact = Factoid.Fact.IntFact(mk, value)
@@ -104,7 +136,7 @@ class TurboFactsOfTheWorld(private val onFactUpdated: (key: String) -> Unit = {}
         return setIntFact(getInt(*key) + value, *key).value
     }
 
-    fun setFloatFact(value: Float, vararg key: String):Factoid.Fact.FloatFact {
+    fun setFloatFact(value: Float, vararg key: String): Factoid.Fact.FloatFact {
         val mk = multiKey(*key)
         if (!facts.containsKey(mk)) {
             val fact = Factoid.Fact.FloatFact(mk, value)
@@ -142,7 +174,7 @@ class TurboFactsOfTheWorld(private val onFactUpdated: (key: String) -> Unit = {}
         return setFloatFact(getFloat(*key) + value, *key).value
     }
 
-    fun setStringFact(value: String, vararg key: String) : Factoid.Fact.StringFact {
+    fun setStringFact(value: String, vararg key: String): Factoid.Fact.StringFact {
         val mk = multiKey(*key)
         var fact = facts[mk]
         when (fact) {
@@ -210,7 +242,7 @@ class TurboFactsOfTheWorld(private val onFactUpdated: (key: String) -> Unit = {}
 
     var silent = false
 
-    fun silent(block: TurboFactsOfTheWorld.()->Unit) {
+    fun silent(block: TurboFactsOfTheWorld.() -> Unit) {
         silent = true
         block()
         silent = false
@@ -218,8 +250,8 @@ class TurboFactsOfTheWorld(private val onFactUpdated: (key: String) -> Unit = {}
     }
 
     fun setFactsFromMap(facts: Map<String, Any>) {
-        for((key, value) in facts) {
-            when(value) {
+        for ((key, value) in facts) {
+            when (value) {
                 is Int -> setIntFact(value as Int, key)
                 is Boolean -> setBooleanFact(value as Boolean, key)
                 is Float -> setFloatFact(value as Float, key)
