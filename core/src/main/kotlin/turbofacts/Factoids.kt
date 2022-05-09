@@ -1,5 +1,37 @@
 package turbofacts
 
+import ecs.systems.enemy.multiKey
+import factories.factsOfTheWorld
+import kotlin.properties.ReadWriteProperty
+import kotlin.reflect.KProperty
+
+//class FactsOfTheWorldInt<in R>(private val key: String, private val defaultValue: Int = 0) :
+//    ReadWriteProperty<R, Int> {
+//    private val factsOfTheWorld: TurboFactsOfTheWorld by lazy { factsOfTheWorld() }
+//    override fun getValue(thisRef: R, property: KProperty<*>): Int {
+//        return factsOfTheWorld.getInt(key)
+//    }
+//
+//    override fun setValue(thisRef: R, property: KProperty<*>, value: Int) {
+//        factsOfTheWorld.intOrDefault(defaultValue, key)
+//    }
+//}
+//
+//fun intByFacts(defaultValue: Int, vararg key: String) : FactsOfTheWorldInt<R> {
+//    return FactsOfTheWorldInt(multiKey(*key), defaultValue)
+//}
+
+object FactsLikeThatMan {
+    var waveSize : Int
+        get() {
+            return factsOfTheWorld().intOrDefault(1, Factoids.WaveSize)
+        }
+        set(value) {
+            factsOfTheWorld().setIntFact(value, Factoids.WaveSize)
+        }
+
+}
+
 object Factoids {
     const val MaxSpawnedEnemies = "MaxSpawnedEnemies"
     const val MaxEnemies = "MaxEnemies"
