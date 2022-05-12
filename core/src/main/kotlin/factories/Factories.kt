@@ -41,7 +41,7 @@ import ecs.systems.graphics.GameConstants
 import ecs.systems.graphics.GameConstants.PLAYER_DENSITY
 import ecs.systems.graphics.GameConstants.SHIP_ANGULAR_DAMPING
 import ecs.systems.graphics.GameConstants.SHIP_LINEAR_DAMPING
-import ecs.systems.graphics.GameConstants.pixelsPerMeter
+import ecs.systems.graphics.GameConstants.PIXELS_PER_METER
 import features.pickups.*
 import features.weapons.AmmoType
 import features.weapons.WeaponDefinition
@@ -281,8 +281,8 @@ fun bodyForSprite(
     pixelWidth: Int = 24,
     pixelHeight: Int = 48
 ): Body {
-    val widthInMeters = pixelWidth / pixelsPerMeter
-    val heightInMeters = pixelHeight / pixelsPerMeter
+    val widthInMeters = pixelWidth / PIXELS_PER_METER
+    val heightInMeters = pixelHeight / PIXELS_PER_METER
 
     val bottomBoxWidth = widthInMeters
     val bottomBoxHeight = widthInMeters / 2

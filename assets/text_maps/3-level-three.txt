@@ -13,14 +13,19 @@ c********
 s********
 ---------
 name
-3-level-three            
+What lurks beneath us?
 start
-Replace this with a start-of-level
-message to inspire the players
+Hacking, shooting, burning, desecrating the corpses.
+It must be done.
+
+Tiring, surely, but it must be done.
 success
-Shows this when players win the level
+Covered in blood and guts, you are
+
+TRIUMPHANT
 fail
-This is when they fail
+Everyone weeps, everyone wallows - if they
+failed us, can we ever succeed?
 facts
 MaxEnemies:500:i
 MaxSpawnedEnemies:2000:i

@@ -22,9 +22,9 @@ class SelectedItemList<T>(val listUpdatedCallback: (T)-> Unit, items: List<T>) :
         var indexToAdd = indexOf(item)
         for(i in 0 until this.size) {
             indexToAdd = when {
-                indexToAdd < 0 -> lastIndex
-                indexToAdd > lastIndex -> 0
-                else -> indexToAdd
+                i < 0 -> lastIndex
+                i > lastIndex -> 0
+                else -> i
             }
             newList.add(this[indexToAdd])
             indexToAdd += i

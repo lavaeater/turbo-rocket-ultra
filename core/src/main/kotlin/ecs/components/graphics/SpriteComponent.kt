@@ -18,7 +18,7 @@ class SpriteComponent: Component, Pool.Poolable {
     val extraSpriteAnchors = mutableMapOf<String, String>()
     var rotateWithTransform = false
     var scale = 1f
-    val actualScale: Float get() = scale * GameConstants.scale
+    val actualScale: Float get() = scale * GameConstants.SCALE
     var offsetX = 0f
     var offsetY = 0f
     val actualOffsetX get() = offsetX * actualScale

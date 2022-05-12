@@ -7,7 +7,6 @@ c*c
 s*g
 ---
 name
-level-one            
 The entrance
 start
 Clean these cursed halls from varmint.

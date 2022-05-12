@@ -30,8 +30,8 @@ import ecs.systems.facts.FactSystem
 import ecs.systems.facts.PerimeterObjectiveSystem
 import ecs.systems.fx.DelayedEntityCreationSystem
 import ecs.systems.graphics.*
-import ecs.systems.graphics.GameConstants.GAMEHEIGHT
-import ecs.systems.graphics.GameConstants.GAMEWIDTH
+import ecs.systems.graphics.GameConstants.GAME_HEIGHT
+import ecs.systems.graphics.GameConstants.GAME_WIDTH
 import ecs.systems.input.ActionHandler
 import ecs.systems.input.GamepadInputSystem
 import ecs.systems.input.KeyboardInputSystem
@@ -73,8 +73,8 @@ object Context {
             bindSingleton<IUserInterface> { Hud(inject<PolygonSpriteBatch>() as Batch) }
             bindSingleton(
                 ExtendViewport(
-                    GAMEWIDTH,
-                    GAMEHEIGHT,
+                    GAME_WIDTH,
+                    GAME_HEIGHT,
                     inject<OrthographicCamera>() as Camera
                 )
             )
