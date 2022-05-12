@@ -1,2 +1,0 @@
-## Thought Bubbles
-Should all information be text-based or audio-based? Well, I think text-based has its place, I really like it. So, thought bubbles could be used to describe the thought process of the player during different stages of the game. 

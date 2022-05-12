@@ -4,7 +4,7 @@ package core.lwjgl3
 
 import com.badlogic.gdx.backends.lwjgl3.Lwjgl3Application
 import com.badlogic.gdx.backends.lwjgl3.Lwjgl3ApplicationConfiguration
-import gamestate.MainGame
+import core.MainGame
 
 /** Launches the desktop (LWJGL3) application. */
 fun main() {

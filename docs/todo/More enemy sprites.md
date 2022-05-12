@@ -1,2 +1,0 @@
-# More enemy sprites
-Go back to the character editor and make sure we have access to female bodies as well (only male now for some reason), and also enable generating a bunch of different sprites or variations using it.
