@@ -29,6 +29,7 @@ AcceleratingSpawnsFactor:1.25:f
 EnemyKillCount:0:i
 TargetEnemyKillCount:1000:i
 ShowEnemyKillCount:true:b
+StartingEnemyCount:80:i
 
 stories
 start-story

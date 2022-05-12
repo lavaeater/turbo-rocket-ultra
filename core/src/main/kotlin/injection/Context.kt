@@ -151,7 +151,7 @@ object Context {
             )
 
             addSystem(RenderMiniMapSystem(3))
-            addSystem(PhysicsDebugRendererSystem(inject(), inject()))
+            //addSystem(PhysicsDebugRendererSystem(inject(), inject()))
             addSystem(PlayerFlashlightSystem())
             addSystem(PlayerContextActionSystem())
             addSystem(DelayedEntityCreationSystem())
