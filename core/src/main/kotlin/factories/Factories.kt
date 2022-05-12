@@ -37,6 +37,7 @@ import ecs.components.pickups.LootComponent
 import ecs.components.pickups.LootDropComponent
 import ecs.components.player.*
 import ecs.components.towers.TowerComponent
+import ecs.systems.graphics.GameConstants
 import ecs.systems.graphics.GameConstants.PLAYER_DENSITY
 import ecs.systems.graphics.GameConstants.SHIP_ANGULAR_DAMPING
 import ecs.systems.graphics.GameConstants.SHIP_LINEAR_DAMPING
@@ -779,8 +780,8 @@ fun boss(at: Vector2, level: Int) {
         with<Enemy>()
         with<AgentProperties> {
             fieldOfView = 270f
-            rushSpeed = 15f + level * 1.5f
-            speed = 10f
+            rushSpeed = GameConstants.ENEMY_RUN_SPEED + level * 1.5f
+            speed = GameConstants.ENEMY_BASE_SPEED
             viewDistance = 40f + 5f * level
             health = 2000f * level
             flock = false

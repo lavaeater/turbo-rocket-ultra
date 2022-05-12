@@ -103,7 +103,7 @@ object Context {
             addSystem(UpdateTimePieceSystem())
             addSystem(PhysicsSystem(0))
             addSystem(CameraUpdateSystem(inject(), inject()))
-            addSystem(PlayerMoveSystem(25f))
+            addSystem(PlayerMoveSystem())
             addSystem(PlayerHasBeenHereSystem())
             addSystem(KeyboardInputSystem())
             addSystem(GamepadInputSystem())

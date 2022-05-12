@@ -8,6 +8,7 @@ import ecs.components.ai.IsAwareOfPlayer
 import ecs.components.ai.PlayerIsInRange
 import ecs.components.enemy.AgentProperties
 import ecs.components.gameplay.TransformComponent
+import ecs.systems.graphics.GameConstants
 import ktx.ashley.allOf
 import ktx.math.vec2
 import physics.addComponent
@@ -35,12 +36,12 @@ class ChasePlayerSystem: IteratingSystem(allOf(
                     chasePlayer.status = Task.Status.SUCCEEDED
                 }
                 chasePlayer.coolDown > 0f -> {
-                    enemyComponent.speed = 10f
+                    enemyComponent.speed = enemyComponent.rushSpeed
                     enemyComponent.directionVector.set(playerPosition).sub(transformComponent.position)
                         .nor()
                 }
                 else -> {
-                    enemyComponent.speed = 1f
+                    enemyComponent.speed = GameConstants.ENEMY_BASE_SPEED
                     chasePlayer.status = Task.Status.FAILED
                 }
             }

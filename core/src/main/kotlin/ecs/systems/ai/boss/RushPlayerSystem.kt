@@ -7,6 +7,7 @@ import ecs.components.ai.IsAwareOfPlayer
 import ecs.components.ai.boss.RushPlayer
 import ecs.components.enemy.AgentProperties
 import ecs.components.gameplay.TransformComponent
+import ecs.systems.graphics.GameConstants
 import ktx.ashley.allOf
 import physics.getComponent
 import physics.has
@@ -59,7 +60,7 @@ class RushPlayerSystem : IteratingSystem(
             Task.Status.RUNNING
         } else {
             enemyComponent.directionVector.setZero()
-            enemyComponent.speed = 2.5f
+            enemyComponent.speed = GameConstants.ENEMY_BASE_SPEED
             Task.Status.SUCCEEDED
         }
         //Scenario 1: the boss does not have a trackingplayer component - so the task fails immediately

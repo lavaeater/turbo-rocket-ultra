@@ -8,6 +8,7 @@ import ecs.components.ai.Investigate
 import ecs.components.ai.NoticedSomething
 import ecs.components.enemy.AgentProperties
 import ecs.components.gameplay.TransformComponent
+import ecs.systems.graphics.GameConstants
 import ecs.systems.sectionX
 import ecs.systems.sectionY
 import injection.Context.inject
@@ -33,7 +34,7 @@ class InvestigateSystem : IteratingSystem(allOf(Investigate::class, AgentPropert
             component.firstRun = false
         }
 
-        agentProperties.speed = 5f
+        agentProperties.speed = GameConstants.ENEMY_INVESTIGATE_SPEED
 
         val weAreDone = progressPath(agentProperties, currentPosition)
 
