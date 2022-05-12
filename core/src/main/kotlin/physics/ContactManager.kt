@@ -11,8 +11,8 @@ import com.badlogic.gdx.physics.box2d.Manifold
 import ecs.components.AudioChannels
 import ecs.components.BodyComponent
 import ecs.components.ai.CollidedWithObstacle
-import ecs.components.ai.KnownPosition
 import ecs.components.ai.IsAwareOfPlayer
+import ecs.components.ai.KnownPosition
 import ecs.components.enemy.AgentProperties
 import ecs.components.fx.ParticleEffectComponent
 import ecs.components.gameplay.*

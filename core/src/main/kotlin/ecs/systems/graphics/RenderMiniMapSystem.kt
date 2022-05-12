@@ -7,7 +7,6 @@ import ecs.components.gameplay.TransformComponent
 import ecs.components.graphics.MiniMapComponent
 import ecs.components.graphics.RenderableComponent
 import ecs.components.graphics.Shape
-import ecs.components.graphics.SpriteComponent
 import injection.Context.inject
 import ktx.ashley.allOf
 import ktx.graphics.use
@@ -15,7 +14,6 @@ import ktx.math.vec2
 import map.grid.GridMapManager
 import physics.AshleyMappers
 import physics.renderable
-import physics.sprite
 import tru.Assets
 
 class RenderMiniMapSystem(priority: Int): SortedIteratingSystem(allOf(RenderableComponent::class, TransformComponent::class, MiniMapComponent::class).get(),

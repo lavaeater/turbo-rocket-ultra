@@ -1,6 +1,5 @@
 package mvvm
 
-import mvvm.Command
 import kotlin.properties.Delegates
 
 abstract class CommandBase : Command {

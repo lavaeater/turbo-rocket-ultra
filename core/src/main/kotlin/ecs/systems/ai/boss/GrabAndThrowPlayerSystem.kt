@@ -3,11 +3,11 @@ package ecs.systems.ai.boss
 import com.badlogic.ashley.core.Entity
 import com.badlogic.ashley.systems.IteratingSystem
 import com.badlogic.gdx.ai.btree.Task
+import ecs.components.ai.IsAwareOfPlayer
+import ecs.components.ai.PlayerIsInRange
+import ecs.components.ai.boss.GrabAndThrowPlayer
 import ecs.components.enemy.AgentProperties
 import ecs.components.gameplay.TransformComponent
-import ecs.components.ai.PlayerIsInRange
-import ecs.components.ai.IsAwareOfPlayer
-import ecs.components.ai.boss.GrabAndThrowPlayer
 import ecs.components.player.PlayerIsRespawning
 import ecs.components.player.PlayerWaitsForRespawn
 import ktx.ashley.allOf

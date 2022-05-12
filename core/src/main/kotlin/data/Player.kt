@@ -3,8 +3,9 @@ package data
 import com.badlogic.ashley.core.Entity
 import com.badlogic.gdx.physics.box2d.Body
 import ecs.components.gameplay.ObjectiveComponent
-import tru.*
-import java.util.*
+import tru.AnimState
+import tru.Assets
+import tru.SpriteDirection
 
 class Player(val name: String) {
     init {

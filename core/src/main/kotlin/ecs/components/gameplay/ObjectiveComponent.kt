@@ -7,7 +7,7 @@ class ObjectiveComponent: Component, Pool.Poolable {
     init {
         counter++
     }
-    var id = "Constructed ${ecs.components.gameplay.ObjectiveComponent.Companion.counter}"
+    var id = "Constructed $counter"
     var touched = false
 
     override fun reset() {

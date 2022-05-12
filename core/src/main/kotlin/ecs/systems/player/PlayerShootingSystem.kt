@@ -7,10 +7,11 @@ import com.badlogic.gdx.math.Polygon
 import com.badlogic.gdx.math.Vector2
 import ecs.components.enemy.AgentProperties
 import ecs.components.gameplay.TransformComponent
-import ecs.components.player.*
+import ecs.components.player.PlayerControlComponent
+import ecs.components.player.WeaponEntityComponent
 import factories.bullet
-import factories.throwMolotov
 import factories.throwGrenade
+import factories.throwMolotov
 import features.weapons.Weapon
 import features.weapons.WeaponType
 import input.canISeeYouFromHere
@@ -18,7 +19,6 @@ import ktx.ashley.allOf
 import ktx.math.random
 import ktx.math.vec2
 import physics.*
-import tru.Assets
 
 
 class PlayerShootingSystem(private val audioPlayer: AudioPlayer) : IteratingSystem(

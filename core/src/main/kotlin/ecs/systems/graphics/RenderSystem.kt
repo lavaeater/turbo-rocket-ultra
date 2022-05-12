@@ -173,7 +173,7 @@ class RenderSystem(
                 component.started = true
                 val emitter = effect.emitters.first()
                 emitter.setPosition(component.at.x, component.at.y)
-                val amplitude: Float = (emitter.angle.getHighMax() - emitter.angle.getHighMin()) / 2f
+                val amplitude: Float = (emitter.angle.highMax - emitter.angle.highMin) / 2f
                 emitter.angle.setHigh(component.rotation + amplitude, component.rotation - amplitude)
                 emitter.angle.setLow(component.rotation)
                 emitter.start()
@@ -193,7 +193,7 @@ class RenderSystem(
                 for (emitter in effect.emitters) {
                     emitter.setPosition(transform.position.x, transform.position.y)
                     if (!effectComponent.started) {
-                        val amplitude: Float = (emitter.angle.getHighMax() - emitter.angle.getHighMin()) / 2f
+                        val amplitude: Float = (emitter.angle.highMax - emitter.angle.highMin) / 2f
                         emitter.angle.setHigh(
                             effectComponent.rotation + amplitude,
                             effectComponent.rotation - amplitude

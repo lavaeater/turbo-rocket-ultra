@@ -7,13 +7,15 @@ import com.badlogic.gdx.controllers.ControllerListener
 import data.Players
 import ecs.components.intent.IntendsTo
 import injection.Context.inject
-import input.*
+import input.Axis
 import input.Axis.Companion.valueOK
+import input.Button
+import input.GamepadControl
+import input.entityFor
 import ktx.ashley.allOf
 import ktx.math.vec2
 import physics.getComponent
 import physics.intendTo
-import physics.intendsTo
 
 /**
  * Controllers will be handled by a polling system

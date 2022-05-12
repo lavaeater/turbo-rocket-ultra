@@ -28,7 +28,7 @@ fun command(name: String, init: CommandMap.() -> Unit): CommandMap {
 }
 
 class MapEditorScreen(gameState: StateMachine<GameState, GameEvent>) : BasicScreen(gameState) {
-    private fun stateUpdated(state: EditState) {
+    private fun stateUpdated(state: EditState, event: EditEvent?) {
         currentControlMap = when (state) {
             EditState.Alt -> altModeMap
             EditState.Camera -> cameraModeMap

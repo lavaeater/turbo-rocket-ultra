@@ -1,6 +1,6 @@
 package graph
 
-class Graph<T>() {
+class Graph<T> {
     val nodes = mutableSetOf<Node<T>>()
 //    private val labels = mutableMapOf<String, MutableSet<Node<T>>>()
 //

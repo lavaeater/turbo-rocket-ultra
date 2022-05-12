@@ -2,17 +2,13 @@ package ecs.systems
 
 import com.badlogic.ashley.core.Entity
 import com.badlogic.ashley.systems.IteratingSystem
-import com.badlogic.gdx.graphics.Color
 import ecs.components.gameplay.AnchorPointsComponent
 import ecs.components.gameplay.TransformComponent
 import ktx.ashley.allOf
-import ktx.graphics.use
-import ktx.math.random
 import ktx.math.vec2
 import physics.anchors
 import physics.playerControl
 import physics.transform
-import tru.Assets
 
 class AnchorPointTransformationSystem(private val debug: Boolean) :
     IteratingSystem(allOf(TransformComponent::class, AnchorPointsComponent::class).get()) {

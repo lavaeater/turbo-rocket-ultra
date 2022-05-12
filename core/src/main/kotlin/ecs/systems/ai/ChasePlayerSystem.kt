@@ -4,8 +4,8 @@ import com.badlogic.ashley.core.Entity
 import com.badlogic.ashley.systems.IteratingSystem
 import com.badlogic.gdx.ai.btree.Task
 import ecs.components.ai.ChasePlayer
-import ecs.components.ai.PlayerIsInRange
 import ecs.components.ai.IsAwareOfPlayer
+import ecs.components.ai.PlayerIsInRange
 import ecs.components.enemy.AgentProperties
 import ecs.components.gameplay.TransformComponent
 import ktx.ashley.allOf

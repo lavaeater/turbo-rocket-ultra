@@ -7,12 +7,12 @@ import ecs.components.gameplay.TransformComponent
 import ecs.components.player.PlayerComponent
 import injection.Context.inject
 import ktx.ashley.allOf
+import messaging.Message
+import messaging.MessageHandler
 import physics.light
 import physics.objective
 import physics.perimeter
 import physics.transform
-import messaging.Message
-import messaging.MessageHandler
 
 class PerimeterObjectiveSystem: IteratingSystem(allOf(PerimeterObjectiveComponent::class, TransformComponent::class).get())  {
     private val playerEntities get() = engine.getEntitiesFor(allOf(PlayerComponent::class, TransformComponent::class).get())

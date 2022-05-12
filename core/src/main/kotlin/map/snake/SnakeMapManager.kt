@@ -36,8 +36,7 @@ class SnakeMapManager(
      */
 
     var currentSection: SnakeMapSection = SnakeMapSection(0, 0)
-        get() = field
-            set(value) {
+        set(value) {
                 field = value
                 updateCurrentSection()
             }

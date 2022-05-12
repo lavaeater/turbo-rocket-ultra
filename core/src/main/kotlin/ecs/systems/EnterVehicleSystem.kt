@@ -1,17 +1,5 @@
 package ecs.systems
 
-import com.badlogic.ashley.core.Entity
-import com.badlogic.ashley.systems.IteratingSystem
-import ecs.components.BodyComponent
-import ecs.components.EnterVehicleComponent
-import ecs.components.IsInVehicleComponent
-import ecs.components.player.PlayerControlComponent
-import ktx.ashley.allOf
-import ktx.ashley.hasNot
-import ktx.ashley.mapperFor
-import ktx.box2d.revoluteJointWith
-import physics.playerControlComponent
-
 //class EnterVehicleSystem : IteratingSystem(
 //    allOf(
 //        EnterVehicleComponent::class,

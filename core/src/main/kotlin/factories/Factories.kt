@@ -349,7 +349,7 @@ fun player(player: Player, mapper: ControlMapper, at: Vector2, debug: Boolean) {
         Box2dCategories.allButLights
     )
 
-    val entity = engine().entity() {
+    val entity = engine().entity {
         with<CameraFollowComponent>()
         with<BodyComponent> { body = box2dBody }
         with<TransformComponent>()
@@ -720,7 +720,7 @@ fun hackingStation(
             }
         }
     }
-    val entity = engine().entity() {
+    val entity = engine().entity {
         with<BodyComponent> { body = box2dBody }
         with<TransformComponent> { position.set(box2dBody.position) }
         with<HackingComponent>()
@@ -810,7 +810,7 @@ fun boss(at: Vector2, level: Int) {
         with<MiniMapComponent> {
             color = Color.RED
         }
-        with<BossComponent>() {}
+        with<BossComponent> {}
     }
     entity.addComponent<BehaviorComponent> { tree = Tree.bossOne().apply { `object` = entity } }
     box2dBody.userData = entity
@@ -833,7 +833,7 @@ fun blockade(
             }
         }
     }
-    val entity = engine().entity() {
+    val entity = engine().entity {
         with<BodyComponent> { body = box2dBody }
         with<TransformComponent> { position.set(box2dBody.position) }
         with<BlockadeComponent>()
@@ -865,7 +865,7 @@ fun spawner(
             }
         }
     }
-    val entity = engine().entity() {
+    val entity = engine().entity {
         with<BodyComponent> { body = box2dBody }
         with<TransformComponent> { position.set(box2dBody.position) }
         with<ObstacleComponent>()
@@ -907,7 +907,7 @@ fun objective(
             }
         }
     }
-    val entity = engine().entity() {
+    val entity = engine().entity {
         with<BodyComponent> { body = box2dBody }
         with<TransformComponent> { position.set(box2dBody.position) }
         with<SpriteComponent> {

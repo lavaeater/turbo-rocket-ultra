@@ -10,18 +10,20 @@ import com.badlogic.gdx.math.Vector2
 import com.badlogic.gdx.physics.box2d.Body
 import com.badlogic.gdx.physics.box2d.Contact
 import com.badlogic.gdx.physics.box2d.Fixture
-import ecs.components.*
-import ecs.components.enemy.AgentProperties
-import ecs.components.player.PlayerComponent
-import ecs.components.player.PlayerControlComponent
-import factories.engine
 import data.Player
+import ecs.components.BodyComponent
+import ecs.components.VehicleComponent
+import ecs.components.VehicleControlComponent
+import ecs.components.enemy.AgentProperties
 import ecs.components.enemy.EnemySensorComponent
 import ecs.components.enemy.TackleComponent
 import ecs.components.gameplay.*
 import ecs.components.pickups.LootComponent
 import ecs.components.player.ComplexActionComponent
+import ecs.components.player.PlayerComponent
+import ecs.components.player.PlayerControlComponent
 import ecs.components.player.PlayerWaitsForRespawn
+import factories.engine
 import ktx.ashley.has
 import ktx.math.times
 
@@ -105,7 +107,7 @@ inline fun <reified T : Component> Entity.getComponent(): T {
 }
 
 fun Contact.noSensors() : Boolean {
-    return !this.fixtureA.isSensor && !this.fixtureB.isSensor()
+    return !this.fixtureA.isSensor && !this.fixtureB.isSensor
 }
 
 inline fun <reified T : Component> Contact.atLeastOneHas(): Boolean {

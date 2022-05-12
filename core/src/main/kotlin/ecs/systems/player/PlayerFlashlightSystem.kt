@@ -8,7 +8,7 @@ import ecs.components.player.PlayerControlComponent
 import ktx.ashley.allOf
 import physics.getComponent
 
-class PlayerFlashlightSystem() : IteratingSystem(
+class PlayerFlashlightSystem : IteratingSystem(
     allOf(
         FlashlightComponent::class,
         TransformComponent::class,

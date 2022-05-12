@@ -44,7 +44,6 @@ class SplitViewport(rootViewport: Viewport) : Viewport() {
         var size: Float
     ) {
         init {
-            size = size
         }
     }
 

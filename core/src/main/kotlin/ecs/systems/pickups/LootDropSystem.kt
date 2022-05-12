@@ -6,7 +6,6 @@ import ecs.components.pickups.LootDropComponent
 import factories.lootBox
 import ktx.ashley.allOf
 import physics.AshleyMappers
-import physics.getComponent
 
 class LootDropSystem : IteratingSystem(allOf(LootDropComponent::class).get()) {
     override fun processEntity(entity: Entity, deltaTime: Float) {

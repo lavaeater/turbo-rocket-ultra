@@ -3,7 +3,6 @@ package ecs.systems
 import com.badlogic.ashley.core.Entity
 import com.badlogic.ashley.systems.IteratingSystem
 import com.badlogic.gdx.physics.box2d.World
-import com.badlogic.gdx.scenes.scene2d.actions.Actions.removeActor
 import ecs.components.BodyComponent
 import ecs.components.gameplay.DestroyComponent
 import ktx.ashley.allOf

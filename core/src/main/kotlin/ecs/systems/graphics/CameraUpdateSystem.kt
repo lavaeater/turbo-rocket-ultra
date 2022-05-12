@@ -10,7 +10,6 @@ import ecs.components.gameplay.TransformComponent
 import ecs.components.graphics.CameraFollowComponent
 import ecs.systems.graphics.GameConstants.GAMEHEIGHT
 import ecs.systems.graphics.GameConstants.GAMEWIDTH
-import injection.Context.inject
 import ktx.ashley.allOf
 import ktx.math.vec2
 import ktx.math.vec3

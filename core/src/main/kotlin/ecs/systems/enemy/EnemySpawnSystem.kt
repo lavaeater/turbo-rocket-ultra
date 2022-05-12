@@ -7,7 +7,6 @@ import ecs.components.enemy.EnemySpawnerComponent
 import ecs.components.gameplay.TransformComponent
 import factories.enemy
 import factories.factsOfTheWorld
-import injection.Context.inject
 import ktx.ashley.allOf
 import ktx.math.random
 import ktx.math.vec2

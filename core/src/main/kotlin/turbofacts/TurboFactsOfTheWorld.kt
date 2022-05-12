@@ -252,9 +252,9 @@ class TurboFactsOfTheWorld(private val onFactUpdated: (key: String) -> Unit = {}
     fun setFactsFromMap(facts: Map<String, Any>) {
         for ((key, value) in facts) {
             when (value) {
-                is Int -> setIntFact(value as Int, key)
-                is Boolean -> setBooleanFact(value as Boolean, key)
-                is Float -> setFloatFact(value as Float, key)
+                is Int -> setIntFact(value, key)
+                is Boolean -> setBooleanFact(value, key)
+                is Float -> setFloatFact(value, key)
                 else -> setStringFact(value.toString(), key)
             }
         }

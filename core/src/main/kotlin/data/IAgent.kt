@@ -1,7 +1,5 @@
 package data
 
-import com.badlogic.gdx.math.MathUtils
-
 interface IAgent {
   val id: String
   var name: String

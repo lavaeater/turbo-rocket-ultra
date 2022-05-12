@@ -1,8 +1,6 @@
 package wastelandui
 
 import com.badlogic.gdx.graphics.Color
-import com.badlogic.gdx.math.Vector2
-import com.badlogic.gdx.math.Vector3
 import com.badlogic.gdx.scenes.scene2d.Stage
 import com.badlogic.gdx.scenes.scene2d.ui.Label
 import com.badlogic.gdx.scenes.scene2d.ui.Table
@@ -14,7 +12,6 @@ import ktx.actors.keepWithinParent
 import ktx.actors.onChange
 import ktx.actors.onKey
 import ktx.actors.txt
-import ktx.math.vec2
 import ktx.scene2d.KTableWidget
 import ktx.scene2d.scene2d
 import ktx.scene2d.table
@@ -83,7 +80,7 @@ class ConversationPresenter(
 
     antagonistRoot = scene2d.table {
 	    antagonistSpeechBubble = label("", speechBubbleStyle) {
-		    setWrap(true)
+		    wrap = true
 		    keepWithinParent()
 	    }.cell(expandY = true, width = baseWidth, align = Align.bottomRight, padLeft = 16f, padBottom = 2f)
 	    if(showAntagonistPortrait) {
@@ -131,7 +128,7 @@ class ConversationPresenter(
         button.onChange {
           makeChoice(indexedValue.index)
         }
-			  button.label.setWrap(true)
+              button.label.wrap = true
 			  add(button).align(Align.left).expandY().growX().pad(8f).space(4f).row()
 			  button.keepWithinParent()
 		  }
@@ -173,7 +170,7 @@ class ConversationPresenter(
 
   }
 
-  private fun stateChanged(state: ConversationState) {
+  private fun stateChanged(state: ConversationState, event: ConversationEvent?) {
     when (state) {
       ConversationState.NotStarted -> stateMachine.acceptEvent(ConversationEvent.ConversationStarted)
       ConversationState.Ended -> conversationEnded()
