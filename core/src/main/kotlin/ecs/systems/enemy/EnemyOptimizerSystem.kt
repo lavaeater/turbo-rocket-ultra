@@ -1,16 +1,11 @@
 package ecs.systems.enemy
 
-import com.badlogic.ashley.core.Entity
-import com.badlogic.ashley.core.EntitySystem
 import com.badlogic.ashley.systems.IntervalSystem
-import com.badlogic.ashley.systems.IteratingSystem
-import com.badlogic.gdx.Gdx
 import ecs.components.enemy.AgentProperties
 import ecs.components.gameplay.DestroyComponent
 import ecs.systems.graphics.GameConstants.MAX_ENEMIES
 import ktx.ashley.allOf
 import physics.addComponent
-import screens.GameScreen
 
 class EnemyOptimizerSystem : IntervalSystem(5f) {
 

@@ -6,7 +6,9 @@ import ecs.components.graphics.AnimatedCharacterComponent
 import ecs.components.graphics.SpriteComponent
 import ecs.components.player.WeaponComponent
 import ktx.ashley.allOf
-import physics.*
+import physics.animation
+import physics.sprite
+import physics.weapon
 import tru.AnimState
 import tru.Assets
 import tru.SpriteDirection

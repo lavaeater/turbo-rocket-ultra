@@ -7,7 +7,6 @@ import gamestate.GameState
 import injection.Context.inject
 import statemachine.StateMachine
 import story.conversation.ConversationManager
-import story.conversation.InternalConversation
 
 class PlacesOfTheWorld {
 

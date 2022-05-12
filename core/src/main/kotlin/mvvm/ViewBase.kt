@@ -12,10 +12,10 @@ abstract class ViewBase<VM: ViewModelBase>(private val batch: Batch, val viewMod
 	View {
 	private var needsLayout = true
 	private var needsDataBinding = true
-	private val bindingMap = mutableMapOf<kotlin.String, (kotlin.Any) -> kotlin.Unit>()
-	private val commandMap = mutableMapOf<kotlin.String, () -> kotlin.Unit>()
+	private val bindingMap = mutableMapOf<String, (Any) -> Unit>()
+	private val commandMap = mutableMapOf<String, () -> Unit>()
 	private val changeListener = object: com.badlogic.gdx.scenes.scene2d.utils.ChangeListener() {
-		override fun changed(event: com.badlogic.gdx.scenes.scene2d.utils.ChangeListener.ChangeEvent, actor: com.badlogic.gdx.scenes.scene2d.Actor) {
+		override fun changed(event: ChangeEvent, actor: Actor) {
 			when(actor) {
 				is CommandWidget -> actor.command.invoke()
 			}
@@ -63,7 +63,7 @@ abstract class ViewBase<VM: ViewModelBase>(private val batch: Batch, val viewMod
 		}
 	}
 
-	private fun updateWidgetValue(propertyName: kotlin.String, newValue: kotlin.Any) {
+	private fun updateWidgetValue(propertyName: String, newValue: Any) {
 		bindingMap[propertyName]?.invoke(newValue) //null safe call - we don't bind to all properties!
 	}
 

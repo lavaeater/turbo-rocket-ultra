@@ -12,7 +12,9 @@ import com.badlogic.gdx.graphics.g2d.Batch
 import com.badlogic.gdx.graphics.g2d.PolygonSpriteBatch
 import com.badlogic.gdx.utils.viewport.ExtendViewport
 import com.crashinvaders.vfx.VfxManager
-import com.crashinvaders.vfx.effects.*
+import com.crashinvaders.vfx.effects.BloomEffect
+import com.crashinvaders.vfx.effects.CrtEffect
+import com.crashinvaders.vfx.effects.OldTvEffect
 import com.strongjoshua.console.CommandExecutor
 import com.strongjoshua.console.GUIConsole
 import ecs.systems.AnchorPointTransformationSystem
@@ -44,12 +46,12 @@ import ktx.inject.Context
 import ktx.inject.register
 import map.grid.GridMapManager
 import messaging.Message
-import physics.ContactManager
-import ui.Hud
-import ui.IUserInterface
 import messaging.MessageHandler
+import physics.ContactManager
 import turbofacts.TurboFactsOfTheWorld
 import turbofacts.TurboStoryManager
+import ui.Hud
+import ui.IUserInterface
 
 object Context {
     val context = Context()

@@ -83,7 +83,7 @@ sealed class AllBooleans : BooleanCriteria() {
     }
 }
 
-sealed class AnyBoolean() : BooleanCriteria() {
+sealed class AnyBoolean : BooleanCriteria() {
     class IsTrue(override val factKey: String) : AnyBoolean() {
         override fun checkRule(): Boolean {
             val facts = facts.factsFor(factKey)

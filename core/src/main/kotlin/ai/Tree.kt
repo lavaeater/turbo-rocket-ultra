@@ -1,32 +1,21 @@
 package ai
 
 import ai.builders.*
-import ai.tasks.*
+import ai.tasks.EntityDecorator
+import ai.tasks.invertDecorator
 import com.badlogic.ashley.core.Entity
-import com.badlogic.gdx.ai.btree.BehaviorTree
-import com.badlogic.gdx.ai.btree.BranchTask
-import com.badlogic.gdx.ai.btree.Decorator
-import com.badlogic.gdx.ai.btree.LeafTask
-import com.badlogic.gdx.ai.btree.Task
-import com.badlogic.gdx.ai.btree.branch.DynamicGuardSelector
-import com.badlogic.gdx.ai.btree.branch.Parallel
-import com.badlogic.gdx.ai.btree.branch.RandomSelector
-import com.badlogic.gdx.ai.btree.branch.RandomSequence
-import com.badlogic.gdx.ai.btree.branch.Selector
+import com.badlogic.gdx.ai.btree.*
 import com.badlogic.gdx.ai.btree.decorator.AlwaysFail
 import com.badlogic.gdx.ai.btree.decorator.AlwaysSucceed
 import com.badlogic.gdx.ai.btree.decorator.Invert
 import com.badlogic.gdx.ai.btree.decorator.Repeat
-import com.badlogic.gdx.ai.btree.leaf.Failure
 import com.badlogic.gdx.ai.utils.random.ConstantIntegerDistribution
-import ecs.components.ai.NoticedSomething
 import ecs.components.ai.*
-import ecs.components.ai.boss.*
+import ecs.components.ai.boss.RushPlayer
 import ecs.components.gameplay.BurningComponent
 import ecs.components.towers.FindTarget
 import ecs.components.towers.Shoot
 import ecs.components.towers.TargetInRange
-import kotlin.reflect.full.createInstance
 
 object Tree {
     fun getMutatedTree(tree: BehaviorTree<Entity>): BehaviorTree<Entity> {
@@ -37,19 +26,19 @@ object Tree {
         return newTree
     }
 
-    private fun mutateBrancher(task: BranchTask<Entity>) : BranchTask<Entity> {
-        val possibleClasses = listOf(Selector::class, com.badlogic.gdx.ai.btree.branch.Sequence::class, RandomSelector::class, RandomSequence::class, Parallel::class, DynamicGuardSelector::class).minus(task::class)
-        val c = possibleClasses.random()
-        val newBranchTask = c.createInstance() as BranchTask<Entity>
-        if(task.guard != null) {
-            newBranchTask.guard = task.guard.cloneTask()
-        }
-        for(index in 0 until task.childCount) {
-            val newChild = mutateTask(task.getChild(index))
-            newBranchTask.addChild(newChild)
-        }
-        return newBranchTask
-    }
+//    private fun mutateBrancher(task: BranchTask<Entity>) : BranchTask<Entity> {
+//        val possibleClasses = listOf(Selector::class, com.badlogic.gdx.ai.btree.branch.Sequence::class, RandomSelector::class, RandomSequence::class, Parallel::class, DynamicGuardSelector::class).minus(task::class)
+//        val c = possibleClasses.random()
+//        val newBranchTask = c.createInstance() as BranchTask<Entity>
+//        if(task.guard != null) {
+//            newBranchTask.guard = task.guard.cloneTask()
+//        }
+//        for(index in 0 until task.childCount) {
+//            val newChild = mutateTask(task.getChild(index))
+//            newBranchTask.addChild(newChild)
+//        }
+//        return newBranchTask
+//    }
 
     private fun mutateDecorator(task: Decorator<Entity>) : Task<Entity> {
         val newTask = when(task) {
@@ -73,7 +62,7 @@ object Tree {
 
     fun mutateTask(task: Task<Entity>) : Task<Entity> {
         return when(task) {
-            is BranchTask<Entity> -> mutateBrancher(task)
+            is BranchTask<Entity> -> task
             is Decorator<Entity> -> mutateDecorator(task)
             is LeafTask<Entity> -> mutateLeaf(task)
             else -> { Invert() }
@@ -99,7 +88,7 @@ object Tree {
                     })
                 last(
                     selector<Entity> {
-                        first(invert(entityDo<Amble>() { unlessEntityHas<IsAwareOfPlayer>() }))
+                        first(invert(entityDo<Amble> { unlessEntityHas<IsAwareOfPlayer>() }))
                         then(invert(entityDo<SeekPlayer>()))
                         last(invert(entityDo<ChasePlayer>()))
                     })
@@ -122,7 +111,7 @@ object Tree {
                 })
             last(
                 selector<Entity> {
-                    first(invert(entityDo<Amble>() { unlessEntityHas<IsAwareOfPlayer>() }))
+                    first(invert(entityDo<Amble> { unlessEntityHas<IsAwareOfPlayer>() }))
                     then(invert(entityDo<SeekPlayer>()))
                     last(invert(entityDo<ChasePlayer>()))
                 })

@@ -104,7 +104,7 @@ class UserInterface(
   private fun setUpScoreBoard() {
     scoreBoard = scene2d.table {
       scoreLabel = label("Score: $score", labelStyle) {
-        setWrap(true)
+        wrap = true
         keepWithinParent()
       }.cell(fill = true, align = Align.bottomLeft, padLeft = 16f, padBottom = 2f)
       isVisible = true

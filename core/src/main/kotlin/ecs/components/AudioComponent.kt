@@ -1,8 +1,6 @@
 package ecs.components
 
 import audio.TurboSound
-import com.badlogic.ashley.core.Component
-import com.badlogic.gdx.utils.Pool
 import ecs.components.ai.CoolDownComponent
 
 class AudioComponent: CoolDownComponent() {

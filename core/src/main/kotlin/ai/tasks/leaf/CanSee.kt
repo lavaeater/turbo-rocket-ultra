@@ -5,8 +5,6 @@ import com.badlogic.ashley.core.Component
 import com.badlogic.ashley.core.Entity
 import com.badlogic.gdx.ai.GdxAI
 import com.badlogic.gdx.ai.btree.Task
-import com.badlogic.gdx.graphics.Color
-import com.badlogic.gdx.math.MathUtils
 import com.badlogic.gdx.math.Vector2
 import com.badlogic.gdx.physics.box2d.Fixture
 import ecs.components.ai.IsAwareOfPlayer
@@ -19,7 +17,6 @@ import input.canISeeYouFromHere
 import ktx.ashley.allOf
 import ktx.box2d.RayCast
 import ktx.box2d.rayCast
-import ktx.graphics.use
 import ktx.math.random
 import ktx.math.vec2
 import physics.*
@@ -94,7 +91,7 @@ class CanSeeAnyThatHas<T : Component>(val coolDown: Float = 0.1f) : EntityTask()
         closestFixture = null
     }
 
-    fun canSee(agentProps: AgentProperties, position: Vector2): Task.Status {
+    fun canSee(agentProps: AgentProperties, position: Vector2): Status {
         actualCoolDown -= deltaTime()
         if (actualCoolDown <= 0f) {
             actualCoolDown = coolDown

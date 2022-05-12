@@ -9,7 +9,7 @@ import ktx.ashley.allOf
 import ktx.math.times
 import physics.*
 
-class VehicleControlSystem() : IteratingSystem(
+class VehicleControlSystem : IteratingSystem(
     allOf(
         VehicleControlComponent::class,
         BodyComponent::class).get()) {
@@ -35,7 +35,7 @@ class VehicleControlSystem() : IteratingSystem(
         val forwardNormal = carBody.forwardVelocity()
         val currentForwardSpeed = forwardNormal.len()
         val dragForceMagnitude = -2 * currentForwardSpeed
-        carBody.applyForce(carBody.forwardVelocity() * dragForceMagnitude, carBody.worldCenter, true);
+        carBody.applyForce(carBody.forwardVelocity() * dragForceMagnitude, carBody.worldCenter, true)
     }
 
     private fun handleInput(vehicleControl: VehicleControlComponent, carBody: Body) {

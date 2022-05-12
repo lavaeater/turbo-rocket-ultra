@@ -7,7 +7,6 @@ import ecs.components.gameplay.TransformComponent
 import ecs.components.graphics.SpriteComponent
 import injection.Context
 import ktx.ashley.allOf
-import physics.sprite
 import physics.transform
 
 /**

@@ -1,9 +1,6 @@
 package turbofacts
 
-import ecs.systems.enemy.multiKey
 import factories.factsOfTheWorld
-import kotlin.properties.ReadWriteProperty
-import kotlin.reflect.KProperty
 
 //class FactsOfTheWorldInt<in R>(private val key: String, private val defaultValue: Int = 0) :
 //    ReadWriteProperty<R, Int> {

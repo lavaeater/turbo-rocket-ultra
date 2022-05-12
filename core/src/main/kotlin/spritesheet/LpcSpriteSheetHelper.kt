@@ -1,6 +1,5 @@
 package spritesheet
 
-import com.badlogic.gdx.Gdx
 import com.badlogic.gdx.Gdx.files
 import java.io.FileFilter
 

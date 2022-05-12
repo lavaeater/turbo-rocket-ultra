@@ -4,7 +4,6 @@ import com.badlogic.ashley.systems.IntervalSystem
 import ecs.components.enemy.BossComponent
 import ecs.components.gameplay.ObjectiveComponent
 import factories.factsOfTheWorld
-import injection.Context.inject
 import ktx.ashley.allOf
 import physics.getComponent
 import turbofacts.Factoids

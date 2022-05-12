@@ -63,7 +63,7 @@ open class Node<T>(data: T) {
 		const val Neighbour = "Neighbour"
 	}
 }
-fun <T> Node<T>.connect(to: Node<T>, relation: String = graph.Node.Neighbour, twoWay: Boolean = true) {
+fun <T> Node<T>.connect(to: Node<T>, relation: String = Node.Neighbour, twoWay: Boolean = true) {
 		this.addRelation(relation, to)
 		if(twoWay)
 			to.addRelation(relation, this)

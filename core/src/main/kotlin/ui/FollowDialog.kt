@@ -36,6 +36,6 @@ class UiThingBuilder {
     lateinit var widget: Actor
     fun build() : UiThingComponent {
 //        stage.addActor(widget)
-        return UiThingComponent().apply { this.widget = widget }
+        return UiThingComponent().apply { }
     }
 }

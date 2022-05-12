@@ -31,6 +31,4 @@ open class ParticleEffectComponent: Component, Pool.Poolable {
     }
 }
 
-class FireEffectComponent : ParticleEffectComponent() {
-
-}
+class FireEffectComponent : ParticleEffectComponent()

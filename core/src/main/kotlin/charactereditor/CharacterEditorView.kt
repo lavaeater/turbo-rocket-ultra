@@ -3,11 +3,13 @@ package charactereditor
 import com.badlogic.gdx.graphics.g2d.Batch
 import com.badlogic.gdx.scenes.scene2d.utils.UIUtils.middle
 import com.badlogic.gdx.utils.Align
+import ktx.scene2d.label
+import ktx.scene2d.scene2d
+import ktx.scene2d.table
 import mvvm.ViewBase
 import mvvm.bindableLabel
 import mvvm.commandTextButton
 import spritesheet.RenderableThing
-import ktx.scene2d.*
 
 class CharacterEditorView(
 		batch: Batch,
@@ -24,7 +26,7 @@ class CharacterEditorView(
 			bindableLabel(viewModel::subName.name)
 			row()
 			bindableLabel(viewModel::currentTags.name) {
-				setWrap(true)
+                wrap = true
 			}
 			center()
 			width = uiWidth / 2f

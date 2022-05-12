@@ -5,13 +5,10 @@ import com.badlogic.ashley.systems.IteratingSystem
 import com.badlogic.gdx.math.Circle
 import ecs.components.ai.NoticedSomething
 import ecs.components.enemy.AgentProperties
-import ecs.components.gameplay.TransformComponent
 import ecs.components.player.FiredShotsComponent
 import ktx.ashley.allOf
 import physics.AshleyMappers
 import physics.addComponent
-import physics.getComponent
-import physics.has
 
 class EnemyHearsShotsSystem : IteratingSystem(allOf(FiredShotsComponent::class).get()) {
 

@@ -16,7 +16,7 @@ import physics.has
 import tru.Assets
 
 
-class TowerDebugSystem() :
+class TowerDebugSystem :
     IteratingSystem(
         allOf(
             TransformComponent::class,

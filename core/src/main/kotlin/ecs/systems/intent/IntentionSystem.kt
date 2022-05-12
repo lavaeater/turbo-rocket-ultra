@@ -8,13 +8,9 @@ import ecs.components.intent.CalculatedPositionComponent
 import ecs.components.intent.IntendsTo
 import ecs.components.intent.IntentComponent
 import ecs.components.player.BuildModeComponent
-import ecs.components.player.InventoryComponent
-import ecs.components.player.WeaponComponent
 import ecs.systems.graphics.CompassDirection
-import ecs.systems.player.Sfx
 import ecs.systems.tileWorldX
 import ecs.systems.tileWorldY
-import features.weapons.ReloadType
 import ktx.ashley.allOf
 import ktx.ashley.entity
 import ktx.ashley.remove

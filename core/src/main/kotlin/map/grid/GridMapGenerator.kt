@@ -5,7 +5,6 @@ import box2dLight.Light
 import box2dLight.RayHandler
 import com.badlogic.ashley.core.Engine
 import com.badlogic.gdx.math.Rectangle
-import ecs.components.enemy.EnemySpawnerComponent
 import ecs.systems.tileWorldX
 import ecs.systems.tileWorldY
 import factories.*

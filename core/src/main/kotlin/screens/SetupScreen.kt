@@ -41,8 +41,7 @@ class SetupViewModel {
     }
 }
 
-open class BoundHorizontalGroup : HorizontalGroup() {
-}
+open class BoundHorizontalGroup : HorizontalGroup()
 
 sealed class PlayerModel(
     val name: String,
@@ -304,7 +303,7 @@ class SetupScreen(gameState: StateMachine<GameState, GameEvent>) : BasicScreen(g
     }
 
     private fun toggleKeyboardPlayer(): Boolean {
-        availableControllers.firstOrNull() { it is PlayerModel.Keyboard }?.toggle()
+        availableControllers.firstOrNull { it is PlayerModel.Keyboard }?.toggle()
         return true
     }
 

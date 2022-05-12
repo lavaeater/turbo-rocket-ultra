@@ -34,7 +34,6 @@ import map.grid.*
 import map.snake.randomPoint
 import physics.*
 import statemachine.StateMachine
-import turbofacts.StoryHelper
 import tru.Assets
 import turbofacts.Factoids
 import turbofacts.TurboFactsOfTheWorld
@@ -99,48 +98,9 @@ class GameScreen(private val gameState: StateMachine<GameState, GameEvent>) : Kt
         }
     }
 
-    private fun loadMapZero() : Pair<Map<Coordinate, GridMapSection>, TileGraph> {
-        CounterObject.maxEnemies = 1
-        CounterObject.maxSpawnedEnemies = 1
-        return GridMapGenerator.generateFromMapFile(MapLoader.loadMap("levelzero.json"))
-    }
-
     private fun loadMap(data: MapData): Pair<Map<Coordinate, GridMapSection>, TileGraph> {
         return GridMapGenerator.generateFromMapFile(data)
     }
-
-    private fun loadSampleMap(): Pair<Map<Coordinate, GridMapSection>, TileGraph> {
-        return GridMapGenerator.generateFromMapFile(MapLoader.loadNewMap("text_maps/newmap.txt"))
-    }
-
-    private fun loadMapTwo(): Pair<Map<Coordinate, GridMapSection>, TileGraph>  {
-        return GridMapGenerator.generateFromMapFile(MapLoader.loadNewMap("text_maps/sample_map.txt"))
-    }
-
-    private fun loadMapThree(): Pair<Map<Coordinate, GridMapSection>, TileGraph>  {
-        CounterObject.maxEnemies = 300
-        CounterObject.maxSpawnedEnemies= 1024
-
-        storyManager.addStories(*StoryHelper.baseStories)
-        storyManager.addStory(StoryHelper.basicStory)
-        return GridMapGenerator.generateFromMapFile(MapLoader.loadMap("levelthree.json"))
-    }
-    private fun loadMapFour(): Pair<Map<Coordinate, GridMapSection>, TileGraph>  {
-        CounterObject.maxEnemies = 512
-        CounterObject.maxSpawnedEnemies= 1024
-
-        storyManager.addStories(*StoryHelper.baseStories)
-        storyManager.addStory(StoryHelper.basicStory)
-        return GridMapGenerator.generateFromMapFile(MapLoader.loadMap("levelfour.json"))
-    }
-    /*
-    4E4048
-A4AE76
-F1E1B5
-D1B67A
-82503A
-    #a4ae76
-     */
 
     val red = 164f / 255f
     val green = 174f / 255f

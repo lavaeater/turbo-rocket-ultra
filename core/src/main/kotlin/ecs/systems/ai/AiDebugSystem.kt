@@ -8,7 +8,8 @@ import ecs.components.gameplay.TransformComponent
 import injection.Context.inject
 import ktx.ashley.allOf
 import ktx.graphics.use
-import physics.*
+import physics.behavior
+import physics.sprite
 import tru.Assets
 
 class AiDebugSystem : IteratingSystem(allOf(BehaviorComponent::class, TransformComponent::class).get()) {

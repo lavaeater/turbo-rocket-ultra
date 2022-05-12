@@ -1,19 +1,23 @@
 package gamestate
 
-sealed class GameEvent {
-    object LeftSplash: GameEvent()
-    object StartedGame: GameEvent()
-    object PausedGame: GameEvent()
-    object ResumedGame: GameEvent()
-    object ExitedGame: GameEvent()
-    object GameOver: GameEvent()
-    object RestartGame : GameEvent()
-    object StartEditor : GameEvent()
-    object StopEditor : GameEvent()
-    object StartConcept : GameEvent()
-    object StopConcept : GameEvent()
-    object ExitMapEditor : GameEvent()
-    object StartMapEditor : GameEvent()
-    object DialogEvent : GameEvent()
-    object LevelComplete : GameEvent()
+sealed class GameEvent(val name: String) {
+    object LeftSplash: GameEvent("LeftSplash")
+    object StartedGame: GameEvent("StartedGame")
+    object PausedGame: GameEvent("PausedGame")
+    object ResumedGame: GameEvent("ResumedGame")
+    object ExitedGame: GameEvent("ExitedGame")
+    object GameOver: GameEvent("GameOver")
+    object RestartGame : GameEvent("RestartGame")
+    object StartEditor : GameEvent("StartEditor")
+    object StopEditor : GameEvent("StopEditor")
+    object StartConcept : GameEvent("StartConcept")
+    object StopConcept : GameEvent("StopConcept")
+    object ExitMapEditor : GameEvent("ExitMapEditor")
+    object StartMapEditor : GameEvent("StartMapEditor")
+    object DialogEvent : GameEvent("DialogEvent")
+    object LevelComplete : GameEvent("LevelComplete")
+
+    override fun toString(): String {
+        return name
+    }
 }

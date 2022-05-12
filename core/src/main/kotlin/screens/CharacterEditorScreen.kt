@@ -1,11 +1,11 @@
 package screens
 
+import charactereditor.CharacterEditorView
+import charactereditor.CharacterEditorViewModel
 import com.badlogic.gdx.Gdx
 import com.badlogic.gdx.graphics.GL20
 import gamestate.GameEvent
 import gamestate.GameState
-import charactereditor.CharacterEditorView
-import charactereditor.CharacterEditorViewModel
 import spritesheet.LpcSpriteSheetHelper
 import spritesheet.SheetDef
 import spritesheet.TextureRegionDef

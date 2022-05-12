@@ -2,7 +2,10 @@ package ecs.systems.player
 
 import com.badlogic.ashley.core.Entity
 import com.badlogic.ashley.systems.IteratingSystem
-import ecs.components.player.*
+import ecs.components.player.InventoryComponent
+import ecs.components.player.PlayerComponent
+import ecs.components.player.WeaponEntityComponent
+import ecs.components.player.doWeHaveAny
 import ktx.ashley.allOf
 import physics.getComponent
 import physics.weapon
