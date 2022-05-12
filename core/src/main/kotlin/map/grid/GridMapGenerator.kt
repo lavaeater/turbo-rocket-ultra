@@ -71,15 +71,7 @@ class GridMapGenerator {
         }
 
         fun generateFromDefintion(def: TextGridMapDefinition, perimeterObjectives: Boolean = false): Pair<Map<Coordinate, GridMapSection>, TileGraph> {
-            //TODO: Move this somewhere
-            Light.setGlobalContactFilter(
-                Box2dCategories.lights,
-                0, Box2dCategories.allButSensors
-            )
-            rayHandler.setAmbientLight(.5f)
-            rayHandler.setBlurNum(3)
-
-            val tileMap = mutableMapOf<Coordinate, GridMapSection>()
+                        val tileMap = mutableMapOf<Coordinate, GridMapSection>()
             val graph = TileGraph()
 
             var index = 0

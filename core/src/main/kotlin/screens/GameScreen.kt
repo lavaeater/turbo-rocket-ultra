@@ -245,6 +245,7 @@ class GameScreen(private val gameState: StateMachine<GameState, GameEvent>) : Kt
             level < MapList.mapFileNames.size -> loadMap(MapList.mapFiles[level - 1])
             else -> GridMapGenerator.generate(CounterObject.currentLength, level)
         }
+        mapManager.removeLights(mapManager.gridMap)
         mapManager.gridMap = map.first
         mapManager.sectionGraph = map.second
         CounterObject.numberOfObjectives = engine.getEntitiesFor(allOf(ObjectiveComponent::class).get()).count()
