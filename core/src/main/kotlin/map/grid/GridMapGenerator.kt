@@ -40,9 +40,9 @@ class GridMapGenerator {
             spawner(position.tileWorldX(), position.tileWorldY())
         }
 
-        fun addBoss(bounds: Rectangle) {
+        fun addBoss(bounds: Rectangle, level: Int) {
             var position = bounds.randomPoint()
-            //boss(position, 1)
+            boss(position, level)
         }
 
         private val factsOfTheWorld by lazy { factsOfTheWorld() }
@@ -105,7 +105,7 @@ class GridMapGenerator {
                         if (def.hasSpawner(coordinate))
                             addSpawner(section.innerBounds)
                         if (def.hasBoss(coordinate))
-                            addBoss(section.innerBounds)
+                            addBoss(section.innerBounds, CounterObject.currentLevel)
 
                         if(def.hasHackingStation(coordinate))
                             addHackingStation(section.innerBounds, CounterObject.currentLevel)

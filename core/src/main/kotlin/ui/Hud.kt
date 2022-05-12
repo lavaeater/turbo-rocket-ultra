@@ -4,6 +4,7 @@ import audio.AudioPlayer
 import com.badlogic.gdx.Gdx
 import com.badlogic.gdx.graphics.OrthographicCamera
 import com.badlogic.gdx.graphics.g2d.Batch
+import com.badlogic.gdx.graphics.g2d.Sprite
 import com.badlogic.gdx.math.Vector2
 import com.badlogic.gdx.scenes.scene2d.Action
 import com.badlogic.gdx.scenes.scene2d.Stage
@@ -23,10 +24,12 @@ import ktx.actors.then
 import ktx.math.vec2
 import ktx.math.vec3
 import ktx.scene2d.*
+import map.grid.GridMapManager
 import messaging.Message
 import messaging.MessageHandler
 import messaging.MessageReceiver
 import physics.AshleyMappers
+import physics.playerControl
 import turbofacts.Factoids
 import ui.customactors.boundLabel
 import ui.customactors.boundProgressBar
@@ -44,7 +47,6 @@ class Hud(private val batch: Batch) : IUserInterface, MessageReceiver {
     private val worldCamera by lazy { inject<OrthographicCamera>() }
     private val audioPlayer by lazy { inject<AudioPlayer>() }
     private val factsOfTheWorld by lazy { factsOfTheWorld() }
-
 
     private val projectionVector = vec3()
     private val _projectionVector = vec2()
@@ -81,14 +83,10 @@ class Hud(private val batch: Batch) : IUserInterface, MessageReceiver {
                 table {
                     table {
                         width = aStage.width / 8
-                        label("Top Scorers:")
+                        label("Level Info")
                         row()
                         boundLabel({
-                            FitnessTracker.fitnessData.sortBy { it.fitness }
-                            if(FitnessTracker.fitnessData.any())
-                                FitnessTracker.fitnessData.subList(0, if(FitnessTracker.fitnessData.size > 10) 10 else FitnessTracker.fitnessData.lastIndex).map { "${it.enemyId} - ${it.fitness}" }.joinToString("\n")
-                            else
-                                "No scorers yet"
+                            factsOfTheWorld.getString(Factoids.CurrentMapName)
                         })
                     }
                     for ((control, player) in Players.players) {
@@ -101,10 +99,14 @@ class Hud(private val batch: Batch) : IUserInterface, MessageReceiver {
                             boundLabel({ "Objectives: ${player.touchedObjectives.count()}" }).inCell.align(Align.right)
                             row()
                             boundLabel({ "Score: ${player.score}" }).inCell.align(Align.right)
-//                            row()
-//                            boundLabel({ "Pos: ${player.entity.transform().position}" }).inCell.align(Align.right)
                             row()
-                            boundLabel({ "${player.currentWeapon}: ${player.ammoLeft}|${player.totalAmmo}" }).inCell.align(
+                            boundLabel({ "Speed: ${player.entity.playerControl().actualSpeed}" }).inCell.align(Align.right)
+                            row()
+                            boundLabel({ "${player.currentWeapon}" }).inCell.align(
+                                Align.right
+                            )
+                            row()
+                            boundLabel({ "${player.ammoLeft}|${player.totalAmmo}" }).inCell.align(
                                 Align.right
                             )
                             row()
@@ -118,7 +120,7 @@ class Hud(private val batch: Batch) : IUserInterface, MessageReceiver {
                             repeatingTexture(
                                 { player.lives },
                                 5f,
-                                AshleyMappers.animatedCharacter.get(player.entity).currentAnim.keyFrames.first()
+                                Sprite(AshleyMappers.animatedCharacter.get(player.entity).currentAnim.keyFrames.first()).apply { flip(false, true) }
                             ) {}
                         }
                     }

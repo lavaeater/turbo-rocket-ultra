@@ -2,11 +2,12 @@ package ecs.systems.graphics
 
 object GameConstants {
 
-    const val ENEMY_INVESTIGATE_SPEED = 7.5f
+    const val GENERAL_SPEED_FACTOR = 1f
+    const val ENEMY_INVESTIGATE_SPEED = 7.5f * GENERAL_SPEED_FACTOR
     const val ENEMY_VIEW_DISTANCE = 30f
     const val ENEMY_FOV = 90f
-    const val ENEMY_BASE_SPEED = 5f
-    const val ENEMY_RUN_SPEED = 10f
+    const val ENEMY_BASE_SPEED = 5f * GENERAL_SPEED_FACTOR
+    const val ENEMY_RUN_SPEED = 10f * GENERAL_SPEED_FACTOR
     const val PIXELS_PER_METER = 16f
     const val SCALE = 1 / PIXELS_PER_METER
 
@@ -18,7 +19,7 @@ object GameConstants {
     const val GAME_WIDTH = 48f
     const val GAME_HEIGHT = 32f
 
-    const val PLAYER_BASE_SPEED = 10f
+    const val PLAYER_BASE_SPEED = 15f * GENERAL_SPEED_FACTOR
     const val AIMING_SPEED_FACTOR = 0.2f
     const val NORMAL_SPEED_FACTOR = 1f
 

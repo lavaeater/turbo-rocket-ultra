@@ -50,7 +50,7 @@ class StateMachine<S, E> private constructor(private val initialState: S, privat
             currentState = state
             globalStateAction(currentState.state, e)
         } catch (exc: NoSuchElementException) {
-            throw IllegalStateException("This state doesn't support " +
+            throw IllegalStateException("This state (${currentState.state}) doesn't support " +
                     "transition on ${e}")
         }
     }
