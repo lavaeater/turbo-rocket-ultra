@@ -12,6 +12,7 @@ import com.badlogic.gdx.math.MathUtils
 import com.badlogic.gdx.utils.viewport.Viewport
 import com.crashinvaders.vfx.VfxManager
 import com.crashinvaders.vfx.effects.ChainVfxEffect
+import ecs.components.enemy.AgentProperties
 import ecs.components.gameplay.DestroyComponent
 import ecs.components.gameplay.TransformComponent
 import ecs.components.graphics.RenderableComponent
@@ -101,7 +102,10 @@ class RenderSystem(
             val sprite = spriteComponent.sprite
             if (spriteComponent.rotateWithTransform)
                 sprite.rotation = transform.rotation * MathUtils.radiansToDegrees
-            sprite.setOriginBasedPosition(transform.position.x + spriteComponent.actualOffsetX, transform.position.y + spriteComponent.actualOffsetY)
+            sprite.setOriginBasedPosition(
+                transform.position.x + spriteComponent.actualOffsetX,
+                transform.position.y + spriteComponent.actualOffsetY
+            )
 
             sprite.draw(batch)
             if (debug) {
@@ -134,31 +138,60 @@ class RenderSystem(
         }
 
         if (enemyDebug && entity.isEnemy()) {
-            val ec = entity.agentProps()
-            val previous = entity.transform().position.cpy()
-            shapeDrawer.line(previous, ec.nextPosition, Color.BLUE, 0.1f)
-            previous.set(ec.nextPosition)
-            for ((i, node) in ec.path.withIndex()) {
-                shapeDrawer.line(previous, node, lineColor, 0.1f)
-                when (i) {
-                    0 -> {
-                        shapeDrawer.filledCircle(node, .25f, Color.GREEN)
-                    }
-                    ec.path.size - 1 -> {
-                        shapeDrawer.filledCircle(node, .25f, Color.RED)
-                    }
-                    else -> {
-                        shapeDrawer.filledCircle(node, .25f, Color.BLUE)
-                    }
-                }
-                previous.set(node)
-            }
+            renderEnemyDebugStuff(entity)
         }
 
-        if(playerDebug && entity.isPlayer() && entity.hasAnchors()) {
-            for((key, point) in entity.anchors().transformedPoints) {
-                shapeDrawer.filledCircle(point, 0.2f, if(colorMap.containsKey(key)) colorMap[key] else Color.WHITE)
+        if (playerDebug && entity.isPlayer() && entity.hasAnchors()) {
+            for ((key, point) in entity.anchors().transformedPoints) {
+                shapeDrawer.filledCircle(point, 0.2f, if (colorMap.containsKey(key)) colorMap[key] else Color.WHITE)
             }
+        }
+    }
+
+    private fun renderEnemyDebugStuff(entity: Entity) {
+        val ec = entity.agentProps()
+        renderPath(entity, ec)
+        renderCanSee(entity, ec)
+    }
+
+    val sectorColor = Color(0f, 1f, 0f, 0.1f)
+
+    private fun renderCanSee(entity: Entity, ap: AgentProperties) {
+        val position = entity.transform().position
+        //1. Render a circle on viewDistance
+        shapeDrawer.sector(
+            position.x,
+            position.y,
+            ap.viewDistance,
+            ap.directionVector.angleRad() - ap.fieldOfView / 2  * MathUtils.degreesToRadians,
+            MathUtils.degreesToRadians * ap.fieldOfView, sectorColor, sectorColor
+        )
+
+        shapeDrawer.setColor(Color.RED)
+
+        shapeDrawer.circle(position.x, position.y, ap.viewDistance,0.1f)
+
+        shapeDrawer.line(position, position.cpy().add(ap.directionVector.cpy().scl(ap.viewDistance)), 0.1f)
+    }
+
+    private fun renderPath(entity: Entity, ec: AgentProperties) {
+        val previous = entity.transform().position.cpy()
+        shapeDrawer.line(previous, ec.nextPosition, Color.BLUE, 0.1f)
+        previous.set(ec.nextPosition)
+        for ((i, node) in ec.path.withIndex()) {
+            shapeDrawer.line(previous, node, lineColor, 0.1f)
+            when (i) {
+                0 -> {
+                    shapeDrawer.filledCircle(node, .25f, Color.GREEN)
+                }
+                ec.path.size - 1 -> {
+                    shapeDrawer.filledCircle(node, .25f, Color.RED)
+                }
+                else -> {
+                    shapeDrawer.filledCircle(node, .25f, Color.BLUE)
+                }
+            }
+            previous.set(node)
         }
     }
 

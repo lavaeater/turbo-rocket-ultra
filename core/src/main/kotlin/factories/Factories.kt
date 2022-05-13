@@ -701,21 +701,21 @@ fun enemy(at: Vector2) {
         stage.actors {
             verticalGroup {
                 it += moveAction
-                boundLabel({ bt.tree.prettyPrint() })
-//                label("TreeStatus") { actor ->
-//                    widget = this
-//                    btComponent.tree.addListener(object : BehaviorTree.Listener<Entity> {
-//                        override fun statusUpdated(task: Task<Entity>, previousStatus: Task.Status) {
-//                            val taskString = task.toString()
-//                            if (!taskString.contains("@"))
-//                                this@label.setText("""$taskString - $previousStatus""".trimMargin())
-//                        }
-//
-//                        override fun childAdded(task: Task<Entity>?, index: Int) {
-//
-//                        }
-//                    })
-//                }
+//                boundLabel({ bt.tree.prettyPrint() })
+                 label("TreeStatus") { actor ->
+                    widget = this
+                    bt.tree.addListener(object : BehaviorTree.Listener<Entity> {
+                        override fun statusUpdated(task: Task<Entity>, previousStatus: Task.Status) {
+                            val taskString = task.toString()
+                            if (!taskString.contains("@"))
+                                this@label.setText("""$taskString - $previousStatus""".trimMargin())
+                        }
+
+                        override fun childAdded(task: Task<Entity>?, index: Int) {
+
+                        }
+                    })
+                }
             }.setPosition(startPosition.x, startPosition.y)
         }
     })
@@ -824,7 +824,7 @@ fun boss(at: Vector2, level: Int) {
         with<BossComponent> {}
 
         bt = with {
-            tree = Tree.bossOne().apply { `object` = this@entity.entity }
+            tree = Tree.bossTest().apply { `object` = this@entity.entity }
         }
     }
     entity.add(getUiThing {

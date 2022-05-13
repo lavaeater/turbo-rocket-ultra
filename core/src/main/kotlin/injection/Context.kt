@@ -116,7 +116,6 @@ object Context {
             // Ai Systems Start
             addSystem(AmblingSystem())
             addSystem(PanicSystem())
-            addSystem(BehaviorTreeSystem())
             addSystem(ChasePlayerSystem())
             addSystem(AlertFriendsSystem())
             addSystem(SeekPlayerSystem(false))
@@ -146,13 +145,15 @@ object Context {
                     inject(),
                     inject(),
                     inject<ExtendViewport>(),
-                    false,
+                    true,
                     1,
                     false
                 )
             )
 
-            addSystem(RenderMiniMapSystem(3))
+            addSystem(RenderMiniMapSystem(2))
+            //We add this here now to make sure it is run AFTER the rendercycle
+            addSystem(BehaviorTreeSystem(4))
             //addSystem(PhysicsDebugRendererSystem(inject(), inject()))
             addSystem(PlayerFlashlightSystem())
             addSystem(PlayerContextActionSystem())

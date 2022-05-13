@@ -5,11 +5,13 @@ import com.badlogic.ashley.core.Component
 import com.badlogic.ashley.core.Entity
 import com.badlogic.gdx.ai.btree.Task
 import com.badlogic.gdx.ai.btree.decorator.*
+import com.badlogic.gdx.ai.utils.random.ConstantIntegerDistribution
 import com.badlogic.gdx.ai.utils.random.IntegerDistribution
 import ecs.components.ai.TaskComponent
 
 fun <T>semaphoreGuard(task: Task<T>) = SemaphoreGuard(task)
 fun <T>repeat( times: IntegerDistribution, task: Task<T>) = Repeat(times, task)
+fun <T>repeatForever(task: Task<T>) = Repeat(ConstantIntegerDistribution.NEGATIVE_ONE, task)
 fun <T>include(tree: String) = Include<T>(tree)
 fun <T>succeed(task: Task<T>) = AlwaysSucceed(task)
 fun <T>fail(task: Task<T>) = AlwaysFail(task)
@@ -23,7 +25,7 @@ inline fun <reified T : Component> entityHas() = HasComponentBuilder(T::class.ja
 
 inline fun <reified T: TaskComponent> entityDo(block: EntityComponentTaskBuilder<T>.() -> Unit = {}) = EntityComponentTaskBuilder(T::class.java).apply(block).build()
 
-inline fun <reified T: Component> canSee() : CanSeeAnyThatHas<T> {
+inline fun <reified T: Component> canSee(coolDown: Float = 0.2f, ) : CanSeeAnyThatHas<T> {
     return CanSeeAnyThatHas(T::class)
 }
 

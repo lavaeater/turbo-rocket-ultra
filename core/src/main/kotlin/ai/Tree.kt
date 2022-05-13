@@ -119,6 +119,10 @@ object Tree {
         }
     }
 
+    fun bossTest() = tree<Entity> {
+        add(repeatForever(canSee<PlayerComponent>()))
+    }
+
     fun bossOne() = tree<Entity> {
         dynamicGuardSelector {
             first(entityDo<RushPlayer> { ifEntityHas<IsAwareOfPlayer>() })

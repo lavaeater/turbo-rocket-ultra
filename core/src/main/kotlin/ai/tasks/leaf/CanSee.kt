@@ -5,6 +5,7 @@ import com.badlogic.ashley.core.Component
 import com.badlogic.ashley.core.Entity
 import com.badlogic.gdx.ai.GdxAI
 import com.badlogic.gdx.ai.btree.Task
+import com.badlogic.gdx.graphics.Color
 import com.badlogic.gdx.math.Vector2
 import com.badlogic.gdx.physics.box2d.Fixture
 import ecs.components.ai.IsAwareOfPlayer
@@ -17,6 +18,8 @@ import input.canISeeYouFromHere
 import ktx.ashley.allOf
 import ktx.box2d.RayCast
 import ktx.box2d.rayCast
+import ktx.graphics.use
+import ktx.log.info
 import ktx.math.random
 import ktx.math.vec2
 import physics.*
@@ -33,7 +36,7 @@ fun deltaTime(): Float {
  *
  *
  */
-class CanSeeAnyThatHas<T : Component>(val coolDown: Float = 0.1f) : EntityTask() {
+class CanSeeAnyThatHas<T : Component>(val coolDown: Float = 0.2f) : EntityTask() {
     lateinit var componentClass: KClass<T>
 
     constructor(componentClass: KClass<T>) : this() {
@@ -49,30 +52,26 @@ class CanSeeAnyThatHas<T : Component>(val coolDown: Float = 0.1f) : EntityTask()
     var actualCoolDown = coolDown
 
     override fun execute(): Status {
-        val agentProps = entity.agentProps()
-        val position = entity.transform().position
-        return when (status) {
-            Status.FRESH -> {
-                startRunning(agentProps)
-            }
-            Status.RUNNING -> {
-                canSee(agentProps, position)
-            }
-            else -> status
-        }
+        return canSee(entity.agentProps(), entity.transform().position)
     }
 
-    private fun startRunning(agentProps: AgentProperties): Status {
+    override fun start() {
+        super.start()
+        startRunning(entity.agentProps())
+    }
+
+    private fun startRunning(agentProps: AgentProperties) {
+        previousSpeed = agentProps.speed
+        agentProps.speed = 0f
+
         if (entity.has<NoticedSomething>()) {
             val noticeVector = entity.getComponent<NoticedSomething>().noticedWhere
             agentProps.directionVector.set(noticeVector).sub(agentProps.directionVector).nor()
         } else {
-            //Always check 5 degrees per "turn" until done from where you are
             val unitVectorRange = -1f..1f
             agentProps.directionVector.set(unitVectorRange.random(), unitVectorRange.random()).nor()
                 .rotateDeg(-agentProps.fieldOfView / 2)
         }
-        return Status.RUNNING
     }
 
     var scanCount = 0
@@ -82,26 +81,37 @@ class CanSeeAnyThatHas<T : Component>(val coolDown: Float = 0.1f) : EntityTask()
     var scanResolution = 1f
     fun maxNumberOfScans(fieldOfView: Float): Float = fieldOfView / scanResolution
 
-    override fun reset() {
-        super.reset()
+    override fun resetTask() {
         actualCoolDown = coolDown
         scanCount = 0
         foundAPlayer = false
         scanDirection.setZero()
         closestFixture = null
+        super.resetTask()
     }
 
+    var previousSpeed = 0f
+    val debug = true
+
     fun canSee(agentProps: AgentProperties, position: Vector2): Status {
+
         actualCoolDown -= deltaTime()
         if (actualCoolDown <= 0f) {
+            info { "Will check for player now" }
             actualCoolDown = coolDown
             val inRange =
                 engine.getEntitiesFor(family).filter { it.transform().position.dst(position) < agentProps.viewDistance }
+            info { "Players in range: ${inRange.size}" }
             var lowestFraction = 1f
             val pointOfHit = vec2()
             val hitNormal = vec2()
             scanCount++
             for (e in inRange) {
+                if(debug) {
+                    shapeDrawer.batch.use {
+                        shapeDrawer.filledCircle(e.transform().position, 1f, Color.RED)
+                    }
+                }
                 if (!foundAPlayer) {
                     val entityPosition = e.transform().position
 
@@ -122,7 +132,7 @@ class CanSeeAnyThatHas<T : Component>(val coolDown: Float = 0.1f) : EntityTask()
                             entityPosition,
                             scanDirection
                         ) { fixture, point, normal, fraction ->
-                            if (fraction < lowestFraction && fixture.isPlayer()) {
+                            if (fraction < lowestFraction) {
                                 lowestFraction = fraction
                                 closestFixture = fixture
                                 pointOfHit.set(point)
@@ -137,19 +147,22 @@ class CanSeeAnyThatHas<T : Component>(val coolDown: Float = 0.1f) : EntityTask()
                             entity.add(
                                 engine.createComponent(IsAwareOfPlayer::class.java)
                                     .apply { this.player = e.getComponent<PlayerComponent>().player })
+                            agentProps.speed = previousSpeed
                             return Status.SUCCEEDED
                         }
 
                     }
                 }
             }
-        }
-        if (!foundAPlayer) {
-            agentProps.directionVector.rotateDeg(scanResolution)
-            if (scanCount > maxNumberOfScans(agentProps.fieldOfView)) {
-                return Status.FAILED
+            if (!foundAPlayer) {
+                agentProps.directionVector.rotateDeg(scanResolution)
+                if (scanCount > maxNumberOfScans(agentProps.fieldOfView)) {
+                    agentProps.speed = previousSpeed
+                    return Status.FAILED
+                }
             }
         }
+
         return Status.RUNNING
     }
 }
