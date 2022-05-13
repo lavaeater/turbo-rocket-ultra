@@ -28,4 +28,8 @@ object CounterObject {
     var maxSpawnedEnemies: Int
         get() = getValue(Factoids.MaxSpawnedEnemies)
         set(value) = setValue(Factoids.MaxSpawnedEnemies, value)
+
+    var startingEnemyCount: Int
+    get() = getValue(Factoids.StartingEnemyCount)
+    set(value) = setValue(Factoids.StartingEnemyCount, value)
 }

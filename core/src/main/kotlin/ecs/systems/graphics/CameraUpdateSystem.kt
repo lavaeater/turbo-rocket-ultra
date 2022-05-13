@@ -8,8 +8,8 @@ import com.badlogic.gdx.math.Vector2
 import com.badlogic.gdx.utils.viewport.ExtendViewport
 import ecs.components.gameplay.TransformComponent
 import ecs.components.graphics.CameraFollowComponent
-import ecs.systems.graphics.GameConstants.GAMEHEIGHT
-import ecs.systems.graphics.GameConstants.GAMEWIDTH
+import ecs.systems.graphics.GameConstants.GAME_HEIGHT
+import ecs.systems.graphics.GameConstants.GAME_WIDTH
 import ktx.ashley.allOf
 import ktx.math.vec2
 import ktx.math.vec3
@@ -46,13 +46,13 @@ class CameraUpdateSystem(
 
         viewport.minWorldWidth =
             (transformComponents.maxOf { it.position.x } - transformComponents.minOf { it.position.x } + 30f).coerceIn(
-                GAMEWIDTH,
-                GAMEWIDTH * 5
+                GAME_WIDTH,
+                GAME_WIDTH * 5
             )
         viewport.minWorldHeight =
             (transformComponents.maxOf { it.position.y } - transformComponents.minOf { it.position.y } + 30f).coerceIn(
-                GAMEHEIGHT,
-                GAMEHEIGHT * 5
+                GAME_HEIGHT,
+                GAME_HEIGHT * 5
             )
         viewport.update(Gdx.graphics.width, Gdx.graphics.height)
         camera.update()

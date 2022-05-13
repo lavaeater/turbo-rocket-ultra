@@ -37,10 +37,11 @@ import ecs.components.pickups.LootComponent
 import ecs.components.pickups.LootDropComponent
 import ecs.components.player.*
 import ecs.components.towers.TowerComponent
+import ecs.systems.graphics.GameConstants
 import ecs.systems.graphics.GameConstants.PLAYER_DENSITY
 import ecs.systems.graphics.GameConstants.SHIP_ANGULAR_DAMPING
 import ecs.systems.graphics.GameConstants.SHIP_LINEAR_DAMPING
-import ecs.systems.graphics.GameConstants.pixelsPerMeter
+import ecs.systems.graphics.GameConstants.PIXELS_PER_METER
 import features.pickups.*
 import features.weapons.AmmoType
 import features.weapons.WeaponDefinition
@@ -280,8 +281,8 @@ fun bodyForSprite(
     pixelWidth: Int = 24,
     pixelHeight: Int = 48
 ): Body {
-    val widthInMeters = pixelWidth / pixelsPerMeter
-    val heightInMeters = pixelHeight / pixelsPerMeter
+    val widthInMeters = pixelWidth / PIXELS_PER_METER
+    val heightInMeters = pixelHeight / PIXELS_PER_METER
 
     val bottomBoxWidth = widthInMeters
     val bottomBoxHeight = widthInMeters / 2
@@ -779,8 +780,8 @@ fun boss(at: Vector2, level: Int) {
         with<Enemy>()
         with<AgentProperties> {
             fieldOfView = 270f
-            rushSpeed = 15f + level * 1.5f
-            speed = 10f
+            rushSpeed = GameConstants.ENEMY_RUN_SPEED + level * 1.5f
+            speed = GameConstants.ENEMY_BASE_SPEED
             viewDistance = 40f + 5f * level
             health = 2000f * level
             flock = false

@@ -30,8 +30,8 @@ import ecs.systems.facts.FactSystem
 import ecs.systems.facts.PerimeterObjectiveSystem
 import ecs.systems.fx.DelayedEntityCreationSystem
 import ecs.systems.graphics.*
-import ecs.systems.graphics.GameConstants.GAMEHEIGHT
-import ecs.systems.graphics.GameConstants.GAMEWIDTH
+import ecs.systems.graphics.GameConstants.GAME_HEIGHT
+import ecs.systems.graphics.GameConstants.GAME_WIDTH
 import ecs.systems.input.ActionHandler
 import ecs.systems.input.GamepadInputSystem
 import ecs.systems.input.KeyboardInputSystem
@@ -73,8 +73,8 @@ object Context {
             bindSingleton<IUserInterface> { Hud(inject<PolygonSpriteBatch>() as Batch) }
             bindSingleton(
                 ExtendViewport(
-                    GAMEWIDTH,
-                    GAMEHEIGHT,
+                    GAME_WIDTH,
+                    GAME_HEIGHT,
                     inject<OrthographicCamera>() as Camera
                 )
             )
@@ -103,7 +103,7 @@ object Context {
             addSystem(UpdateTimePieceSystem())
             addSystem(PhysicsSystem(0))
             addSystem(CameraUpdateSystem(inject(), inject()))
-            addSystem(PlayerMoveSystem(25f))
+            addSystem(PlayerMoveSystem())
             addSystem(PlayerHasBeenHereSystem())
             addSystem(KeyboardInputSystem())
             addSystem(GamepadInputSystem())
@@ -153,7 +153,7 @@ object Context {
             )
 
             addSystem(RenderMiniMapSystem(3))
-            addSystem(PhysicsDebugRendererSystem(inject(), inject()))
+            //addSystem(PhysicsDebugRendererSystem(inject(), inject()))
             addSystem(PlayerFlashlightSystem())
             addSystem(PlayerContextActionSystem())
             addSystem(DelayedEntityCreationSystem())

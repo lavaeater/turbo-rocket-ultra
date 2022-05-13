@@ -42,6 +42,7 @@ object Factoids {
     const val PlayerTileX = "PlayerTileX"
     const val PlayerTileY = "PlayerTileY"
     const val WaveSize = "WaveSize"
+    const val StartingEnemyCount = "StartingEnemyCount"
 
 
     // New keys for my new, shiny game

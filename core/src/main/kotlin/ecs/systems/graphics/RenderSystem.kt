@@ -15,7 +15,7 @@ import com.crashinvaders.vfx.effects.ChainVfxEffect
 import ecs.components.gameplay.DestroyComponent
 import ecs.components.gameplay.TransformComponent
 import ecs.components.graphics.RenderableComponent
-import ecs.systems.graphics.GameConstants.scale
+import ecs.systems.graphics.GameConstants.SCALE
 import injection.Context.inject
 import ktx.ashley.allOf
 import ktx.graphics.use
@@ -112,8 +112,8 @@ class RenderSystem(
 
                 )
                 shapeDrawer.filledCircle(
-                    transform.position.x + spriteComponent.sprite.originX * scale * spriteComponent.scale,
-                    transform.position.y + spriteComponent.sprite.originY * scale * spriteComponent.scale,
+                    transform.position.x + spriteComponent.sprite.originX * SCALE * spriteComponent.scale,
+                    transform.position.y + spriteComponent.sprite.originY * SCALE * spriteComponent.scale,
                     .5f,
                     Color.RED
                 )

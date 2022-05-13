@@ -24,6 +24,14 @@ class GridMapManager {
         fixBodies()
     }
 
+    fun removeLights(oldMap: Map<Coordinate, GridMapSection>) {
+        for(section in oldMap.values) {
+            for(l in section.lights) {
+                l.remove(true)
+            }
+        }
+    }
+
     private val bodies = mutableListOf<Body>()
 
     fun getRandomSection(except: Coordinate, maxDistance: Int = 5): Coordinate {

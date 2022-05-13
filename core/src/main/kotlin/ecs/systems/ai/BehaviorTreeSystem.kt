@@ -10,6 +10,6 @@ import physics.behavior
 class BehaviorTreeSystem : IntervalIteratingSystem(allOf(BehaviorComponent::class).get(), 0.05f) {
     override fun processEntity(entity: Entity) {
         entity.behavior().tree.step()
-        FitnessTracker.saveFitnessDataFor(entity)
+        //FitnessTracker.saveFitnessDataFor(entity)
     }
 }

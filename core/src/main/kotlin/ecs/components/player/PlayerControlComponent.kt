@@ -5,6 +5,7 @@ import com.badlogic.gdx.math.Vector2
 import com.badlogic.gdx.utils.Pool
 import data.Player
 import ecs.systems.graphics.CompassDirection
+import ecs.systems.graphics.GameConstants
 import input.ControlMapper
 import ktx.math.vec2
 import tru.AnimState
@@ -33,6 +34,11 @@ class PlayerControlComponent(var controlMapper: ControlMapper, val player: Playe
 
     var shotsFired = 0
         private set
+
+    val speed get() = player.speed
+    val actualSpeed : Float get() {
+        return speed * if(waitsForRespawn) 0f else if(aiming) GameConstants.AIMING_SPEED_FACTOR else GameConstants.NORMAL_SPEED_FACTOR
+    }
 
     val playerAnimState: AnimState
         get() {

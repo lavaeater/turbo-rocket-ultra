@@ -5,6 +5,7 @@ import com.badlogic.ashley.systems.IteratingSystem
 import com.badlogic.gdx.ai.btree.Task
 import ecs.components.ai.Panic
 import ecs.components.enemy.AgentProperties
+import ecs.systems.graphics.GameConstants
 import ktx.ashley.allOf
 import ktx.math.random
 import physics.audio
@@ -21,7 +22,7 @@ class PanicSystem : IteratingSystem(allOf(Panic::class, AgentProperties::class).
             val directionRange = -1f..1f
             val enemyComponent = entity.getComponent<AgentProperties>()
             enemyComponent.directionVector.set(directionRange.random(), directionRange.random()).nor()
-            enemyComponent.speed = 10f
+            enemyComponent.speed = GameConstants.ENEMY_RUN_SPEED
 
             if(entity.hasAudio()) {
                 val audio = entity.audio()

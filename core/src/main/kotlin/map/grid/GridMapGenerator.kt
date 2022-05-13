@@ -40,9 +40,9 @@ class GridMapGenerator {
             spawner(position.tileWorldX(), position.tileWorldY())
         }
 
-        fun addBoss(bounds: Rectangle) {
+        fun addBoss(bounds: Rectangle, level: Int) {
             var position = bounds.randomPoint()
-            //boss(position, 1)
+            boss(position, level)
         }
 
         private val factsOfTheWorld by lazy { factsOfTheWorld() }
@@ -71,15 +71,7 @@ class GridMapGenerator {
         }
 
         fun generateFromDefintion(def: TextGridMapDefinition, perimeterObjectives: Boolean = false): Pair<Map<Coordinate, GridMapSection>, TileGraph> {
-            //TODO: Move this somewhere
-            Light.setGlobalContactFilter(
-                Box2dCategories.lights,
-                0, Box2dCategories.allButSensors
-            )
-            rayHandler.setAmbientLight(.5f)
-            rayHandler.setBlurNum(3)
-
-            val tileMap = mutableMapOf<Coordinate, GridMapSection>()
+                        val tileMap = mutableMapOf<Coordinate, GridMapSection>()
             val graph = TileGraph()
 
             var index = 0
@@ -113,7 +105,7 @@ class GridMapGenerator {
                         if (def.hasSpawner(coordinate))
                             addSpawner(section.innerBounds)
                         if (def.hasBoss(coordinate))
-                            addBoss(section.innerBounds)
+                            addBoss(section.innerBounds, CounterObject.currentLevel)
 
                         if(def.hasHackingStation(coordinate))
                             addHackingStation(section.innerBounds, CounterObject.currentLevel)

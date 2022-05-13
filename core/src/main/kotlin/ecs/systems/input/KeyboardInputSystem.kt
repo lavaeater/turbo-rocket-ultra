@@ -65,7 +65,6 @@ class KeyboardInputSystem :
 
     override fun keyDown(keycode: Int): Boolean {
         if (::keyboardControl.isInitialized) {
-            keyboardControl.aiming = false
             if (!keyboardControl.requireSequencePress) {
                 when (keycode) {
                     Input.Keys.W -> keyboardControl.thrust = 1f
@@ -110,7 +109,6 @@ class KeyboardInputSystem :
             if (keyboardControl.requireSequencePress && hackingKeys.contains(keycode)) {
                 keyboardControl.keyPressedCallback(keycode)
             } else {
-                keyboardControl.aiming = true
                 when (keycode) {
                     Input.Keys.W -> keyboardControl.thrust = 0f
                     Input.Keys.S -> keyboardControl.thrust = 0f
@@ -167,6 +165,7 @@ class KeyboardInputSystem :
         if (::keyboardControl.isInitialized) {
             if (!keyboardControl.firing) {
                 keyboardControl.firing = true
+                keyboardControl.aiming = true
             }
         }
         return true

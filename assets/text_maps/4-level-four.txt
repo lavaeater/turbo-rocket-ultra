@@ -1,0 +1,52 @@
+g
+b
+b
+w
+w
+w
+w
+w
+w
+l
+l
+l
+l
+l
+w
+w
+w
+b
+b
+b
+w
+w
+w
+w
+w
+b
+l
+s
+-
+name
+4-level-four            
+start
+Replace this with a start-of-level
+message to inspire the players
+success
+Shows this when players win the level
+fail
+This is when they fail
+facts
+MaxEnemies:100:i
+MaxSpawnedEnemies:200:i
+AcceleratingSpawns:false:b
+AcceleratingSpawnsFactor:1.25:f
+EnemyKillCount:0:i
+TargetEnemyKillCount:0:i
+ShowEnemyKillCount:false:b
+
+stories
+start-story
+level-failed
+level-complete
+basic-story            

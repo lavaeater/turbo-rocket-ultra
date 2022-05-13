@@ -1,3 +1,0 @@
-# Transitions
-I tried this using an addon that already exists. However, it uses nested framebuffers and a separate SpriteBatch (instead of generic batch) so I couldn't make myself bother. Will try something else instead. Maybe I will simply clone his project and update the code and rewrite it in Kotlin.
-To make this happen we need to fork this and rewrite it using the generic spritebatch or something like that.

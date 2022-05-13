@@ -8,6 +8,7 @@ import ecs.components.ai.IsAwareOfPlayer
 import ecs.components.ai.KnownPosition
 import ecs.components.enemy.AgentProperties
 import ecs.components.gameplay.TransformComponent
+import ecs.systems.graphics.GameConstants
 import ktx.ashley.allOf
 import physics.agentProps
 import physics.alertFriends
@@ -49,7 +50,7 @@ class AlertFriendsSystem: IteratingSystem(allOf(
                 val toRunTo = alertFriends.nextToRunTo!!.transform().position
                 val enemyComponent = entity.agentProps()
 
-                enemyComponent.speed = 10f
+                enemyComponent.speed = enemyComponent.rushSpeed
                 enemyComponent.directionVector.set(toRunTo).sub(entity.transform().position)
                     .nor()
             }

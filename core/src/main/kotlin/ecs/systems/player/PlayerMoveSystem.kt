@@ -8,7 +8,7 @@ import ecs.components.player.PlayerControlComponent
 import ktx.ashley.allOf
 import physics.getComponent
 
-class PlayerMoveSystem(private var speed: Float): IteratingSystem(
+class PlayerMoveSystem(): IteratingSystem(
     allOf(
         PlayerControlComponent::class,
         BodyComponent::class,
@@ -23,16 +23,14 @@ class PlayerMoveSystem(private var speed: Float): IteratingSystem(
         }
     }
 
-    private var speedFactor = 1f
     private fun executeMove(
         playerControlComponent: PlayerControlComponent,
         bodyComponent: BodyComponent,
         animatedCharacterComponent: AnimatedCharacterComponent
     ) {
-        speedFactor = if(playerControlComponent.waitsForRespawn) 0f else if(playerControlComponent.triggerPulled) 0.2f else 1f
 
-        val vX = playerControlComponent.walkVector.x * speed * speedFactor
-        val vY = playerControlComponent.walkVector.y * speed * speedFactor
+        val vX = playerControlComponent.walkVector.x * playerControlComponent.actualSpeed
+        val vY = playerControlComponent.walkVector.y * playerControlComponent.actualSpeed
         bodyComponent.body!!.setLinearVelocity(vX, vY)
 
         animatedCharacterComponent.currentAnimState = playerControlComponent.playerAnimState

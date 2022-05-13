@@ -5,6 +5,7 @@ import com.badlogic.gdx.math.Vector2
 import com.badlogic.gdx.utils.Pool
 import com.badlogic.gdx.utils.Queue
 import data.Player
+import ecs.systems.graphics.GameConstants
 import ktx.math.random
 import ktx.math.vec2
 import kotlin.reflect.KMutableProperty
@@ -15,12 +16,12 @@ class Enemy : Component, Pool.Poolable {
 }
 
 class AgentProperties : Component, Pool.Poolable {
+    var rushSpeed = GameConstants.ENEMY_RUN_SPEED
     var flock = true
     var lastShotAngle = 0f
-    var rushSpeed = 15f
     var fieldOfView = 180f
     var viewDistance = 90f
-    var speed = 5f
+    var speed = GameConstants.ENEMY_BASE_SPEED
     var stunned = false
 
     val directionVector = vec2()
@@ -80,9 +81,9 @@ class AgentProperties : Component, Pool.Poolable {
         nextPosition.setZero()
         path.clear()
         needsNewNextPosition = true
-        fieldOfView = 90f
-        speed = 2.5f
-        viewDistance = 30f
+        fieldOfView = GameConstants.ENEMY_FOV
+        speed = GameConstants.ENEMY_BASE_SPEED
+        viewDistance = GameConstants.ENEMY_VIEW_DISTANCE
         directionVector.set(Vector2.Zero)
         val randomValue = (1..100).random()
         health = if (randomValue < 5) 1000f else 100f

@@ -3,6 +3,7 @@ package data
 import com.badlogic.ashley.core.Entity
 import com.badlogic.gdx.physics.box2d.Body
 import ecs.components.gameplay.ObjectiveComponent
+import ecs.systems.graphics.GameConstants
 import tru.AnimState
 import tru.Assets
 import tru.SpriteDirection
@@ -11,6 +12,8 @@ class Player(val name: String) {
     init {
         playerIndex++
     }
+
+    var speed: Float = GameConstants.PLAYER_BASE_SPEED
     val playerId = "P$playerIndex"
     var currentWeapon = ""
     var kills = 0

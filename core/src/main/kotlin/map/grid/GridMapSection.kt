@@ -61,7 +61,7 @@ class GridMapSection(
 
     val safePoints by lazy {
         val sp = mutableListOf<Vector2>()
-        val maxPoints = (innerBounds.area()).toInt() / 10
+        val maxPoints = (innerBounds.area()).toInt()
         for (i in 0..maxPoints) {
             val point = innerBounds.randomPoint()
             if (isThisPointSafe(point)) {

@@ -21,7 +21,7 @@ gccccccch
 sccc*****
 ---------
 name
-One Level Down
+Go Down One Level
 start
 If Project Phoenix
 
@@ -72,6 +72,7 @@ AcceleratingSpawnsFactor:1.15:f
 EnemyKillCount:0:i
 TargetEnemyKillCount:0:i
 ShowEnemyKillCount:false:b
+StartingEnemyCount:40:i
 
 stories
 start-story

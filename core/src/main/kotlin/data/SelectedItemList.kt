@@ -27,7 +27,7 @@ class SelectedItemList<T>(val listUpdatedCallback: (T)-> Unit, items: List<T>) :
                 else -> indexToAdd
             }
             newList.add(this[indexToAdd])
-            indexToAdd += i
+            indexToAdd += 1
         }
         return newList
     }

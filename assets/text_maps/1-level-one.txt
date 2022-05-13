@@ -7,7 +7,6 @@ c*c
 s*g
 ---
 name
-level-one            
 The entrance
 start
 Clean these cursed halls from varmint.
@@ -41,6 +40,7 @@ EnemyKillCount:0:i
 TargetEnemyKillCount:0:i
 ShowEnemyKillCount:false:b
 WaveSize:15:i
+StartingEnemyCount:20:i
 
 stories
 start-story
