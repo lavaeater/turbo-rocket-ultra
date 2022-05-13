@@ -9,6 +9,7 @@ import com.badlogic.gdx.ai.btree.BehaviorTree
 import com.badlogic.gdx.ai.btree.Task
 import com.badlogic.gdx.ai.btree.Task.Status
 import com.badlogic.gdx.graphics.Color
+import com.badlogic.gdx.graphics.g2d.Sprite
 import com.badlogic.gdx.math.MathUtils
 import com.badlogic.gdx.math.MathUtils.degreesToRadians
 import com.badlogic.gdx.math.Vector2
@@ -47,6 +48,7 @@ import features.weapons.AmmoType
 import features.weapons.WeaponDefinition
 import injection.Context.inject
 import input.ControlMapper
+import ktx.ashley.EngineEntity
 import ktx.ashley.entity
 import ktx.ashley.with
 import ktx.box2d.body
@@ -60,9 +62,7 @@ import ktx.scene2d.scene2d
 import ktx.scene2d.table
 import physics.*
 import screens.CounterObject
-import tru.Assets
-import tru.SpriteDirection
-import tru.getSpriteFor
+import tru.*
 import turbofacts.FactsLikeThatMan
 import turbofacts.TurboFactsOfTheWorld
 import kotlin.experimental.or
@@ -660,15 +660,7 @@ fun enemy(at: Vector2) {
     )
 
     val entity = engine().entity {
-        with<BodyComponent> { body = box2dBody }
-        with<TransformComponent> { position.set(box2dBody.position) }
-        with<EnemySensorComponent>()
-        with<AudioComponent>()
-        with<Enemy>()
-        with<AgentProperties>()
-        with<AnimatedCharacterComponent> {
-            anims = Assets.enemies.values.random()
-        }
+        withBasicEnemyStuff(box2dBody, Assets.enemies.values.random())
         with<LootDropComponent> {
             WeaponDefinition.weapons.forEach { lootTable.contents.add(WeaponLoot(it, 5f)) }
             lootTable.contents.add(AmmoLoot(AmmoType.NineMilliMeters, 17..51, 10f))
@@ -681,23 +673,12 @@ fun enemy(at: Vector2) {
             )
             lootTable.count = (1..5).random()
         }
-        with<SpriteComponent> {
-        }
-        with<Fitness>()
-        with<RenderableComponent> {
-            layer = 1
-            renderableType = RenderableType.Sprite
-        }
-        with<MiniMapComponent> {
-            color = Color.RED
-        }
-    }
-    entity.addComponent<BehaviorComponent>
-    {
-        if ((1..5).random() <= 2) {
-            tree = Tree.getEnemyBehaviorThatFindsOtherEnemies().apply { `object` = entity }
-        } else {
-            tree = Tree.getEnemyBehaviorTree().apply { `object` = entity }
+        with<BehaviorComponent> {
+            tree = if ((1..5).random() <= 2) {
+                Tree.getEnemyBehaviorThatFindsOtherEnemies().apply { `object` = this@entity.entity }
+            } else {
+                Tree.getEnemyBehaviorTree().apply { `object` = this@entity.entity }
+            }
         }
     }
     box2dBody.userData = entity
@@ -758,6 +739,10 @@ fun hackingStation(
     box2dBody.userData = entity
 }
 
+/**
+ * The boss entity should take a normal enemy entity and
+ * modify it, instead of creating its own from scratch.
+ */
 fun boss(at: Vector2, level: Int) {
 
     val box2dBody = bodyForSprite(
@@ -773,22 +758,18 @@ fun boss(at: Vector2, level: Int) {
     )
 
     val entity = engine().entity {
-        with<BodyComponent> { body = box2dBody }
-        with<TransformComponent> { position.set(box2dBody.position) }
-        with<EnemySensorComponent>()
+        withBasicEnemyStuff(
+            box2dBody,
+            Assets.bosses.values.random(),
+        270f,
+            GameConstants.ENEMY_RUSH_SPEED + level * 1.5f,
+            GameConstants.ENEMY_BASE_SPEED,
+            40f + 5f * level,
+            2000f * level,
+            false,
+            4f
+        )
         with<TackleComponent>()
-        with<Enemy>()
-        with<AgentProperties> {
-            fieldOfView = 270f
-            rushSpeed = GameConstants.ENEMY_RUN_SPEED + level * 1.5f
-            speed = GameConstants.ENEMY_BASE_SPEED
-            viewDistance = 40f + 5f * level
-            health = 2000f * level
-            flock = false
-        }
-        with<AnimatedCharacterComponent> {
-            anims = Assets.bosses.values.random()
-        }
         with<LootDropComponent> {
             WeaponDefinition.weapons.forEach { lootTable.contents.add(WeaponLoot(it, 10f)) }
             lootTable.contents.add(AmmoLoot(AmmoType.NineMilliMeters, 34..96, 10f))
@@ -801,21 +782,52 @@ fun boss(at: Vector2, level: Int) {
             )
             lootTable.count = (3..8).random()
         }
-        with<SpriteComponent> {
-            scale = 4f
-        }
-        with<RenderableComponent> {
-            layer = 1
-            renderableType = RenderableType.Sprite
-        }
-        with<MiniMapComponent> {
-            color = Color.RED
-        }
         with<BossComponent> {}
     }
     entity.addComponent<BehaviorComponent> { tree = Tree.bossOne().apply { `object` = entity } }
     box2dBody.userData = entity
     CounterObject.enemyCount++
+}
+
+private fun EngineEntity.withBasicEnemyStuff(
+    box2dBody: Body,
+    anim: Map<AnimState, LpcCharacterAnim<Sprite>>,
+    fov: Float = GameConstants.ENEMY_FOV,
+    rush: Float = GameConstants.ENEMY_RUSH_SPEED,
+    velocity: Float = GameConstants.ENEMY_BASE_SPEED,
+    howFarCanIsee: Float = GameConstants.ENEMY_VIEW_DISTANCE,
+    healthBarValue: Float = GameConstants.ENEMY_BASE_HEALTH,
+    isFlocking: Boolean = true,
+    spriteScale:Float = 1f
+) {
+    with<BodyComponent> { body = box2dBody }
+    with<TransformComponent> { position.set(box2dBody.position) }
+    with<EnemySensorComponent>()
+    with<AudioComponent>()
+    with<Enemy>()
+    with<AgentProperties> {
+        fieldOfView = fov
+        rushSpeed = rush
+        speed = velocity
+        viewDistance = howFarCanIsee
+        health = healthBarValue
+        flock = isFlocking
+
+    }
+    with<AnimatedCharacterComponent> {
+        anims = anim
+    }
+    with<SpriteComponent> {
+        scale = spriteScale
+    }
+    with<Fitness>()
+    with<RenderableComponent> {
+        layer = 1
+        renderableType = RenderableType.Sprite
+    }
+    with<MiniMapComponent> {
+        color = Color.RED
+    }
 }
 
 fun blockade(

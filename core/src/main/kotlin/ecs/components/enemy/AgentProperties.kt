@@ -16,7 +16,7 @@ class Enemy : Component, Pool.Poolable {
 }
 
 class AgentProperties : Component, Pool.Poolable {
-    var rushSpeed = GameConstants.ENEMY_RUN_SPEED
+    var rushSpeed = GameConstants.ENEMY_RUSH_SPEED
     var flock = true
     var lastShotAngle = 0f
     var fieldOfView = 180f

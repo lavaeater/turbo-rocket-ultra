@@ -22,7 +22,7 @@ class PanicSystem : IteratingSystem(allOf(Panic::class, AgentProperties::class).
             val directionRange = -1f..1f
             val enemyComponent = entity.getComponent<AgentProperties>()
             enemyComponent.directionVector.set(directionRange.random(), directionRange.random()).nor()
-            enemyComponent.speed = GameConstants.ENEMY_RUN_SPEED
+            enemyComponent.speed = GameConstants.ENEMY_RUSH_SPEED
 
             if(entity.hasAudio()) {
                 val audio = entity.audio()

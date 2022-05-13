@@ -538,6 +538,13 @@ object Assets : Disposable {
                     for (d in b.keyFrames) {
                         d.setFlip(true, true)
                     }
+        for(c in bosses.values) {
+            for(a in c.values)
+                for(b in a.animations.values)
+                    for(d in b.keyFrames) {
+                        d.setFlip(true, true)
+                    }
+        }
     }
 
     private fun fixScene2dSkin() {

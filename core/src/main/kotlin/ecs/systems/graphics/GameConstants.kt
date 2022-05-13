@@ -2,12 +2,13 @@ package ecs.systems.graphics
 
 object GameConstants {
 
+    const val ENEMY_BASE_HEALTH = 100f
     const val GENERAL_SPEED_FACTOR = 1f
     const val ENEMY_INVESTIGATE_SPEED = 7.5f * GENERAL_SPEED_FACTOR
     const val ENEMY_VIEW_DISTANCE = 30f
     const val ENEMY_FOV = 90f
     const val ENEMY_BASE_SPEED = 5f * GENERAL_SPEED_FACTOR
-    const val ENEMY_RUN_SPEED = 10f * GENERAL_SPEED_FACTOR
+    const val ENEMY_RUSH_SPEED = 10f * GENERAL_SPEED_FACTOR
     const val PIXELS_PER_METER = 16f
     const val SCALE = 1 / PIXELS_PER_METER
 
