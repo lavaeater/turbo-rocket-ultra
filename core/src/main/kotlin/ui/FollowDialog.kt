@@ -32,7 +32,8 @@ class UiThingComponent: Component, Pool.Poolable {
 fun getUiThing(block: UiThingBuilder.() -> Unit) : UiThingComponent = UiThingBuilder().apply(block).build()
 
 class UiThingBuilder {
-    val stage by lazy { inject<IUserInterface>().stage }
+    val hud by lazy { inject<IUserInterface>()}
+    val stage by lazy { hud.stage }
     lateinit var widget: Actor
     fun build() : UiThingComponent {
 //        stage.addActor(widget)

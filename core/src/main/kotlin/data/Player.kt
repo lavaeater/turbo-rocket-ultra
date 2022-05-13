@@ -13,6 +13,7 @@ class Player(val name: String) {
         playerIndex++
     }
 
+    var isReady = false
     var speed: Float = GameConstants.PLAYER_BASE_SPEED
     val playerId = "P$playerIndex"
     var currentWeapon = ""

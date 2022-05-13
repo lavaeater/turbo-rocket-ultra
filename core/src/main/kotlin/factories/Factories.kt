@@ -16,6 +16,7 @@ import com.badlogic.gdx.math.Vector2
 import com.badlogic.gdx.physics.box2d.Body
 import com.badlogic.gdx.physics.box2d.BodyDef
 import com.badlogic.gdx.physics.box2d.World
+import com.badlogic.gdx.scenes.scene2d.Action
 import com.esotericsoftware.kryo.Kryo
 import com.esotericsoftware.kryo.io.Input
 import com.esotericsoftware.kryo.io.Output
@@ -48,6 +49,8 @@ import features.weapons.AmmoType
 import features.weapons.WeaponDefinition
 import injection.Context.inject
 import input.ControlMapper
+import ktx.actors.plusAssign
+import ktx.actors.repeatForever
 import ktx.ashley.EngineEntity
 import ktx.ashley.entity
 import ktx.ashley.with
@@ -57,14 +60,14 @@ import ktx.box2d.circle
 import ktx.box2d.filter
 import ktx.math.random
 import ktx.math.vec2
-import ktx.scene2d.label
-import ktx.scene2d.scene2d
-import ktx.scene2d.table
+import ktx.scene2d.*
 import physics.*
 import screens.CounterObject
 import tru.*
 import turbofacts.FactsLikeThatMan
 import turbofacts.TurboFactsOfTheWorld
+import ui.customactors.boundLabel
+import ui.getUiThing
 import kotlin.experimental.or
 
 
@@ -350,12 +353,13 @@ fun player(player: Player, mapper: ControlMapper, at: Vector2, debug: Boolean) {
         Box2dCategories.allButLights
     )
 
-    val entity = engine().entity {
+    player.entity = engine().entity {
         with<CameraFollowComponent>()
         with<BodyComponent> { body = box2dBody }
         with<TransformComponent>()
         with<AnimatedCharacterComponent> {
             anims = Assets.characters[player.selectedCharacterSpriteName]!!
+            currentAnim = anims.values.first().animations.values.first()
         }
         with<SpriteComponent> {
             offsetY = -1f
@@ -391,12 +395,12 @@ fun player(player: Player, mapper: ControlMapper, at: Vector2, debug: Boolean) {
             useDirectionVector = true
         }
     }
-    entity.add(mapper)
-    entity.add(PlayerControlComponent(mapper, player))
-    box2dBody.userData = entity
+    player.entity.add(mapper)
+    player.entity.add(PlayerControlComponent(mapper, player))
+    box2dBody.userData = player.entity
 
     player.body = box2dBody
-    player.entity = entity
+    player.isReady = true
 //    playerWeapon(entity, "green")
 }
 
@@ -658,7 +662,7 @@ fun enemy(at: Vector2) {
         Box2dCategories.enemies,
         Box2dCategories.players
     )
-
+    lateinit var bt: BehaviorComponent
     val entity = engine().entity {
         withBasicEnemyStuff(box2dBody, Assets.enemies.values.random())
         with<LootDropComponent> {
@@ -673,7 +677,7 @@ fun enemy(at: Vector2) {
             )
             lootTable.count = (1..5).random()
         }
-        with<BehaviorComponent> {
+        bt = with {
             tree = if ((1..5).random() <= 2) {
                 Tree.getEnemyBehaviorThatFindsOtherEnemies().apply { `object` = this@entity.entity }
             } else {
@@ -681,6 +685,40 @@ fun enemy(at: Vector2) {
             }
         }
     }
+    entity.add(getUiThing {
+        val startPosition = hud.worldToHudPosition(entity.transform().position.cpy().add(1f, 1f))
+
+        val moveAction = object : Action() {
+            override fun act(delta: Float): Boolean {
+                if (entity.hasTransform()) {
+                    val coordinate = hud.worldToHudPosition(entity.transform().position.cpy().add(.5f, -.5f))
+                    actor.setPosition(coordinate.x, coordinate.y)
+                }
+                return true
+            }
+        }.repeatForever()
+
+        stage.actors {
+            verticalGroup {
+                it += moveAction
+                boundLabel({ bt.tree.prettyPrint() })
+//                label("TreeStatus") { actor ->
+//                    widget = this
+//                    btComponent.tree.addListener(object : BehaviorTree.Listener<Entity> {
+//                        override fun statusUpdated(task: Task<Entity>, previousStatus: Task.Status) {
+//                            val taskString = task.toString()
+//                            if (!taskString.contains("@"))
+//                                this@label.setText("""$taskString - $previousStatus""".trimMargin())
+//                        }
+//
+//                        override fun childAdded(task: Task<Entity>?, index: Int) {
+//
+//                        }
+//                    })
+//                }
+            }.setPosition(startPosition.x, startPosition.y)
+        }
+    })
     box2dBody.userData = entity
     CounterObject.enemyCount++
 }
@@ -757,11 +795,13 @@ fun boss(at: Vector2, level: Int) {
         144
     )
 
+    lateinit var bt: BehaviorComponent
+
     val entity = engine().entity {
         withBasicEnemyStuff(
             box2dBody,
             Assets.bosses.values.random(),
-        270f,
+            270f,
             GameConstants.ENEMY_RUSH_SPEED + level * 1.5f,
             GameConstants.ENEMY_BASE_SPEED,
             40f + 5f * level,
@@ -783,8 +823,45 @@ fun boss(at: Vector2, level: Int) {
             lootTable.count = (3..8).random()
         }
         with<BossComponent> {}
+
+        bt = with {
+            tree = Tree.bossOne().apply { `object` = this@entity.entity }
+        }
     }
-    entity.addComponent<BehaviorComponent> { tree = Tree.bossOne().apply { `object` = entity } }
+    entity.add(getUiThing {
+        val startPosition = hud.worldToHudPosition(entity.transform().position.cpy().add(1f, 1f))
+
+        val moveAction = object : Action() {
+            override fun act(delta: Float): Boolean {
+                if (entity.hasTransform()) {
+                    val coordinate = hud.worldToHudPosition(entity.transform().position.cpy().add(.5f, -.5f))
+                    actor.setPosition(coordinate.x, coordinate.y)
+                }
+                return true
+            }
+        }.repeatForever()
+
+        stage.actors {
+            verticalGroup {
+                it += moveAction
+//                boundLabel({ bt.tree.prettyPrint() })
+                label("TreeStatus") { actor ->
+                    widget = this
+                    bt.tree.addListener(object : BehaviorTree.Listener<Entity> {
+                        override fun statusUpdated(task: Task<Entity>, previousStatus: Task.Status) {
+                            val taskString = task.toString()
+                            if (!taskString.contains("@"))
+                                this@label.setText("""$taskString - $previousStatus""".trimMargin())
+                        }
+
+                        override fun childAdded(task: Task<Entity>?, index: Int) {
+
+                        }
+                    })
+                }
+            }.setPosition(startPosition.x, startPosition.y)
+        }
+    })
     box2dBody.userData = entity
     CounterObject.enemyCount++
 }
@@ -798,7 +875,7 @@ private fun EngineEntity.withBasicEnemyStuff(
     howFarCanIsee: Float = GameConstants.ENEMY_VIEW_DISTANCE,
     healthBarValue: Float = GameConstants.ENEMY_BASE_HEALTH,
     isFlocking: Boolean = true,
-    spriteScale:Float = 1f
+    spriteScale: Float = 1f
 ) {
     with<BodyComponent> { body = box2dBody }
     with<TransformComponent> { position.set(box2dBody.position) }
@@ -828,6 +905,7 @@ private fun EngineEntity.withBasicEnemyStuff(
     with<MiniMapComponent> {
         color = Color.RED
     }
+
 }
 
 fun blockade(

@@ -15,7 +15,6 @@ import com.badlogic.gdx.utils.Queue
 import com.badlogic.gdx.utils.viewport.ExtendViewport
 import com.rafaskoberg.gdx.typinglabel.TypingLabel
 import data.Players
-import ecs.systems.enemy.FitnessTracker
 import factories.factsOfTheWorld
 import injection.Context.inject
 import ktx.actors.along
@@ -24,11 +23,11 @@ import ktx.actors.then
 import ktx.math.vec2
 import ktx.math.vec3
 import ktx.scene2d.*
-import map.grid.GridMapManager
 import messaging.Message
 import messaging.MessageHandler
 import messaging.MessageReceiver
 import physics.AshleyMappers
+import physics.animation
 import physics.playerControl
 import turbofacts.Factoids
 import ui.customactors.boundLabel
@@ -64,7 +63,20 @@ class Hud(private val batch: Batch) : IUserInterface, MessageReceiver {
     override val stage by lazy {
         val aStage = Stage(hudViewPort, batch)
         aStage.isDebugAll = false
-        aStage.actors {
+        aStage
+    }
+
+    var isReady = false
+    var needsPlayerInfos = true
+    override fun show() {
+        //Set up this as receiver for messages with messagehandler
+        inject<MessageHandler>().addReceiver(this@Hud)
+        if(needsPlayerInfos)
+            addPlayerInfos()
+    }
+
+    fun addPlayerInfos() {
+        stage.actors {
             table {
                 setFillParent(true)
                 top()
@@ -82,7 +94,7 @@ class Hud(private val batch: Batch) : IUserInterface, MessageReceiver {
                 row()
                 table {
                     table {
-                        width = aStage.width / 8
+                        width = stage.width / 8
                         label("Level Info")
                         row()
                         boundLabel({
@@ -91,8 +103,8 @@ class Hud(private val batch: Batch) : IUserInterface, MessageReceiver {
                     }
                     for ((control, player) in Players.players) {
                         table {
-                            width = aStage.width / 8
-                            label("${control.controllerId}").inCell.align(Align.right).width(aStage.width / 8)
+                            width = stage.width / 8
+                            label(control.controllerId).inCell.align(Align.right).width(stage.width / 8)
                             row()
                             boundLabel({ "Kills: ${player.kills}" }).inCell.align(Align.right)
                             row()
@@ -100,9 +112,11 @@ class Hud(private val batch: Batch) : IUserInterface, MessageReceiver {
                             row()
                             boundLabel({ "Score: ${player.score}" }).inCell.align(Align.right)
                             row()
-                            boundLabel({ "Speed: ${player.entity.playerControl().actualSpeed}" }).inCell.align(Align.right)
+                            boundLabel({ "Speed: ${if(player.isReady) {
+                                player.entity.playerControl().actualSpeed
+                            } else 0f}" }).inCell.align(Align.right)
                             row()
-                            boundLabel({ "${player.currentWeapon}" }).inCell.align(
+                            boundLabel({ player.currentWeapon }).inCell.align(
                                 Align.right
                             )
                             row()
@@ -120,7 +134,7 @@ class Hud(private val batch: Batch) : IUserInterface, MessageReceiver {
                             repeatingTexture(
                                 { player.lives },
                                 5f,
-                                Sprite(AshleyMappers.animatedCharacter.get(player.entity).currentAnim.keyFrames.first()).apply { flip(false, true) }
+                                Sprite(player.entity.animation().currentAnim.keyFrames.first()).apply { flip(false, true) }
                             ) {}
                         }
                     }
@@ -129,13 +143,6 @@ class Hud(private val batch: Batch) : IUserInterface, MessageReceiver {
                 bottom()
             }
         }
-        aStage
-    }
-
-    var isReady = false
-    override fun show() {
-        //Set up this as receiver for messages with messagehandler
-        inject<MessageHandler>().addReceiver(this@Hud)
     }
 
     override fun update(delta: Float) {
