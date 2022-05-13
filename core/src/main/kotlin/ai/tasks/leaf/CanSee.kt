@@ -139,14 +139,15 @@ class CanSeeAnyThatHas<T : Component>(val coolDown: Float = 0.1f) : EntityTask()
                                     .apply { this.player = e.getComponent<PlayerComponent>().player })
                             return Status.SUCCEEDED
                         }
-                        if (!foundAPlayer) {
-                            agentProps.directionVector.rotateDeg(scanResolution)
-                            if (scanCount > maxNumberOfScans(agentProps.fieldOfView)) {
-                                return Status.FAILED
-                            }
-                        }
+
                     }
                 }
+            }
+        }
+        if (!foundAPlayer) {
+            agentProps.directionVector.rotateDeg(scanResolution)
+            if (scanCount > maxNumberOfScans(agentProps.fieldOfView)) {
+                return Status.FAILED
             }
         }
         return Status.RUNNING

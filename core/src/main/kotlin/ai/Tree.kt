@@ -13,6 +13,7 @@ import com.badlogic.gdx.ai.utils.random.ConstantIntegerDistribution
 import ecs.components.ai.*
 import ecs.components.ai.boss.RushPlayer
 import ecs.components.gameplay.BurningComponent
+import ecs.components.player.PlayerComponent
 import ecs.components.towers.FindTarget
 import ecs.components.towers.Shoot
 import ecs.components.towers.TargetInRange
@@ -82,14 +83,14 @@ object Tree {
                 ifThen(
                     entityHas<NoticedSomething>(),
                     selector {
-                        first(entityDo<SeekPlayer>())
+                        first(canSee<PlayerComponent>())
                         then(entityDo<Investigate>())
-                        then(entityDo<SeekPlayer>())
+                        then(canSee<PlayerComponent>())
                     })
                 last(
                     selector<Entity> {
                         first(invert(entityDo<Amble> { unlessEntityHas<IsAwareOfPlayer>() }))
-                        then(invert(entityDo<SeekPlayer>()))
+                        then(invert(canSee<PlayerComponent>()))
                         last(invert(entityDo<ChasePlayer>()))
                     })
             }
@@ -124,13 +125,13 @@ object Tree {
             ifThen(
                 entityHas<NoticedSomething>(),
                 selector {
-                    first(entityDo<SeekPlayer>())
+                    first(canSee<PlayerComponent>())
                     then(entityDo<Investigate>())
-                    then(entityDo<SeekPlayer>())
+                    then(canSee<PlayerComponent>())
                 })
             last(selector<Entity> {
                 first(invert(entityDo<Amble>()))
-                then(invert(entityDo<SeekPlayer>()))
+                then(invert(canSee<PlayerComponent>()))
             })
         }
     }

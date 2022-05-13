@@ -1,5 +1,6 @@
 package ai.builders
 
+import ai.tasks.leaf.CanSeeAnyThatHas
 import com.badlogic.ashley.core.Component
 import com.badlogic.ashley.core.Entity
 import com.badlogic.gdx.ai.btree.Task
@@ -21,6 +22,10 @@ fun <T> parallel(block: ParallelBuilder<T>.() -> Unit) = ParallelBuilder<T>().ap
 inline fun <reified T : Component> entityHas() = HasComponentBuilder(T::class.java).build()
 
 inline fun <reified T: TaskComponent> entityDo(block: EntityComponentTaskBuilder<T>.() -> Unit = {}) = EntityComponentTaskBuilder(T::class.java).apply(block).build()
+
+inline fun <reified T: Component> canSee() : CanSeeAnyThatHas<T> {
+    return CanSeeAnyThatHas(T::class)
+}
 
 inline fun <reified T: Component>unlessEntityHas(
     task: Task<Entity>,

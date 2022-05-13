@@ -801,10 +801,9 @@ fun boss(at: Vector2, level: Int) {
         withBasicEnemyStuff(
             box2dBody,
             Assets.bosses.values.random(),
-            270f,
-            GameConstants.ENEMY_RUSH_SPEED + level * 1.5f,
-            GameConstants.ENEMY_BASE_SPEED,
-            40f + 5f * level,
+            90f,
+            10f,10f,
+            20f,
             2000f * level,
             false,
             4f
