@@ -5,6 +5,7 @@ import com.badlogic.ashley.core.Entity
 import com.badlogic.ashley.systems.IteratingSystem
 import com.badlogic.gdx.ai.btree.Task
 import com.badlogic.gdx.math.Vector2
+import com.badlogic.gdx.utils.Queue
 import ecs.components.ai.Amble
 import ecs.components.ai.CollidedWithObstacle
 import ecs.components.enemy.AgentProperties
@@ -84,6 +85,18 @@ fun progressPath(enemyComponent: AgentProperties, currentPosition: Vector2): Boo
     val direction = enemyComponent.nextPosition.cpy().sub(currentPosition).nor()
     enemyComponent.directionVector.set(direction)
     return enemyComponent.path.isEmpty
+}
+
+fun findPathFromTo(q: Queue<Vector2>, from: Coordinate, to: Coordinate) {
+    q.clear()
+    val mapManager = inject<GridMapManager>()
+    val path = mapManager.sectionGraph.findPath(from, to)
+    for (i in 0 until path.count) {
+        val target = path.get(i)
+        val section = mapManager.gridMap[target]!!
+        val someSpotInThatPlace = section.safePoints.random()
+        q.addLast(someSpotInThatPlace)
+    }
 }
 
 fun findPathFromTo(enemyComponent: AgentProperties, from: Coordinate, to: Coordinate) {

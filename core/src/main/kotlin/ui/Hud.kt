@@ -109,7 +109,7 @@ class Hud(private val batch: Batch) : IUserInterface, MessageReceiver {
                             row()
                             boundLabel({
                                 if(e.has<SeenPlayerPositions>())
-                                    e.getComponent<SeenPlayerPositions>().positions.joinToString(" | ")
+                                    e.getComponent<SeenPlayerPositions>().storage.joinToString(" | ")
                                 else
                                     "Nothing" })
 //                            row()

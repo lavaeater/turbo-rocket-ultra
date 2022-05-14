@@ -101,9 +101,9 @@ class LookForAndStore<ToLookFor : Component, ToStoreIn : PositionStorageComponen
         }
         val storageComponent =
             if (mapper.has(entity)) mapper.get(entity) else engine.createComponent(storageComponentClass.java)
-        storageComponent.positions.clear()
+        storageComponent.storage.clear()
         return if (seenEntityPositions.any()) {
-            storageComponent.positions.addAll(seenEntityPositions)
+            storageComponent.storage.addAll(seenEntityPositions)
             entity.add(storageComponent)
             Status.SUCCEEDED
         } else {
