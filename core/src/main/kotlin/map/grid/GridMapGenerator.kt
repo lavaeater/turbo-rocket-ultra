@@ -110,6 +110,7 @@ class GridMapGenerator {
                         if(def.hasHackingStation(coordinate))
                             addHackingStation(section.innerBounds, CounterObject.currentLevel)
 
+
                         if (def.hasLoot(coordinate)) {
                             randomLoot(
                                 section.innerBounds.randomPoint(),

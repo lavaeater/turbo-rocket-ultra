@@ -2,6 +2,7 @@ package ecs.systems.graphics
 
 object GameConstants {
 
+    const val ENEMY_ROTATION_SPEED = 45f
     const val ENEMY_BASE_HEALTH = 100f
     const val GENERAL_SPEED_FACTOR = 1f
     const val ENEMY_INVESTIGATE_SPEED = 7.5f * GENERAL_SPEED_FACTOR

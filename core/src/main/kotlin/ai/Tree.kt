@@ -3,7 +3,7 @@ package ai
 import ai.builders.*
 import ai.tasks.EntityDecorator
 import ai.tasks.invertDecorator
-import ai.tasks.leaf.CanSeeAnyThatHas
+import ai.tasks.leaf.SeenPlayerPositions
 import com.badlogic.ashley.core.Entity
 import com.badlogic.gdx.ai.btree.*
 import com.badlogic.gdx.ai.btree.decorator.AlwaysFail
@@ -23,7 +23,7 @@ import ecs.components.towers.TargetInRange
 object Tree {
     fun getMutatedTree(tree: BehaviorTree<Entity>): BehaviorTree<Entity> {
         val newTree = BehaviorTree<Entity>()
-        if(tree.childCount > 0) {
+        if (tree.childCount > 0) {
             newTree.addChild(mutateTask(tree.getChild(0)))
         }
         return newTree
@@ -43,16 +43,18 @@ object Tree {
 //        return newBranchTask
 //    }
 
-    private fun mutateDecorator(task: Decorator<Entity>) : Task<Entity> {
-        val newTask = when(task) {
+    private fun mutateDecorator(task: Decorator<Entity>): Task<Entity> {
+        val newTask = when (task) {
             is EntityDecorator -> task.invertDecorator()
             is AlwaysFail -> AlwaysSucceed(mutateTask(task.getChild(0)))
             is AlwaysSucceed -> AlwaysFail(mutateTask(task.getChild(0)))
             is Repeat -> mutateRepeat(task)
             is Invert -> task.getChild(0)
-            else -> { task }
+            else -> {
+                task
+            }
         }
-        if(task.guard != null) {
+        if (task.guard != null) {
             newTask.guard = task.guard.cloneTask()
         }
         return newTask
@@ -63,16 +65,18 @@ object Tree {
         return task
     }
 
-    fun mutateTask(task: Task<Entity>) : Task<Entity> {
-        return when(task) {
+    fun mutateTask(task: Task<Entity>): Task<Entity> {
+        return when (task) {
             is BranchTask<Entity> -> task
             is Decorator<Entity> -> mutateDecorator(task)
             is LeafTask<Entity> -> mutateLeaf(task)
-            else -> { Invert() }
+            else -> {
+                Invert()
+            }
         }
     }
 
-    private fun mutateLeaf(task: LeafTask<Entity>) : LeafTask<Entity> {
+    private fun mutateLeaf(task: LeafTask<Entity>): LeafTask<Entity> {
         return task
     }
 
@@ -101,7 +105,12 @@ object Tree {
     }
 
     fun testTree() = tree<Entity> {
-        add(repeatForever(canSee<ObstacleComponent>()))
+        add(repeatForever(selector<Entity> {
+            first(invert(rotate(15f)))
+            then(invert(delayFor(1f)))
+            then(invert(lookForAndStore<ObstacleComponent, SeenPlayerPositions>()))
+        }))
+
     }
 
     fun getEnemyBehaviorThatFindsOtherEnemies() = tree<Entity> {

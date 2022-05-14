@@ -1,5 +1,6 @@
 package ui
 
+import ai.tasks.leaf.SeenPlayerPositions
 import audio.AudioPlayer
 import com.badlogic.gdx.Gdx
 import com.badlogic.gdx.graphics.OrthographicCamera
@@ -20,15 +21,14 @@ import injection.Context.inject
 import ktx.actors.along
 import ktx.actors.plusAssign
 import ktx.actors.then
+import ktx.ashley.get
 import ktx.math.vec2
 import ktx.math.vec3
 import ktx.scene2d.*
 import messaging.Message
 import messaging.MessageHandler
 import messaging.MessageReceiver
-import physics.AshleyMappers
-import physics.animation
-import physics.playerControl
+import physics.*
 import turbofacts.Factoids
 import ui.customactors.boundLabel
 import ui.customactors.boundProgressBar
@@ -102,19 +102,26 @@ class Hud(private val batch: Batch) : IUserInterface, MessageReceiver {
                         })
                     }
                     for ((control, player) in Players.players) {
+                        val e = player.entity
                         table {
                             width = stage.width / 8
                             label(control.controllerId).inCell.align(Align.right).width(stage.width / 8)
                             row()
-                            boundLabel({ "Kills: ${player.kills}" }).inCell.align(Align.right)
-                            row()
-                            boundLabel({ "Objectives: ${player.touchedObjectives.count()}" }).inCell.align(Align.right)
-                            row()
-                            boundLabel({ "Score: ${player.score}" }).inCell.align(Align.right)
-                            row()
-                            boundLabel({ "Speed: ${if(player.isReady) {
-                                player.entity.playerControl().actualSpeed
-                            } else 0f}" }).inCell.align(Align.right)
+                            boundLabel({
+                                if(e.has<SeenPlayerPositions>())
+                                    e.getComponent<SeenPlayerPositions>().positions.joinToString(" | ")
+                                else
+                                    "Nothing" })
+//                            row()
+//                            boundLabel({ "Kills: ${player.kills}" }).inCell.align(Align.right)
+//                            row()
+//                            boundLabel({ "Objectives: ${player.touchedObjectives.count()}" }).inCell.align(Align.right)
+//                            row()
+//                            boundLabel({ "Score: ${player.score}" }).inCell.align(Align.right)
+//                            row()
+//                            boundLabel({ "Speed: ${if(player.isReady) {
+//                                player.entity.playerControl().actualSpeed
+//                            } else 0f}" }).inCell.align(Align.right)
                             row()
                             boundLabel({ player.currentWeapon }).inCell.align(
                                 Align.right

@@ -1,0 +1,81 @@
+***g*****
+***c*****
+***c*****
+*w*c*b*w*
+gccccccch
+*b*c*w*b*
+***c*****
+**wcb****
+***c*****
+**lc*****
+***cw****
+**bc*****
+***cw****
+**bc*****
+***cb****
+***c*****
+**wch****
+***c*****
+**cc*****
+***cc****
+sccc*****
+---------
+name
+Go Down One Level
+start
+If Project Phoenix
+
+is to succeed, we need
+
+to cleanse the tunnels of the
+
+Zombie-mutant hordes that thrive
+
+down there in the darkness. When
+
+done, then finally the
+
+FAMILIES can move from the Silos
+
+into the Tunnels and our society
+
+will rise
+
+LIKE THE PHOENIX!
+
+success
+Yes, it is hard work.
+
+No, it isn't pleasant, killing, butchering.
+
+But always think of the greater good,
+
+think of the F A M I L I E S that will
+
+have living space thanks to your sacrifice.
+
+
+fail
+A nation is only as strong as its people.
+
+We must hope this is not a testament to our
+
+nations and peoples strength, because
+
+then we are truly fucked.
+
+facts
+MaxEnemies:200:i
+MaxSpawnedEnemies:2000:i
+AcceleratingSpawns:true:b
+AcceleratingSpawnsFactor:1.15:f
+EnemyKillCount:0:i
+TargetEnemyKillCount:0:i
+ShowEnemyKillCount:false:b
+StartingEnemyCount:40:i
+
+stories
+start-story
+level-failed
+level-complete
+basic-story            

@@ -16,6 +16,7 @@ class Enemy : Component, Pool.Poolable {
 }
 
 class AgentProperties : Component, Pool.Poolable {
+    var rotationSpeed = GameConstants.ENEMY_ROTATION_SPEED //degrees per second
     var rushSpeed = GameConstants.ENEMY_RUSH_SPEED
     var flock = true
     var lastShotAngle = 0f
@@ -24,7 +25,7 @@ class AgentProperties : Component, Pool.Poolable {
     var speed = GameConstants.ENEMY_BASE_SPEED
     var stunned = false
 
-    val directionVector = vec2()
+    val directionVector = Vector2.X.cpy()
     var health = 100f
     lateinit var lastHitBy: Player
 
@@ -84,9 +85,10 @@ class AgentProperties : Component, Pool.Poolable {
         fieldOfView = GameConstants.ENEMY_FOV
         speed = GameConstants.ENEMY_BASE_SPEED
         viewDistance = GameConstants.ENEMY_VIEW_DISTANCE
-        directionVector.set(Vector2.Zero)
+        directionVector.set(Vector2.X)
         val randomValue = (1..100).random()
         health = if (randomValue < 5) 1000f else 100f
         timeRemaining = 0f
+        rotationSpeed = GameConstants.ENEMY_ROTATION_SPEED
     }
 }

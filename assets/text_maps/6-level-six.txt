@@ -1,21 +1,20 @@
-ggggggg
-ggggggg
-gggsggg
-ggggggg
-ggggggg
------
+cb*
+c**
+c**
+c**
+c**
+ccc
+s*g
+---
 name
-trainer            
-
+6-level-six            
 start
-This is a trainer map for you, and for the enemy.
-
+Replace this with a start-of-level
+message to inspire the players
 success
-Not much of a challenge, eh?
-
+Shows this when players win the level
 fail
-Kind of amazing, really
-
+This is when they fail
 facts
 MaxEnemies:10:i
 MaxSpawnedEnemies:20:i
