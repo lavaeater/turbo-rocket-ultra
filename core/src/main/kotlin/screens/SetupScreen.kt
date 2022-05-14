@@ -197,6 +197,7 @@ class SetupScreen(gameState: StateMachine<GameState, GameEvent>) : BasicScreen(g
             Input.Keys.LEFT -> changeSpriteKeyboard(-1)
             Input.Keys.RIGHT -> changeSpriteKeyboard(1)
             Input.Keys.ENTER -> startGame()
+            Input.Keys.T -> startGameWithAi()
             Input.Keys.C -> startConceptScreen()
             Input.Keys.E -> startEditor()
             Input.Keys.A -> previousMap()
@@ -246,6 +247,27 @@ class SetupScreen(gameState: StateMachine<GameState, GameEvent>) : BasicScreen(g
         availableControllers.first { it is PlayerModel.Keyboard }.apply {
             if (indexChange < 0) this.selectedAbleSpriteAnims.previousItem() else this.selectedAbleSpriteAnims.nextItem()
         }
+        return true
+    }
+
+
+    private fun startGameWithAi(): Boolean {
+
+        /*
+        I know, cheat.
+
+        Create a player but with an enemy as a basis. Set a flag or some shit, then the game can simply just make into
+        an enemy when starting.
+         */
+
+        Players.players[KeyboardControl()] = Player("AI PLAYER", true).apply {
+            selectedCharacterSpriteName = Assets.characterTurboAnims.first().name
+        }
+        MapList.mapFileNames.clear()
+        for (name in mapNames.withSelectedItemFirst) {
+            MapList.mapFileNames.add(name)
+        }
+        gameState.acceptEvent(GameEvent.StartedGame)
         return true
     }
 

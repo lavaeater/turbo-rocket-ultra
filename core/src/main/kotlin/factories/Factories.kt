@@ -651,7 +651,7 @@ fun bullet(at: Vector2, towards: Vector2, speed: Float, damage: Float, player: P
     CounterObject.bulletCount++
 }
 
-fun enemy(at: Vector2) {
+fun enemy(at: Vector2, init: EngineEntity.() -> Unit = {}) : Entity {
 
     val box2dBody = bodyForSprite(
         at,
@@ -684,6 +684,7 @@ fun enemy(at: Vector2) {
                 Tree.getEnemyBehaviorTree().apply { `object` = this@entity.entity }
             }
         }
+        init(this)
     }
     entity.add(getUiThing {
         val startPosition = hud.worldToHudPosition(entity.transform().position.cpy().add(1f, 1f))
@@ -721,6 +722,7 @@ fun enemy(at: Vector2) {
     })
     box2dBody.userData = entity
     CounterObject.enemyCount++
+    return entity
 }
 
 fun hackingStation(

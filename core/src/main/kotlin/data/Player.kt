@@ -8,7 +8,7 @@ import tru.AnimState
 import tru.Assets
 import tru.SpriteDirection
 
-class Player(val name: String) {
+class Player(val name: String, val isAiPlayer: Boolean = false) {
     init {
         playerIndex++
     }
