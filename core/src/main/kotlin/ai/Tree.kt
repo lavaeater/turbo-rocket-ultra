@@ -3,6 +3,7 @@ package ai
 import ai.builders.*
 import ai.tasks.EntityDecorator
 import ai.tasks.invertDecorator
+import ai.tasks.leaf.CanSeeAnyThatHas
 import com.badlogic.ashley.core.Entity
 import com.badlogic.gdx.ai.btree.*
 import com.badlogic.gdx.ai.btree.decorator.AlwaysFail
@@ -13,6 +14,7 @@ import com.badlogic.gdx.ai.utils.random.ConstantIntegerDistribution
 import ecs.components.ai.*
 import ecs.components.ai.boss.RushPlayer
 import ecs.components.gameplay.BurningComponent
+import ecs.components.gameplay.ObstacleComponent
 import ecs.components.player.PlayerComponent
 import ecs.components.towers.FindTarget
 import ecs.components.towers.Shoot
@@ -96,6 +98,10 @@ object Tree {
             }
         }
         return t
+    }
+
+    fun testTree() = tree<Entity> {
+        add(repeatForever(canSee<ObstacleComponent>()))
     }
 
     fun getEnemyBehaviorThatFindsOtherEnemies() = tree<Entity> {

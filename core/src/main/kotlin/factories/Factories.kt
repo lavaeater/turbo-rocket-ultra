@@ -678,11 +678,14 @@ fun enemy(at: Vector2, init: EngineEntity.() -> Unit = {}) : Entity {
             lootTable.count = (1..5).random()
         }
         bt = with {
-            tree = if ((1..5).random() <= 2) {
-                Tree.getEnemyBehaviorThatFindsOtherEnemies().apply { `object` = this@entity.entity }
-            } else {
-                Tree.getEnemyBehaviorTree().apply { `object` = this@entity.entity }
+            tree = Tree.testTree().apply {
+                `object` = this@entity.entity
             }
+//            tree = if ((1..5).random() <= 2) {
+//                Tree.getEnemyBehaviorThatFindsOtherEnemies().apply { `object` = this@entity.entity }
+//            } else {
+//                Tree.getEnemyBehaviorTree().apply { `object` = this@entity.entity }
+//            }
         }
         init(this)
     }

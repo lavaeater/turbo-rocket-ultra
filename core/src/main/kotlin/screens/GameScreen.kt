@@ -13,6 +13,7 @@ import com.crashinvaders.vfx.VfxManager
 import com.crashinvaders.vfx.effects.ChainVfxEffect
 import com.strongjoshua.console.GUIConsole
 import data.Players
+import ecs.components.ai.BehaviorComponent
 import ecs.components.gameplay.ObjectiveComponent
 import ecs.components.graphics.CameraFollowComponent
 import ecs.components.player.PlayerComponent
@@ -32,6 +33,7 @@ import injection.Context.inject
 import ktx.app.KtxScreen
 import ktx.ashley.allOf
 import ktx.ashley.getSystem
+import ktx.ashley.remove
 import ktx.ashley.with
 import map.grid.*
 import map.snake.randomPoint
