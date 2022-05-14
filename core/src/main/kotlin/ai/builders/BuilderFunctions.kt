@@ -33,10 +33,6 @@ inline fun <reified ToLookFor: Component, reified ToStoreIn: PositionStorageComp
     return LookForAndStore(ToLookFor::class, ToStoreIn::class)
 }
 
-inline fun <reified T: Component> canSee(coolDown: Float = 0.2f, ) : CanSeeAnyThatHas<T> {
-    return CanSeeAnyThatHas(T::class)
-}
-
 inline fun <reified T: Component>unlessEntityHas(
     task: Task<Entity>,
     block: EntityDoesNotHaveComponentGuardBuilder<T>.()-> Unit = {}) = EntityDoesNotHaveComponentGuardBuilder(task, T::class.java).apply(block).build()

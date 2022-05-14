@@ -829,7 +829,7 @@ fun boss(at: Vector2, level: Int) {
         with<BossComponent> {}
 
         bt = with {
-            tree = Tree.bossTest().apply { `object` = this@entity.entity }
+            tree = Tree.testTree().apply { `object` = this@entity.entity }
         }
     }
     entity.add(getUiThing {
@@ -1053,11 +1053,11 @@ fun unKryoSomeBitch(treeName: String = "regular_enemy"): BehaviorTree<Entity> {
         } else {
             when (treeName) {
                 "alert_enemies" -> {
-                    val tr = Tree.getEnemyBehaviorThatFindsOtherEnemies()
+                    val tr = Tree.testTree()
                     tr.kryoThisBitch(treeName)
                 }
                 else -> {
-                    val tr = Tree.getEnemyBehaviorTree()
+                    val tr = Tree.testTree()
                     tr.kryoThisBitch(treeName)
                 }
             }
