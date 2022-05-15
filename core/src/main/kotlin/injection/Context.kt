@@ -64,7 +64,6 @@ object Context {
         return context.inject()
     }
 
-
     private fun buildContext() {
         context.register {
             bindSingleton(PolygonSpriteBatch())
@@ -113,17 +112,16 @@ object Context {
             addSystem(EnemyDeathSystem(audioPlayer = inject(), factsOfTheWorld = inject()))
             addSystem(EnemyMovementSystem(true))
             addSystem(PerimeterObjectiveSystem())
-            // Ai Systems Start
-            addSystem(AmblingSystem())
-            addSystem(PanicSystem())
-            addSystem(ChasePlayerSystem())
-            addSystem(AlertFriendsSystem())
-            addSystem(SeekPlayerSystem(false))
-            addSystem(AttackPlayerSystem())
+//            // Ai Systems Start
+//            addSystem(PanicSystem())
+//            addSystem(ChasePlayerSystem())
+//            addSystem(AlertFriendsSystem())
+//            addSystem(SeekPlayerSystem(false))
+//            addSystem(AttackPlayerSystem())
             addSystem(EnemyAnimationSystem())
             addSystem(EnemyHearsShotsSystem())
-            addSystem(InvestigateSystem())
-            addSystem(RushPlayerSystem())
+//            addSystem(InvestigateSystem())
+//            addSystem(RushPlayerSystem())
             addSystem(AudioSystem())
             // Ai Systems End
             //Burning
@@ -169,7 +167,6 @@ object Context {
             addSystem(CalculatePositionSystem())
             addSystem(CalculateRotationSystem())
             addSystem(RunFunctionsSystem())
-
         }
     }
 }

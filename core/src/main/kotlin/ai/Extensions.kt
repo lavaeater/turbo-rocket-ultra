@@ -11,7 +11,80 @@ import com.badlogic.gdx.ai.btree.decorator.Invert
 import com.badlogic.gdx.ai.btree.decorator.Repeat
 import com.badlogic.gdx.ai.utils.random.ConstantIntegerDistribution
 import com.badlogic.gdx.math.Vector2
+import com.badlogic.gdx.utils.Queue
+import ecs.components.enemy.AgentProperties
+import ecs.systems.enemy.stateBooleanFact
+import factories.world
+import injection.Context
+import ktx.box2d.Query
+import ktx.box2d.query
+import ktx.math.random
+import ktx.math.vec2
+import map.grid.Coordinate
+import map.grid.GridMapManager
+import physics.getEntity
+import physics.hasObstacle
+import physics.isEntity
+import turbofacts.TurboFactsOfTheWorld
 
+fun progressPath(enemyComponent: AgentProperties, currentPosition: Vector2): Boolean {
+    if (enemyComponent.needsNewNextPosition && !enemyComponent.path.isEmpty) {
+        enemyComponent.nextPosition = enemyComponent.path.removeFirst()
+        enemyComponent.needsNewNextPosition = false
+        stateBooleanFact(false, "Enemy", enemyComponent.id.toString(), "ReachedWayPoint")
+        Context.inject<TurboFactsOfTheWorld>().setBooleanFact(false, "Enemy", enemyComponent.id.toString(), "ReachedWayPoint")
+    }
+    if (currentPosition.dst(enemyComponent.nextPosition) <= 1f) {
+        enemyComponent.nextPosition = vec2()
+        enemyComponent.needsNewNextPosition = true
+        stateBooleanFact(true, "Enemy", enemyComponent.id.toString(), "ReachedWayPoint")
+        Context.inject<TurboFactsOfTheWorld>().setBooleanFact(true, "Enemy", enemyComponent.id.toString(), "ReachedWayPoint")
+    }
+
+    val direction = enemyComponent.nextPosition.cpy().sub(currentPosition).nor()
+    enemyComponent.directionVector.set(direction)
+    return enemyComponent.path.isEmpty
+}
+
+fun findPathFromTo(q: Queue<Vector2>, from: Coordinate, to: Coordinate) {
+    q.clear()
+    val mapManager = Context.inject<GridMapManager>()
+    val path = mapManager.sectionGraph.findPath(from, to)
+    for (i in 0 until path.count) {
+        val target = path.get(i)
+        val section = mapManager.gridMap[target]!!
+        val someSpotInThatPlace = section.safePoints.random()
+        q.addLast(someSpotInThatPlace)
+    }
+}
+
+fun findPathFromTo(enemyComponent: AgentProperties, from: Coordinate, to: Coordinate) {
+    enemyComponent.path.clear()
+    val mapManager = Context.inject<GridMapManager>()
+    val path = mapManager.sectionGraph.findPath(from, to)
+    for (i in 0 until path.count) {
+        val target = path.get(i)
+        val section = mapManager.gridMap[target]!!
+        val someSpotInThatPlace = section.safePoints.random()// .safeBounds.randomPoint())
+        enemyComponent.path.addLast(someSpotInThatPlace)
+    }
+}
+
+fun avoidObstacles(position: Vector2): Vector2 {
+    var obstacles = false
+    world().query(position.x, position.y, position.x, position.y) {
+        if (it.isEntity() && it.getEntity().hasObstacle()) {
+            obstacles = true
+            Query.STOP
+        }
+        Query.CONTINUE
+    }
+    return if (obstacles) {
+        position.x += (-1f..1f).random()
+        position.y += (-1f..1f).random()
+        avoidObstacles(position)
+    } else position
+}
 
 /**
  * returns a unit vector aimed at target from
