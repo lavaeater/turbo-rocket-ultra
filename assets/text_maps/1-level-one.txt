@@ -1,7 +1,7 @@
 hcc
 l*c
-b*c
-w*c
+c*c
+c*c
 c*c
 c*c
 s*g
@@ -32,15 +32,15 @@ Families that now will have to wait for the next
 crop of sewer-cleaners to help them out.
 
 facts
-MaxEnemies:100:i
-MaxSpawnedEnemies:200:i
+MaxEnemies:10:i
+MaxSpawnedEnemies:100:i
 AcceleratingSpawns:false:b
 AcceleratingSpawnsFactor:1.25:f
 EnemyKillCount:0:i
 TargetEnemyKillCount:0:i
 ShowEnemyKillCount:false:b
 WaveSize:15:i
-StartingEnemyCount:20:i
+StartingEnemyCount:5:i
 
 stories
 start-story

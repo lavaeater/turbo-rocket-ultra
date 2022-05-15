@@ -1,4 +1,4 @@
-package ecs.components.ai
+package ecs.components.ai.old
 
 import com.badlogic.gdx.math.Vector2
 import ktx.math.random

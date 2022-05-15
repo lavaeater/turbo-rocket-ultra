@@ -1,4 +1,4 @@
-package ecs.components.ai
+package ecs.components.ai.old
 
 class Investigate: TaskComponent() {
     var needsNew = true

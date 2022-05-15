@@ -14,6 +14,7 @@ import com.crashinvaders.vfx.effects.ChainVfxEffect
 import com.strongjoshua.console.GUIConsole
 import data.Players
 import ecs.components.gameplay.ObjectiveComponent
+import ecs.components.graphics.CameraFollowComponent
 import ecs.components.player.PlayerComponent
 import ecs.systems.graphics.CameraUpdateSystem
 import ecs.systems.graphics.GameConstants.MAX_ENEMIES
@@ -22,14 +23,17 @@ import ecs.systems.graphics.RenderSystem
 import ecs.systems.input.GamepadInputSystem
 import ecs.systems.input.KeyboardInputSystem
 import ecs.systems.player.GameOverSystem
+import factories.enemy
 import factories.factsOfTheWorld
 import factories.player
 import gamestate.GameEvent
 import gamestate.GameState
 import injection.Context.inject
+import input.KeyboardControl
 import ktx.app.KtxScreen
 import ktx.ashley.allOf
 import ktx.ashley.getSystem
+import ktx.ashley.with
 import map.grid.*
 import map.snake.randomPoint
 import physics.*
@@ -182,7 +186,20 @@ class GameScreen(private val gameState: StateMachine<GameState, GameEvent>) : Kt
     private fun addPlayers() {
         val startBounds = mapManager.gridMap.values.first { it.startSection }.innerBounds
         for ((controlComponent, player) in Players.players) {
-            player(player, controlComponent, startBounds.randomPoint(), false)
+            if(player.isAiPlayer) {
+                val enemy = enemy(startBounds.randomPoint()) {
+                    with<CameraFollowComponent>()
+                    with<PlayerComponent> {
+                        this.player = player
+                    }
+                    with<KeyboardControl> {
+
+                    }
+                }
+                player.entity = enemy
+                player.body = enemy.body()
+            } else
+                player(player, controlComponent, startBounds.randomPoint(), false)
         }
     }
 

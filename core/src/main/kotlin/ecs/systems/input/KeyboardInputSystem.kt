@@ -4,6 +4,7 @@ import com.badlogic.ashley.core.Entity
 import com.badlogic.ashley.systems.IteratingSystem
 import com.badlogic.gdx.Gdx
 import com.badlogic.gdx.Input
+import com.badlogic.gdx.graphics.OrthographicCamera
 import com.badlogic.gdx.math.Vector2
 import ecs.components.gameplay.TransformComponent
 import ecs.components.intent.IntendsTo
@@ -58,6 +59,7 @@ class KeyboardInputSystem :
         TransformComponent::class
     ).get()
 ) {
+    private var zoom = 0f
     lateinit var keyboardControl: KeyboardControl
     lateinit var keyboardEntity: Entity
     val actionHandler by lazy { inject<ActionHandler>() }
@@ -71,6 +73,9 @@ class KeyboardInputSystem :
                     Input.Keys.S -> keyboardControl.thrust = -1f
                     Input.Keys.A -> keyboardControl.turning = -1f
                     Input.Keys.D -> keyboardControl.turning = 1f
+                    Input.Keys.Z -> zoom = 1f
+                    Input.Keys.X -> zoom = -1f
+
                     Input.Keys.P -> if (gameState.currentState.state == GameState.Running) gameState.acceptEvent(
                         GameEvent.PausedGame
                     ) else gameState.acceptEvent(
@@ -120,6 +125,8 @@ class KeyboardInputSystem :
                     Input.Keys.RIGHT -> handleRight() //keyboardControl.uiControl.right()
                     Input.Keys.ENTER -> handleSelect()//keyboardControl.uiControl.select()
                     Input.Keys.SPACE -> handleAction()
+                    Input.Keys.Z -> zoom = 0f
+                    Input.Keys.X -> zoom = 0f
                     else -> return false
                 }
             }
@@ -188,7 +195,9 @@ class KeyboardInputSystem :
         keyboardEntity = entity
         keyboardControl = entity.getComponent()
         updateMouseInput(entity.getComponent<TransformComponent>().position)
+        camera.zoom += 0.1f * zoom
     }
+    val camera by lazy { inject<OrthographicCamera>() }
 
     private fun updateMouseInput(position: Vector2) {
         keyboardControl.setAimVector(Gdx.input.x, Gdx.input.y, position)

@@ -23,13 +23,13 @@ open class Transform(val position: Vector2 = vec2()) {
     /*
     A class to keep track of an objects position in 2D space
      */
-    val forward: Vector2 = Vector2.X.cpy()
     private val magnitude = 10f
     val aimVector = vec2()
     private val mousePosition3D = vec3()
     private val camera by lazy { inject<OrthographicCamera>() }
     private val mousePosition = vec2()
 
+    val forward: Vector2 = Vector2.X.cpy()
     private val _normal = vec2()
     val normal: Vector2
         get() = run {

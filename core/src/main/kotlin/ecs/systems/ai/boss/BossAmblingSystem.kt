@@ -3,7 +3,7 @@ package ecs.systems.ai.boss
 import com.badlogic.ashley.core.Entity
 import com.badlogic.ashley.systems.IteratingSystem
 import com.badlogic.gdx.ai.btree.Task
-import ecs.components.ai.Amble
+import ecs.components.ai.old.Amble
 import ecs.components.enemy.AgentProperties
 import ktx.ashley.allOf
 import ktx.math.random

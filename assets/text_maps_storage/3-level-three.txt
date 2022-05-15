@@ -1,0 +1,43 @@
+*wwwwwwww
+*lwlwlwgw
+*wlwlwlww
+*lwlwlwlw
+*wlwlwlww
+*lwlwlwlw
+*wlwlwlww
+*lwlwlwlw
+*wlwlwlww
+*cwcwcwcw
+ccccccccw
+c********
+s********
+---------
+name
+What lurks beneath us?
+start
+Hacking, shooting, burning, desecrating the corpses.
+It must be done.
+
+Tiring, surely, but it must be done.
+success
+Covered in blood and guts, you are
+
+TRIUMPHANT
+fail
+Everyone weeps, everyone wallows - if they
+failed us, can we ever succeed?
+facts
+MaxEnemies:500:i
+MaxSpawnedEnemies:2000:i
+AcceleratingSpawns:true:b
+AcceleratingSpawnsFactor:1.25:f
+EnemyKillCount:0:i
+TargetEnemyKillCount:1000:i
+ShowEnemyKillCount:true:b
+StartingEnemyCount:80:i
+
+stories
+start-story
+level-failed
+level-complete
+enemy-killcount

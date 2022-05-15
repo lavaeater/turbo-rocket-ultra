@@ -8,9 +8,9 @@ import com.badlogic.gdx.math.MathUtils.degreesToRadians
 import com.badlogic.gdx.math.Vector2
 import com.badlogic.gdx.physics.box2d.Fixture
 import data.Players
-import ecs.components.ai.IsAwareOfPlayer
-import ecs.components.ai.NoticedSomething
-import ecs.components.ai.SeekPlayer
+import ecs.components.ai.old.IsAwareOfPlayer
+import ecs.components.ai.old.NoticedSomething
+import ecs.components.ai.old.SeekPlayer
 import ecs.components.enemy.AgentProperties
 import ecs.components.gameplay.TransformComponent
 import ecs.components.player.PlayerComponent

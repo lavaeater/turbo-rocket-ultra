@@ -1,4 +1,4 @@
-package ecs.components.ai
+package ecs.components.ai.old
 
 import com.badlogic.gdx.ai.btree.Task
 

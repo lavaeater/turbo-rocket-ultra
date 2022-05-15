@@ -8,6 +8,7 @@ import injection.Context
 import ktx.app.KtxGame
 import ktx.app.KtxScreen
 import ktx.inject.register
+import ktx.log.debug
 import ktx.log.info
 import screens.*
 import statemachine.StateMachine
@@ -90,7 +91,7 @@ class MainGame : KtxGame<KtxScreen>() {
     }
 
     private fun stateChanged(gameState: GameState, gameEvent: GameEvent?) {
-        info { "$gameEvent -> $gameState" }
+        debug { "$gameEvent -> $gameState" }
     }
 
     private val gameScreen by lazy {

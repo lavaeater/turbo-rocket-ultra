@@ -2,7 +2,7 @@ package ecs.systems.player
 
 import com.badlogic.ashley.core.Entity
 import com.badlogic.ashley.systems.IteratingSystem
-import ecs.components.ai.*
+import ecs.components.ai.old.*
 import ecs.components.enemy.AgentProperties
 import ecs.components.player.*
 import ktx.ashley.allOf

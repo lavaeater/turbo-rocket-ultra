@@ -64,7 +64,6 @@ object Context {
         return context.inject()
     }
 
-
     private fun buildContext() {
         context.register {
             bindSingleton(PolygonSpriteBatch())
@@ -113,18 +112,16 @@ object Context {
             addSystem(EnemyDeathSystem(audioPlayer = inject(), factsOfTheWorld = inject()))
             addSystem(EnemyMovementSystem(true))
             addSystem(PerimeterObjectiveSystem())
-            // Ai Systems Start
-            addSystem(AmblingSystem())
-            addSystem(PanicSystem())
-            addSystem(BehaviorTreeSystem())
-            addSystem(ChasePlayerSystem())
-            addSystem(AlertFriendsSystem())
-            addSystem(SeekPlayerSystem(false))
-            addSystem(AttackPlayerSystem())
+//            // Ai Systems Start
+//            addSystem(PanicSystem())
+//            addSystem(ChasePlayerSystem())
+//            addSystem(AlertFriendsSystem())
+//            addSystem(SeekPlayerSystem(false))
+//            addSystem(AttackPlayerSystem())
             addSystem(EnemyAnimationSystem())
             addSystem(EnemyHearsShotsSystem())
-            addSystem(InvestigateSystem())
-            addSystem(RushPlayerSystem())
+//            addSystem(InvestigateSystem())
+//            addSystem(RushPlayerSystem())
             addSystem(AudioSystem())
             // Ai Systems End
             //Burning
@@ -146,13 +143,15 @@ object Context {
                     inject(),
                     inject(),
                     inject<ExtendViewport>(),
-                    false,
+                    true,
                     1,
                     false
                 )
             )
 
-            addSystem(RenderMiniMapSystem(3))
+            addSystem(RenderMiniMapSystem(2))
+            //We add this here now to make sure it is run AFTER the rendercycle
+            addSystem(BehaviorTreeSystem(4))
             //addSystem(PhysicsDebugRendererSystem(inject(), inject()))
             addSystem(PlayerFlashlightSystem())
             addSystem(PlayerContextActionSystem())
@@ -168,7 +167,6 @@ object Context {
             addSystem(CalculatePositionSystem())
             addSystem(CalculateRotationSystem())
             addSystem(RunFunctionsSystem())
-
         }
     }
 }

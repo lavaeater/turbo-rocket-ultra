@@ -20,7 +20,7 @@ import input.Button
 import input.ControlMapper
 import input.GamepadControl
 import input.KeyboardControl
-import ktx.log.info
+import ktx.log.debug
 import ktx.scene2d.*
 import statemachine.StateMachine
 import tru.AnimState
@@ -57,13 +57,13 @@ sealed class PlayerModel(
 
     class Keyboard : PlayerModel("Keyboard", Assets.characterTurboAnims.first().name) {
         init {
-            info { "Keyboard" }
+            debug { "Keyboard" }
         }
     }
     class GamePad(val controller: Controller) :
         PlayerModel("GamePad ${controller.playerIndex + 1}", Assets.characterTurboAnims.first().name) {
         init {
-            info { "Added for ${controller.uniqueId}" }
+            debug { "Added for ${controller.uniqueId}" }
         }
     }
 
@@ -197,6 +197,7 @@ class SetupScreen(gameState: StateMachine<GameState, GameEvent>) : BasicScreen(g
             Input.Keys.LEFT -> changeSpriteKeyboard(-1)
             Input.Keys.RIGHT -> changeSpriteKeyboard(1)
             Input.Keys.ENTER -> startGame()
+            Input.Keys.T -> startGameWithAi()
             Input.Keys.C -> startConceptScreen()
             Input.Keys.E -> startEditor()
             Input.Keys.A -> previousMap()
@@ -212,9 +213,9 @@ class SetupScreen(gameState: StateMachine<GameState, GameEvent>) : BasicScreen(g
     var mapNames = getMapList()
 
     fun getMapList(): SelectedItemList<String> {
-        info { Gdx.files.localStoragePath }
+        debug { Gdx.files.localStoragePath }
         val mapFiles = Gdx.files.local("text_maps").list()
-        info { "Have found ${mapFiles.size} files" }
+        debug { "Have found ${mapFiles.size} files" }
         return selectedItemListOf(*mapFiles.map { it.file().nameWithoutExtension }.toTypedArray())
     }
 
@@ -246,6 +247,27 @@ class SetupScreen(gameState: StateMachine<GameState, GameEvent>) : BasicScreen(g
         availableControllers.first { it is PlayerModel.Keyboard }.apply {
             if (indexChange < 0) this.selectedAbleSpriteAnims.previousItem() else this.selectedAbleSpriteAnims.nextItem()
         }
+        return true
+    }
+
+
+    private fun startGameWithAi(): Boolean {
+
+        /*
+        I know, cheat.
+
+        Create a player but with an enemy as a basis. Set a flag or some shit, then the game can simply just make into
+        an enemy when starting.
+         */
+
+        Players.players[KeyboardControl()] = Player("AI PLAYER", true).apply {
+            selectedCharacterSpriteName = Assets.characterTurboAnims.first().name
+        }
+        MapList.mapFileNames.clear()
+        for (name in mapNames.withSelectedItemFirst) {
+            MapList.mapFileNames.add(name)
+        }
+        gameState.acceptEvent(GameEvent.StartedGame)
         return true
     }
 

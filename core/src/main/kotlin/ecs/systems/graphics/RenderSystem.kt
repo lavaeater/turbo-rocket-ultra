@@ -12,9 +12,14 @@ import com.badlogic.gdx.math.MathUtils
 import com.badlogic.gdx.utils.viewport.Viewport
 import com.crashinvaders.vfx.VfxManager
 import com.crashinvaders.vfx.effects.ChainVfxEffect
+import ecs.components.ai.Path
+import ecs.components.ai.PositionTarget
+import ecs.components.ai.SeenPlayerPositions
+import ecs.components.enemy.AgentProperties
 import ecs.components.gameplay.DestroyComponent
 import ecs.components.gameplay.TransformComponent
 import ecs.components.graphics.RenderableComponent
+import ecs.components.player.PlayerComponent
 import ecs.systems.graphics.GameConstants.SCALE
 import injection.Context.inject
 import ktx.ashley.allOf
@@ -101,7 +106,10 @@ class RenderSystem(
             val sprite = spriteComponent.sprite
             if (spriteComponent.rotateWithTransform)
                 sprite.rotation = transform.rotation * MathUtils.radiansToDegrees
-            sprite.setOriginBasedPosition(transform.position.x + spriteComponent.actualOffsetX, transform.position.y + spriteComponent.actualOffsetY)
+            sprite.setOriginBasedPosition(
+                transform.position.x + spriteComponent.actualOffsetX,
+                transform.position.y + spriteComponent.actualOffsetY
+            )
 
             sprite.draw(batch)
             if (debug) {
@@ -134,30 +142,73 @@ class RenderSystem(
         }
 
         if (enemyDebug && entity.isEnemy()) {
-            val ec = entity.agentProps()
+            renderEnemyDebugStuff(entity)
+        }
+
+        if (playerDebug && entity.isPlayer() && entity.hasAnchors()) {
+            for ((key, point) in entity.anchors().transformedPoints) {
+                shapeDrawer.filledCircle(point, 0.2f, if (colorMap.containsKey(key)) colorMap[key] else Color.WHITE)
+            }
+        }
+    }
+
+    private fun renderEnemyDebugStuff(entity: Entity) {
+        val ec = entity.agentProps()
+        if(entity.has<PlayerComponent>()) {
+            renderPath(entity, ec)
+            renderCanSee(entity, ec)
+        }
+    }
+
+    val sectorColor = Color(0f, 1f, 0f, 0.1f)
+    val pathNodeColor = Color(0f, 1f, 0f, 0.5f)
+
+    private fun renderCanSee(entity: Entity, ap: AgentProperties) {
+        val position = entity.transform().position
+        //1. Render a circle on viewDistance
+        shapeDrawer.sector(
+            position.x,
+            position.y,
+            ap.viewDistance,
+            ap.directionVector.angleRad() - ap.fieldOfView / 2  * MathUtils.degreesToRadians,
+            MathUtils.degreesToRadians * ap.fieldOfView, sectorColor, sectorColor
+        )
+
+        shapeDrawer.setColor(Color.RED)
+
+        shapeDrawer.circle(position.x, position.y, ap.viewDistance,0.1f)
+
+        shapeDrawer.line(position, position.cpy().add(ap.directionVector.cpy().scl(ap.viewDistance)), 0.1f)
+
+        if(entity.has<SeenPlayerPositions>()) {
+            for(v in entity.getComponent<SeenPlayerPositions>().storage) {
+                shapeDrawer.filledCircle(v, 0.5f, Color.RED)
+            }
+        }
+    }
+
+    private fun renderPath(entity: Entity, ec: AgentProperties) {
+        if(entity.has<Path>()) {
             val previous = entity.transform().position.cpy()
-            shapeDrawer.line(previous, ec.nextPosition, Color.BLUE, 0.1f)
-            previous.set(ec.nextPosition)
-            for ((i, node) in ec.path.withIndex()) {
+            val nextPosition = if(entity.has<PositionTarget>()) entity.getComponent<PositionTarget>().position else previous
+            shapeDrawer.line(previous, nextPosition, Color.BLUE, 0.1f)
+            shapeDrawer.filledCircle(nextPosition, GameConstants.TOUCHING_DISTANCE, pathNodeColor)
+            previous.set(nextPosition)
+            val actualPath = entity.getComponent<Path>()
+            for ((i, node) in actualPath.queue.withIndex()) {
                 shapeDrawer.line(previous, node, lineColor, 0.1f)
                 when (i) {
                     0 -> {
-                        shapeDrawer.filledCircle(node, .25f, Color.GREEN)
+                        shapeDrawer.filledCircle(node, GameConstants.TOUCHING_DISTANCE, pathNodeColor)
                     }
                     ec.path.size - 1 -> {
-                        shapeDrawer.filledCircle(node, .25f, Color.RED)
+                        shapeDrawer.filledCircle(node, GameConstants.TOUCHING_DISTANCE, pathNodeColor)
                     }
                     else -> {
-                        shapeDrawer.filledCircle(node, .25f, Color.BLUE)
+                        shapeDrawer.filledCircle(node, GameConstants.TOUCHING_DISTANCE, pathNodeColor)
                     }
                 }
                 previous.set(node)
-            }
-        }
-
-        if(playerDebug && entity.isPlayer() && entity.hasAnchors()) {
-            for((key, point) in entity.anchors().transformedPoints) {
-                shapeDrawer.filledCircle(point, 0.2f, if(colorMap.containsKey(key)) colorMap[key] else Color.WHITE)
             }
         }
     }
