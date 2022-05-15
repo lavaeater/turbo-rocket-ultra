@@ -1,11 +1,11 @@
 package ai.tasks.leaf
 
+import ai.findPathFromTo
 import ai.tasks.EntityTask
 import com.badlogic.ashley.core.Entity
 import com.badlogic.gdx.ai.btree.Task
 import ecs.components.ai.CoordinateStorageComponent
 import ecs.components.ai.Path
-import ecs.systems.ai.findPathFromTo
 import ktx.ashley.remove
 import physics.addComponent
 import kotlin.reflect.KClass
