@@ -10,4 +10,8 @@ class TreeBuilder<T> : TaskBuilder<T>() {
     override fun add(task: Task<T>) {
         rootTask = task
     }
+
+    fun root(rootTask:Task<T>) {
+        add(rootTask)
+    }
 }

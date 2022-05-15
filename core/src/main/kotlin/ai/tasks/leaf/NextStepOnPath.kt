@@ -23,7 +23,6 @@ class NextStepOnPath : EntityTask() {
             return Status.FAILED
         val path = entity.getComponent<Path>()
         if (path.queue.isEmpty) {
-            //Remove PathComponent!
             entity.remove<Path>()
             return Status.FAILED
         }
@@ -32,5 +31,9 @@ class NextStepOnPath : EntityTask() {
             position = nextStep
         }
         return Status.SUCCEEDED
+    }
+
+    override fun toString(): String {
+        return "Next Step on Path"
     }
 }

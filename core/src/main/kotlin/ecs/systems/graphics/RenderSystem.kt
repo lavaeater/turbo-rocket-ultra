@@ -12,6 +12,8 @@ import com.badlogic.gdx.math.MathUtils
 import com.badlogic.gdx.utils.viewport.Viewport
 import com.crashinvaders.vfx.VfxManager
 import com.crashinvaders.vfx.effects.ChainVfxEffect
+import ecs.components.ai.Path
+import ecs.components.ai.PositionTarget
 import ecs.components.enemy.AgentProperties
 import ecs.components.gameplay.DestroyComponent
 import ecs.components.gameplay.TransformComponent
@@ -155,6 +157,7 @@ class RenderSystem(
     }
 
     val sectorColor = Color(0f, 1f, 0f, 0.1f)
+    val pathNodeColor = Color(0f, 1f, 0f, 0.5f)
 
     private fun renderCanSee(entity: Entity, ap: AgentProperties) {
         val position = entity.transform().position
@@ -175,23 +178,28 @@ class RenderSystem(
     }
 
     private fun renderPath(entity: Entity, ec: AgentProperties) {
-        val previous = entity.transform().position.cpy()
-        shapeDrawer.line(previous, ec.nextPosition, Color.BLUE, 0.1f)
-        previous.set(ec.nextPosition)
-        for ((i, node) in ec.path.withIndex()) {
-            shapeDrawer.line(previous, node, lineColor, 0.1f)
-            when (i) {
-                0 -> {
-                    shapeDrawer.filledCircle(node, .25f, Color.GREEN)
+        if(entity.has<Path>()) {
+            val previous = entity.transform().position.cpy()
+            val nextPosition = if(entity.has<PositionTarget>()) entity.getComponent<PositionTarget>().position else previous
+            shapeDrawer.line(previous, nextPosition, Color.BLUE, 0.1f)
+            shapeDrawer.filledCircle(nextPosition, GameConstants.TOUCHING_DISTANCE, pathNodeColor)
+            previous.set(nextPosition)
+            val actualPath = entity.getComponent<Path>()
+            for ((i, node) in actualPath.queue.withIndex()) {
+                shapeDrawer.line(previous, node, lineColor, 0.1f)
+                when (i) {
+                    0 -> {
+                        shapeDrawer.filledCircle(node, GameConstants.TOUCHING_DISTANCE, pathNodeColor)
+                    }
+                    ec.path.size - 1 -> {
+                        shapeDrawer.filledCircle(node, GameConstants.TOUCHING_DISTANCE, pathNodeColor)
+                    }
+                    else -> {
+                        shapeDrawer.filledCircle(node, GameConstants.TOUCHING_DISTANCE, pathNodeColor)
+                    }
                 }
-                ec.path.size - 1 -> {
-                    shapeDrawer.filledCircle(node, .25f, Color.RED)
-                }
-                else -> {
-                    shapeDrawer.filledCircle(node, .25f, Color.BLUE)
-                }
+                previous.set(node)
             }
-            previous.set(node)
         }
     }
 

@@ -34,4 +34,8 @@ class FindSection<T: CoordinateStorageComponent>(private val componentClass: KCl
         })
         return Status.SUCCEEDED
     }
+
+    override fun toString(): String {
+        return "Find a section"
+    }
 }

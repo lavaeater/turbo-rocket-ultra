@@ -58,6 +58,7 @@ import ktx.box2d.body
 import ktx.box2d.box
 import ktx.box2d.circle
 import ktx.box2d.filter
+import ktx.log.info
 import ktx.math.random
 import ktx.math.vec2
 import ktx.scene2d.*
@@ -710,8 +711,13 @@ fun enemy(at: Vector2, init: EngineEntity.() -> Unit = {}) : Entity {
                     bt.tree.addListener(object : BehaviorTree.Listener<Entity> {
                         override fun statusUpdated(task: Task<Entity>, previousStatus: Task.Status) {
                             val taskString = task.toString()
-                            if (!taskString.contains("@"))
-                                this@label.setText("""$taskString - $previousStatus""".trimMargin())
+                            if (!taskString.contains("@")) {
+                                //info { taskString }
+                                this@label.setText("""
+                                    ${entity.agentProps().directionVector}
+                                    $taskString - $previousStatus
+                                    """.trimMargin())
+                            }
                         }
 
                         override fun childAdded(task: Task<Entity>?, index: Int) {

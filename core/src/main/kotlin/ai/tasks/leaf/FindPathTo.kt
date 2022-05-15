@@ -6,8 +6,8 @@ import com.badlogic.gdx.ai.btree.Task
 import ecs.components.ai.CoordinateStorageComponent
 import ecs.components.ai.Path
 import ecs.systems.ai.findPathFromTo
-import ktx.ashley.addComponent
 import ktx.ashley.remove
+import physics.addComponent
 import kotlin.reflect.KClass
 
 class FindPathTo<T: CoordinateStorageComponent>(private val componentClass: KClass<T>) : EntityTask() {
@@ -19,11 +19,15 @@ class FindPathTo<T: CoordinateStorageComponent>(private val componentClass: KCla
         entity.remove<Path>()
         val coordStorage = entity.getComponent(componentClass.java)
         if(coordStorage.storage.size != 2) return Status.FAILED
-        val path = entity.addComponent<Path>(engine)
-        val from = coordStorage.storage.removeFirst() //Remove starting section
-        val to = coordStorage.storage.first() //Keep the other one, might need it, might not
-
-        findPathFromTo(path.queue, from, to)
+        val path = entity.addComponent<Path> {
+            val from = coordStorage.storage.removeFirst() //Remove starting section
+            val to = coordStorage.storage.first() //Keep the other one, might need it, might not
+            findPathFromTo(this.queue, from, to)
+        }
         return Status.SUCCEEDED
+    }
+
+    override fun toString(): String {
+        return "Find a path!"
     }
 }

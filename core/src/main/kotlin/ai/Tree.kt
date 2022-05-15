@@ -10,47 +10,43 @@ import ecs.components.towers.TargetInRange
 
 object Tree {
     fun testTree() = tree<Entity> {
-        add(
+        root(
             repeatForever(
-                selector {
-                    selector {
-                        first(invert(rotate(5f)))
-                        then(invert(delayFor(1f)))
-                        then(invert(lookForAndStore<ObstacleComponent, SeenPlayerPositions>()))
-                    }
-                    then(invert(sequence {
-                        first(findSection<AmblingEndpoint>())
-                        then(findPathTo<AmblingEndpoint>())
-                    }))
-                    then(
-                        ifEntityHas<Path>
-
-
-
-                            invert(
-                                ai.builders.selector {
-                                    ifEntityHas()
-                                    selector {
-                                        first(invert(entityHas<PositionTarget>()))
-                                        then(invert(moveTowardsPositionTarget()))
-                                    }
-                                    selector {
-                                        first(entityHas<PositionTarget>())
-                                        then(invert(getNextStepOnPath()))
-                                    }
-                                    /*
-                                    The above succeeding means we end up here, implying we have
-                                    reached the end of the path. So what do we do now then?
-                                     */
-                                }
+                succeedOnFirstSuccessMoveToNextOnFailure {
+                    moveToNextIfThisFails(
+                        succeedOnFirstSuccessMoveToNextOnFailure {
+                            moveToNextIfThisFails(invertResultFrom(rotate(5f)))
+                            moveToNextIfThisFails(invertResultFrom(delayFor(1f)))
+                            failBranchIfThisFails(invertResultFrom(lookForAndStore<ObstacleComponent, SeenPlayerPositions>()))
+                        })
+                    moveToNextIfThisFails(
+                        ifEntityDoesNotHaveThisComponent<Path>(
+                            invertResultFrom(
+                                failOnFirstFailureMoveToNextOnSuccess {
+                                    moveToNextIfThisSucceeds(findSection<AmblingEndpoint>())
+                                    branchSucceedsIfThisSucceeds(findPathTo<AmblingEndpoint>())
+                                })
                         )
-                    ))
+                    )
+                    failBranchIfThisFails(
+                        ifEntityHasThisComponent<Path>(
+                            invertResultFrom(
+                                succeedOnFirstSuccessMoveToNextOnFailure {
+                                    moveToNextIfThisFails(
+                                        ifEntityHasThisComponent<PositionTarget>(invertResultFrom(moveTowardsPositionTarget()))
+                                    )
+                                    failBranchIfThisFails(
+                                        ifEntityDoesNotHaveThisComponent<PositionTarget>(invertResultFrom(getNextStepOnPath()))
+                                    )
+                                })
+                        )
+                    )
                 })
         )
     }
 
     fun getTowerBehaviorTree() = tree<Entity> {
-        add(sequence {
+        add(failOnFirstFailureMoveToNextOnSuccess {
             first(entityDo<FindTarget>())
             then(entityDo<Shoot> { ifEntityHas<TargetInRange>() })
         })
