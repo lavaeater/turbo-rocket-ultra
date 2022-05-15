@@ -13,7 +13,7 @@ class SelectorBuilder<T> : CompositeTaskBuilder<T>() {
         then(task)
     }
 
-    fun expectSuccess(task:Task<T>) {
+    fun expectedToSucceed(task:Task<T>) {
         then(task)
     }
 

@@ -2,40 +2,101 @@ package ai
 
 import ai.builders.*
 import com.badlogic.ashley.core.Entity
+import com.badlogic.gdx.ai.btree.Task
 import ecs.components.ai.*
 import ecs.components.gameplay.ObstacleComponent
 import ecs.components.towers.FindTarget
 import ecs.components.towers.Shoot
 import ecs.components.towers.TargetInRange
 
+fun <T>ifThis(task: Task<T>) : Task<T> {
+    return task
+}
+fun <T>Task<T>.then(task: Task<T>) :Task<T> {
+    task.guard = this
+    return task
+}
+
 object Tree {
-    fun testTree() = tree<Entity> {
+    fun nowWithAttachs() = tree<Entity> {
         root(
+            dyanmicGuardSelector<Entity> {
+                ifThis(entityHas<AttackPoint>()).then(
+                    moveTowardsPositionTarget()
+                )
+                ifThis(entityHas<SeenPlayerPositions>()).then(
+                    selectTarget()
+                )
+                ifThis(entityDoesNotHave<Path>()).then(
+                    exitOnFirstThatFails {
+                        expectSuccess(findSection<AmblingEndpoint>())
+                        expectSuccess(findPathTo<AmblingEndpoint>())
+                    }
+                )
+                ifThis(entityDoesNotHave<Waypoint>()).then(
+                    getNextStepOnPath()
+                )
+            }
             repeatForever(
-                runUntilFirstSucceeds {
-                    expectSuccess(
+                exitOnFirstThatSucceeds {
+                    expectedToSucceed(
                         onlyIfEntityHas<Path>(
-                            runUntilFirstSucceeds {
+                            exitOnFirstThatSucceeds {
                                 expectFailureAndMoveToNext(
                                     onlyIfEntityHas<PositionTarget>(invertResultOf(moveTowardsPositionTarget()))
                                 )
                                 expectFailureAndMoveToNext(
                                     invertResultOf(
-                                        repeat(10, runUntilFirstSucceeds {
+                                        repeat(10, exitOnFirstThatSucceeds {
                                             expectFailureAndMoveToNext(invertResultOf(rotate(15f)))
-                                            expectSuccess(lookForAndStore<ObstacleComponent, SeenPlayerPositions>())
+                                            expectedToSucceed(lookForAndStore<ObstacleComponent, SeenPlayerPositions>())
                                         })
                                     )
                                 )
-                                expectSuccess(
+                                expectedToSucceed(
                                     onlyIfEntityDoesNotHave<PositionTarget>(getNextStepOnPath())
                                 )
                             }
                         )
                     )
-                    expectSuccess(
+                    expectedToSucceed(
                         onlyIfEntityDoesNotHave<Path>(
-                            runInSequence {
+                            exitOnFirstThatFails {
+                                expectSuccess(findSection<AmblingEndpoint>())
+                                expectSuccess(findPathTo<AmblingEndpoint>())
+                            }
+                        )
+                    )
+                })
+        )
+    }
+    fun testTree() = tree<Entity> {
+        root(
+            repeatForever(
+                exitOnFirstThatSucceeds {
+                    expectedToSucceed(
+                        onlyIfEntityHas<Path>(
+                            exitOnFirstThatSucceeds {
+                                expectFailureAndMoveToNext(
+                                    onlyIfEntityHas<PositionTarget>(invertResultOf(moveTowardsPositionTarget()))
+                                )
+                                expectFailureAndMoveToNext(
+                                    invertResultOf(
+                                        repeat(10, exitOnFirstThatSucceeds {
+                                            expectFailureAndMoveToNext(invertResultOf(rotate(15f)))
+                                            expectedToSucceed(lookForAndStore<ObstacleComponent, SeenPlayerPositions>())
+                                        })
+                                    )
+                                )
+                                expectedToSucceed(
+                                    onlyIfEntityDoesNotHave<PositionTarget>(getNextStepOnPath())
+                                )
+                            }
+                        )
+                    )
+                    expectedToSucceed(
+                        onlyIfEntityDoesNotHave<Path>(
+                            exitOnFirstThatFails {
                                 first(findSection<AmblingEndpoint>())
                                 then(findPathTo<AmblingEndpoint>())
                             }
