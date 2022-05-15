@@ -19,7 +19,7 @@ class FindPathTo<T: CoordinateStorageComponent>(private val componentClass: KCla
         entity.remove<Path>()
         val coordStorage = entity.getComponent(componentClass.java)
         if(coordStorage.storage.size != 2) return Status.FAILED
-        val path = entity.addComponent<Path> {
+        entity.addComponent<Path> {
             val from = coordStorage.storage.removeFirst() //Remove starting section
             val to = coordStorage.storage.first() //Keep the other one, might need it, might not
             findPathFromTo(this.queue, from, to)

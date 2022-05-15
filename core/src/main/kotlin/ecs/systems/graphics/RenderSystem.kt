@@ -14,10 +14,12 @@ import com.crashinvaders.vfx.VfxManager
 import com.crashinvaders.vfx.effects.ChainVfxEffect
 import ecs.components.ai.Path
 import ecs.components.ai.PositionTarget
+import ecs.components.ai.SeenPlayerPositions
 import ecs.components.enemy.AgentProperties
 import ecs.components.gameplay.DestroyComponent
 import ecs.components.gameplay.TransformComponent
 import ecs.components.graphics.RenderableComponent
+import ecs.components.player.PlayerComponent
 import ecs.systems.graphics.GameConstants.SCALE
 import injection.Context.inject
 import ktx.ashley.allOf
@@ -152,8 +154,10 @@ class RenderSystem(
 
     private fun renderEnemyDebugStuff(entity: Entity) {
         val ec = entity.agentProps()
-        renderPath(entity, ec)
-        renderCanSee(entity, ec)
+        if(entity.has<PlayerComponent>()) {
+            renderPath(entity, ec)
+            renderCanSee(entity, ec)
+        }
     }
 
     val sectorColor = Color(0f, 1f, 0f, 0.1f)
@@ -175,6 +179,12 @@ class RenderSystem(
         shapeDrawer.circle(position.x, position.y, ap.viewDistance,0.1f)
 
         shapeDrawer.line(position, position.cpy().add(ap.directionVector.cpy().scl(ap.viewDistance)), 0.1f)
+
+        if(entity.has<SeenPlayerPositions>()) {
+            for(v in entity.getComponent<SeenPlayerPositions>().storage) {
+                shapeDrawer.filledCircle(v, 0.5f, Color.RED)
+            }
+        }
     }
 
     private fun renderPath(entity: Entity, ec: AgentProperties) {

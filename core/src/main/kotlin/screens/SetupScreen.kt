@@ -20,7 +20,7 @@ import input.Button
 import input.ControlMapper
 import input.GamepadControl
 import input.KeyboardControl
-import ktx.log.info
+import ktx.log.debug
 import ktx.scene2d.*
 import statemachine.StateMachine
 import tru.AnimState
@@ -57,13 +57,13 @@ sealed class PlayerModel(
 
     class Keyboard : PlayerModel("Keyboard", Assets.characterTurboAnims.first().name) {
         init {
-            info { "Keyboard" }
+            debug { "Keyboard" }
         }
     }
     class GamePad(val controller: Controller) :
         PlayerModel("GamePad ${controller.playerIndex + 1}", Assets.characterTurboAnims.first().name) {
         init {
-            info { "Added for ${controller.uniqueId}" }
+            debug { "Added for ${controller.uniqueId}" }
         }
     }
 
@@ -213,9 +213,9 @@ class SetupScreen(gameState: StateMachine<GameState, GameEvent>) : BasicScreen(g
     var mapNames = getMapList()
 
     fun getMapList(): SelectedItemList<String> {
-        info { Gdx.files.localStoragePath }
+        debug { Gdx.files.localStoragePath }
         val mapFiles = Gdx.files.local("text_maps").list()
-        info { "Have found ${mapFiles.size} files" }
+        debug { "Have found ${mapFiles.size} files" }
         return selectedItemListOf(*mapFiles.map { it.file().nameWithoutExtension }.toTypedArray())
     }
 

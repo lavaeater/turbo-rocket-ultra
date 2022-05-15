@@ -6,6 +6,8 @@ import com.badlogic.gdx.ai.btree.Task
 import ecs.components.ai.Path
 import ecs.components.ai.PositionTarget
 import ktx.ashley.remove
+import ktx.log.debug
+import ktx.log.info
 import physics.*
 
 
@@ -19,14 +21,19 @@ class NextStepOnPath : EntityTask() {
     }
 
     override fun execute(): Status {
-        if (!entity.has<Path>())
+        if (!entity.has<Path>()) {
+            debug { "Entity did not have Path Component" }
             return Status.FAILED
+        }
         val path = entity.getComponent<Path>()
         if (path.queue.isEmpty) {
             entity.remove<Path>()
+            debug { "Queue was empty, failing" }
             return Status.FAILED
         }
+
         val nextStep = path.queue.removeFirst()
+        debug { "NextStepOnPath is $nextStep" }
         entity.addComponent<PositionTarget> {
             position = nextStep
         }

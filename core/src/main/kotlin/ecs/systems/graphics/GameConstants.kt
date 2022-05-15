@@ -2,7 +2,7 @@ package ecs.systems.graphics
 
 object GameConstants {
 
-    const val TOUCHING_DISTANCE = 1f
+    const val TOUCHING_DISTANCE = 2f
     const val STUCK_DISTANCE = 0.005f
     const val ENEMY_ROTATION_SPEED = 45f
     const val ENEMY_BASE_HEALTH = 100f

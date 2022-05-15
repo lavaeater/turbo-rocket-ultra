@@ -12,6 +12,8 @@ import com.badlogic.gdx.ai.utils.random.UniformIntegerDistribution
 import ecs.components.ai.CoordinateStorageComponent
 import ecs.components.ai.PositionStorageComponent
 import ecs.components.ai.old.TaskComponent
+import ktx.log.debug
+import ktx.log.info
 import map.grid.Coordinate
 import kotlin.reflect.KClass
 
@@ -24,10 +26,11 @@ fun <T> repeatForever(task: Task<T>) = Repeat(ConstantIntegerDistribution.NEGATI
 fun <T> include(tree: String) = Include<T>(tree)
 fun <T> succeed(task: Task<T>) = AlwaysSucceed(task)
 fun <T> fail(task: Task<T>) = AlwaysFail(task)
-fun <T> invertResultFrom(task: Task<T>) = Invert(task)
+fun <T> invertResultOf(task: Task<T>) = Invert(task)
 fun <T> tree(block: TreeBuilder<T>.() -> Unit) = TreeBuilder<T>().apply(block).build()
-fun <T> succeedOnFirstSuccessMoveToNextOnFailure(block: SelectorBuilder<T>.() -> Unit) = SelectorBuilder<T>().apply(block).build()
-fun <T> failOnFirstFailureMoveToNextOnSuccess(block: SequenceBuilder<T>.() -> Unit) = SequenceBuilder<T>().apply(block).build()
+fun <T> runUntilFirstSucceeds(block: SelectorBuilder<T>.() -> Unit) = SelectorBuilder<T>().apply(block).build()
+fun <T> runInTurnUntilFirstFailure(block: SequenceBuilder<T>.() -> Unit) = SequenceBuilder<T>().apply(block).build()
+fun <T> runInSequence(block: SequenceBuilder<T>.() -> Unit) = SequenceBuilder<T>().apply(block).build()
 fun <T> parallel(block: ParallelBuilder<T>.() -> Unit) = ParallelBuilder<T>().apply(block).build()
 
 inline fun <reified T : TaskComponent> entityDo(block: EntityComponentTaskBuilder<T>.() -> Unit = {}) =
@@ -39,19 +42,19 @@ inline fun <reified ToLookFor : Component, reified ToStoreIn : PositionStorageCo
 
 inline fun <reified ToStoreIn : CoordinateStorageComponent> findSection(
     noinline method: (Coordinate, Int, Int) -> Coordinate = SectionFindingMethods::classicRandom
-) : FindSection<ToStoreIn>{
+): FindSection<ToStoreIn> {
     return FindSection(ToStoreIn::class, method)
 }
 
-fun getNextStepOnPath() : NextStepOnPath {
+fun getNextStepOnPath(): NextStepOnPath {
     return NextStepOnPath()
 }
 
-fun moveTowardsPositionTarget(run: Boolean = false) : MoveTowardsPositionTarget {
+fun moveTowardsPositionTarget(run: Boolean = false): MoveTowardsPositionTarget {
     return MoveTowardsPositionTarget(run)
 }
 
-inline fun <reified Storage : CoordinateStorageComponent> findPathTo() : FindPathTo<Storage>{
+inline fun <reified Storage : CoordinateStorageComponent> findPathTo(): FindPathTo<Storage> {
     return FindPathTo(Storage::class)
 }
 //
@@ -65,16 +68,18 @@ inline fun <reified Storage : CoordinateStorageComponent> findPathTo() : FindPat
 //    block: EntityHasComponentGuardBuilder<T>.() -> Unit = {}
 //) = EntityHasComponentGuardBuilder(task, T::class.java).apply(block).build()
 
-inline fun <reified T: Component>ifEntityHasThisComponent(task: Task<Entity>): Task<Entity> {
+inline fun <reified T : Component> onlyIfEntityHas(task: Task<Entity>): Task<Entity> {
     task.guard = ComponentExistenceGuard(true, T::class)
     return task
 }
-inline fun <reified T: Component>ifEntityDoesNotHaveThisComponent(task: Task<Entity>): Task<Entity> {
+
+inline fun <reified T : Component> onlyIfEntityDoesNotHave(task: Task<Entity>): Task<Entity> {
     task.guard = ComponentExistenceGuard(false, T::class)
     return task
 }
 
-class ComponentExistenceGuard<T:Component>(private val mustHave: Boolean, private val componentClass: KClass<T>): EntityTask() {
+class ComponentExistenceGuard<T : Component>(private val mustHave: Boolean, private val componentClass: KClass<T>) :
+    EntityTask() {
     @delegate: Transient
     private val mapper by lazy { ComponentMapper.getFor(componentClass.java) }
     override fun copyTo(task: Task<Entity>?): Task<Entity> {
@@ -82,16 +87,29 @@ class ComponentExistenceGuard<T:Component>(private val mustHave: Boolean, privat
     }
 
     override fun execute(): Status {
-        return if(mustHave) {
-            if(mapper.has(entity))
+        return if (mustHave) {
+            if (mapper.has(entity)) {
+                debug { "Entity has ${componentClass.simpleName} and this is good" }
                 Status.SUCCEEDED
-            else
+            } else {
+                debug { "Entity does not have ${componentClass.simpleName} and this is bad" }
                 Status.FAILED
+            }
         } else {
-            if(mapper.has(entity))
+            if (mapper.has(entity)) {
+                debug { "Entity has ${componentClass.simpleName} and this is bad" }
                 Status.FAILED
-            else
+            } else {
+                debug { "Entity does not have ${componentClass.simpleName} and this is good" }
                 Status.SUCCEEDED
+            }
         }
+    }
+
+    override fun toString(): String {
+        return if (mustHave)
+            "Entity must have ${componentClass.simpleName}"
+        else
+            "Entity must NOT have ${componentClass.simpleName}"
     }
 }

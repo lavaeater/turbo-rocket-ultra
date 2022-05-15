@@ -12,33 +12,33 @@ object Tree {
     fun testTree() = tree<Entity> {
         root(
             repeatForever(
-                succeedOnFirstSuccessMoveToNextOnFailure {
-                    moveToNextIfThisFails(
-                        succeedOnFirstSuccessMoveToNextOnFailure {
-                            moveToNextIfThisFails(invertResultFrom(rotate(5f)))
-                            moveToNextIfThisFails(invertResultFrom(delayFor(1f)))
-                            failBranchIfThisFails(invertResultFrom(lookForAndStore<ObstacleComponent, SeenPlayerPositions>()))
-                        })
-                    moveToNextIfThisFails(
-                        ifEntityDoesNotHaveThisComponent<Path>(
-                            invertResultFrom(
-                                failOnFirstFailureMoveToNextOnSuccess {
-                                    moveToNextIfThisSucceeds(findSection<AmblingEndpoint>())
-                                    branchSucceedsIfThisSucceeds(findPathTo<AmblingEndpoint>())
-                                })
+                runUntilFirstSucceeds {
+                    expectSuccess(
+                        onlyIfEntityHas<Path>(
+                            runUntilFirstSucceeds {
+                                expectFailureAndMoveToNext(
+                                    onlyIfEntityHas<PositionTarget>(invertResultOf(moveTowardsPositionTarget()))
+                                )
+                                expectFailureAndMoveToNext(
+                                    invertResultOf(
+                                        repeat(10, runUntilFirstSucceeds {
+                                            expectFailureAndMoveToNext(invertResultOf(rotate(15f)))
+                                            expectSuccess(lookForAndStore<ObstacleComponent, SeenPlayerPositions>())
+                                        })
+                                    )
+                                )
+                                expectSuccess(
+                                    onlyIfEntityDoesNotHave<PositionTarget>(getNextStepOnPath())
+                                )
+                            }
                         )
                     )
-                    failBranchIfThisFails(
-                        ifEntityHasThisComponent<Path>(
-                            invertResultFrom(
-                                succeedOnFirstSuccessMoveToNextOnFailure {
-                                    moveToNextIfThisFails(
-                                        ifEntityHasThisComponent<PositionTarget>(invertResultFrom(moveTowardsPositionTarget()))
-                                    )
-                                    failBranchIfThisFails(
-                                        ifEntityDoesNotHaveThisComponent<PositionTarget>(invertResultFrom(getNextStepOnPath()))
-                                    )
-                                })
+                    expectSuccess(
+                        onlyIfEntityDoesNotHave<Path>(
+                            runInSequence {
+                                first(findSection<AmblingEndpoint>())
+                                then(findPathTo<AmblingEndpoint>())
+                            }
                         )
                     )
                 })
@@ -46,7 +46,7 @@ object Tree {
     }
 
     fun getTowerBehaviorTree() = tree<Entity> {
-        add(failOnFirstFailureMoveToNextOnSuccess {
+        add(runInTurnUntilFirstFailure {
             first(entityDo<FindTarget>())
             then(entityDo<Shoot> { ifEntityHas<TargetInRange>() })
         })

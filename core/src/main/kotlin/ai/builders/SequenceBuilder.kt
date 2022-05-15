@@ -9,6 +9,12 @@ class SequenceBuilder<T> : CompositeTaskBuilder<T>() {
     fun moveToNextIfThisSucceeds(task:Task<T>) {
         then(task)
     }
+
+    fun expectSuccess(task:Task<T>) {
+        then(task)
+    }
+
+
     fun branchSucceedsIfThisSucceeds(task:Task<T>) {
         last(task)
     }

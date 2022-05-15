@@ -14,6 +14,8 @@ import input.canISeeYouFromHere
 import ktx.ashley.allOf
 import ktx.box2d.RayCast
 import ktx.box2d.rayCast
+import ktx.log.debug
+import ktx.log.info
 import ktx.math.vec2
 import physics.agentProps
 import physics.getEntity
@@ -74,6 +76,7 @@ class LookForAndStore<ToLookFor : Component, ToStoreIn : PositionStorageComponen
                     agentProps.fieldOfView
                 )
             }
+        debug { "LookForAndStore found ${inrangeEntities.size} entities in range and in the field of view" }
         val seenEntityPositions = mutableListOf<Vector2>()
         for (potential in inrangeEntities) {
             val entityPosition = potential.transform().position
@@ -97,6 +100,7 @@ class LookForAndStore<ToLookFor : Component, ToStoreIn : PositionStorageComponen
             }
 
             if (closestFixture != null && closestFixture!!.isEntity() && inrangeEntities.contains(closestFixture!!.getEntity())) {
+                debug { "LookForAndStore - entity at $entityPosition can be seen " }
                 seenEntityPositions.add(entityPosition)
             }
         }

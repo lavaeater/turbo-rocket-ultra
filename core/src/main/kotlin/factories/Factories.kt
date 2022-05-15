@@ -2,12 +2,15 @@ package factories
 
 import ai.Tree
 import ai.tasks.EntityComponentTask
+import ai.tasks.EntityTask
 import com.badlogic.ashley.core.Engine
 import com.badlogic.ashley.core.Entity
 import com.badlogic.gdx.Gdx
 import com.badlogic.gdx.ai.btree.BehaviorTree
+import com.badlogic.gdx.ai.btree.LeafTask
 import com.badlogic.gdx.ai.btree.Task
 import com.badlogic.gdx.ai.btree.Task.Status
+import com.badlogic.gdx.ai.btree.branch.Selector
 import com.badlogic.gdx.graphics.Color
 import com.badlogic.gdx.graphics.g2d.Sprite
 import com.badlogic.gdx.math.MathUtils
@@ -651,7 +654,7 @@ fun bullet(at: Vector2, towards: Vector2, speed: Float, damage: Float, player: P
     CounterObject.bulletCount++
 }
 
-fun enemy(at: Vector2, init: EngineEntity.() -> Unit = {}) : Entity {
+fun enemy(at: Vector2, init: EngineEntity.() -> Unit = {}): Entity {
 
     val box2dBody = bodyForSprite(
         at,
@@ -681,14 +684,16 @@ fun enemy(at: Vector2, init: EngineEntity.() -> Unit = {}) : Entity {
             tree = Tree.testTree().apply {
                 `object` = this@entity.entity
             }
-//            tree = if ((1..5).random() <= 2) {
-//                Tree.getEnemyBehaviorThatFindsOtherEnemies().apply { `object` = this@entity.entity }
-//            } else {
-//                Tree.getEnemyBehaviorTree().apply { `object` = this@entity.entity }
-//            }
         }
         init(this)
     }
+
+    box2dBody.userData = entity
+    CounterObject.enemyCount++
+    return entity
+}
+
+fun addUiThing(entity: Entity, bt: BehaviorComponent) {
     entity.add(getUiThing {
         val startPosition = hud.worldToHudPosition(entity.transform().position.cpy().add(1f, 1f))
 
@@ -702,22 +707,28 @@ fun enemy(at: Vector2, init: EngineEntity.() -> Unit = {}) : Entity {
             }
         }.repeatForever()
 
+        val taskStringList = mutableListOf<String>()
         stage.actors {
             verticalGroup {
                 it += moveAction
-//                boundLabel({ bt.tree.prettyPrint() })
-                 label("TreeStatus") { actor ->
+                label("TreeStatus") { actor ->
                     widget = this
                     bt.tree.addListener(object : BehaviorTree.Listener<Entity> {
-                        override fun statusUpdated(task: Task<Entity>, previousStatus: Task.Status) {
-                            val taskString = task.toString()
-                            if (!taskString.contains("@")) {
-                                //info { taskString }
-                                this@label.setText("""
+                        override fun statusUpdated(task: Task<Entity>, previousStatus: Status) {
+                            val taskString = if (task is EntityTask)
+                                task.toString()
+                            else
+                                task::class.simpleName!!
+                            taskStringList.add("$taskString - $previousStatus")
+                            if (taskStringList.size > 5)
+                                taskStringList.removeFirst()
+
+                            this@label.setText(
+                                """
                                     ${entity.agentProps().directionVector}
-                                    $taskString - $previousStatus
-                                    """.trimMargin())
-                            }
+                                    ${taskStringList.joinToString("\n")}
+                                    """.trimMargin()
+                            )
                         }
 
                         override fun childAdded(task: Task<Entity>?, index: Int) {
@@ -728,9 +739,6 @@ fun enemy(at: Vector2, init: EngineEntity.() -> Unit = {}) : Entity {
             }.setPosition(startPosition.x, startPosition.y)
         }
     })
-    box2dBody.userData = entity
-    CounterObject.enemyCount++
-    return entity
 }
 
 fun hackingStation(
@@ -812,7 +820,7 @@ fun boss(at: Vector2, level: Int) {
             box2dBody,
             Assets.bosses.values.random(),
             90f,
-            10f,10f,
+            10f, 10f,
             20f,
             2000f * level,
             false,
@@ -837,40 +845,6 @@ fun boss(at: Vector2, level: Int) {
             tree = Tree.testTree().apply { `object` = this@entity.entity }
         }
     }
-    entity.add(getUiThing {
-        val startPosition = hud.worldToHudPosition(entity.transform().position.cpy().add(1f, 1f))
-
-        val moveAction = object : Action() {
-            override fun act(delta: Float): Boolean {
-                if (entity.hasTransform()) {
-                    val coordinate = hud.worldToHudPosition(entity.transform().position.cpy().add(.5f, -.5f))
-                    actor.setPosition(coordinate.x, coordinate.y)
-                }
-                return true
-            }
-        }.repeatForever()
-
-        stage.actors {
-            verticalGroup {
-                it += moveAction
-//                boundLabel({ bt.tree.prettyPrint() })
-                label("TreeStatus") { actor ->
-                    widget = this
-                    bt.tree.addListener(object : BehaviorTree.Listener<Entity> {
-                        override fun statusUpdated(task: Task<Entity>, previousStatus: Task.Status) {
-                            val taskString = task.toString()
-                            if (!taskString.contains("@"))
-                                this@label.setText("""$taskString - $previousStatus""".trimMargin())
-                        }
-
-                        override fun childAdded(task: Task<Entity>?, index: Int) {
-
-                        }
-                    })
-                }
-            }.setPosition(startPosition.x, startPosition.y)
-        }
-    })
     box2dBody.userData = entity
     CounterObject.enemyCount++
 }

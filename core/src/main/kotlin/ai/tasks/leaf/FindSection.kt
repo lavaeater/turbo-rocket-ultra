@@ -7,6 +7,8 @@ import com.badlogic.gdx.ai.btree.Task
 import ecs.components.ai.CoordinateStorageComponent
 import ecs.systems.sectionX
 import ecs.systems.sectionY
+import ktx.log.debug
+import ktx.log.info
 import map.grid.Coordinate
 import physics.transform
 import kotlin.reflect.KClass
@@ -32,6 +34,7 @@ class FindSection<T: CoordinateStorageComponent>(private val componentClass: KCl
             storage.add(currentSection)
             storage.add(foundSection)
         })
+        debug { "Found section $foundSection" }
         return Status.SUCCEEDED
     }
 

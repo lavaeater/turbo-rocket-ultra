@@ -29,6 +29,7 @@ import factories.player
 import gamestate.GameEvent
 import gamestate.GameState
 import injection.Context.inject
+import input.KeyboardControl
 import ktx.app.KtxScreen
 import ktx.ashley.allOf
 import ktx.ashley.getSystem
@@ -190,6 +191,9 @@ class GameScreen(private val gameState: StateMachine<GameState, GameEvent>) : Kt
                     with<CameraFollowComponent>()
                     with<PlayerComponent> {
                         this.player = player
+                    }
+                    with<KeyboardControl> {
+
                     }
                 }
                 player.entity = enemy

@@ -11,6 +11,7 @@ import ecs.components.ai.PositionTarget
 import ecs.components.ai.StuckComponent
 import ecs.systems.graphics.GameConstants
 import ktx.ashley.remove
+import ktx.log.debug
 import ktx.log.info
 import ktx.math.vec2
 import physics.*
@@ -58,11 +59,12 @@ class MoveTowardsPositionTarget(private val run: Boolean = false) : EntityTask()
             actualCoolDown = coolDown
             currentDistance = positionToMoveTowards.dst(entity.transform().position)
             if(previousDistance - currentDistance <= GameConstants.STUCK_DISTANCE) {
-                info { "We're stuck in the muud!" }
+                debug { "MoveTowards got stuck" }
                 entity.addComponent<StuckComponent>()
                 entity.remove<PositionTarget>()
                 return Status.FAILED
             } else if(currentDistance < GameConstants.TOUCHING_DISTANCE){
+                debug { "MoveTowards reached destination with $currentDistance to spare " }
                 entity.remove<PositionTarget>()
                 return Status.SUCCEEDED
             }
