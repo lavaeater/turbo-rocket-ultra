@@ -3,7 +3,7 @@ package ecs.systems.ai.boss
 import com.badlogic.ashley.core.Entity
 import com.badlogic.ashley.systems.IteratingSystem
 import com.badlogic.gdx.ai.btree.Task
-import ecs.components.ai.IsAwareOfPlayer
+import ecs.components.ai.old.IsAwareOfPlayer
 import ecs.components.ai.boss.RushPlayer
 import ecs.components.enemy.AgentProperties
 import ecs.components.gameplay.TransformComponent

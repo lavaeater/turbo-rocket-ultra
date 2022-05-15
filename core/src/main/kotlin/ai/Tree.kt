@@ -1,24 +1,9 @@
 package ai
 
 import ai.builders.*
-import ai.tasks.EntityDecorator
-import ai.tasks.invertDecorator
-import ai.tasks.leaf.AmblingEndpointComponent
-import ai.tasks.leaf.FindSection
-import ai.tasks.leaf.PathComponent
-import ai.tasks.leaf.SeenPlayerPositions
 import com.badlogic.ashley.core.Entity
-import com.badlogic.gdx.ai.btree.*
-import com.badlogic.gdx.ai.btree.decorator.AlwaysFail
-import com.badlogic.gdx.ai.btree.decorator.AlwaysSucceed
-import com.badlogic.gdx.ai.btree.decorator.Invert
-import com.badlogic.gdx.ai.btree.decorator.Repeat
-import com.badlogic.gdx.ai.utils.random.ConstantIntegerDistribution
 import ecs.components.ai.*
-import ecs.components.ai.boss.RushPlayer
-import ecs.components.gameplay.BurningComponent
 import ecs.components.gameplay.ObstacleComponent
-import ecs.components.player.PlayerComponent
 import ecs.components.towers.FindTarget
 import ecs.components.towers.Shoot
 import ecs.components.towers.TargetInRange
@@ -28,20 +13,38 @@ object Tree {
         add(
             repeatForever(
                 selector {
-                    first(selector {
+                    selector {
                         first(invert(rotate(5f)))
                         then(invert(delayFor(1f)))
                         then(invert(lookForAndStore<ObstacleComponent, SeenPlayerPositions>()))
-                    })
+                    }
                     then(invert(sequence {
-                        first(findSection<AmblingEndpointComponent>())
-                        then(findPathTo<AmblingEndpointComponent>())
+                        first(findSection<AmblingEndpoint>())
+                        then(findPathTo<AmblingEndpoint>())
                     }))
-                    then(ifEntityHas<PathComponent>(selector {
-                        /*
-                        Follow a path code goes here
-                         */
-                    }))
+                    then(
+                        ifEntityHas<Path>
+
+
+
+                            invert(
+                                ai.builders.selector {
+                                    ifEntityHas()
+                                    selector {
+                                        first(invert(entityHas<PositionTarget>()))
+                                        then(invert(moveTowardsPositionTarget()))
+                                    }
+                                    selector {
+                                        first(entityHas<PositionTarget>())
+                                        then(invert(getNextStepOnPath()))
+                                    }
+                                    /*
+                                    The above succeeding means we end up here, implying we have
+                                    reached the end of the path. So what do we do now then?
+                                     */
+                                }
+                        )
+                    ))
                 })
         )
     }

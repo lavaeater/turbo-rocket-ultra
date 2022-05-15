@@ -7,6 +7,7 @@ import com.badlogic.ashley.core.Entity
 import com.badlogic.gdx.ai.btree.Task
 import com.badlogic.gdx.math.Vector2
 import com.badlogic.gdx.physics.box2d.Fixture
+import ecs.components.ai.PositionStorageComponent
 import ecs.components.gameplay.TransformComponent
 import factories.world
 import input.canISeeYouFromHere

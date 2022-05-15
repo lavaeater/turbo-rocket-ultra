@@ -1,7 +1,7 @@
 package ecs.components.gameplay
 
 import data.Player
-import ecs.components.ai.CoolDownComponent
+import ecs.components.ai.old.CoolDownComponent
 
 class BurningComponent : CoolDownComponent() {
     lateinit var player: Player

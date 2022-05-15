@@ -24,8 +24,8 @@ import com.esotericsoftware.kryo.serializers.EnumNameSerializer
 import data.Player
 import ecs.components.AudioComponent
 import ecs.components.BodyComponent
-import ecs.components.ai.BehaviorComponent
-import ecs.components.ai.GibComponent
+import ecs.components.ai.old.BehaviorComponent
+import ecs.components.fx.GibComponent
 import ecs.components.enemy.*
 import ecs.components.fx.CreateEntityComponent
 import ecs.components.fx.ParticleEffectComponent
@@ -66,7 +66,6 @@ import screens.CounterObject
 import tru.*
 import turbofacts.FactsLikeThatMan
 import turbofacts.TurboFactsOfTheWorld
-import ui.customactors.boundLabel
 import ui.getUiThing
 import kotlin.experimental.or
 

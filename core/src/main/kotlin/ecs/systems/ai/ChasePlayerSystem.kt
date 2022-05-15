@@ -3,9 +3,9 @@ package ecs.systems.ai
 import com.badlogic.ashley.core.Entity
 import com.badlogic.ashley.systems.IteratingSystem
 import com.badlogic.gdx.ai.btree.Task
-import ecs.components.ai.ChasePlayer
-import ecs.components.ai.IsAwareOfPlayer
-import ecs.components.ai.PlayerIsInRange
+import ecs.components.ai.old.ChasePlayer
+import ecs.components.ai.old.IsAwareOfPlayer
+import ecs.components.ai.old.PlayerIsInRange
 import ecs.components.enemy.AgentProperties
 import ecs.components.gameplay.TransformComponent
 import ecs.systems.graphics.GameConstants

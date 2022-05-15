@@ -3,12 +3,11 @@ package ecs.systems.ai
 import com.badlogic.ashley.core.Entity
 import com.badlogic.ashley.systems.IteratingSystem
 import com.badlogic.gdx.ai.btree.Task
-import ecs.components.ai.AlertFriends
-import ecs.components.ai.IsAwareOfPlayer
-import ecs.components.ai.KnownPosition
+import ecs.components.ai.old.AlertFriends
+import ecs.components.ai.old.IsAwareOfPlayer
+import ecs.components.ai.old.KnownPosition
 import ecs.components.enemy.AgentProperties
 import ecs.components.gameplay.TransformComponent
-import ecs.systems.graphics.GameConstants
 import ktx.ashley.allOf
 import physics.agentProps
 import physics.alertFriends

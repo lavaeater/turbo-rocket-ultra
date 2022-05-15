@@ -1,4 +1,4 @@
-package ecs.components.ai
+package ecs.components.ai.old
 
 import ai.tasks.EntityComponentTask
 import com.badlogic.ashley.core.Component

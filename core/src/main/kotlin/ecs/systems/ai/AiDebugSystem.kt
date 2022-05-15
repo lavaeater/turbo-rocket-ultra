@@ -3,7 +3,7 @@ package ecs.systems.ai
 import com.badlogic.ashley.core.Entity
 import com.badlogic.ashley.systems.IteratingSystem
 import com.badlogic.gdx.graphics.g2d.PolygonSpriteBatch
-import ecs.components.ai.BehaviorComponent
+import ecs.components.ai.old.BehaviorComponent
 import ecs.components.gameplay.TransformComponent
 import injection.Context.inject
 import ktx.ashley.allOf

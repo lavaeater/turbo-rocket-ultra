@@ -3,7 +3,7 @@ package ecs.systems.enemy
 import com.badlogic.ashley.core.Entity
 import com.badlogic.ashley.systems.IteratingSystem
 import com.badlogic.gdx.math.Circle
-import ecs.components.ai.NoticedSomething
+import ecs.components.ai.old.NoticedSomething
 import ecs.components.enemy.AgentProperties
 import ecs.components.player.FiredShotsComponent
 import ktx.ashley.allOf

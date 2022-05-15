@@ -1,6 +1,6 @@
 package ecs.components.player
 
-import ecs.components.ai.CoolDownComponent
+import ecs.components.ai.old.CoolDownComponent
 
 class PlayerWaitsForRespawn: CoolDownComponent() {
     init {

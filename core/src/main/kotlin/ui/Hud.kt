@@ -1,6 +1,6 @@
 package ui
 
-import ai.tasks.leaf.SeenPlayerPositions
+import ecs.components.ai.SeenPlayerPositions
 import audio.AudioPlayer
 import com.badlogic.gdx.Gdx
 import com.badlogic.gdx.graphics.OrthographicCamera
@@ -21,7 +21,6 @@ import injection.Context.inject
 import ktx.actors.along
 import ktx.actors.plusAssign
 import ktx.actors.then
-import ktx.ashley.get
 import ktx.math.vec2
 import ktx.math.vec3
 import ktx.scene2d.*

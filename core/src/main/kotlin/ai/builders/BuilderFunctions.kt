@@ -7,7 +7,9 @@ import com.badlogic.gdx.ai.btree.Task
 import com.badlogic.gdx.ai.btree.decorator.*
 import com.badlogic.gdx.ai.utils.random.ConstantIntegerDistribution
 import com.badlogic.gdx.ai.utils.random.UniformIntegerDistribution
-import ecs.components.ai.TaskComponent
+import ecs.components.ai.CoordinateStorageComponent
+import ecs.components.ai.PositionStorageComponent
+import ecs.components.ai.old.TaskComponent
 import map.grid.Coordinate
 
 fun delayFor(seconds: Float) = DelayTask(seconds)
@@ -25,6 +27,11 @@ fun <T> selector(block: SelectorBuilder<T>.() -> Unit) = SelectorBuilder<T>().ap
 fun <T> sequence(block: SequenceBuilder<T>.() -> Unit) = SequenceBuilder<T>().apply(block).build()
 fun <T> parallel(block: ParallelBuilder<T>.() -> Unit) = ParallelBuilder<T>().apply(block).build()
 
+inline fun <T>CompositeTaskBuilder<T>.selector(block: SelectorBuilder<T>.() -> Unit) {
+    this.add(SelectorBuilder<T>().apply(block).build())
+}
+
+
 inline fun <reified T : Component> entityHas() = HasComponentBuilder(T::class.java).build()
 
 inline fun <reified T : TaskComponent> entityDo(block: EntityComponentTaskBuilder<T>.() -> Unit = {}) =
@@ -40,11 +47,19 @@ inline fun <reified ToStoreIn : CoordinateStorageComponent> findSection(
     return FindSection(ToStoreIn::class, method)
 }
 
+fun getNextStepOnPath() : NextStepOnPath {
+    return NextStepOnPath()
+}
+
+fun moveTowardsPositionTarget(run: Boolean = false) : MoveTowardsPositionTarget {
+    return MoveTowardsPositionTarget(run)
+}
+
 inline fun <reified Storage : CoordinateStorageComponent> findPathTo() : FindPathTo<Storage>{
     return FindPathTo(Storage::class)
 }
 
-inline fun <reified T : Component> unlessEntityHas(
+inline fun <reified T : Component> ifEntityHasNot(
     task: Task<Entity>,
     block: EntityDoesNotHaveComponentGuardBuilder<T>.() -> Unit = {}
 ) = EntityDoesNotHaveComponentGuardBuilder(task, T::class.java).apply(block).build()

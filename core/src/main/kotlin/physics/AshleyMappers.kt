@@ -6,8 +6,9 @@ import com.badlogic.ashley.core.Entity
 import com.badlogic.gdx.math.Vector2
 import ecs.components.AudioComponent
 import ecs.components.BodyComponent
-import ecs.components.ai.*
+import ecs.components.ai.old.*
 import ecs.components.enemy.*
+import ecs.components.fx.GibComponent
 import ecs.components.fx.ParticleEffectComponent
 import ecs.components.fx.SplatterComponent
 import ecs.components.gameplay.*

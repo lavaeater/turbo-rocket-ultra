@@ -2,7 +2,7 @@ package ecs.systems.ai
 
 import com.badlogic.ashley.core.Entity
 import com.badlogic.ashley.systems.IteratingSystem
-import ecs.components.ai.BehaviorComponent
+import ecs.components.ai.old.BehaviorComponent
 import ktx.ashley.allOf
 import physics.behavior
 

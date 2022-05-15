@@ -6,8 +6,8 @@ import com.badlogic.ashley.systems.IteratingSystem
 import com.badlogic.gdx.ai.btree.Task
 import com.badlogic.gdx.math.Vector2
 import com.badlogic.gdx.utils.Queue
-import ecs.components.ai.Amble
-import ecs.components.ai.CollidedWithObstacle
+import ecs.components.ai.old.Amble
+import ecs.components.ai.old.CollidedWithObstacle
 import ecs.components.enemy.AgentProperties
 import ecs.components.gameplay.TransformComponent
 import ecs.systems.enemy.stateBooleanFact

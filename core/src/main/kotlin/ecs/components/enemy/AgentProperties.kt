@@ -23,6 +23,7 @@ class AgentProperties : Component, Pool.Poolable {
     var fieldOfView = 180f
     var viewDistance = 90f
     var speed = GameConstants.ENEMY_BASE_SPEED
+    var baseSpeed = GameConstants.ENEMY_BASE_SPEED
     var stunned = false
 
     val directionVector = Vector2.X.cpy()
@@ -83,12 +84,14 @@ class AgentProperties : Component, Pool.Poolable {
         path.clear()
         needsNewNextPosition = true
         fieldOfView = GameConstants.ENEMY_FOV
-        speed = GameConstants.ENEMY_BASE_SPEED
         viewDistance = GameConstants.ENEMY_VIEW_DISTANCE
         directionVector.set(Vector2.X)
         val randomValue = (1..100).random()
         health = if (randomValue < 5) 1000f else 100f
         timeRemaining = 0f
         rotationSpeed = GameConstants.ENEMY_ROTATION_SPEED
+        speed = GameConstants.ENEMY_BASE_SPEED
+        baseSpeed = GameConstants.ENEMY_BASE_SPEED
+        rushSpeed = GameConstants.ENEMY_RUSH_SPEED
     }
 }

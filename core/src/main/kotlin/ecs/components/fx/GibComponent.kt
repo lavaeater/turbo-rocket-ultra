@@ -1,4 +1,6 @@
-package ecs.components.ai
+package ecs.components.fx
+
+import ecs.components.ai.old.CoolDownComponent
 
 class GibComponent: CoolDownComponent() {
     var hasStopped = false

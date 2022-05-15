@@ -4,8 +4,8 @@ import ai.pathfinding.TileGraph
 import com.badlogic.ashley.core.Entity
 import com.badlogic.ashley.systems.IteratingSystem
 import com.badlogic.gdx.ai.btree.Task
-import ecs.components.ai.Investigate
-import ecs.components.ai.NoticedSomething
+import ecs.components.ai.old.Investigate
+import ecs.components.ai.old.NoticedSomething
 import ecs.components.enemy.AgentProperties
 import ecs.components.gameplay.TransformComponent
 import ecs.systems.graphics.GameConstants

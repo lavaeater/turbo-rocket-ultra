@@ -3,7 +3,7 @@ package ecs.systems.enemy
 import com.badlogic.ashley.core.Entity
 import com.badlogic.ashley.systems.IteratingSystem
 import ecs.components.BodyComponent
-import ecs.components.ai.GibComponent
+import ecs.components.fx.GibComponent
 import ecs.components.gameplay.DestroyComponent
 import factories.world
 import ktx.ashley.allOf

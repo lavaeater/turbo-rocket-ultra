@@ -10,7 +10,16 @@ import com.badlogic.gdx.ai.btree.decorator.AlwaysSucceed
 import com.badlogic.gdx.ai.btree.decorator.Invert
 import com.badlogic.gdx.ai.btree.decorator.Repeat
 import com.badlogic.gdx.ai.utils.random.ConstantIntegerDistribution
+import com.badlogic.gdx.math.Vector2
 
+
+/**
+ * returns a unit vector aimed at target from
+ * [this]
+ */
+fun Vector2.aimTowards(target: Vector2): Vector2 {
+    return target.cpy().sub(this).nor()
+}
 fun deltaTime(): Float {
     return GdxAI.getTimepiece().deltaTime
 }
