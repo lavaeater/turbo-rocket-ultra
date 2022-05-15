@@ -34,6 +34,25 @@ class GridMapManager {
 
     private val bodies = mutableListOf<Body>()
 
+    fun getRandomSection(except: Coordinate, minDistance: Int = 2, maxDistance: Int = 5) : Coordinate {
+        val minXa = except.x - maxDistance
+        val minXb = except.x - minDistance
+        val maxXa = except.x + maxDistance
+        val maxXb = except.x + minDistance
+        val minYa = except.y - maxDistance
+        val minYb = except.y - minDistance
+        val maxYa = except.y + maxDistance
+        val maxYb = except.y + minDistance
+        val allKeys = gridMap
+            .keys
+            .filter { it != except && it.x > minXa && it.x < maxXa && it.y > minYa && it.y < maxYa }
+        val innerKeys = gridMap
+            .keys
+            .filter { it != except && it.x > minXb && it.x < maxXb && it.y > minYb && it.y < maxYb }
+        val outerKeys = allKeys - innerKeys.toSet()
+        return if(outerKeys.any()) outerKeys.random() else getRandomSection(except, minDistance, maxDistance + 1)
+    }
+
     fun getRandomSection(except: Coordinate, maxDistance: Int = 5): Coordinate {
         val minX = except.x - maxDistance
         val maxX = except.x + maxDistance

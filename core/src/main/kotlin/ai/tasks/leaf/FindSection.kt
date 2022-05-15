@@ -18,7 +18,7 @@ import kotlin.reflect.KClass
  *
  * The most basic one is "pick a random section"
  */
-class FindSection<T: CoordinateStorageComponent>(private val componentClass: KClass<T>, private val method: (Coordinate, Int) -> Coordinate) : EntityTask() {
+class FindSection<T: CoordinateStorageComponent>(private val componentClass: KClass<T>, private val method: (Coordinate, Int, Int) -> Coordinate) : EntityTask() {
     override fun copyTo(task: Task<Entity>?): Task<Entity> {
         TODO("Not yet implemented")
     }
@@ -26,7 +26,7 @@ class FindSection<T: CoordinateStorageComponent>(private val componentClass: KCl
     override fun execute(): Status {
         val position = entity.transform().position
         val currentSection = TileGraph.getCoordinateInstance(position.sectionX(), position.sectionY())
-        val foundSection = method(currentSection, 10) //must it be able to fail?
+        val foundSection = method(currentSection, 3, 10) //must it be able to fail?
         entity.remove(componentClass.java)
         entity.add(engine.createComponent(componentClass.java).apply {
             storage.add(currentSection)
