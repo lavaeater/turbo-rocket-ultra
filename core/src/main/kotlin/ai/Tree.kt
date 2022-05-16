@@ -5,6 +5,7 @@ import com.badlogic.ashley.core.Entity
 import com.badlogic.gdx.ai.btree.Task
 import ecs.components.ai.*
 import ecs.components.gameplay.ObstacleComponent
+import ecs.components.player.PlayerComponent
 import ecs.components.towers.FindTarget
 import ecs.components.towers.Shoot
 import ecs.components.towers.TargetInRange
@@ -22,7 +23,13 @@ object Tree {
         root(
             dyanmicGuardSelector<Entity> {
                 ifThis(entityHas<AttackPoint>()).then(
-                    moveTowardsPositionTarget()
+                    moveTowardsPositionTarget<AttackPoint>()
+                )
+                ifThis(entityDoesNotHave<SeenPlayerPositions>()).then(
+                    runInTurnUntilFirstFailure {
+                        expectSuccess(rotate(15f))
+                        invertResultOf(lookForAndStore<ObstacleComponent, SeenPlayerPositions>())
+                    }
                 )
                 ifThis(entityHas<SeenPlayerPositions>()).then(
                     selectTarget()
@@ -33,8 +40,9 @@ object Tree {
                         expectSuccess(findPathTo<AmblingEndpoint>())
                     }
                 )
-                ifThis(entityDoesNotHave<Waypoint>()).then(
-                    getNextStepOnPath()
+                ifThis(entityDoesNotHave<Waypoint>()).then(getNextStepOnPath())
+                ifThis(entityHas<Waypoint>()).then(
+                    moveTowardsPositionTarget<Waypoint>()
                 )
             }
             repeatForever(

@@ -22,7 +22,6 @@ import ecs.systems.BodyDestroyerSystem
 import ecs.systems.CharacterWalkAndShootDirectionSystem
 import ecs.systems.PhysicsSystem
 import ecs.systems.ai.*
-import ecs.systems.ai.boss.RushPlayerSystem
 import ecs.systems.ai.towers.TowerShootSystem
 import ecs.systems.ai.towers.TowerTargetFinderSystem
 import ecs.systems.enemy.*

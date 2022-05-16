@@ -9,6 +9,7 @@ import com.badlogic.gdx.ai.utils.random.ConstantIntegerDistribution
 import com.badlogic.gdx.ai.utils.random.UniformIntegerDistribution
 import ecs.components.ai.CoordinateStorageComponent
 import ecs.components.ai.PositionStorageComponent
+import ecs.components.ai.PositionTarget
 import ecs.components.ai.old.TaskComponent
 import map.grid.Coordinate
 
@@ -46,8 +47,8 @@ fun getNextStepOnPath(): NextStepOnPath {
     return NextStepOnPath()
 }
 
-fun moveTowardsPositionTarget(run: Boolean = false): MoveTowardsPositionTarget {
-    return MoveTowardsPositionTarget(run)
+inline fun <reified T: PositionTarget>moveTowardsPositionTarget(run: Boolean = false): MoveTowardsPositionTarget<T> {
+    return MoveTowardsPositionTarget(run, T::class)
 }
 
 inline fun <reified Storage : CoordinateStorageComponent> findPathTo(): FindPathTo<Storage> {
