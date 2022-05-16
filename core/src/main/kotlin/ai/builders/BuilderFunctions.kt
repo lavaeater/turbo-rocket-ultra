@@ -1,5 +1,6 @@
 package ai.builders
 
+import ai.tasks.EntityTask
 import ai.tasks.leaf.*
 import com.badlogic.ashley.core.Component
 import com.badlogic.ashley.core.Entity
@@ -12,6 +13,7 @@ import ecs.components.ai.PositionStorageComponent
 import ecs.components.ai.PositionTarget
 import ecs.components.ai.old.TaskComponent
 import map.grid.Coordinate
+import kotlin.reflect.KClass
 
 fun delayFor(seconds: Float) = DelayTask(seconds)
 fun rotate(degrees: Float, counterClockwise: Boolean = true) = RotateTask(degrees, counterClockwise)
@@ -35,6 +37,22 @@ inline fun <reified T : TaskComponent> entityDo(block: EntityComponentTaskBuilde
 
 inline fun <reified ToLookFor : Component, reified ToStoreIn : PositionStorageComponent> lookForAndStore(): LookForAndStore<ToLookFor, ToStoreIn> {
     return LookForAndStore(ToLookFor::class, ToStoreIn::class)
+}
+
+class SelectTarget<Targets: PositionStorageComponent, TargetStorage: PositionTarget>(targets: KClass<Targets>, targetStorage: KClass<TargetStorage>): EntityTask() {
+    val ma
+    override fun copyTo(task: Task<Entity>?): Task<Entity> {
+        TODO("Not yet implemented")
+    }
+
+    override fun execute(): Status {
+        TODO("Not yet implemented")
+    }
+
+}
+
+inline fun <reified Targets: PositionStorageComponent, reified TargetStorage: PositionTarget> selectTarget(): SelectTarget<Targets, TargetStorage> {
+
 }
 
 inline fun <reified ToStoreIn : CoordinateStorageComponent> findSection(

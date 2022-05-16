@@ -45,37 +45,6 @@ object Tree {
                     moveTowardsPositionTarget<Waypoint>()
                 )
             }
-            repeatForever(
-                exitOnFirstThatSucceeds {
-                    expectedToSucceed(
-                        onlyIfEntityHas<Path>(
-                            exitOnFirstThatSucceeds {
-                                expectFailureAndMoveToNext(
-                                    onlyIfEntityHas<PositionTarget>(invertResultOf(moveTowardsPositionTarget()))
-                                )
-                                expectFailureAndMoveToNext(
-                                    invertResultOf(
-                                        repeat(10, exitOnFirstThatSucceeds {
-                                            expectFailureAndMoveToNext(invertResultOf(rotate(15f)))
-                                            expectedToSucceed(lookForAndStore<ObstacleComponent, SeenPlayerPositions>())
-                                        })
-                                    )
-                                )
-                                expectedToSucceed(
-                                    onlyIfEntityDoesNotHave<PositionTarget>(getNextStepOnPath())
-                                )
-                            }
-                        )
-                    )
-                    expectedToSucceed(
-                        onlyIfEntityDoesNotHave<Path>(
-                            exitOnFirstThatFails {
-                                expectSuccess(findSection<AmblingEndpoint>())
-                                expectSuccess(findPathTo<AmblingEndpoint>())
-                            }
-                        )
-                    )
-                })
         )
     }
     fun testTree() = tree<Entity> {
