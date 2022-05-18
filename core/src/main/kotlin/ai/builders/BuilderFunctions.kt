@@ -1,6 +1,5 @@
 package ai.builders
 
-import ai.tasks.EntityTask
 import ai.tasks.leaf.*
 import com.badlogic.ashley.core.Component
 import com.badlogic.ashley.core.Entity
@@ -13,7 +12,6 @@ import ecs.components.ai.PositionStorageComponent
 import ecs.components.ai.PositionTarget
 import ecs.components.ai.old.TaskComponent
 import map.grid.Coordinate
-import kotlin.reflect.KClass
 
 fun delayFor(seconds: Float) = DelayTask(seconds)
 fun rotate(degrees: Float, counterClockwise: Boolean = true) = RotateTask(degrees, counterClockwise)
@@ -27,7 +25,9 @@ fun <T> fail(task: Task<T>) = AlwaysFail(task)
 fun <T> invertResultOf(task: Task<T>) = Invert(task)
 fun <T> tree(block: TreeBuilder<T>.() -> Unit) = TreeBuilder<T>().apply(block).build()
 fun <T> exitOnFirstThatSucceeds(block: SelectorBuilder<T>.() -> Unit) = SelectorBuilder<T>().apply(block).build()
-fun <T> dyanmicGuardSelector(block: DynamicGuardSelectorBuilder<T>.() -> Unit) = DynamicGuardSelectorBuilder<T>().apply(block).build()
+fun <T> dyanmicGuardSelector(block: DynamicGuardSelectorBuilder<T>.() -> Unit) =
+    DynamicGuardSelectorBuilder<T>().apply(block).build()
+
 fun <T> runInTurnUntilFirstFailure(block: SequenceBuilder<T>.() -> Unit) = SequenceBuilder<T>().apply(block).build()
 fun <T> exitOnFirstThatFails(block: SequenceBuilder<T>.() -> Unit) = SequenceBuilder<T>().apply(block).build()
 fun <T> parallel(block: ParallelBuilder<T>.() -> Unit) = ParallelBuilder<T>().apply(block).build()
@@ -39,20 +39,9 @@ inline fun <reified ToLookFor : Component, reified ToStoreIn : PositionStorageCo
     return LookForAndStore(ToLookFor::class, ToStoreIn::class)
 }
 
-class SelectTarget<Targets: PositionStorageComponent, TargetStorage: PositionTarget>(targets: KClass<Targets>, targetStorage: KClass<TargetStorage>): EntityTask() {
-    val ma
-    override fun copyTo(task: Task<Entity>?): Task<Entity> {
-        TODO("Not yet implemented")
-    }
-
-    override fun execute(): Status {
-        TODO("Not yet implemented")
-    }
-
-}
-
-inline fun <reified Targets: PositionStorageComponent, reified TargetStorage: PositionTarget> selectTarget(): SelectTarget<Targets, TargetStorage> {
-
+inline fun <reified Targets : PositionStorageComponent,
+        reified TargetStorage : PositionTarget> selectTarget(): SelectTarget<Targets, TargetStorage> {
+    return SelectTarget(Targets::class, TargetStorage::class)
 }
 
 inline fun <reified ToStoreIn : CoordinateStorageComponent> findSection(
@@ -65,7 +54,7 @@ fun getNextStepOnPath(): NextStepOnPath {
     return NextStepOnPath()
 }
 
-inline fun <reified T: PositionTarget>moveTowardsPositionTarget(run: Boolean = false): MoveTowardsPositionTarget<T> {
+inline fun <reified T : PositionTarget> moveTowardsPositionTarget(run: Boolean = false): MoveTowardsPositionTarget<T> {
     return MoveTowardsPositionTarget(run, T::class)
 }
 
