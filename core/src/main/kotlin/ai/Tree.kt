@@ -26,17 +26,19 @@ object Tree {
     fun nowWithAttacks() = tree<Entity> {
         root(
             dyanmicGuardSelector<Entity> {
-                doThis(moveTowardsPositionTarget<AttackPoint>())
-                    .ifThis(entityHas<AttackPoint>())
 
                 doThis(runInTurnUntilFirstFailure {
                     expectSuccess(rotate(15f))
-                    invertResultOf(lookForAndStore<ObstacleComponent, SeenPlayerPositions>())
+                    expectFailure(invertResultOf(lookForAndStore<ObstacleComponent, SeenPlayerPositions>()))
                 })
                     .ifThis(entityDoesNotHave<SeenPlayerPositions>())
 
+                doThis(invertResultOf(moveTowardsPositionTarget<AttackPoint>(run = true)))
+                    .ifThis(entityHas<AttackPoint>())
+
                 doThis(selectTarget<SeenPlayerPositions, AttackPoint>())
                     .ifThis(entityHas<SeenPlayerPositions>())
+
 
                 doThis(exitOnFirstThatFails {
                     expectSuccess(findSection<AmblingEndpoint>())
