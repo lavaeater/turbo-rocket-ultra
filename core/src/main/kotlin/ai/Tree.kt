@@ -19,7 +19,7 @@ fun <T>Task<T>.then(task: Task<T>) :Task<T> {
 }
 
 object Tree {
-    fun nowWithAttachs() = tree<Entity> {
+    fun nowWithAttacks() = tree<Entity> {
         root(
             dyanmicGuardSelector<Entity> {
                 ifThis(entityHas<AttackPoint>()).then(
@@ -32,7 +32,7 @@ object Tree {
                     }
                 )
                 ifThis(entityHas<SeenPlayerPositions>()).then(
-                    selectTarget()
+                    selectTarget<SeenPlayerPositions, AttackPoint>()
                 )
                 ifThis(entityDoesNotHave<Path>()).then(
                     exitOnFirstThatFails {
@@ -55,7 +55,7 @@ object Tree {
                         onlyIfEntityHas<Path>(
                             exitOnFirstThatSucceeds {
                                 expectFailureAndMoveToNext(
-                                    onlyIfEntityHas<PositionTarget>(invertResultOf(moveTowardsPositionTarget()))
+                                    onlyIfEntityHas<PositionTarget>(invertResultOf(moveTowardsPositionTarget<Waypoint>()))
                                 )
                                 expectFailureAndMoveToNext(
                                     invertResultOf(

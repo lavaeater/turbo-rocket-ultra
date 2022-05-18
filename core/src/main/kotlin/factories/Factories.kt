@@ -681,7 +681,7 @@ fun enemy(at: Vector2, init: EngineEntity.() -> Unit = {}): Entity {
             lootTable.count = (1..5).random()
         }
         bt = with {
-            tree = Tree.testTree().apply {
+            tree = Tree.nowWithAttacks().apply {
                 `object` = this@entity.entity
             }
         }
