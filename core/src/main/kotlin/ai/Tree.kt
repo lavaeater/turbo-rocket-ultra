@@ -5,48 +5,54 @@ import com.badlogic.ashley.core.Entity
 import com.badlogic.gdx.ai.btree.Task
 import ecs.components.ai.*
 import ecs.components.gameplay.ObstacleComponent
-import ecs.components.player.PlayerComponent
 import ecs.components.towers.FindTarget
 import ecs.components.towers.Shoot
 import ecs.components.towers.TargetInRange
 
-fun <T>ifThis(task: Task<T>) : Task<T> {
+fun <T> useThisGuard(task: Task<T>): Task<T> {
     return task
 }
-fun <T>Task<T>.then(task: Task<T>) :Task<T> {
+
+fun <T> Task<T>.then(task: Task<T>): Task<T> {
     task.guard = this
     return task
+}
+
+fun <T> Task<T>.ifThis(task: Task<T>) {
+    this.guard = task
 }
 
 object Tree {
     fun nowWithAttacks() = tree<Entity> {
         root(
             dyanmicGuardSelector<Entity> {
-                ifThis(entityHas<AttackPoint>()).then(
-                    moveTowardsPositionTarget<AttackPoint>()
-                )
-                ifThis(entityDoesNotHave<SeenPlayerPositions>()).then(
-                    runInTurnUntilFirstFailure {
-                        expectSuccess(rotate(15f))
-                        invertResultOf(lookForAndStore<ObstacleComponent, SeenPlayerPositions>())
-                    }
-                )
-                ifThis(entityHas<SeenPlayerPositions>()).then(
-                    selectTarget<SeenPlayerPositions, AttackPoint>()
-                )
-                ifThis(entityDoesNotHave<Path>()).then(
-                    exitOnFirstThatFails {
-                        expectSuccess(findSection<AmblingEndpoint>())
-                        expectSuccess(findPathTo<AmblingEndpoint>())
-                    }
-                )
-                ifThis(entityDoesNotHave<Waypoint>()).then(getNextStepOnPath())
-                ifThis(entityHas<Waypoint>()).then(
-                    moveTowardsPositionTarget<Waypoint>()
-                )
+                doThis(moveTowardsPositionTarget<AttackPoint>())
+                    .ifThis(entityHas<AttackPoint>())
+
+                doThis(runInTurnUntilFirstFailure {
+                    expectSuccess(rotate(15f))
+                    invertResultOf(lookForAndStore<ObstacleComponent, SeenPlayerPositions>())
+                })
+                    .ifThis(entityDoesNotHave<SeenPlayerPositions>())
+
+                doThis(selectTarget<SeenPlayerPositions, AttackPoint>())
+                    .ifThis(entityHas<SeenPlayerPositions>())
+
+                doThis(exitOnFirstThatFails {
+                    expectSuccess(findSection<AmblingEndpoint>())
+                    expectSuccess(findPathTo<AmblingEndpoint>())
+                })
+                    .ifThis(entityDoesNotHave<Path>())
+
+                doThis(getNextStepOnPath())
+                    .ifThis(entityDoesNotHave<Waypoint>())
+
+                doThis(moveTowardsPositionTarget<Waypoint>())
+                    .ifThis(entityHas<Waypoint>())
             }
         )
     }
+
     fun testTree() = tree<Entity> {
         root(
             repeatForever(
