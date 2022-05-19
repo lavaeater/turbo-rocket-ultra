@@ -6,6 +6,7 @@ import com.badlogic.gdx.ai.btree.Task
 import ecs.components.ai.*
 import ecs.components.gameplay.ObstacleComponent
 import ecs.components.gameplay.TargetComponent
+import ecs.components.player.PlayerComponent
 import ecs.components.towers.FindTarget
 import ecs.components.towers.Shoot
 import ecs.components.towers.TargetInRange
@@ -39,14 +40,14 @@ object Tree {
 
                 doThis(runInTurnUntilFirstFailure {
                     expectSuccess(rotate(15f))
-                    expectFailure(fail(lookForAndStore<TargetComponent, SeenPlayerPositions>(true)))
+                    expectFailure(fail(lookForAndStore<PlayerComponent, SeenPlayerPositions>(true)))
                 })
                     .ifThis(entityDoesNotHave<SeenPlayerPositions>())
 
                 doThis(
                     tryInTurn {
                         expectFailureAndMoveToNext(invertResultOf(moveTowardsPositionTarget<AttackPoint>(run = true)))
-                        expectFailureAndMoveToNext(invertResultOf(attack<TargetComponent>()))
+                        expectFailureAndMoveToNext(invertResultOf(attack<PlayerComponent>()))
                     }
                 )
                     .ifThis(entityHas<AttackPoint>())
