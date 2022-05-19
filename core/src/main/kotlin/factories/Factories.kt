@@ -7,10 +7,8 @@ import com.badlogic.ashley.core.Engine
 import com.badlogic.ashley.core.Entity
 import com.badlogic.gdx.Gdx
 import com.badlogic.gdx.ai.btree.BehaviorTree
-import com.badlogic.gdx.ai.btree.LeafTask
 import com.badlogic.gdx.ai.btree.Task
 import com.badlogic.gdx.ai.btree.Task.Status
-import com.badlogic.gdx.ai.btree.branch.Selector
 import com.badlogic.gdx.graphics.Color
 import com.badlogic.gdx.graphics.g2d.Sprite
 import com.badlogic.gdx.math.MathUtils
@@ -20,17 +18,13 @@ import com.badlogic.gdx.physics.box2d.Body
 import com.badlogic.gdx.physics.box2d.BodyDef
 import com.badlogic.gdx.physics.box2d.World
 import com.badlogic.gdx.scenes.scene2d.Action
-import com.esotericsoftware.kryo.Kryo
-import com.esotericsoftware.kryo.io.Input
-import com.esotericsoftware.kryo.io.Output
-import com.esotericsoftware.kryo.serializers.EnumNameSerializer
 import data.Player
 import ecs.components.AudioComponent
 import ecs.components.BodyComponent
 import ecs.components.ai.old.BehaviorComponent
-import ecs.components.fx.GibComponent
 import ecs.components.enemy.*
 import ecs.components.fx.CreateEntityComponent
+import ecs.components.fx.GibComponent
 import ecs.components.fx.ParticleEffectComponent
 import ecs.components.fx.SplatterComponent
 import ecs.components.gameplay.*
@@ -43,10 +37,10 @@ import ecs.components.pickups.LootDropComponent
 import ecs.components.player.*
 import ecs.components.towers.TowerComponent
 import ecs.systems.graphics.GameConstants
+import ecs.systems.graphics.GameConstants.PIXELS_PER_METER
 import ecs.systems.graphics.GameConstants.PLAYER_DENSITY
 import ecs.systems.graphics.GameConstants.SHIP_ANGULAR_DAMPING
 import ecs.systems.graphics.GameConstants.SHIP_LINEAR_DAMPING
-import ecs.systems.graphics.GameConstants.PIXELS_PER_METER
 import features.pickups.*
 import features.weapons.AmmoType
 import features.weapons.WeaponDefinition
@@ -61,7 +55,6 @@ import ktx.box2d.body
 import ktx.box2d.box
 import ktx.box2d.circle
 import ktx.box2d.filter
-import ktx.log.info
 import ktx.math.random
 import ktx.math.vec2
 import ktx.scene2d.*
@@ -741,6 +734,47 @@ fun addUiThing(entity: Entity, bt: BehaviorComponent) {
     })
 }
 
+fun targetStation(
+    at: Vector2,
+    level: Int,
+    width: Float = 4f,
+    height: Float = 4f
+) {
+    val box2dBody = world().body {
+        type = BodyDef.BodyType.StaticBody
+        position.set(at)
+        box(width, height) {
+            restitution = 0f
+            filter {
+                categoryBits = Box2dCategories.objectives
+                maskBits = Box2dCategories.players or Box2dCategories.lights
+            }
+        }
+    }
+    val entity = engine().entity {
+        with<BodyComponent> { body = box2dBody }
+        with<TransformComponent> { position.set(box2dBody.position) }
+        with<TargetComponent>()
+        with<SpriteComponent> {
+            sprite = Assets.towers["objective"]!!
+            scale = 4f
+            offsetY = -4f
+        }
+        with<RenderableComponent> {
+            layer = 1
+            renderableType = RenderableType.Sprite
+        }
+        with<MiniMapComponent> {
+            color = Color.GREEN
+        }
+        with<ObjectiveComponent> {
+            id = "I did this"
+        }
+        with<ObstacleComponent>()
+    }
+    box2dBody.userData = entity
+}
+
 fun hackingStation(
     at: Vector2,
     level: Int,
@@ -981,6 +1015,7 @@ fun objective(
             }
         }
     }
+
     val entity = engine().entity {
         with<BodyComponent> { body = box2dBody }
         with<TransformComponent> { position.set(box2dBody.position) }
@@ -1009,61 +1044,6 @@ fun objective(
     }
     box2dBody.userData = entity
     return box2dBody
-}
-
-object TreeCache {
-    val trees = mutableMapOf<String, ByteArray>()
-    val kryo: Kryo by lazy {
-        Kryo().apply {
-            references = true
-            isRegistrationRequired = false
-            register(Status::class.javaObjectType, EnumNameSerializer(Status::class.javaObjectType))
-            register(BehaviorTree<Entity>().javaClass)
-        }
-    }
-}
-
-fun unKryoSomeBitch(treeName: String = "regular_enemy"): BehaviorTree<Entity> {
-    var t = TreeCache.trees[treeName]
-    if (t == null) {
-        val file = Gdx.files.local("${treeName}.tree")
-        t = if (file.exists()) {
-            file.readBytes()
-        } else {
-            when (treeName) {
-                "alert_enemies" -> {
-                    val tr = Tree.testTree()
-                    tr.kryoThisBitch(treeName)
-                }
-                else -> {
-                    val tr = Tree.testTree()
-                    tr.kryoThisBitch(treeName)
-                }
-            }
-        }
-        TreeCache.trees[treeName] = t!!
-    }
-    val input = Input(t)
-    return TreeCache.kryo.readObject(input, BehaviorTree<Entity>().javaClass)
-}
-
-fun ByteArray.kryoThisBitchToDisk(id: Int) {
-    val stream = Gdx.files.local("${id}.tree")
-    stream.writeBytes(this, false)
-}
-
-
-fun BehaviorTree<Entity>.kryoThisBitch(): ByteArray {
-    val output = Output(100000, 10000000)
-    TreeCache.kryo.writeObject(output, this)
-    return output.toBytes()
-}
-
-fun BehaviorTree<Entity>.kryoThisBitch(treeName: String): ByteArray {
-    val stream = Gdx.files.local("${treeName}.tree")
-    val bytes = this.kryoThisBitch()
-    stream.writeBytes(bytes, false)
-    return bytes
 }
 
 fun <T> Task<T>.prettyPrint(level: Int = 0): String {

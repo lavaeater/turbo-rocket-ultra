@@ -8,7 +8,6 @@ import ecs.components.enemy.AgentProperties
 import ecs.components.gameplay.DestroyComponent
 import factories.factsOfTheWorld
 import factories.gibs
-import factories.kryoThisBitch
 import factories.lootBox
 import ktx.ashley.allOf
 import physics.*
@@ -24,7 +23,7 @@ object FitnessTracker {
         if(fd == null) {
             val bt = enemy.behavior().tree
             bt.`object` = null
-            fitnessData.add(FitnessData(key, enemy.fitnesScore(), bt.kryoThisBitch()))
+            fitnessData.add(FitnessData(key, enemy.fitnesScore(), byteArrayOf()))
             bt.`object` = enemy
         } else {
             fd.fitness = enemy.fitnesScore()

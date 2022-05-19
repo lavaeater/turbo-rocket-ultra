@@ -8,4 +8,5 @@ interface IGridMapDefinition {
     fun hasSpawner(coordinate: Coordinate): Boolean
     fun hasBoss(coordinate: Coordinate): Boolean
     fun hasHackingStation(coordinate: Coordinate) : Boolean
+    fun hasTarget(coordinate: Coordinate): Boolean
 }

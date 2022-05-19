@@ -5,6 +5,7 @@ import com.badlogic.ashley.core.Entity
 import com.badlogic.gdx.ai.btree.Task
 import ecs.components.ai.*
 import ecs.components.gameplay.ObstacleComponent
+import ecs.components.gameplay.TargetComponent
 import ecs.components.towers.FindTarget
 import ecs.components.towers.Shoot
 import ecs.components.towers.TargetInRange
@@ -25,11 +26,20 @@ fun <T> Task<T>.ifThis(task: Task<T>) {
 object Tree {
     fun nowWithAttacks() = tree<Entity> {
         root(
-            dyanmicGuardSelector<Entity> {
+            exitOnFirstThatSucceeds {
+
+                doThis(exitOnFirstThatFails {
+                    expectSuccess(findSection<AmblingEndpoint>())
+                    expectFailure(invertResultOf(findPathTo<AmblingEndpoint>()))
+                })
+                    .ifThis(entityDoesNotHave<Path>())
+
+                doThis(invertResultOf(getNextStepOnPath()))
+                    .ifThis(entityDoesNotHave<Waypoint>())
 
                 doThis(runInTurnUntilFirstFailure {
                     expectSuccess(rotate(15f))
-                    expectFailure(invertResultOf(lookForAndStore<ObstacleComponent, SeenPlayerPositions>()))
+                    expectFailure(fail(lookForAndStore<TargetComponent, SeenPlayerPositions>()))
                 })
                     .ifThis(entityDoesNotHave<SeenPlayerPositions>())
 
@@ -39,17 +49,7 @@ object Tree {
                 doThis(selectTarget<SeenPlayerPositions, AttackPoint>())
                     .ifThis(entityHas<SeenPlayerPositions>())
 
-
-                doThis(exitOnFirstThatFails {
-                    expectSuccess(findSection<AmblingEndpoint>())
-                    expectSuccess(findPathTo<AmblingEndpoint>())
-                })
-                    .ifThis(entityDoesNotHave<Path>())
-
-                doThis(getNextStepOnPath())
-                    .ifThis(entityDoesNotHave<Waypoint>())
-
-                doThis(moveTowardsPositionTarget<Waypoint>())
+                doThis(invertResultOf(moveTowardsPositionTarget<Waypoint>()))
                     .ifThis(entityHas<Waypoint>())
             }
         )
