@@ -16,6 +16,8 @@ import com.badlogic.gdx.utils.Queue
 import com.badlogic.gdx.utils.viewport.ExtendViewport
 import com.rafaskoberg.gdx.typinglabel.TypingLabel
 import data.Players
+import ecs.components.enemy.AttackableProperties
+import ecs.systems.graphics.GameConstants
 import factories.factsOfTheWorld
 import injection.Context.inject
 import ktx.actors.along
@@ -131,9 +133,9 @@ class Hud(private val batch: Batch) : IUserInterface, MessageReceiver {
                             )
                             row()
                             boundProgressBar(
-                                { player.health },
+                                { player.entity.getComponent<AttackableProperties>().health },
                                 0f,
-                                player.startingHealth,
+                                GameConstants.BASE_HEALTH,
                                 0.1f
                             ) { }.inCell.align(Align.right)
                             row()

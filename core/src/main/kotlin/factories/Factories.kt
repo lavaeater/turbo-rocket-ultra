@@ -5,7 +5,6 @@ import ai.tasks.EntityComponentTask
 import ai.tasks.EntityTask
 import com.badlogic.ashley.core.Engine
 import com.badlogic.ashley.core.Entity
-import com.badlogic.gdx.Gdx
 import com.badlogic.gdx.ai.btree.BehaviorTree
 import com.badlogic.gdx.ai.btree.Task
 import com.badlogic.gdx.ai.btree.Task.Status
@@ -350,6 +349,9 @@ fun player(player: Player, mapper: ControlMapper, at: Vector2, debug: Boolean) {
     )
 
     player.entity = engine().entity {
+        with<AttackableProperties> {
+            health = GameConstants.BASE_HEALTH
+        }
         with<CameraFollowComponent>()
         with<BodyComponent> { body = box2dBody }
         with<TransformComponent>()
@@ -755,6 +757,7 @@ fun targetStation(
         with<BodyComponent> { body = box2dBody }
         with<TransformComponent> { position.set(box2dBody.position) }
         with<TargetComponent>()
+        with<AttackableProperties>()
         with<SpriteComponent> {
             sprite = Assets.towers["objective"]!!
             scale = 4f
@@ -770,7 +773,6 @@ fun targetStation(
         with<ObjectiveComponent> {
             id = "I did this"
         }
-        with<ObstacleComponent>()
     }
     box2dBody.userData = entity
 }
@@ -876,7 +878,7 @@ fun boss(at: Vector2, level: Int) {
         with<BossComponent> {}
 
         bt = with {
-            tree = Tree.testTree().apply { `object` = this@entity.entity }
+            tree = Tree.nowWithAttacks().apply { `object` = this@entity.entity }
         }
     }
     box2dBody.userData = entity
@@ -890,7 +892,7 @@ private fun EngineEntity.withBasicEnemyStuff(
     rush: Float = GameConstants.ENEMY_RUSH_SPEED,
     velocity: Float = GameConstants.ENEMY_BASE_SPEED,
     howFarCanIsee: Float = GameConstants.ENEMY_VIEW_DISTANCE,
-    healthBarValue: Float = GameConstants.ENEMY_BASE_HEALTH,
+    healthBarValue: Float = GameConstants.BASE_HEALTH,
     isFlocking: Boolean = true,
     spriteScale: Float = 1f
 ) {
@@ -904,9 +906,10 @@ private fun EngineEntity.withBasicEnemyStuff(
         rushSpeed = rush
         speed = velocity
         viewDistance = howFarCanIsee
-        health = healthBarValue
         flock = isFlocking
-
+    }
+    with<AttackableProperties> {
+        health = healthBarValue
     }
     with<AnimatedCharacterComponent> {
         anims = anim

@@ -39,11 +39,16 @@ object Tree {
 
                 doThis(runInTurnUntilFirstFailure {
                     expectSuccess(rotate(15f))
-                    expectFailure(fail(lookForAndStore<TargetComponent, SeenPlayerPositions>()))
+                    expectFailure(fail(lookForAndStore<TargetComponent, SeenPlayerPositions>(true)))
                 })
                     .ifThis(entityDoesNotHave<SeenPlayerPositions>())
 
-                doThis(invertResultOf(moveTowardsPositionTarget<AttackPoint>(run = true)))
+                doThis(
+                    tryInTurn {
+                        expectFailureAndMoveToNext(invertResultOf(moveTowardsPositionTarget<AttackPoint>(run = true)))
+                        expectFailureAndMoveToNext(invertResultOf(attack<TargetComponent>()))
+                    }
+                )
                     .ifThis(entityHas<AttackPoint>())
 
                 doThis(selectTarget<SeenPlayerPositions, AttackPoint>())
@@ -52,42 +57,6 @@ object Tree {
                 doThis(invertResultOf(moveTowardsPositionTarget<Waypoint>()))
                     .ifThis(entityHas<Waypoint>())
             }
-        )
-    }
-
-    fun testTree() = tree<Entity> {
-        root(
-            repeatForever(
-                exitOnFirstThatSucceeds {
-                    expectedToSucceed(
-                        onlyIfEntityHas<Path>(
-                            exitOnFirstThatSucceeds {
-                                expectFailureAndMoveToNext(
-                                    onlyIfEntityHas<PositionTarget>(invertResultOf(moveTowardsPositionTarget<Waypoint>()))
-                                )
-                                expectFailureAndMoveToNext(
-                                    invertResultOf(
-                                        repeat(10, exitOnFirstThatSucceeds {
-                                            expectFailureAndMoveToNext(invertResultOf(rotate(15f)))
-                                            expectedToSucceed(lookForAndStore<ObstacleComponent, SeenPlayerPositions>())
-                                        })
-                                    )
-                                )
-                                expectedToSucceed(
-                                    onlyIfEntityDoesNotHave<PositionTarget>(getNextStepOnPath())
-                                )
-                            }
-                        )
-                    )
-                    expectedToSucceed(
-                        onlyIfEntityDoesNotHave<Path>(
-                            exitOnFirstThatFails {
-                                first(findSection<AmblingEndpoint>())
-                                then(findPathTo<AmblingEndpoint>())
-                            }
-                        )
-                    )
-                })
         )
     }
 

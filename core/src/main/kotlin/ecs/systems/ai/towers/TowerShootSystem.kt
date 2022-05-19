@@ -8,6 +8,7 @@ import com.badlogic.gdx.physics.box2d.World
 import data.Players
 import ecs.components.BodyComponent
 import ecs.components.enemy.AgentProperties
+import ecs.components.enemy.AttackableProperties
 import ecs.components.gameplay.TransformComponent
 import ecs.components.towers.Shoot
 import ecs.components.towers.TargetInRange
@@ -67,7 +68,7 @@ the desired angle
                     if (closestFixture.isEntity() && closestFixture.body.isEnemy()) {
                         val enemyEntity = closestFixture.getEntity()
                         //TODO: FIX PLAYER KILLS WITH EXTRA COMPONENT
-                        enemyEntity.getComponent<AgentProperties>().takeDamage(3f..8f, Players.players.values.random())
+                        enemyEntity.getComponent<AttackableProperties>().takeDamage(3f..8f, Players.players.values.random().entity)
                         splatterEntity(closestFixture.body.worldCenter, targetInRange.aimTarget.cpy().nor().angleDeg())
                     }
                     shootComponent.status = Task.Status.SUCCEEDED

@@ -3,9 +3,13 @@ package ecs.systems.enemy
 import audio.AudioPlayer
 import com.badlogic.ashley.core.Entity
 import com.badlogic.ashley.systems.IteratingSystem
+import data.Player
 import ecs.components.AudioChannels
 import ecs.components.enemy.AgentProperties
+import ecs.components.enemy.AttackableProperties
 import ecs.components.gameplay.DestroyComponent
+import ecs.components.player.PlayerComponent
+import ecs.components.player.PlayerControlComponent
 import factories.factsOfTheWorld
 import factories.gibs
 import factories.lootBox
@@ -14,13 +18,14 @@ import physics.*
 import tru.Assets
 import turbofacts.Factoids
 import turbofacts.TurboFactsOfTheWorld
+import javax.swing.text.StyleConstants.getComponent
 
 object FitnessTracker {
     val fitnessData = mutableListOf<FitnessData>()
     fun saveFitnessDataFor(enemy: Entity) {
         val key = enemy.agentProps().id
         var fd = fitnessData.firstOrNull { it.enemyId == key }
-        if(fd == null) {
+        if (fd == null) {
             val bt = enemy.behavior().tree
             bt.`object` = null
             fitnessData.add(FitnessData(key, enemy.fitnesScore(), byteArrayOf()))
@@ -55,7 +60,8 @@ class EnemyDeathSystem(
 
     override fun processEntity(entity: Entity, deltaTime: Float) {
         val enemyComponent = AshleyMappers.agentProps.get(entity)
-        if (enemyComponent.isDead) {
+        val attackableProperties = entity.getComponent<AttackableProperties>()
+        if (attackableProperties.isDead) {
             audioPlayer.playNextIfEmpty(
                 AudioChannels.enemyDeath,
                 Assets.newSoundEffects["misc"]!!["flesh"]!!.last(),
@@ -68,9 +74,10 @@ class EnemyDeathSystem(
                     lootBox(transformComponent.position, result)
                 }
             }
-            enemyComponent.lastHitBy.kills++
+            val player = attackableProperties.lastHitBy.getComponent<PlayerControlComponent>().player
+            player.kills++
 
-            addToIntStat(1, "Player", enemyComponent.lastHitBy.playerId, "KillCount")
+            addToIntStat(1, "Player", player.playerId, "KillCount")
             addToIntStat(1, Factoids.EnemyKillCount)
 
             gibs(transformComponent.position, enemyComponent.lastShotAngle)

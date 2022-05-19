@@ -30,14 +30,9 @@ class Player(val name: String, val isAiPlayer: Boolean = false) {
     val selectedSprite get() = Assets.playerCharacters[selectedCharacterSpriteName]!!
     var currentAnimState: AnimState = AnimState.Idle
     var currentSpriteDirection : SpriteDirection = SpriteDirection.South
-    val startingHealth = 100f
     private val startingLives = 3
 
     var lives = startingLives
-    var health: Float = startingHealth
-    set(value) {
-        field = value.coerceAtLeast(0f)
-    }
 
     val touchedObjectives = mutableSetOf<ObjectiveComponent>()
     fun touchObjective(objective: ObjectiveComponent) {
@@ -49,12 +44,8 @@ class Player(val name: String, val isAiPlayer: Boolean = false) {
     var ammoLeft = 0
     var totalAmmo = 0
 
-    val isDead : Boolean
-        get() = health < 1
-
     fun reset() {
         lives = startingLives
-        health = startingHealth
         kills = 0
         touchedObjectives.clear()
     }

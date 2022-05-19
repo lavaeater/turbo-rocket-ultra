@@ -15,6 +15,7 @@ import com.crashinvaders.vfx.effects.ChainVfxEffect
 import ecs.components.ai.Path
 import ecs.components.ai.PositionTarget
 import ecs.components.ai.SeenPlayerPositions
+import ecs.components.ai.Waypoint
 import ecs.components.enemy.AgentProperties
 import ecs.components.gameplay.DestroyComponent
 import ecs.components.gameplay.TransformComponent
@@ -190,7 +191,7 @@ class RenderSystem(
     private fun renderPath(entity: Entity, ec: AgentProperties) {
         if(entity.has<Path>()) {
             val previous = entity.transform().position.cpy()
-            val nextPosition = if(entity.has<PositionTarget>()) entity.getComponent<PositionTarget>().position else previous
+            val nextPosition = if(entity.has<Waypoint>()) entity.getComponent<Waypoint>().position else previous
             shapeDrawer.line(previous, nextPosition, Color.BLUE, 0.1f)
             shapeDrawer.filledCircle(nextPosition, GameConstants.TOUCHING_DISTANCE, pathNodeColor)
             previous.set(nextPosition)

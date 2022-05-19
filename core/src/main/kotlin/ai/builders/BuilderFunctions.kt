@@ -1,5 +1,7 @@
 package ai.builders
 
+import ai.deltaTime
+import ai.tasks.EntityTask
 import ai.tasks.leaf.*
 import com.badlogic.ashley.core.Component
 import com.badlogic.ashley.core.Entity
@@ -7,11 +9,17 @@ import com.badlogic.gdx.ai.btree.Task
 import com.badlogic.gdx.ai.btree.decorator.*
 import com.badlogic.gdx.ai.utils.random.ConstantIntegerDistribution
 import com.badlogic.gdx.ai.utils.random.UniformIntegerDistribution
-import ecs.components.ai.CoordinateStorageComponent
-import ecs.components.ai.PositionStorageComponent
-import ecs.components.ai.PositionTarget
+import ecs.components.ai.*
 import ecs.components.ai.old.TaskComponent
+import ecs.components.enemy.AttackableProperties
+import ecs.components.gameplay.TransformComponent
+import ktx.ashley.allOf
+import ktx.ashley.remove
 import map.grid.Coordinate
+import physics.agentProps
+import physics.getComponent
+import physics.transform
+import kotlin.reflect.KClass
 
 fun delayFor(seconds: Float) = DelayTask(seconds)
 fun rotate(degrees: Float, counterClockwise: Boolean = true) = RotateTask(degrees, counterClockwise)
@@ -25,6 +33,8 @@ fun <T> fail(task: Task<T>) = AlwaysFail(task)
 fun <T> invertResultOf(task: Task<T>) = Invert(task)
 fun <T> tree(block: TreeBuilder<T>.() -> Unit) = TreeBuilder<T>().apply(block).build()
 fun <T> exitOnFirstThatSucceeds(block: SelectorBuilder<T>.() -> Unit) = SelectorBuilder<T>().apply(block).build()
+fun <T> selector(block: SelectorBuilder<T>.() -> Unit) = SelectorBuilder<T>().apply(block).build()
+fun <T> tryInTurn(block: SelectorBuilder<T>.() -> Unit) = SelectorBuilder<T>().apply(block).build()
 fun <T> dyanmicGuardSelector(block: DynamicGuardSelectorBuilder<T>.() -> Unit) =
     DynamicGuardSelectorBuilder<T>().apply(block).build()
 
@@ -35,8 +45,8 @@ fun <T> parallel(block: ParallelBuilder<T>.() -> Unit) = ParallelBuilder<T>().ap
 inline fun <reified T : TaskComponent> entityDo(block: EntityComponentTaskBuilder<T>.() -> Unit = {}) =
     EntityComponentTaskBuilder(T::class.java).apply(block).build()
 
-inline fun <reified ToLookFor : Component, reified ToStoreIn : PositionStorageComponent> lookForAndStore(): LookForAndStore<ToLookFor, ToStoreIn> {
-    return LookForAndStore(ToLookFor::class, ToStoreIn::class)
+inline fun <reified ToLookFor : Component, reified ToStoreIn : PositionStorageComponent> lookForAndStore(stop: Boolean): LookForAndStore<ToLookFor, ToStoreIn> {
+    return LookForAndStore(ToLookFor::class, ToStoreIn::class, stop)
 }
 
 inline fun <reified Targets : PositionStorageComponent,
@@ -56,6 +66,46 @@ fun getNextStepOnPath(): NextStepOnPath {
 
 inline fun <reified T : PositionTarget> moveTowardsPositionTarget(run: Boolean = false): MoveTowardsPositionTarget<T> {
     return MoveTowardsPositionTarget(run, T::class)
+}
+
+class AttackTarget<T: Component>(targetComponentClass:KClass<T>): EntityTask() {
+    private val coolDown = 1f
+    private var actualCoolDown = coolDown
+    private val attackableFamily = allOf(targetComponentClass, TransformComponent::class, AttackableProperties::class).get()
+    private fun entitiesInMeleeRange(): List<Entity> {
+        return engine.getEntitiesFor(attackableFamily)
+            .filter { it.transform().position.dst(entity.transform().position) < entity.agentProps().meleeDistance }
+    }
+    override fun copyTo(task: Task<Entity>?): Task<Entity> {
+        TODO("Not yet implemented")
+    }
+
+    override fun execute(): Status {
+        if(entitiesInMeleeRange().isEmpty()) return Status.FAILED
+
+        entity.agentProps().speed = 0f
+        entity.remove<Path>()
+        actualCoolDown -= deltaTime()
+        return if(actualCoolDown < 0f) {
+            actualCoolDown = coolDown
+            val target = entitiesInMeleeRange().random()
+            val healthAndStuff = target.getComponent<AttackableProperties>()
+            healthAndStuff.takeDamage(10f, entity)
+            Status.SUCCEEDED
+        } else {
+            Status.RUNNING
+        }
+    }
+
+    override fun resetTask() {
+        super.resetTask()
+        actualCoolDown = coolDown
+    }
+
+}
+
+inline fun <reified T: Component> attack(): AttackTarget<T> {
+    return AttackTarget(T::class)
 }
 
 inline fun <reified Storage : CoordinateStorageComponent> findPathTo(): FindPathTo<Storage> {

@@ -4,20 +4,25 @@ import com.badlogic.ashley.core.Entity
 import com.badlogic.ashley.systems.IteratingSystem
 import ecs.components.ai.old.*
 import ecs.components.enemy.AgentProperties
+import ecs.components.enemy.AttackableProperties
 import ecs.components.player.*
+import ecs.systems.graphics.GameConstants
 import ktx.ashley.allOf
 import ktx.ashley.remove
 import physics.getComponent
 import physics.has
 
 
-class PlayerDeathSystem: IteratingSystem(allOf(PlayerComponent::class).get()) {
+class PlayerDeathSystem: IteratingSystem(allOf(PlayerComponent::class, AttackableProperties::class).get()) {
     override fun processEntity(entity: Entity, deltaTime: Float) {
         val pc = entity.getComponent<PlayerComponent>()
-        if(pc.player.isDead && pc.player.lives > 0 && !entity.has<PlayerWaitsForRespawn>() && !entity.has<PlayerIsRespawning>()) {
+        val ap = entity.getComponent<AttackableProperties>()
+
+
+        if(ap.isDead && pc.player.lives > 0 && !entity.has<PlayerWaitsForRespawn>() && !entity.has<PlayerIsRespawning>()) {
             pc.player.lives -= 1
             entity.add(engine.createComponent(PlayerWaitsForRespawn::class.java))
-        } else if(pc.player.isDead && pc.player.lives <= 0){
+        } else if(ap.isDead && pc.player.lives <= 0){
             entity.add(engine.createComponent(PlayerIsDead::class.java))
         }
 
@@ -43,7 +48,7 @@ class PlayerDeathSystem: IteratingSystem(allOf(PlayerComponent::class).get()) {
             if(dc.coolDown < 0f) {
                 entity.remove(PlayerWaitsForRespawn::class.java)
                 entity.add(engine.createComponent(PlayerIsRespawning::class.java))
-                pc.player.health = pc.player.startingHealth
+                ap.health = GameConstants.BASE_HEALTH
             }
         }
         if(entity.has<PlayerIsRespawning>()) {
