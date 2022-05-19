@@ -1,8 +1,8 @@
-ggggggg
-ggggggg
+tgtgtgt
+gtgggtg
 gggsggg
-ggggggg
-ggggggg
+gtgggtg
+tgtgtgt
 -----
 name
 trainer            

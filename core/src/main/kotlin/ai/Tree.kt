@@ -2,46 +2,62 @@ package ai
 
 import ai.builders.*
 import com.badlogic.ashley.core.Entity
+import com.badlogic.gdx.ai.btree.Task
 import ecs.components.ai.*
 import ecs.components.gameplay.ObstacleComponent
+import ecs.components.gameplay.TargetComponent
+import ecs.components.player.PlayerComponent
 import ecs.components.towers.FindTarget
 import ecs.components.towers.Shoot
 import ecs.components.towers.TargetInRange
 
+fun <T> useThisGuard(task: Task<T>): Task<T> {
+    return task
+}
+
+fun <T> Task<T>.then(task: Task<T>): Task<T> {
+    task.guard = this
+    return task
+}
+
+fun <T> Task<T>.ifThis(task: Task<T>) {
+    this.guard = task
+}
+
 object Tree {
-    fun testTree() = tree<Entity> {
+    fun nowWithAttacks() = tree<Entity> {
         root(
-            repeatForever(
-                runUntilFirstSucceeds {
-                    expectSuccess(
-                        onlyIfEntityHas<Path>(
-                            runUntilFirstSucceeds {
-                                expectFailureAndMoveToNext(
-                                    onlyIfEntityHas<PositionTarget>(invertResultOf(moveTowardsPositionTarget()))
-                                )
-                                expectFailureAndMoveToNext(
-                                    invertResultOf(
-                                        repeat(10, runUntilFirstSucceeds {
-                                            expectFailureAndMoveToNext(invertResultOf(rotate(15f)))
-                                            expectSuccess(lookForAndStore<ObstacleComponent, SeenPlayerPositions>())
-                                        })
-                                    )
-                                )
-                                expectSuccess(
-                                    onlyIfEntityDoesNotHave<PositionTarget>(getNextStepOnPath())
-                                )
-                            }
-                        )
-                    )
-                    expectSuccess(
-                        onlyIfEntityDoesNotHave<Path>(
-                            runInSequence {
-                                first(findSection<AmblingEndpoint>())
-                                then(findPathTo<AmblingEndpoint>())
-                            }
-                        )
-                    )
+            exitOnFirstThatSucceeds {
+
+                doThis(exitOnFirstThatFails {
+                    expectSuccess(findSection<AmblingEndpoint>())
+                    expectFailure(invertResultOf(findPathTo<AmblingEndpoint>()))
                 })
+                    .ifThis(entityDoesNotHave<Path>())
+
+                doThis(invertResultOf(getNextStepOnPath()))
+                    .ifThis(entityDoesNotHave<Waypoint>())
+
+                doThis(runInTurnUntilFirstFailure {
+                    expectSuccess(rotate(15f))
+                    expectFailure(fail(lookForAndStore<PlayerComponent, SeenPlayerPositions>(true)))
+                })
+                    .ifThis(entityDoesNotHave<SeenPlayerPositions>())
+
+                doThis(
+                    tryInTurn {
+                        expectFailureAndMoveToNext(invertResultOf(moveTowardsPositionTarget<AttackPoint>(run = true)))
+                        expectFailureAndMoveToNext(invertResultOf(attack<PlayerComponent>()))
+                    }
+                )
+                    .ifThis(entityHas<AttackPoint>())
+
+                doThis(selectTarget<SeenPlayerPositions, AttackPoint>())
+                    .ifThis(entityHas<SeenPlayerPositions>())
+
+                doThis(invertResultOf(moveTowardsPositionTarget<Waypoint>()))
+                    .ifThis(entityHas<Waypoint>())
+            }
         )
     }
 

@@ -6,6 +6,7 @@ import com.badlogic.ashley.systems.IteratingSystem
 import com.badlogic.gdx.math.Polygon
 import com.badlogic.gdx.math.Vector2
 import ecs.components.enemy.AgentProperties
+import ecs.components.enemy.AttackableProperties
 import ecs.components.gameplay.TransformComponent
 import ecs.components.player.PlayerControlComponent
 import ecs.components.player.WeaponEntityComponent
@@ -130,7 +131,7 @@ class PlayerShootingSystem(private val audioPlayer: AudioPlayer) : IteratingSyst
                 )
             }
             enemiesInRangeAndInHitArc.forEach {
-                AshleyMappers.agentProps.get(it).takeDamage(weapon.damageRange, controlComponent.player)
+                it.getComponent<AttackableProperties>().takeDamage(weapon.damageRange, controlComponent.player.entity)
             }
         }
     }

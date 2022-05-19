@@ -1,6 +1,7 @@
 package ecs.systems.player
 
 import com.badlogic.ashley.systems.IntervalSystem
+import ecs.components.enemy.AttackableProperties
 import ecs.components.player.PlayerComponent
 import gamestate.GameEvent
 import gamestate.GameState
@@ -14,7 +15,7 @@ class GameOverSystem(private val gameState: StateMachine<GameState, GameEvent>) 
     private val players get() = engine.getEntitiesFor(playerFamily)
 
     override fun updateInterval() {
-        if(players.map { it.getComponent<PlayerComponent>() }.all { it.player.lives < 1 && it.player.isDead })
+        if(players.map { it.getComponent<PlayerComponent>() }.all { it.player.lives < 1 && it.player.entity.getComponent<AttackableProperties>().isDead })
             gameState.acceptEvent(GameEvent.GameOver)
     }
 }

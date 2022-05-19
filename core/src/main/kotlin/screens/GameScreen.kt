@@ -23,6 +23,7 @@ import ecs.systems.graphics.RenderSystem
 import ecs.systems.input.GamepadInputSystem
 import ecs.systems.input.KeyboardInputSystem
 import ecs.systems.player.GameOverSystem
+import factories.addUiThing
 import factories.enemy
 import factories.factsOfTheWorld
 import factories.player
@@ -43,6 +44,7 @@ import turbofacts.Factoids
 import turbofacts.TurboFactsOfTheWorld
 import turbofacts.TurboStoryManager
 import ui.IUserInterface
+import ui.getUiThing
 import kotlin.math.pow
 import kotlin.math.roundToInt
 
@@ -196,6 +198,7 @@ class GameScreen(private val gameState: StateMachine<GameState, GameEvent>) : Kt
 
                     }
                 }
+                addUiThing(enemy, enemy.behavior())
                 player.entity = enemy
                 player.body = enemy.body()
             } else

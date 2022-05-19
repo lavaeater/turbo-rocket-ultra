@@ -14,6 +14,9 @@ class SequenceBuilder<T> : CompositeTaskBuilder<T>() {
         then(task)
     }
 
+    fun expectFailure(task: Task<T>) {
+        then(task)
+    }
 
     fun branchSucceedsIfThisSucceeds(task:Task<T>) {
         last(task)

@@ -36,7 +36,8 @@ import kotlin.reflect.KClass
  */
 class LookForAndStore<ToLookFor : Component, ToStoreIn : PositionStorageComponent>(
     private val componentClass: KClass<ToLookFor>,
-    private val storageComponentClass: KClass<ToStoreIn>
+    private val storageComponentClass: KClass<ToStoreIn>,
+    private val stop: Boolean
 ) : EntityTask() {
     override fun copyTo(task: Task<Entity>?): Task<Entity> {
         TODO("Not yet implemented")
@@ -59,7 +60,8 @@ class LookForAndStore<ToLookFor : Component, ToStoreIn : PositionStorageComponen
         Entities to find MUST have transformComponent!
         */
         val agentProps = entity.agentProps()
-        agentProps.speed = 0f
+        if(stop)
+            agentProps.speed = 0f
         val agentPosition = entity.transform().position
         /*
         Choose a random viewDirection within fov of current viewingdirection! Or some other technique

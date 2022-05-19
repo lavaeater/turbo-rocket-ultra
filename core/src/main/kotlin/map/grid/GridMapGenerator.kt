@@ -110,6 +110,8 @@ class GridMapGenerator {
                         if(def.hasHackingStation(coordinate))
                             addHackingStation(section.innerBounds, CounterObject.currentLevel)
 
+                        if(def.hasTarget(coordinate))
+                            addTargetStation(section.innerBounds, CounterObject.currentLevel)
 
                         if (def.hasLoot(coordinate)) {
                             randomLoot(
@@ -133,6 +135,11 @@ class GridMapGenerator {
         private fun addHackingStation(bounds: Rectangle, level: Int) {
             var position = bounds.randomPoint()
             hackingStation(position, level)
+        }
+
+        private fun addTargetStation(bounds: Rectangle, level: Int) {
+            var position = bounds.randomPoint()
+            targetStation(position, level)
         }
 
         fun generate(length: Int, level: Int): Pair<Map<Coordinate, GridMapSection>, TileGraph> {

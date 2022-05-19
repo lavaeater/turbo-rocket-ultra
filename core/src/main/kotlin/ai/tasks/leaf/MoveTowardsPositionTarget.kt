@@ -4,25 +4,30 @@ import ai.aimTowards
 import ai.deltaTime
 import ai.format
 import ai.tasks.EntityTask
+import com.badlogic.ashley.core.ComponentMapper
 import com.badlogic.ashley.core.Entity
 import com.badlogic.gdx.ai.btree.Task
 import com.badlogic.gdx.math.Vector2
 import ecs.components.ai.PositionTarget
 import ecs.components.ai.StuckComponent
 import ecs.systems.graphics.GameConstants
+import ktx.ashley.mapperFor
 import ktx.ashley.remove
 import ktx.log.debug
 import ktx.log.info
 import ktx.math.vec2
 import physics.*
+import kotlin.reflect.KClass
 
-class MoveTowardsPositionTarget(private val run: Boolean = false) : EntityTask() {
+class MoveTowardsPositionTarget<T: PositionTarget>(private val run: Boolean = false, private val componentClass: KClass<T>) : EntityTask() {
     var previousDistance = 0f
     var currentDistance = 0f
     var positionToMoveTowards = Vector2.Zero.cpy()
     var coolDown = 0.5f
     var actualCoolDown = coolDown
     var needsPosition = true
+    val mapper by lazy { ComponentMapper.getFor(componentClass.java)  }
+
     override fun start() {
         super.start()
         actualCoolDown = coolDown
@@ -36,11 +41,11 @@ class MoveTowardsPositionTarget(private val run: Boolean = false) : EntityTask()
 
 
     override fun execute(): Status {
-        if (!entity.has<PositionTarget>())
+        if (!mapper.has(entity))
             return Status.FAILED
 
         if(needsPosition) {
-            positionToMoveTowards = entity.getComponent<PositionTarget>().position
+            positionToMoveTowards = mapper.get(entity).position
             previousDistance = positionToMoveTowards.dst(entity.transform().position)
             currentDistance = previousDistance
             needsPosition = false
@@ -61,11 +66,11 @@ class MoveTowardsPositionTarget(private val run: Boolean = false) : EntityTask()
             if(previousDistance - currentDistance <= GameConstants.STUCK_DISTANCE) {
                 debug { "MoveTowards got stuck" }
                 entity.addComponent<StuckComponent>()
-                entity.remove<PositionTarget>()
+                entity.remove(componentClass.java)
                 return Status.FAILED
             } else if(currentDistance < GameConstants.TOUCHING_DISTANCE){
                 debug { "MoveTowards reached destination with $currentDistance to spare " }
-                entity.remove<PositionTarget>()
+                entity.remove(componentClass.java)
                 return Status.SUCCEEDED
             }
             previousDistance = currentDistance

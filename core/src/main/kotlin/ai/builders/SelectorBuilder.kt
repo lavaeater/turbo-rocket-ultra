@@ -9,11 +9,16 @@ class SelectorBuilder<T> : CompositeTaskBuilder<T>() {
         then(task)
     }
 
+    fun doThis(task: Task<T>): Task<T> {
+        then(task)
+        return task
+    }
+
     fun expectFailureAndMoveToNext(task:Task<T>) {
         then(task)
     }
 
-    fun expectSuccess(task:Task<T>) {
+    fun expectedToSucceed(task:Task<T>) {
         then(task)
     }
 
