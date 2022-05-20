@@ -2,9 +2,6 @@ package ecs.systems.input
 
 import com.badlogic.ashley.core.Entity
 import com.badlogic.ashley.systems.IteratingSystem
-import com.badlogic.gdx.controllers.Controller
-import com.badlogic.gdx.controllers.ControllerListener
-import com.badlogic.gdx.controllers.PovDirection
 import com.badlogic.gdx.math.MathUtils
 import com.badlogic.gdx.math.Vector3
 import input.Axis
