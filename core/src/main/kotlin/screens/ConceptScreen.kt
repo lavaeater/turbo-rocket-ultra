@@ -1,8 +1,10 @@
 package screens
 
 import ai.Tree
+import com.badlogic.ashley.core.Entity
 import com.badlogic.gdx.Gdx
 import com.badlogic.gdx.ai.btree.BehaviorTree
+import com.badlogic.gdx.ai.btree.Decorator
 import com.badlogic.gdx.ai.btree.Task
 import com.badlogic.gdx.ai.btree.branch.DynamicGuardSelector
 import com.badlogic.gdx.ai.btree.branch.Parallel
@@ -14,26 +16,51 @@ import com.badlogic.gdx.graphics.OrthographicCamera
 import com.badlogic.gdx.math.MathUtils.acos
 import com.badlogic.gdx.math.MathUtils.radiansToDegrees
 import com.badlogic.gdx.math.Vector2
+import com.badlogic.gdx.scenes.scene2d.Actor
 import com.badlogic.gdx.scenes.scene2d.Stage
+import com.badlogic.gdx.scenes.scene2d.actions.Actions
+import com.badlogic.gdx.scenes.scene2d.ui.HorizontalGroup
+import com.badlogic.gdx.scenes.scene2d.ui.Label
+import com.badlogic.gdx.scenes.scene2d.ui.Skin
+import com.badlogic.gdx.scenes.scene2d.ui.VerticalGroup
 import com.badlogic.gdx.utils.viewport.ExtendViewport
 import com.badlogic.gdx.utils.viewport.FitViewport
 import gamestate.GameEvent
 import gamestate.GameState
-import ktx.actors.onChangeEvent
 import ktx.actors.onClick
 import ktx.math.vec2
-import ktx.scene2d.KNode
-import ktx.scene2d.actors
-import ktx.scene2d.label
-import ktx.scene2d.tree
+import ktx.scene2d.*
 import statemachine.StateMachine
 import tru.Assets
+import kotlin.reflect.KClass
+
+/*
+I think custom classes is the way to go.
+
+Take complete control. Re-build the entire behavior tree when
+removing children, if necessary, keep separate view model of children.
+
+As it stands now, if we cannot remove children, there is no point.
+ */
+
 
 
 object BehaviorTreeViewBuilder {
     fun <T> nodeForTask(parent: KNode<*>, task: Task<T>) {
         if (task.guard == null) {
+//            parent.horizontalGroup {node ->
+//                node.value = task
+//                label(task.treeString())
+//                textButton("Remove") {
+//                    onClick {
+//                        (parent.value as Task<T>).addChild()
+//                    }
+//                }
+//            }
             parent.label(task.treeString()) { node ->
+                this.onClick {
+                    node.isExpanded = !node.isExpanded
+                }
                 node.isExpanded = true
                 node.isSelectable = true
                 node {
@@ -44,11 +71,18 @@ object BehaviorTreeViewBuilder {
             }
         } else {
             parent.label("IF ${task.guard.treeString()} THEN") {node ->
+                this.onClick {
+                    node.isExpanded = !node.isExpanded
+                }
                 node.isExpanded = true
                 node.isSelectable = true
                 node {
                     label(task.treeString()) {node->
+                        this.onClick {
+                            node.isExpanded = !node.isExpanded
+                        }
                         node.isExpanded = true
+                        node.isSelectable
                         node {
                             for (childIndex in 0 until task.childCount) {
                                 nodeForTask(node, task.getChild(childIndex))
@@ -76,6 +110,44 @@ fun <T> Task<T>.treeString(): String {
     }
 }
 
+fun label(text: String, skin: Skin = Scene2DSkin.defaultSkin, labelStyleName: String = defaultStyle): Actor {
+    return Label(text,skin, labelStyleName)
+}
+
+
+class TaskNode<T>(val task: Task<T>): com.badlogic.gdx.scenes.scene2d.ui.Tree.Node<TaskNode<T>, Task<T>, Actor>() {
+    init {
+        isExpanded = true
+        isSelectable = true
+        value = task
+    }
+
+    companion object {
+
+        fun <T>getActorForTask(task: Task<T>) : Actor {
+            val returnActor = VerticalGroup()
+            returnActor.addActor(label(task.treeString()))
+            return returnActor
+        }
+        fun <T> buildNodeForTask(task: Task<T>): TaskNode<T> {
+            val newNode = TaskNode(task)
+            newNode.actor
+            val returnActor = when (task) {
+                is Decorator<T> -> {
+                    /*
+                    The decorator changes what happens when executing the child
+                     */
+                    HorizontalGroup()
+                }
+                else -> {
+                    label("Test")
+                }
+            }
+            return newNode
+        }
+    }
+
+}
 
 /**
  * Editor / Displayer of Behavior Trees
@@ -87,10 +159,13 @@ class ConceptScreen(gameState: StateMachine<GameState, GameEvent>) : BasicScreen
 
     private val stage by lazy {
         val aStage = Stage(ExtendViewport(1600f, 1200f, OrthographicCamera()), batch)
-        aStage.isDebugAll = true
+//        val aTree = com.badlogic.gdx.scenes.scene2d.ui.Tree<TaskNode<Entity>, Task<Entity>>(Scene2DSkin.defaultSkin, defaultStyle)
+//        aTree.addActor(label("Tree"))
+//        aTree.add(TaskNode.buildNodeForTask(testTree))
+
         aStage.actors {
             tree {
-                setPadding(10f)
+                setPadding(20f)
                 label("Tree") { node ->
                     node.isExpanded = true
                     BehaviorTreeViewBuilder.nodeForTask(node, testTree)
@@ -101,6 +176,7 @@ class ConceptScreen(gameState: StateMachine<GameState, GameEvent>) : BasicScreen
         Gdx.input.inputProcessor = aStage
         aStage
     }
+
 
     override val camera = OrthographicCamera().apply {
         setToOrtho(false)

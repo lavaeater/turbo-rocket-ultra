@@ -1,0 +1,34 @@
+bcchcc
+c****g
+c****c
+cccccc
+lc****
+cc****
+cwcc**
+c**c**
+c**c**
+s**c**
+------
+name
+test            
+start
+Replace this with a start-of-level
+message to inspire the players
+success
+Shows this when players win the level
+fail
+This is when they fail
+facts
+MaxEnemies:10:i
+MaxSpawnedEnemies:20:i
+AcceleratingSpawns:false:b
+AcceleratingSpawnsFactor:1.25:f
+EnemyKillCount:0:i
+TargetEnemyKillCount:0:i
+ShowEnemyKillCount:false:b
+
+stories
+start-story
+level-failed
+level-complete
+basic-story            
