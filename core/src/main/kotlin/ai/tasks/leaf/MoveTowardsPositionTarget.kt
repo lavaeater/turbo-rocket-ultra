@@ -79,6 +79,6 @@ class MoveTowardsPositionTarget<T: PositionTarget>(private val run: Boolean = fa
     }
 
     override fun toString(): String {
-        return "${currentDistance.format(1)} | ${(previousDistance - currentDistance).format(2)}"
+        return "Move towards ${componentClass.simpleName} ${currentDistance.format(1)} | ${(previousDistance - currentDistance).format(2)}"
     }
 }

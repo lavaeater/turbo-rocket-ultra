@@ -37,6 +37,6 @@ class RotateTask(private val degrees: Float, private val counterClockwise: Boole
         rotatedSoFar = 0f
     }
     override fun toString(): String {
-        return "${rotatedSoFar.format(1)} of $degrees"
+        return "Rotate $degrees"
     }
 }

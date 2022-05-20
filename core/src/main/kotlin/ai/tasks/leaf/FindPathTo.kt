@@ -28,6 +28,6 @@ class FindPathTo<T: CoordinateStorageComponent>(private val componentClass: KCla
     }
 
     override fun toString(): String {
-        return "Find a path!"
+        return "Find Path To"
     }
 }

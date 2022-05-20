@@ -8,7 +8,6 @@ import ecs.components.ai.CoordinateStorageComponent
 import ecs.systems.sectionX
 import ecs.systems.sectionY
 import ktx.log.debug
-import ktx.log.info
 import map.grid.Coordinate
 import physics.transform
 import kotlin.reflect.KClass
@@ -20,7 +19,7 @@ import kotlin.reflect.KClass
  *
  * The most basic one is "pick a random section"
  */
-class FindSection<T: CoordinateStorageComponent>(private val componentClass: KClass<T>, private val method: (Coordinate, Int, Int) -> Coordinate) : EntityTask() {
+class SelectSection<T: CoordinateStorageComponent>(private val componentClass: KClass<T>, private val method: (Coordinate, Int, Int) -> Coordinate) : EntityTask() {
     override fun copyTo(task: Task<Entity>?): Task<Entity> {
         TODO("Not yet implemented")
     }
@@ -39,6 +38,6 @@ class FindSection<T: CoordinateStorageComponent>(private val componentClass: KCl
     }
 
     override fun toString(): String {
-        return "Find a section"
+        return "Select Section"
     }
 }

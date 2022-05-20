@@ -34,4 +34,8 @@ class SelectTarget<Targets : PositionStorageComponent, TargetStorage : PositionT
         return Status.SUCCEEDED
     }
 
+    override fun toString(): String {
+        return "Select Target"
+    }
+
 }

@@ -38,8 +38,8 @@ class ComponentExistenceGuard<T : Component>(private val mustHave: Boolean, priv
 
     override fun toString(): String {
         return if (mustHave)
-            "Entity must have ${componentClass.simpleName}"
+            "Entity has ${componentClass.simpleName}"
         else
-            "Entity must NOT have ${componentClass.simpleName}"
+            "Entity hasn't got ${componentClass.simpleName}"
     }
 }

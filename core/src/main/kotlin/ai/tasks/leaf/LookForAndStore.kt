@@ -120,6 +120,6 @@ class LookForAndStore<ToLookFor : Component, ToStoreIn : PositionStorageComponen
     }
 
     override fun toString(): String {
-        return "Looking for $componentClass"
+        return "Look for Entities w.\n${componentClass.simpleName}"
     }
 }

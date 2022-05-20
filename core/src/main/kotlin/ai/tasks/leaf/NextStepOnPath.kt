@@ -42,6 +42,6 @@ class NextStepOnPath : EntityTask() {
     }
 
     override fun toString(): String {
-        return "Next Step on Path"
+        return "Get Next Step on Path"
     }
 }

@@ -1,7 +1,5 @@
 package ai.builders
 
-import ai.deltaTime
-import ai.tasks.EntityTask
 import ai.tasks.leaf.*
 import com.badlogic.ashley.core.Component
 import com.badlogic.ashley.core.Entity
@@ -11,15 +9,7 @@ import com.badlogic.gdx.ai.utils.random.ConstantIntegerDistribution
 import com.badlogic.gdx.ai.utils.random.UniformIntegerDistribution
 import ecs.components.ai.*
 import ecs.components.ai.old.TaskComponent
-import ecs.components.enemy.AttackableProperties
-import ecs.components.gameplay.TransformComponent
-import ktx.ashley.allOf
-import ktx.ashley.remove
 import map.grid.Coordinate
-import physics.agentProps
-import physics.getComponent
-import physics.transform
-import kotlin.reflect.KClass
 
 fun delayFor(seconds: Float) = DelayTask(seconds)
 fun rotate(degrees: Float, counterClockwise: Boolean = true) = RotateTask(degrees, counterClockwise)
@@ -56,8 +46,8 @@ inline fun <reified Targets : PositionStorageComponent,
 
 inline fun <reified ToStoreIn : CoordinateStorageComponent> findSection(
     noinline method: (Coordinate, Int, Int) -> Coordinate = SectionFindingMethods::classicRandom
-): FindSection<ToStoreIn> {
-    return FindSection(ToStoreIn::class, method)
+): SelectSection<ToStoreIn> {
+    return SelectSection(ToStoreIn::class, method)
 }
 
 fun getNextStepOnPath(): NextStepOnPath {
@@ -66,42 +56,6 @@ fun getNextStepOnPath(): NextStepOnPath {
 
 inline fun <reified T : PositionTarget> moveTowardsPositionTarget(run: Boolean = false): MoveTowardsPositionTarget<T> {
     return MoveTowardsPositionTarget(run, T::class)
-}
-
-class AttackTarget<T: Component>(targetComponentClass:KClass<T>): EntityTask() {
-    private val coolDown = 1f
-    private var actualCoolDown = coolDown
-    private val attackableFamily = allOf(targetComponentClass, TransformComponent::class, AttackableProperties::class).get()
-    private fun entitiesInMeleeRange(): List<Entity> {
-        return engine.getEntitiesFor(attackableFamily)
-            .filter { it.transform().position.dst(entity.transform().position) < entity.agentProps().meleeDistance }
-    }
-    override fun copyTo(task: Task<Entity>?): Task<Entity> {
-        TODO("Not yet implemented")
-    }
-
-    override fun execute(): Status {
-        if(entitiesInMeleeRange().isEmpty()) return Status.FAILED
-
-        entity.agentProps().speed = 0f
-        entity.remove<Path>()
-        actualCoolDown -= deltaTime()
-        return if(actualCoolDown < 0f) {
-            actualCoolDown = coolDown
-            val target = entitiesInMeleeRange().random()
-            val healthAndStuff = target.getComponent<AttackableProperties>()
-            healthAndStuff.takeDamage(10f, entity)
-            Status.SUCCEEDED
-        } else {
-            Status.RUNNING
-        }
-    }
-
-    override fun resetTask() {
-        super.resetTask()
-        actualCoolDown = coolDown
-    }
-
 }
 
 inline fun <reified T: Component> attack(): AttackTarget<T> {
