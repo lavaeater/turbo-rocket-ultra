@@ -5,6 +5,7 @@ import com.badlogic.ashley.core.Entity
 import com.badlogic.gdx.ai.btree.Task
 import ecs.components.ai.Path
 import ecs.components.ai.PositionTarget
+import ecs.components.ai.Waypoint
 import ktx.ashley.remove
 import ktx.log.debug
 import ktx.log.info
@@ -13,7 +14,7 @@ import physics.*
 
 class NextStepOnPath : EntityTask() {
     override fun start() {
-        entity.remove<PositionTarget>() //Make sure we do NOT have this component, no matter what
+        entity.remove<Waypoint>() //Make sure we do NOT have this component, no matter what
     }
 
     override fun copyTo(task: Task<Entity>?): Task<Entity> {
@@ -34,13 +35,13 @@ class NextStepOnPath : EntityTask() {
 
         val nextStep = path.queue.removeFirst()
         debug { "NextStepOnPath is $nextStep" }
-        entity.addComponent<PositionTarget> {
+        entity.addComponent<Waypoint> {
             position = nextStep
         }
         return Status.SUCCEEDED
     }
 
     override fun toString(): String {
-        return "Next Step on Path"
+        return "Get Next Step on Path"
     }
 }

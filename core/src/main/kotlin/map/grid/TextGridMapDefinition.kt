@@ -55,6 +55,10 @@ class TextGridMapDefinition(val def: List<String>) : IGridMapDefinition {
         return sections[coordinate.x][coordinate.y] == 'h'
     }
 
+    override fun hasTarget(coordinate: Coordinate): Boolean {
+        return sections[coordinate.x][coordinate.y] == 't'
+    }
+
     override val booleanSections
         get() : Array<Array<Boolean>> {
             return sections.map { column -> column.toCharArray().map { it != 'e' && it != '*' }.toTypedArray() }.toTypedArray()

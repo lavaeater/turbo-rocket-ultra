@@ -4,9 +4,21 @@ import com.badlogic.ashley.core.Component
 import com.badlogic.gdx.math.Vector2
 import com.badlogic.gdx.utils.Pool
 
-class PositionTarget: Component, Pool.Poolable {
+
+
+open class TargetInClose: Component, Pool.Poolable {
     var position = Vector2.Zero.cpy()
     override fun reset() {
         position = Vector2.Zero.cpy()
     }
 }
+
+open class PositionTarget: Component, Pool.Poolable {
+    var position = Vector2.Zero.cpy()
+    override fun reset() {
+        position = Vector2.Zero.cpy()
+    }
+}
+
+class AttackPoint: PositionTarget()
+class Waypoint : PositionTarget()

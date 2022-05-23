@@ -14,10 +14,12 @@ class RotateTask(private val degrees: Float, private val counterClockwise: Boole
     }
 
     override fun execute(): Status {
+        entity.agentProps().speed = 0f
         val toRotate = deltaTime() * entity.agentProps().rotationSpeed
         rotatedSoFar += toRotate
-        return if(rotatedSoFar >= degrees)
+        return if(rotatedSoFar >= degrees) {
             Status.SUCCEEDED
+        }
         else {
             entity.agentProps().directionVector.rotateDeg(if(counterClockwise) toRotate else -toRotate)
             Status.RUNNING
@@ -35,6 +37,6 @@ class RotateTask(private val degrees: Float, private val counterClockwise: Boole
         rotatedSoFar = 0f
     }
     override fun toString(): String {
-        return "${rotatedSoFar.format(1)} of $degrees"
+        return "Rotate $degrees"
     }
 }

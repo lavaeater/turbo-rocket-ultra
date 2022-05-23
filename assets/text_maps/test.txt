@@ -1,21 +1,23 @@
-tgtgtgt
-gtgggtg
-gggsggg
-gtgggtg
-tgtgtgt
------
+bcchcc
+c****g
+c****c
+cccccc
+lc****
+cc****
+cwcc**
+c**c**
+c**c**
+s**c**
+------
 name
-trainer            
-
+test            
 start
-This is a trainer map for you, and for the enemy.
-
+Replace this with a start-of-level
+message to inspire the players
 success
-Not much of a challenge, eh?
-
+Shows this when players win the level
 fail
-Kind of amazing, really
-
+This is when they fail
 facts
 MaxEnemies:10:i
 MaxSpawnedEnemies:20:i

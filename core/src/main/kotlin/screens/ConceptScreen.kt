@@ -1,162 +1,208 @@
 package screens
 
-import com.badlogic.gdx.Input
-import com.badlogic.gdx.controllers.Controller
-import com.badlogic.gdx.controllers.Controllers
-import com.badlogic.gdx.graphics.Color
+import ai.Tree
+import com.badlogic.ashley.core.Entity
+import com.badlogic.gdx.Gdx
+import com.badlogic.gdx.ai.btree.BehaviorTree
+import com.badlogic.gdx.ai.btree.Decorator
+import com.badlogic.gdx.ai.btree.Task
+import com.badlogic.gdx.ai.btree.branch.DynamicGuardSelector
+import com.badlogic.gdx.ai.btree.branch.Parallel
+import com.badlogic.gdx.ai.btree.branch.Selector
+import com.badlogic.gdx.ai.btree.decorator.AlwaysFail
+import com.badlogic.gdx.ai.btree.decorator.AlwaysSucceed
+import com.badlogic.gdx.ai.btree.decorator.Invert
 import com.badlogic.gdx.graphics.OrthographicCamera
-import com.badlogic.gdx.math.MathUtils.*
+import com.badlogic.gdx.math.MathUtils.acos
+import com.badlogic.gdx.math.MathUtils.radiansToDegrees
 import com.badlogic.gdx.math.Vector2
+import com.badlogic.gdx.scenes.scene2d.Actor
+import com.badlogic.gdx.scenes.scene2d.Stage
+import com.badlogic.gdx.scenes.scene2d.actions.Actions
+import com.badlogic.gdx.scenes.scene2d.ui.HorizontalGroup
+import com.badlogic.gdx.scenes.scene2d.ui.Label
+import com.badlogic.gdx.scenes.scene2d.ui.Skin
+import com.badlogic.gdx.scenes.scene2d.ui.VerticalGroup
 import com.badlogic.gdx.utils.viewport.ExtendViewport
+import com.badlogic.gdx.utils.viewport.FitViewport
 import gamestate.GameEvent
 import gamestate.GameState
-import input.Axis
-import input.GamepadControl
-import input.Transform
-import ktx.graphics.use
+import ktx.actors.onClick
 import ktx.math.vec2
-import ktx.math.vec3
+import ktx.scene2d.*
 import statemachine.StateMachine
 import tru.Assets
+import kotlin.reflect.KClass
 
-class ConceptScreen(gameState: StateMachine<GameState, GameEvent>) : BasicScreen(gameState) {
-    /*
-    Controllers exist by themselves. They might be connected or not connected
-    This system we are making should handle all input, at least from controllers
-    and how do we do that independent of entity systems etc?
-     */
-    override val camera = OrthographicCamera()
-    override val viewport = ExtendViewport(200f, 200f, camera)
-    val shapeDrawer by lazy { Assets.shapeDrawer }
-    val player: Transform = Transform(vec2(100f, 100f))
-    val mouseTransform = Transform(vec2())
-    val detectables = listOf(mouseTransform)
-    val detectedColor = Color(0f, 1f, 0f, 0.2f)
-    val notDetectedColor = Color(0f, 0f, 1f, 0.2f)
-    val fieldOfView = 270f
+/*
+I think custom classes is the way to go.
 
-    var rotationSectorColor = notDetectedColor
+Take complete control. Re-build the entire behavior tree when
+removing children, if necessary, keep separate view model of children.
 
-    var rotation = 45f
-    val viewDistance = 100f
-
-    val controller: Controller by lazy { Controllers.getCurrent() }
-    val gamepadControl by lazy { GamepadControl(controller) }
+As it stands now, if we cannot remove children, there is no point.
+ */
 
 
-    override fun render(delta: Float) {
-        super.render(delta)
 
-        //player.rotate(rotation * delta)
-
-        batch.use {
-            shapeDrawer.pixelSize = 1f
-            shapeDrawer.setColor(Color.RED)
-            renderPosition(player, Color.RED, Color.GREEN)
-            renderControllerAim(player, gamepadControl, delta)
-//            renderAimAndMouse(player)
-
-            var rotationDetected = false
-            for (t in detectables) {
-                if (player.dst(t) < viewDistance) {
-                    rotationDetected = player.forwardAngleTo (t) < fieldOfView / 2
+object BehaviorTreeViewBuilder {
+    fun <T> nodeForTask(parent: KNode<*>, task: Task<T>) {
+        if (task.guard == null) {
+//            parent.horizontalGroup {node ->
+//                node.value = task
+//                label(task.treeString())
+//                textButton("Remove") {
+//                    onClick {
+//                        (parent.value as Task<T>).addChild()
+//                    }
+//                }
+//            }
+            parent.label(task.treeString()) { node ->
+                this.onClick {
+                    node.isExpanded = !node.isExpanded
                 }
-                rotationSectorColor = if (rotationDetected) detectedColor else notDetectedColor
-                renderPosition(t, Color.RED, Color.GREEN)
+                node.isExpanded = true
+                node.isSelectable = true
+                node {
+                    for (childIndex in 0 until task.childCount) {
+                        nodeForTask(node, task.getChild(childIndex))
+                    }
+                }
             }
-            rotationSectorColor = notDetectedColor
-            rotationSectorColor = if (rotationDetected) detectedColor else notDetectedColor
+        } else {
+            parent.label("IF ${task.guard.treeString()} THEN") {node ->
+                this.onClick {
+                    node.isExpanded = !node.isExpanded
+                }
+                node.isExpanded = true
+                node.isSelectable = true
+                node {
+                    label(task.treeString()) {node->
+                        this.onClick {
+                            node.isExpanded = !node.isExpanded
+                        }
+                        node.isExpanded = true
+                        node.isSelectable
+                        node {
+                            for (childIndex in 0 until task.childCount) {
+                                nodeForTask(node, task.getChild(childIndex))
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
 
-            shapeDrawer.sector(
-                player.position.x,
-                player.position.y,
-                viewDistance,
-                player.forward.angleRad() - fieldOfView / 2  * degreesToRadians,
-                degreesToRadians * fieldOfView, rotationSectorColor, rotationSectorColor
-            )
+
+fun <T> Task<T>.treeString(): String {
+    return when (this) {
+        is BehaviorTree<T> -> "BehaviorTree"
+        is Selector<T> -> "Selector"
+        is com.badlogic.gdx.ai.btree.branch.Sequence<T> -> "Sequence"
+        is Parallel<T> -> "Parallel"
+        is DynamicGuardSelector<T> -> "Dynamic"
+        is Invert<T> -> "Invert result of"
+        is AlwaysFail<T> -> "Always Fail"
+        is AlwaysSucceed<T> -> "Always Succeed"
+        else -> toString()
+    }
+}
+
+fun label(text: String, skin: Skin = Scene2DSkin.defaultSkin, labelStyleName: String = defaultStyle): Actor {
+    return Label(text,skin, labelStyleName)
+}
+
+
+class TaskNode<T>(val task: Task<T>): com.badlogic.gdx.scenes.scene2d.ui.Tree.Node<TaskNode<T>, Task<T>, Actor>() {
+    init {
+        isExpanded = true
+        isSelectable = true
+        value = task
+    }
+
+    companion object {
+
+        fun <T>getActorForTask(task: Task<T>) : Actor {
+            val returnActor = VerticalGroup()
+            returnActor.addActor(label(task.treeString()))
+            return returnActor
+        }
+        fun <T> buildNodeForTask(task: Task<T>): TaskNode<T> {
+            val newNode = TaskNode(task)
+            newNode.actor
+            val returnActor = when (task) {
+                is Decorator<T> -> {
+                    /*
+                    The decorator changes what happens when executing the child
+                     */
+                    HorizontalGroup()
+                }
+                else -> {
+                    label("Test")
+                }
+            }
+            return newNode
         }
     }
 
-    val steeringMap = mapOf(
-        2 to Axis.RightX,
-        3 to Axis.RightY
-    )
-    val deadzone = -0.05f..0.05f
-    val axisMap = steeringMap.map { it.value to it.key }.toMap()
-    private val controllerVector = vec2()
-    private fun renderControllerAim(player: Transform, gamepadControl: GamepadControl, deltaTime: Float) {
-        val rightX = gamepadControl.controller.getAxis(axisMap[Axis.RightX]!!)
-        val rightY = gamepadControl.controller.getAxis(axisMap[Axis.RightY]!!)
-        controllerVector.x = if(deadzone.contains(rightX)) controllerVector.x else rightX
-        controllerVector.y = if(deadzone.contains(rightY)) controllerVector.y else -rightY
+}
 
-        /**
-         * Shit, this is fudging tricky.
-         * How do we interpret the control input and the
-         */
+/**
+ * Editor / Displayer of Behavior Trees
+ */
+class ConceptScreen(gameState: StateMachine<GameState, GameEvent>) : BasicScreen(gameState) {
+    private val normalCommandMap = command("Normal") {
+    }
+    private val testTree = Tree.nowWithAttacks()
 
-        player.aimVector.set(controllerVector).nor()
-        Assets.font.draw(batch, "C: ${controllerVector.angleDeg()}", 10f,100f)
-        Assets.font.draw(batch, "A: ${player.aimVector.angleDeg()}", 10f,80f)
+    private val stage by lazy {
+        val aStage = Stage(ExtendViewport(1600f, 1200f, OrthographicCamera()), batch)
+//        val aTree = com.badlogic.gdx.scenes.scene2d.ui.Tree<TaskNode<Entity>, Task<Entity>>(Scene2DSkin.defaultSkin, defaultStyle)
+//        aTree.addActor(label("Tree"))
+//        aTree.add(TaskNode.buildNodeForTask(testTree))
 
-        shapeDrawer.setColor(Color.RED)
-        shapeDrawer.line(player.position, player.position.cpy().add(player.aimVector.cpy().scl(10f)))
-
-        shapeDrawer.setColor(Color.BLUE)
-        shapeDrawer.line(player.position, player.position.cpy().add(controllerVector.cpy().scl(10f)))
+        aStage.actors {
+            tree {
+                setPadding(20f)
+                label("Tree") { node ->
+                    node.isExpanded = true
+                    BehaviorTreeViewBuilder.nodeForTask(node, testTree)
+                }
+                setPosition(100f, stage.height - 100f)
+            }
+        }
+        Gdx.input.inputProcessor = aStage
+        aStage
     }
 
-    fun renderAimAndMouse(transform: Transform) {
-        shapeDrawer.setColor(Color.BLUE)
-        shapeDrawer.line(transform.position, mousePosition)
-        shapeDrawer.setColor(Color.RED)
-        shapeDrawer.line(transform.position, transform.position.cpy().add(transform.aimVector.cpy().scl(10f)))
 
+    override val camera = OrthographicCamera().apply {
+        setToOrtho(false)
     }
+    override val viewport = FitViewport(32f, 32f, camera)
+    val shapeDrawer by lazy { Assets.shapeDrawer }
+    private val cameraMove = vec2()
+    private var currentControlMap: CommandMap = normalCommandMap
+    private val zoomFactor = 0.05f
+    private var cameraZoom: Float = 0f
 
-    fun renderPosition(transform: Transform, positionColor: Color, indicatorColor: Color) {
-        shapeDrawer.filledCircle(transform.position, 2f, positionColor)
-        shapeDrawer.setColor(indicatorColor)
-        shapeDrawer.circle(transform.position.x, transform.position.y, 10f, 1f)
-        shapeDrawer.line(transform.position, transform.forwardPoint)
-        shapeDrawer.line(transform.position, transform.normalPoint, Color.BLUE, 1f)
-    }
-
-    val mousePosition3D = vec3()
-    val mousePosition = vec2()
-
-    override fun mouseMoved(screenX: Int, screenY: Int): Boolean {
-        mousePosition3D.set(screenX.toFloat(), screenY.toFloat(), 0f)
-        camera.unproject(mousePosition3D)
-        mousePosition.set(mousePosition3D.x, mousePosition3D.y)
-//        player.pointAimVectorAt(mousePosition)
-        mouseTransform.set(mousePosition)
-        return true
+    override fun render(delta: Float) {
+        camera.position.x += cameraMove.x
+        camera.position.y += cameraMove.y
+        camera.zoom += zoomFactor * cameraZoom
+        super.render(delta)
+        stage.act()
+        stage.draw()
     }
 
     override fun keyDown(keycode: Int): Boolean {
-        when (keycode) {
-//            Input.Keys.W -> keyboardControl.thrust = 0f
-//            Input.Keys.S -> keyboardControl.thrust = 0f
-            Input.Keys.A -> rotation = 90f
-            Input.Keys.D -> rotation = -90f
-        }
-        return true
+        return currentControlMap.execute(keycode, KeyPress.Down)
     }
 
     override fun keyUp(keycode: Int): Boolean {
-        when (keycode) {
-            Input.Keys.A -> rotation = 0f
-            Input.Keys.D -> rotation = 0f
-        }
-        return true
-    }
-
-    override fun resize(width: Int, height: Int) {
-        camera.setToOrtho(false)
-        viewport.update(width, height, true)
-        camera.update()
-        batch.projectionMatrix = camera.combined
+        return currentControlMap.execute(keycode, KeyPress.Up)
     }
 }
 

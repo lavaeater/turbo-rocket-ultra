@@ -3,7 +3,6 @@ package screens
 import com.badlogic.gdx.Gdx
 import com.badlogic.gdx.Input
 import com.badlogic.gdx.controllers.Controller
-import com.badlogic.gdx.controllers.Controllers
 import com.badlogic.gdx.graphics.Color
 import com.badlogic.gdx.graphics.OrthographicCamera
 import com.badlogic.gdx.scenes.scene2d.Actor
@@ -26,48 +25,8 @@ import statemachine.StateMachine
 import tru.AnimState
 import tru.Assets
 import tru.SpriteDirection
-import tru.TurboCharacterAnim
 import ui.customactors.animatedSpriteImage
 import ui.customactors.boundLabel
-
-
-class SetupViewModel {
-    val availableControllers: MutableList<PlayerModel> by lazy {
-        val controllers = Controllers.getControllers()
-        mutableListOf(
-            *Controllers.getControllers().map { PlayerModel.GamePad(it) }.toTypedArray(),
-            PlayerModel.Keyboard()
-        )
-    }
-}
-
-open class BoundHorizontalGroup : HorizontalGroup()
-
-sealed class PlayerModel(
-    val name: String,
-    var selectedCharacter: String
-) {
-    lateinit var isSelectedCallback: (Boolean) -> Unit
-    lateinit var selectedAbleSpriteAnims: SelectedItemList<TurboCharacterAnim>
-    var isSelected = false
-    fun toggle() {
-        isSelected = !isSelected
-        isSelectedCallback(isSelected)
-    }
-
-    class Keyboard : PlayerModel("Keyboard", Assets.characterTurboAnims.first().name) {
-        init {
-            debug { "Keyboard" }
-        }
-    }
-    class GamePad(val controller: Controller) :
-        PlayerModel("GamePad ${controller.playerIndex + 1}", Assets.characterTurboAnims.first().name) {
-        init {
-            debug { "Added for ${controller.uniqueId}" }
-        }
-    }
-
-}
 
 class SetupScreen(gameState: StateMachine<GameState, GameEvent>) : BasicScreen(gameState) {
     override val camera = OrthographicCamera()

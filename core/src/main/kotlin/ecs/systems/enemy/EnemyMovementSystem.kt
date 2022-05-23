@@ -7,14 +7,12 @@ import com.badlogic.gdx.math.Vector2
 import com.badlogic.gdx.physics.box2d.Body
 import ecs.components.BodyComponent
 import ecs.components.enemy.AgentProperties
+import ecs.components.enemy.AttackableProperties
 import ecs.components.gameplay.ObstacleComponent
 import ecs.components.gameplay.TransformComponent
 import ktx.ashley.allOf
 import ktx.math.vec2
-import physics.AshleyMappers
-import physics.agentProps
-import physics.sprite
-import physics.transform
+import physics.*
 import tru.Assets
 
 class EnemyMovementSystem(private val flocking: Boolean) : IteratingSystem(
@@ -38,7 +36,8 @@ class EnemyMovementSystem(private val flocking: Boolean) : IteratingSystem(
 
     override fun processEntity(entity: Entity, deltaTime: Float) {
         val enemyComponent = entity.agentProps()
-        if (enemyComponent.cooldownPropertyCheckIfDone(enemyComponent::stunned, deltaTime)) {
+        val attackable = entity.getComponent<AttackableProperties>()
+        if (enemyComponent.cooldownPropertyCheckIfDone(attackable::stunned, deltaTime)) {
             val bodyComponent = AshleyMappers.body.get(entity)
             if (flocking && enemyComponent.flock && entity.sprite().isVisible) {
                 fixFlocking(bodyComponent.body!!)

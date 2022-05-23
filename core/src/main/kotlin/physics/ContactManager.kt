@@ -14,6 +14,7 @@ import ecs.components.ai.old.CollidedWithObstacle
 import ecs.components.ai.old.IsAwareOfPlayer
 import ecs.components.ai.old.KnownPosition
 import ecs.components.enemy.AgentProperties
+import ecs.components.enemy.AttackableProperties
 import ecs.components.fx.ParticleEffectComponent
 import ecs.components.gameplay.*
 import ecs.components.pickups.LootComponent
@@ -70,8 +71,9 @@ class ContactManager : ContactListener {
                 enemyEntity.fitnessDown()
 
                 val enemyComponent = enemyEntity.agentProps()
+                val ap = enemyEntity.getComponent<AttackableProperties>()
                 val bulletComponent = bulletEntity.bullet()
-                enemyComponent.takeDamage(bulletComponent.damage, bulletComponent.player)
+                ap.takeDamage(bulletComponent.damage, bulletComponent.player.entity)
                 val bulletBody = bulletEntity.body()
                 val splatterAngle = bulletBody.linearVelocity.cpy().angleDeg()
 
@@ -87,7 +89,7 @@ class ContactManager : ContactListener {
                 enemy.fitnessDown()
 
                 enemy.addComponent<BurningComponent> {
-                    player = contactType.damageEntity.getComponent<DamageEffectComponent>().player
+                    player = contactType.damageEntity.getComponent<DamageEffectComponent>().player.entity
                 }
                 enemy.addComponent<ParticleEffectComponent> {
                     effect = Assets.fireEffectPool.obtain()
@@ -161,7 +163,7 @@ class ContactManager : ContactListener {
                 contactType.objective.getComponent<LightComponent>().light.isActive = true
             }
             is ContactType.PlayerAndProjectile -> {
-                contactType.player.getComponent<PlayerComponent>().player.health -= 20
+                contactType.player.getComponent<AttackableProperties>().health -= 20
             }
             is ContactType.PlayerAndSomeoneWhoTackles -> {
                 val enemy = contactType.tackler
@@ -178,7 +180,7 @@ class ContactManager : ContactListener {
                     player.getComponent<TransformComponent>().position,
                     true
                 )
-                player.getComponent<PlayerComponent>().player.health -= (5..40).random()
+                player.getComponent<AttackableProperties>().health -= (5..40).random()
             }
             is ContactType.PlayerCloseToPlayer -> {
                 //Some other stuff could be done here.
@@ -193,7 +195,7 @@ class ContactManager : ContactListener {
                     livingPlayer.contextAction().apply {
                         sprite = Assets.ps4Buttons["cross"]!!
                         contextAction = {
-                            player.health += (50..85).random()
+                            player.entity.getComponent<AttackableProperties>().health += (50..85).random()
                             deadPlayer.remove<PlayerWaitsForRespawn>()
                             playerControlComponent.waitsForRespawn = false
                         }
@@ -202,7 +204,7 @@ class ContactManager : ContactListener {
                     livingPlayer.addContextAction {
                         sprite = Assets.ps4Buttons["cross"]!!
                         contextAction = {
-                            player.health += (50..85).random()
+                            player.entity.getComponent<AttackableProperties>().health += (50..85).random()
                             deadPlayer.remove<PlayerWaitsForRespawn>()
                             playerControlComponent.waitsForRespawn = false
                         }
@@ -313,12 +315,13 @@ class ContactManager : ContactListener {
 
             //apply impulse to enemy body, hopefully sending them away
             val enemyComponent = AshleyMappers.agentProps.get(enemy)
-            enemyComponent.startCooldown(enemyComponent::stunned, 0.5f)
+            //Fix this later.
+            //enemyComponent.startCooldown(enemyComponent::stunned, 0.5f)
             val enemyBody = enemy.body()
             val distanceVector = enemyBody.worldCenter.cpy().sub(body.worldCenter)
             val direction = distanceVector.cpy().nor()
             val inverseDistance = 1 / distanceVector.len()
-            enemyComponent.takeDamage((50f..150f).random() * inverseDistance, grenadeComponent.player)
+            enemy.getComponent<AttackableProperties>().takeDamage((50f..150f).random() * inverseDistance, grenadeComponent.player.entity)
             enemyComponent.lastShotAngle  = direction.angleDeg()
             enemyBody.applyLinearImpulse(direction.scl(inverseDistance * (500f..1500f).random()), enemyBody.worldCenter, true)
         }

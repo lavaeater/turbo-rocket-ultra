@@ -10,7 +10,6 @@ import core.MainGame
 fun main() {
     Lwjgl3Application(MainGame(), Lwjgl3ApplicationConfiguration().apply {
         setTitle("turbo-rocket-ultra")
-//        setFullscreenMode(Lwjgl3ApplicationConfiguration.getDisplayMode())
         setWindowedMode(1280, 1024)
         setWindowIcon(*(arrayOf(128, 64, 32, 16).map { "libgdx$it.png" }.toTypedArray()))
     })
