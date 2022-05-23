@@ -1,13 +1,14 @@
 #!/bin/bash
-rm -rf out-win
+rm -rf ../turbo-build/out-win
 
-java -jar ../packr-all-4.0.0.jar \
+java -jar ../turbo-build/packr-all-4.0.0.jar \
      --platform windows64 \
-     --jdk /home/tommie/.sdkman/candidates/java/current \
+     --jdk ../turbo-build/turbo-build/openjdk-19-ea+23_windows-x64_bin.tar.gz \
      --useZgcIfSupportedOs \
      --executable TurboRocketUltra \
-     --classpath /home/tommie/projects/games/turbo-rocket-ultra/lwjgl3/build/libs/turbo-rocket-ultra-0.0.1.jar \
+     --classpath ./lwjgl3/build/libs/turbo-rocket-ultra-0.0.1.jar \
      --mainclass core.lwjgl3.Lwjgl3Launcher \
-     --vmargs Xmx1G \
+     --vmargs Xmx1G XstartOnFirstThread \
      --resources assets/* \
-     --output out-win
+
+     --output ../turbo-build/out-win
