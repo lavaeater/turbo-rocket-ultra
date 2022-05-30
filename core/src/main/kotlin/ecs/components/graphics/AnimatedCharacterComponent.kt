@@ -11,7 +11,8 @@ import tru.SpriteDirection
 class AnimatedCharacterComponent: Component, Pool.Poolable {
     var anims: Map<AnimState, LpcCharacterAnim<Sprite>> = emptyMap()
     set(value) {
-        currentAnim = value.values.first().animations.values.first()
+        if(value.any())
+            currentAnim = value.values.first().animations.values.first()
         field = value
     }
     var currentDirection: SpriteDirection = SpriteDirection.South
