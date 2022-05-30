@@ -45,6 +45,7 @@ import turbofacts.TurboFactsOfTheWorld
 import turbofacts.TurboStoryManager
 import ui.IUserInterface
 import ui.getUiThing
+import kotlin.math.log
 import kotlin.math.pow
 import kotlin.math.roundToInt
 
@@ -67,7 +68,7 @@ class GameScreen(private val gameState: StateMachine<GameState, GameEvent>) : Kt
 
     override fun show() {
         initializeIfNeeded()
-        if(running) {
+        if (running) {
             camera.setToOrtho(true, viewPort.maxWorldWidth, viewPort.maxWorldHeight)
             Gdx.input.inputProcessor = engine.getSystem(KeyboardInputSystem::class.java)
             Controllers.addListener(engine.getSystem(GamepadInputSystem::class.java))
@@ -123,15 +124,16 @@ class GameScreen(private val gameState: StateMachine<GameState, GameEvent>) : Kt
         audioPlayer.update(delta)
         turboStoryManager.checkIfNeeded()
     }
+
     private val turboStoryManager by lazy { inject<TurboStoryManager>() }
 
     private val velIters = 8
     private val posIters = 3
-    private val timeStep = 1/60f
+    private val timeStep = 1 / 60f
 
     var accumulator = 0f
 
-    private fun updatePhysics(delta:Float) {
+    private fun updatePhysics(delta: Float) {
         val ourTime = delta.coerceAtMost(timeStep * 2)
         accumulator += ourTime
         while (accumulator > timeStep) {
@@ -185,10 +187,11 @@ class GameScreen(private val gameState: StateMachine<GameState, GameEvent>) : Kt
             firstRun = false
         }
     }
+
     private fun addPlayers() {
         val startBounds = mapManager.gridMap.values.first { it.startSection }.innerBounds
         for ((controlComponent, player) in Players.players) {
-            if(player.isAiPlayer) {
+            if (player.isAiPlayer) {
                 val enemy = enemy(startBounds.randomPoint()) {
                     with<CameraFollowComponent>()
                     with<PlayerComponent> {
@@ -207,15 +210,19 @@ class GameScreen(private val gameState: StateMachine<GameState, GameEvent>) : Kt
     }
 
     private fun movePlayersToStart() {
-        val startBounds = mapManager.gridMap.values.first { it.startSection }.innerBounds
-        val players = engine.getEntitiesFor(allOf(PlayerComponent::class).get())
-        if(players.none()) {
-            addPlayers()
-        } else
-            for (player in players) {
-                val body = AshleyMappers.body.get(player).body!!
-                body.setTransform(startBounds.randomPoint(), body.angle)
-            }
+        try {
+            val startBounds = mapManager.gridMap.values.first { it.startSection }.innerBounds
+            val players = engine.getEntitiesFor(allOf(PlayerComponent::class).get())
+            if (players.none()) {
+                addPlayers()
+            } else
+                for (player in players) {
+                    val body = AshleyMappers.body.get(player).body!!
+                    body.setTransform(startBounds.randomPoint(), body.angle)
+                }
+        } catch (e: Exception) {
+            ktx.log.error { "Couldn't move player to start area, check map to see if there is a start area (s) ${e.message}" }
+        }
     }
 
     private fun nextLevel() {
@@ -231,7 +238,7 @@ class GameScreen(private val gameState: StateMachine<GameState, GameEvent>) : Kt
 
         CounterObject.currentLevel++
         generateMap(CounterObject.currentLevel)
-        if(Players.players.keys.any { it.isKeyboard }) {
+        if (Players.players.keys.any { it.isKeyboard }) {
             engine.getSystem<KeyboardInputSystem>().setProcessing(true)
         } else {
             engine.getSystem<KeyboardInputSystem>().setProcessing(false)
@@ -242,9 +249,9 @@ class GameScreen(private val gameState: StateMachine<GameState, GameEvent>) : Kt
     private val mapManager by lazy { inject<GridMapManager>() }
 
     private fun clearAllButPlayers() {
-        for(entity in engine.entities) {
-            if(!entity.isPlayer() && !entity.hasWeapon()) {
-                if(entity.hasBody()) {
+        for (entity in engine.entities) {
+            if (!entity.isPlayer() && !entity.hasWeapon()) {
+                if (entity.hasBody()) {
                     val body = entity.body()
                     world.destroyBody(body)
                 }
@@ -258,7 +265,7 @@ class GameScreen(private val gameState: StateMachine<GameState, GameEvent>) : Kt
         CounterObject.enemyCount = 0
 
         //For debuggin we will swarm with enemies
-        CounterObject.maxEnemies =  (8f.pow(CounterObject.currentLevel).roundToInt() * 2).coerceAtMost(MAX_ENEMIES)
+        CounterObject.maxEnemies = (8f.pow(CounterObject.currentLevel).roundToInt() * 2).coerceAtMost(MAX_ENEMIES)
         CounterObject.maxSpawnedEnemies = CounterObject.maxEnemies * 2
 
         val map = when {
@@ -280,8 +287,9 @@ class GameScreen(private val gameState: StateMachine<GameState, GameEvent>) : Kt
 
 object MapList {
     val mapFileNames = mutableListOf<String>()
-    val mapFiles: List<MapData> get () {
-        return mapFileNames.map { MapLoader.loadNewMap("text_maps/$it.txt") }
-    }
+    val mapFiles: List<MapData>
+        get() {
+            return mapFileNames.map { MapLoader.loadNewMap("text_maps/$it.txt") }
+        }
 }
 
