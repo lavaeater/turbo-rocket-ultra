@@ -40,7 +40,7 @@ import kotlin.reflect.KClass
 
 class Hud(private val batch: Batch) : IUserInterface, MessageReceiver {
     private val aspectRatio = 14f / 9f
-    private val hudWidth = 960f
+    private val hudWidth = 720f
     private val hudHeight = hudWidth * aspectRatio
     private val camera = OrthographicCamera()
     override val hudViewPort = ExtendViewport(hudWidth, hudHeight, camera)

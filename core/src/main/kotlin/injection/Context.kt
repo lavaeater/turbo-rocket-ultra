@@ -111,16 +111,8 @@ object Context {
             addSystem(EnemyDeathSystem(audioPlayer = inject(), factsOfTheWorld = inject()))
             addSystem(EnemyMovementSystem(true))
             addSystem(PerimeterObjectiveSystem())
-//            // Ai Systems Start
-//            addSystem(PanicSystem())
-//            addSystem(ChasePlayerSystem())
-//            addSystem(AlertFriendsSystem())
-//            addSystem(SeekPlayerSystem(false))
-//            addSystem(AttackPlayerSystem())
             addSystem(EnemyAnimationSystem())
             addSystem(EnemyHearsShotsSystem())
-//            addSystem(InvestigateSystem())
-//            addSystem(RushPlayerSystem())
             addSystem(AudioSystem())
             // Ai Systems End
             //Burning
@@ -142,7 +134,7 @@ object Context {
                     inject(),
                     inject(),
                     inject<ExtendViewport>(),
-                    true,
+                    false,
                     1,
                     false
                 )
@@ -151,7 +143,6 @@ object Context {
             addSystem(RenderMiniMapSystem(2))
             //We add this here now to make sure it is run AFTER the rendercycle
             addSystem(BehaviorTreeSystem(4))
-            //addSystem(PhysicsDebugRendererSystem(inject(), inject()))
             addSystem(PlayerFlashlightSystem())
             addSystem(PlayerContextActionSystem())
             addSystem(DelayedEntityCreationSystem())
