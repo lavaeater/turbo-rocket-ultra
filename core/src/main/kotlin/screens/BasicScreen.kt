@@ -2,9 +2,6 @@ package screens
 
 import audio.AudioPlayer
 import com.badlogic.gdx.Gdx
-import com.badlogic.gdx.controllers.Controller
-import com.badlogic.gdx.controllers.ControllerListener
-import com.badlogic.gdx.controllers.Controllers
 import com.badlogic.gdx.graphics.GL20
 import com.badlogic.gdx.graphics.OrthographicCamera
 import com.badlogic.gdx.graphics.g2d.PolygonSpriteBatch
@@ -17,7 +14,7 @@ import ktx.app.KtxInputAdapter
 import ktx.app.KtxScreen
 import statemachine.StateMachine
 
-abstract class BasicScreen(val gameState: StateMachine<GameState, GameEvent>) : KtxScreen, KtxInputAdapter, ControllerListener {
+abstract class BasicScreen(val gameState: StateMachine<GameState, GameEvent>) : KtxScreen, KtxInputAdapter {
 
     open val camera: OrthographicCamera by lazy { Context.inject() }
     open val viewport: ExtendViewport by lazy { Context.inject() }
@@ -26,12 +23,10 @@ abstract class BasicScreen(val gameState: StateMachine<GameState, GameEvent>) : 
 
     override fun show() {
         Gdx.input.inputProcessor = this
-        Controllers.addListener(this)
     }
 
     override fun hide() {
         Gdx.input.inputProcessor = null
-        Controllers.removeListener(this)
     }
 
     override fun render(delta: Float) {
@@ -40,23 +35,5 @@ abstract class BasicScreen(val gameState: StateMachine<GameState, GameEvent>) : 
         camera.update(true)
         batch.projectionMatrix = camera.combined
 
-    }
-
-    override fun connected(controller: Controller) {
-    }
-
-    override fun disconnected(controller: Controller) {
-    }
-
-    override fun buttonDown(controller: Controller?, buttonCode: Int): Boolean {
-        return true
-    }
-
-    override fun buttonUp(controller: Controller, buttonCode: Int): Boolean {
-        return true
-    }
-
-    override fun axisMoved(controller: Controller, axisCode: Int, value: Float): Boolean {
-        return true
     }
 }
