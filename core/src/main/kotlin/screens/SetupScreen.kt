@@ -1,16 +1,13 @@
 package screens
 
 import com.badlogic.gdx.Input
-import com.badlogic.gdx.controllers.Controller
 import com.badlogic.gdx.graphics.OrthographicCamera
 import com.badlogic.gdx.utils.viewport.ExtendViewport
 import gamestate.GameEvent
 import gamestate.GameState
 import gamestate.Player
 import gamestate.Players
-import input.Button
 import input.ControlMapper
-import input.GamepadControl
 import input.KeyboardControl
 import ktx.graphics.use
 import ktx.math.vec2
@@ -103,18 +100,6 @@ class SetupScreen(gameState: StateMachine<GameState, GameEvent>) : BasicScreen(g
         return true
     }
 
-
-    override fun buttonUp(controller: Controller, buttonCode: Int): Boolean {
-        return when(Button.getButton(buttonCode)) {
-            Button.Cross -> addIfNotAdded(controller)
-            Button.Square -> startGame()
-            Button.Ring -> removeIfAdded(controller)
-            Button.DPadLeft -> changeSprite(controller, -1)
-            Button.DPadRight -> changeSprite(controller, 1)
-            else -> super.buttonUp(controller, buttonCode)
-        }
-    }
-
     private fun updateSprite(player: Player, indexChange: Int) {
         var currentIndex = Assets.playerCharacters.keys.indexOf(player.selectedCharacterSpriteName)
         currentIndex += indexChange
@@ -126,37 +111,9 @@ class SetupScreen(gameState: StateMachine<GameState, GameEvent>) : BasicScreen(g
         player.selectedCharacterSpriteName = Assets.playerCharacters.keys.toList()[currentIndex]
     }
 
-    private fun changeSprite(controller: Controller, indexChange: Int): Boolean {
-        val playerPair = Players.players.filterKeys { it.isGamepad && (it as GamepadControl).controller == controller}.values.firstOrNull()
-        if(playerPair != null) {
-            updateSprite(playerPair, indexChange)
-        }
-        return true
-    }
-
-    private fun removeIfAdded(controller: Controller): Boolean {
-        val toRemove = Players.players.filterKeys { it.isGamepad && (it as GamepadControl).controller == controller}.keys.firstOrNull()
-
-        if(toRemove != null) {
-            Players.players.remove(toRemove)
-            updatePlayers()
-            return true
-        }
-        return false
-    }
-
     private fun updatePlayers() {
         activePlayers.clear()
         activePlayers.addAll(Players.players.toList())
-    }
-
-    private fun addIfNotAdded(controller: Controller): Boolean {
-        if(!Players.players.filterKeys { it.isGamepad && (it as GamepadControl).controller == controller }.any() ) {
-            Players.players[GamepadControl(controller)] = Player()
-            updatePlayers()
-            return true
-        }
-        return false
     }
 
     private fun toggleKeyboardPlayer(): Boolean {
