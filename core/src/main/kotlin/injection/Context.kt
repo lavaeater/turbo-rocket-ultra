@@ -9,17 +9,15 @@ import com.badlogic.gdx.graphics.g2d.Batch
 import com.badlogic.gdx.graphics.g2d.PolygonSpriteBatch
 import com.badlogic.gdx.maps.MapRenderer
 import com.badlogic.gdx.utils.viewport.ExtendViewport
-import ecs.systems.*
+import ecs.systems.BodyDestroyerSystem
+import ecs.systems.CharacterWalkAndShootDirectionSystem
+import ecs.systems.PhysicsSystem
 import ecs.systems.ai.*
 import ecs.systems.ai.towers.TowerShootSystem
 import ecs.systems.ai.towers.TowerTargetFinderSystem
 import ecs.systems.enemy.*
-import ecs.systems.input.KeyboardInputSystem
-import ecs.systems.fx.AddSplatterSystem
-import ecs.systems.fx.SplatterRemovalSystem
 import ecs.systems.graphics.*
-import ecs.systems.input.GamepadInputSystem
-import ecs.systems.input.VehicleControlSystem
+import ecs.systems.input.KeyboardInputSystem
 import ecs.systems.player.*
 import ktx.box2d.createWorld
 import ktx.inject.Context
@@ -66,12 +64,10 @@ object Context {
     private fun getEngine(): Engine {
         return PooledEngine().apply {
             addSystem(PhysicsSystem(inject()))
-            //addSystem(PhysicsDebugRendererSystem(inject(), inject()))
             addSystem(CameraUpdateSystem())
             addSystem(PlayerMoveSystem())
             addSystem(PlayerBuildModeSystem())
             addSystem(KeyboardInputSystem())
-            addSystem(GamepadInputSystem())
             addSystem(BodyDestroyerSystem(inject())) //world
             addSystem(CharacterWalkAndShootDirectionSystem())
             addSystem(ShootDebugRenderSystem())
