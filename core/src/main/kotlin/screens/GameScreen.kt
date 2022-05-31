@@ -3,7 +3,6 @@ package screens
 import audio.AudioPlayer
 import com.badlogic.ashley.core.Engine
 import com.badlogic.gdx.Gdx
-import com.badlogic.gdx.controllers.Controllers
 import com.badlogic.gdx.graphics.GL20
 import com.badlogic.gdx.graphics.OrthographicCamera
 import com.badlogic.gdx.graphics.g2d.PolygonSpriteBatch
@@ -18,7 +17,6 @@ import ecs.components.gameplay.TransformComponent
 import ecs.systems.graphics.CameraUpdateSystem
 import ecs.systems.graphics.RenderMiniMapSystem
 import ecs.systems.graphics.RenderSystem
-import ecs.systems.input.GamepadInputSystem
 import injection.Context.inject
 import ecs.systems.input.KeyboardInputSystem
 import ecs.systems.player.GameOverSystem
@@ -69,7 +67,6 @@ class GameScreen(private val gameState: StateMachine<GameState, GameEvent>) : Kt
         initializeIfNeeded()
         camera.setToOrtho(true, viewPort.maxWorldWidth, viewPort.maxWorldHeight)
         Gdx.input.inputProcessor = engine.getSystem(KeyboardInputSystem::class.java)
-        Controllers.addListener(engine.getSystem(GamepadInputSystem::class.java))
 
         engine.getSystem<CameraUpdateSystem>().reset()
         engine.removeAllEntities()
@@ -120,7 +117,6 @@ class GameScreen(private val gameState: StateMachine<GameState, GameEvent>) : Kt
 
     override fun resume() {
         Gdx.input.inputProcessor = engine.getSystem(KeyboardInputSystem::class.java)
-        Controllers.addListener(engine.getSystem(GamepadInputSystem::class.java))
         for (system in engine.systems)
             system.setProcessing(true)
     }
@@ -128,7 +124,6 @@ class GameScreen(private val gameState: StateMachine<GameState, GameEvent>) : Kt
     override fun hide() {
         ui.hide()
         Gdx.input.inputProcessor = null
-        Controllers.removeListener(engine.getSystem(GamepadInputSystem::class.java))
         for (system in engine.systems)
             system.setProcessing(false)
     }
