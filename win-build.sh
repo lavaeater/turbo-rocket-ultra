@@ -7,7 +7,7 @@ java -jar ../turbo-build/packr-all-4.0.0.jar \
      --jdk ../turbo-build/openjdk-18.0.1.1_windows-x64_bin.zip \
      --useZgcIfSupportedOs \
      --executable TurboRocketUltra \
-     --classpath ./lwjgl3/build/libs/turbo-rocket-ultra-0.0.1.jar \
+     --classpath ./lwjgl3/build/libs/TurboRocketUltra-0.0.1.jar \
      --mainclass core.lwjgl3.Lwjgl3Launcher \
      --vmargs Xmx1G XstartOnFirstThread \
      --resources assets/* \
