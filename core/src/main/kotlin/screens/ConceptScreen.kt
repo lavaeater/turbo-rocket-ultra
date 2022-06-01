@@ -10,7 +10,6 @@ import com.badlogic.gdx.math.Vector2
 import com.badlogic.gdx.scenes.scene2d.Stage
 import com.badlogic.gdx.utils.viewport.ExtendViewport
 import ecs.systems.graphics.GameConstants.GAME_HEIGHT
-import ecs.systems.graphics.GameConstants.GAME_WIDTH
 import gamestate.GameEvent
 import gamestate.GameState
 import injection.Context.inject
@@ -18,9 +17,16 @@ import ktx.graphics.use
 import ktx.math.plus
 import ktx.math.vec2
 import ktx.math.vec3
+import map.snake.bottom
+import map.snake.left
+import map.snake.right
+import map.snake.top
+import screens.MousePosition.maxX
+import screens.MousePosition.minX
 import space.earlygrey.shapedrawer.ShapeDrawer
 import statemachine.StateMachine
 import tru.Assets
+import kotlin.math.absoluteValue
 
 object MousePosition {
     private val mousePosition3D = vec3()
@@ -43,6 +49,7 @@ object MousePosition {
     const val maxY = GAME_HEIGHT - margin
     const val minY = 0f + margin
 }
+
 
 fun Vector2.worldToNorm(): Vector2 {
     return this.worldToNorm(MousePosition.minX, MousePosition.maxX, MousePosition.minY, MousePosition.maxY)
@@ -70,33 +77,55 @@ class ConceptScreen(gameState: StateMachine<GameState, GameEvent>) : BasicScreen
         val aStage = Stage(ExtendViewport(1600f, 1200f, OrthographicCamera()), batch)
     }
     private var currentlySelectedNode: GraphicsNode? = GraphicsNode()
+    private var nodeUnderMouse: GraphicsNode? = null
     private val graphicsNodes = mutableListOf(currentlySelectedNode!!)
+    private val allNodes = mutableListOf(currentlySelectedNode!!)
+
 
     override fun touchDown(screenX: Int, screenY: Int, pointer: Int, button: Int): Boolean {
         drawPointerBall = button == Buttons.LEFT
         return true
     }
 
+    fun getNodeAt(screenX: Int, screenY: Int): GraphicsNode? {
+        val normPos = MousePosition.toWorld(screenX, screenY).worldToNorm()
+        return allNodes.firstOrNull { it.globalPosition.dst(normPos) < 0.25f }
+    }
+
+    fun checkNodeUnderMouse() {
+        val normPos = MousePosition.toWorld()
+        nodeUnderMouse = allNodes.firstOrNull { it.globalPosition.normToWorld().dst(normPos) < 0.25f }
+    }
+
     override fun touchUp(screenX: Int, screenY: Int, pointer: Int, button: Int): Boolean {
         drawPointerBall = false
         if (button == Buttons.LEFT) {
-            if(currentlySelectedNode == null)
-                addNodeAt(screenX, screenY)
+            if(nodeUnderMouse != null)
+                currentlySelectedNode = nodeUnderMouse
             else {
-                addChildNodeAt(screenX, screenY, currentlySelectedNode!!)
+                if (currentlySelectedNode == null)
+                    addNodeAt(screenX, screenY)
+                else {
+                    addChildNodeAt(screenX, screenY, currentlySelectedNode!!)
+                }
             }
+        } else if(button == Buttons.RIGHT) {
+            currentlySelectedNode = null
         }
         return true
     }
 
     private fun addChildNodeAt(screenX: Int, screenY: Int, parent: GraphicsNode) {
         val p = MousePosition.toWorld(screenX, screenY).worldToNorm()
-        parent.addChild(p.x, p.y)
+        allNodes.add(parent.addChild(p.x, p.y))
     }
 
     private fun addNodeAt(screenX: Int, screenY: Int) {
         val p = MousePosition.toWorld(screenX, screenY).worldToNorm()
-        graphicsNodes.add(GraphicsNode(p.x,p.y))
+        val node = GraphicsNode(p.x,p.y)
+        graphicsNodes.add(node)
+        allNodes.add(node)
+        currentlySelectedNode = node
     }
 
     private lateinit var drawArea: Rectangle
@@ -115,10 +144,24 @@ class ConceptScreen(gameState: StateMachine<GameState, GameEvent>) : BasicScreen
         )
     }
 
+
+
     override fun render(delta: Float) {
         super.render(delta)
+        checkNodeUnderMouse()
+        val mousePosition = MousePosition.toWorld()
+
         shapeDrawer.batch.use {
-            shapeDrawer.rectangle(drawArea, Color.WHITE, 0.5f)
+
+            val vertYes = allNodes.any { (it.globalPosition.normToWorld().x - mousePosition.x).absoluteValue < 0.05f }
+            val horiYes= allNodes.any { (it.globalPosition.normToWorld().y - mousePosition.y).absoluteValue < 0.05f }
+
+            shapeDrawer.line(mousePosition.x, drawArea.top(), mousePosition.x, drawArea.bottom(), if(vertYes) Color.BLUE else Color.WHITE, 0.1f)
+            shapeDrawer.line(drawArea.left(), mousePosition.y, drawArea.right(), mousePosition.y, if(horiYes) Color.BLUE else Color.WHITE, 0.1f)
+
+
+
+            shapeDrawer.rectangle(drawArea, Color.WHITE, 0.1f)
             if (drawPointerBall) {
                 shapeDrawer.filledCircle(MousePosition.toWorld(), .5f, Color.GREEN)
             }
@@ -133,7 +176,7 @@ class ConceptScreen(gameState: StateMachine<GameState, GameEvent>) : BasicScreen
         shapeDrawer.filledCircle(
             graphicsNode.globalPosition.normToWorld(),
             .5f,
-            if(currentlySelectedNode == graphicsNode) Color.GREEN else Color.BLUE
+            if(nodeUnderMouse == graphicsNode) Color.RED else if(currentlySelectedNode == graphicsNode) Color.GREEN else Color.BLUE
         )
         for (childNode in graphicsNode.children) {
             shapeDrawer.line(graphicsNode.globalPosition.normToWorld(), childNode.globalPosition.normToWorld(), Color.BLACK, .1f)
@@ -182,4 +225,6 @@ class GraphicsNode(localX: Float = 0.5f, localY: Float = 0.5f, var rotation: Flo
         children.add(newChild)
         return newChild
     }
+
+    val allChildren:List<GraphicsNode> get() = children + children.flatMap { it.allChildren }
 }
