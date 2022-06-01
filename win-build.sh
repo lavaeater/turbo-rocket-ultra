@@ -13,6 +13,4 @@ java -jar ../turbo-build/packr-all-4.0.0.jar \
      --resources assets/* \
      --output ../turbo-build/out-win
 
-7z a ../turbo-build/zips/win/turbo-rocket-ultra-win.zip ../turbo-build/out-win/*
-
-butler push ../turbo-build/zips/win lavaeater/turbo-rocket-ultra:win
+butler push ../turbo-build/out-win lavaeater/turbo-rocket-ultra:win

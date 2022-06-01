@@ -13,6 +13,4 @@ java -jar ../turbo-build/packr-all-4.0.0.jar \
      --resources assets/* \
      --output ../turbo-build/out-linux
 
-7z a ../turbo-build/zips/linux/turbo-rocket-ultra-linux.zip ../turbo-build/out-linux/*
-
-butler push ../turbo-build/zips/linux lavaeater/turbo-rocket-ultra:linux
+butler push ../turbo-build/out-linux lavaeater/turbo-rocket-ultra:linux
