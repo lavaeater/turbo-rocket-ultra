@@ -10,7 +10,7 @@ import core.MainGame
 fun main() {
     Lwjgl3Application(MainGame(), Lwjgl3ApplicationConfiguration().apply {
         setTitle("turbo-rocket-ultra")
-        setWindowedMode(1280, 1024)
+        setWindowedMode(640, 512)
         setWindowIcon(*(arrayOf(128, 64, 32, 16).map { "libgdx$it.png" }.toTypedArray()))
     })
 }

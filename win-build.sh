@@ -1,5 +1,6 @@
 #!/bin/bash
 rm -rf ../turbo-build/out-win
+rm ../turbo-build/turbo-rocket-ultra-win.zip
 
 java -jar ../turbo-build/packr-all-4.0.0.jar \
      --platform windows64 \
@@ -11,3 +12,7 @@ java -jar ../turbo-build/packr-all-4.0.0.jar \
      --vmargs Xmx1G XstartOnFirstThread \
      --resources assets/* \
      --output ../turbo-build/out-win
+
+7z a ../turbo-build/zips/win/turbo-rocket-ultra-win.zip ../turbo-build/out-win/*
+
+butler push ../turbo-build/zips/win lavaeater/turbo-rocket-ultra:win
