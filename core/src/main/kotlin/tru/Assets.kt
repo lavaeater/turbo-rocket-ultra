@@ -456,7 +456,7 @@ object Assets : Disposable {
     val playerCharacters by lazy { characters }
 
     val splashTexture: Texture by lazy {
-        Texture(Gdx.files.internal("splash/splash_1.png"))
+        Texture(Gdx.files.internal("graphics/splash-screen.png"))
     }
 
     val dummyRegion: TextureRegion by lazy {
