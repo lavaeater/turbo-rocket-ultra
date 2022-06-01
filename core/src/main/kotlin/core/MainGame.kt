@@ -9,7 +9,6 @@ import ktx.app.KtxGame
 import ktx.app.KtxScreen
 import ktx.inject.register
 import ktx.log.debug
-import ktx.log.info
 import screens.*
 import statemachine.StateMachine
 import tru.Assets
@@ -106,6 +105,7 @@ class MainGame : KtxGame<KtxScreen>() {
         addScreen(PauseScreen(gameState))
         addScreen(GameOverScreen(gameState))
         addScreen(AnimEditorScreen(gameState))
+        addScreen(BehaviorTreeViewScreen(gameState))
         addScreen(ConceptScreen(gameState))
         addScreen(CharacterEditorScreen(gameState))
         addScreen(MapEditorScreen(gameState))

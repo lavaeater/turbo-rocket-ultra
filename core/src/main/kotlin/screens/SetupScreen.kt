@@ -32,6 +32,21 @@ class SetupScreen(gameState: StateMachine<GameState, GameEvent>) : BasicScreen(g
     override val camera = OrthographicCamera()
     override val viewport = ExtendViewport(800f, 600f, camera)
 
+    private val normalMap = command("Normal") {
+        setUp(Input.Keys.SPACE, "Toggle Player") { toggleKeyboardPlayer() }
+        setUp(Input.Keys.LEFT, "Prev Character") { changeSpriteKeyboard(-1) }
+        setUp(Input.Keys.RIGHT, "Next Character") { changeSpriteKeyboard(1) }
+        setUp(Input.Keys.ENTER, "Start Game") { startGame() }
+        setUp(Input.Keys.T, "Start Game with AI") { startGameWithAi() }
+        setUp(Input.Keys.C, "Start Concept Screen") { startConceptScreen() }
+        setUp(Input.Keys.E, "Start Editor") { startEditor() }
+        setUp(Input.Keys.UP, "Next map") { nextMap() }
+        setUp(Input.Keys.DOWN, "Previous map") { previousMap() }
+        setUp(Input.Keys.M, "Previous map") {
+            gameState.acceptEvent(GameEvent.StartMapEditor)
+        }
+    }
+
     val debug = false
     val shapeDrawer by lazy { Assets.shapeDrawer }
     private val setupViewModel = SetupViewModel()
@@ -53,7 +68,13 @@ class SetupScreen(gameState: StateMachine<GameState, GameEvent>) : BasicScreen(g
         val aStage = Stage(viewport, batch)
         aStage.isDebugAll = false
         aStage.actors {
-            boundLabel({ mapNames.selectedItem }) {
+            table {
+                boundLabel({ mapNames.selectedItem }) {
+                }
+                row()
+                label("To start mapeditor, press M,\nTo start Concept, press C")
+                setPosition(100f, 400f)
+                pack()
             }
         }
         aStage.addActor(playerCards)
@@ -150,23 +171,12 @@ class SetupScreen(gameState: StateMachine<GameState, GameEvent>) : BasicScreen(g
         batch.projectionMatrix = camera.combined
     }
 
+    override fun keyDown(keycode: Int): Boolean {
+        return normalMap.execute(keycode, KeyPress.Down)
+    }
+
     override fun keyUp(keycode: Int): Boolean {
-        return when (keycode) {
-            Input.Keys.SPACE -> toggleKeyboardPlayer()
-            Input.Keys.LEFT -> changeSpriteKeyboard(-1)
-            Input.Keys.RIGHT -> changeSpriteKeyboard(1)
-            Input.Keys.ENTER -> startGame()
-            Input.Keys.T -> startGameWithAi()
-            Input.Keys.C -> startConceptScreen()
-            Input.Keys.E -> startEditor()
-            Input.Keys.A -> previousMap()
-            Input.Keys.S -> nextMap()
-            Input.Keys.M -> {
-                gameState.acceptEvent(GameEvent.StartMapEditor)
-                true
-            }
-            else -> super.keyUp(keycode)
-        }
+        return normalMap.execute(keycode, KeyPress.Up)
     }
 
     var mapNames = getMapList()
