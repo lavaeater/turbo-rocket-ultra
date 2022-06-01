@@ -107,7 +107,6 @@ class MainGame : KtxGame<KtxScreen>() {
         addScreen(GameOverScreen(gameState))
         addScreen(AnimEditorScreen(gameState))
         addScreen(ConceptScreen(gameState))
-        addScreen(CharacterEditorScreen(gameState))
         addScreen(MapEditorScreen(gameState))
         gameState.initialize()
     }

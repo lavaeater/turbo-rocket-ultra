@@ -1,10 +1,9 @@
 #!/bin/bash
 rm -rf ../turbo-build/out-win
-rm ../turbo-build/turbo-rocket-ultra-win.zip
 
 java -jar ../turbo-build/packr-all-4.0.0.jar \
      --platform windows64 \
-     --jdk ../turbo-build/openjdk-18.0.1.1_windows-x64_bin.zip \
+     --jdk ../turbo-build/windows.zip \
      --useZgcIfSupportedOs \
      --executable TurboRocketUltra \
      --classpath ./lwjgl3/build/libs/TurboRocketUltra-0.0.1.jar \

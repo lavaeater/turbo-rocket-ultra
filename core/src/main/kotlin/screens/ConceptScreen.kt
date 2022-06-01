@@ -1,7 +1,6 @@
 package screens
 
 import ai.Tree
-import com.badlogic.ashley.core.Entity
 import com.badlogic.gdx.Gdx
 import com.badlogic.gdx.ai.btree.BehaviorTree
 import com.badlogic.gdx.ai.btree.Decorator
@@ -18,7 +17,6 @@ import com.badlogic.gdx.math.MathUtils.radiansToDegrees
 import com.badlogic.gdx.math.Vector2
 import com.badlogic.gdx.scenes.scene2d.Actor
 import com.badlogic.gdx.scenes.scene2d.Stage
-import com.badlogic.gdx.scenes.scene2d.actions.Actions
 import com.badlogic.gdx.scenes.scene2d.ui.HorizontalGroup
 import com.badlogic.gdx.scenes.scene2d.ui.Label
 import com.badlogic.gdx.scenes.scene2d.ui.Skin
@@ -32,7 +30,6 @@ import ktx.math.vec2
 import ktx.scene2d.*
 import statemachine.StateMachine
 import tru.Assets
-import kotlin.reflect.KClass
 
 /*
 I think custom classes is the way to go.

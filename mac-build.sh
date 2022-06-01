@@ -1,10 +1,9 @@
 #!/bin/bash
 rm -rf ../turbo-build/out-mac
-rm ../turbo-build/zips/mac/turbo-rocket-ultra-mac.zip
 
 java -jar ../turbo-build/packr-all-4.0.0.jar \
      --platform mac \
-     --jdk ../turbo-build/openjdk-18.0.1.1_macos-x64_bin.tar.gz \
+     --jdk ../turbo-build/mac.tar.gz \
      --useZgcIfSupportedOs \
      --executable TurboRocketUltra \
      --classpath ./lwjgl3/build/libs/TurboRocketUltra-0.0.1.jar \
