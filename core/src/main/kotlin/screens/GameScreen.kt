@@ -160,6 +160,8 @@ class GameScreen(private val gameState: StateMachine<GameState, GameEvent>) : Kt
     }
 
     override fun resume() {
+        if (factsOfTheWorld.getBoolean(Factoids.GotoNextLevel))
+            nextLevel()
         Gdx.input.inputProcessor = engine.getSystem(KeyboardInputSystem::class.java)
         Controllers.addListener(engine.getSystem(GamepadInputSystem::class.java))
         for (system in engine.systems)
@@ -167,8 +169,7 @@ class GameScreen(private val gameState: StateMachine<GameState, GameEvent>) : Kt
 
         ui.resume()
         running = true
-        if (factsOfTheWorld.getBoolean(Factoids.GotoNextLevel))
-            nextLevel()
+
     }
 
     override fun hide() {
