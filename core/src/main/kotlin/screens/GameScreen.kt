@@ -253,6 +253,7 @@ class GameScreen(private val gameState: StateMachine<GameState, GameEvent>) : Kt
                     val body = entity.body()
                     world.destroyBody(body)
                 }
+                entity.removeAll()
                 engine.removeEntity(entity)
             }
         }

@@ -173,6 +173,8 @@ class ContactManager : ContactListener {
                             val gun = loot.weaponDefinition.getWeapon()
                             if (!inventory.weapons.any { it.name == gun.name }) {
                                 inventory.weapons.add(gun)
+                                if(!inventory.ammo.containsKey(gun.ammoType))
+                                    inventory.ammo[gun.ammoType] = 0
                             }
                             if (!playerEntity.has<WeaponComponent>())
                                 playerEntity.addComponent<WeaponComponent> {
