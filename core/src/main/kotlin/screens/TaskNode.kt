@@ -1,5 +1,6 @@
 package screens
 
+import ai.treeString
 import com.badlogic.gdx.ai.btree.Decorator
 import com.badlogic.gdx.ai.btree.Task
 import com.badlogic.gdx.scenes.scene2d.Actor

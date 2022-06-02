@@ -19,13 +19,14 @@ import ui.new.*
 class AnimEditorScreen(gameState: StateMachine<GameState, GameEvent>) : BasicScreen(gameState) {
 
     override val camera = OrthographicCamera()
-    override val viewport = ExtendViewport(800f, 600f, camera)
+    override val viewport = ExtendViewport(1600f, 1200f, camera)
 
     val debug = false
     val shapeDrawer by lazy { Assets.shapeDrawer }
 
-    private val fileName = "blonde.png"
-    private val baseFolder = "sprites/sheets"
+    private val name = "boy"
+    private val fileName = "$name.png"
+    private val baseFolder = "sprites/$name"
     private val texture = Texture(Gdx.files.internal("$baseFolder/$fileName"))
     private val region = TextureRegion(texture)
 
