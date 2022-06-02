@@ -805,6 +805,7 @@ fun hackingStation(
                     Press the key sequence
                     to hack the station""".trimMargin()
                 )
+                row()
             }
         }
         with<SpriteComponent> {

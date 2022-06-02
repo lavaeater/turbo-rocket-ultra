@@ -3,6 +3,7 @@ package physics
 import audio.AudioPlayer
 import com.badlogic.ashley.core.Engine
 import com.badlogic.gdx.Input
+import com.badlogic.gdx.math.MathUtils
 import com.badlogic.gdx.math.Vector2
 import com.badlogic.gdx.physics.box2d.Contact
 import com.badlogic.gdx.physics.box2d.ContactImpulse
@@ -30,11 +31,15 @@ import input.Button
 import ktx.ashley.allOf
 import ktx.ashley.remove
 import ktx.math.random
+import ktx.scene2d.image
 import ktx.scene2d.label
 import ktx.scene2d.table
 import messaging.Message
 import messaging.MessageHandler
+import screens.CounterObject
 import tru.Assets
+import kotlin.math.pow
+import kotlin.math.roundToInt
 
 /*
 How to handle contacts in the absolutely smashingly BEST
@@ -57,6 +62,29 @@ contact, which is one of the superpowers of sealed classes, that become availabl
 
 
  */
+
+fun Int.pow(exponent: Int): Int {
+    return this.toDouble().pow(exponent).roundToInt()
+}
+
+object InputSequenceGenerator {
+
+    private val gamePadKeys = listOf(Button.DPadUp, Button.DPadDown, Button.DPadLeft, Button.DPadRight)
+    private val keyboardKeys = listOf(Input.Keys.UP, Input.Keys.DOWN, Input.Keys.LEFT, Input.Keys.RIGHT)
+
+    fun generate(gamepad: Boolean, level: Int): List<Int> {
+        val numberOfThings = 2.pow(level)
+        return if (gamepad)
+            Array(numberOfThings) {
+                Button.buttonsToCodes[gamePadKeys.random()]!!
+            }.toList()
+        else
+            Array(numberOfThings) {
+                keyboardKeys.random()
+            }.toList()
+    }
+}
+
 class ContactManager : ContactListener {
     private val engine by lazy { inject<Engine>() }
     private val messageHandler by lazy { inject<MessageHandler>() }
@@ -242,26 +270,33 @@ class ContactManager : ContactListener {
                 val playerPosition = contactType.player.transform().position
                 val complexActionComponent = contactType.other.complexAction()
                 val objectiveComponent = contactType.other.objective()
-                if(!complexActionComponent.busy) {
+                if (!complexActionComponent.busy) {
                     playerControl.locked = true
-                    if(contactType.other.hasHacking()) {
+                    if (contactType.other.hasHacking()) {
                         //create the done function, I suppose?
-                        val inputSequence: List<Int> = if(playerControl.controlMapper.isGamepad)
-                            listOf(Button.buttonsToCodes[Button.DPadUp]!!,Button.buttonsToCodes[Button.DPadLeft]!!)
-                        else
-                            listOf(Input.Keys.UP, Input.Keys.LEFT)
-
+                        val inputSequence: List<Int> = InputSequenceGenerator.generate(
+                            playerControl.controlMapper.isGamepad,
+                            CounterObject.currentLevel
+                        )
                         playerControl.requireSequence(inputSequence)
                         complexActionComponent.scene2dTable.table {
-                            label("Up, Left")
+                            if (playerControl.controlMapper.isGamepad) {
+                                label(inputSequence.map { Button.getButton(it).playstationButtonName }
+                                    .joinToString(" "))
+                                //row()
+                                inputSequence.map { this.add(image(Button.getButton(it).image).apply { scaleBy(1.25f) }) }
+                            } else {
+                                label(inputSequence.map { Input.Keys.toString(it) }.joinToString(" "))
+                            }
+
                         }
                         complexActionComponent.doneFunction = {
-                             playerControl.sequencePressingProgress()
+                            playerControl.sequencePressingProgress()
                         }
                         complexActionComponent.doneCallBacks.add {
                             playerControl.locked = false
                             complexActionComponent.busy = false
-                            if(it == ComplexActionResult.Success) {
+                            if (it == ComplexActionResult.Success) {
                                 objectiveComponent.touched = true
                                 contactType.other.getComponent<LightComponent>().light.isActive = true
                                 playerControl.player.touchObjective(objectiveComponent)
@@ -269,7 +304,13 @@ class ContactManager : ContactListener {
                         }
                     }
                     complexActionComponent.busy = true
-                    messageHandler.sendMessage(Message.ShowUiForComplexAction(complexActionComponent, playerControl, playerPosition))
+                    messageHandler.sendMessage(
+                        Message.ShowUiForComplexAction(
+                            complexActionComponent,
+                            playerControl,
+                            playerPosition
+                        )
+                    )
                 }
             }
             is ContactType.GrenadeHittingAnything -> {
@@ -287,7 +328,7 @@ class ContactManager : ContactListener {
     }
 
     private fun handleEnemyHittingObstacle(contactType: ContactType.EnemyAndObstacle) {
-        if(!contactType.enemy.hasCollidedWithObstacle())
+        if (!contactType.enemy.hasCollidedWithObstacle())
             contactType.enemy.addComponent<CollidedWithObstacle>()
     }
 
@@ -308,7 +349,8 @@ class ContactManager : ContactListener {
         explosionEffectEntity(body.worldCenter)
 
         //Find all enemies with an area
-        val enemiesInRange = engine().getEntitiesFor(allOf(AgentProperties::class).get()).filter { it.transform().position.dst(body.worldCenter) < 50f }
+        val enemiesInRange = engine().getEntitiesFor(allOf(AgentProperties::class).get())
+            .filter { it.transform().position.dst(body.worldCenter) < 50f }
 
         for (enemy in enemiesInRange) {
             //apply distance-related damage
@@ -321,9 +363,14 @@ class ContactManager : ContactListener {
             val distanceVector = enemyBody.worldCenter.cpy().sub(body.worldCenter)
             val direction = distanceVector.cpy().nor()
             val inverseDistance = 1 / distanceVector.len()
-            enemy.getComponent<AttackableProperties>().takeDamage((50f..150f).random() * inverseDistance, grenadeComponent.player.entity)
-            enemyComponent.lastShotAngle  = direction.angleDeg()
-            enemyBody.applyLinearImpulse(direction.scl(inverseDistance * (500f..1500f).random()), enemyBody.worldCenter, true)
+            enemy.getComponent<AttackableProperties>()
+                .takeDamage((50f..150f).random() * inverseDistance, grenadeComponent.player.entity)
+            enemyComponent.lastShotAngle = direction.angleDeg()
+            enemyBody.applyLinearImpulse(
+                direction.scl(inverseDistance * (500f..1500f).random()),
+                enemyBody.worldCenter,
+                true
+            )
         }
         grenade.addComponent<DestroyComponent>() //This entity will die and disappear now.
     }

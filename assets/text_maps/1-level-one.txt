@@ -1,9 +1,5 @@
 hcc
 l*c
-c*c
-c*c
-c*c
-c*c
 s*g
 ---
 name

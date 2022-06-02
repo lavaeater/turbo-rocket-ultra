@@ -127,7 +127,7 @@ class SetupScreen(gameState: StateMachine<GameState, GameEvent>) : BasicScreen(g
                         label("Press ")
                         when (playerModel) {
                             is PlayerModel.Keyboard -> label("[Space]")
-                            is PlayerModel.GamePad -> image(Assets.ps4Buttons["cross"]!!)
+                            is PlayerModel.GamePad -> image(Button.Cross.image)
                         }
 
                     }
