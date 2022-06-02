@@ -3,7 +3,6 @@ package screens
 import ai.Tree
 import com.badlogic.gdx.Gdx
 import com.badlogic.gdx.ai.btree.BehaviorTree
-import com.badlogic.gdx.ai.btree.Decorator
 import com.badlogic.gdx.ai.btree.Task
 import com.badlogic.gdx.ai.btree.branch.DynamicGuardSelector
 import com.badlogic.gdx.ai.btree.branch.Parallel
@@ -17,10 +16,8 @@ import com.badlogic.gdx.math.MathUtils.radiansToDegrees
 import com.badlogic.gdx.math.Vector2
 import com.badlogic.gdx.scenes.scene2d.Actor
 import com.badlogic.gdx.scenes.scene2d.Stage
-import com.badlogic.gdx.scenes.scene2d.ui.HorizontalGroup
 import com.badlogic.gdx.scenes.scene2d.ui.Label
 import com.badlogic.gdx.scenes.scene2d.ui.Skin
-import com.badlogic.gdx.scenes.scene2d.ui.VerticalGroup
 import com.badlogic.gdx.utils.viewport.ExtendViewport
 import com.badlogic.gdx.utils.viewport.FitViewport
 import gamestate.GameEvent
@@ -39,58 +36,12 @@ removing children, if necessary, keep separate view model of children.
 As it stands now, if we cannot remove children, there is no point.
  */
 
-fun <T> Task<T>.treeString(): String {
-    return when (this) {
-        is BehaviorTree<T> -> "BehaviorTree"
-        is Selector<T> -> "Selector"
-        is com.badlogic.gdx.ai.btree.branch.Sequence<T> -> "Sequence"
-        is Parallel<T> -> "Parallel"
-        is DynamicGuardSelector<T> -> "Dynamic"
-        is Invert<T> -> "Invert result of"
-        is AlwaysFail<T> -> "Always Fail"
-        is AlwaysSucceed<T> -> "Always Succeed"
-        else -> toString()
-    }
-}
+
 
 fun label(text: String, skin: Skin = Scene2DSkin.defaultSkin, labelStyleName: String = defaultStyle): Actor {
     return Label(text,skin, labelStyleName)
 }
 
-
-class TaskNode<T>(val task: Task<T>): com.badlogic.gdx.scenes.scene2d.ui.Tree.Node<TaskNode<T>, Task<T>, Actor>() {
-    init {
-        isExpanded = true
-        isSelectable = true
-        value = task
-    }
-
-    companion object {
-
-        fun <T>getActorForTask(task: Task<T>) : Actor {
-            val returnActor = VerticalGroup()
-            returnActor.addActor(label(task.treeString()))
-            return returnActor
-        }
-        fun <T> buildNodeForTask(task: Task<T>): TaskNode<T> {
-            val newNode = TaskNode(task)
-            newNode.actor
-            val returnActor = when (task) {
-                is Decorator<T> -> {
-                    /*
-                    The decorator changes what happens when executing the child
-                     */
-                    HorizontalGroup()
-                }
-                else -> {
-                    label("Test")
-                }
-            }
-            return newNode
-        }
-    }
-
-}
 
 /**
  * Editor / Displayer of Behavior Trees
@@ -149,10 +100,3 @@ class BehaviorTreeViewScreen(gameState: StateMachine<GameState, GameEvent>) : Ba
     }
 }
 
-
-/***
- * Returns angle in degrees to @param positionVector
- */
-fun Vector2.angleTo(positionVector: Vector2): Float {
-    return (acos(this.dot(this.cpy().sub(positionVector).nor()))) * radiansToDegrees
-}

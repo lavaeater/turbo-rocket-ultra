@@ -1,5 +1,6 @@
 package extensions
 
+import com.badlogic.gdx.math.MathUtils
 import com.badlogic.gdx.math.Vector2
 import tru.SpriteDirection
 
@@ -13,4 +14,11 @@ fun Vector2.spriteDirection(): SpriteDirection {
         in 30f..149f -> SpriteDirection.South
         else -> SpriteDirection.South
     }
+}
+
+/***
+ * Returns angle in degrees to @param positionVector
+ */
+fun Vector2.angleTo(positionVector: Vector2): Float {
+    return (MathUtils.acos(this.dot(this.cpy().sub(positionVector).nor()))) * MathUtils.radiansToDegrees
 }
