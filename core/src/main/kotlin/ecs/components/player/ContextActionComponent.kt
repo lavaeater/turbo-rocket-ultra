@@ -45,7 +45,7 @@ sealed class ComplexActionResult {
 class ComplexActionComponent: Component, Pool.Poolable {
     val worldPosition = vec2()
     var busy = false
-    var scene2dTable = scene2d.table {  }
+    var scene2dTable = scene2d.table { }
     var doneFunction: () -> ComplexActionResult = { ComplexActionResult.Failure }
     val doneCallBacks = mutableListOf<(ComplexActionResult)->Unit>()
     override fun reset() {

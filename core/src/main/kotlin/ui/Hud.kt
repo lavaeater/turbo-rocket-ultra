@@ -38,7 +38,7 @@ import ui.customactors.typingLabel
 import kotlin.reflect.KClass
 
 
-class Hud(private val batch: Batch) : IUserInterface, MessageReceiver {
+class Hud(private val batch: Batch, debugAll: Boolean) : IUserInterface, MessageReceiver {
     private val aspectRatio = 14f / 9f
     private val hudWidth = 720f
     private val hudHeight = hudWidth * aspectRatio
@@ -63,7 +63,7 @@ class Hud(private val batch: Batch) : IUserInterface, MessageReceiver {
 
     override val stage by lazy {
         val aStage = Stage(hudViewPort, batch)
-        aStage.isDebugAll = false
+        aStage.isDebugAll = debugAll
         aStage
     }
 

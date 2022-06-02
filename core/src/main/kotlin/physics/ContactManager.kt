@@ -288,7 +288,7 @@ class ContactManager : ContactListener {
                             } else {
                                 label(inputSequence.map { Input.Keys.toString(it) }.joinToString(" "))
                             }
-
+                            pack()
                         }
                         complexActionComponent.doneFunction = {
                             playerControl.sequencePressingProgress()
