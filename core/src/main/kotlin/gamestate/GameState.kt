@@ -7,9 +7,10 @@ sealed class GameState(val name: String) {
     object Running: GameState("Running")
     object Paused: GameState("Paused")
     object Ended: GameState("Ended")
-    object Editor: GameState("Editor")
+    object CharacterEditor: GameState("CharacterEditor")
     object Concept: GameState("Concept")
     object MapEditor: GameState("MapEditor")
+    object AnimEditor : GameState("AnimEditor")
 
     override fun toString(): String {
         return name

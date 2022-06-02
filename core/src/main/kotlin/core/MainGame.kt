@@ -9,7 +9,6 @@ import ktx.app.KtxGame
 import ktx.app.KtxScreen
 import ktx.inject.register
 import ktx.log.debug
-import ktx.log.info
 import screens.*
 import statemachine.StateMachine
 import tru.Assets
@@ -30,7 +29,8 @@ class MainGame : KtxGame<KtxScreen>() {
                         resetPlayers()
                     }
                 }
-                edge(GameEvent.StartEditor, GameState.Editor) {}
+                edge(GameEvent.StartCharacterEditor, GameState.CharacterEditor) {}
+                edge(GameEvent.StartAnimEditor, GameState.AnimEditor) {}
                 edge(GameEvent.StartConcept, GameState.Concept) {}
                 edge(GameEvent.StartMapEditor, GameState.MapEditor) {}
             }
@@ -63,9 +63,13 @@ class MainGame : KtxGame<KtxScreen>() {
                 edge(GameEvent.ResumedGame, GameState.Running) {}
                 edge(GameEvent.ExitedGame, GameState.Setup) {}
             }
-            state(GameState.Editor) {
+            state(GameState.CharacterEditor) {
                 action { setScreen<CharacterEditorScreen>() }
-                edge(GameEvent.StopEditor, GameState.Setup) {}
+                edge(GameEvent.StopCharacterEditor, GameState.Setup) {}
+            }
+            state(GameState.AnimEditor) {
+                action { setScreen<AnimEditorScreen>() }
+                edge(GameEvent.StopAnimEditor, GameState.Setup) {}
             }
             state(GameState.Concept) {
                 action { setScreen<ConceptScreen>() }
@@ -106,6 +110,8 @@ class MainGame : KtxGame<KtxScreen>() {
         addScreen(PauseScreen(gameState))
         addScreen(GameOverScreen(gameState))
         addScreen(AnimEditorScreen(gameState))
+        addScreen(CharacterEditorScreen(gameState))
+        addScreen(BehaviorTreeViewScreen(gameState))
         addScreen(ConceptScreen(gameState))
         addScreen(MapEditorScreen(gameState))
         gameState.initialize()

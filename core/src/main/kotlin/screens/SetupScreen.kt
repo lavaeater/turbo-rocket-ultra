@@ -32,6 +32,26 @@ class SetupScreen(gameState: StateMachine<GameState, GameEvent>) : BasicScreen(g
     override val camera = OrthographicCamera()
     override val viewport = ExtendViewport(800f, 600f, camera)
 
+    private val currentKeyMap = command("Normal") {
+        setUp(Input.Keys.SPACE, "Toggle Player") { toggleKeyboardPlayer() }
+        setUp(Input.Keys.LEFT, "Prev Character") { changeSpriteKeyboard(-1) }
+        setUp(Input.Keys.RIGHT, "Next Character") { changeSpriteKeyboard(1) }
+        setUp(Input.Keys.ENTER, "Start Game") { startGame() }
+        setUp(Input.Keys.T, "Start Game with AI") { startGameWithAi() }
+        setUp(Input.Keys.C, "Concept Screen") { startConceptScreen() }
+        setUp(Input.Keys.E, "Character Editor") { startCharacterEditor() }
+        setUp(Input.Keys.A, "Animation Editor") { startAnimEditor() }
+        setUp(Input.Keys.UP, "Next map") { nextMap() }
+        setUp(Input.Keys.DOWN, "Previous map") { previousMap() }
+        setUp(Input.Keys.M, "Map Editor") {
+            gameState.acceptEvent(GameEvent.StartMapEditor)
+        }
+    }
+
+    private fun startAnimEditor() {
+        gameState.acceptEvent(GameEvent.StartAnimEditor)
+    }
+
     val debug = false
     val shapeDrawer by lazy { Assets.shapeDrawer }
     private val setupViewModel = SetupViewModel()
@@ -53,7 +73,15 @@ class SetupScreen(gameState: StateMachine<GameState, GameEvent>) : BasicScreen(g
         val aStage = Stage(viewport, batch)
         aStage.isDebugAll = false
         aStage.actors {
-            boundLabel({ mapNames.selectedItem }) {
+            table {
+                boundLabel({ mapNames.selectedItem }) {
+                }
+                row()
+                label("Keymap:")
+                row()
+                boundLabel({ currentKeyMap.toString() }).setFontScale(.5f)
+                setPosition(100f, 400f)
+                pack()
             }
         }
         aStage.addActor(playerCards)
@@ -150,23 +178,12 @@ class SetupScreen(gameState: StateMachine<GameState, GameEvent>) : BasicScreen(g
         batch.projectionMatrix = camera.combined
     }
 
+    override fun keyDown(keycode: Int): Boolean {
+        return currentKeyMap.execute(keycode, KeyPress.Down)
+    }
+
     override fun keyUp(keycode: Int): Boolean {
-        return when (keycode) {
-            Input.Keys.SPACE -> toggleKeyboardPlayer()
-            Input.Keys.LEFT -> changeSpriteKeyboard(-1)
-            Input.Keys.RIGHT -> changeSpriteKeyboard(1)
-            Input.Keys.ENTER -> startGame()
-            Input.Keys.T -> startGameWithAi()
-            Input.Keys.C -> startConceptScreen()
-            Input.Keys.E -> startEditor()
-            Input.Keys.A -> previousMap()
-            Input.Keys.S -> nextMap()
-            Input.Keys.M -> {
-                gameState.acceptEvent(GameEvent.StartMapEditor)
-                true
-            }
-            else -> super.keyUp(keycode)
-        }
+        return currentKeyMap.execute(keycode, KeyPress.Up)
     }
 
     var mapNames = getMapList()
@@ -255,8 +272,8 @@ class SetupScreen(gameState: StateMachine<GameState, GameEvent>) : BasicScreen(g
         return true
     }
 
-    private fun startEditor(): Boolean {
-        gameState.acceptEvent(GameEvent.StartEditor)
+    private fun startCharacterEditor(): Boolean {
+        gameState.acceptEvent(GameEvent.StartCharacterEditor)
         return true
     }
 
