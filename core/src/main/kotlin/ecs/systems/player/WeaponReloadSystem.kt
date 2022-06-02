@@ -43,7 +43,9 @@ class WeaponReloadSystem : IteratingSystem(
                         reloadSound.play()
                         weapon.ammoRemaining += 1
                         inventory.ammo[ammoType] = inventory.ammo[ammoType]!! - 1
-                        if (weapon.ammoRemaining == weapon.ammoCap || inventory.ammo[ammoType]!! <= 0) {
+                        if (weapon.ammoRemaining >= weapon.ammoCap || inventory.ammo[ammoType]!! <= 0) {
+                            if(weapon.ammoRemaining > weapon.ammoCap)
+                                weapon.ammoRemaining = weapon.ammoCap
                             entity.remove<IsReloadingComponent>()
                         } else {
                             isReloading.reloadHasStarted = false

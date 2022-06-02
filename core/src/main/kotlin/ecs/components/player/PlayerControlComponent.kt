@@ -30,7 +30,7 @@ class PlayerControlComponent(var controlMapper: ControlMapper, val player: Playe
     var locked = false
     var waitsForRespawn = false
     private var cooldownRemaining = 0f
-    var rof: Float = 3f
+    var rof: Float = 1f
 
     var shotsFired = 0
         private set
