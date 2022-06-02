@@ -81,6 +81,14 @@ class ConceptScreen(gameState: StateMachine<GameState, GameEvent>) : BasicScreen
     private val graphicsNodes = mutableListOf(currentlySelectedNode!!)
     private val allNodes = mutableListOf(currentlySelectedNode!!)
 
+    /*
+    What is a keyframe? It could simply be defined as the movement of something to another place
+
+    But how are things moving?
+
+    These are questions I have yet to answer
+     */
+
 
     override fun touchDown(screenX: Int, screenY: Int, pointer: Int, button: Int): Boolean {
         drawPointerBall = button == Buttons.LEFT
