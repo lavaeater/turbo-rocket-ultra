@@ -3,7 +3,6 @@ package physics
 import audio.AudioPlayer
 import com.badlogic.ashley.core.Engine
 import com.badlogic.gdx.Input
-import com.badlogic.gdx.math.MathUtils
 import com.badlogic.gdx.math.Vector2
 import com.badlogic.gdx.physics.box2d.Contact
 import com.badlogic.gdx.physics.box2d.ContactImpulse
@@ -11,9 +10,8 @@ import com.badlogic.gdx.physics.box2d.ContactListener
 import com.badlogic.gdx.physics.box2d.Manifold
 import ecs.components.AudioChannels
 import ecs.components.BodyComponent
-import ecs.components.ai.old.CollidedWithObstacle
-import ecs.components.ai.old.IsAwareOfPlayer
-import ecs.components.ai.old.KnownPosition
+import ecs.components.ai.AttackPoint
+import ecs.components.ai.CollidedWithObstacle
 import ecs.components.enemy.AgentProperties
 import ecs.components.enemy.AttackableProperties
 import ecs.components.fx.ParticleEffectComponent
@@ -133,11 +131,8 @@ class ContactManager : ContactListener {
                 val player = playerEntity.getComponent<PlayerComponent>().player
                 if (!contact.atLeastOneHas<PlayerWaitsForRespawn>() && !contact.atLeastOneHas<PlayerIsRespawning>()) {
                     enemy.add(
-                        engine.createComponent(IsAwareOfPlayer::class.java)
-                            .apply { this.player = player })
-                    enemy.addComponent<KnownPosition> {
-                        position.set(playerEntity.transform().position)
-                    }
+                        engine.createComponent(AttackPoint::class.java)
+                            .apply { this.position = playerEntity.transform().position })
                 }
             }
             is ContactType.MolotovHittingAnything -> {
@@ -249,17 +244,7 @@ class ContactManager : ContactListener {
 
                 val enemyAEntity = contactType.enemyOne
                 val enemyBEntity = contactType.enemyTwo
-                if (enemyAEntity.has<IsAwareOfPlayer>() && !enemyBEntity.has<IsAwareOfPlayer>()) {
-                    enemyAEntity.fitnessUp()
-                    enemyBEntity.addComponent<IsAwareOfPlayer> {
-                        player = enemyAEntity.getComponent<IsAwareOfPlayer>().player
-                    }
-                } else if (enemyBEntity.has<IsAwareOfPlayer>() && !enemyAEntity.has<IsAwareOfPlayer>()) {
-                    enemyBEntity.fitnessUp()
-                    enemyAEntity.addComponent<IsAwareOfPlayer> {
-                        player = enemyBEntity.getComponent<IsAwareOfPlayer>().player
-                    }
-                }
+
             }
             ContactType.Unknown -> {
 

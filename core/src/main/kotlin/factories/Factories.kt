@@ -20,7 +20,7 @@ import com.badlogic.gdx.scenes.scene2d.Action
 import data.Player
 import ecs.components.AudioComponent
 import ecs.components.BodyComponent
-import ecs.components.ai.old.BehaviorComponent
+import ecs.components.ai.BehaviorComponent
 import ecs.components.enemy.*
 import ecs.components.fx.CreateEntityComponent
 import ecs.components.fx.GibComponent

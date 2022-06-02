@@ -1,6 +1,6 @@
 package ecs.components.towers
 
-import ecs.components.ai.old.TaskComponent
+import ecs.components.ai.TaskComponent
 
 class FindTarget(var radius: Float = 20f): TaskComponent(){
     override fun reset() {

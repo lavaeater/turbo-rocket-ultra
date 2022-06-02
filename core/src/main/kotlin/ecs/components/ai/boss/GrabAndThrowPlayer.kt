@@ -1,6 +1,6 @@
 package ecs.components.ai.boss
 
-import ecs.components.ai.old.TaskComponent
+import ecs.components.ai.TaskComponent
 
 class GrabAndThrowPlayer: TaskComponent() {
     init {

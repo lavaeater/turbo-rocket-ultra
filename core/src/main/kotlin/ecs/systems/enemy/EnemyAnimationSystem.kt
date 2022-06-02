@@ -21,7 +21,7 @@ class EnemyAnimationSystem : IteratingSystem(
 }
 
 fun Entity.enemyDirection() : SpriteDirection {
-    val characterAngle = if(this.isSeeking()) AshleyMappers.seekPlayer.get(this).scanVector.angleDeg() else this.agentProps().directionVector.angleDeg()
+    val characterAngle = this.agentProps().directionVector.angleDeg()
     return if(this.getComponent<AttackableProperties>().isDead)
         SpriteDirection.South
     else
@@ -35,5 +35,8 @@ fun Entity.enemyDirection() : SpriteDirection {
         }
 }
 fun Entity.enemyAnimState(): AnimState {
-    return if(this.getComponent<AttackableProperties>().isDead) AnimState.Death else if(this.isSeeking()) AnimState.Idle else if(this.isAttackingPlayer()) AnimState.Slash else AnimState.Walk
+    //This must be set by the leaf tasks from now on!
+    //TODO: Fix this
+    val speed = this.agentProps().speed
+    return if(this.getComponent<AttackableProperties>().isDead) AnimState.Death else if(speed == 0f) AnimState.Idle else AnimState.Walk
 }

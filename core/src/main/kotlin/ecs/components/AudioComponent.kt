@@ -1,7 +1,7 @@
 package ecs.components
 
 import audio.TurboSound
-import ecs.components.ai.old.CoolDownComponent
+import ecs.components.ai.CoolDownComponent
 
 class AudioComponent: CoolDownComponent() {
     var takeDistanceIntoAccount = true

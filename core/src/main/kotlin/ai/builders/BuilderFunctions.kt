@@ -8,7 +8,7 @@ import com.badlogic.gdx.ai.btree.decorator.*
 import com.badlogic.gdx.ai.utils.random.ConstantIntegerDistribution
 import com.badlogic.gdx.ai.utils.random.UniformIntegerDistribution
 import ecs.components.ai.*
-import ecs.components.ai.old.TaskComponent
+import ecs.components.ai.TaskComponent
 import map.grid.Coordinate
 
 fun delayFor(seconds: Float) = DelayTask(seconds)

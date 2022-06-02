@@ -1,6 +1,6 @@
 package ecs.components.player
 
-import ecs.components.ai.old.CoolDownComponent
+import ecs.components.ai.CoolDownComponent
 
 class IsReloadingComponent: CoolDownComponent() {
     var reloadHasStarted = false

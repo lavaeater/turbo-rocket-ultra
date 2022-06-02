@@ -1,6 +1,6 @@
 package ecs.components.enemy
 
-import ecs.components.ai.old.CoolDownComponent
+import ecs.components.ai.CoolDownComponent
 
 class EnemySpawnerComponent : CoolDownComponent() {
     var waveSize = 1

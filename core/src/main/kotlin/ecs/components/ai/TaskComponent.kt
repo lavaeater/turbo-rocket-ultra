@@ -1,6 +1,7 @@
-package ecs.components.ai.old
+package ecs.components.ai
 
 import com.badlogic.gdx.ai.btree.Task
+import ecs.components.ai.CoolDownComponent
 
 abstract class TaskComponent : CoolDownComponent() {
     var status : Task.Status = Task.Status.RUNNING

@@ -8,9 +8,9 @@ import ktx.ashley.allOf
 import physics.AshleyMappers
 import physics.addComponent
 
-class DestroyAfterReadingSystem: IteratingSystem(allOf(DestroyAfterCoolDownComponent::class).get()) {
+class DestroyAfterCooldownSystem: IteratingSystem(allOf(DestroyAfterCoolDownComponent::class).get()) {
     override fun processEntity(entity: Entity, deltaTime: Float) {
-        val damageEffectComponent = AshleyMappers.destroyAfterReading.get(entity)
+        val damageEffectComponent = AshleyMappers.destroyAfterCooldown.get(entity)
         damageEffectComponent.coolDown -= deltaTime
         if(damageEffectComponent.coolDown <= 0f) {
             entity.addComponent<DestroyComponent>()

@@ -2,13 +2,10 @@ package ecs.systems.player
 
 import com.badlogic.ashley.core.Entity
 import com.badlogic.ashley.systems.IteratingSystem
-import ecs.components.ai.old.*
-import ecs.components.enemy.AgentProperties
 import ecs.components.enemy.AttackableProperties
 import ecs.components.player.*
 import ecs.systems.graphics.GameConstants
 import ktx.ashley.allOf
-import ktx.ashley.remove
 import physics.getComponent
 import physics.has
 
@@ -29,17 +26,6 @@ class PlayerDeathSystem: IteratingSystem(allOf(PlayerComponent::class, Attackabl
         if(entity.has<PlayerIsDead>() || entity.has<PlayerWaitsForRespawn>()) {
             val controlComponent = entity.getComponent<PlayerControlComponent>()
             controlComponent.waitsForRespawn = true
-//            entity.getComponent<AnimatedCharacterComponent>().currentAnim =
-            for(enemy in engine.getEntitiesFor(allOf(AgentProperties::class).get())) {
-                if(enemy.has<IsAwareOfPlayer>() && enemy.getComponent<IsAwareOfPlayer>().player == pc.player) {
-                    enemy.remove<ChasePlayer>()
-                    enemy.remove<AttackPlayer>()
-                    enemy.remove<IsAwareOfPlayer>()
-                    enemy.remove<PlayerIsInRange>()
-                    enemy.remove<NoticedSomething>()
-
-                }
-            }
         }
 
         if(entity.has<PlayerWaitsForRespawn>()) {

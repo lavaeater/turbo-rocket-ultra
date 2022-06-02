@@ -6,7 +6,9 @@ import com.badlogic.ashley.core.Entity
 import com.badlogic.gdx.math.Vector2
 import ecs.components.AudioComponent
 import ecs.components.BodyComponent
-import ecs.components.ai.old.*
+import ecs.components.ai.BehaviorComponent
+import ecs.components.ai.CollidedWithObstacle
+import ecs.components.ai.NoticedSomething
 import ecs.components.enemy.*
 import ecs.components.fx.GibComponent
 import ecs.components.fx.ParticleEffectComponent
@@ -34,26 +36,18 @@ object AshleyMappers {
 
     val audio = mapperFor<AudioComponent>()
     val hacking = mapperFor<HackingComponent>()
-    val destroyAfterReading = mapperFor<DestroyAfterCoolDownComponent>()
+    val destroyAfterCooldown = mapperFor<DestroyAfterCoolDownComponent>()
     val body = mapperFor<BodyComponent>()
     val mappers = mutableMapOf<KType, ComponentMapper<*>>()
     val transform = mapperFor<TransformComponent>()
     val perimeter = mapperFor<PerimeterObjectiveComponent>()
-    val amble = mapperFor<Amble>()
-    val attackPlayer = mapperFor<AttackPlayer>()
     val behavior = mapperFor<BehaviorComponent>()
-    val chasePlayer = mapperFor<ChasePlayer>()
     val gib = mapperFor<GibComponent>()
-    val investigate = mapperFor<Investigate>()
     val noticedSomething = mapperFor<NoticedSomething>()
-    val playerIsInRange = mapperFor<PlayerIsInRange>()
-    val seekPlayer = mapperFor<SeekPlayer>()
-    val isAwareOfPlayer = mapperFor<IsAwareOfPlayer>()
     val agentProps = mapperFor<AgentProperties>()
     val enemy = mapperFor<Enemy>()
     val enemySensor = mapperFor<EnemySensorComponent>()
     val enemySpawner = mapperFor<EnemySpawnerComponent>()
-    val tackle = mapperFor<TackleComponent>()
     val splatter = mapperFor<SplatterComponent>()
     val aim = mapperFor<AimComponent>()
     val bullet = mapperFor<BulletComponent>()
@@ -88,8 +82,6 @@ object AshleyMappers {
     val weaponEntity = mapperFor<WeaponEntityComponent>()
     val inventory = mapperFor<InventoryComponent>()
     val reloading = mapperFor<IsReloadingComponent>()
-    val alertFriends = mapperFor<AlertFriends>()
-    val awareOfPlayer = mapperFor<IsAwareOfPlayer>()
     val fitness = mapperFor<Fitness>()
 }
 
@@ -106,25 +98,6 @@ fun Entity.fitnessUp() {
 
 fun Entity.fitnessDown() {
     AshleyMappers.fitness.get(this).fitness--
-}
-
-fun Entity.isAwareOfPlayer(): Boolean {
-    return AshleyMappers.awareOfPlayer.has(this)
-}
-
-fun Entity.isAlertingFriends() : Boolean {
-    return AshleyMappers.alertFriends.has(this)
-}
-
-fun Entity.alertFriends(): AlertFriends {
-    return AshleyMappers.alertFriends.get(this)
-}
-
-fun Entity.isAttackingPlayer(): Boolean {
-    return AshleyMappers.attackPlayer.has(this)
-}
-fun Entity.isSeeking() : Boolean {
-    return AshleyMappers.seekPlayer.has(this)
 }
 
 fun Entity.isReloading() : Boolean {

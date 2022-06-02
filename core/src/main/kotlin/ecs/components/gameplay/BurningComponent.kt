@@ -1,8 +1,7 @@
 package ecs.components.gameplay
 
 import com.badlogic.ashley.core.Entity
-import data.Player
-import ecs.components.ai.old.CoolDownComponent
+import ecs.components.ai.CoolDownComponent
 
 class BurningComponent : CoolDownComponent() {
     lateinit var player: Entity

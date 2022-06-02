@@ -1,6 +1,6 @@
 package ecs.components.towers
 
-import ecs.components.ai.old.TaskComponent
+import ecs.components.ai.TaskComponent
 
 class Shoot : TaskComponent() {
     init {
