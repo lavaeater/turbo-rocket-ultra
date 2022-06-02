@@ -8,6 +8,7 @@ import com.badlogic.gdx.math.Vector2
 import ecs.components.enemy.AgentProperties
 import ecs.components.enemy.AttackableProperties
 import ecs.components.gameplay.TransformComponent
+import ecs.components.intent.IntendsTo
 import ecs.components.player.PlayerControlComponent
 import ecs.components.player.WeaponEntityComponent
 import factories.bullet
@@ -100,6 +101,8 @@ class PlayerShootingSystem(private val audioPlayer: AudioPlayer) : IteratingSyst
                 }
 
             }
+            if(weapon.ammoRemaining <= 0)
+                playerEntity.intendTo(IntendsTo.Reload)
         } else if (weapon.ammoRemaining <= 0) {
             audioPlayer.playOnChannel(controlComponent.player.playerId, "players", "out-of-ammo")
         }
@@ -232,6 +235,8 @@ class PlayerShootingSystem(private val audioPlayer: AudioPlayer) : IteratingSyst
                     controlComponent.player
                 )
             }
+            if(weapon.ammoRemaining <= 0)
+                playerEntity.intendTo(IntendsTo.Reload)
         } else if (weapon.ammoRemaining <= 0 && controlComponent.canPlay(Sfx.outofAmmo)) {
             audioPlayer.playOnChannel(controlComponent.player.playerId, "players", Sfx.outofAmmo)
             controlComponent.hasPlayed(Sfx.outofAmmo)

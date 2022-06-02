@@ -377,6 +377,7 @@ fun player(player: Player, mapper: ControlMapper, at: Vector2, debug: Boolean) {
                 AmmoType.ammoTypes.forEach { ammo[it] = 1000 }
             } else {
                 weapons.add(weapon)
+                ammo[weapon.ammoType] = 24
             }
         }
         with<WeaponEntityComponent> {

@@ -78,7 +78,7 @@ class GamepadInputSystem : IteratingSystem(allOf(GamepadControl::class).get()), 
                     Button.Cross -> handleAction(actualController.entityFor())
                     Button.Ring -> {}
                     Button.Square -> actualController.entityFor()
-                        .intendTo(IntendsTo.Reload)// actualController.needsReload = true
+                        .intendTo(IntendsTo.Reload)
                     Button.DPadLeft -> {
                         actualController.entityFor().intendTo(IntendsTo.SelectPreviousWeapon)
                     }
