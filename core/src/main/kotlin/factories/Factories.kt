@@ -954,7 +954,7 @@ fun blockade(
         with<SpriteComponent> {
             sprite = Assets.buildables.first()
             scale = 4f
-            offsetY = -4f
+            //offsetY = //-4f
         }
         with<RenderableComponent> {
             layer = 1
