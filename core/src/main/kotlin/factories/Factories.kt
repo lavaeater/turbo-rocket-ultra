@@ -180,7 +180,7 @@ fun fireEntity(at: Vector2, linearVelocity: Vector2, player: Player) {
             density = 1f //tune
             restitution = 0.9f
             filter {
-                categoryBits = Box2dCategories.molotov
+                categoryBits = Box2dCategories.molotovs
                 maskBits = Box2dCategories.whatMolotovsHit
             }
         }

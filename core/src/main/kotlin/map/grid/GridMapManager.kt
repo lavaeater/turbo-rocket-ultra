@@ -109,7 +109,7 @@ class GridMapManager {
                             box(tileWidth * tileScale, tileHeight * tileScale) {
                                 filter {
                                     categoryBits = Box2dCategories.walls
-                                    maskBits = Box2dCategories.allButLights
+                                    maskBits = Box2dCategories.whatWallsHit
                                 }
                             }
                         }

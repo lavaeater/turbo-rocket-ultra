@@ -141,7 +141,6 @@ object Context {
             )
 
             addSystem(RenderMiniMapSystem(2))
-            addSystem(PhysicsDebugRendererSystem(inject(), inject()))
             //We add this here now to make sure it is run AFTER the rendercycle
             addSystem(BehaviorTreeSystem(4))
             addSystem(PlayerFlashlightSystem())

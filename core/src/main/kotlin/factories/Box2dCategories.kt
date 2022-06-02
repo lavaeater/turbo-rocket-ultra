@@ -16,19 +16,21 @@ object Box2dCategories {
     const val walls: Short = 512
     const val gibs: Short = 1024
     const val sensors: Short = 2048
-    const val molotov: Short = 4096
+    const val molotovs: Short = 4096
     val all =
-        players or enemies or objectives or obstacles or enemySensors or lights or loot or bullets or walls or gibs or molotov
-    val allButSensors = players or enemies or objectives or obstacles or lights or loot or bullets or walls or gibs
+        players or enemies or objectives or obstacles or enemySensors or lights or loot or bullets or walls or gibs or molotovs
+    val allButSensors =
+        players or enemies or objectives or obstacles or lights or loot or bullets or walls or gibs or molotovs
     val allButLights =
-        players or enemies or objectives or obstacles or enemySensors or loot or bullets or walls or gibs or molotov
+        players or enemies or objectives or obstacles or enemySensors or loot or bullets or walls or gibs or molotovs
     val whatGibsHit = players or enemies or walls or obstacles or loot or objectives
     val whatEnemiesHit = players or objectives or obstacles or walls or lights or bullets or gibs or sensors
     val whatPlayersHit =
         players or enemies or objectives or obstacles or walls or lights or gibs or enemySensors or indicators or loot
-    val whatMolotovsHit = walls or obstacles or objectives or molotov
+    val whatMolotovsHit = walls or obstacles or objectives or molotovs
     val whatSensorsSense = players or enemies
 
+    val whatWallsHit = players or enemies or lights or bullets or gibs or molotovs
     /**
      * Will this show up when hovering?
      */
