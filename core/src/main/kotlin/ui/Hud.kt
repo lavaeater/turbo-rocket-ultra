@@ -30,6 +30,7 @@ import messaging.Message
 import messaging.MessageHandler
 import messaging.MessageReceiver
 import physics.*
+import screens.CrawlDialog
 import turbofacts.Factoids
 import ui.customactors.boundLabel
 import ui.customactors.boundProgressBar
@@ -72,7 +73,7 @@ class Hud(private val batch: Batch, debugAll: Boolean) : IUserInterface, Message
     override fun show() {
         //Set up this as receiver for messages with messagehandler
         inject<MessageHandler>().addReceiver(this@Hud)
-        if(needsPlayerInfos)
+        if (needsPlayerInfos)
             addPlayerInfos()
     }
 
@@ -109,10 +110,11 @@ class Hud(private val batch: Batch, debugAll: Boolean) : IUserInterface, Message
                             label(control.controllerId).inCell.align(Align.right).width(stage.width / 8)
                             row()
                             boundLabel({
-                                if(e.has<SeenPlayerPositions>())
+                                if (e.has<SeenPlayerPositions>())
                                     e.getComponent<SeenPlayerPositions>().storage.joinToString(" | ")
                                 else
-                                    "Nothing" })
+                                    "Nothing"
+                            })
 //                            row()
 //                            boundLabel({ "Kills: ${player.kills}" }).inCell.align(Align.right)
 //                            row()
@@ -142,7 +144,12 @@ class Hud(private val batch: Batch, debugAll: Boolean) : IUserInterface, Message
                             repeatingTexture(
                                 { player.lives },
                                 5f,
-                                Sprite(player.entity.animation().currentAnim.keyFrames.first()).apply { flip(false, true) }
+                                Sprite(player.entity.animation().currentAnim.keyFrames.first()).apply {
+                                    flip(
+                                        false,
+                                        true
+                                    )
+                                }
                             ) {}
                         }
                     }
@@ -171,32 +178,13 @@ class Hud(private val batch: Batch, debugAll: Boolean) : IUserInterface, Message
     override fun reset() {
     }
 
-    private lateinit var pauseLabel: TypingLabel
     private lateinit var pauseDialog: KDialog
 
     private val pauseBlurb by lazy {
-        val dialogWidth = 800f
-        val dialogHeight = 800f
-        val x = stage.width / 2 - dialogWidth / 2
-        val y = stage.height / 4 + dialogHeight / 2
-        val text = """
-""".trimIndent()
-
         pauseDialog = scene2d.dialog("Paused") {
             contentTable.add(
-                scene2d.table {
-                    setFillParent(true)
-                    left()
-                    top()
-                    pauseLabel = typingLabel(text)//.inCell.expand()
-                    row()
-                    label("Press any key...")
-                })
-            width = dialogWidth
-            height = dialogHeight
-            //contentTable.pack()
-            pack()
-            setPosition(x, y)
+                label("Press any key...")
+            )
         }
         stage.addActor(pauseDialog)
         pauseDialog
@@ -204,8 +192,6 @@ class Hud(private val batch: Batch, debugAll: Boolean) : IUserInterface, Message
 
     override fun pause() {
         pauseBlurb.isVisible = true
-        pauseLabel.setText("Game Paused")
-        pauseLabel.pack()
     }
 
     override fun resume() {
@@ -313,23 +299,20 @@ class Hud(private val batch: Batch, debugAll: Boolean) : IUserInterface, Message
             }
             is Message.FactUpdated -> TODO() //We don't subscribe to this type of messages so this won't happen
             is Message.LevelComplete -> {
-                setPauseLabelText(message.completeMessage)
+                showPauseCrawl(message.completeMessage)
             }
             is Message.LevelFailed -> {
-                setPauseLabelText(message.failMessage)
+                showPauseCrawl(message.failMessage)
             }
             is Message.LevelStarting -> {
-                setPauseLabelText(message.beforeStartMessage)
+                showPauseCrawl(message.beforeStartMessage)
             }
         }
     }
 
-    fun setPauseLabelText(text: String) {
-        if (this::pauseLabel.isInitialized) {
-            pauseLabel.setText(text)
-            pauseDialog.pack()
-        }
+    fun showPauseCrawl(text: String) {
+        if(::pauseDialog.isInitialized)
+            CrawlDialog.showDialog(pauseDialog, text)
     }
 }
-
 
