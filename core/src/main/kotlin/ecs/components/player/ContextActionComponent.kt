@@ -31,7 +31,6 @@ class BuildModeComponent: Component, Pool.Poolable {
     val buildables = selectedItemListOf(Buildable.Blockade, Buildable.MachineGunTower)
     var buildCursorEntity: Entity? = null
     override fun reset() {
-        buildables.clear()
         buildCursorEntity = null
     }
 }

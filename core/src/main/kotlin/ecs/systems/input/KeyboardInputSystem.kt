@@ -120,7 +120,6 @@ class KeyboardInputSystem :
     }
 
     private fun toggleBuildMode() {
-        //Fucking finally
         keyboardEntity.intendTo(IntendsTo.ToggleBuildMode)
     }
 

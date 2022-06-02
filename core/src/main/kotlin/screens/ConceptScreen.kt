@@ -74,7 +74,7 @@ class ConceptScreen(gameState: StateMachine<GameState, GameEvent>) : BasicScreen
                 """
             This is it.
             The scrolling pane,
-            the pane of scrolls.
+            the pane of scrolls.T
             It goes from bottom to up, 
             in a most satisifying
             temperament

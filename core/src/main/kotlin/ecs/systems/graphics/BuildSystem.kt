@@ -55,7 +55,7 @@ class BuildSystem(private val debug: Boolean) : IteratingSystem(
 
     override fun processEntity(entity: Entity, deltaTime: Float) {
         val controlComponent = entity.playerControl()
-        val buildComponent = entity.build()
+        val buildComponent = entity.buildModal()
 
         if (controlComponent.isInBuildMode) {
             val cursorEntity = buildComponent.buildCursorEntity!!

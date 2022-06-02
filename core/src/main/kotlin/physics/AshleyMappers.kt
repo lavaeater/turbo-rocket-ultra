@@ -226,11 +226,11 @@ fun Entity.perimeter() : PerimeterObjectiveComponent {
     return AshleyMappers.perimeter.get(this)
 }
 
-fun Entity.build(): BuildModeComponent {
+fun Entity.buildModal(): BuildModeComponent {
     return AshleyMappers.build.get(this)
 }
 
-fun Entity.isBuilding(): Boolean {
+fun Entity.inBuildMode(): Boolean {
     return AshleyMappers.build.has(this)
 }
 

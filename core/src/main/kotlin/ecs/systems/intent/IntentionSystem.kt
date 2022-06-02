@@ -3,6 +3,8 @@ package ecs.systems.intent
 import com.badlogic.ashley.core.Entity
 import com.badlogic.ashley.systems.IteratingSystem
 import ecs.components.gameplay.TransformComponent
+import ecs.components.graphics.RenderableComponent
+import ecs.components.graphics.RenderableType
 import ecs.components.graphics.SpriteComponent
 import ecs.components.intent.CalculatedPositionComponent
 import ecs.components.intent.IntendsTo
@@ -48,16 +50,16 @@ class IntentionSystem : IteratingSystem(allOf(IntentComponent::class).get()) {
     }
 
     private fun build(entity: Entity) {
-        if (entity.isBuilding()) {
-            val buildComponent = entity.build()
+        if (entity.inBuildMode()) {
+            val buildComponent = entity.buildModal()
             val cursorEntity = buildComponent.buildCursorEntity!!
             buildComponent.buildables.selectedItem.buildIt(cursorEntity.transform().position)
         }
     }
 
     private fun toggleBuildMode(entity: Entity) {
-        if (entity.isBuilding()) {
-            val bc = entity.build()
+        if (entity.inBuildMode()) {
+            val bc = entity.buildModal()
             engine.removeEntity(bc.buildCursorEntity)
             entity.remove<BuildModeComponent>()
         } else {
@@ -65,7 +67,7 @@ class IntentionSystem : IteratingSystem(allOf(IntentComponent::class).get()) {
             val builderTransform = entity.transform()
             val builderPosition = builderTransform.position
             val control = entity.playerControl()
-            entity.build().buildCursorEntity = engine.entity {
+            entity.buildModal().buildCursorEntity = engine.entity {
                 with<CalculatedPositionComponent> {
                     calculate = {
                         val cursorOffset = CompassDirection.directionOffsets[control.compassDirection]!!
@@ -75,10 +77,13 @@ class IntentionSystem : IteratingSystem(allOf(IntentComponent::class).get()) {
                     }
                 }
                 with<TransformComponent>()
+                with<RenderableComponent> {
+                    renderableType = RenderableType.Sprite
+                }
                 with<SpriteComponent> {
-                    sprite = entity.build().buildables.selectedItem.sprite
+                    sprite = entity.buildModal().buildables.selectedItem.sprite
                     scale = 4f
-                    updateSprite = { sprite = entity.build().buildables.selectedItem.sprite }
+                    updateSprite = { sprite = entity.buildModal().buildables.selectedItem.sprite }
                 }
             }
         }
