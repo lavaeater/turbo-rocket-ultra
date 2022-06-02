@@ -6,6 +6,8 @@ import com.badlogic.gdx.controllers.Controller
 import com.badlogic.gdx.controllers.ControllerListener
 import data.Players
 import ecs.components.intent.IntendsTo
+import gamestate.GameEvent
+import gamestate.GameState
 import injection.Context.inject
 import input.Axis
 import input.Axis.Companion.valueOK
@@ -13,15 +15,17 @@ import input.Button
 import input.GamepadControl
 import input.entityFor
 import ktx.ashley.allOf
-import ktx.math.vec2
 import physics.getComponent
 import physics.intendTo
+import statemachine.StateMachine
 
 /**
  * Controllers will be handled by a polling system
  */
 class GamepadInputSystem : IteratingSystem(allOf(GamepadControl::class).get()), ControllerListener {
-    private val actionHandler by lazy { inject<ActionHandler>() }
+    private val gameState by lazy { inject<StateMachine<GameState, GameEvent>>() }
+
+    private val inputActionHandler by lazy { inject<InputActionHandler>() }
     private val controllers: List<GamepadControl>
         get() = Players.players.keys.filterIsInstance<GamepadControl>().map { it }
 
@@ -37,23 +41,19 @@ class GamepadInputSystem : IteratingSystem(allOf(GamepadControl::class).get()), 
         if (actualController != null) {
             if (!actualController.requireSequencePress) {
                 when (Button.getButton(buttonCode)) {
-                    Button.Cross -> if (actualController.isInBuildMode) actualController.buildIfPossible =
+                    Button.Cross -> if (gameState.currentState.state == GameState.Paused) gameState.acceptEvent(
+                        GameEvent.ResumedGame
+                    ) else if (actualController.isInBuildMode) actualController.buildIfPossible =
                         true else actualController.doContextAction = true
-                    Button.Ring -> {}
-                    Button.Square -> {}
-                    Button.DPadLeft -> {}
-                    Button.DPadRight -> {}
-                    Button.Triangle -> {}
-                    Button.Unknown -> {}
-                    Button.DPadDown -> {}
-                    Button.DPadUp -> {}
-                    Button.L1 -> {}
-                    Button.L3 -> {}
-                    Button.Options -> {}
-                    Button.PsButton -> {}
-                    Button.R1 -> {}
-                    Button.R3 -> {}
-                    Button.Share -> {}
+                    Button.Options -> {
+                        if (gameState.currentState.state == GameState.Running) gameState.acceptEvent(GameEvent.PausedGame) else if (gameState.currentState.state == GameState.Paused) gameState.acceptEvent(
+                            GameEvent.ResumedGame
+                        )
+                    }
+                    else -> {
+                        if (gameState.currentState.state == GameState.Paused)
+                            gameState.acceptEvent(GameEvent.ResumedGame)
+                    }
                 }
             }
         }
@@ -105,15 +105,15 @@ class GamepadInputSystem : IteratingSystem(allOf(GamepadControl::class).get()), 
     }
 
     private fun handleUp(entity: Entity) {
-        actionHandler.previous(entity)
+        inputActionHandler.previous(entity)
     }
 
     private fun handleDown(entity: Entity) {
-        actionHandler.next(entity)
+        inputActionHandler.next(entity)
     }
 
     private fun handleAction(entity: Entity) {
-        actionHandler.act(entity)
+        inputActionHandler.act(entity)
     }
 
     private fun toggleBuildMode(entity: Entity) {

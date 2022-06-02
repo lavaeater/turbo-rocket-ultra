@@ -14,43 +14,9 @@ import injection.Context.inject
 import input.KeyboardControl
 import ktx.app.KtxInputAdapter
 import ktx.ashley.allOf
-import physics.build
 import physics.getComponent
 import physics.intendTo
-import physics.isBuilding
 import statemachine.StateMachine
-
-class ActionHandler {
-    /**
-     * Handles spaceBar, for instance
-     */
-    fun next(entity: Entity) {
-        if (entity.isBuilding()) {
-            entity.build().buildables.nextItem()
-        }
-    }
-
-    fun previous(entity: Entity) {
-        if (entity.isBuilding()) {
-            entity.build().buildables.previousItem()
-        }
-    }
-
-    /**
-     * Depending on mode, selects something - if in buildMode, it will simply BUILD
-     */
-    fun select(entity: Entity) {
-        if (entity.isBuilding()) {
-            entity.intendTo(IntendsTo.Build)
-        }
-    }
-
-    fun act(entity: Entity) {
-        if (entity.isBuilding()) {
-            entity.intendTo(IntendsTo.Build)
-        }
-    }
-}
 
 class KeyboardInputSystem :
     KtxInputAdapter, IteratingSystem(
@@ -62,8 +28,8 @@ class KeyboardInputSystem :
     private var zoom = 0f
     lateinit var keyboardControl: KeyboardControl
     lateinit var keyboardEntity: Entity
-    val actionHandler by lazy { inject<ActionHandler>() }
-    val gameState by lazy { inject<StateMachine<GameState, GameEvent>>() }
+    val inputActionHandler by lazy { inject<InputActionHandler>() }
+    private val gameState by lazy { inject<StateMachine<GameState, GameEvent>>() }
 
     override fun keyDown(keycode: Int): Boolean {
         if (::keyboardControl.isInitialized) {
@@ -75,12 +41,15 @@ class KeyboardInputSystem :
                     Input.Keys.D -> keyboardControl.turning = 1f
                     Input.Keys.Z -> zoom = 1f
                     Input.Keys.X -> zoom = -1f
-
+//TODO: Chaaange this madness!
                     Input.Keys.P -> if (gameState.currentState.state == GameState.Running) gameState.acceptEvent(
                         GameEvent.PausedGame
                     ) else gameState.acceptEvent(
                         GameEvent.ResumedGame
-                    )                    else -> return false
+                    )
+                    else -> if (gameState.currentState.state == GameState.Paused) gameState.acceptEvent(GameEvent.ResumedGame)
+                            else
+                                return false
                 }
             }
         } else {
@@ -135,19 +104,19 @@ class KeyboardInputSystem :
     }
 
     private fun handleSelect() {
-        actionHandler.select(keyboardEntity)
+        inputActionHandler.select(keyboardEntity)
     }
 
     private fun handleRight() {
-        actionHandler.next(keyboardEntity)
+        inputActionHandler.next(keyboardEntity)
     }
 
     private fun handleLeft() {
-        actionHandler.previous(keyboardEntity)
+        inputActionHandler.previous(keyboardEntity)
     }
 
     private fun handleAction() {
-        actionHandler.act(keyboardEntity)
+        inputActionHandler.act(keyboardEntity)
     }
 
     private fun toggleBuildMode() {

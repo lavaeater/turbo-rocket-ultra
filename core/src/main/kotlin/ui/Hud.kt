@@ -189,6 +189,8 @@ class Hud(private val batch: Batch) : IUserInterface, MessageReceiver {
                     left()
                     top()
                     pauseLabel = typingLabel(text)//.inCell.expand()
+                    row()
+                    label("Press any key...")
                 })
             width = dialogWidth
             height = dialogHeight

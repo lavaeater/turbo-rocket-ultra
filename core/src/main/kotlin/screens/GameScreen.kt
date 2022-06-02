@@ -44,8 +44,6 @@ import turbofacts.Factoids
 import turbofacts.TurboFactsOfTheWorld
 import turbofacts.TurboStoryManager
 import ui.IUserInterface
-import ui.getUiThing
-import kotlin.math.log
 import kotlin.math.pow
 import kotlin.math.roundToInt
 
@@ -283,13 +281,5 @@ class GameScreen(private val gameState: StateMachine<GameState, GameEvent>) : Kt
         vfxManager.dispose()
         inject<List<ChainVfxEffect>>().forEach { it.dispose() }
     }
-}
-
-object MapList {
-    val mapFileNames = mutableListOf<String>()
-    val mapFiles: List<MapData>
-        get() {
-            return mapFileNames.map { MapLoader.loadNewMap("text_maps/$it.txt") }
-        }
 }
 

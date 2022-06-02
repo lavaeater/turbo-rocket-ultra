@@ -31,7 +31,7 @@ import ecs.systems.fx.DelayedEntityCreationSystem
 import ecs.systems.graphics.*
 import ecs.systems.graphics.GameConstants.GAME_HEIGHT
 import ecs.systems.graphics.GameConstants.GAME_WIDTH
-import ecs.systems.input.ActionHandler
+import ecs.systems.input.InputActionHandler
 import ecs.systems.input.GamepadInputSystem
 import ecs.systems.input.KeyboardInputSystem
 import ecs.systems.intent.CalculatePositionSystem
@@ -66,7 +66,7 @@ object Context {
     private fun buildContext() {
         context.register {
             bindSingleton(PolygonSpriteBatch())
-            bindSingleton(ActionHandler())
+            bindSingleton(InputActionHandler())
             bindSingleton(OrthographicCamera())
             bindSingleton<IUserInterface> { Hud(inject<PolygonSpriteBatch>() as Batch) }
             bindSingleton(
