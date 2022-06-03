@@ -10,6 +10,7 @@ import com.badlogic.gdx.graphics.Texture
 import com.badlogic.gdx.graphics.g2d.*
 import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator
 import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator.FreeTypeFontParameter
+import com.badlogic.gdx.math.MathUtils
 import com.badlogic.gdx.scenes.scene2d.ui.Skin
 import com.badlogic.gdx.utils.Disposable
 import features.weapons.GunFrames
@@ -27,6 +28,7 @@ object Assets : Disposable {
 
     lateinit var am: AssetManager
 
+    private val disposables = mutableListOf<Disposable>()
 
     val speechBTexture by lazy { Texture(Gdx.files.internal("ui/graphics/speechbubble.png")) }
     val speechBubble by lazy { NinePatch(speechBTexture, 14, 8, 12, 12) }
@@ -330,7 +332,7 @@ object Assets : Disposable {
     }
 
     val lootBox by lazy {
-        Sprite(Texture(Gdx.files.internal("sprites/loot/lootbox.png")))
+        Sprite(Texture(Gdx.files.internal("sprites/loot/lootbox.png"))).apply { flip(false, true) }
     }
     val arrowTexture by lazy {
         Texture(Gdx.files.internal("sprites/arrows.png"))
@@ -510,7 +512,6 @@ object Assets : Disposable {
 
     fun load(): AssetManager {
         am = AssetManager()
-//        am.registerFreeTypeFontLoaders()
         fixScene2dSkin()
         fixFlip()
         return am
@@ -538,21 +539,34 @@ object Assets : Disposable {
                     for (d in b.keyFrames) {
                         d.setFlip(true, true)
                     }
-        for(c in bosses.values) {
-            for(a in c.values)
-                for(b in a.animations.values)
-                    for(d in b.keyFrames) {
+        for (c in bosses.values) {
+            for (a in c.values)
+                for (b in a.animations.values)
+                    for (d in b.keyFrames) {
                         d.setFlip(true, true)
                     }
         }
     }
 
+    val foregroundColor = Color(
+        MathUtils.norm(0f, 255f, 255f),
+        MathUtils.norm(0f, 255f, 111f),
+        0f,
+        1f
+    )
+
+    val backgroundColor = Color(
+        MathUtils.norm(0f, 255f, 11f),
+        MathUtils.norm(0f, 255f, 12f),
+        MathUtils.norm(0f, 255f, 57f),
+        1f
+    )
+
     private fun fixScene2dSkin() {
-        Scene2DSkin.defaultSkin = Skin(Gdx.files.internal("skins/c64/uiskin.json"))
+        Scene2DSkin.defaultSkin = Skin(Gdx.files.internal("skins/my-skin/uiskin.json"))
     }
 
     override fun dispose() {
-
     }
 }
 

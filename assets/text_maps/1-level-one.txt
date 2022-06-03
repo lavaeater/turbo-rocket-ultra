@@ -1,4 +1,5 @@
 hcc
+w*l
 l*c
 s*g
 ---

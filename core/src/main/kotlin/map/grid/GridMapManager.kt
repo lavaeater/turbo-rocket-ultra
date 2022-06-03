@@ -5,6 +5,7 @@ import com.badlogic.gdx.graphics.Color
 import com.badlogic.gdx.graphics.g2d.Batch
 import com.badlogic.gdx.physics.box2d.Body
 import com.badlogic.gdx.physics.box2d.BodyDef
+import ecs.systems.graphics.GameConstants
 import factories.Box2dCategories
 import factories.world
 import ktx.box2d.body
@@ -34,7 +35,10 @@ class GridMapManager {
 
     private val bodies = mutableListOf<Body>()
 
-    fun getRandomSection(except: Coordinate, minDistance: Int = 2, maxDistance: Int = 5) : Coordinate {
+    fun getRandomSection(except: Coordinate, minDistance: Int = 2, maxDistance: Int = 5, level: Int = 0) : Coordinate? {
+        if(level > GameConstants.MAX_RANDOM_SECTION_RECURSION_LEVEL)
+            return null
+
         val minXa = except.x - maxDistance
         val minXb = except.x - minDistance
         val maxXa = except.x + maxDistance
@@ -50,7 +54,7 @@ class GridMapManager {
             .keys
             .filter { it != except && it.x > minXb && it.x < maxXb && it.y > minYb && it.y < maxYb }
         val outerKeys = allKeys - innerKeys.toSet()
-        return if(outerKeys.any()) outerKeys.random() else getRandomSection(except, minDistance, maxDistance + 1)
+        return if(outerKeys.any()) outerKeys.random() else getRandomSection(except, minDistance, maxDistance + 1, level + 1)
     }
 
     fun getRandomSection(except: Coordinate, maxDistance: Int = 5): Coordinate {

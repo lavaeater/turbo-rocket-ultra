@@ -45,7 +45,7 @@ inline fun <reified Targets : PositionStorageComponent,
 }
 
 inline fun <reified ToStoreIn : CoordinateStorageComponent> findSection(
-    noinline method: (Coordinate, Int, Int) -> Coordinate = SectionFindingMethods::classicRandom
+    noinline method: (Coordinate, Int, Int) -> Coordinate? = SectionFindingMethods::classicRandom
 ): SelectSection<ToStoreIn> {
     return SelectSection(ToStoreIn::class, method)
 }

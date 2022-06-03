@@ -178,11 +178,7 @@ class Hud(private val batch: Batch, debugAll: Boolean) : IUserInterface, Message
     private lateinit var pauseDialog: KDialog
 
     private val pauseBlurb by lazy {
-        pauseDialog = scene2d.dialog("Paused") {
-            contentTable.add(
-                label("Press any key...")
-            )
-        }
+        pauseDialog = scene2d.dialog("Paused")
         stage.addActor(pauseDialog)
         pauseDialog
     }
@@ -309,7 +305,7 @@ class Hud(private val batch: Batch, debugAll: Boolean) : IUserInterface, Message
 
     fun showPauseCrawl(text: String) {
         if(::pauseDialog.isInitialized)
-            CrawlDialog.showDialog(pauseDialog, text)
+            CrawlDialog.showDialog(pauseDialog, text, duration = 2f)
     }
 }
 

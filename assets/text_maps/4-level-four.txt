@@ -30,12 +30,27 @@ s
 name
 4-level-four            
 start
-Replace this with a start-of-level
-message to inspire the players
+Never look back,
+never look towards the light.
+You are not IN the darkness
+You ARE the darkness - the terror
+To everyone that lives beneath
+us.
+
 success
-Shows this when players win the level
+Nothing matters anymore.
+Right
+
+Wrong
+
+It's all the same, in the end.
+
+All that matters is that you press on,
+always downwards
 fail
-This is when they fail
+Never give up the dream
+The dream of a future
+free of varmint
 facts
 MaxEnemies:100:i
 MaxSpawnedEnemies:200:i

@@ -35,6 +35,7 @@ import ktx.app.KtxScreen
 import ktx.ashley.allOf
 import ktx.ashley.getSystem
 import ktx.ashley.with
+import ktx.log.debug
 import map.grid.*
 import map.snake.randomPoint
 import physics.*
@@ -104,6 +105,7 @@ class GameScreen(private val gameState: StateMachine<GameState, GameEvent>) : Kt
     }
 
     private fun loadMap(data: MapData): Pair<Map<Coordinate, GridMapSection>, TileGraph> {
+        debug { "Loading ${data.name}" }
         return GridMapGenerator.generateFromMapFile(data)
     }
 
