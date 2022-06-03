@@ -463,7 +463,7 @@ fun randomLoot(at: Vector2, lootTable: LootTable) {
         type = BodyDef.BodyType.StaticBody
         position.set(at)
         fixedRotation = true
-        box(1f, 1f) {
+        box(2f, 2f) {
             density = 1f
             filter {
                 categoryBits = Box2dCategories.loot

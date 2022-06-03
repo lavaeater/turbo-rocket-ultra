@@ -7,6 +7,9 @@ import gamestate.GameState
 import injection.Context
 import ktx.app.KtxGame
 import ktx.app.KtxScreen
+import ktx.assets.DisposableContainer
+import ktx.assets.DisposableRegistry
+import ktx.assets.disposeSafely
 import ktx.inject.register
 import ktx.log.debug
 import screens.*
@@ -14,7 +17,7 @@ import statemachine.StateMachine
 import tru.Assets
 import turbofacts.Factoids
 
-class MainGame : KtxGame<KtxScreen>() {
+class MainGame : KtxGame<KtxScreen>(), DisposableRegistry by DisposableContainer() {
 
     val gameState: StateMachine<GameState, GameEvent> by lazy {
         val stateMachine = StateMachine.buildStateMachine<GameState, GameEvent>(GameState.Splash, ::stateChanged) {
@@ -103,7 +106,7 @@ class MainGame : KtxGame<KtxScreen>() {
     }
 
     override fun create() {
-        Assets.load()
+        Assets.load().alsoRegister()
         addScreen(SplashScreen(gameState))
         addScreen(SetupScreen(gameState))
         addScreen(gameScreen)

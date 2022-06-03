@@ -20,7 +20,13 @@ object CrawlDialog {
         val lines = text.lines()
         return lines.mapIndexed { index, line ->
             scene2d.label(line) {
-                if (autoQuit && index == lines.lastIndex) {
+                addAction(
+                    Actions.moveBy(0f, dialogHeight, duration, Interpolation.linear).then(Actions.removeActor())
+                )
+            }
+        }.toMutableList().apply {
+            add(scene2d.label("Press Any Key") {
+                if (autoQuit) {
                     addAction(
                         Actions.moveBy(0f, dialogHeight, duration, Interpolation.linear).then(
                             object : Action() {
@@ -35,8 +41,8 @@ object CrawlDialog {
                     addAction(
                         Actions.moveBy(0f, dialogHeight, duration, Interpolation.linear).then(Actions.removeActor())
                     )
-            }
-        }.toMutableList()
+            })
+        }
     }
 
     fun showDialog(

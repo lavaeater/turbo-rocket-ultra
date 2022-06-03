@@ -8,6 +8,7 @@ import com.badlogic.gdx.graphics.OrthographicCamera
 import com.badlogic.gdx.scenes.scene2d.Actor
 import com.badlogic.gdx.scenes.scene2d.Stage
 import com.badlogic.gdx.scenes.scene2d.ui.HorizontalGroup
+import com.badlogic.gdx.utils.Align
 import com.badlogic.gdx.utils.viewport.ExtendViewport
 import data.Player
 import data.Players
@@ -27,12 +28,21 @@ import tru.Assets
 import tru.SpriteDirection
 import ui.customactors.animatedSpriteImage
 import ui.customactors.boundLabel
+import kotlin.properties.Delegates
 
 class SetupScreen(gameState: StateMachine<GameState, GameEvent>) : BasicScreen(gameState) {
     override val camera = OrthographicCamera()
     override val viewport = ExtendViewport(800f, 600f, camera)
 
-    private val currentKeyMap = command("Normal") {
+    private val defaultKeyMap = command("Default") {
+        setUp(Input.Keys.SPACE, "Toggle Player") { toggleKeyboardPlayer() }
+        setUp(Input.Keys.LEFT, "Prev Character") { changeSpriteKeyboard(-1) }
+        setUp(Input.Keys.RIGHT, "Next Character") { changeSpriteKeyboard(1) }
+        setUp(Input.Keys.ENTER, "Start Game") { startGame() }
+        setUp(Input.Keys.D, "Debug Mode On") { toggleDebugMode() }
+    }
+
+    private val debugModeKeyMap = command("Normal") {
         setUp(Input.Keys.SPACE, "Toggle Player") { toggleKeyboardPlayer() }
         setUp(Input.Keys.LEFT, "Prev Character") { changeSpriteKeyboard(-1) }
         setUp(Input.Keys.RIGHT, "Next Character") { changeSpriteKeyboard(1) }
@@ -46,6 +56,18 @@ class SetupScreen(gameState: StateMachine<GameState, GameEvent>) : BasicScreen(g
         setUp(Input.Keys.M, "Map Editor") {
             gameState.acceptEvent(GameEvent.StartMapEditor)
         }
+        setUp(Input.Keys.D, "Debug Mode Off") { toggleDebugMode() }
+    }
+
+    private var currentKeyMap = defaultKeyMap
+
+    private var debugMode = false
+    private fun toggleDebugMode() {
+        debugMode = !debugMode
+        if (debugMode)
+            currentKeyMap = debugModeKeyMap
+        else
+            currentKeyMap = defaultKeyMap
     }
 
     private fun startAnimEditor() {
@@ -61,7 +83,6 @@ class SetupScreen(gameState: StateMachine<GameState, GameEvent>) : BasicScreen(g
 
     private val playerCards: HorizontalGroup by lazy {
         scene2d.horizontalGroup {
-//            setFillParent(true)
             setPosition(25f, 200f)
             for (model in setupViewModel.availableControllers) {
                 addActor(cardForPlayerModel(model))
@@ -74,13 +95,8 @@ class SetupScreen(gameState: StateMachine<GameState, GameEvent>) : BasicScreen(g
         aStage.isDebugAll = false
         aStage.actors {
             table {
-                boundLabel({ mapNames.selectedItem }) {
-                }
-                row()
-                label("Keymap:")
-                row()
                 boundLabel({ currentKeyMap.toString() }).setFontScale(.5f)
-                setPosition(100f, 400f)
+                setPosition(50f, 550f)
                 pack()
             }
         }
@@ -92,37 +108,11 @@ class SetupScreen(gameState: StateMachine<GameState, GameEvent>) : BasicScreen(g
         return scene2d.verticalGroup {
             userObject = playerModel
             isVisible = true
-            val selectedGroup = verticalGroup {
-                isVisible = false
-                boundLabel({ playerModel.name })
-                boundLabel({ playerModel.selectedCharacter })
-                val ai = animatedSpriteImage(
-                    Assets.characterTurboAnims.first().animationFor(AnimState.Walk, SpriteDirection.South)
-                ) {}
-                addActor(ai)
-                verticalGroup {
-                    horizontalGroup {
-                        label("Press ")
-                        when (playerModel) {
-                            is PlayerModel.Keyboard -> label("[Return]")
-                            is PlayerModel.GamePad -> image(Assets.ps4Buttons["square"]!!)
-                        }
-
-                    }
-                    label(" to start")
-                }
-                playerModel.selectedAbleSpriteAnims = selectedItemListOf(
-                    { anim ->
-                        playerModel.selectedCharacter = anim.name
-                        ai.animation = anim.animationFor(AnimState.Walk, SpriteDirection.South)
-                    },
-                    *Assets.characterTurboAnims.toTypedArray()
-                )
-            }
-            addActor(selectedGroup)
             val notSelectedGroup = verticalGroup {
+                columnAlign(Align.left)
                 isVisible = true
                 verticalGroup {
+                    columnAlign(Align.left)
                     horizontalGroup {
                         label("Press ")
                         when (playerModel) {
@@ -135,6 +125,65 @@ class SetupScreen(gameState: StateMachine<GameState, GameEvent>) : BasicScreen(g
                 }
             }
             addActor(notSelectedGroup)
+            val selectedGroup = verticalGroup {
+                columnAlign(Align.left)
+                isVisible = false
+                boundLabel({ playerModel.name })
+                boundLabel({ playerModel.selectedCharacter })
+                val ai = animatedSpriteImage(
+                    Assets.characterTurboAnims.first().animationFor(AnimState.Walk, SpriteDirection.South)
+                ) {}
+                addActor(ai)
+                verticalGroup {
+                    columnAlign(Align.left)
+                    horizontalGroup {
+                        label("Press ")
+                        when (playerModel) {
+                            is PlayerModel.Keyboard -> label("[Return]")
+                            is PlayerModel.GamePad -> image(Assets.ps4Buttons["square"]!!)
+                        }
+
+                    }
+                    label(" to start")
+                    label("")
+                    when (playerModel) {
+                        is PlayerModel.Keyboard -> {
+                            label("WASD - walk about").setFontScale(0.5f)
+                            label("R - reload").setFontScale(0.5f)
+                            label("Mouse - aim").setFontScale(0.5f)
+                            label("B - build").setFontScale(0.5f)
+                            label("LMB - shoot").setFontScale(0.5f)
+                            label("Wheel - change weapon").setFontScale(0.5f)
+                        }
+                        is PlayerModel.GamePad -> {
+                            label("Left Stick - move").setFontScale(0.5f)
+                            label("Right Stick - aim").setFontScale(0.5f)
+                            horizontalGroup {
+                                image(Button.Square.image)
+                                label(" - reload").setFontScale(0.5f)
+                            }
+                            horizontalGroup {
+                                image(Button.Triangle.image)
+                                label(" - build").setFontScale(0.5f)
+                            }
+                            horizontalGroup {
+                                image(Button.DPadLeft.image)
+                                image(Button.DPadRight.image)
+                                label(" - change weapon").setFontScale(0.5f)
+                            }
+                        }
+                    }
+                }
+                playerModel.selectedAbleSpriteAnims = selectedItemListOf(
+                    { anim ->
+                        playerModel.selectedCharacter = anim.name
+                        ai.animation = anim.animationFor(AnimState.Walk, SpriteDirection.South)
+                    },
+                    *Assets.characterTurboAnims.toTypedArray()
+                )
+            }
+            addActor(selectedGroup)
+
             playerModel.isSelectedCallback = { isSelected ->
                 selectedGroup.isVisible = isSelected
                 notSelectedGroup.isVisible = !isSelected

@@ -10,12 +10,29 @@ cblblb
 name
 5-level-five            
 start
-Replace this with a start-of-level
-message to inspire the players
+Is there no end to the killing
+and the murder?
+Will you ever be able to wash out the blood?
+Will friends and family be able to rekindle
+what trace of humanity is still left in you?
+
+Or will they be able to tell - that you have
+
+changed?
+
 success
-Shows this when players win the level
+Is there glory in this?
+No.
+Is there triumph to be had?
+No.
+All you hear are the whispers of
+the slave in your ear:
+"you are merely mortal"
+
 fail
-This is when they fail
+I cannot look upon you with my eyes.
+Leave. Never come back.
+
 facts
 MaxEnemies:10:i
 MaxSpawnedEnemies:20:i

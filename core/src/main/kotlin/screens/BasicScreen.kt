@@ -16,6 +16,7 @@ import injection.Context
 import ktx.app.KtxInputAdapter
 import ktx.app.KtxScreen
 import statemachine.StateMachine
+import tru.Assets
 
 abstract class BasicScreen(val gameState: StateMachine<GameState, GameEvent>) : KtxScreen, KtxInputAdapter, ControllerListener {
 
@@ -34,8 +35,9 @@ abstract class BasicScreen(val gameState: StateMachine<GameState, GameEvent>) : 
         Controllers.removeListener(this)
     }
 
+    val clearColor by lazy { Assets.backgroundColor }
     override fun render(delta: Float) {
-        Gdx.gl.glClearColor(.4f, .4f, .4f, 1f)
+        Gdx.gl.glClearColor(clearColor.r, clearColor.g, clearColor.b, clearColor.a)
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT)
         camera.update(true)
         batch.projectionMatrix = camera.combined
