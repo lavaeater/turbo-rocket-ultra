@@ -14,7 +14,6 @@ import com.badlogic.gdx.scenes.scene2d.ui.Label
 import com.badlogic.gdx.utils.Align
 import com.badlogic.gdx.utils.Queue
 import com.badlogic.gdx.utils.viewport.ExtendViewport
-import com.rafaskoberg.gdx.typinglabel.TypingLabel
 import data.Players
 import ecs.components.enemy.AttackableProperties
 import ecs.systems.graphics.GameConstants
@@ -30,12 +29,10 @@ import messaging.Message
 import messaging.MessageHandler
 import messaging.MessageReceiver
 import physics.*
-import screens.CrawlDialog
 import turbofacts.Factoids
 import ui.customactors.boundLabel
 import ui.customactors.boundProgressBar
 import ui.customactors.repeatingTexture
-import ui.customactors.typingLabel
 import kotlin.reflect.KClass
 
 
