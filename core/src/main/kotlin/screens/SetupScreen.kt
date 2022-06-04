@@ -49,7 +49,6 @@ class SetupScreen(gameState: StateMachine<GameState, GameEvent>) : BasicScreen(g
         setUp(Input.Keys.ENTER, "Start Game") { startGame() }
         setUp(Input.Keys.T, "Start Game with AI") { startGameWithAi() }
         setUp(Input.Keys.C, "Concept Screen") { startConceptScreen() }
-        setUp(Input.Keys.E, "Character Editor") { startCharacterEditor() }
         setUp(Input.Keys.A, "Animation Editor") { startAnimEditor() }
         setUp(Input.Keys.UP, "Next map") { nextMap() }
         setUp(Input.Keys.DOWN, "Previous map") { previousMap() }
