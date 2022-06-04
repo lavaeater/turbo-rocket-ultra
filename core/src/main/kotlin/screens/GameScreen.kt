@@ -152,7 +152,7 @@ class GameScreen(private val gameState: StateMachine<GameState, GameEvent>) : Kt
         for (system in engine.systems)
             system.setProcessing(false)
 
-        //Continue to render, though
+        //Continue to render, though  gaah
         engine.getSystem<RenderSystem>().setProcessing(true)
         engine.getSystem<RenderMiniMapSystem>().setProcessing(true)
 
@@ -250,6 +250,9 @@ class GameScreen(private val gameState: StateMachine<GameState, GameEvent>) : Kt
     private val mapManager by lazy { inject<GridMapManager>() }
 
     private fun clearAllButPlayers() {
+        //Pause rendering RIGHT NOW
+        engine.getSystem<RenderSystem>().setProcessing(false)
+        engine.getSystem<RenderMiniMapSystem>().setProcessing(false)
         for (entity in engine.entities) {
             if (!entity.isPlayer() && !entity.hasWeapon()) {
                 if (entity.hasBody()) {
@@ -260,6 +263,10 @@ class GameScreen(private val gameState: StateMachine<GameState, GameEvent>) : Kt
                 engine.removeEntity(entity)
             }
         }
+        //Resume rendering
+        //Continue to render, though  gaah
+        engine.getSystem<RenderSystem>().setProcessing(true)
+        engine.getSystem<RenderMiniMapSystem>().setProcessing(true)
     }
 
     private fun generateMap(level: Int) {
