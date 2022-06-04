@@ -95,7 +95,7 @@ class SetupScreen(gameState: StateMachine<GameState, GameEvent>) : BasicScreen(g
         aStage.isDebugAll = false
         aStage.actors {
             table {
-                boundLabel({ currentKeyMap.toString() }).setFontScale(.5f)
+                boundLabel({ currentKeyMap.toString() })
                 setPosition(50f, 550f)
                 pack()
             }
@@ -148,28 +148,28 @@ class SetupScreen(gameState: StateMachine<GameState, GameEvent>) : BasicScreen(g
                     label("")
                     when (playerModel) {
                         is PlayerModel.Keyboard -> {
-                            label("WASD - walk about").setFontScale(0.5f)
-                            label("R - reload").setFontScale(0.5f)
-                            label("Mouse - aim").setFontScale(0.5f)
-                            label("B - build").setFontScale(0.5f)
-                            label("LMB - shoot").setFontScale(0.5f)
-                            label("Wheel - change weapon").setFontScale(0.5f)
+                            label("WASD - walk about")
+                            label("R - reload")
+                            label("Mouse - aim")
+                            label("B - build")
+                            label("LMB - shoot")
+                            label("Wheel - change weapon")
                         }
                         is PlayerModel.GamePad -> {
-                            label("Left Stick - move").setFontScale(0.5f)
-                            label("Right Stick - aim").setFontScale(0.5f)
+                            label("Left Stick - move")
+                            label("Right Stick - aim")
                             horizontalGroup {
                                 image(Button.Square.image)
-                                label(" - reload").setFontScale(0.5f)
+                                label(" - reload")
                             }
                             horizontalGroup {
                                 image(Button.Triangle.image)
-                                label(" - build").setFontScale(0.5f)
+                                label(" - build")
                             }
                             horizontalGroup {
                                 image(Button.DPadLeft.image)
                                 image(Button.DPadRight.image)
-                                label(" - change weapon").setFontScale(0.5f)
+                                label(" - change weapon")
                             }
                         }
                     }
