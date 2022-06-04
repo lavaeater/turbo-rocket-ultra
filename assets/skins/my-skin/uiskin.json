@@ -1,10 +1,16 @@
 {
-BitmapFont: {
+com.badlogic.gdx.graphics.g2d.BitmapFont: {
 	commodore-64: {
 		file: commodore-64.fnt
 	}
+	november: {
+		file: november.fnt
+	}
+	orange_kid: {
+		file: orange kid.fnt
+	}
 }
-Color: {
+com.badlogic.gdx.graphics.Color: {
 	green: {
 		r: 1
 		g: 1
@@ -35,10 +41,10 @@ Color: {
 		b: 0
 		a: 1
 	}
-	grey: {
-		r: 0.7
-		g: 0.7
-		b: 0.7
+	text_shadow: {
+		r: 0.68666667
+		g: 0.30584356
+		b: 0.013733327
 		a: 1
 	}
 	dark_grey: {
@@ -60,7 +66,7 @@ Color: {
 		a: 1
 	}
 }
-TintedDrawable: {
+com.badlogic.gdx.scenes.scene2d.ui.Skin$TintedDrawable: {
 	dialogDim: {
 		name: white
 		color: {
@@ -71,7 +77,7 @@ TintedDrawable: {
 		}
 	}
 }
-ButtonStyle: {
+com.badlogic.gdx.scenes.scene2d.ui.Button$ButtonStyle: {
 	default: {
 		up: button
 		down: button-down
@@ -92,7 +98,7 @@ ButtonStyle: {
 		checked: button-down
 	}
 }
-CheckBoxStyle: {
+com.badlogic.gdx.scenes.scene2d.ui.CheckBox$CheckBoxStyle: {
 	default: {
 		checkboxOn: check-box
 		checkboxOff: check-box-off
@@ -104,15 +110,15 @@ CheckBoxStyle: {
 		font: commodore-64
 	}
 }
-ImageButtonStyle: {
+com.badlogic.gdx.scenes.scene2d.ui.ImageButton$ImageButtonStyle: {
 	default: {
 		up: button
 		down: button-down
 	}
 }
-LabelStyle: {
+com.badlogic.gdx.scenes.scene2d.ui.Label$LabelStyle: {
 	default: {
-		font: commodore-64
+		font: november
 		fontColor: foreground
 	}
 	optional: {
@@ -125,8 +131,12 @@ LabelStyle: {
 		font: commodore-64
 		background: button
 	}
+	november: {
+		font: november
+		fontColor: foreground
+	}
 }
-ProgressBarStyle: {
+com.badlogic.gdx.scenes.scene2d.ui.ProgressBar$ProgressBarStyle: {
 	default-horizontal: {
 		background: progress-bar
 		knobBefore: progress-bar-knob
@@ -136,7 +146,7 @@ ProgressBarStyle: {
 		knobBefore: progress-bar-knob
 	}
 }
-ScrollPaneStyle: {
+com.badlogic.gdx.scenes.scene2d.ui.ScrollPane$ScrollPaneStyle: {
 	default: {
 		background: blue
 		hScroll: scroll-bar
@@ -145,7 +155,7 @@ ScrollPaneStyle: {
 		vScrollKnob: scroll-bar-vertical-knob
 	}
 }
-SliderStyle: {
+com.badlogic.gdx.scenes.scene2d.ui.Slider$SliderStyle: {
 	default-horizontal: {
 		background: slider
 		knob: slider-knob
@@ -155,7 +165,7 @@ SliderStyle: {
 		knob: slider-knob
 	}
 }
-SplitPaneStyle: {
+com.badlogic.gdx.scenes.scene2d.ui.SplitPane$SplitPaneStyle: {
 	default-horizontal: {
 		handle: horizontal-split-pane
 	}
@@ -163,7 +173,7 @@ SplitPaneStyle: {
 		handle: vertical-split-pane
 	}
 }
-TextButtonStyle: {
+com.badlogic.gdx.scenes.scene2d.ui.TextButton$TextButtonStyle: {
 	default: {
 		font: commodore-64
 		fontColor: foreground
@@ -177,7 +187,7 @@ TextButtonStyle: {
 		checked: button-down
 	}
 }
-TextFieldStyle: {
+com.badlogic.gdx.scenes.scene2d.ui.TextField$TextFieldStyle: {
 	default: {
 		font: commodore-64
 		fontColor: foreground
@@ -194,25 +204,25 @@ TextFieldStyle: {
 		messageFont: commodore-64
 	}
 }
-TextTooltipStyle: {
+com.badlogic.gdx.scenes.scene2d.ui.TextTooltip$TextTooltipStyle: {
 	default: {
 		label: default
 	}
 }
-TouchpadStyle: {
+com.badlogic.gdx.scenes.scene2d.ui.Touchpad$TouchpadStyle: {
 	default: {
 		background: touchpad
 		knob: touchpad-knob
 	}
 }
-TreeStyle: {
+com.badlogic.gdx.scenes.scene2d.ui.Tree$TreeStyle: {
 	default: {
 		plus: plus
 		minus: minus
 		selection: progress-bar
 	}
 }
-WindowStyle: {
+com.badlogic.gdx.scenes.scene2d.ui.Window$WindowStyle: {
 	default: {
 		background: window
 		titleFont: commodore-64

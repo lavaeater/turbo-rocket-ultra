@@ -305,7 +305,7 @@ class Hud(private val batch: Batch, debugAll: Boolean) : IUserInterface, Message
 
     fun showPauseCrawl(text: String) {
         if(::pauseDialog.isInitialized)
-            CrawlDialog.showDialog(pauseDialog, text, duration = 2f)
+            CrawlDialog.showDialog(pauseDialog, text, duration = 5f)
     }
 }
 
