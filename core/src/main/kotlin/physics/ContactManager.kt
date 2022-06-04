@@ -151,7 +151,9 @@ class ContactManager : ContactListener {
                 val inventory = playerEntity.getComponent<InventoryComponent>()
                 val lootComponent = lootEntity.getComponent<LootComponent>()
                 val lootPosition = lootEntity.getComponent<TransformComponent>().position
-                audioPlayer.playOnChannel(playerEntity.playerControl().player.playerId, "players", "loot-found")
+                //Add a simple randomness to this, to begin with
+                if((1..10).random() == 1)
+                    audioPlayer.playOnChannel(playerEntity.playerControl().player.playerId, "players", "loot-found")
 
                 val looted =
                     if (lootComponent.lootTable != null) lootComponent.lootTable!!.result else lootComponent.loot

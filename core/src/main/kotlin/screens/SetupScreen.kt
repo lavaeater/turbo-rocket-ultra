@@ -187,6 +187,7 @@ class SetupScreen(gameState: StateMachine<GameState, GameEvent>) : BasicScreen(g
             playerModel.isSelectedCallback = { isSelected ->
                 selectedGroup.isVisible = isSelected
                 notSelectedGroup.isVisible = !isSelected
+                pack()
             }
 
             color = Color.RED
