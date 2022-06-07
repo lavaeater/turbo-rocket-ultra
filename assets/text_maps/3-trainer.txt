@@ -1,9 +1,9 @@
-tgtgtgt
-gtgggtg
-gggsggg
-gtgggtg
-tgtgtgt
------
+tctctct
+ctccctc
+cccsccg
+ctccctc
+tctctct
+-----   
 name
 trainer            
 
