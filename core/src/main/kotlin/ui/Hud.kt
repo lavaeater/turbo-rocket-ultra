@@ -134,7 +134,7 @@ class Hud(private val batch: Batch, debugAll: Boolean) : IUserInterface, Message
                             boundProgressBar(
                                 { player.entity.getComponent<AttackableProperties>().health },
                                 0f,
-                                GameConstants.BASE_HEALTH,
+                                GameConstants.ENEMY_BASE_HEALTH,
                                 0.1f
                             ) { }.inCell.align(Align.right)
                             row()

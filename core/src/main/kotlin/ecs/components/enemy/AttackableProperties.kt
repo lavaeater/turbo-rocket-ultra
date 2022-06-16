@@ -8,7 +8,8 @@ import ktx.math.random
 
 class AttackableProperties: Component, Pool.Poolable {
     var stunned = false
-    var health = GameConstants.BASE_HEALTH
+    var health = GameConstants.ENEMY_BASE_HEALTH
+    var maxHealth = health
     lateinit var lastHitBy: Entity
 
     val isDead get() = health <= 0f
@@ -23,7 +24,8 @@ class AttackableProperties: Component, Pool.Poolable {
     }
     override fun reset() {
         val randomValue = (1..100).random()
-        health = if (randomValue < 5) 1000f else 100f
+        health = if (randomValue < 5) GameConstants.ENEMY_BASE_HEALTH * 10f else GameConstants.ENEMY_BASE_HEALTH
+        maxHealth = health
         stunned = false
     }
 

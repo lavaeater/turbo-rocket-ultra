@@ -83,6 +83,11 @@ object AshleyMappers {
     val inventory = mapperFor<InventoryComponent>()
     val reloading = mapperFor<IsReloadingComponent>()
     val fitness = mapperFor<Fitness>()
+    val attackableProperties = mapperFor<AttackableProperties>()
+}
+
+fun Entity.attackables(): AttackableProperties {
+    return AshleyMappers.attackableProperties.get(this)
 }
 
 fun Entity.hasBody(): Boolean {

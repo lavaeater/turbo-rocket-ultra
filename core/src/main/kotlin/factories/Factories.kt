@@ -350,7 +350,7 @@ fun player(player: Player, mapper: ControlMapper, at: Vector2, debug: Boolean) {
 
     player.entity = engine().entity {
         with<AttackableProperties> {
-            health = GameConstants.BASE_HEALTH
+            health = GameConstants.ENEMY_BASE_HEALTH
         }
         with<CameraFollowComponent>()
         with<BodyComponent> { body = box2dBody }
@@ -894,7 +894,7 @@ private fun EngineEntity.withBasicEnemyStuff(
     rush: Float = GameConstants.ENEMY_RUSH_SPEED,
     velocity: Float = GameConstants.ENEMY_BASE_SPEED,
     howFarCanIsee: Float = GameConstants.ENEMY_VIEW_DISTANCE,
-    healthBarValue: Float = GameConstants.BASE_HEALTH,
+    healthBarValue: Float = GameConstants.ENEMY_BASE_HEALTH,
     isFlocking: Boolean = true,
     spriteScale: Float = 1f
 ) {
