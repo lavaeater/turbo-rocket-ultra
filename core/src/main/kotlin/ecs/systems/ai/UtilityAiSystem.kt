@@ -1,5 +1,6 @@
 package ecs.systems.ai
 
+import ai.deltaTime
 import com.badlogic.ashley.core.Component
 import com.badlogic.ashley.core.Entity
 import com.badlogic.ashley.systems.IteratingSystem
@@ -50,11 +51,6 @@ class UtilityAiSystem(priority: Int) : IteratingSystem(allOf(UtilityAiComponent:
 
 abstract class Consideration {
     abstract fun normalizedScore(entity: Entity): Float
-}
-
-class AmbleConsideration : Consideration() {
-    override fun normalizedScore(entity: Entity): Float {
-    }
 }
 
 class MyHealthConsideration : Consideration() {
@@ -190,18 +186,15 @@ class AmbleAiAction(score: Float):StaticScoreAction(score) {
          * and return. The method needs to run fast fast fast
          * so no long hold-ups, we will return here later.
          */
-        if(!entity.has<Path>()) {
+        if (!entity.has<Path>()) {
 
-        } else if(!entity.has<Waypoint>()) {
-
-
+        } else if (!entity.has<Waypoint>()) {
 
 
         } else {
 
 
-
-
+        }
     }
 }
 
@@ -211,8 +204,10 @@ class UtilityAiComponent : Component, Pool.Poolable {
     fun topAction(entity: Entity): AiAction? {
         val potentialAction = actions.minByOrNull { it.score(entity) }
         if(currentAction != potentialAction) {
-            currentAction.pause()
+            currentAction?.pause()
+            currentAction = potentialAction
         }
+        return currentAction
     }
 
     override fun reset() {
