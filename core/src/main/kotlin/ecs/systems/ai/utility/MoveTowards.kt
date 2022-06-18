@@ -5,15 +5,14 @@ import com.badlogic.ashley.core.Entity
 import kotlin.reflect.KClass
 
 class MoveTowards<ToLookFor : Component>(
-    private val componentClass: KClass<ToLookFor>,
-    private val stop: Boolean = true
-) : AiAction() {
+    private val componentClass: KClass<ToLookFor>) : AiAction() {
     override fun abort(entity: Entity) {
-        TODO("Not yet implemented")
+        /*
+        Remove relevant
+         */
     }
 
     override fun act(entity: Entity, deltaTime: Float) {
         TODO("Not yet implemented")
     }
-
 }

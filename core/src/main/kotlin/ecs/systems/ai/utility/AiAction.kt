@@ -15,7 +15,18 @@ abstract class AiAction {
         return considerations.map { it.normalizedScore(entity) }.average()
     }
 
+    /**
+     * Removes all components, settings etc related to this
+     * action from the supplied entity - or puts them in a
+     * paused state if the normal behavior is for the entity
+     * to continue where it left off later
+     */
     abstract fun abort(entity: Entity)
 
+    /**
+     * Does the thing it should do
+     * Remember that actions should not hold their own state,
+     * state should rather be kept on the entities themselves.
+     */
     abstract fun act(entity: Entity, deltaTime: Float)
 }
