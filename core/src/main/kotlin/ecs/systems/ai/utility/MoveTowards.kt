@@ -5,7 +5,7 @@ import com.badlogic.ashley.core.Entity
 import kotlin.reflect.KClass
 
 class MoveTowards<ToLookFor : Component>(
-    private val componentClass: KClass<ToLookFor>) : AiAction() {
+    private val componentClass: KClass<ToLookFor>) : AiAction(name) {
     override fun abort(entity: Entity) {
         /*
         Remove relevant

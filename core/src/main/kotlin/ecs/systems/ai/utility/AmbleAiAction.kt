@@ -23,7 +23,7 @@ import physics.*
  * All AiActions MUST be stateless and contain NO data. They will be kept as
  * objects or something somewhere.
  */
-class AmbleAiAction(score: Float = 0.6f) : StaticScoreAction(score) {
+class AmbleAiAction(score: Float = 0.6f) : StaticScoreAction("Amble", score) {
 
     private val method = SectionFindingMethods::classicRandom
     private fun findAmblePath(entity: Entity) {

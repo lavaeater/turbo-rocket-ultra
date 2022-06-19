@@ -19,9 +19,9 @@ import physics.transform
 import kotlin.reflect.KClass
 
 class CanISeeThisConsideration<ToLookFor : Component>(
-    private val componentClass: KClass<ToLookFor>,
+    componentClass: KClass<ToLookFor>,
     private val stop: Boolean = true
-) : Consideration() {
+) : Consideration("Can I See ") {
     private val entitiesToLookForFamily = allOf(componentClass, TransformComponent::class).get()
     private val engine by lazy { engine() }
     override fun normalizedScore(entity: Entity): Float {

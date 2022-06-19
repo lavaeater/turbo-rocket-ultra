@@ -2,7 +2,7 @@ package ecs.systems.ai.utility
 
 import com.badlogic.ashley.core.Entity
 
-abstract class AiAction {
+abstract class AiAction(name: String) {
     val considerations = mutableListOf<Consideration>()
 
     /***

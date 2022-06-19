@@ -2,10 +2,12 @@ package ecs.systems.ai.utility
 
 import com.badlogic.ashley.core.Entity
 
-class ConsideredAction(private val abortFunction: (entity: Entity) -> Unit,
+class ConsideredAction(
+    name: String,
+    private val abortFunction: (entity: Entity) -> Unit,
                        private val actFunction: (entity: Entity, deltaTime:Float) -> Unit,
                        vararg consideration: Consideration
-): AiAction() {
+): AiAction(name) {
     init {
         considerations.addAll(consideration)
     }
