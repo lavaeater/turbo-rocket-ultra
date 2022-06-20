@@ -50,6 +50,11 @@ class UtilityAiComponent : Component, Pool.Poolable {
                  * object or something.
                  */
 
+                //1. Check if we have a player to follow
+                //2. If not, find one
+                //3. Follow the player
+                //4. If player is dead, stop all of this nonsense!
+
             }, CanISeeThisConsideration(PlayerComponent::class),
             Consideration.MyHealthConsideration
         )
