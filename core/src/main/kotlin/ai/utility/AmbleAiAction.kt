@@ -1,4 +1,4 @@
-package ecs.systems.ai.utility
+package ai.utility
 
 import ai.findPathFromTo
 import ai.pathfinding.TileGraph

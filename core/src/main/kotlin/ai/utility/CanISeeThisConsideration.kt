@@ -1,4 +1,4 @@
-package ecs.systems.ai.utility
+package ai.utility
 
 import com.badlogic.ashley.core.Component
 import com.badlogic.ashley.core.Entity
@@ -30,10 +30,6 @@ class CanISeeThisConsideration<ToLookFor : Component>(
             agentProps.speed = 0f
         }
         val agentPosition = entity.transform().position
-        /*
-        Choose a random viewDirection within fov of current viewingdirection! Or some other technique
-         */
-
         val inrangeEntities = engine.getEntitiesFor(entitiesToLookForFamily)
             .filter { it.transform().position.dst(agentPosition) < agentProps.viewDistance }
             .filter {

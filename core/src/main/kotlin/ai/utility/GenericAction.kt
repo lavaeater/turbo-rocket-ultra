@@ -1,8 +1,9 @@
-package ecs.systems.ai.utility
+package ai.utility
 
 import com.badlogic.ashley.core.Entity
 
 class GenericAction(
+    name: String,
     private val scoreFunction: (entity: Entity) -> Double,
     private val abortFunction: (entity: Entity) -> Unit,
     private val actFunction: (entity: Entity, deltaTime:Float) -> Unit): AiAction(name) {

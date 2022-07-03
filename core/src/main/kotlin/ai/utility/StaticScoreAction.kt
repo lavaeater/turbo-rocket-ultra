@@ -1,4 +1,4 @@
-package ecs.systems.ai.utility
+package ai.utility
 
 import com.badlogic.ashley.core.Entity
 
