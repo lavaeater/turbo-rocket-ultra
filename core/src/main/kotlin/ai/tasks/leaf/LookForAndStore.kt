@@ -8,9 +8,9 @@ import com.badlogic.gdx.ai.btree.Task
 import com.badlogic.gdx.math.Vector2
 import com.badlogic.gdx.physics.box2d.Fixture
 import eater.ai.canISeeYouFromHere
+import eater.core.world
 import ecs.components.ai.PositionStorageComponent
 import eater.ecs.components.TransformComponent
-import factories.world
 import ktx.ashley.allOf
 import ktx.box2d.RayCast
 import ktx.box2d.rayCast

@@ -5,8 +5,8 @@ import com.badlogic.ashley.systems.IteratingSystem
 import com.badlogic.gdx.graphics.Color
 import com.badlogic.gdx.math.Vector2
 import com.badlogic.gdx.physics.box2d.Body
-import ecs.components.BodyComponent
 import eater.ecs.components.AgentProperties
+import eater.ecs.components.Box2d
 import ecs.components.enemy.AttackableProperties
 import ecs.components.gameplay.ObstacleComponent
 import eater.ecs.components.TransformComponent
@@ -18,7 +18,7 @@ import tru.Assets
 class EnemyMovementSystem(private val flocking: Boolean) : IteratingSystem(
     allOf(
         AgentProperties::class,
-        BodyComponent::class,
+        Box2d::class,
         TransformComponent::class
     ).get()
 ) {
@@ -110,7 +110,7 @@ class EnemyMovementSystem(private val flocking: Boolean) : IteratingSystem(
     private val actualDirectionVector = vec2()
     private val circleColor = Color(1f, 0f, 0f, 0.1f)
 
-    private fun moveEnemy(enemyComponent: AgentProperties, bodyComponent: BodyComponent) {
+    private fun moveEnemy(enemyComponent: AgentProperties, bodyComponent: Box2d) {
         //.
         actualDirectionVector.set(enemyComponent.directionVector)
         if(flocking)
@@ -120,7 +120,7 @@ class EnemyMovementSystem(private val flocking: Boolean) : IteratingSystem(
         bodyComponent.body!!.linearVelocity = actualDirectionVector.scl(enemyComponent.speed)
     }
 
-    private fun handleObstacles(enemyComponent: AgentProperties, bodyComponent: BodyComponent) {
+    private fun handleObstacles(enemyComponent: AgentProperties, bodyComponent: Box2d) {
 
     }
 }

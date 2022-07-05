@@ -29,13 +29,6 @@ import kotlin.reflect.KType
 import kotlin.reflect.typeOf
 
 object AshleyMappers {
-    inline fun <reified T : Component> getMapper(): ComponentMapper<T> {
-        val type = typeOf<T>()
-        if (!mappers.containsKey(type))
-            mappers[type] = mapperFor<T>()
-        return mappers[type] as ComponentMapper<T>
-    }
-
     val audio = mapperFor<AudioComponent>()
     val hacking = mapperFor<HackingComponent>()
     val destroyAfterCooldown = mapperFor<DestroyAfterCoolDownComponent>()

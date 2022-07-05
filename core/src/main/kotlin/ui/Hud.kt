@@ -15,9 +15,9 @@ import com.badlogic.gdx.utils.Align
 import com.badlogic.gdx.utils.Queue
 import com.badlogic.gdx.utils.viewport.ExtendViewport
 import data.Players
+import eater.messaging.IMessage
 import ecs.components.enemy.AttackableProperties
 import ecs.systems.graphics.GameConstants
-import factories.factsOfTheWorld
 import injection.Context.inject
 import ktx.actors.along
 import ktx.actors.plusAssign
@@ -30,6 +30,7 @@ import eater.messaging.MessageHandler
 import eater.messaging.IMessageReceiver
 import physics.*
 import eater.turbofacts.Factoids
+import eater.turbofacts.factsOfTheWorld
 import ui.customactors.boundLabel
 import ui.customactors.boundProgressBar
 import ui.customactors.repeatingTexture
@@ -264,7 +265,7 @@ class Hud(private val batch: Batch, debugAll: Boolean) : IUserInterface, IMessag
         }
     }
 
-    override fun receiveMessage(message: Message) {
+    override fun receiveMessage(message: IMessage) {
         when (message) {
             is Message.ShowToast -> {
                 toastQueue.addLast(message)

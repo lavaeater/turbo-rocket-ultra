@@ -8,19 +8,19 @@ import com.badlogic.gdx.physics.box2d.Contact
 import com.badlogic.gdx.physics.box2d.ContactImpulse
 import com.badlogic.gdx.physics.box2d.ContactListener
 import com.badlogic.gdx.physics.box2d.Manifold
+import eater.core.engine
 import eater.ecs.components.TransformComponent
 import ecs.components.AudioChannels
-import ecs.components.BodyComponent
 import ecs.components.ai.AttackPoint
 import ecs.components.ai.CollidedWithObstacle
 import eater.ecs.components.AgentProperties
+import eater.ecs.components.Box2d
 import ecs.components.enemy.AttackableProperties
 import ecs.components.fx.ParticleEffectComponent
 import ecs.components.gameplay.*
 import ecs.components.pickups.LootComponent
 import ecs.components.player.*
 import factories.delayedFireEntity
-import factories.engine
 import factories.explosionEffectEntity
 import factories.splatterEntity
 import features.pickups.AmmoLoot
@@ -327,7 +327,7 @@ class ContactManager : ContactListener {
         audioPlayer.playOnChannel(AudioChannels.simultaneous, Assets.newSoundEffects["weapons"]!!["grenade"]!!.random())
         val grenade = contactType.grenade
         val grenadeComponent = grenade.getComponent<GrenadeComponent>()
-        val body = grenade.getComponent<BodyComponent>().body!!
+        val body = grenade.getComponent<Box2d>().body
         body.linearVelocity.set(Vector2.Zero)
 
         /*
@@ -369,7 +369,7 @@ class ContactManager : ContactListener {
         audioPlayer.playOnChannel(AudioChannels.simultaneous, Assets.newSoundEffects["weapons"]!!["molotov"]!!.random())
         val molotov = contactType.molotov
         val molotovComponent = molotov.getComponent<MolotovComponent>()
-        val body = molotov.getComponent<BodyComponent>().body!!
+        val body = molotov.getComponent<Box2d>().body
         val linearVelocity = body.linearVelocity.cpy()
         body.linearVelocity = Vector2.Zero.cpy()
 

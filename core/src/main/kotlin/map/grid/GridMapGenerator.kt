@@ -19,29 +19,27 @@ import map.snake.random
 import map.snake.randomPoint
 import screens.CounterObject
 import eater.turbofacts.Factoids
-import eater.turbofacts.StoryHelper
 import eater.turbofacts.TurboStoryManager
+import eater.turbofacts.factsOfTheWorld
+import turbofacts.StoryHelper
 
 class GridMapGenerator {
     companion object {
         val engine by lazy { inject<Engine>() }
         val rayHandler by lazy { inject<RayHandler>() }
         fun addObjective(bounds: Rectangle, perimeterObjectives: Boolean) {
-            var position = bounds.randomPoint()
+            val position = bounds.randomPoint()
             objective(position.x, position.y, perimeterObjectives)
-//
-//            position = bounds.randomPoint()
-//            val emitter = spawner(position.x, position.y)
-//            emitter.add(engine.createComponent(EnemySpawnerComponent::class.java))
+
         }
 
         fun addSpawner(bounds: Rectangle) {
-            var position = bounds.randomPoint()
+            val position = bounds.randomPoint()
             spawner(position.tileWorldX(), position.tileWorldY())
         }
 
         fun addBoss(bounds: Rectangle, level: Int) {
-            var position = bounds.randomPoint()
+            val position = bounds.randomPoint()
             boss(position, level)
         }
 

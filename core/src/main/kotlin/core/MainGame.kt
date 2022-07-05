@@ -1,7 +1,6 @@
 package core
 
 import data.Players
-import factories.factsOfTheWorld
 import gamestate.GameEvent
 import gamestate.GameState
 import injection.Context
@@ -9,13 +8,13 @@ import ktx.app.KtxGame
 import ktx.app.KtxScreen
 import ktx.assets.DisposableContainer
 import ktx.assets.DisposableRegistry
-import ktx.assets.disposeSafely
 import ktx.inject.register
 import ktx.log.debug
 import screens.*
 import statemachine.StateMachine
 import tru.Assets
 import eater.turbofacts.Factoids
+import eater.turbofacts.factsOfTheWorld
 
 class MainGame : KtxGame<KtxScreen>(), DisposableRegistry by DisposableContainer() {
 

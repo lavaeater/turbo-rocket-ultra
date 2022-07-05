@@ -22,9 +22,7 @@ import ecs.components.player.ComplexActionComponent
 import ecs.components.player.PlayerComponent
 import ecs.components.player.PlayerControlComponent
 import ecs.components.player.PlayerWaitsForRespawn
-import factories.engine
 import ktx.ashley.has
-import ktx.math.times
 
 fun Entity.playerControlComponent(): PlayerControlComponent {
     return this.getComponent()
@@ -50,14 +48,6 @@ fun Fixture.isPlayer(): Boolean {
     return this.body.userData is Entity && (this.body.isPlayer())
 }
 
-inline fun <reified T : Component> Entity.has(): Boolean {
-    return AshleyMappers.getMapper<T>().has(this)
-}
-
-inline fun <reified T : Component> Entity.getComponent(): T {
-    return AshleyMappers.getMapper<T>().get(this)
-}
-
 inline fun <reified T : Component> Contact.atLeastOneHas(): Boolean {
     if (this.eitherIsEntity()) {
         return if (this.fixtureA.isEntity() && this.fixtureA.getEntity()
@@ -79,7 +69,7 @@ inline fun<reified T: Component> getEntityThatHas(entityOne: Entity, entityTwo: 
 }
 inline fun <reified T : Component> Contact.bothHaveComponent(): Boolean {
     if (this.bothAreEntities()) {
-        val mapper = AshleyMappers.getMapper<T>()
+        val mapper = AshleyMapperStore.getMapper<T>()
         return this.fixtureA.getEntity().has(mapper) &&
                 this.fixtureB.getEntity().has(mapper)
     }
@@ -159,20 +149,6 @@ fun Batch.drawScaled(
 
     drawScaled(textureRegion, x, y, scale, scale, rotation)
 
-}
-
-inline fun <reified T : Component> Entity.addComponent(block: T.() -> Unit = {}): T {
-    val c = component(block)
-    this.add(c)
-    return c
-}
-
-inline fun <reified T : Component> component(block: T.() -> Unit = {}): T {
-    return engine().createComponent(block)
-}
-
-inline fun <reified T : Component> Engine.createComponent(block: T.() -> Unit = {}): T {
-    return this.createComponent(T::class.java).apply(block)
 }
 
 fun Contact.thisIsAContactBetween(): ContactType {

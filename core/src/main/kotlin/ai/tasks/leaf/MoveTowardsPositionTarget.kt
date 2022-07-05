@@ -52,7 +52,7 @@ class MoveTowardsPositionTarget<T: PositionTarget>(private val run: Boolean = fa
         }
 
         val agentProps = entity.agentProps()
-        agentProps.speed = if (run) agentProps.rushSpeed else agentProps.baseSpeed
+        agentProps.speed = if (run) agentProps.rushSpeed else agentProps.baseProperties.speed
 
         val currentPosition = entity.transform().position
 

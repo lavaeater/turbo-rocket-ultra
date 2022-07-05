@@ -6,13 +6,13 @@ import eater.ecs.components.AgentProperties
 import ecs.components.enemy.EnemySpawnerComponent
 import eater.ecs.components.TransformComponent
 import factories.enemy
-import factories.factsOfTheWorld
 import ktx.ashley.allOf
 import ktx.math.random
 import ktx.math.vec2
 import physics.AshleyMappers
 import screens.CounterObject
 import eater.turbofacts.Factoids
+import eater.turbofacts.factsOfTheWorld
 
 class EnemySpawnSystem : IteratingSystem(allOf(EnemySpawnerComponent::class, TransformComponent::class).get()) {
     private val enemyCount get() = engine.getEntitiesFor(allOf(AgentProperties::class).get()).count()

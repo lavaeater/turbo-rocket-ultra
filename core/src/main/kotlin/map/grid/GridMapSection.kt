@@ -5,9 +5,9 @@ import box2dLight.RayHandler
 import com.badlogic.gdx.graphics.Color
 import com.badlogic.gdx.math.Rectangle
 import com.badlogic.gdx.math.Vector2
+import eater.core.world
 import ecs.components.graphics.renderables.RenderableTextureRegion
 import ecs.components.graphics.renderables.RenderableTextureRegions
-import factories.world
 import injection.Context.inject
 import ktx.box2d.Query
 import ktx.box2d.query

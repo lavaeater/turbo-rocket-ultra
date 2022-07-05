@@ -3,7 +3,6 @@ package factories
 import ai.Tree
 import ai.tasks.EntityComponentTask
 import ai.tasks.EntityTask
-import com.badlogic.ashley.core.Engine
 import com.badlogic.ashley.core.Entity
 import com.badlogic.gdx.ai.btree.BehaviorTree
 import com.badlogic.gdx.ai.btree.Task
@@ -15,13 +14,15 @@ import com.badlogic.gdx.math.MathUtils.degreesToRadians
 import com.badlogic.gdx.math.Vector2
 import com.badlogic.gdx.physics.box2d.Body
 import com.badlogic.gdx.physics.box2d.BodyDef
-import com.badlogic.gdx.physics.box2d.World
 import com.badlogic.gdx.scenes.scene2d.Action
 import data.Player
+import eater.core.engine
+import eater.core.world
 import eater.ecs.components.AgentProperties
+import eater.ecs.components.Box2d
 import eater.ecs.components.TransformComponent
+import eater.turbofacts.FactsLikeThatMan
 import ecs.components.AudioComponent
-import ecs.components.BodyComponent
 import ecs.components.ai.BehaviorComponent
 import ecs.components.enemy.*
 import ecs.components.fx.CreateEntityComponent
@@ -45,7 +46,6 @@ import ecs.systems.graphics.GameConstants.SHIP_LINEAR_DAMPING
 import features.pickups.*
 import features.weapons.AmmoType
 import features.weapons.WeaponDefinition
-import injection.Context.inject
 import input.ControlMapper
 import ktx.actors.plusAssign
 import ktx.actors.repeatForever
@@ -62,8 +62,6 @@ import ktx.scene2d.*
 import physics.*
 import screens.CounterObject
 import tru.*
-import eater.turbofacts.FactsLikeThatMan
-import eater.turbofacts.TurboFactsOfTheWorld
 import ui.getUiThing
 import kotlin.experimental.or
 
@@ -101,7 +99,7 @@ fun gibs(at: Vector2, gibAngle: Float = 1000f) {
             with<TransformComponent> {
                 position.set(at)
             }
-            with<BodyComponent> {
+            with<Box2d> {
                 body = gibBody
             }
             with<GibComponent> {
@@ -185,7 +183,7 @@ fun fireEntity(at: Vector2, linearVelocity: Vector2, player: Player) {
     box2dBody.applyLinearImpulse(linearVelocity.scl(box2dBody.mass), box2dBody.getWorldPoint(Vector2.X), true)
     box2dBody.userData = engine().entity {
         with<TransformComponent>()
-        with<BodyComponent> {
+        with<Box2d> {
             body = box2dBody
         }
         with<ParticleEffectComponent> {
@@ -225,7 +223,7 @@ fun tower(
     }
 
     val towerEntity = engine().entity {
-        with<BodyComponent> {
+        with<Box2d> {
             body = towerBody
         }
         with<TransformComponent>()
@@ -343,7 +341,7 @@ fun player(player: Player, mapper: ControlMapper, at: Vector2, debug: Boolean) {
             health = GameConstants.ENEMY_BASE_HEALTH
         }
         with<CameraFollowComponent>()
-        with<BodyComponent> { body = box2dBody }
+        with<Box2d> { body = box2dBody }
         with<TransformComponent>()
         with<AnimatedCharacterComponent> {
             anims = Assets.characters[player.selectedCharacterSpriteName]!!
@@ -468,7 +466,7 @@ fun randomLoot(at: Vector2, lootTable: LootTable) {
         }
     }
     val entity = engine().entity {
-        with<BodyComponent> { body = box2dBody }
+        with<Box2d> { body = box2dBody }
         with<TransformComponent> { position.set(box2dBody.position) }
         with<SpriteComponent> {
             sprite = Assets.lootBox
@@ -504,7 +502,7 @@ fun lootBox(at: Vector2, lootDrop: List<ILoot>) {
         }
     }
     val entity = engine().entity {
-        with<BodyComponent> { body = box2dBody }
+        with<Box2d> { body = box2dBody }
         with<TransformComponent> { position.set(box2dBody.position) }
         with<SpriteComponent> {
             sprite = Assets.lootBox
@@ -540,7 +538,7 @@ fun throwGrenade(
         }
     }
     val entity = engine().entity {
-        with<BodyComponent> { body = box2dBody }
+        with<Box2d> { body = box2dBody }
         with<GrenadeComponent> {
             this.player = player
         }
@@ -582,7 +580,7 @@ fun throwMolotov(
         }
     }
     val entity = engine().entity {
-        with<BodyComponent> { body = box2dBody }
+        with<Box2d> { body = box2dBody }
         with<MolotovComponent> {
             this.player = player
         }
@@ -622,7 +620,7 @@ fun bullet(at: Vector2, towards: Vector2, speed: Float, damage: Float, player: P
         }
     }
     val entity = engine().entity {
-        with<BodyComponent> { body = box2dBody }
+        with<Box2d> { body = box2dBody }
         with<BulletComponent> {
             this.damage = damage
             this.player = player
@@ -745,7 +743,7 @@ fun targetStation(
         }
     }
     val entity = engine().entity {
-        with<BodyComponent> { body = box2dBody }
+        with<Box2d> { body = box2dBody }
         with<TransformComponent> { position.set(box2dBody.position) }
         with<TargetComponent>()
         with<AttackableProperties>()
@@ -786,7 +784,7 @@ fun hackingStation(
         }
     }
     val entity = engine().entity {
-        with<BodyComponent> { body = box2dBody }
+        with<Box2d> { body = box2dBody }
         with<TransformComponent> { position.set(box2dBody.position) }
         with<HackingComponent>()
         with<ComplexActionComponent> {
@@ -888,7 +886,7 @@ private fun EngineEntity.withBasicEnemyStuff(
     isFlocking: Boolean = true,
     spriteScale: Float = 1f
 ) {
-    with<BodyComponent> { body = box2dBody }
+    with<Box2d> { body = box2dBody }
     with<TransformComponent> { position.set(box2dBody.position) }
     with<EnemySensorComponent>()
     with<AudioComponent>()
@@ -937,7 +935,7 @@ fun blockade(
         }
     }
     val entity = engine().entity {
-        with<BodyComponent> { body = box2dBody }
+        with<Box2d> { body = box2dBody }
         with<TransformComponent> { position.set(box2dBody.position) }
         with<BlockadeComponent>()
         with<ObstacleComponent>()
@@ -969,7 +967,7 @@ fun spawner(
         }
     }
     val entity = engine().entity {
-        with<BodyComponent> { body = box2dBody }
+        with<Box2d> { body = box2dBody }
         with<TransformComponent> { position.set(box2dBody.position) }
         with<ObstacleComponent>()
         with<SpriteComponent> {
@@ -1012,7 +1010,7 @@ fun objective(
     }
 
     val entity = engine().entity {
-        with<BodyComponent> { body = box2dBody }
+        with<Box2d> { body = box2dBody }
         with<TransformComponent> { position.set(box2dBody.position) }
         with<SpriteComponent> {
             sprite = Assets.towers["objective"]!!

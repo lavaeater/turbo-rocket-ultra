@@ -2,7 +2,7 @@ package story.conversation
 
 import com.bladecoder.ink.runtime.Story
 import data.IAgent
-import factories.factsOfTheWorld
+import eater.turbofacts.factsOfTheWorld
 
 class InkConversation(val story:Story, override val protagonist: IAgent, override val antagonist: IAgent) : IConversation {
   private val factsOfTheWorld by lazy { factsOfTheWorld() }

@@ -2,10 +2,10 @@ package ecs.systems.enemy
 
 import com.badlogic.ashley.core.Entity
 import com.badlogic.ashley.systems.IteratingSystem
-import ecs.components.BodyComponent
+import eater.core.world
+import eater.ecs.components.Box2d
 import ecs.components.fx.GibComponent
 import ecs.components.gameplay.DestroyComponent
-import factories.world
 import ktx.ashley.allOf
 import ktx.ashley.remove
 import physics.AshleyMappers
@@ -19,7 +19,7 @@ class GibSystem : IteratingSystem(allOf(GibComponent::class).get()) {
             if (AshleyMappers.body.has(entity)) {
                 val bodyComponent = AshleyMappers.body.get(entity)
                 world().destroyBody(bodyComponent.body!!)
-                entity.remove<BodyComponent>()
+                entity.remove<Box2d>()
             }
             gibComponent.coolDown = 60f
             gibComponent.hasStopped = true

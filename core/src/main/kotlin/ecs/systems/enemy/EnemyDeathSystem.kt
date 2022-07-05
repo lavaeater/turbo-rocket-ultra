@@ -8,7 +8,6 @@ import eater.ecs.components.AgentProperties
 import ecs.components.enemy.AttackableProperties
 import ecs.components.gameplay.DestroyComponent
 import ecs.components.player.PlayerControlComponent
-import factories.factsOfTheWorld
 import factories.gibs
 import factories.lootBox
 import ktx.ashley.allOf
@@ -16,6 +15,7 @@ import physics.*
 import tru.Assets
 import eater.turbofacts.Factoids
 import eater.turbofacts.TurboFactsOfTheWorld
+import eater.turbofacts.addToIntStat
 
 object FitnessTracker {
     val fitnessData = mutableListOf<FitnessData>()

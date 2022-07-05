@@ -3,7 +3,7 @@ package ecs.systems
 import com.badlogic.ashley.core.Entity
 import com.badlogic.ashley.systems.IteratingSystem
 import com.badlogic.gdx.physics.box2d.World
-import ecs.components.BodyComponent
+import eater.ecs.components.Box2d
 import ecs.components.gameplay.DestroyComponent
 import ktx.ashley.allOf
 import ktx.ashley.remove
@@ -21,7 +21,7 @@ class BodyDestroyerSystem(private val world: World) : IteratingSystem(
         if(AshleyMappers.body.has(entity)) {
             val bodyComponent = AshleyMappers.body.get(entity)
             world.destroyBody(bodyComponent.body)
-            entity.remove<BodyComponent>()
+            entity.remove<Box2d>()
         }
         if(AshleyMappers.bullet.has(entity)) {
             CounterObject.bulletCount--

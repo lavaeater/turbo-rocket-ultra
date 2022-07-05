@@ -1,12 +1,12 @@
 package story.conversation
 
 import data.IAgent
-import factories.factsOfTheWorld
+import eater.turbofacts.factsOfTheWorld
 
 class InlineConvo(override val protagonist: IAgent, override val antagonist: IAgent = EmptyAgent(), val antagonistLines: Map<Int, List<String>> = mapOf()) : IConversation {
 
   private var storyIndex = 0
-  val factsOfTheWorld by lazy { factsOfTheWorld()}
+  val factsOfTheWorld by lazy { factsOfTheWorld() }
 
   override val antagonistCanSpeak: Boolean
     get() = storyIndex >= 0 && storyIndex < antagonistLines.keys.count()

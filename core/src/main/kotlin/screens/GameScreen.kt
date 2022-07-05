@@ -25,7 +25,6 @@ import ecs.systems.input.KeyboardInputSystem
 import ecs.systems.player.GameOverSystem
 import factories.addUiThing
 import factories.enemy
-import factories.factsOfTheWorld
 import factories.player
 import gamestate.GameEvent
 import gamestate.GameState
@@ -44,6 +43,7 @@ import tru.Assets
 import eater.turbofacts.Factoids
 import eater.turbofacts.TurboFactsOfTheWorld
 import eater.turbofacts.TurboStoryManager
+import eater.turbofacts.factsOfTheWorld
 import ui.IUserInterface
 import kotlin.math.pow
 import kotlin.math.roundToInt

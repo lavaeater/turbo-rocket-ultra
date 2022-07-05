@@ -1,7 +1,7 @@
 package story.places
 
 import data.Player
-import factories.factsOfTheWorld
+import eater.turbofacts.factsOfTheWorld
 import gamestate.GameEvent
 import gamestate.GameState
 import injection.Context.inject

@@ -5,12 +5,12 @@ import com.badlogic.ashley.systems.IteratingSystem
 import com.badlogic.gdx.graphics.Color
 import com.badlogic.gdx.graphics.g2d.PolygonSpriteBatch
 import com.badlogic.gdx.physics.box2d.Fixture
+import eater.core.world
 import eater.ecs.components.TransformComponent
 import ecs.components.player.PlayerControlComponent
 import ecs.systems.tileWorldX
 import ecs.systems.tileWorldY
 import factories.blockade
-import factories.world
 import injection.Context.inject
 import ktx.ashley.allOf
 import ktx.box2d.KtxQueryCallback

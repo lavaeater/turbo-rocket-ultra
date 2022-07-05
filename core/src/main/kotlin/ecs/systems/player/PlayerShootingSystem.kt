@@ -5,6 +5,7 @@ import com.badlogic.ashley.core.Entity
 import com.badlogic.ashley.systems.IteratingSystem
 import com.badlogic.gdx.math.Polygon
 import com.badlogic.gdx.math.Vector2
+import eater.ai.canISeeYouFromHere
 import eater.ecs.components.AgentProperties
 import ecs.components.enemy.AttackableProperties
 import eater.ecs.components.TransformComponent
@@ -16,7 +17,6 @@ import factories.throwGrenade
 import factories.throwMolotov
 import features.weapons.Weapon
 import features.weapons.WeaponType
-import input.canISeeYouFromHere
 import ktx.ashley.allOf
 import ktx.math.random
 import ktx.math.vec2

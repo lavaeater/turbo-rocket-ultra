@@ -3,7 +3,7 @@ package ecs.systems
 import com.badlogic.ashley.core.Entity
 import com.badlogic.ashley.systems.IteratingSystem
 import com.badlogic.gdx.math.Vector2
-import ecs.components.BodyComponent
+import eater.ecs.components.Box2d
 import ecs.components.gameplay.GrenadeComponent
 import ecs.components.gameplay.MolotovComponent
 import eater.ecs.components.TransformComponent
@@ -17,7 +17,7 @@ import physics.ContactType
 import physics.has
 
 class PhysicsSystem(priority: Int) :
-    IteratingSystem(allOf(BodyComponent::class, TransformComponent::class).get(), priority) {
+    IteratingSystem(allOf(Box2d::class, TransformComponent::class).get(), priority) {
 
     val g = -10f //is y up or down?
     val contactManager by lazy { inject<ContactManager>()}

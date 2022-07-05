@@ -6,7 +6,7 @@ import com.badlogic.gdx.ai.btree.Task
 import com.badlogic.gdx.physics.box2d.Fixture
 import com.badlogic.gdx.physics.box2d.World
 import data.Players
-import ecs.components.BodyComponent
+import eater.ecs.components.Box2d
 import ecs.components.enemy.AttackableProperties
 import eater.ecs.components.TransformComponent
 import ecs.components.towers.Shoot
@@ -21,7 +21,7 @@ import ktx.math.random
 import ktx.math.vec2
 import physics.*
 
-class TowerShootSystem: IteratingSystem(allOf(Shoot::class, BodyComponent::class).get()) {
+class TowerShootSystem: IteratingSystem(allOf(Shoot::class, Box2d::class).get()) {
     private val world: World by lazy { Context.inject() }
 
     override fun processEntity(entity: Entity, deltaTime: Float) {

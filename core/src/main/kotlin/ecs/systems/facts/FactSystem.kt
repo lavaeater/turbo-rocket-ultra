@@ -3,10 +3,10 @@ package ecs.systems.facts
 import com.badlogic.ashley.systems.IntervalSystem
 import ecs.components.enemy.BossComponent
 import ecs.components.gameplay.ObjectiveComponent
-import factories.factsOfTheWorld
 import ktx.ashley.allOf
 import physics.getComponent
 import eater.turbofacts.Factoids
+import eater.turbofacts.factsOfTheWorld
 
 /***
  * Takes fact-setting rules and sets facts if these rules are indeed
