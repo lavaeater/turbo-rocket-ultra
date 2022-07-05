@@ -2,18 +2,17 @@ package ecs.systems.enemy
 
 import com.badlogic.ashley.core.Entity
 import com.badlogic.ashley.systems.IteratingSystem
-import ecs.components.enemy.AgentProperties
+import eater.ecs.components.AgentProperties
 import ecs.components.enemy.EnemySpawnerComponent
-import ecs.components.gameplay.TransformComponent
+import eater.ecs.components.TransformComponent
 import factories.enemy
 import factories.factsOfTheWorld
 import ktx.ashley.allOf
 import ktx.math.random
 import ktx.math.vec2
-import org.w3c.dom.css.Counter
 import physics.AshleyMappers
 import screens.CounterObject
-import turbofacts.Factoids
+import eater.turbofacts.Factoids
 
 class EnemySpawnSystem : IteratingSystem(allOf(EnemySpawnerComponent::class, TransformComponent::class).get()) {
     private val enemyCount get() = engine.getEntitiesFor(allOf(AgentProperties::class).get()).count()

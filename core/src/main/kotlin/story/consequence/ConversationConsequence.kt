@@ -7,8 +7,8 @@ import gamestate.GameState
 import injection.Context.inject
 import statemachine.StateMachine
 import story.conversation.ConversationManager
-import turbofacts.Factoid
-import turbofacts.TurboRule
+import eater.turbofacts.Factoid
+import eater.turbofacts.TurboRule
 
 class ConversationConsequence (
     val story: Story,

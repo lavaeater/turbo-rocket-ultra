@@ -1,6 +1,7 @@
 package ai.utility
 
 import com.badlogic.ashley.core.Entity
+import eater.ai.CanISeeThisConsideration
 import ecs.components.player.PlayerComponent
 
 object UtilityAiActions {

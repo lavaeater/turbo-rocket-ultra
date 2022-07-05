@@ -3,8 +3,8 @@ package ecs.systems.ai.towers
 import com.badlogic.ashley.core.Entity
 import com.badlogic.ashley.systems.IteratingSystem
 import com.badlogic.gdx.ai.btree.Task
-import ecs.components.enemy.AgentProperties
-import ecs.components.gameplay.TransformComponent
+import eater.ecs.components.AgentProperties
+import eater.ecs.components.TransformComponent
 import ecs.components.towers.FindTarget
 import ecs.components.towers.TargetInRange
 import ktx.ashley.allOf

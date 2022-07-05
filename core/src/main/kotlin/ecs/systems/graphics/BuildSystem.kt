@@ -5,7 +5,7 @@ import com.badlogic.ashley.systems.IteratingSystem
 import com.badlogic.gdx.graphics.Color
 import com.badlogic.gdx.graphics.g2d.PolygonSpriteBatch
 import com.badlogic.gdx.physics.box2d.Fixture
-import ecs.components.gameplay.TransformComponent
+import eater.ecs.components.TransformComponent
 import ecs.components.player.PlayerControlComponent
 import ecs.systems.tileWorldX
 import ecs.systems.tileWorldY

@@ -2,7 +2,7 @@ package ecs.systems.player
 
 import com.badlogic.ashley.core.Entity
 import com.badlogic.ashley.systems.IteratingSystem
-import ecs.components.gameplay.TransformComponent
+import eater.ecs.components.TransformComponent
 import ecs.components.player.PlayerControlComponent
 import ecs.components.player.WeaponComponent
 import ecs.components.player.WeaponLaserComponent

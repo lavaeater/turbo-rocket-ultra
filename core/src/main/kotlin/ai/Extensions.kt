@@ -11,7 +11,7 @@ import com.badlogic.gdx.ai.btree.decorator.AlwaysSucceed
 import com.badlogic.gdx.ai.btree.decorator.Invert
 import com.badlogic.gdx.math.Vector2
 import com.badlogic.gdx.utils.Queue
-import ecs.components.enemy.AgentProperties
+import eater.ecs.components.AgentProperties
 import ecs.systems.enemy.stateBooleanFact
 import factories.world
 import injection.Context
@@ -24,7 +24,7 @@ import map.grid.GridMapManager
 import physics.getEntity
 import physics.hasObstacle
 import physics.isEntity
-import turbofacts.TurboFactsOfTheWorld
+import eater.turbofacts.TurboFactsOfTheWorld
 
 fun progressPath(enemyComponent: AgentProperties, currentPosition: Vector2): Boolean {
     if (enemyComponent.needsNewNextPosition && !enemyComponent.path.isEmpty) {

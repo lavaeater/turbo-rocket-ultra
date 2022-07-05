@@ -3,7 +3,7 @@ package ecs.systems.graphics
 import com.badlogic.ashley.core.Entity
 import com.badlogic.ashley.systems.SortedIteratingSystem
 import com.badlogic.gdx.graphics.OrthographicCamera
-import ecs.components.gameplay.TransformComponent
+import eater.ecs.components.TransformComponent
 import ecs.components.graphics.MiniMapComponent
 import ecs.components.graphics.RenderableComponent
 import ecs.components.graphics.Shape

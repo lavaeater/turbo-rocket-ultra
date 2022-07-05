@@ -6,7 +6,7 @@ import com.badlogic.gdx.math.Vector2
 import ecs.components.BodyComponent
 import ecs.components.gameplay.GrenadeComponent
 import ecs.components.gameplay.MolotovComponent
-import ecs.components.gameplay.TransformComponent
+import eater.ecs.components.TransformComponent
 import injection.Context.inject
 import ktx.ashley.allOf
 import ktx.math.vec2

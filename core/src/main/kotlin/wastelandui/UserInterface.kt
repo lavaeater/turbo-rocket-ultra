@@ -17,8 +17,8 @@ import ktx.scene2d.table
 import statemachine.StateMachine
 import story.conversation.IConversation
 import tru.Assets
-import turbofacts.Factoids
-import turbofacts.TurboFactsOfTheWorld
+import eater.turbofacts.Factoids
+import eater.turbofacts.TurboFactsOfTheWorld
 
 class UserInterface(
     private val batch: Batch,

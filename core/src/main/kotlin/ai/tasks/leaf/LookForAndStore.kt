@@ -8,14 +8,13 @@ import com.badlogic.gdx.ai.btree.Task
 import com.badlogic.gdx.math.Vector2
 import com.badlogic.gdx.physics.box2d.Fixture
 import ecs.components.ai.PositionStorageComponent
-import ecs.components.gameplay.TransformComponent
+import eater.ecs.components.TransformComponent
 import factories.world
 import input.canISeeYouFromHere
 import ktx.ashley.allOf
 import ktx.box2d.RayCast
 import ktx.box2d.rayCast
 import ktx.log.debug
-import ktx.log.info
 import ktx.math.vec2
 import physics.agentProps
 import physics.getEntity

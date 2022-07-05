@@ -13,12 +13,11 @@ import com.badlogic.gdx.utils.viewport.Viewport
 import com.crashinvaders.vfx.VfxManager
 import com.crashinvaders.vfx.effects.ChainVfxEffect
 import ecs.components.ai.Path
-import ecs.components.ai.PositionTarget
 import ecs.components.ai.SeenPlayerPositions
 import ecs.components.ai.Waypoint
-import ecs.components.enemy.AgentProperties
+import eater.ecs.components.AgentProperties
 import ecs.components.gameplay.DestroyComponent
-import ecs.components.gameplay.TransformComponent
+import eater.ecs.components.TransformComponent
 import ecs.components.graphics.RenderableComponent
 import ecs.components.player.PlayerComponent
 import ecs.systems.graphics.GameConstants.SCALE

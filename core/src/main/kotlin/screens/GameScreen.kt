@@ -41,9 +41,9 @@ import map.snake.randomPoint
 import physics.*
 import statemachine.StateMachine
 import tru.Assets
-import turbofacts.Factoids
-import turbofacts.TurboFactsOfTheWorld
-import turbofacts.TurboStoryManager
+import eater.turbofacts.Factoids
+import eater.turbofacts.TurboFactsOfTheWorld
+import eater.turbofacts.TurboStoryManager
 import ui.IUserInterface
 import kotlin.math.pow
 import kotlin.math.roundToInt

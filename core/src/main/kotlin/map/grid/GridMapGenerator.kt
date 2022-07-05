@@ -18,9 +18,9 @@ import map.snake.MapDirection
 import map.snake.random
 import map.snake.randomPoint
 import screens.CounterObject
-import turbofacts.Factoids
-import turbofacts.StoryHelper
-import turbofacts.TurboStoryManager
+import eater.turbofacts.Factoids
+import eater.turbofacts.StoryHelper
+import eater.turbofacts.TurboStoryManager
 
 class GridMapGenerator {
     companion object {

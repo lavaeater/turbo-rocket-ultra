@@ -3,7 +3,7 @@ package ecs.systems
 import com.badlogic.ashley.core.Entity
 import com.badlogic.ashley.systems.IteratingSystem
 import ecs.components.gameplay.AnchorPointsComponent
-import ecs.components.gameplay.TransformComponent
+import eater.ecs.components.TransformComponent
 import ktx.ashley.allOf
 import ktx.math.vec2
 import physics.anchors

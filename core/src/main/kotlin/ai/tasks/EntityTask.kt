@@ -8,7 +8,7 @@ import factories.factsOfTheWorld
 import injection.Context.inject
 import space.earlygrey.shapedrawer.ShapeDrawer
 import tru.Assets
-import turbofacts.TurboFactsOfTheWorld
+import eater.turbofacts.TurboFactsOfTheWorld
 
 abstract class EntityTask : LeafTask<Entity>() {
     @delegate: Transient

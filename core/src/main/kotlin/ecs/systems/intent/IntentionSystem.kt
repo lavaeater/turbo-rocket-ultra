@@ -2,7 +2,7 @@ package ecs.systems.intent
 
 import com.badlogic.ashley.core.Entity
 import com.badlogic.ashley.systems.IteratingSystem
-import ecs.components.gameplay.TransformComponent
+import eater.ecs.components.TransformComponent
 import ecs.components.graphics.RenderableComponent
 import ecs.components.graphics.RenderableType
 import ecs.components.graphics.SpriteComponent

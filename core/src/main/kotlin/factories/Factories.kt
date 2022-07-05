@@ -18,6 +18,8 @@ import com.badlogic.gdx.physics.box2d.BodyDef
 import com.badlogic.gdx.physics.box2d.World
 import com.badlogic.gdx.scenes.scene2d.Action
 import data.Player
+import eater.ecs.components.AgentProperties
+import eater.ecs.components.TransformComponent
 import ecs.components.AudioComponent
 import ecs.components.BodyComponent
 import ecs.components.ai.BehaviorComponent
@@ -60,8 +62,8 @@ import ktx.scene2d.*
 import physics.*
 import screens.CounterObject
 import tru.*
-import turbofacts.FactsLikeThatMan
-import turbofacts.TurboFactsOfTheWorld
+import eater.turbofacts.FactsLikeThatMan
+import eater.turbofacts.TurboFactsOfTheWorld
 import ui.getUiThing
 import kotlin.experimental.or
 

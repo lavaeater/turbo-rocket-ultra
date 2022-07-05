@@ -7,9 +7,8 @@ import com.badlogic.gdx.physics.box2d.Fixture
 import com.badlogic.gdx.physics.box2d.World
 import data.Players
 import ecs.components.BodyComponent
-import ecs.components.enemy.AgentProperties
 import ecs.components.enemy.AttackableProperties
-import ecs.components.gameplay.TransformComponent
+import eater.ecs.components.TransformComponent
 import ecs.components.towers.Shoot
 import ecs.components.towers.TargetInRange
 import factories.splatterEntity

@@ -1,7 +1,7 @@
 package screens
 
 import factories.factsOfTheWorld
-import turbofacts.Factoids
+import eater.turbofacts.Factoids
 
 object CounterObject {
     val factsOfTheWorld by lazy { factsOfTheWorld() }

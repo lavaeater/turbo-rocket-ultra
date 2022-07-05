@@ -15,7 +15,7 @@ import ktx.log.debug
 import screens.*
 import statemachine.StateMachine
 import tru.Assets
-import turbofacts.Factoids
+import eater.turbofacts.Factoids
 
 class MainGame : KtxGame<KtxScreen>(), DisposableRegistry by DisposableContainer() {
 

@@ -1,7 +1,7 @@
 package story.consequence
 
-import turbofacts.Factoid
-import turbofacts.TurboRule
+import eater.turbofacts.Factoid
+import eater.turbofacts.TurboRule
 
 
 interface Consequence {

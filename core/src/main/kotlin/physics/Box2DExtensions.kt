@@ -11,10 +11,9 @@ import com.badlogic.gdx.physics.box2d.Body
 import com.badlogic.gdx.physics.box2d.Contact
 import com.badlogic.gdx.physics.box2d.Fixture
 import data.Player
-import ecs.components.BodyComponent
 import ecs.components.VehicleComponent
 import ecs.components.VehicleControlComponent
-import ecs.components.enemy.AgentProperties
+import eater.ecs.components.AgentProperties
 import ecs.components.enemy.EnemySensorComponent
 import ecs.components.enemy.TackleComponent
 import ecs.components.gameplay.*
@@ -27,47 +26,8 @@ import factories.engine
 import ktx.ashley.has
 import ktx.math.times
 
-
-fun Body.rightNormal(): Vector2 {
-    return this.getWorldVector(Vector2.X)
-}
-
-fun Body.lateralVelocity(): Vector2 {
-    val rightNormal = this.rightNormal()
-    return rightNormal * this.linearVelocity.dot(rightNormal)
-}
-
-fun Body.forwardNormal(): Vector2 {
-    return this.getWorldVector(Vector2.Y)
-}
-
-fun Body.forwardVelocity(): Vector2 {
-    val forwardNormal = this.forwardNormal()
-    return forwardNormal * this.linearVelocity.dot(forwardNormal)
-}
-
-fun Entity.body(): Body {
-    return getComponent<BodyComponent>().body!!
-}
-
-fun Entity.vehicleControlComponent(): VehicleControlComponent {
-    return this.getComponent()
-}
-
 fun Entity.playerControlComponent(): PlayerControlComponent {
     return this.getComponent()
-}
-
-fun Entity.vehicle(): VehicleComponent {
-    return this.getComponent()
-}
-
-fun Contact.eitherIsEntity(): Boolean {
-    return this.fixtureA.body.userData is Entity || this.fixtureB.body.userData is Entity
-}
-
-fun Contact.bothAreEntities(): Boolean {
-    return this.fixtureA.body.userData is Entity && this.fixtureB.body.userData is Entity
 }
 
 fun Body.isEnemy(): Boolean {
@@ -90,24 +50,12 @@ fun Fixture.isPlayer(): Boolean {
     return this.body.userData is Entity && (this.body.isPlayer())
 }
 
-fun Fixture.isEntity(): Boolean {
-    return this.body.userData is Entity
-}
-
-fun Fixture.getEntity(): Entity {
-    return this.body.userData as Entity
-}
-
 inline fun <reified T : Component> Entity.has(): Boolean {
     return AshleyMappers.getMapper<T>().has(this)
 }
 
 inline fun <reified T : Component> Entity.getComponent(): T {
     return AshleyMappers.getMapper<T>().get(this)
-}
-
-fun Contact.noSensors() : Boolean {
-    return !this.fixtureA.isSensor && !this.fixtureB.isSensor
 }
 
 inline fun <reified T : Component> Contact.atLeastOneHas(): Boolean {

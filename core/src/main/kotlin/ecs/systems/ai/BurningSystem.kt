@@ -2,7 +2,6 @@ package ecs.systems.ai
 
 import com.badlogic.ashley.core.Entity
 import com.badlogic.ashley.systems.IteratingSystem
-import ecs.components.enemy.AgentProperties
 import ecs.components.enemy.AttackableProperties
 import ecs.components.fx.ParticleEffectComponent
 import ecs.components.gameplay.BurningComponent

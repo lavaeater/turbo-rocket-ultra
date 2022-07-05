@@ -6,10 +6,10 @@ import com.badlogic.gdx.graphics.Color
 import com.badlogic.gdx.math.Vector2
 import com.badlogic.gdx.physics.box2d.Body
 import ecs.components.BodyComponent
-import ecs.components.enemy.AgentProperties
+import eater.ecs.components.AgentProperties
 import ecs.components.enemy.AttackableProperties
 import ecs.components.gameplay.ObstacleComponent
-import ecs.components.gameplay.TransformComponent
+import eater.ecs.components.TransformComponent
 import ktx.ashley.allOf
 import ktx.math.vec2
 import physics.*

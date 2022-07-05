@@ -4,7 +4,7 @@ import com.badlogic.ashley.core.Entity
 import com.badlogic.ashley.systems.IteratingSystem
 import com.badlogic.gdx.math.Circle
 import ecs.components.ai.NoticedSomething
-import ecs.components.enemy.AgentProperties
+import eater.ecs.components.AgentProperties
 import ecs.components.player.FiredShotsComponent
 import ktx.ashley.allOf
 import physics.AshleyMappers

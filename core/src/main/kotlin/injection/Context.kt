@@ -47,8 +47,8 @@ import map.grid.GridMapManager
 import messaging.Message
 import messaging.MessageHandler
 import physics.ContactManager
-import turbofacts.TurboFactsOfTheWorld
-import turbofacts.TurboStoryManager
+import eater.turbofacts.TurboFactsOfTheWorld
+import eater.turbofacts.TurboStoryManager
 import ui.Hud
 import ui.IUserInterface
 

@@ -8,11 +8,12 @@ import com.badlogic.gdx.physics.box2d.Contact
 import com.badlogic.gdx.physics.box2d.ContactImpulse
 import com.badlogic.gdx.physics.box2d.ContactListener
 import com.badlogic.gdx.physics.box2d.Manifold
+import eater.ecs.components.TransformComponent
 import ecs.components.AudioChannels
 import ecs.components.BodyComponent
 import ecs.components.ai.AttackPoint
 import ecs.components.ai.CollidedWithObstacle
-import ecs.components.enemy.AgentProperties
+import eater.ecs.components.AgentProperties
 import ecs.components.enemy.AttackableProperties
 import ecs.components.fx.ParticleEffectComponent
 import ecs.components.gameplay.*

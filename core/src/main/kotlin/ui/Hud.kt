@@ -29,7 +29,7 @@ import messaging.Message
 import messaging.MessageHandler
 import messaging.MessageReceiver
 import physics.*
-import turbofacts.Factoids
+import eater.turbofacts.Factoids
 import ui.customactors.boundLabel
 import ui.customactors.boundProgressBar
 import ui.customactors.repeatingTexture

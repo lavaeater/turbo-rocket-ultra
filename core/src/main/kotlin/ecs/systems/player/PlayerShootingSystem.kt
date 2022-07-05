@@ -5,9 +5,9 @@ import com.badlogic.ashley.core.Entity
 import com.badlogic.ashley.systems.IteratingSystem
 import com.badlogic.gdx.math.Polygon
 import com.badlogic.gdx.math.Vector2
-import ecs.components.enemy.AgentProperties
+import eater.ecs.components.AgentProperties
 import ecs.components.enemy.AttackableProperties
-import ecs.components.gameplay.TransformComponent
+import eater.ecs.components.TransformComponent
 import ecs.components.intent.IntendsTo
 import ecs.components.player.PlayerControlComponent
 import ecs.components.player.WeaponEntityComponent

@@ -6,7 +6,7 @@ import ecs.components.gameplay.ObjectiveComponent
 import factories.factsOfTheWorld
 import ktx.ashley.allOf
 import physics.getComponent
-import turbofacts.Factoids
+import eater.turbofacts.Factoids
 
 /***
  * Takes fact-setting rules and sets facts if these rules are indeed

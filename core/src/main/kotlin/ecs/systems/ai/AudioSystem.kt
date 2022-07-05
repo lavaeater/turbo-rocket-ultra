@@ -5,7 +5,7 @@ import com.badlogic.ashley.core.Entity
 import com.badlogic.ashley.systems.IteratingSystem
 import com.badlogic.gdx.graphics.OrthographicCamera
 import ecs.components.AudioComponent
-import ecs.components.gameplay.TransformComponent
+import eater.ecs.components.TransformComponent
 import injection.Context.inject
 import ktx.ashley.allOf
 import ktx.math.random

@@ -4,8 +4,10 @@ import com.badlogic.ashley.core.Component
 import com.badlogic.ashley.core.ComponentMapper
 import com.badlogic.ashley.core.Entity
 import com.badlogic.gdx.math.Vector2
+import eater.ecs.components.AgentProperties
+import eater.ecs.components.Box2d
+import eater.ecs.components.TransformComponent
 import ecs.components.AudioComponent
-import ecs.components.BodyComponent
 import ecs.components.ai.BehaviorComponent
 import ecs.components.ai.CollidedWithObstacle
 import ecs.components.ai.NoticedSomething
@@ -37,8 +39,7 @@ object AshleyMappers {
     val audio = mapperFor<AudioComponent>()
     val hacking = mapperFor<HackingComponent>()
     val destroyAfterCooldown = mapperFor<DestroyAfterCoolDownComponent>()
-    val body = mapperFor<BodyComponent>()
-    val mappers = mutableMapOf<KType, ComponentMapper<*>>()
+    val body = mapperFor<Box2d>()
     val transform = mapperFor<TransformComponent>()
     val perimeter = mapperFor<PerimeterObjectiveComponent>()
     val behavior = mapperFor<BehaviorComponent>()
