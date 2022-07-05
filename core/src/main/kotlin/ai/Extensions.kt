@@ -11,9 +11,8 @@ import com.badlogic.gdx.ai.btree.decorator.AlwaysSucceed
 import com.badlogic.gdx.ai.btree.decorator.Invert
 import com.badlogic.gdx.math.Vector2
 import com.badlogic.gdx.utils.Queue
+import eater.core.world
 import eater.ecs.components.AgentProperties
-import ecs.systems.enemy.stateBooleanFact
-import factories.world
 import injection.Context
 import ktx.box2d.Query
 import ktx.box2d.query
@@ -25,6 +24,7 @@ import physics.getEntity
 import physics.hasObstacle
 import physics.isEntity
 import eater.turbofacts.TurboFactsOfTheWorld
+import eater.turbofacts.stateBooleanFact
 
 fun progressPath(enemyComponent: AgentProperties, currentPosition: Vector2): Boolean {
     if (enemyComponent.needsNewNextPosition && !enemyComponent.path.isEmpty) {

@@ -3,12 +3,10 @@ package ai.tasks
 import com.badlogic.ashley.core.Engine
 import com.badlogic.ashley.core.Entity
 import com.badlogic.gdx.ai.btree.LeafTask
-import factories.engine
-import factories.factsOfTheWorld
-import injection.Context.inject
-import space.earlygrey.shapedrawer.ShapeDrawer
+import eater.core.engine
 import tru.Assets
 import eater.turbofacts.TurboFactsOfTheWorld
+import eater.turbofacts.factsOfTheWorld
 
 abstract class EntityTask : LeafTask<Entity>() {
     @delegate: Transient
