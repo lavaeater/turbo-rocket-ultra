@@ -17,6 +17,9 @@ import com.crashinvaders.vfx.effects.CrtEffect
 import com.crashinvaders.vfx.effects.OldTvEffect
 import com.strongjoshua.console.CommandExecutor
 import com.strongjoshua.console.GUIConsole
+import eater.injection.InjectionContext
+import eater.messaging.IMessage
+import eater.messaging.IMessageReceiver
 import ecs.systems.AnchorPointTransformationSystem
 import ecs.systems.BodyDestroyerSystem
 import ecs.systems.CharacterWalkAndShootDirectionSystem
@@ -45,7 +48,7 @@ import ktx.inject.Context
 import ktx.inject.register
 import map.grid.GridMapManager
 import messaging.Message
-import messaging.MessageHandler
+import eater.messaging.MessageHandler
 import physics.ContactManager
 import eater.turbofacts.TurboFactsOfTheWorld
 import eater.turbofacts.TurboStoryManager
@@ -88,7 +91,21 @@ object Context {
             bindSingleton(GridMapManager())
             bindSingleton(RayHandler(inject(), 500, 500))
             bindSingleton(MessageHandler())
-            bindSingleton(TurboStoryManager())
+            bindSingleton(TurboStoryManager().apply {
+                inject<MessageHandler>().apply {
+                    this.addReceiver(object : IMessageReceiver {
+                        override val messageTypes = setOf(Message.FactUpdated::class)
+
+                        override fun receiveMessage(message: IMessage) {
+                            when (message) {
+                                is Message.FactUpdated -> needsChecking = true
+                                else -> {}
+                            }
+                        }
+
+                    })
+                }
+            })
             bindSingleton(TurboFactsOfTheWorld { key -> inject<MessageHandler>().sendMessage(Message.FactUpdated(key)) })
             bindSingleton(getEngine())
             bindSingleton(listOf(BloomEffect(), CrtEffect(), OldTvEffect()))

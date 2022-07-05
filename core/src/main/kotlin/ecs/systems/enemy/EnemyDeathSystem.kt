@@ -82,15 +82,3 @@ class EnemyDeathSystem(
         }
     }
 }
-
-fun multiKey(vararg key: String): String {
-    return key.joinToString(".")
-}
-
-fun stateBooleanFact(toSet: Boolean, vararg key: String): Boolean {
-    return factsOfTheWorld().setBooleanFact(toSet, *key).value
-}
-
-fun addToIntStat(toAdd: Int, vararg key: String): Int {
-    return factsOfTheWorld().addToInt(toAdd, *key)
-}

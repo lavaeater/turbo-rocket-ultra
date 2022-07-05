@@ -8,7 +8,7 @@ import ecs.components.player.PlayerComponent
 import injection.Context.inject
 import ktx.ashley.allOf
 import messaging.Message
-import messaging.MessageHandler
+import eater.messaging.MessageHandler
 import physics.light
 import physics.objective
 import physics.perimeter

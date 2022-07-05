@@ -68,18 +68,6 @@ import ui.getUiThing
 import kotlin.experimental.or
 
 
-fun world(): World {
-    return inject()
-}
-
-fun engine(): Engine {
-    return inject()
-}
-
-fun factsOfTheWorld(): TurboFactsOfTheWorld {
-    return inject()
-}
-
 fun enemy(x: Float = 0f, y: Float = 0f) {
     enemy(vec2(x, y))
 }

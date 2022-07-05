@@ -34,7 +34,7 @@ import ktx.scene2d.image
 import ktx.scene2d.label
 import ktx.scene2d.table
 import messaging.Message
-import messaging.MessageHandler
+import eater.messaging.MessageHandler
 import screens.CounterObject
 import tru.Assets
 import kotlin.math.pow
