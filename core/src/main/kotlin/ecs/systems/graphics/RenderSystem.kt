@@ -21,6 +21,7 @@ import eater.injection.InjectionContext.Companion.inject
 import eater.physics.addComponent
 import eater.physics.getComponent
 import eater.physics.has
+import ecs.components.ai.behavior.AmbleStateComponent
 import ecs.components.graphics.RenderableComponent
 import ecs.components.player.PlayerComponent
 import ecs.systems.graphics.GameConstants.SCALE
@@ -35,9 +36,9 @@ class RenderSystem(
     private val debug: Boolean,
     private val rayHandler: RayHandler,
     private val camera: OrthographicCamera,
-    private val enemyDebug: Boolean,
+    var enemyDebug: Boolean,
     priority: Int,
-    private val playerDebug: Boolean
+    var playerDebug: Boolean
 ) : SortedIteratingSystem(
     allOf(
         RenderableComponent::class,
@@ -196,6 +197,28 @@ class RenderSystem(
             previous.set(nextPosition)
             val actualPath = entity.getComponent<Path>()
             for ((i, node) in actualPath.queue.withIndex()) {
+                shapeDrawer.line(previous, node, lineColor, 0.1f)
+                when (i) {
+                    0 -> {
+                        shapeDrawer.filledCircle(node, GameConstants.TOUCHING_DISTANCE, pathNodeColor)
+                    }
+                    ec.path.size - 1 -> {
+                        shapeDrawer.filledCircle(node, GameConstants.TOUCHING_DISTANCE, pathNodeColor)
+                    }
+                    else -> {
+                        shapeDrawer.filledCircle(node, GameConstants.TOUCHING_DISTANCE, pathNodeColor)
+                    }
+                }
+                previous.set(node)
+            }
+        } else if(AmbleStateComponent.has(entity)) {
+            val state = AmbleStateComponent.get(entity)
+            val previous = entity.transform().position.cpy()
+            val nextPosition = if(state.wayPoint != null) state.wayPoint else previous
+            shapeDrawer.line(previous, nextPosition, Color.BLUE, 0.1f)
+            shapeDrawer.filledCircle(nextPosition, GameConstants.TOUCHING_DISTANCE, pathNodeColor)
+            previous.set(nextPosition)
+            for ((i, node) in state.queue.withIndex()) {
                 shapeDrawer.line(previous, node, lineColor, 0.1f)
                 when (i) {
                     0 -> {

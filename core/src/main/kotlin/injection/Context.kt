@@ -141,7 +141,7 @@ object Context : InjectionContext() {
                     false,
                     inject(),
                     inject(),
-                    false,
+                    true,
                     1,
                     false
                 )

@@ -89,17 +89,17 @@ class EnemyMovementSystem(private val flocking: Boolean) : IteratingSystem(
     private fun avoidObstacles(enemyPosition: Vector2) {
         val avoid = vec2()
         var count = 0
-        for(obstacle in allObstacles) {
+        for (obstacle in allObstacles) {
             val position = obstacle.transform().position
             val distance = position.dst(enemyPosition)
-            if(distance < 5f) {
+            if (distance < 5f) {
                 //The closer we get, the more we avoid the obstacle!
                 avoid.x += position.x - enemyPosition.x
                 avoid.y += position.y - enemyPosition.y
                 count++
             }
         }
-        if(count > 0) {
+        if (count > 0) {
             avoid.x /= count
             avoid.y /= count
             avoid.x *= -1
@@ -112,13 +112,12 @@ class EnemyMovementSystem(private val flocking: Boolean) : IteratingSystem(
     private val circleColor = Color(1f, 0f, 0f, 0.1f)
 
     private fun moveEnemy(enemyComponent: AgentProperties, bodyComponent: Box2d) {
-        //.
         actualDirectionVector.set(enemyComponent.directionVector)
-        if(flocking)
+        if (flocking)
             actualDirectionVector.add(cohesion.scl(.3f)).add(separation.scl(0.7f))
-            .add(alignment.scl(.5f))
+                .add(alignment.scl(.5f))
         actualDirectionVector.add(obstacleAvoidance.scl(.8f)).nor()
-        bodyComponent.body!!.linearVelocity = actualDirectionVector.scl(enemyComponent.speed)
+        bodyComponent.body.linearVelocity = actualDirectionVector.scl(enemyComponent.speed)
     }
 
     private fun handleObstacles(enemyComponent: AgentProperties, bodyComponent: Box2d) {

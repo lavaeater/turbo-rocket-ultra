@@ -95,7 +95,8 @@ class SetupScreen(gameState: StateMachine<GameState, GameEvent>) : BasicScreen(g
         aStage.actors {
             table {
                 boundLabel({ currentKeyMap.toString() })
-                setPosition(50f, 550f)
+                boundLabel({mapNames.selectedItem})
+                setPosition(450f, 350f)
                 pack()
             }
         }

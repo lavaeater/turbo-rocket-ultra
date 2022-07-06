@@ -82,7 +82,6 @@ class GameScreen(private val gameState: StateMachine<GameState, GameEvent>) : Kt
                 system.setProcessing(true)
             }
             generateMap(CounterObject.currentLevel)
-            //addPlayers()
 
             if (Players.players.keys.any { it.isKeyboard }) {
                 engine.getSystem<KeyboardInputSystem>().setProcessing(true)
@@ -204,7 +203,6 @@ class GameScreen(private val gameState: StateMachine<GameState, GameEvent>) : Kt
 
                     }
                 }
-                addUiThing(enemy, enemy.behavior())
                 player.entity = enemy
                 player.body = enemy.body()
             } else
