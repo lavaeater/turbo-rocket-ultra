@@ -1,6 +1,7 @@
 package factories
 
 import ai.Tree
+import ai.behaviors.EnemyBehaviors
 import ai.tasks.EntityComponentTask
 import ai.tasks.EntityTask
 import com.badlogic.ashley.core.Entity
@@ -16,6 +17,7 @@ import com.badlogic.gdx.physics.box2d.Body
 import com.badlogic.gdx.physics.box2d.BodyDef
 import com.badlogic.gdx.scenes.scene2d.Action
 import data.Player
+import eater.ai.AiComponent
 import eater.core.engine
 import eater.core.world
 import eater.ecs.components.AgentProperties
@@ -639,8 +641,7 @@ fun bullet(at: Vector2, towards: Vector2, speed: Float, damage: Float, player: P
     CounterObject.bulletCount++
 }
 
-fun enemy(at: Vector2, init: EngineEntity.() -> Unit = {}): Entity {
-
+fun newEnemy(at:Vector2, init: EngineEntity.() -> Unit = {}): Entity {
     val box2dBody = bodyForSprite(
         at,
         Box2dCategories.enemies,
@@ -650,7 +651,6 @@ fun enemy(at: Vector2, init: EngineEntity.() -> Unit = {}): Entity {
         Box2dCategories.enemies,
         Box2dCategories.players
     )
-    lateinit var bt: BehaviorComponent
     val entity = engine().entity {
         withBasicEnemyStuff(box2dBody, Assets.enemies.values.random())
         with<LootDropComponent> {
@@ -665,7 +665,43 @@ fun enemy(at: Vector2, init: EngineEntity.() -> Unit = {}): Entity {
             )
             lootTable.count = (1..5).random()
         }
-        bt = with {
+        with<AiComponent> {
+            actions.add(EnemyBehaviors.ambleAction)
+        }
+        init(this)
+    }
+
+    box2dBody.userData = entity
+    CounterObject.enemyCount++
+    return entity
+}
+
+fun enemy(at: Vector2, init: EngineEntity.() -> Unit = {}): Entity {
+
+    val box2dBody = bodyForSprite(
+        at,
+        Box2dCategories.enemies,
+        Box2dCategories.whatEnemiesHit,
+        Box2dCategories.enemies,
+        Box2dCategories.bullets,
+        Box2dCategories.enemies,
+        Box2dCategories.players
+    )
+    val entity = engine().entity {
+        withBasicEnemyStuff(box2dBody, Assets.enemies.values.random())
+        with<LootDropComponent> {
+            WeaponDefinition.weapons.forEach { lootTable.contents.add(WeaponLoot(it, 5f)) }
+            lootTable.contents.add(AmmoLoot(AmmoType.NineMilliMeters, 17..51, 10f))
+            lootTable.contents.add(AmmoLoot(AmmoType.FnP90Ammo, 25..75, 10f))
+            lootTable.contents.add(AmmoLoot(AmmoType.TwelveGaugeShotgun, 4..18, 10f))
+            lootTable.contents.add(AmmoLoot(AmmoType.Molotov, 1..2, 10f))
+            lootTable.contents.add(AmmoLoot(AmmoType.Grenade, 1..2, 10f))
+            lootTable.contents.add(
+                NullValue(200f)
+            )
+            lootTable.count = (1..5).random()
+        }
+        with<BehaviorComponent> {
             tree = Tree.nowWithAttacks().apply {
                 `object` = this@entity.entity
             }

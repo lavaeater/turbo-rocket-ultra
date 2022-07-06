@@ -2,44 +2,15 @@ package ai.behaviors
 
 import ai.pathfinding.TileGraph
 import ai.tasks.leaf.SectionFindingMethods
-import com.badlogic.ashley.core.Component
 import com.badlogic.ashley.core.Entity
-import com.badlogic.gdx.math.Vector2
-import com.badlogic.gdx.utils.Pool.Poolable
 import eater.ai.Consideration
 import eater.ai.ConsideredActionWithState
-import ecs.components.ai.Path
+import ecs.components.ai.behavior.AmbleStateComponent
 import ecs.systems.sectionX
 import ecs.systems.sectionY
-import map.grid.Coordinate
 import physics.agentProps
 import physics.attackables
 import physics.transform
-
-class AmbleStateComponent : Component, Poolable {
-
-    var endpointCoordinate: Coordinate? = null
-    var path: Path? = null
-    var targetPosition: Vector2? = null
-
-    sealed class AmbleState(val name: String) {
-        object NotStarted : AmbleState("Not started")
-        object FindingTargetCoordinate : AmbleState("Looking For Endpoint")
-        object FindingPathToTarget : AmbleState("Finding Path")
-        object MoveToNextStepOnPath : AmbleState("Finding Path")
-    }
-
-    var state: AmbleState = AmbleState.NotStarted
-
-
-    override fun reset() {
-        endpointCoordinate = null
-        path = null
-        targetPosition = null
-        state = AmbleState.NotStarted
-    }
-
-}
 
 object EnemyBehaviors {
 

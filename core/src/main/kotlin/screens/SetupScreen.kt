@@ -277,14 +277,6 @@ class SetupScreen(gameState: StateMachine<GameState, GameEvent>) : BasicScreen(g
 
 
     private fun startGameWithAi(): Boolean {
-
-        /*
-        I know, cheat.
-
-        Create a player but with an enemy as a basis. Set a flag or some shit, then the game can simply just make into
-        an enemy when starting.
-         */
-
         Players.players[KeyboardControl()] = Player("AI PLAYER", true).apply {
             selectedCharacterSpriteName = Assets.characterTurboAnims.first().name
         }
