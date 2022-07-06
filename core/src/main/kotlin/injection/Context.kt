@@ -17,6 +17,8 @@ import com.crashinvaders.vfx.effects.CrtEffect
 import com.crashinvaders.vfx.effects.OldTvEffect
 import com.strongjoshua.console.CommandExecutor
 import com.strongjoshua.console.GUIConsole
+import eater.ecs.systems.UpdateActionsSystem
+import eater.ecs.systems.UtilityAiSystem
 import eater.injection.InjectionContext
 import eater.messaging.IMessage
 import eater.messaging.IMessageReceiver
@@ -147,7 +149,9 @@ object Context : InjectionContext() {
 
             addSystem(RenderMiniMapSystem(2))
             //We add this here now to make sure it is run AFTER the rendercycle
-            addSystem(BehaviorTreeSystem(4))
+//            addSystem(BehaviorTreeSystem(4))
+            addSystem(UtilityAiSystem())
+            addSystem(UpdateActionsSystem())
             addSystem(PlayerFlashlightSystem())
             addSystem(PlayerContextActionSystem())
             addSystem(DelayedEntityCreationSystem())
