@@ -35,6 +35,10 @@ class GridMapManager {
 
     private val bodies = mutableListOf<Body>()
 
+    fun getRandomSection(except: Coordinate) : Coordinate {
+        return (gridMap.keys - except).random()
+    }
+
     fun getRandomSection(except: Coordinate, minDistance: Int = 2, maxDistance: Int = 5, level: Int = 0) : Coordinate? {
         if(level > GameConstants.MAX_RANDOM_SECTION_RECURSION_LEVEL)
             return null
