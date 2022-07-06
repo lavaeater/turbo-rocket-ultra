@@ -1,12 +1,11 @@
 package physics
 
-import com.badlogic.ashley.core.Component
-import com.badlogic.ashley.core.ComponentMapper
 import com.badlogic.ashley.core.Entity
 import com.badlogic.gdx.math.Vector2
 import eater.ecs.components.AgentProperties
 import eater.ecs.components.Box2d
 import eater.ecs.components.TransformComponent
+import eater.physics.addComponent
 import ecs.components.AudioComponent
 import ecs.components.ai.BehaviorComponent
 import ecs.components.ai.CollidedWithObstacle
@@ -25,8 +24,6 @@ import ktx.ashley.mapperFor
 import tru.Assets
 import tru.getRandomSoundFor
 import ui.UiThingComponent
-import kotlin.reflect.KType
-import kotlin.reflect.typeOf
 
 object AshleyMappers {
     val audio = mapperFor<AudioComponent>()

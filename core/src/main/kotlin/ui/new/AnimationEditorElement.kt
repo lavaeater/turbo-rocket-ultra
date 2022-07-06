@@ -11,7 +11,7 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion
 import com.badlogic.gdx.math.Vector2
 import ktx.collections.toGdxArray
 import ktx.math.vec2
-import physics.drawScaled
+import eater.physics.drawScaled
 import tru.AnimDef
 import tru.AnimState
 import tru.SpriteDirection

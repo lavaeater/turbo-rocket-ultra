@@ -1,6 +1,5 @@
 package ai.tasks.leaf
 
-import ai.aimTowards
 import ai.deltaTime
 import ai.format
 import ai.tasks.EntityTask
@@ -8,14 +7,11 @@ import com.badlogic.ashley.core.ComponentMapper
 import com.badlogic.ashley.core.Entity
 import com.badlogic.gdx.ai.btree.Task
 import com.badlogic.gdx.math.Vector2
+import eater.physics.addComponent
 import ecs.components.ai.PositionTarget
 import ecs.components.ai.StuckComponent
 import ecs.systems.graphics.GameConstants
-import ktx.ashley.mapperFor
-import ktx.ashley.remove
 import ktx.log.debug
-import ktx.log.info
-import ktx.math.vec2
 import physics.*
 import kotlin.reflect.KClass
 

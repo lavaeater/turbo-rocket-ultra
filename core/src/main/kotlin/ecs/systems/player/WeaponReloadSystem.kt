@@ -3,12 +3,12 @@ package ecs.systems.player
 import audio.AudioPlayer
 import com.badlogic.ashley.core.Entity
 import com.badlogic.ashley.systems.IteratingSystem
+import eater.injection.InjectionContext.Companion.inject
 import ecs.components.player.InventoryComponent
 import ecs.components.player.IsReloadingComponent
 import ecs.components.player.WeaponEntityComponent
 import ecs.components.player.doWeHaveAny
 import features.weapons.ReloadType
-import injection.Context.inject
 import ktx.ashley.allOf
 import ktx.ashley.remove
 import physics.inventory
@@ -18,9 +18,7 @@ import physics.weaponEntity
 
 class WeaponReloadSystem : IteratingSystem(
     allOf(
-        WeaponEntityComponent::class,
-        InventoryComponent::class,
-        IsReloadingComponent::class
+        WeaponEntityComponent::class, InventoryComponent::class, IsReloadingComponent::class
     ).get()
 ) {
 
@@ -44,8 +42,7 @@ class WeaponReloadSystem : IteratingSystem(
                         weapon.ammoRemaining += 1
                         inventory.ammo[ammoType] = inventory.ammo[ammoType]!! - 1
                         if (weapon.ammoRemaining >= weapon.ammoCap || inventory.ammo[ammoType]!! <= 0) {
-                            if(weapon.ammoRemaining > weapon.ammoCap)
-                                weapon.ammoRemaining = weapon.ammoCap
+                            if (weapon.ammoRemaining > weapon.ammoCap) weapon.ammoRemaining = weapon.ammoCap
                             entity.remove<IsReloadingComponent>()
                         } else {
                             isReloading.reloadHasStarted = false

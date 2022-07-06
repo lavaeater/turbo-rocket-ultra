@@ -9,10 +9,14 @@ import data.Players
 import eater.ecs.components.Box2d
 import ecs.components.enemy.AttackableProperties
 import eater.ecs.components.TransformComponent
+import eater.injection.InjectionContext.Companion.inject
+import eater.physics.getComponent
+import eater.physics.getEntity
+import eater.physics.has
+import eater.physics.isEntity
 import ecs.components.towers.Shoot
 import ecs.components.towers.TargetInRange
 import factories.splatterEntity
-import injection.Context
 import ktx.ashley.allOf
 import ktx.box2d.RayCast
 import ktx.box2d.rayCast
@@ -22,7 +26,7 @@ import ktx.math.vec2
 import physics.*
 
 class TowerShootSystem: IteratingSystem(allOf(Shoot::class, Box2d::class).get()) {
-    private val world: World by lazy { Context.inject() }
+    private val world: World by lazy { inject() }
 
     override fun processEntity(entity: Entity, deltaTime: Float) {
         val shootComponent = entity.getComponent<Shoot>()

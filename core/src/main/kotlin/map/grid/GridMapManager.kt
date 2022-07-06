@@ -14,7 +14,7 @@ import ktx.box2d.filter
 import map.grid.GridMapSection.Companion.tileHeight
 import map.grid.GridMapSection.Companion.tileScale
 import map.grid.GridMapSection.Companion.tileWidth
-import physics.drawScaled
+import eater.physics.drawScaled
 import space.earlygrey.shapedrawer.ShapeDrawer
 
 class GridMapManager {

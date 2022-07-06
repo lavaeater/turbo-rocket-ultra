@@ -21,6 +21,7 @@ import eater.core.world
 import eater.ecs.components.AgentProperties
 import eater.ecs.components.Box2d
 import eater.ecs.components.TransformComponent
+import eater.physics.addComponent
 import eater.turbofacts.FactsLikeThatMan
 import ecs.components.AudioComponent
 import ecs.components.ai.BehaviorComponent

@@ -13,6 +13,8 @@ import com.crashinvaders.vfx.VfxManager
 import com.crashinvaders.vfx.effects.ChainVfxEffect
 import com.strongjoshua.console.GUIConsole
 import data.Players
+import eater.injection.InjectionContext.Companion.inject
+import eater.physics.body
 import ecs.components.gameplay.ObjectiveComponent
 import ecs.components.graphics.CameraFollowComponent
 import ecs.components.player.PlayerComponent
@@ -28,7 +30,6 @@ import factories.enemy
 import factories.player
 import gamestate.GameEvent
 import gamestate.GameState
-import injection.Context.inject
 import input.KeyboardControl
 import ktx.app.KtxScreen
 import ktx.ashley.allOf

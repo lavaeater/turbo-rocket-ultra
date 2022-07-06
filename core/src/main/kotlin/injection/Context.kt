@@ -45,7 +45,6 @@ import ecs.systems.pickups.LootDropSystem
 import ecs.systems.player.*
 import ktx.box2d.createWorld
 import ktx.inject.Context
-import ktx.inject.register
 import map.grid.GridMapManager
 import messaging.Message
 import eater.messaging.MessageHandler
@@ -55,19 +54,9 @@ import eater.turbofacts.TurboStoryManager
 import ui.Hud
 import ui.IUserInterface
 
-object Context {
-    val context = Context()
-
-    init {
-        buildContext()
-    }
-
-    inline fun <reified T> inject(): T {
-        return context.inject()
-    }
-
-    private fun buildContext() {
-        context.register {
+object Context : InjectionContext() {
+    fun initializeContext() {
+        buildContext {
             bindSingleton(PolygonSpriteBatch())
             bindSingleton(InputActionHandler())
             bindSingleton(OrthographicCamera())
@@ -150,7 +139,6 @@ object Context {
                     false,
                     inject(),
                     inject(),
-                    inject<ExtendViewport>(),
                     false,
                     1,
                     false

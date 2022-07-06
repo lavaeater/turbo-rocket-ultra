@@ -7,7 +7,7 @@ import ecs.components.fx.ParticleEffectComponent
 import ecs.components.gameplay.BurningComponent
 import ktx.ashley.allOf
 import ktx.ashley.remove
-import physics.getComponent
+import eater.physics.getComponent
 
 class BurningSystem: IteratingSystem(allOf(BurningComponent::class, AttackableProperties::class).get()) {
     override fun processEntity(entity: Entity, deltaTime: Float) {

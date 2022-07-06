@@ -6,16 +6,17 @@ import com.badlogic.gdx.graphics.Color
 import com.badlogic.gdx.math.Rectangle
 import com.badlogic.gdx.math.Vector2
 import eater.core.world
+import eater.injection.InjectionContext.Companion.inject
 import ecs.components.graphics.renderables.RenderableTextureRegion
 import ecs.components.graphics.renderables.RenderableTextureRegions
-import injection.Context.inject
+
 import ktx.box2d.Query
 import ktx.box2d.query
 import ktx.math.vec2
 import map.snake.*
-import physics.getEntity
+import eater.physics.getEntity
 import physics.hasObstacle
-import physics.isEntity
+import eater.physics.isEntity
 import tru.Assets
 
 class GridMapSection(

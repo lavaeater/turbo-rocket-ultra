@@ -8,7 +8,7 @@ import com.badlogic.gdx.physics.box2d.BodyDef
 import eater.core.world
 import ktx.box2d.body
 import ktx.box2d.box
-import physics.drawScaled
+import eater.physics.drawScaled
 import space.earlygrey.shapedrawer.ShapeDrawer
 
 class SnakeMapManager(

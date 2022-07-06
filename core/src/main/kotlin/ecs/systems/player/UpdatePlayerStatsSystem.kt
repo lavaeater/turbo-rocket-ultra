@@ -7,7 +7,7 @@ import ecs.components.player.PlayerComponent
 import ecs.components.player.WeaponEntityComponent
 import ecs.components.player.doWeHaveAny
 import ktx.ashley.allOf
-import physics.getComponent
+import eater.physics.getComponent
 import physics.weapon
 import physics.weaponEntity
 

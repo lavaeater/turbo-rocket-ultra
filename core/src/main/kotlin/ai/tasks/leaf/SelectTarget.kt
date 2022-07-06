@@ -6,7 +6,6 @@ import com.badlogic.ashley.core.Entity
 import com.badlogic.gdx.ai.btree.Task
 import ecs.components.ai.PositionStorageComponent
 import ecs.components.ai.PositionTarget
-import physics.addComponent
 import kotlin.reflect.KClass
 
 class SelectTarget<Targets : PositionStorageComponent, TargetStorage : PositionTarget>(

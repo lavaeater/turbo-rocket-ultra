@@ -1,19 +1,16 @@
 package physics
 
 import com.badlogic.ashley.core.Component
-import com.badlogic.ashley.core.Engine
 import com.badlogic.ashley.core.Entity
 import com.badlogic.gdx.graphics.g2d.Batch
 import com.badlogic.gdx.graphics.g2d.TextureRegion
 import com.badlogic.gdx.math.MathUtils
-import com.badlogic.gdx.math.Vector2
 import com.badlogic.gdx.physics.box2d.Body
 import com.badlogic.gdx.physics.box2d.Contact
 import com.badlogic.gdx.physics.box2d.Fixture
 import data.Player
-import ecs.components.VehicleComponent
-import ecs.components.VehicleControlComponent
 import eater.ecs.components.AgentProperties
+import eater.physics.*
 import ecs.components.enemy.EnemySensorComponent
 import ecs.components.enemy.TackleComponent
 import ecs.components.gameplay.*

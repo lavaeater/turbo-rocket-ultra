@@ -5,7 +5,7 @@ import com.badlogic.gdx.graphics.g2d.Batch
 import com.badlogic.gdx.graphics.g2d.Sprite
 import com.badlogic.gdx.math.Vector2
 import ktx.math.vec2
-import physics.drawScaled
+import eater.physics.drawScaled
 
 open class BoundAnimationElement<T: Any>(valueFunc: (T) -> Animation<Sprite>,
                                          val changeAnimation: (T) -> Unit = {},

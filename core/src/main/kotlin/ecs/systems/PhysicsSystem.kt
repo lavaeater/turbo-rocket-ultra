@@ -7,14 +7,14 @@ import eater.ecs.components.Box2d
 import ecs.components.gameplay.GrenadeComponent
 import ecs.components.gameplay.MolotovComponent
 import eater.ecs.components.TransformComponent
-import injection.Context.inject
+import eater.injection.InjectionContext.Companion.inject
 import ktx.ashley.allOf
 import ktx.math.vec2
 import map.grid.GridMapSection
 import physics.AshleyMappers
 import physics.ContactManager
 import physics.ContactType
-import physics.has
+import eater.physics.has
 
 class PhysicsSystem(priority: Int) :
     IteratingSystem(allOf(Box2d::class, TransformComponent::class).get(), priority) {

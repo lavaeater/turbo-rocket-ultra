@@ -4,7 +4,7 @@ import com.badlogic.gdx.graphics.Color
 import com.badlogic.gdx.graphics.g2d.Batch
 import com.badlogic.gdx.graphics.g2d.TextureRegion
 import com.badlogic.gdx.math.Vector2
-import physics.drawScaled
+import eater.physics.drawScaled
 import space.earlygrey.shapedrawer.ShapeDrawer
 
 class RenderableTextureRegions(val regions: List<RenderableTextureRegion>) : Renderable {

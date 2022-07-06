@@ -1,9 +1,9 @@
 package story.consequence
 
 import com.bladecoder.ink.runtime.Story
+import eater.injection.InjectionContext.Companion.inject
 import gamestate.GameEvent
 import gamestate.GameState
-import injection.Context.inject
 import statemachine.StateMachine
 import story.conversation.ConversationManager
 import eater.turbofacts.Factoid

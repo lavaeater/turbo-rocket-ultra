@@ -15,6 +15,7 @@ import ecs.components.ai.AttackPoint
 import ecs.components.ai.CollidedWithObstacle
 import eater.ecs.components.AgentProperties
 import eater.ecs.components.Box2d
+import eater.injection.InjectionContext.Companion.inject
 import ecs.components.enemy.AttackableProperties
 import ecs.components.fx.ParticleEffectComponent
 import ecs.components.gameplay.*
@@ -25,7 +26,6 @@ import factories.explosionEffectEntity
 import factories.splatterEntity
 import features.pickups.AmmoLoot
 import features.pickups.WeaponLoot
-import injection.Context.inject
 import input.Button
 import ktx.ashley.allOf
 import ktx.ashley.remove
@@ -35,6 +35,7 @@ import ktx.scene2d.label
 import ktx.scene2d.table
 import messaging.Message
 import eater.messaging.MessageHandler
+import eater.physics.*
 import screens.CounterObject
 import tru.Assets
 import kotlin.math.pow

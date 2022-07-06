@@ -9,7 +9,7 @@ import ecs.components.gameplay.DestroyComponent
 import ktx.ashley.allOf
 import ktx.ashley.remove
 import physics.AshleyMappers
-import physics.addComponent
+import eater.physics.addComponent
 
 class GibSystem : IteratingSystem(allOf(GibComponent::class).get()) {
     override fun processEntity(entity: Entity, deltaTime: Float) {

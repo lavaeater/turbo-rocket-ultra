@@ -4,7 +4,7 @@ import com.badlogic.ashley.systems.IntervalSystem
 import ecs.components.enemy.BossComponent
 import ecs.components.gameplay.ObjectiveComponent
 import ktx.ashley.allOf
-import physics.getComponent
+import eater.physics.getComponent
 import eater.turbofacts.Factoids
 import eater.turbofacts.factsOfTheWorld
 

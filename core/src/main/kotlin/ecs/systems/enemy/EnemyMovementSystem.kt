@@ -10,6 +10,7 @@ import eater.ecs.components.Box2d
 import ecs.components.enemy.AttackableProperties
 import ecs.components.gameplay.ObstacleComponent
 import eater.ecs.components.TransformComponent
+import eater.physics.getComponent
 import ktx.ashley.allOf
 import ktx.math.vec2
 import physics.*

@@ -5,7 +5,7 @@ import eater.ecs.components.AgentProperties
 import ecs.components.gameplay.DestroyComponent
 import ecs.systems.graphics.GameConstants.MAX_ENEMIES
 import ktx.ashley.allOf
-import physics.addComponent
+import eater.physics.addComponent
 
 class EnemyOptimizerSystem : IntervalSystem(5f) {
 

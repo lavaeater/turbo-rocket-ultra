@@ -4,8 +4,8 @@ import com.badlogic.ashley.core.Entity
 import com.badlogic.ashley.systems.IteratingSystem
 import ecs.components.gameplay.PerimeterObjectiveComponent
 import eater.ecs.components.TransformComponent
+import eater.injection.InjectionContext.Companion.inject
 import ecs.components.player.PlayerComponent
-import injection.Context.inject
 import ktx.ashley.allOf
 import messaging.Message
 import eater.messaging.MessageHandler

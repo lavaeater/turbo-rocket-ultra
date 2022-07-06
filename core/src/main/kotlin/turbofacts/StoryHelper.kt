@@ -1,9 +1,9 @@
 package turbofacts
 
+import eater.injection.InjectionContext.Companion.inject
 import eater.turbofacts.*
 import gamestate.GameEvent
 import gamestate.GameState
-import injection.Context.inject
 import messaging.Message
 import eater.messaging.MessageHandler
 import statemachine.StateMachine

@@ -6,13 +6,13 @@ import com.badlogic.gdx.graphics.Color
 import com.badlogic.gdx.graphics.g2d.Batch
 import com.badlogic.gdx.graphics.g2d.PolygonSpriteBatch
 import eater.ecs.components.TransformComponent
+import eater.injection.InjectionContext.Companion.inject
 import ecs.components.towers.TargetInRange
 import ecs.components.towers.TowerComponent
-import injection.Context.inject
 import ktx.ashley.allOf
 import ktx.graphics.use
-import physics.getComponent
-import physics.has
+import eater.physics.getComponent
+import eater.physics.has
 import tru.Assets
 
 

@@ -6,7 +6,7 @@ import ecs.components.gameplay.DestroyAfterCoolDownComponent
 import ecs.components.gameplay.DestroyComponent
 import ktx.ashley.allOf
 import physics.AshleyMappers
-import physics.addComponent
+import eater.physics.addComponent
 
 class DestroyAfterCooldownSystem: IteratingSystem(allOf(DestroyAfterCoolDownComponent::class).get()) {
     override fun processEntity(entity: Entity, deltaTime: Float) {

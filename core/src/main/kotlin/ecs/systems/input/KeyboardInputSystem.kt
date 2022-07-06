@@ -7,14 +7,14 @@ import com.badlogic.gdx.Input
 import com.badlogic.gdx.graphics.OrthographicCamera
 import com.badlogic.gdx.math.Vector2
 import eater.ecs.components.TransformComponent
+import eater.injection.InjectionContext.Companion.inject
 import ecs.components.intent.IntendsTo
 import gamestate.GameEvent
 import gamestate.GameState
-import injection.Context.inject
 import input.KeyboardControl
 import ktx.app.KtxInputAdapter
 import ktx.ashley.allOf
-import physics.getComponent
+import eater.physics.getComponent
 import physics.intendTo
 import statemachine.StateMachine
 

@@ -9,7 +9,6 @@ import com.badlogic.gdx.graphics.GL20
 import com.badlogic.gdx.graphics.OrthographicCamera
 import com.badlogic.gdx.graphics.g2d.Batch
 import com.badlogic.gdx.math.MathUtils
-import com.badlogic.gdx.utils.viewport.Viewport
 import com.crashinvaders.vfx.VfxManager
 import com.crashinvaders.vfx.effects.ChainVfxEffect
 import ecs.components.ai.Path
@@ -18,10 +17,13 @@ import ecs.components.ai.Waypoint
 import eater.ecs.components.AgentProperties
 import ecs.components.gameplay.DestroyComponent
 import eater.ecs.components.TransformComponent
+import eater.injection.InjectionContext.Companion.inject
+import eater.physics.addComponent
+import eater.physics.getComponent
+import eater.physics.has
 import ecs.components.graphics.RenderableComponent
 import ecs.components.player.PlayerComponent
 import ecs.systems.graphics.GameConstants.SCALE
-import injection.Context.inject
 import ktx.ashley.allOf
 import ktx.graphics.use
 import map.grid.GridMapManager
@@ -33,10 +35,9 @@ class RenderSystem(
     private val debug: Boolean,
     private val rayHandler: RayHandler,
     private val camera: OrthographicCamera,
-    private val mainViewPort: Viewport,
     private val enemyDebug: Boolean,
     priority: Int,
-    val playerDebug: Boolean
+    private val playerDebug: Boolean
 ) : SortedIteratingSystem(
     allOf(
         RenderableComponent::class,
@@ -75,7 +76,8 @@ class RenderSystem(
     }
     private val colorMap =
         mutableMapOf("blue" to Color.BLUE, "red" to Color.RED, "green" to Color.GREEN, "yellow" to Color.YELLOW)
-    private val r = 0f..1f
+    private val sectorColor = Color(0f, 1f, 0f, 0.1f)
+    private val pathNodeColor = Color(0f, 1f, 0f, 0.5f)
 
     override fun update(deltaTime: Float) {
         Gdx.gl.glClearColor(0f, 0f, 0f, 1f)
@@ -98,7 +100,7 @@ class RenderSystem(
         rayHandler.updateAndRender()
     }
 
-    fun renderSpriteEntity(entity: Entity) {
+    private fun renderSpriteEntity(entity: Entity) {
         val transform = entity.transform()
         val spriteComponent = entity.sprite()
 
@@ -160,8 +162,6 @@ class RenderSystem(
         }
     }
 
-    val sectorColor = Color(0f, 1f, 0f, 0.1f)
-    val pathNodeColor = Color(0f, 1f, 0f, 0.5f)
 
     private fun renderCanSee(entity: Entity, ap: AgentProperties) {
         val position = entity.transform().position

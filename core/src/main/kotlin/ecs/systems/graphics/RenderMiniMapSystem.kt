@@ -4,10 +4,10 @@ import com.badlogic.ashley.core.Entity
 import com.badlogic.ashley.systems.SortedIteratingSystem
 import com.badlogic.gdx.graphics.OrthographicCamera
 import eater.ecs.components.TransformComponent
+import eater.injection.InjectionContext.Companion.inject
 import ecs.components.graphics.MiniMapComponent
 import ecs.components.graphics.RenderableComponent
 import ecs.components.graphics.Shape
-import injection.Context.inject
 import ktx.ashley.allOf
 import ktx.graphics.use
 import ktx.math.vec2

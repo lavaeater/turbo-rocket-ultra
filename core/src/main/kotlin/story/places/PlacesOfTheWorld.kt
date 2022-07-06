@@ -1,10 +1,11 @@
 package story.places
 
 import data.Player
+import eater.injection.InjectionContext.Companion.inject
 import eater.turbofacts.factsOfTheWorld
 import gamestate.GameEvent
 import gamestate.GameState
-import injection.Context.inject
+
 import statemachine.StateMachine
 import story.conversation.ConversationManager
 

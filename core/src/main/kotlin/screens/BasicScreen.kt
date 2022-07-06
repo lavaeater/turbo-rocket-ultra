@@ -10,6 +10,7 @@ import com.badlogic.gdx.graphics.OrthographicCamera
 import com.badlogic.gdx.graphics.g2d.PolygonSpriteBatch
 import com.badlogic.gdx.utils.viewport.ExtendViewport
 import com.badlogic.gdx.utils.viewport.Viewport
+import eater.injection.InjectionContext.Companion.inject
 import gamestate.GameEvent
 import gamestate.GameState
 import injection.Context
@@ -20,10 +21,10 @@ import tru.Assets
 
 abstract class BasicScreen(val gameState: StateMachine<GameState, GameEvent>) : KtxScreen, KtxInputAdapter, ControllerListener {
 
-    open val camera: OrthographicCamera by lazy { Context.inject() }
-    open val viewport: Viewport by lazy { Context.inject<ExtendViewport>() }
-    protected val batch: PolygonSpriteBatch by lazy { Context.inject() }
-    protected val audioPlayer: AudioPlayer by lazy { Context.inject() }
+    open val camera: OrthographicCamera by lazy { inject() }
+    open val viewport: Viewport by lazy { inject<ExtendViewport>() }
+    protected val batch: PolygonSpriteBatch by lazy { inject() }
+    protected val audioPlayer: AudioPlayer by lazy { inject() }
 
     override fun show() {
         Gdx.input.inputProcessor = this

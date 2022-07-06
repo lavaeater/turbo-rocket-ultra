@@ -4,7 +4,7 @@ import com.badlogic.ashley.core.Entity
 import com.badlogic.ashley.systems.IteratingSystem
 import ecs.components.fx.CreateEntityComponent
 import ktx.ashley.allOf
-import physics.getComponent
+import eater.physics.getComponent
 
 class DelayedEntityCreationSystem: IteratingSystem(allOf(CreateEntityComponent::class).get()) {
     override fun processEntity(entity: Entity, deltaTime: Float) {

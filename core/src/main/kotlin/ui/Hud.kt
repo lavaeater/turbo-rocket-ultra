@@ -15,10 +15,10 @@ import com.badlogic.gdx.utils.Align
 import com.badlogic.gdx.utils.Queue
 import com.badlogic.gdx.utils.viewport.ExtendViewport
 import data.Players
+import eater.injection.InjectionContext.Companion.inject
 import eater.messaging.IMessage
 import ecs.components.enemy.AttackableProperties
 import ecs.systems.graphics.GameConstants
-import injection.Context.inject
 import ktx.actors.along
 import ktx.actors.plusAssign
 import ktx.actors.then
@@ -28,6 +28,8 @@ import ktx.scene2d.*
 import messaging.Message
 import eater.messaging.MessageHandler
 import eater.messaging.IMessageReceiver
+import eater.physics.getComponent
+import eater.physics.has
 import physics.*
 import eater.turbofacts.Factoids
 import eater.turbofacts.factsOfTheWorld

@@ -5,6 +5,7 @@ import box2dLight.Light
 import box2dLight.RayHandler
 import com.badlogic.ashley.core.Engine
 import com.badlogic.gdx.math.Rectangle
+import eater.injection.InjectionContext.Companion.inject
 import ecs.systems.tileWorldX
 import ecs.systems.tileWorldY
 import factories.*
@@ -13,7 +14,7 @@ import features.pickups.LootTable
 import features.pickups.WeaponLoot
 import features.weapons.AmmoType
 import features.weapons.WeaponDefinition
-import injection.Context.inject
+
 import map.snake.MapDirection
 import map.snake.random
 import map.snake.randomPoint

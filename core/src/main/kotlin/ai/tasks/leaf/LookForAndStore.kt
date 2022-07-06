@@ -17,8 +17,8 @@ import ktx.box2d.rayCast
 import ktx.log.debug
 import ktx.math.vec2
 import physics.agentProps
-import physics.getEntity
-import physics.isEntity
+import eater.physics.getEntity
+import eater.physics.isEntity
 import physics.transform
 import kotlin.reflect.KClass
 

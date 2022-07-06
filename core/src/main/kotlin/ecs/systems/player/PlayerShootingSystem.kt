@@ -9,6 +9,7 @@ import eater.ai.canISeeYouFromHere
 import eater.ecs.components.AgentProperties
 import ecs.components.enemy.AttackableProperties
 import eater.ecs.components.TransformComponent
+import eater.physics.getComponent
 import ecs.components.intent.IntendsTo
 import ecs.components.player.PlayerControlComponent
 import ecs.components.player.WeaponEntityComponent

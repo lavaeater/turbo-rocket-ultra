@@ -6,7 +6,7 @@ import ecs.components.player.PlayerComponent
 import gamestate.GameEvent
 import gamestate.GameState
 import ktx.ashley.allOf
-import physics.getComponent
+import eater.physics.getComponent
 import statemachine.StateMachine
 
 class GameOverSystem(private val gameState: StateMachine<GameState, GameEvent>) : IntervalSystem(1f) {

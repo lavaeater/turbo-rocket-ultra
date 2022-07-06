@@ -13,31 +13,31 @@ import com.badlogic.gdx.math.Vector2
 import com.badlogic.gdx.utils.Queue
 import eater.core.world
 import eater.ecs.components.AgentProperties
-import injection.Context
+import eater.injection.InjectionContext.Companion.inject
+import eater.turbofacts.TurboFactsOfTheWorld
+import eater.turbofacts.stateBooleanFact
 import ktx.box2d.Query
 import ktx.box2d.query
 import ktx.math.random
 import ktx.math.vec2
 import map.grid.Coordinate
 import map.grid.GridMapManager
-import physics.getEntity
+import eater.physics.getEntity
 import physics.hasObstacle
-import physics.isEntity
-import eater.turbofacts.TurboFactsOfTheWorld
-import eater.turbofacts.stateBooleanFact
+import eater.physics.isEntity
 
 fun progressPath(enemyComponent: AgentProperties, currentPosition: Vector2): Boolean {
     if (enemyComponent.needsNewNextPosition && !enemyComponent.path.isEmpty) {
         enemyComponent.nextPosition = enemyComponent.path.removeFirst()
         enemyComponent.needsNewNextPosition = false
         stateBooleanFact(false, "Enemy", enemyComponent.id.toString(), "ReachedWayPoint")
-        Context.inject<TurboFactsOfTheWorld>().setBooleanFact(false, "Enemy", enemyComponent.id.toString(), "ReachedWayPoint")
+        inject<TurboFactsOfTheWorld>().setBooleanFact(false, "Enemy", enemyComponent.id.toString(), "ReachedWayPoint")
     }
     if (currentPosition.dst(enemyComponent.nextPosition) <= 1f) {
         enemyComponent.nextPosition = vec2()
         enemyComponent.needsNewNextPosition = true
         stateBooleanFact(true, "Enemy", enemyComponent.id.toString(), "ReachedWayPoint")
-        Context.inject<TurboFactsOfTheWorld>().setBooleanFact(true, "Enemy", enemyComponent.id.toString(), "ReachedWayPoint")
+        inject<TurboFactsOfTheWorld>().setBooleanFact(true, "Enemy", enemyComponent.id.toString(), "ReachedWayPoint")
     }
 
     val direction = enemyComponent.nextPosition.cpy().sub(currentPosition).nor()
@@ -47,7 +47,7 @@ fun progressPath(enemyComponent: AgentProperties, currentPosition: Vector2): Boo
 
 fun findPathFromTo(q: Queue<Vector2>, from: Coordinate, to: Coordinate) {
     q.clear()
-    val mapManager = Context.inject<GridMapManager>()
+    val mapManager = inject<GridMapManager>()
     val path = mapManager.sectionGraph.findPath(from, to)
     for (i in 0 until path.count) {
         val target = path.get(i)
@@ -59,7 +59,7 @@ fun findPathFromTo(q: Queue<Vector2>, from: Coordinate, to: Coordinate) {
 
 fun findPathFromTo(enemyComponent: AgentProperties, from: Coordinate, to: Coordinate) {
     enemyComponent.path.clear()
-    val mapManager = Context.inject<GridMapManager>()
+    val mapManager = inject<GridMapManager>()
     val path = mapManager.sectionGraph.findPath(from, to)
     for (i in 0 until path.count) {
         val target = path.get(i)

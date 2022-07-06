@@ -7,7 +7,7 @@ import ecs.components.player.PlayerControlComponent
 import ecs.components.player.WeaponComponent
 import ecs.components.player.WeaponLaserComponent
 import ktx.ashley.allOf
-import physics.getComponent
+import eater.physics.getComponent
 
 /**
  * We need a cool-down system, which determines the rate of fire.

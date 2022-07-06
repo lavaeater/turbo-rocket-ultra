@@ -8,7 +8,7 @@ import eater.ecs.components.AgentProperties
 import ecs.components.player.FiredShotsComponent
 import ktx.ashley.allOf
 import physics.AshleyMappers
-import physics.addComponent
+import eater.physics.addComponent
 
 class EnemyHearsShotsSystem : IteratingSystem(allOf(FiredShotsComponent::class).get()) {
 

@@ -6,7 +6,7 @@ import eater.ecs.components.TransformComponent
 import ecs.components.player.FlashlightComponent
 import ecs.components.player.PlayerControlComponent
 import ktx.ashley.allOf
-import physics.getComponent
+import eater.physics.getComponent
 
 class PlayerFlashlightSystem : IteratingSystem(
     allOf(

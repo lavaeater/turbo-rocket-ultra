@@ -13,7 +13,7 @@ import ecs.systems.graphics.GameConstants.GAME_WIDTH
 import ktx.ashley.allOf
 import ktx.math.vec2
 import ktx.math.vec3
-import physics.getComponent
+import eater.physics.getComponent
 
 class CameraUpdateSystem(
     private val camera: OrthographicCamera,

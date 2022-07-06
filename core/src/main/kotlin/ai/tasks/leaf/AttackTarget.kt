@@ -11,7 +11,7 @@ import eater.ecs.components.TransformComponent
 import ktx.ashley.allOf
 import ktx.ashley.remove
 import physics.agentProps
-import physics.getComponent
+import eater.physics.getComponent
 import physics.transform
 import kotlin.reflect.KClass
 

@@ -3,6 +3,7 @@ package screens
 import com.badlogic.gdx.Gdx
 import com.badlogic.gdx.graphics.OrthographicCamera
 import com.badlogic.gdx.math.Vector2
+import eater.injection.InjectionContext.Companion.inject
 import ecs.systems.graphics.GameConstants
 import injection.Context
 import ktx.math.vec2
@@ -11,7 +12,7 @@ import ktx.math.vec3
 object MousePosition {
     private val mousePosition3D = vec3()
     private val mousePosition2D = vec2()
-    private val camera by lazy { Context.inject<OrthographicCamera>() }
+    private val camera by lazy { inject<OrthographicCamera>() }
     fun toWorld(screenX: Int, screenY: Int): Vector2 {
         mousePosition3D.set(screenX.toFloat(), screenY.toFloat(), 0f)
         camera.unproject(mousePosition3D)

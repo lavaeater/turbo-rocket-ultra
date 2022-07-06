@@ -5,6 +5,7 @@ import com.badlogic.gdx.scenes.scene2d.Action
 import com.badlogic.gdx.scenes.scene2d.actions.Actions
 import com.badlogic.gdx.scenes.scene2d.ui.Dialog
 import com.badlogic.gdx.scenes.scene2d.ui.Label
+import eater.injection.InjectionContext.Companion.inject
 import gamestate.GameEvent
 import gamestate.GameState
 import injection.Context
@@ -15,7 +16,7 @@ import ktx.scene2d.scene2d
 import statemachine.StateMachine
 
 object CrawlDialog {
-    private val gameState by lazy { Context.inject<StateMachine<GameState, GameEvent>>() }
+    private val gameState by lazy { inject<StateMachine<GameState, GameEvent>>() }
     fun getLabelsFromString(text: String, dialogHeight: Float, duration: Float, autoQuit: Boolean): MutableList<Label> {
         val lines = text.lines()
         return lines.mapIndexed { index, line ->

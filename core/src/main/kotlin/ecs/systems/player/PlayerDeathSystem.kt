@@ -6,8 +6,8 @@ import ecs.components.enemy.AttackableProperties
 import ecs.components.player.*
 import ecs.systems.graphics.GameConstants
 import ktx.ashley.allOf
-import physics.getComponent
-import physics.has
+import eater.physics.getComponent
+import eater.physics.has
 
 
 class PlayerDeathSystem: IteratingSystem(allOf(PlayerComponent::class, AttackableProperties::class).get()) {

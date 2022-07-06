@@ -13,9 +13,9 @@ import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator.FreeTypeFont
 import com.badlogic.gdx.math.MathUtils
 import com.badlogic.gdx.scenes.scene2d.ui.Skin
 import com.badlogic.gdx.utils.Disposable
+import eater.injection.InjectionContext.Companion.inject
 import features.weapons.GunFrames
 import features.weapons.Weapon
-import injection.Context.inject
 import ktx.scene2d.Scene2DSkin
 import map.snake.MapDirection
 import space.earlygrey.shapedrawer.ShapeDrawer
