@@ -67,7 +67,7 @@ object EnemyBehaviors {
                         state.coolDownRange = (agentProps.attackSpeed / 1.5f)..(agentProps.attackSpeed * 1.5f)
                         state.coolDown = state.coolDownRange.random()
                         state.targetEntity =
-                            memory.closeEntities[TargetComponent::class.starProjectedType]?.firstOrNull()
+                            memory.closeEntities[PlayerComponent::class.starProjectedType]?.firstOrNull()
                         state.status = AttackStatus.Attacking
                         agentProps.speed = 0f
                     }
