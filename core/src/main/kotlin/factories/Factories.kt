@@ -669,6 +669,7 @@ fun newEnemy(at:Vector2, init: EngineEntity.() -> Unit = {}): Entity {
             actions.add(EnemyBehaviors.amble)
             actions.add(EnemyBehaviors.approachTarget)
             actions.add(EnemyBehaviors.attackTarget)
+            actions.add(EnemyBehaviors.panik)
         }
         init(this)
     }

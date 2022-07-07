@@ -10,6 +10,7 @@ import eater.ecs.components.AgentProperties
 import eater.ecs.components.Memory
 import ecs.components.ai.behavior.*
 import ecs.components.enemy.AttackableProperties
+import ecs.components.gameplay.BurningComponent
 import ecs.components.gameplay.TargetComponent
 import ecs.systems.graphics.GameConstants
 import ecs.systems.graphics.GameConstants.TOUCHING_DISTANCE
@@ -24,6 +25,24 @@ import physics.transform
 import kotlin.reflect.full.starProjectedType
 
 object EnemyBehaviors {
+    val panik = ConsideredActionWithState("PANIK!", {}, { entity, state, deltaTime ->
+        when(state.status) {
+            PanikStatus.NotStarted -> {
+                state.coolDown = 0f
+                state.coolDownRange = 0.5f..1.5f
+                state.status = PanikStatus.Paniking
+            }
+            PanikStatus.Paniking -> {
+                if(state.ready(deltaTime)) {
+                    val agentProps = AgentProperties.get(entity)
+                    agentProps.directionVector.rotateDeg((45f..135f).random())
+                    agentProps.speed = agentProps.baseProperties.rushSpeed
+                }
+            }
+        }
+    }, PanikState::class, InvertedConsideration("Am I dying?", EnemyConsiderations.healthConsideration), DoIHaveThisComponentConsideration("Am I burning?", BurningComponent::class))
+
+
     val attackTarget = ConsideredActionWithState(
         "Attack Target",
         {},
