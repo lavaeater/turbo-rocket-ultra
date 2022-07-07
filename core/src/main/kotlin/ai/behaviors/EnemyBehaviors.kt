@@ -5,37 +5,115 @@ import ai.pathfinding.TileGraph
 import ai.tasks.leaf.SectionFindingMethods
 import com.badlogic.ashley.core.Entity
 import com.badlogic.gdx.math.MathUtils
-import eater.ai.CanISeeThisConsideration
-import eater.ai.Consideration
-import eater.ai.ConsideredActionWithState
-import eater.ai.GenericActionWithState
-import ecs.components.ai.behavior.AmbleStateComponent
-import ecs.components.ai.behavior.ApproachPlayerStateComponent
+import eater.ai.*
+import eater.ecs.components.AgentProperties
+import eater.ecs.components.Memory
+import ecs.components.ai.behavior.*
+import ecs.components.enemy.AttackableProperties
 import ecs.components.gameplay.TargetComponent
+import ecs.systems.graphics.GameConstants
 import ecs.systems.graphics.GameConstants.TOUCHING_DISTANCE
 import ecs.systems.sectionX
 import ecs.systems.sectionY
 import ktx.log.debug
 import ktx.math.minus
+import ktx.math.random
 import physics.agentProps
 import physics.attackables
 import physics.transform
+import kotlin.reflect.full.starProjectedType
 
 object EnemyBehaviors {
+    val attackTarget = ConsideredActionWithState(
+        "Attack Target",
+        {},
+        { entity, state, deltaTime ->
+            //We can reset the cooldown right here to the correct values!
+            when (state.status) {
+                AttackStatus.Attacking -> {
+                    if(state.targetEntity != null && state.ready(deltaTime)) {
+                        val agentProperties = AgentProperties.get(entity)
+                        val targetEntity = state.targetEntity!!
+                        val attackableProperties = AttackableProperties.get(targetEntity)
+                        val damage = agentProperties.meleeDamageRange.random()
+                        attackableProperties.takeDamage(damage, entity)
+                        debug { "Attack dealt $damage" }
+                    }
+                }
+                AttackStatus.NotStarted -> {
+                    if (Memory.has(entity)) {
+                        val memory = Memory.get(entity)
+                        val agentProps = AgentProperties.get(entity)
+                        state.coolDownRange = (agentProps.attackSpeed / 1.5f)..(agentProps.attackSpeed * 1.5f)
+                        state.coolDown = state.coolDownRange.random()
+                        state.targetEntity =
+                            memory.closeEntities[TargetComponent::class.starProjectedType]?.firstOrNull()
+                        state.status = AttackStatus.Attacking
+                        agentProps.speed = 0f
+                    }
+                }
+            }
+        },
+        AttackState::class,
+        EnemyConsiderations.healthConsideration,
+        AmICloseToThisConsideration(TargetComponent::class, Memory::class, GameConstants.ENEMY_MELEE_DISTANCE)
+    )
 
-    val getCloserToPlayerAction = ConsideredActionWithState(
+    val approachTarget = ConsideredActionWithState(
         "Approach Player",
         {},
         { entity, state, deltaTime ->
+            when (state.status) {
+                ApproachTargetStatus.NotStarted -> {
+                    /**
+                     * What do we do here? Just set the next status?
+                     *
+                     * How do we know which thingamajig we see? Do the entire thing
+                     * again?
+                     *
+                     * How do we implement some kind of "memory" for our enemy entity?
+                     *
+                     * It sees things, then it perhaps remembers where these things are?
+                     *
+                     * Ah, well, that's what this action does, it checks "again" to see
+                     *
+                     * players and stores them in some kind of memory. This memory should
+                     * probably not only be used for this particular task.
+                     *
+                     * Or no, the CanISeeConsideration could constantly keep a list of things
+                     * the entity sees in some kind of storage, instead.
+                     *
+                     * We come here because we have seen some shit. So, we take the closest
+                     * entity off that list and move towards that one.
+                     */
+                    if (Memory.has(entity)) {
+                        val memory = Memory.get(entity)
+                        state.targetEntity =
+                            memory.seenEntities[TargetComponent::class.starProjectedType]?.firstOrNull()
+                        state.status = ApproachTargetStatus.Approach
+                    }
+                }
+                ApproachTargetStatus.Approach -> {
+                    if (state.targetEntity != null) {
+                        val agentProps = entity.agentProps()
+                        val position = entity.transform().position
+                        val targetPosition = state.targetEntity!!.transform().position
+                        agentProps.directionVector.set(targetPosition - position).nor()
+                        agentProps.speed = agentProps.baseProperties.speed
+                    } else {
+                        state.status = ApproachTargetStatus.NotStarted
+                    }
+                }
+            }
             debug { "Moving closer to the targets" }
         },
-        ApproachPlayerStateComponent::class,
-        EnemyConsiderations.healthConsideration, CanISeeThisConsideration(TargetComponent::class)
+        ApproachTargetState::class,
+        EnemyConsiderations.healthConsideration, CanISeeThisConsideration(TargetComponent::class, Memory::class)
     )
 
-    val ambleAction = GenericActionWithState(
+    val amble = GenericActionWithState(
         "Amble",
-        {_ -> 0.5 }, {}, { entity, state, deltaTime ->
+        { _ -> 0.5 }, {}, { entity, state, deltaTime ->
             /**
              * What kind of state do we need? Well, we need to check
              * if we are going somewhere, right now, or not.
@@ -47,21 +125,21 @@ object EnemyBehaviors {
              * Just focus on ambling, right now. Other actions come after
              * this.
              */
-            when (state.state) {
-                AmbleStateComponent.AmbleState.FindingPathToTarget -> findPathToTarget(entity, state, deltaTime)
-                AmbleStateComponent.AmbleState.FindingTargetCoordinate -> findTarget(entity, state, deltaTime)
-                AmbleStateComponent.AmbleState.MoveToWaypoint -> move(entity, state)
-                AmbleStateComponent.AmbleState.NotStarted -> {
+            when (state.status) {
+                AmbleStatus.FindingPathToTarget -> findPathToTarget(entity, state, deltaTime)
+                AmbleStatus.FindingTargetCoordinate -> findTarget(entity, state, deltaTime)
+                AmbleStatus.MoveToWaypoint -> move(entity, state)
+                AmbleStatus.NotStarted -> {
                     entity.agentProps().speed = 0f
-                    state.state =
-                        AmbleStateComponent.AmbleState.FindingTargetCoordinate
+                    state.status =
+                        AmbleStatus.FindingTargetCoordinate
                 }
-                AmbleStateComponent.AmbleState.NeedsWaypoint -> getWaypoint(entity, state, deltaTime)
+                AmbleStatus.NeedsWaypoint -> getWaypoint(entity, state, deltaTime)
             }
-        }, AmbleStateComponent::class
+        }, AmbleState::class
     )
 
-    private fun getWaypoint(entity: Entity, state: AmbleStateComponent, deltaTime: Float) {
+    private fun getWaypoint(entity: Entity, state: AmbleState, deltaTime: Float) {
         entity.agentProps().apply {
             this.directionVector.rotateDeg(this.rotationSpeed * deltaTime)
             this.speed = 0f
@@ -70,25 +148,25 @@ object EnemyBehaviors {
             if (state.ready(deltaTime)) {
                 if (state.queue.any()) {
                     state.wayPoint = state.queue.removeFirst()
-                    state.state = AmbleStateComponent.AmbleState.MoveToWaypoint
+                    state.status = AmbleStatus.MoveToWaypoint
                 } else {
                     state.wayPoint = null
-                    state.state = AmbleStateComponent.AmbleState.NotStarted
+                    state.status = AmbleStatus.NotStarted
                 }
             }
         } else {
-            state.state = AmbleStateComponent.AmbleState.MoveToWaypoint
+            state.status = AmbleStatus.MoveToWaypoint
         }
     }
 
-    private fun move(entity: Entity, state: AmbleStateComponent) {
+    private fun move(entity: Entity, state: AmbleState) {
         if (state.wayPoint == null) {
-            state.state = AmbleStateComponent.AmbleState.NeedsWaypoint
+            state.status = AmbleStatus.NeedsWaypoint
         } else {
             val currentPos = entity.transform().position
             if (currentPos.dst(state.wayPoint) < TOUCHING_DISTANCE) {
                 state.wayPoint = null
-                state.state = AmbleStateComponent.AmbleState.NeedsWaypoint // Safeguard
+                state.status = AmbleStatus.NeedsWaypoint // Safeguard
             } else {
                 entity.agentProps().directionVector.set(state.wayPoint!! - currentPos).nor()
                 entity.agentProps().speed = entity.agentProps().baseProperties.speed
@@ -97,18 +175,18 @@ object EnemyBehaviors {
         }
     }
 
-    private fun findPathToTarget(entity: Entity, state: AmbleStateComponent, deltaTime: Float) {
+    private fun findPathToTarget(entity: Entity, state: AmbleState, deltaTime: Float) {
         entity.agentProps().apply {
             this.directionVector.rotateDeg(this.rotationSpeed * deltaTime)
             this.speed = 0f
         }
         if (state.ready(deltaTime)) {
             findPathFromTo(state.queue, state.startPointCoordinate!!, state.endPointCoordinate!!)
-            state.state = AmbleStateComponent.AmbleState.MoveToWaypoint
+            state.status = AmbleStatus.MoveToWaypoint
         }
     }
 
-    private fun findTarget(entity: Entity, state: AmbleStateComponent, deltaTime: Float) {
+    private fun findTarget(entity: Entity, state: AmbleState, deltaTime: Float) {
         entity.agentProps().apply {
             this.directionVector.rotateDeg(this.rotationSpeed * deltaTime)
             this.speed = 0f
@@ -121,7 +199,7 @@ object EnemyBehaviors {
                 3,
                 5
             ) //must it be able to fail? - no, not in this case. if this fail, we randomize
-            state.state = AmbleStateComponent.AmbleState.FindingPathToTarget
+            state.status = AmbleStatus.FindingPathToTarget
             if (foundSection == null) {
                 state.endPointCoordinate = SectionFindingMethods.randomOfAll(state.startPointCoordinate!!)
             } else {

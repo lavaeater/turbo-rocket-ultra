@@ -9,7 +9,7 @@ import ktx.ashley.mapperFor
 import ktx.math.random
 import map.grid.Coordinate
 
-class AmbleStateComponent : CoolDownComponent(), Pool.Poolable {
+class AmbleState : CoolDownComponent(), Pool.Poolable {
     init {
         coolDownRange = 1f..3f
         coolDown = coolDownRange.random()
@@ -20,15 +20,7 @@ class AmbleStateComponent : CoolDownComponent(), Pool.Poolable {
     var wayPoint: Vector2? = null
     val queue = Queue<Vector2>()
 
-    sealed class AmbleState(val name: String) {
-        object NotStarted : AmbleState("Not started")
-        object FindingTargetCoordinate : AmbleState("Looking For Endpoint")
-        object FindingPathToTarget : AmbleState("Finding Path")
-        object NeedsWaypoint : AmbleState("Needs Waypoint")
-        object MoveToWaypoint : AmbleState("Moving to Waypoint")
-    }
-
-    var state: AmbleState = AmbleState.NotStarted
+    var status: AmbleStatus = AmbleStatus.NotStarted
 
 
     override fun reset() {
@@ -36,12 +28,12 @@ class AmbleStateComponent : CoolDownComponent(), Pool.Poolable {
         queue.clear()
         endPointCoordinate = null
         wayPoint = null
-        state = AmbleState.NotStarted
+        status = AmbleStatus.NotStarted
     }
 
     companion object {
-        val mapper = mapperFor<AmbleStateComponent>()
-        fun get(entity: Entity): AmbleStateComponent {
+        val mapper = mapperFor<AmbleState>()
+        fun get(entity: Entity): AmbleState {
             return mapper.get(entity)
         }
 

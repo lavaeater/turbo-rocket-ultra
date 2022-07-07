@@ -11,6 +11,7 @@ import com.badlogic.gdx.graphics.g2d.Batch
 import com.badlogic.gdx.math.MathUtils
 import com.crashinvaders.vfx.VfxManager
 import com.crashinvaders.vfx.effects.ChainVfxEffect
+import eater.ecs.components.Memory
 import ecs.components.ai.Path
 import ecs.components.ai.SeenPlayerPositions
 import ecs.components.ai.Waypoint
@@ -21,7 +22,7 @@ import eater.injection.InjectionContext.Companion.inject
 import eater.physics.addComponent
 import eater.physics.getComponent
 import eater.physics.has
-import ecs.components.ai.behavior.AmbleStateComponent
+import ecs.components.ai.behavior.AmbleState
 import ecs.components.graphics.RenderableComponent
 import ecs.components.player.PlayerComponent
 import ecs.systems.graphics.GameConstants.SCALE
@@ -160,6 +161,19 @@ class RenderSystem(
         if(entity.has<PlayerComponent>()) {
             renderPath(entity, ec)
             renderCanSee(entity, ec)
+            renderMemory(entity, ec)
+        }
+    }
+
+    private fun renderMemory(entity: Entity, ec: AgentProperties) {
+        if(Memory.has(entity)) {
+            val memory = Memory.get(entity)
+            for(position in memory.seenEntities.values.flatten().map { TransformComponent.get(it).position }) {
+                shapeDrawer.filledCircle(position, 1f, Color.RED)
+            }
+            for(position in memory.closeEntities.values.flatten().map { TransformComponent.get(it).position }) {
+                shapeDrawer.filledCircle(position, 1f, Color.BLUE)
+            }
         }
     }
 
@@ -211,8 +225,8 @@ class RenderSystem(
                 }
                 previous.set(node)
             }
-        } else if(AmbleStateComponent.has(entity)) {
-            val state = AmbleStateComponent.get(entity)
+        } else if(AmbleState.has(entity)) {
+            val state = AmbleState.get(entity)
             val previous = entity.transform().position.cpy()
             val nextPosition = if(state.wayPoint != null) state.wayPoint else previous
             shapeDrawer.line(previous, nextPosition, Color.BLUE, 0.1f)

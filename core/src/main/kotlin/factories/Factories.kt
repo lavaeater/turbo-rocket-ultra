@@ -666,8 +666,9 @@ fun newEnemy(at:Vector2, init: EngineEntity.() -> Unit = {}): Entity {
             lootTable.count = (1..5).random()
         }
         with<AiComponent> {
-            actions.add(EnemyBehaviors.ambleAction)
-            actions.add(EnemyBehaviors.getCloserToPlayerAction)
+            actions.add(EnemyBehaviors.amble)
+            actions.add(EnemyBehaviors.approachTarget)
+            actions.add(EnemyBehaviors.attackTarget)
         }
         init(this)
     }

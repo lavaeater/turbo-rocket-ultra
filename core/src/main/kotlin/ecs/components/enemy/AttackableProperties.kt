@@ -4,6 +4,7 @@ import com.badlogic.ashley.core.Component
 import com.badlogic.ashley.core.Entity
 import com.badlogic.gdx.utils.Pool
 import ecs.systems.graphics.GameConstants
+import ktx.ashley.mapperFor
 import ktx.math.random
 
 class AttackableProperties: Component, Pool.Poolable {
@@ -27,6 +28,16 @@ class AttackableProperties: Component, Pool.Poolable {
         health = if (randomValue < 5) GameConstants.ENEMY_BASE_HEALTH * 10f else GameConstants.ENEMY_BASE_HEALTH
         maxHealth = health
         stunned = false
+    }
+
+    companion object {
+        val mapper = mapperFor<AttackableProperties>()
+        fun get(entity: Entity):AttackableProperties {
+            return mapper.get(entity)
+        }
+        fun has(entity:Entity) : Boolean {
+            return mapper.has(entity)
+        }
     }
 
 }
