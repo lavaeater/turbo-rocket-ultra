@@ -667,6 +667,7 @@ fun newEnemy(at:Vector2, init: EngineEntity.() -> Unit = {}): Entity {
         }
         with<AiComponent> {
             actions.add(EnemyBehaviors.ambleAction)
+            actions.add(EnemyBehaviors.getCloserToPlayerAction)
         }
         init(this)
     }

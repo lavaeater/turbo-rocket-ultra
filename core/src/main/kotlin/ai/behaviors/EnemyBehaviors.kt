@@ -4,12 +4,18 @@ import ai.findPathFromTo
 import ai.pathfinding.TileGraph
 import ai.tasks.leaf.SectionFindingMethods
 import com.badlogic.ashley.core.Entity
+import com.badlogic.gdx.math.MathUtils
+import eater.ai.CanISeeThisConsideration
 import eater.ai.Consideration
 import eater.ai.ConsideredActionWithState
+import eater.ai.GenericActionWithState
 import ecs.components.ai.behavior.AmbleStateComponent
+import ecs.components.ai.behavior.ApproachPlayerStateComponent
+import ecs.components.gameplay.TargetComponent
 import ecs.systems.graphics.GameConstants.TOUCHING_DISTANCE
 import ecs.systems.sectionX
 import ecs.systems.sectionY
+import ktx.log.debug
 import ktx.math.minus
 import physics.agentProps
 import physics.attackables
@@ -17,9 +23,19 @@ import physics.transform
 
 object EnemyBehaviors {
 
-    val ambleAction = ConsideredActionWithState(
+    val getCloserToPlayerAction = ConsideredActionWithState(
+        "Approach Player",
+        {},
+        { entity, state, deltaTime ->
+            debug { "Moving closer to the targets" }
+        },
+        ApproachPlayerStateComponent::class,
+        EnemyConsiderations.healthConsideration, CanISeeThisConsideration(TargetComponent::class)
+    )
+
+    val ambleAction = GenericActionWithState(
         "Amble",
-        {}, { entity, state, deltaTime ->
+        {_ -> 0.5 }, {}, { entity, state, deltaTime ->
             /**
              * What kind of state do we need? Well, we need to check
              * if we are going somewhere, right now, or not.
@@ -42,8 +58,7 @@ object EnemyBehaviors {
                 }
                 AmbleStateComponent.AmbleState.NeedsWaypoint -> getWaypoint(entity, state, deltaTime)
             }
-        }, AmbleStateComponent::class,
-        EnemyConsiderations.healthConsideration
+        }, AmbleStateComponent::class
     )
 
     private fun getWaypoint(entity: Entity, state: AmbleStateComponent, deltaTime: Float) {
@@ -51,9 +66,9 @@ object EnemyBehaviors {
             this.directionVector.rotateDeg(this.rotationSpeed * deltaTime)
             this.speed = 0f
         }
-        if(state.wayPoint == null) {
+        if (state.wayPoint == null) {
             if (state.ready(deltaTime)) {
-                if(state.queue.any()) {
+                if (state.queue.any()) {
                     state.wayPoint = state.queue.removeFirst()
                     state.state = AmbleStateComponent.AmbleState.MoveToWaypoint
                 } else {
@@ -67,11 +82,11 @@ object EnemyBehaviors {
     }
 
     private fun move(entity: Entity, state: AmbleStateComponent) {
-        if(state.wayPoint == null) {
+        if (state.wayPoint == null) {
             state.state = AmbleStateComponent.AmbleState.NeedsWaypoint
         } else {
             val currentPos = entity.transform().position
-            if(currentPos.dst(state.wayPoint) < TOUCHING_DISTANCE) {
+            if (currentPos.dst(state.wayPoint) < TOUCHING_DISTANCE) {
                 state.wayPoint = null
                 state.state = AmbleStateComponent.AmbleState.NeedsWaypoint // Safeguard
             } else {
@@ -87,7 +102,7 @@ object EnemyBehaviors {
             this.directionVector.rotateDeg(this.rotationSpeed * deltaTime)
             this.speed = 0f
         }
-        if(state.ready(deltaTime)) {
+        if (state.ready(deltaTime)) {
             findPathFromTo(state.queue, state.startPointCoordinate!!, state.endPointCoordinate!!)
             state.state = AmbleStateComponent.AmbleState.MoveToWaypoint
         }
@@ -98,7 +113,7 @@ object EnemyBehaviors {
             this.directionVector.rotateDeg(this.rotationSpeed * deltaTime)
             this.speed = 0f
         }
-        if(state.ready(deltaTime)) {
+        if (state.ready(deltaTime)) {
             val position = entity.transform().position
             state.startPointCoordinate = TileGraph.getCoordinateInstance(position.sectionX(), position.sectionY())
             val foundSection = SectionFindingMethods.classicRandom(
@@ -120,6 +135,6 @@ object EnemyBehaviors {
 object EnemyConsiderations {
     val healthConsideration = Consideration("How's my health?") { entity ->
         val attackables = entity.attackables()
-        attackables.health / attackables.maxHealth
+        MathUtils.norm(0f, attackables.maxHealth, attackables.health)
     }
 }

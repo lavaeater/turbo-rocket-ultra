@@ -3,6 +3,7 @@ package screens
 import ai.pathfinding.TileGraph
 import audio.AudioPlayer
 import com.badlogic.ashley.core.Engine
+import com.badlogic.gdx.Application
 import com.badlogic.gdx.Gdx
 import com.badlogic.gdx.controllers.Controllers
 import com.badlogic.gdx.graphics.OrthographicCamera
@@ -68,6 +69,8 @@ class GameScreen(private val gameState: StateMachine<GameState, GameEvent>) : Kt
     private var running = true
 
     override fun show() {
+        Gdx.app.logLevel = Application.LOG_DEBUG
+
         initializeIfNeeded()
         if (running) {
             camera.setToOrtho(true, viewPort.maxWorldWidth, viewPort.maxWorldHeight)
@@ -95,12 +98,6 @@ class GameScreen(private val gameState: StateMachine<GameState, GameEvent>) : Kt
             Assets.music.first().isLooping = true
             Assets.music.first().play()
 
-            //And then we pause and show intro text, wait for any input at all.
-            //That will be a total pain in the ass
-            /*
-            Maybe
-            How would we want this to work, ideally?
-             */
             storyManager.activate()
         }
     }
