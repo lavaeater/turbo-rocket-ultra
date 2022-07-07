@@ -46,7 +46,7 @@ import eater.turbofacts.Factoids
 import eater.turbofacts.TurboFactsOfTheWorld
 import eater.turbofacts.TurboStoryManager
 import eater.turbofacts.factsOfTheWorld
-import factories.newEnemy
+import factories.enemy
 import ui.IUserInterface
 import kotlin.math.pow
 import kotlin.math.roundToInt
@@ -191,7 +191,7 @@ class GameScreen(private val gameState: StateMachine<GameState, GameEvent>) : Kt
         val startBounds = mapManager.gridMap.values.first { it.startSection }.innerBounds
         for ((controlComponent, player) in Players.players) {
             if (player.isAiPlayer) {
-                val enemy = newEnemy(startBounds.randomPoint()) {
+                val enemy = enemy(startBounds.randomPoint()) {
                     with<CameraFollowComponent>()
                     with<PlayerComponent> {
                         this.player = player

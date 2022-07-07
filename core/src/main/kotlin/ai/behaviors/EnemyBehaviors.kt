@@ -12,6 +12,7 @@ import ecs.components.ai.behavior.*
 import ecs.components.enemy.AttackableProperties
 import ecs.components.gameplay.BurningComponent
 import ecs.components.gameplay.TargetComponent
+import ecs.components.player.PlayerComponent
 import ecs.systems.graphics.GameConstants
 import ecs.systems.graphics.GameConstants.TOUCHING_DISTANCE
 import ecs.systems.sectionX
@@ -75,7 +76,7 @@ object EnemyBehaviors {
         },
         AttackState::class,
         EnemyConsiderations.healthConsideration,
-        AmICloseToThisConsideration(TargetComponent::class, Memory::class, GameConstants.ENEMY_MELEE_DISTANCE)
+        AmICloseToThisConsideration(PlayerComponent::class, Memory::class, GameConstants.ENEMY_MELEE_DISTANCE)
     )
 
     val approachTarget = ConsideredActionWithState(
@@ -127,7 +128,7 @@ object EnemyBehaviors {
             debug { "Moving closer to the targets" }
         },
         ApproachTargetState::class,
-        EnemyConsiderations.healthConsideration, CanISeeThisConsideration(TargetComponent::class, Memory::class)
+        EnemyConsiderations.healthConsideration, CanISeeThisConsideration(PlayerComponent::class, Memory::class)
     )
 
     val amble = GenericActionWithState(

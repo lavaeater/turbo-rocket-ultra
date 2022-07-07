@@ -158,20 +158,18 @@ class RenderSystem(
 
     private fun renderEnemyDebugStuff(entity: Entity) {
         val ec = entity.agentProps()
-        if(entity.has<PlayerComponent>()) {
-            renderPath(entity, ec)
-            renderCanSee(entity, ec)
-            renderMemory(entity, ec)
-        }
+        renderPath(entity, ec)
+        renderCanSee(entity, ec)
+        renderMemory(entity, ec)
     }
 
     private fun renderMemory(entity: Entity, ec: AgentProperties) {
-        if(Memory.has(entity)) {
+        if (Memory.has(entity)) {
             val memory = Memory.get(entity)
-            for(position in memory.seenEntities.values.flatten().map { TransformComponent.get(it).position }) {
+            for (position in memory.seenEntities.values.flatten().map { TransformComponent.get(it).position }) {
                 shapeDrawer.filledCircle(position, 1f, Color.RED)
             }
-            for(position in memory.closeEntities.values.flatten().map { TransformComponent.get(it).position }) {
+            for (position in memory.closeEntities.values.flatten().map { TransformComponent.get(it).position }) {
                 shapeDrawer.filledCircle(position, 1f, Color.BLUE)
             }
         }
@@ -185,27 +183,27 @@ class RenderSystem(
             position.x,
             position.y,
             ap.viewDistance,
-            ap.directionVector.angleRad() - ap.fieldOfView / 2  * MathUtils.degreesToRadians,
+            ap.directionVector.angleRad() - ap.fieldOfView / 2 * MathUtils.degreesToRadians,
             MathUtils.degreesToRadians * ap.fieldOfView, sectorColor, sectorColor
         )
 
         shapeDrawer.setColor(Color.RED)
 
-        shapeDrawer.circle(position.x, position.y, ap.viewDistance,0.1f)
+        shapeDrawer.circle(position.x, position.y, ap.viewDistance, 0.1f)
 
         shapeDrawer.line(position, position.cpy().add(ap.directionVector.cpy().scl(ap.viewDistance)), 0.1f)
 
-        if(entity.has<SeenPlayerPositions>()) {
-            for(v in entity.getComponent<SeenPlayerPositions>().storage) {
+        if (entity.has<SeenPlayerPositions>()) {
+            for (v in entity.getComponent<SeenPlayerPositions>().storage) {
                 shapeDrawer.filledCircle(v, 0.5f, Color.RED)
             }
         }
     }
 
     private fun renderPath(entity: Entity, ec: AgentProperties) {
-        if(entity.has<Path>()) {
+        if (entity.has<Path>()) {
             val previous = entity.transform().position.cpy()
-            val nextPosition = if(entity.has<Waypoint>()) entity.getComponent<Waypoint>().position else previous
+            val nextPosition = if (entity.has<Waypoint>()) entity.getComponent<Waypoint>().position else previous
             shapeDrawer.line(previous, nextPosition, Color.BLUE, 0.1f)
             shapeDrawer.filledCircle(nextPosition, GameConstants.TOUCHING_DISTANCE, pathNodeColor)
             previous.set(nextPosition)
@@ -225,10 +223,10 @@ class RenderSystem(
                 }
                 previous.set(node)
             }
-        } else if(AmbleState.has(entity)) {
+        } else if (AmbleState.has(entity)) {
             val state = AmbleState.get(entity)
             val previous = entity.transform().position.cpy()
-            val nextPosition = if(state.wayPoint != null) state.wayPoint else previous
+            val nextPosition = if (state.wayPoint != null) state.wayPoint else previous
             shapeDrawer.line(previous, nextPosition, Color.BLUE, 0.1f)
             shapeDrawer.filledCircle(nextPosition, GameConstants.TOUCHING_DISTANCE, pathNodeColor)
             previous.set(nextPosition)

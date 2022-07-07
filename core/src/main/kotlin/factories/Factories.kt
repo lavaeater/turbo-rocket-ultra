@@ -641,7 +641,7 @@ fun bullet(at: Vector2, towards: Vector2, speed: Float, damage: Float, player: P
     CounterObject.bulletCount++
 }
 
-fun newEnemy(at:Vector2, init: EngineEntity.() -> Unit = {}): Entity {
+fun enemy(at:Vector2, init: EngineEntity.() -> Unit = {}): Entity {
     val box2dBody = bodyForSprite(
         at,
         Box2dCategories.enemies,
@@ -679,7 +679,7 @@ fun newEnemy(at:Vector2, init: EngineEntity.() -> Unit = {}): Entity {
     return entity
 }
 
-fun enemy(at: Vector2, init: EngineEntity.() -> Unit = {}): Entity {
+fun oldenemy(at: Vector2, init: EngineEntity.() -> Unit = {}): Entity {
 
     val box2dBody = bodyForSprite(
         at,
