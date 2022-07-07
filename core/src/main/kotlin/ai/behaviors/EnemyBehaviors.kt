@@ -47,7 +47,10 @@ object EnemyBehaviors {
     )
 
     private fun getWaypoint(entity: Entity, state: AmbleStateComponent, deltaTime: Float) {
-        entity.agentProps().speed = 0f
+        entity.agentProps().apply {
+            this.directionVector.rotateDeg(this.rotationSpeed * deltaTime)
+            this.speed = 0f
+        }
         if(state.wayPoint == null) {
             if (state.ready(deltaTime)) {
                 if(state.queue.any()) {
@@ -80,7 +83,10 @@ object EnemyBehaviors {
     }
 
     private fun findPathToTarget(entity: Entity, state: AmbleStateComponent, deltaTime: Float) {
-        entity.agentProps().speed = 0f
+        entity.agentProps().apply {
+            this.directionVector.rotateDeg(this.rotationSpeed * deltaTime)
+            this.speed = 0f
+        }
         if(state.ready(deltaTime)) {
             findPathFromTo(state.queue, state.startPointCoordinate!!, state.endPointCoordinate!!)
             state.state = AmbleStateComponent.AmbleState.MoveToWaypoint
@@ -88,7 +94,10 @@ object EnemyBehaviors {
     }
 
     private fun findTarget(entity: Entity, state: AmbleStateComponent, deltaTime: Float) {
-        entity.agentProps().speed = 0f
+        entity.agentProps().apply {
+            this.directionVector.rotateDeg(this.rotationSpeed * deltaTime)
+            this.speed = 0f
+        }
         if(state.ready(deltaTime)) {
             val position = entity.transform().position
             state.startPointCoordinate = TileGraph.getCoordinateInstance(position.sectionX(), position.sectionY())
