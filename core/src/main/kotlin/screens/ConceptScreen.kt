@@ -18,9 +18,13 @@ import kotlin.reflect.full.starProjectedType
 class ConceptScreen(gameState: StateMachine<GameState, GameEvent>) : BasicScreen(gameState) {
     private var drawPointerBall = false
     private val valueSize = 10
-    private val values = Array(valueSize) {
-        (it * 1f / valueSize.toFloat()).toFloat()
-    }
+    private val scores = arrayOf(arrayOf(0.25f, 0.5f, 0.75f), arrayOf(0.5f), arrayOf(0.25f, 0.75f))
+    private val scoreAvgs = scores.map { it.average().toFloat() }
+
+    private val values = arrayOf(0.3f, 0.5f, 0.7f, 1f)
+//        Array(valueSize) {
+//        (it * 1f / valueSize.toFloat()).toFloat()
+//    }
     private val interpolations = mapOf(
         "Exp 10    " to Interpolation.exp10,
         "Exp 10 In " to Interpolation.exp10In,
@@ -62,7 +66,7 @@ class ConceptScreen(gameState: StateMachine<GameState, GameEvent>) : BasicScreen
     private val stage by lazy {
         val aStage = ktx.actors.stage(batch, ExtendViewport(800f, 600f, OrthographicCamera()))
         aStage.actors {
-            label(interpolations.keys.joinToString("\n") { ip -> ip + values.joinToString { "${(interpolations[ip]!!.apply(it)* 100).toInt()}" }}).apply {
+            label(scoreAvgs.joinToString("\n")).apply {
                 setFontScale(0.5f)
             }
         }
