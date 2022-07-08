@@ -1,5 +1,6 @@
 package ai.behaviors
 
+import ai.behaviors.EnemyConsiderations.healthConsideration
 import ai.findPathFromTo
 import ai.pathfinding.TileGraph
 import ai.tasks.leaf.SectionFindingMethods
@@ -47,7 +48,7 @@ object EnemyBehaviors {
         },
         PanikState::class,
         0f..0.6f,
-        InvertedConsideration("Am I dying?", EnemyConsiderations.healthConsideration),
+        InvertedConsideration("Am I dying?", healthConsideration),
         DoIHaveThisComponentConsideration("Am I burning?", BurningComponent::class)
     )
 
@@ -84,7 +85,8 @@ object EnemyBehaviors {
         },
         AttackState::class,
         0f..0.9f,
-        AmICloseToThisConsideration(PlayerComponent::class, GameConstants.ENEMY_MELEE_DISTANCE)
+        AmICloseToThisConsideration(PlayerComponent::class, GameConstants.ENEMY_MELEE_DISTANCE),
+        healthConsideration
     )
 
     val approachTarget = ConsideredActionWithState(

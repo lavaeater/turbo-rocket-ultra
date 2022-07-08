@@ -3,6 +3,7 @@ package screens
 import com.badlogic.gdx.Input
 import com.badlogic.gdx.graphics.OrthographicCamera
 import com.badlogic.gdx.math.Interpolation
+import com.badlogic.gdx.math.Interpolation.Pow
 import com.badlogic.gdx.utils.viewport.ExtendViewport
 import gamestate.GameEvent
 import gamestate.GameState
@@ -20,6 +21,9 @@ class ConceptScreen(gameState: StateMachine<GameState, GameEvent>) : BasicScreen
     private val valueSize = 10
     private val scores = arrayOf(arrayOf(0.25f, 0.5f, 0.75f), arrayOf(0.5f), arrayOf(0.25f, 0.75f))
     private val scoreAvgs = scores.map { it.average().toFloat() }
+    private val scoresInterpolated = scores.map {
+        Interpolation.PowOut(it.count()).apply(it.average().toFloat())
+    }
 
     private val values = arrayOf(0.3f, 0.5f, 0.7f, 1f)
 //        Array(valueSize) {
@@ -66,7 +70,7 @@ class ConceptScreen(gameState: StateMachine<GameState, GameEvent>) : BasicScreen
     private val stage by lazy {
         val aStage = ktx.actors.stage(batch, ExtendViewport(800f, 600f, OrthographicCamera()))
         aStage.actors {
-            label(scoreAvgs.joinToString("\n")).apply {
+            label(scoreAvgs.joinToString() + "\n" + scoresInterpolated.joinToString()).apply {
                 setFontScale(0.5f)
             }
         }
