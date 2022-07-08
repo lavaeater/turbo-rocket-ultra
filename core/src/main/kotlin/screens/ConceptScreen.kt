@@ -21,7 +21,22 @@ class ConceptScreen(gameState: StateMachine<GameState, GameEvent>) : BasicScreen
     private val values = Array(valueSize) {
         (it * 1f / valueSize.toFloat()).toFloat()
     }
-    private val interpolations = listOf(Interpolation.exp10, Interpolation.exp10In, Interpolation.exp10Out)
+    private val interpolations = mapOf(
+        "Exp 10    " to Interpolation.exp10,
+        "Exp 10 In " to Interpolation.exp10In,
+        "Exp 10 Out" to Interpolation.exp10Out,
+        "Exp 5     " to Interpolation.exp5,
+        "Exp 5 In  " to Interpolation.exp5In,
+        "Exp 5 In  " to Interpolation.exp5Out,
+//    Interpolation.fastSlow,
+//        Interpolation.pow2,
+//        Interpolation.pow2In,
+//        Interpolation.pow2Out,
+//        Interpolation.pow4,
+//        Interpolation.pow4In,
+//    Interpolation.pow4Out,
+//        Interpolation.slowFast
+    )
 
     private val normalCommandMap = command("Normal") {
         setUp(Input.Keys.SPACE, "Show the scrolling dialog") {
@@ -47,7 +62,7 @@ class ConceptScreen(gameState: StateMachine<GameState, GameEvent>) : BasicScreen
     private val stage by lazy {
         val aStage = ktx.actors.stage(batch, ExtendViewport(800f, 600f, OrthographicCamera()))
         aStage.actors {
-            label(interpolations.joinToString("\n") { ip -> "${ip::class.starProjectedType } " + values.joinToString { "${(ip.apply(it)* 100).toInt()}" }}).apply {
+            label(interpolations.keys.joinToString("\n") { ip -> ip + values.joinToString { "${(interpolations[ip]!!.apply(it)* 100).toInt()}" }}).apply {
                 setFontScale(0.5f)
             }
         }
