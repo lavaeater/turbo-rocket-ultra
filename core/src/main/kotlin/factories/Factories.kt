@@ -63,8 +63,10 @@ import ktx.math.random
 import ktx.math.vec2
 import ktx.scene2d.*
 import physics.*
+import screens.ApplicationFlags
 import screens.CounterObject
 import tru.*
+import ui.customactors.boundLabel
 import ui.getUiThing
 import kotlin.experimental.or
 
@@ -341,7 +343,7 @@ fun player(player: Player, mapper: ControlMapper, at: Vector2, debug: Boolean) {
 
     player.entity = engine().entity {
         with<AttackableProperties> {
-            health = GameConstants.ENEMY_BASE_HEALTH
+            health = GameConstants.ENEMY_BASE_HEALTH * 10000f
         }
         with<CameraFollowComponent>()
         with<Box2d> { body = box2dBody }
@@ -641,7 +643,7 @@ fun bullet(at: Vector2, towards: Vector2, speed: Float, damage: Float, player: P
     CounterObject.bulletCount++
 }
 
-fun enemy(at:Vector2, init: EngineEntity.() -> Unit = {}): Entity {
+fun enemy(at: Vector2, init: EngineEntity.() -> Unit = {}): Entity {
     val box2dBody = bodyForSprite(
         at,
         Box2dCategories.enemies,
@@ -670,7 +672,10 @@ fun enemy(at:Vector2, init: EngineEntity.() -> Unit = {}): Entity {
             actions.add(EnemyBehaviors.approachTarget)
             actions.add(EnemyBehaviors.attackTarget)
             actions.add(EnemyBehaviors.panik)
+            if (ApplicationFlags.showEnemyActionInfo)
+                addActionUiThing(this@entity.entity, this)
         }
+
         init(this)
     }
 
@@ -717,7 +722,7 @@ fun oldenemy(at: Vector2, init: EngineEntity.() -> Unit = {}): Entity {
     return entity
 }
 
-fun addUiThing(entity: Entity, bt: BehaviorComponent) {
+fun addActionUiThing(entity: Entity, aiComponent: AiComponent) {
     entity.add(getUiThing {
         val startPosition = hud.worldToHudPosition(entity.transform().position.cpy().add(1f, 1f))
 
@@ -725,6 +730,34 @@ fun addUiThing(entity: Entity, bt: BehaviorComponent) {
             override fun act(delta: Float): Boolean {
                 if (entity.hasTransform()) {
                     val coordinate = hud.worldToHudPosition(entity.transform().position.cpy().add(.5f, -.5f))
+                    actor.setPosition(coordinate.x, coordinate.y)
+                }
+                return true
+            }
+        }.repeatForever()
+        stage.actors {
+            verticalGroup {
+                it += moveAction
+                boundLabel({
+"""${entity.agentProps().directionVector}
+${aiComponent.actions.joinToString("\n") { action -> "${action.name}: ${action.score}"}}""".trimMargin()
+                }) {
+
+                }.setPosition(startPosition.x, startPosition.y)
+            }
+        }
+    })
+}
+
+fun addUiThing(entity: Entity, bt: BehaviorComponent) {
+    entity.add(getUiThing {
+        val startPosition = hud.worldToHudPosition(entity.transform().position.cpy().add(1f, 1f))
+
+        val moveAction = object : Action() {
+            override fun act(delta: Float): Boolean {
+                if (entity.hasTransform()) {
+                    val coordinate =
+                        hud.worldToHudPosition(entity.transform().position.cpy().add(.5f, -.5f))
                     actor.setPosition(coordinate.x, coordinate.y)
                 }
                 return true
@@ -999,7 +1032,10 @@ fun spawner(
     val box2dBody = world().body {
         type = BodyDef.BodyType.StaticBody
         position.set(tileX, tileY)
-        box(4f, 4f) {//widthInMeters, projectedHeightInMeters, vec2(widthInMeters / 2, -projectedHeightInMeters / 2)) {
+        box(
+            4f,
+            4f
+        ) {//widthInMeters, projectedHeightInMeters, vec2(widthInMeters / 2, -projectedHeightInMeters / 2)) {
             restitution = 0f
             filter {
                 categoryBits = Box2dCategories.obstacles

@@ -26,22 +26,30 @@ import physics.transform
 import kotlin.reflect.full.starProjectedType
 
 object EnemyBehaviors {
-    val panik = ConsideredActionWithState("PANIK!", {}, { entity, state, deltaTime ->
-        when(state.status) {
-            PanikStatus.NotStarted -> {
-                state.coolDown = 0f
-                state.coolDownRange = 0.5f..1.5f
-                state.status = PanikStatus.Paniking
-            }
-            PanikStatus.Paniking -> {
-                if(state.ready(deltaTime)) {
-                    val agentProps = AgentProperties.get(entity)
-                    agentProps.directionVector.rotateDeg((45f..135f).random())
-                    agentProps.speed = agentProps.baseProperties.rushSpeed
+    val panik = ConsideredActionWithState(
+        "PANIK!",
+        {},
+        { entity, state, deltaTime ->
+            when (state.status) {
+                PanikStatus.NotStarted -> {
+                    state.coolDown = 0f
+                    state.coolDownRange = 0.5f..1.5f
+                    state.status = PanikStatus.Paniking
+                }
+                PanikStatus.Paniking -> {
+                    if (state.ready(deltaTime)) {
+                        val agentProps = AgentProperties.get(entity)
+                        agentProps.directionVector.rotateDeg((45f..135f).random())
+                        agentProps.speed = agentProps.baseProperties.rushSpeed
+                    }
                 }
             }
-        }
-    }, PanikState::class, InvertedConsideration("Am I dying?", EnemyConsiderations.healthConsideration), DoIHaveThisComponentConsideration("Am I burning?", BurningComponent::class))
+        },
+        PanikState::class,
+        0f..0.6f,
+        InvertedConsideration("Am I dying?", EnemyConsiderations.healthConsideration),
+        DoIHaveThisComponentConsideration("Am I burning?", BurningComponent::class)
+    )
 
 
     val attackTarget = ConsideredActionWithState(
@@ -51,7 +59,7 @@ object EnemyBehaviors {
             //We can reset the cooldown right here to the correct values!
             when (state.status) {
                 AttackStatus.Attacking -> {
-                    if(state.targetEntity != null && state.ready(deltaTime)) {
+                    if (state.targetEntity != null && state.ready(deltaTime)) {
                         val agentProperties = AgentProperties.get(entity)
                         val targetEntity = state.targetEntity!!
                         val attackableProperties = AttackableProperties.get(targetEntity)
@@ -75,8 +83,8 @@ object EnemyBehaviors {
             }
         },
         AttackState::class,
-        EnemyConsiderations.healthConsideration,
-        AmICloseToThisConsideration(PlayerComponent::class, Memory::class, GameConstants.ENEMY_MELEE_DISTANCE)
+        0f..0.9f,
+        AmICloseToThisConsideration(PlayerComponent::class, GameConstants.ENEMY_MELEE_DISTANCE)
     )
 
     val approachTarget = ConsideredActionWithState(
@@ -128,12 +136,13 @@ object EnemyBehaviors {
             debug { "Moving closer to the targets" }
         },
         ApproachTargetState::class,
-        EnemyConsiderations.healthConsideration, CanISeeThisConsideration(PlayerComponent::class, Memory::class)
+        0.0f..0.9f,
+        CanISeeThisConsideration(PlayerComponent::class)
     )
 
     val amble = GenericActionWithState(
         "Amble",
-        { _ -> 0.5 }, {}, { entity, state, deltaTime ->
+        { _ -> 0.7f }, {}, { entity, state, deltaTime ->
             /**
              * What kind of state do we need? Well, we need to check
              * if we are going somewhere, right now, or not.
@@ -228,7 +237,6 @@ object EnemyBehaviors {
         }
     }
 }
-
 
 object EnemyConsiderations {
     val healthConsideration = Consideration("How's my health?") { entity ->

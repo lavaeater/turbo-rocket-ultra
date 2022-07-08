@@ -24,12 +24,12 @@ import eater.physics.getComponent
 import eater.physics.has
 import ecs.components.ai.behavior.AmbleState
 import ecs.components.graphics.RenderableComponent
-import ecs.components.player.PlayerComponent
 import ecs.systems.graphics.GameConstants.SCALE
 import ktx.ashley.allOf
 import ktx.graphics.use
 import map.grid.GridMapManager
 import physics.*
+import screens.ApplicationFlags
 import tru.Assets
 
 class RenderSystem(
@@ -37,7 +37,6 @@ class RenderSystem(
     private val debug: Boolean,
     private val rayHandler: RayHandler,
     private val camera: OrthographicCamera,
-    var enemyDebug: Boolean,
     priority: Int,
     var playerDebug: Boolean
 ) : SortedIteratingSystem(
@@ -145,7 +144,7 @@ class RenderSystem(
             is ecs.components.graphics.RenderableType.Effect -> renderEffect(entity, deltaTime)
         }
 
-        if (enemyDebug && entity.isEnemy()) {
+        if (entity.isEnemy()) {
             renderEnemyDebugStuff(entity)
         }
 
@@ -158,19 +157,22 @@ class RenderSystem(
 
     private fun renderEnemyDebugStuff(entity: Entity) {
         val ec = entity.agentProps()
-        renderPath(entity, ec)
-        renderCanSee(entity, ec)
-        renderMemory(entity, ec)
+        if(ApplicationFlags.showEnemyPaths)
+            renderPath(entity, ec)
+        if(ApplicationFlags.showCanSee)
+            renderCanSee(entity, ec)
+        if(ApplicationFlags.showMemory)
+            renderMemory(entity)
     }
 
-    private fun renderMemory(entity: Entity, ec: AgentProperties) {
+    private fun renderMemory(entity: Entity) {
         if (Memory.has(entity)) {
             val memory = Memory.get(entity)
             for (position in memory.seenEntities.values.flatten().map { TransformComponent.get(it).position }) {
-                shapeDrawer.filledCircle(position, 1f, Color.RED)
+                shapeDrawer.filledCircle(position, 0.25f, Color.RED)
             }
             for (position in memory.closeEntities.values.flatten().map { TransformComponent.get(it).position }) {
-                shapeDrawer.filledCircle(position, 1f, Color.BLUE)
+                shapeDrawer.filledCircle(position, 0.5f, Color.BLUE)
             }
         }
     }

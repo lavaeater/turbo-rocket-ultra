@@ -30,6 +30,15 @@ import ui.customactors.animatedSpriteImage
 import ui.customactors.boundLabel
 import kotlin.properties.Delegates
 
+object ApplicationFlags {
+    val map = mutableMapOf("showEnemyPaths" to false, "showEnemyActionInfo" to true, "showCanSee" to false, "showMemory" to true)
+    var showEnemyPaths by map
+    var showCanSee by map
+    var showEnemyActionInfo by map
+    var showMemory by map
+}
+
+
 class SetupScreen(gameState: StateMachine<GameState, GameEvent>) : BasicScreen(gameState) {
     override val camera = OrthographicCamera()
     override val viewport = ExtendViewport(800f, 600f, camera)
