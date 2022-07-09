@@ -34,7 +34,7 @@ object EnemyBehaviors {
             when (state.status) {
                 PanikStatus.NotStarted -> {
                     state.coolDown = 0f
-                    state.coolDownRange = 0.5f..1.5f
+                    state.coolDownRange = 0.25f..1.5f
                     state.status = PanikStatus.Paniking
                 }
                 PanikStatus.Paniking -> {
@@ -73,10 +73,10 @@ object EnemyBehaviors {
                     if (Memory.has(entity)) {
                         val memory = Memory.get(entity)
                         val agentProps = AgentProperties.get(entity)
-                        state.coolDownRange = (agentProps.attackSpeed / 1.5f)..(agentProps.attackSpeed * 1.5f)
+                        state.coolDownRange = (agentProps.attackSpeed / 2f)..(agentProps.attackSpeed * 1.25f)
                         state.coolDown = state.coolDownRange.random()
                         state.targetEntity =
-                            memory.closeEntities[PlayerComponent::class.starProjectedType]?.firstOrNull()
+                            memory.closeEntities[TargetComponent::class.starProjectedType]?.firstOrNull()
                         state.status = AttackStatus.Attacking
                         agentProps.speed = 0f
                     }
@@ -85,7 +85,7 @@ object EnemyBehaviors {
         },
         AttackState::class,
         0f..0.9f,
-        AmICloseToThisConsideration(PlayerComponent::class, GameConstants.ENEMY_MELEE_DISTANCE),
+        AmICloseToThisConsideration(TargetComponent::class, GameConstants.ENEMY_MELEE_DISTANCE),
         healthConsideration
     )
 
@@ -139,7 +139,7 @@ object EnemyBehaviors {
         },
         ApproachTargetState::class,
         0.0f..0.9f,
-        CanISeeThisConsideration(PlayerComponent::class)
+        CanISeeThisConsideration(TargetComponent::class)
     )
 
     val amble = GenericActionWithState(

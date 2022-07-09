@@ -29,8 +29,8 @@ Families that now will have to wait for the next
 crop of sewer-cleaners to help them out.
 
 facts
-MaxEnemies:10:i
-MaxSpawnedEnemies:100:i
+MaxEnemies:1:i
+MaxSpawnedEnemies:1:i
 AcceleratingSpawns:false:b
 AcceleratingSpawnsFactor:1.25:f
 EnemyKillCount:0:i

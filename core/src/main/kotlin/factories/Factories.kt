@@ -736,11 +736,13 @@ fun addActionUiThing(entity: Entity, aiComponent: AiComponent) {
             }
         }.repeatForever()
         stage.actors {
-            verticalGroup {
+            widget = verticalGroup {
                 it += moveAction
                 boundLabel({
-"""${entity.agentProps().directionVector}
-${aiComponent.actions.joinToString("\n") { action -> "${action.name}: ${action.score}"}}""".trimMargin()
+                    if(AgentProperties.has(entity)) {
+                        """${entity.agentProps().directionVector}
+${aiComponent.actions.joinToString("\n") { action -> "${action.name}: ${action.score}" }}""".trimMargin()
+                    } else ""
                 }) {
 
                 }.setPosition(startPosition.x, startPosition.y)
