@@ -18,6 +18,7 @@ import com.crashinvaders.vfx.effects.OldTvEffect
 import com.strongjoshua.console.CommandExecutor
 import com.strongjoshua.console.GUIConsole
 import eater.ecs.systems.UpdateActionsSystem
+import eater.ecs.systems.UpdateMemorySystem
 import eater.ecs.systems.UtilityAiSystem
 import eater.injection.InjectionContext
 import eater.messaging.IMessage
@@ -151,6 +152,7 @@ object Context : InjectionContext() {
 //            addSystem(BehaviorTreeSystem(4))
             addSystem(UtilityAiSystem())
             addSystem(UpdateActionsSystem())
+            addSystem(UpdateMemorySystem())
             addSystem(PlayerFlashlightSystem())
             addSystem(PlayerContextActionSystem())
             addSystem(DelayedEntityCreationSystem())

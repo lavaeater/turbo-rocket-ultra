@@ -76,7 +76,7 @@ object EnemyBehaviors {
                         state.coolDownRange = (agentProps.attackSpeed / 2f)..(agentProps.attackSpeed * 1.25f)
                         state.coolDown = state.coolDownRange.random()
                         state.targetEntity =
-                            memory.closeEntities[TargetComponent::class.starProjectedType]?.firstOrNull()
+                            memory.closeEntities[TargetComponent::class.starProjectedType]?.keys?.firstOrNull()
                         state.status = AttackStatus.Attacking
                         agentProps.speed = 0f
                     }
@@ -119,7 +119,7 @@ object EnemyBehaviors {
                     if (Memory.has(entity)) {
                         val memory = Memory.get(entity)
                         state.targetEntity =
-                            memory.seenEntities[TargetComponent::class.starProjectedType]?.firstOrNull()
+                            memory.seenEntities[TargetComponent::class.starProjectedType]?.keys?.firstOrNull()
                         state.status = ApproachTargetStatus.Approach
                     }
                 }

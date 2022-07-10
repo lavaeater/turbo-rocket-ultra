@@ -2,6 +2,7 @@ package ecs.systems.graphics
 
 object GameConstants {
 
+    const val ENEMY_MEMORY_TIME = 5f
     const val MAX_RANDOM_SECTION_RECURSION_LEVEL = 4
     const val TOUCHING_DISTANCE = 2f
     const val ENEMY_MELEE_DISTANCE = 2f

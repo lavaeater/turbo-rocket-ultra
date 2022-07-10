@@ -168,7 +168,7 @@ class RenderSystem(
     private fun renderMemory(entity: Entity) {
         if (Memory.has(entity)) {
             val memory = Memory.get(entity)
-            for (position in memory.seenEntities.values.flatten().map { TransformComponent.get(it).position }) {
+            for (position in memory.seenEntities.fl .values.flatten().map { TransformComponent.get(it).position }) {
                 shapeDrawer.filledCircle(position, 0.25f, Color.RED)
             }
             for (position in memory.closeEntities.values.flatten().map { TransformComponent.get(it).position }) {
