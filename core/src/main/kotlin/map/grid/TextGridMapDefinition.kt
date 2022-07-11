@@ -29,6 +29,15 @@ fun convert(imagePath: String): TextGridMapDefinition {
     return TextGridMapDefinition(lines)
 }
 
+/**
+ * l = loot
+ * s = start
+ * g = goal
+ * w = spawner
+ * b = boss
+ * h = hackingstation
+ * t = target
+ */
 class TextGridMapDefinition(val def: List<String>) : IGridMapDefinition {
 
     override fun hasLoot(coordinate: Coordinate): Boolean {
