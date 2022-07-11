@@ -91,7 +91,7 @@ object EnemyBehaviors {
 
     val approachTarget = ConsideredActionWithState(
         "Approach Player",
-        {},
+        {debug { "Abort approach" }},
         { entity, state, deltaTime ->
             when (state.status) {
                 ApproachTargetStatus.NotStarted -> {
@@ -116,7 +116,9 @@ object EnemyBehaviors {
                      * We come here because we have seen some shit. So, we take the closest
                      * entity off that list and move towards that one.
                      */
+                    debug { "Not started" }
                     if (Memory.has(entity)) {
+                        debug { "has memory"}
                         val memory = Memory.get(entity)
                         state.targetEntity =
                             memory.seenEntities[TargetComponent::class.starProjectedType]?.keys?.firstOrNull()
@@ -124,18 +126,20 @@ object EnemyBehaviors {
                     }
                 }
                 ApproachTargetStatus.Approach -> {
+                    debug { "Approaching" }
                     if (state.targetEntity != null) {
+                        debug { "has target entity" }
                         val agentProps = entity.agentProps()
                         val position = entity.transform().position
                         val targetPosition = state.targetEntity!!.transform().position
                         agentProps.directionVector.set(targetPosition - position).nor()
                         agentProps.speed = agentProps.baseProperties.speed
                     } else {
+                        debug { "Has no target" }
                         state.status = ApproachTargetStatus.NotStarted
                     }
                 }
             }
-            debug { "Moving closer to the targets" }
         },
         ApproachTargetState::class,
         0.0f..0.9f,
