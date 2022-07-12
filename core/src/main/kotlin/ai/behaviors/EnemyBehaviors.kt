@@ -10,6 +10,7 @@ import com.badlogic.gdx.math.MathUtils
 import eater.ai.*
 import eater.ecs.components.AgentProperties
 import eater.ecs.components.Memory
+import eater.ecs.components.TransformComponent
 import ecs.components.ai.behavior.*
 import ecs.components.enemy.AttackableProperties
 import ecs.components.gameplay.AnotherTargetComponent
@@ -136,11 +137,12 @@ object EnemyBehaviors {
                     }
                     ApproachTargetStatus.Approach -> {
                         debug { "Approaching" }
-                        if (state.targetEntity != null) {
+                        if (state.targetEntity != null && TransformComponent.has(state.targetEntity!!) ) {
+                            val targetComponent = TransformComponent.get(state.targetEntity!!)
                             debug { "has target entity" }
                             val agentProps = entity.agentProps()
                             val position = entity.transform().position
-                            val targetPosition = state.targetEntity!!.transform().position
+                            val targetPosition = targetComponent.position
                             agentProps.directionVector.set(targetPosition - position).nor()
                             agentProps.speed = agentProps.baseProperties.speed
                         } else {
