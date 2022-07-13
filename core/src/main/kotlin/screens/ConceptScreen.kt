@@ -3,7 +3,6 @@ package screens
 import com.badlogic.gdx.Input
 import com.badlogic.gdx.graphics.OrthographicCamera
 import com.badlogic.gdx.math.Interpolation
-import com.badlogic.gdx.math.Interpolation.Pow
 import com.badlogic.gdx.utils.viewport.ExtendViewport
 import gamestate.GameEvent
 import gamestate.GameState
@@ -14,7 +13,6 @@ import ktx.scene2d.scene2d
 import statemachine.StateMachine
 import tru.Assets
 import ui.CrawlDialog
-import kotlin.reflect.full.starProjectedType
 
 class ConceptScreen(gameState: StateMachine<GameState, GameEvent>) : BasicScreen(gameState) {
     private var drawPointerBall = false
