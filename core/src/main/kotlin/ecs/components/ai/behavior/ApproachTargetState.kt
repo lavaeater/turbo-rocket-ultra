@@ -7,7 +7,7 @@ import ktx.ashley.mapperFor
 
 class ApproachTargetState: Component, Pool.Poolable {
 
-    var targetEntity: Entity? = null
+    var targetEntity: Entity? by EntityOrNullDelegate()
     var status: ApproachTargetStatus = ApproachTargetStatus.NotStarted
 
 
