@@ -31,7 +31,7 @@ import ui.customactors.boundLabel
 import kotlin.properties.Delegates
 
 object ApplicationFlags {
-    val map = mutableMapOf("showEnemyPaths" to false, "showEnemyActionInfo" to true, "showCanSee" to true, "showMemory" to true)
+    val map = mutableMapOf("showEnemyPaths" to false, "showEnemyActionInfo" to false, "showCanSee" to false, "showMemory" to false)
     var showEnemyPaths by map
     var showCanSee by map
     var showEnemyActionInfo by map
