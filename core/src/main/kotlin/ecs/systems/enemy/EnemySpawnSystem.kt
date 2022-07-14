@@ -18,13 +18,15 @@ class EnemySpawnSystem : IteratingSystem(allOf(EnemySpawnerComponent::class, Tra
     private val enemyCount get() = engine.getEntitiesFor(allOf(AgentProperties::class).get()).count()
     private val spawnPosition = vec2()
     private val factsOfTheWorld by lazy { factsOfTheWorld() }
+    var choice = true
 
     override fun processEntity(entity: Entity, deltaTime: Float) {
         val spawnerComponent = AshleyMappers.enemySpawner.get(entity)
         if (CounterObject.startingEnemyCount > 0) {
             spawnPosition.set(AshleyMappers.transform.get(entity).position)
             spawnPosition.set(spawnPosition.x + (-2f..2f).random(), spawnPosition.y + (-2f..2f).random())
-            enemy(spawnPosition)
+            choice = !choice
+            enemy(spawnPosition, choice)
             CounterObject.maxSpawnedEnemies--
             CounterObject.startingEnemyCount--
         } else {
@@ -39,7 +41,8 @@ class EnemySpawnSystem : IteratingSystem(allOf(EnemySpawnerComponent::class, Tra
                 for (i in 0 until (1..spawnerComponent.waveSize).random()) {
                     spawnPosition.set(AshleyMappers.transform.get(entity).position)
                     spawnPosition.set(spawnPosition.x + (-2f..2f).random(), spawnPosition.y + (-2f..2f).random())
-                    enemy(spawnPosition)
+                    choice = !choice
+                    enemy(spawnPosition, choice)
                     CounterObject.maxSpawnedEnemies--
                 }
             }

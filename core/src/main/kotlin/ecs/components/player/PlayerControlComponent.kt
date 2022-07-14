@@ -1,12 +1,14 @@
 package ecs.components.player
 
 import com.badlogic.ashley.core.Component
+import com.badlogic.ashley.core.Entity
 import com.badlogic.gdx.math.Vector2
 import com.badlogic.gdx.utils.Pool
 import data.Player
 import ecs.systems.graphics.CompassDirection
 import ecs.systems.graphics.GameConstants
 import input.ControlMapper
+import ktx.ashley.mapperFor
 import ktx.math.vec2
 import tru.AnimState
 import kotlin.reflect.KMutableProperty
@@ -27,6 +29,7 @@ import kotlin.reflect.KMutableProperty
  */
 
 class PlayerControlComponent(var controlMapper: ControlMapper, val player: Player) : Component, Pool.Poolable {
+
     var locked = false
     var waitsForRespawn = false
     private var cooldownRemaining = 0f
@@ -179,6 +182,17 @@ class PlayerControlComponent(var controlMapper: ControlMapper, val player: Playe
 
     fun resetSound(soundGroup: String) {
         soundsThatCanPlayAndSuch[soundGroup] = true
+    }
+
+    companion object {
+        val mapper = mapperFor<PlayerControlComponent>()
+        fun has(entity: Entity): Boolean {
+            return mapper.has(entity)
+        }
+
+        fun get(entity: Entity):PlayerControlComponent {
+            return mapper.get(entity)
+        }
     }
 }
 

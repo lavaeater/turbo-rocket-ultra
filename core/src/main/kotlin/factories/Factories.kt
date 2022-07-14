@@ -71,8 +71,8 @@ import ui.getUiThing
 import kotlin.experimental.or
 
 
-fun enemy(x: Float = 0f, y: Float = 0f) {
-    enemy(vec2(x, y))
+fun enemy(x: Float = 0f, y: Float = 0f, choice: Boolean) {
+    enemy(vec2(x, y), choice)
 }
 
 fun gibs(at: Vector2, gibAngle: Float = 1000f) {
@@ -643,7 +643,7 @@ fun bullet(at: Vector2, towards: Vector2, speed: Float, damage: Float, player: P
     CounterObject.bulletCount++
 }
 
-fun enemy(at: Vector2, init: EngineEntity.() -> Unit = {}): Entity {
+fun enemy(at: Vector2, choice: Boolean, init: EngineEntity.() -> Unit = {}): Entity {
     val box2dBody = bodyForSprite(
         at,
         Box2dCategories.enemies,
@@ -667,10 +667,14 @@ fun enemy(at: Vector2, init: EngineEntity.() -> Unit = {}): Entity {
             )
             lootTable.count = (1..5).random()
         }
+        if(choice)
+            with<TargetComponent>()
+        else
+            with<AnotherTargetComponent>()
         with<AiComponent> {
             actions.add(EnemyBehaviors.amble)
-            actions.add(EnemyBehaviors.approachTarget)
-            actions.add(EnemyBehaviors.attackTarget)
+            actions.add(if(choice) EnemyBehaviors.approachAnotherTarget else EnemyBehaviors.approachTarget)
+            actions.add(if(choice) EnemyBehaviors.attackAnotherTarget else EnemyBehaviors.attackTarget)
             actions.add(EnemyBehaviors.panik)
             if (ApplicationFlags.showEnemyActionInfo)
                 addActionUiThing(this@entity.entity, this)
@@ -736,11 +740,13 @@ fun addActionUiThing(entity: Entity, aiComponent: AiComponent) {
             }
         }.repeatForever()
         stage.actors {
-            verticalGroup {
+            widget = verticalGroup {
                 it += moveAction
                 boundLabel({
-"""${entity.agentProps().directionVector}
-${aiComponent.actions.joinToString("\n") { action -> "${action.name}: ${action.score}"}}""".trimMargin()
+                    if(AgentProperties.has(entity)) {
+                        """${entity.agentProps().directionVector}
+${aiComponent.actions.joinToString("\n") { action -> "${action.name}: ${action.score}" }}""".trimMargin()
+                    } else ""
                 }) {
 
                 }.setPosition(startPosition.x, startPosition.y)

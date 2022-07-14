@@ -191,12 +191,12 @@ class GameScreen(private val gameState: StateMachine<GameState, GameEvent>) : Kt
         val startBounds = mapManager.gridMap.values.first { it.startSection }.innerBounds
         for ((controlComponent, player) in Players.players) {
             if (player.isAiPlayer) {
-                val enemy = enemy(startBounds.randomPoint()) {
+                val enemy = enemy(startBounds.randomPoint(), false) {
                     with<CameraFollowComponent>()
                     with<PlayerComponent> {
                         this.player = player
                     }
-                    with<KeyboardControl> {
+                    with<KeyboardControl> {1
 
                     }
                 }

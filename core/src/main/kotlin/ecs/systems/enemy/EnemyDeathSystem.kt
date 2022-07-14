@@ -73,11 +73,12 @@ class EnemyDeathSystem(
                     lootBox(transformComponent.position, result)
                 }
             }
-            val player = attackableProperties.lastHitBy.getComponent<PlayerControlComponent>().player
-            player.kills++
-
-            addToIntStat(1, "Player", player.playerId, "KillCount")
-            addToIntStat(1, Factoids.EnemyKillCount)
+            if(PlayerControlComponent.has(attackableProperties.lastHitBy)) {
+                val player = PlayerControlComponent.get(attackableProperties.lastHitBy).player
+                player.kills++
+                addToIntStat(1, "Player", player.playerId, "KillCount")
+                addToIntStat(1, Factoids.EnemyKillCount)
+            }
 
             gibs(transformComponent.position, enemyComponent.lastShotAngle)
             entity.addComponent<DestroyComponent>()

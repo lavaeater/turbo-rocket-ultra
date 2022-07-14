@@ -11,7 +11,7 @@ import map.grid.Coordinate
 
 class AmbleState : CoolDownComponent(), Pool.Poolable {
     init {
-        coolDownRange = 1f..3f
+        coolDownRange = 0.5f..1f
         coolDown = coolDownRange.random()
     }
 

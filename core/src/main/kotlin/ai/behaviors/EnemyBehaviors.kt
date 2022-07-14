@@ -1,15 +1,19 @@
 package ai.behaviors
 
+import ai.behaviors.EnemyConsiderations.healthConsideration
 import ai.findPathFromTo
 import ai.pathfinding.TileGraph
 import ai.tasks.leaf.SectionFindingMethods
+import com.badlogic.ashley.core.Component
 import com.badlogic.ashley.core.Entity
 import com.badlogic.gdx.math.MathUtils
 import eater.ai.*
 import eater.ecs.components.AgentProperties
 import eater.ecs.components.Memory
+import eater.ecs.components.TransformComponent
 import ecs.components.ai.behavior.*
 import ecs.components.enemy.AttackableProperties
+import ecs.components.gameplay.AnotherTargetComponent
 import ecs.components.gameplay.BurningComponent
 import ecs.components.gameplay.TargetComponent
 import ecs.components.player.PlayerComponent
@@ -23,6 +27,7 @@ import ktx.math.random
 import physics.agentProps
 import physics.attackables
 import physics.transform
+import kotlin.reflect.KClass
 import kotlin.reflect.full.starProjectedType
 
 object EnemyBehaviors {
@@ -33,7 +38,7 @@ object EnemyBehaviors {
             when (state.status) {
                 PanikStatus.NotStarted -> {
                     state.coolDown = 0f
-                    state.coolDownRange = 0.5f..1.5f
+                    state.coolDownRange = 0.25f..1.5f
                     state.status = PanikStatus.Paniking
                 }
                 PanikStatus.Paniking -> {
@@ -47,98 +52,115 @@ object EnemyBehaviors {
         },
         PanikState::class,
         0f..0.6f,
-        InvertedConsideration("Am I dying?", EnemyConsiderations.healthConsideration),
+        InvertedConsideration("Am I dying?", healthConsideration),
         DoIHaveThisComponentConsideration("Am I burning?", BurningComponent::class)
     )
 
+    fun <T:Component>getAttackAction(targetComponentClass: KClass<T>): ConsideredActionWithState<AttackState> {
+        return ConsideredActionWithState(
+            "Attack Target",
+            {},
+            { entity, state, deltaTime ->
+                //We can reset the cooldown right here to the correct values!
+                when (state.status) {
+                    AttackStatus.Attacking -> {
+                        if (state.targetEntity != null && state.ready(deltaTime)) {
+                            val agentProperties = AgentProperties.get(entity)
+                            val targetEntity = state.targetEntity!!
+                            val attackableProperties = AttackableProperties.get(targetEntity)
+                            val damage = agentProperties.meleeDamageRange.random()
+                            attackableProperties.takeDamage(damage, entity)
+                            debug { "Attack dealt $damage" }
+                        }
+                    }
+                    AttackStatus.NotStarted -> {
+                        if (Memory.has(entity)) {
+                            val memory = Memory.get(entity)
+                            val agentProps = AgentProperties.get(entity)
+                            state.coolDownRange = (agentProps.attackSpeed / 2f)..(agentProps.attackSpeed * 1.25f)
+                            state.coolDown = state.coolDownRange.random()
+                            state.targetEntity =
+                                memory.closeEntities[targetComponentClass.starProjectedType]?.keys?.firstOrNull()
+                            state.status = AttackStatus.Attacking
+                            agentProps.speed = 0f
+                        }
+                    }
+                }
+            },
+            AttackState::class,
+            0f..0.9f,
+            AmICloseToThisConsideration(targetComponentClass, GameConstants.ENEMY_MELEE_DISTANCE),
+            healthConsideration
+        )
+    }
 
-    val attackTarget = ConsideredActionWithState(
-        "Attack Target",
-        {},
-        { entity, state, deltaTime ->
-            //We can reset the cooldown right here to the correct values!
-            when (state.status) {
-                AttackStatus.Attacking -> {
-                    if (state.targetEntity != null && state.ready(deltaTime)) {
-                        val agentProperties = AgentProperties.get(entity)
-                        val targetEntity = state.targetEntity!!
-                        val attackableProperties = AttackableProperties.get(targetEntity)
-                        val damage = agentProperties.meleeDamageRange.random()
-                        attackableProperties.takeDamage(damage, entity)
-                        debug { "Attack dealt $damage" }
-                    }
-                }
-                AttackStatus.NotStarted -> {
-                    if (Memory.has(entity)) {
-                        val memory = Memory.get(entity)
-                        val agentProps = AgentProperties.get(entity)
-                        state.coolDownRange = (agentProps.attackSpeed / 1.5f)..(agentProps.attackSpeed * 1.5f)
-                        state.coolDown = state.coolDownRange.random()
-                        state.targetEntity =
-                            memory.closeEntities[PlayerComponent::class.starProjectedType]?.firstOrNull()
-                        state.status = AttackStatus.Attacking
-                        agentProps.speed = 0f
-                    }
-                }
-            }
-        },
-        AttackState::class,
-        0f..0.9f,
-        AmICloseToThisConsideration(PlayerComponent::class, GameConstants.ENEMY_MELEE_DISTANCE)
-    )
+    val attackTarget = getAttackAction(TargetComponent::class)
+    val attackAnotherTarget = getAttackAction(AnotherTargetComponent::class)
+    val attackPlayer = getAttackAction(PlayerComponent::class)
 
-    val approachTarget = ConsideredActionWithState(
-        "Approach Player",
-        {},
-        { entity, state, deltaTime ->
-            when (state.status) {
-                ApproachTargetStatus.NotStarted -> {
-                    /**
-                     * What do we do here? Just set the next status?
-                     *
-                     * How do we know which thingamajig we see? Do the entire thing
-                     * again?
-                     *
-                     * How do we implement some kind of "memory" for our enemy entity?
-                     *
-                     * It sees things, then it perhaps remembers where these things are?
-                     *
-                     * Ah, well, that's what this action does, it checks "again" to see
-                     *
-                     * players and stores them in some kind of memory. This memory should
-                     * probably not only be used for this particular task.
-                     *
-                     * Or no, the CanISeeConsideration could constantly keep a list of things
-                     * the entity sees in some kind of storage, instead.
-                     *
-                     * We come here because we have seen some shit. So, we take the closest
-                     * entity off that list and move towards that one.
-                     */
-                    if (Memory.has(entity)) {
-                        val memory = Memory.get(entity)
-                        state.targetEntity =
-                            memory.seenEntities[TargetComponent::class.starProjectedType]?.firstOrNull()
-                        state.status = ApproachTargetStatus.Approach
+    fun <T : Component> getApproachAction(targetComponentClass: KClass<T>) : ConsideredActionWithState<ApproachTargetState> {
+        return ConsideredActionWithState(
+            "Approach Player",
+            {debug { "Abort approach" }},
+            { entity, state, deltaTime ->
+                when (state.status) {
+                    ApproachTargetStatus.NotStarted -> {
+                        /**
+                         * What do we do here? Just set the next status?
+                         *
+                         * How do we know which thingamajig we see? Do the entire thing
+                         * again?
+                         *
+                         * How do we implement some kind of "memory" for our enemy entity?
+                         *
+                         * It sees things, then it perhaps remembers where these things are?
+                         *
+                         * Ah, well, that's what this action does, it checks "again" to see
+                         *
+                         * players and stores them in some kind of memory. This memory should
+                         * probably not only be used for this particular task.
+                         *
+                         * Or no, the CanISeeConsideration could constantly keep a list of things
+                         * the entity sees in some kind of storage, instead.
+                         *
+                         * We come here because we have seen some shit. So, we take the closest
+                         * entity off that list and move towards that one.
+                         */
+                        debug { "Not started" }
+                        if (Memory.has(entity)) {
+                            debug { "has memory"}
+                            val memory = Memory.get(entity)
+                            state.targetEntity =
+                                memory.seenEntities[targetComponentClass.starProjectedType]?.keys?.firstOrNull()
+                            state.status = ApproachTargetStatus.Approach
+                        }
+                    }
+                    ApproachTargetStatus.Approach -> {
+                        debug { "Approaching" }
+                        if (state.targetEntity != null && TransformComponent.has(state.targetEntity!!) ) {
+                            val targetComponent = TransformComponent.get(state.targetEntity!!)
+                            debug { "has target entity" }
+                            val agentProps = entity.agentProps()
+                            val position = entity.transform().position
+                            val targetPosition = targetComponent.position
+                            agentProps.directionVector.set(targetPosition - position).nor()
+                            agentProps.speed = agentProps.baseProperties.speed
+                        } else {
+                            debug { "Has no target" }
+                            state.status = ApproachTargetStatus.NotStarted
+                        }
                     }
                 }
-                ApproachTargetStatus.Approach -> {
-                    if (state.targetEntity != null) {
-                        val agentProps = entity.agentProps()
-                        val position = entity.transform().position
-                        val targetPosition = state.targetEntity!!.transform().position
-                        agentProps.directionVector.set(targetPosition - position).nor()
-                        agentProps.speed = agentProps.baseProperties.speed
-                    } else {
-                        state.status = ApproachTargetStatus.NotStarted
-                    }
-                }
-            }
-            debug { "Moving closer to the targets" }
-        },
-        ApproachTargetState::class,
-        0.0f..0.9f,
-        CanISeeThisConsideration(PlayerComponent::class)
-    )
+            },
+            ApproachTargetState::class,
+            0.0f..0.9f,
+            CanISeeThisConsideration(targetComponentClass)
+        )
+    }
+
+    val approachTarget = getApproachAction(TargetComponent::class)
+    val approachPlayer = getApproachAction(PlayerComponent::class)
+    val approachAnotherTarget = getApproachAction(AnotherTargetComponent::class)
 
     val amble = GenericActionWithState(
         "Amble",
