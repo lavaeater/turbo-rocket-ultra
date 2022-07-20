@@ -40,7 +40,7 @@ class EnemyMovementSystem(private val flocking: Boolean) : IteratingSystem(
         val attackable = entity.getComponent<AttackableProperties>()
         if (enemyComponent.cooldownPropertyCheckIfDone(attackable::stunned, deltaTime)) {
             val bodyComponent = AshleyMappers.body.get(entity)
-            if (flocking && enemyComponent.flock && entity.sprite().isVisible) {
+            if (flocking && enemyComponent.flock && entity.textureRegionComponent().isVisible) {
                 fixFlocking(bodyComponent.body!!)
             }
             avoidObstacles(bodyComponent.body!!.position)

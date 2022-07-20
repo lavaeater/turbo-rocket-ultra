@@ -14,7 +14,7 @@ import ktx.math.vec2
 import eater.physics.drawScaled
 import tru.AnimDef
 import tru.AnimState
-import tru.SpriteDirection
+import tru.CardinalDirection
 
 
 class AnimationEditorElement(
@@ -84,7 +84,7 @@ class AnimationEditorElement(
     var stateIndex = 0
     val currentAnimState get() = AnimState.animStates[stateIndex]
     var directionIndex = 0
-    val currentDirection get() = SpriteDirection.spriteDirections[directionIndex]
+    val currentDirection get() = CardinalDirection.spriteDirections[directionIndex]
 
     private fun nextState() {
         stateIndex++
@@ -94,7 +94,7 @@ class AnimationEditorElement(
 
     private fun nextDirection() {
         directionIndex++
-        if (directionIndex >= SpriteDirection.spriteDirections.size)
+        if (directionIndex >= CardinalDirection.spriteDirections.size)
             directionIndex = 0
 
     }

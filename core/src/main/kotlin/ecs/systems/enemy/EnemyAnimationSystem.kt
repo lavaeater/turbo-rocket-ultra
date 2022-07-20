@@ -9,7 +9,7 @@ import ecs.components.graphics.AnimatedCharacterComponent
 import ktx.ashley.allOf
 import physics.*
 import tru.AnimState
-import tru.SpriteDirection
+import tru.CardinalDirection
 
 class EnemyAnimationSystem : IteratingSystem(
     allOf(
@@ -21,18 +21,18 @@ class EnemyAnimationSystem : IteratingSystem(
     }
 }
 
-fun Entity.enemyDirection() : SpriteDirection {
+fun Entity.enemyDirection() : CardinalDirection {
     val characterAngle = this.agentProps().directionVector.angleDeg()
     return if(this.getComponent<AttackableProperties>().isDead)
-        SpriteDirection.South
+        CardinalDirection.South
     else
         when (characterAngle) {
-            in 150f..209f -> SpriteDirection.East
-            in 210f..329f -> SpriteDirection.North
-            in 330f..360f -> SpriteDirection.West
-            in 0f..29f -> SpriteDirection.West
-            in 30f..149f -> SpriteDirection.South
-            else -> SpriteDirection.South
+            in 150f..209f -> CardinalDirection.East
+            in 210f..329f -> CardinalDirection.North
+            in 330f..360f -> CardinalDirection.West
+            in 0f..29f -> CardinalDirection.West
+            in 30f..149f -> CardinalDirection.South
+            else -> CardinalDirection.South
         }
 }
 fun Entity.enemyAnimState(): AnimState {

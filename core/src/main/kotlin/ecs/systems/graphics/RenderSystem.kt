@@ -8,23 +8,23 @@ import com.badlogic.gdx.graphics.Color
 import com.badlogic.gdx.graphics.GL20
 import com.badlogic.gdx.graphics.OrthographicCamera
 import com.badlogic.gdx.graphics.g2d.Batch
+import com.badlogic.gdx.math.Affine2
 import com.badlogic.gdx.math.MathUtils
 import com.crashinvaders.vfx.VfxManager
 import com.crashinvaders.vfx.effects.ChainVfxEffect
-import eater.ecs.components.Memory
-import ecs.components.ai.Path
-import ecs.components.ai.SeenPlayerPositions
-import ecs.components.ai.Waypoint
 import eater.ecs.components.AgentProperties
-import ecs.components.gameplay.DestroyComponent
+import eater.ecs.components.Memory
 import eater.ecs.components.TransformComponent
 import eater.injection.InjectionContext.Companion.inject
 import eater.physics.addComponent
 import eater.physics.getComponent
 import eater.physics.has
+import ecs.components.ai.Path
+import ecs.components.ai.SeenPlayerPositions
+import ecs.components.ai.Waypoint
 import ecs.components.ai.behavior.AmbleState
+import ecs.components.gameplay.DestroyComponent
 import ecs.components.graphics.RenderableComponent
-import ecs.systems.graphics.GameConstants.SCALE
 import ktx.ashley.allOf
 import ktx.graphics.use
 import map.grid.GridMapManager
@@ -101,40 +101,65 @@ class RenderSystem(
         rayHandler.updateAndRender()
     }
 
+    fun createAdvancedShadowAffine(
+        worldX: Float, worldY: Float,
+        rotation: Float,
+        offsetX: Float, offsetY: Float,
+        originX: Float, originY: Float,
+        shearX: Float, shearY: Float,
+        scaleX: Float, scaleY: Float
+    ): Affine2? {
+        val shearingAffine = Affine2()
+        shearingAffine.setToShearing(shearX, shearY)
+        val offsetAffine = Affine2()
+        offsetAffine.setToTranslation(offsetX, offsetY)
+        val rotationAffine = Affine2()
+        rotationAffine.translate(originX, originY)
+        rotationAffine.rotate(rotation)
+        rotationAffine.translate(-originX, -originY)
+        rotationAffine.preMul(offsetAffine)
+        return Affine2()
+            .preMul(rotationAffine)
+            .preMul(shearingAffine)
+            .preScale(scaleX, scaleY)
+            .preTranslate(worldX, worldY)
+    }
+
     private fun renderSpriteEntity(entity: Entity) {
         val transform = entity.transform()
-        val spriteComponent = entity.sprite()
+        val textureRegionComponent = entity.textureRegionComponent()
 
-        if (spriteComponent.isVisible) {
-            val sprite = spriteComponent.sprite
-            if (spriteComponent.rotateWithTransform)
-                sprite.rotation = transform.rotation * MathUtils.radiansToDegrees
-            sprite.setOriginBasedPosition(
-                transform.position.x + spriteComponent.actualOffsetX,
-                transform.position.y + spriteComponent.actualOffsetY
-            )
+        if (textureRegionComponent.isVisible) {
+            val textureRegion = textureRegionComponent.textureRegion
 
-            sprite.draw(batch)
-            if (debug) {
-                shapeDrawer.filledCircle(
-                    sprite.originX,
-                    sprite.originY, .5f,
-                    Color.GREEN
+//            val affine = createAdvancedShadowAffine(
+//                transform.position.x - sprite.originX - spriteComponent.actualOffsetX,
+//                transform.position.y - sprite.originY - spriteComponent.actualOffsetY,
+//                sprite.rotation,
+//                0f,
+//                0f,
+//                0f,
+//                0f,
+//                0.5f,
+//                0f,
+//                sprite.scaleX,
+//                sprite.scaleY
+//            )
+//            batch.setColor(0f, 0f, 0f, 1f)
+//            batch.draw(sprite, sprite.width, sprite.height, affine)
+//            batch.setColor(1f, 1f, 1f, 1f)
 
-                )
-                shapeDrawer.filledCircle(
-                    transform.position.x + spriteComponent.sprite.originX * SCALE * spriteComponent.scale,
-                    transform.position.y + spriteComponent.sprite.originY * SCALE * spriteComponent.scale,
-                    .5f,
-                    Color.RED
-                )
-                shapeDrawer.filledCircle(
-                    transform.position.x,
-                    transform.position.y,
-                    .5f,
-                    Color.WHITE
-                )
-            }
+            batch.draw(
+                textureRegion,
+                transform.position.x - textureRegion.regionWidth * textureRegionComponent.originX * textureRegionComponent.actualScale,
+                transform.position.y - textureRegion.regionHeight * textureRegionComponent.originY * textureRegionComponent.actualScale,
+                0f,
+                0f,
+                textureRegion.regionWidth.toFloat(),
+                textureRegion.regionHeight.toFloat(),
+                textureRegionComponent.actualScale,
+                textureRegionComponent.actualScale,
+                if (textureRegionComponent.rotateWithTransform) transform.rotation * MathUtils.radiansToDegrees else 0f)
         }
     }
 
@@ -157,23 +182,23 @@ class RenderSystem(
 
     private fun renderEnemyDebugStuff(entity: Entity) {
         val ec = entity.agentProps()
-        if(ApplicationFlags.showEnemyPaths)
+        if (ApplicationFlags.showEnemyPaths)
             renderPath(entity, ec)
-        if(ApplicationFlags.showCanSee)
+        if (ApplicationFlags.showCanSee)
             renderCanSee(entity, ec)
-        if(ApplicationFlags.showMemory)
+        if (ApplicationFlags.showMemory)
             renderMemory(entity)
     }
 
     private fun renderMemory(entity: Entity) {
         if (Memory.has(entity)) {
             val memory = Memory.get(entity)
-            for(map in memory.seenEntities) {
+            for (map in memory.seenEntities) {
                 for (position in map.value.keys.map { TransformComponent.get(it).position }) {
                     shapeDrawer.filledCircle(position, 0.25f, Color.RED)
                 }
             }
-            for(map in memory.closeEntities) {
+            for (map in memory.closeEntities) {
                 for (position in map.value.keys.map { TransformComponent.get(it).position }) {
                     shapeDrawer.filledCircle(position, 0.5f, Color.BLUE)
                 }

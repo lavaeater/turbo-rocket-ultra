@@ -59,7 +59,7 @@ class BuildSystem(private val debug: Boolean) : IteratingSystem(
 
         if (controlComponent.isInBuildMode) {
             val cursorEntity = buildComponent.buildCursorEntity!!
-            cursorEntity.sprite().sprite = buildComponent.buildables.selectedItem.sprite
+            cursorEntity.textureRegionComponent().textureRegion = buildComponent.buildables.selectedItem.textureRegion
 
             /*
             Now all we have to fix is simply... setting the position of the sprite
@@ -88,7 +88,7 @@ class BuildSystem(private val debug: Boolean) : IteratingSystem(
 
             batch.use {
                 batch.drawScaled(
-                    buildComponent.buildables.selectedItem.sprite,
+                    buildComponent.buildables.selectedItem.textureRegion,
                     cursorX + scaledWidth,
                     cursorY + scaledHeight,
 //                    textureX,

@@ -38,20 +38,20 @@ object Assets : Disposable {
 
     val portrait by lazy { Texture(Gdx.files.internal("portraits/portrait.png")) }
 
-    val characters: Map<String, Map<AnimState, LpcCharacterAnim<Sprite>>> by lazy {
-        SpriteLoader.initCharachterAnims()
+    val characters: Map<String, Map<AnimState, LpcCharacterAnim<TextureRegion>>> by lazy {
+        AnimLoader.initCharachterAnims()
     }
 
     val characterTurboAnims by lazy {
-        SpriteLoader.initCharacterTurboAnims()
+        AnimLoader.initCharacterTurboAnims()
     }
 
     val enemies by lazy {
-        SpriteLoader.initEnemyAnims()
+        AnimLoader.initEnemyAnims()
     }
 
     val bosses by lazy {
-        SpriteLoader.initBossAnims()
+        AnimLoader.initBossAnims()
     }
 
     val gunAudio by lazy {
@@ -207,110 +207,78 @@ object Assets : Disposable {
     val enemyGibs by lazy {
         val texture = Texture(Gdx.files.internal("sprites/enemies/enemy_gibs.png"))
         listOf(
-            Sprite(texture, 0, 0, 24, 24),
-            Sprite(texture, 24, 0, 24, 24),
-            Sprite(texture, 48, 0, 24, 24),
-            Sprite(texture, 72, 0, 24, 24),
-            Sprite(texture, 96, 0, 24, 24),
-            Sprite(texture, 0, 24, 24, 24),
-            Sprite(texture, 24, 24, 24, 24),
-            Sprite(texture, 48, 24, 24, 24),
-            Sprite(texture, 72, 24, 24, 24),
-            Sprite(texture, 96, 24, 24, 24)
+            TextureRegion(texture, 0, 0, 24, 24),
+            TextureRegion(texture, 24, 0, 24, 24),
+            TextureRegion(texture, 48, 0, 24, 24),
+            TextureRegion(texture, 72, 0, 24, 24),
+            TextureRegion(texture, 96, 0, 24, 24),
+            TextureRegion(texture, 0, 24, 24, 24),
+            TextureRegion(texture, 24, 24, 24, 24),
+            TextureRegion(texture, 48, 24, 24, 24),
+            TextureRegion(texture, 72, 24, 24, 24),
+            TextureRegion(texture, 96, 24, 24, 24)
         )
     }
 
     private val handgunSprite by lazy {
-        Sprite(Texture(Gdx.files.internal("sprites/weapons/pistol.png"))).apply {
-            this.setOrigin(
-                0f, this.regionHeight / 2f
-            )
-        }
+        TextureRegion(Texture(Gdx.files.internal("sprites/weapons/pistol.png")))
     }
 
     private val handgunTopSprite by lazy {
-        Sprite(Texture(Gdx.files.internal("sprites/weapons/pistol-top.png"))).apply {
-            this.setOrigin(
-                0f, this.regionHeight / 2f
-            )
-        }
+        TextureRegion(Texture(Gdx.files.internal("sprites/weapons/pistol-top.png")))
     }
     private val handgunBottomSprite by lazy {
-        Sprite(Texture(Gdx.files.internal("sprites/weapons/pistol-bottom.png"))).apply {
-            this.setOrigin(
-                0f, this.regionHeight / 2f
-            )
-        }
+        TextureRegion(Texture(Gdx.files.internal("sprites/weapons/pistol-bottom.png")))
     }
 
     private val spas12Sprite by lazy {
-        Sprite(Texture(Gdx.files.internal("sprites/weapons/shotgun.png"))).apply {
-            this.setOrigin(
-                0f,
-                this.regionHeight / 2f
-            )
-        }
+        TextureRegion(Texture(Gdx.files.internal("sprites/weapons/shotgun.png")))
     }
 
     private val spas12Top by lazy {
-        Sprite(Texture(Gdx.files.internal("sprites/weapons/shotgun-top.png"))).apply {
-            this.setOrigin(
-                0f,
-                this.regionHeight / 2f
-            )
-        }
+        TextureRegion(Texture(Gdx.files.internal("sprites/weapons/shotgun-top.png")))
     }
     private val spas12Bottom by lazy {
-        Sprite(Texture(Gdx.files.internal("sprites/weapons/shotgun-bottom.png"))).apply {
-            this.setOrigin(
-                0f,
-                this.regionHeight / 2f
-            )
-        }
+        TextureRegion(Texture(Gdx.files.internal("sprites/weapons/shotgun-bottom.png")))
     }
 
     private val batSprite by lazy {
-        Sprite(Texture(Gdx.files.internal("sprites/weapons/bat.png")), 0, 0, 32, 5).apply {
-            this.setOrigin(
-                0f,
-                this.regionHeight / 2f
-            )
-        }
+        TextureRegion(Texture(Gdx.files.internal("sprites/weapons/bat.png")), 0, 0, 32, 5)
     }
 
-    val weapons: Map<String, Map<SpriteDirection, Sprite>> by lazy {
+    val weapons: Map<String, Map<CardinalDirection, TextureRegion>> by lazy {
         mapOf(
             GunFrames.handGun to
                     mapOf(
-                        SpriteDirection.North to
+                        CardinalDirection.North to
                                 handgunTopSprite,
-                        SpriteDirection.West to
+                        CardinalDirection.West to
                                 handgunSprite,
-                        SpriteDirection.South to
+                        CardinalDirection.South to
                                 handgunBottomSprite,
-                        SpriteDirection.East to
+                        CardinalDirection.East to
                                 handgunSprite
                     ),
             GunFrames.spas12 to
                     mapOf(
-                        SpriteDirection.North to
+                        CardinalDirection.North to
                                 spas12Top,
-                        SpriteDirection.West to
+                        CardinalDirection.West to
                                 spas12Sprite,
-                        SpriteDirection.South to
+                        CardinalDirection.South to
                                 spas12Bottom,
-                        SpriteDirection.East to
+                        CardinalDirection.East to
                                 spas12Sprite
                     ),
             GunFrames.bat to
                     mapOf(
-                        SpriteDirection.North to
+                        CardinalDirection.North to
                                 batSprite,
-                        SpriteDirection.West to
+                        CardinalDirection.West to
                                 batSprite,
-                        SpriteDirection.South to
+                        CardinalDirection.South to
                                 batSprite,
-                        SpriteDirection.East to
+                        CardinalDirection.East to
                                 batSprite,
                     )
         )
@@ -319,20 +287,20 @@ object Assets : Disposable {
 
     val towers by lazy {
         mapOf(
-            "machinegun" to Sprite(Texture(Gdx.files.internal("sprites/towers/tower-1.png"))).apply { scale(4f) },
-            "flamethrower" to Sprite(Texture(Gdx.files.internal("sprites/towers/tower-1.png"))).apply { scale(4f) },
-            "obstacle" to Sprite(Texture(Gdx.files.internal("sprites/towers/tower-obstacle.png"))).apply { scale(4f) },
-            "objective" to Sprite(Texture(Gdx.files.internal("sprites/towers/tower-objective.png"))).apply { scale(4f) },
-            "noise" to Sprite(Texture(Gdx.files.internal("sprites/towers/tower-1.png"))).apply { scale(4f) }
+            "machinegun" to TextureRegion(Texture(Gdx.files.internal("sprites/towers/tower-1.png"))),
+            "flamethrower" to TextureRegion(Texture(Gdx.files.internal("sprites/towers/tower-1.png"))),
+            "obstacle" to TextureRegion(Texture(Gdx.files.internal("sprites/towers/tower-obstacle.png"))),
+            "objective" to TextureRegion(Texture(Gdx.files.internal("sprites/towers/tower-objective.png"))),
+            "noise" to TextureRegion(Texture(Gdx.files.internal("sprites/towers/tower-1.png")))
         )
     }
 
     val newTower by lazy {
-        Sprite(Texture(Gdx.files.internal("sprites/towers/tower-template.png")))
+        TextureRegion(Texture(Gdx.files.internal("sprites/towers/tower-template.png")))
     }
 
     val lootBox by lazy {
-        Sprite(Texture(Gdx.files.internal("sprites/loot/lootbox.png"))).apply { flip(false, true) }
+        TextureRegion(Texture(Gdx.files.internal("sprites/loot/lootbox.png"))).apply { flip(false, true) }
     }
     val arrowTexture by lazy {
         Texture(Gdx.files.internal("sprites/arrows.png"))
@@ -375,29 +343,26 @@ object Assets : Disposable {
         Texture(Gdx.files.internal("tiles/tiles.png"))
     }
     val tiles by lazy {
-        val ts = mutableMapOf<String, Sprite>()
+        val ts = mutableMapOf<String, TextureRegion>()
         for (xTile in 0..3)
             for (yTile in 0..2) {
                 when (yTile) {
-                    0 -> ts["floor$xTile"] = Sprite(tileTexture, xTile * 16, yTile * 16, 16, 16)
+                    0 -> ts["floor$xTile"] = TextureRegion(tileTexture, xTile * 16, yTile * 16, 16, 16)
                     1 -> {
                         when (xTile) {
-                            0 -> ts["wall$xTile"] = Sprite(tileTexture, xTile * 16, yTile * 16, 16, 16)
-                            1 -> ts["wall$xTile"] = Sprite(tileTexture, xTile * 16, yTile * 16, 16, 16)
+                            0 -> ts["wall$xTile"] = TextureRegion(tileTexture, xTile * 16, yTile * 16, 16, 16)
+                            1 -> ts["wall$xTile"] = TextureRegion(tileTexture, xTile * 16, yTile * 16, 16, 16)
                             2 -> {} //ts["wall_end"] = TextureRegion(tileTexture, xTile * 16, yTile * 16, 16, 16)
                         }
                     }
                     2 -> {
                         if (xTile in 0 until 1)
-                            ts["wall_end"] = Sprite(tileTexture, xTile * 16, yTile * 16, 16, 16)
+                            ts["wall_end"] = TextureRegion(tileTexture, xTile * 16, yTile * 16, 16, 16)
                         if (xTile == 2)
-                            ts["build_crate"] = Sprite(tileTexture, xTile * 16, yTile * 16, 16, 16)
+                            ts["build_crate"] = TextureRegion(tileTexture, xTile * 16, yTile * 16, 16, 16)
                     }
                 }
             }
-        for (sprite in ts.values) {
-            sprite.scale(4f)
-        }
         ts
     }
 
@@ -418,41 +383,36 @@ object Assets : Disposable {
     val aiDebugBadges by lazy {
         val texture = Texture(Gdx.files.internal("sprites/bt_labels/bt_labels.png"))
         mapOf(
-            "amble" to Sprite(texture, 0, 0, 64, 12),
-            "attack" to Sprite(texture, 0, 12, 64, 12),
-            "chase" to Sprite(texture, 0, 24, 64, 12),
-            "check" to Sprite(texture, 0, 36, 64, 12),
-            "seek" to Sprite(texture, 0, 48, 64, 12),
-            "grabthrow" to Sprite(texture, 0, 60, 64, 12),
-            "rush" to Sprite(texture, 0, 72, 64, 12),
-            "panic" to Sprite(texture, 0, 84, 64, 12)
+            "amble" to TextureRegion(texture, 0, 0, 64, 12),
+            "attack" to TextureRegion(texture, 0, 12, 64, 12),
+            "chase" to TextureRegion(texture, 0, 24, 64, 12),
+            "check" to TextureRegion(texture, 0, 36, 64, 12),
+            "seek" to TextureRegion(texture, 0, 48, 64, 12),
+            "grabthrow" to TextureRegion(texture, 0, 60, 64, 12),
+            "rush" to TextureRegion(texture, 0, 72, 64, 12),
+            "panic" to TextureRegion(texture, 0, 84, 64, 12)
         )
     }
 
     val ps4Buttons by lazy {
         val texture = Texture(Gdx.files.internal("controllers/PS4.png"))
         mapOf(
-            "cross" to Sprite(texture, 32, 48, 16, 16),
-            "square" to Sprite(texture, 32, 64, 16, 16),
-            "triangle" to Sprite(texture, 32, 80, 16, 16),
-            "circle" to Sprite(texture, 32, 96, 16, 16),
-            "dpadup" to Sprite(texture, 0, 16, 16, 16),
-            "dpadright" to Sprite(texture, 0, 32, 16, 16),
-            "dpaddown" to Sprite(texture, 0, 48, 16, 16),
-            "dpadleft" to Sprite(texture, 0, 64, 16, 16)
+            "cross" to TextureRegion(texture, 32, 48, 16, 16),
+            "square" to TextureRegion(texture, 32, 64, 16, 16),
+            "triangle" to TextureRegion(texture, 32, 80, 16, 16),
+            "circle" to TextureRegion(texture, 32, 96, 16, 16),
+            "dpadup" to TextureRegion(texture, 0, 16, 16, 16),
+            "dpadright" to TextureRegion(texture, 0, 32, 16, 16),
+            "dpaddown" to TextureRegion(texture, 0, 48, 16, 16),
+            "dpadleft" to TextureRegion(texture, 0, 64, 16, 16)
         )
     }
     val bullet by lazy {
-        Sprite(Texture(Gdx.files.internal("sprites/bullets/bullet.png")))
+        TextureRegion(Texture(Gdx.files.internal("sprites/bullets/bullet.png")))
     }
 
     val molotov by lazy {
-        Sprite(Texture(Gdx.files.internal("sprites/weapons/molotov.png"))).apply {
-            this.setOrigin(
-                0f,
-                this.regionHeight / 2f
-            )
-        }
+        TextureRegion(Texture(Gdx.files.internal("sprites/weapons/molotov.png")))
     }
 
     val playerCharacters by lazy { characters }
@@ -519,9 +479,9 @@ object Assets : Disposable {
 
     private fun fixFlip() {
         for (t in towers.values)
-            t.setFlip(true, true)
+            t.flip(true, true)
 
-        newTower.setFlip(true, true)
+        newTower.flip(true, true)
 
         for (t in aiDebugBadges.values)
             t.flip(true, false)
@@ -530,20 +490,20 @@ object Assets : Disposable {
             for (a in c.values)
                 for (b in a.animations.values)
                     for (d in b.keyFrames) {
-                        d.setFlip(true, true)
+                        d.flip(true, true)
 
                     }
         for (c in enemies.values)
             for (a in c.values)
                 for (b in a.animations.values)
                     for (d in b.keyFrames) {
-                        d.setFlip(true, true)
+                        d.flip(true, true)
                     }
         for (c in bosses.values) {
             for (a in c.values)
                 for (b in a.animations.values)
                     for (d in b.keyFrames) {
-                        d.setFlip(true, true)
+                        d.flip(true, true)
                     }
         }
     }
@@ -574,22 +534,22 @@ fun Map<String, Map<String, List<TurboSound>>>.getRandomSoundFor(category: Strin
     return this[category]!![subCategory]!!.random()
 }
 
-fun Map<String, Map<AnimState, LpcCharacterAnim<Sprite>>>.getFirstFor(
+fun Map<String, Map<AnimState, LpcCharacterAnim<TextureRegion>>>.getFirstFor(
     anim: AnimState,
-    direction: SpriteDirection
-): Animation<Sprite> {
+    direction: CardinalDirection
+): Animation<TextureRegion> {
     return this.values.first()[anim]!!.animations[direction]!!
 }
 
-fun Map<String, Map<AnimState, LpcCharacterAnim<Sprite>>>.getAnimationFor(
+fun Map<String, Map<AnimState, LpcCharacterAnim<TextureRegion>>>.getAnimationFor(
     character: String,
     anim: AnimState,
-    direction: SpriteDirection
-): Animation<Sprite> {
+    direction: CardinalDirection
+): Animation<TextureRegion> {
     return this[character]!![anim]!!.animations[direction]!!
 }
 
-fun Map<String, Map<SpriteDirection, Sprite>>.getSpriteFor(weapon: Weapon, direction: SpriteDirection): Sprite {
+fun Map<String, Map<CardinalDirection, TextureRegion>>.getSpriteFor(weapon: Weapon, direction: CardinalDirection): TextureRegion {
     return this[weapon.textureName]!![direction]!!
 }
 

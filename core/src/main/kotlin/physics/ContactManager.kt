@@ -222,7 +222,7 @@ class ContactManager : ContactListener {
 
                 if (livingPlayer.hasContextAction()) {
                     livingPlayer.contextAction().apply {
-                        sprite = Assets.ps4Buttons["cross"]!!
+                        textureRegion = Assets.ps4Buttons["cross"]!!
                         contextAction = {
                             player.entity.getComponent<AttackableProperties>().health += (50..85).random()
                             deadPlayer.remove<PlayerWaitsForRespawn>()
@@ -231,7 +231,7 @@ class ContactManager : ContactListener {
                     }
                 } else {
                     livingPlayer.addContextAction {
-                        sprite = Assets.ps4Buttons["cross"]!!
+                        textureRegion = Assets.ps4Buttons["cross"]!!
                         contextAction = {
                             player.entity.getComponent<AttackableProperties>().health += (50..85).random()
                             deadPlayer.remove<PlayerWaitsForRespawn>()

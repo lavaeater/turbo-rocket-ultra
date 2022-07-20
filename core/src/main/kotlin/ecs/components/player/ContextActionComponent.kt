@@ -2,7 +2,7 @@ package ecs.components.player
 
 import com.badlogic.ashley.core.Component
 import com.badlogic.ashley.core.Entity
-import com.badlogic.gdx.graphics.g2d.Sprite
+import com.badlogic.gdx.graphics.g2d.TextureRegion
 import com.badlogic.gdx.math.Vector2
 import com.badlogic.gdx.utils.Pool
 import data.selectedItemListOf
@@ -13,7 +13,7 @@ import ktx.scene2d.scene2d
 import ktx.scene2d.table
 import tru.Assets
 
-sealed class Buildable(val name: String, val sprite: Sprite) {
+sealed class Buildable(val name: String, val textureRegion: TextureRegion) {
     open fun buildIt(at: Vector2) {}
     object Blockade : Buildable("Blockade", Assets.buildables.first()) {
         override fun buildIt(at: Vector2) {
@@ -58,10 +58,10 @@ class ComplexActionComponent: Component, Pool.Poolable {
 }
 
 class ContextActionComponent: Component, Pool.Poolable {
-    var sprite: Sprite = Sprite()
+    var textureRegion: TextureRegion = TextureRegion()
     var contextAction = {}
     override fun reset() {
         contextAction = {}
-        sprite = Sprite()
+        textureRegion = TextureRegion()
     }
 }

@@ -6,7 +6,7 @@ import eater.ecs.components.TransformComponent
 import eater.physics.addComponent
 import ecs.components.graphics.RenderableComponent
 import ecs.components.graphics.RenderableType
-import ecs.components.graphics.SpriteComponent
+import ecs.components.graphics.TextureRegionComponent
 import ecs.components.intent.CalculatedPositionComponent
 import ecs.components.intent.IntendsTo
 import ecs.components.intent.IntentComponent
@@ -81,10 +81,10 @@ class IntentionSystem : IteratingSystem(allOf(IntentComponent::class).get()) {
                 with<RenderableComponent> {
                     renderableType = RenderableType.Sprite
                 }
-                with<SpriteComponent> {
-                    sprite = entity.buildModal().buildables.selectedItem.sprite
+                with<TextureRegionComponent> {
+                    textureRegion = entity.buildModal().buildables.selectedItem.textureRegion
                     scale = 4f
-                    updateSprite = { sprite = entity.buildModal().buildables.selectedItem.sprite }
+                    updateTextureRegion = { textureRegion = entity.buildModal().buildables.selectedItem.textureRegion }
                 }
             }
         }

@@ -5,7 +5,7 @@ import com.badlogic.ashley.systems.IteratingSystem
 import com.badlogic.gdx.graphics.OrthographicCamera
 import eater.ecs.components.TransformComponent
 import eater.injection.InjectionContext.Companion.inject
-import ecs.components.graphics.SpriteComponent
+import ecs.components.graphics.TextureRegionComponent
 import ktx.ashley.allOf
 import physics.transform
 
@@ -14,7 +14,7 @@ import physics.transform
  * Two systems. One checks only entities that we know have visiblecomponent, the other
  * checks entities with notvisiblecomponent
  */
-class FrustumCullingSystem : IteratingSystem(allOf(TransformComponent::class, SpriteComponent::class).get()) {
+class FrustumCullingSystem : IteratingSystem(allOf(TransformComponent::class, TextureRegionComponent::class).get()) {
     private val camera by lazy { inject<OrthographicCamera>() }
 
     override fun processEntity(entity: Entity, deltaTime: Float) {

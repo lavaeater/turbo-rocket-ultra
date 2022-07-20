@@ -9,7 +9,7 @@ import com.badlogic.gdx.ai.btree.BehaviorTree
 import com.badlogic.gdx.ai.btree.Task
 import com.badlogic.gdx.ai.btree.Task.Status
 import com.badlogic.gdx.graphics.Color
-import com.badlogic.gdx.graphics.g2d.Sprite
+import com.badlogic.gdx.graphics.g2d.TextureRegion
 import com.badlogic.gdx.math.MathUtils
 import com.badlogic.gdx.math.MathUtils.degreesToRadians
 import com.badlogic.gdx.math.Vector2
@@ -95,9 +95,9 @@ fun gibs(at: Vector2, gibAngle: Float = 1000f) {
         val localPoint = vec2(-1f, 0f)
 
         val gibEntity = engine().entity {
-            with<SpriteComponent> {
+            with<TextureRegionComponent> {
                 rotateWithTransform = true
-                sprite = i
+                textureRegion = i
             }
             with<RenderableComponent> {
             }
@@ -232,10 +232,10 @@ fun tower(
             body = towerBody
         }
         with<TransformComponent>()
-        with<SpriteComponent> {
-            sprite = Assets.newTower
+        with<TextureRegionComponent> {
+            textureRegion = Assets.newTower
             scale = 4f
-            offsetX = -4f
+//            offsetX = -4f
         }
         with<RenderableComponent> {
             layer = 1
@@ -261,7 +261,7 @@ fun tower(
  * 64 / 16 = 4, which is weird.
  */
 
-fun bodyForSprite(
+fun bodyForRegion(
     at: Vector2,
     colliderCategoryBits: Short,
     colliderMaskBits: Short,
@@ -314,7 +314,7 @@ fun bodyForSprite(
 fun buildCursor(): Entity {
     val entity = engine().entity {
         with<TransformComponent>()
-        with<SpriteComponent> {
+        with<TextureRegionComponent> {
         }
         with<RenderableComponent> {
             layer = 2
@@ -331,7 +331,7 @@ fun player(player: Player, mapper: ControlMapper, at: Vector2, debug: Boolean) {
     whereas the other one symbolizes the characters actual body and is for hit detection
     from shots etc. Nice.
      */
-    val box2dBody = bodyForSprite(
+    val box2dBody = bodyForRegion(
         at,
         Box2dCategories.players,
         Box2dCategories.whatPlayersHit,
@@ -352,8 +352,8 @@ fun player(player: Player, mapper: ControlMapper, at: Vector2, debug: Boolean) {
             anims = Assets.characters[player.selectedCharacterSpriteName]!!
             currentAnim = anims.values.first().animations.values.first()
         }
-        with<SpriteComponent> {
-            offsetY = -1f
+        with<TextureRegionComponent> {
+//            offsetY = -1f
         }
         with<RenderableComponent> {
             layer = 1
@@ -399,9 +399,11 @@ fun player(player: Player, mapper: ControlMapper, at: Vector2, debug: Boolean) {
 fun playerWeapon(playerEntity: Entity, anchor: String = "green"): Entity {
     return engine().entity {
         with<TransformComponent>()
-        with<SpriteComponent> {
+        with<TextureRegionComponent> {
             rotateWithTransform = true
             isVisible = true
+            originX = 0f
+            originY = 0f
         }
         with<RenderableComponent> {
             layer = 1
@@ -424,16 +426,16 @@ fun playerWeapon(playerEntity: Entity, anchor: String = "green"): Entity {
         }
         with<FunctionsComponent> {
             functions["SetVisibility"] = { w ->
-                w.sprite().isVisible = playerEntity.playerControl().aiming
+                w.textureRegionComponent().isVisible = playerEntity.playerControl().aiming
             }
             functions["UpdateWeaponSprite"] = { w ->
                 val direction = playerEntity.animation().currentDirection
-                w.sprite().sprite = Assets.weapons.getSpriteFor(w.weapon().currentWeapon, direction)
+                w.textureRegionComponent().textureRegion = Assets.weapons.getSpriteFor(w.weapon().currentWeapon, direction)
                 when (direction) {
-                    SpriteDirection.East -> w.sprite().sprite.setFlip(false, false)
-                    SpriteDirection.North -> w.sprite().sprite.setFlip(false, false)
-                    SpriteDirection.South -> w.sprite().sprite.setFlip(false, false)
-                    SpriteDirection.West -> w.sprite().sprite.setFlip(false, true)
+                    CardinalDirection.East -> w.textureRegionComponent().textureRegion.flip(false, false)
+                    CardinalDirection.North -> w.textureRegionComponent().textureRegion.flip(false, false)
+                    CardinalDirection.South -> w.textureRegionComponent().textureRegion.flip(false, false)
+                    CardinalDirection.West -> w.textureRegionComponent().textureRegion.flip(false, true)
                 }
             }
         }
@@ -473,8 +475,8 @@ fun randomLoot(at: Vector2, lootTable: LootTable) {
     val entity = engine().entity {
         with<Box2d> { body = box2dBody }
         with<TransformComponent> { position.set(box2dBody.position) }
-        with<SpriteComponent> {
-            sprite = Assets.lootBox
+        with<TextureRegionComponent> {
+            textureRegion = Assets.lootBox
         }
         with<RenderableComponent> {
             layer = 1
@@ -509,8 +511,8 @@ fun lootBox(at: Vector2, lootDrop: List<ILoot>) {
     val entity = engine().entity {
         with<Box2d> { body = box2dBody }
         with<TransformComponent> { position.set(box2dBody.position) }
-        with<SpriteComponent> {
-            sprite = Assets.lootBox
+        with<TextureRegionComponent> {
+            textureRegion = Assets.lootBox
         }
         with<RenderableComponent> {
             layer = 1
@@ -552,8 +554,8 @@ fun throwGrenade(
             feelsGravity = true
             verticalSpeed = 5f
         }
-        with<SpriteComponent> {
-            sprite = Assets.molotov //Fix a burning bottle sprite
+        with<TextureRegionComponent> {
+            textureRegion = Assets.molotov //Fix a burning bottle sprite
             rotateWithTransform = true
         }
         with<RenderableComponent> {
@@ -597,8 +599,8 @@ fun throwMolotov(
             feelsGravity = true
             verticalSpeed = 5f
         }
-        with<SpriteComponent> {
-            sprite = Assets.molotov //Fix a burning bottle sprite
+        with<TextureRegionComponent> {
+            textureRegion = Assets.molotov //Fix a burning bottle sprite
             rotateWithTransform = true
         }
         with<RenderableComponent> {
@@ -631,8 +633,8 @@ fun bullet(at: Vector2, towards: Vector2, speed: Float, damage: Float, player: P
             this.player = player
         }
         with<TransformComponent> { position.set(box2dBody.position) }
-        with<SpriteComponent> {
-            sprite = Assets.bullet
+        with<TextureRegionComponent> {
+            textureRegion = Assets.bullet
         }
         with<RenderableComponent> {
             layer = 1
@@ -644,7 +646,7 @@ fun bullet(at: Vector2, towards: Vector2, speed: Float, damage: Float, player: P
 }
 
 fun enemy(at: Vector2, choice: Boolean, init: EngineEntity.() -> Unit = {}): Entity {
-    val box2dBody = bodyForSprite(
+    val box2dBody = bodyForRegion(
         at,
         Box2dCategories.enemies,
         Box2dCategories.whatEnemiesHit,
@@ -690,7 +692,7 @@ fun enemy(at: Vector2, choice: Boolean, init: EngineEntity.() -> Unit = {}): Ent
 
 fun oldenemy(at: Vector2, init: EngineEntity.() -> Unit = {}): Entity {
 
-    val box2dBody = bodyForSprite(
+    val box2dBody = bodyForRegion(
         at,
         Box2dCategories.enemies,
         Box2dCategories.whatEnemiesHit,
@@ -826,10 +828,10 @@ fun targetStation(
         with<TransformComponent> { position.set(box2dBody.position) }
         with<TargetComponent>()
         with<AttackableProperties>()
-        with<SpriteComponent> {
-            sprite = Assets.towers["objective"]!!
+        with<TextureRegionComponent> {
+            textureRegion = Assets.towers["objective"]!!
             scale = 4f
-            offsetY = -4f
+//            offsetY = -4f
         }
         with<RenderableComponent> {
             layer = 1
@@ -876,10 +878,10 @@ fun hackingStation(
                 row()
             }
         }
-        with<SpriteComponent> {
-            sprite = Assets.towers["objective"]!!
+        with<TextureRegionComponent> {
+            textureRegion = Assets.towers["objective"]!!
             scale = 4f
-            offsetY = -4f
+//            offsetY = -4f
         }
         with<RenderableComponent> {
             layer = 1
@@ -906,7 +908,7 @@ fun hackingStation(
  */
 fun boss(at: Vector2, level: Int) {
 
-    val box2dBody = bodyForSprite(
+    val box2dBody = bodyForRegion(
         at,
         Box2dCategories.enemies,
         Box2dCategories.all,
@@ -956,7 +958,7 @@ fun boss(at: Vector2, level: Int) {
 
 private fun EngineEntity.withBasicEnemyStuff(
     box2dBody: Body,
-    anim: Map<AnimState, LpcCharacterAnim<Sprite>>,
+    anim: Map<AnimState, LpcCharacterAnim<TextureRegion>>,
     fov: Float = GameConstants.ENEMY_FOV,
     rush: Float = GameConstants.ENEMY_RUSH_SPEED,
     velocity: Float = GameConstants.ENEMY_BASE_SPEED,
@@ -983,7 +985,7 @@ private fun EngineEntity.withBasicEnemyStuff(
     with<AnimatedCharacterComponent> {
         anims = anim
     }
-    with<SpriteComponent> {
+    with<TextureRegionComponent> {
         scale = spriteScale
     }
     with<Fitness>()
@@ -1018,8 +1020,8 @@ fun blockade(
         with<TransformComponent> { position.set(box2dBody.position) }
         with<BlockadeComponent>()
         with<ObstacleComponent>()
-        with<SpriteComponent> {
-            sprite = Assets.buildables.first()
+        with<TextureRegionComponent> {
+            textureRegion = Assets.buildables.first()
             scale = 4f
             //offsetY = //-4f
         }
@@ -1052,9 +1054,9 @@ fun spawner(
         with<Box2d> { body = box2dBody }
         with<TransformComponent> { position.set(box2dBody.position) }
         with<ObstacleComponent>()
-        with<SpriteComponent> {
-            sprite = Assets.towers["obstacle"]!!
-            offsetY = -4f
+        with<TextureRegionComponent> {
+            textureRegion = Assets.towers["obstacle"]!!
+//            offsetY = -4f
             scale = 4f
         }
         with<RenderableComponent> {
@@ -1094,9 +1096,9 @@ fun objective(
     val entity = engine().entity {
         with<Box2d> { body = box2dBody }
         with<TransformComponent> { position.set(box2dBody.position) }
-        with<SpriteComponent> {
-            sprite = Assets.towers["objective"]!!
-            offsetY = -4f
+        with<TextureRegionComponent> {
+            textureRegion = Assets.towers["objective"]!!
+//            offsetY = -4f
             scale = 4f
         }
         with<RenderableComponent> {

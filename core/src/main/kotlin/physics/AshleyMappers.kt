@@ -57,7 +57,7 @@ object AshleyMappers {
     val weapon = mapperFor<WeaponComponent>()
     val respawn = mapperFor<PlayerIsRespawning>()
     val waitsForRespawn = mapperFor<PlayerWaitsForRespawn>()
-    val sprite = mapperFor<SpriteComponent>()
+    val textureRegion = mapperFor<TextureRegionComponent>()
     val renderable = mapperFor<RenderableComponent>()
     val anchors = mapperFor<AnchorPointsComponent>()
     val build = mapperFor<BuildModeComponent>()
@@ -246,8 +246,8 @@ fun Entity.hasBehavior(): Boolean {
     return AshleyMappers.behavior.has(this)
 }
 
-fun Entity.sprite(): SpriteComponent {
-    return AshleyMappers.sprite.get(this)
+fun Entity.textureRegionComponent(): TextureRegionComponent {
+    return AshleyMappers.textureRegion.get(this)
 }
 
 fun Entity.renderable(): RenderableComponent {
@@ -255,7 +255,7 @@ fun Entity.renderable(): RenderableComponent {
 }
 
 fun Entity.hasSprite(): Boolean {
-    return AshleyMappers.sprite.has(this)
+    return AshleyMappers.textureRegion.has(this)
 }
 
 fun Entity.weapon(): WeaponComponent {

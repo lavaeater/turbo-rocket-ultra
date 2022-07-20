@@ -6,7 +6,7 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion
 import com.badlogic.gdx.utils.Pool
 import tru.AnimState
 import tru.LpcCharacterAnim
-import tru.SpriteDirection
+import tru.CardinalDirection
 
 /**
  * DO not make it more complicated at this juncture. Exploring using
@@ -32,7 +32,7 @@ import tru.SpriteDirection
  */
 class MultiTextureAndAnimation : Component, Pool.Poolable {
     var anims: Map<AnimState, LpcCharacterAnim<TextureRegion>> = emptyMap()
-    var currentDirection: SpriteDirection = SpriteDirection.South
+    var currentDirection: CardinalDirection = CardinalDirection.South
     var currentAnimState: AnimState =
         AnimState.Idle //this is nice because all states give us the same animation - except if we are moving we get walking anim
 

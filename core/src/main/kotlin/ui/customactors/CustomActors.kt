@@ -40,18 +40,18 @@ inline fun <S> KWidget<S>.repeatingTexture(noinline countFunction: () -> Int, sp
 
 @OptIn(ExperimentalContracts::class)
 @Scene2dDsl
-inline fun <S> KWidget<S>.animatedSpriteImage(animation: Animation<Sprite>, init: (@Scene2dDsl AnimatedSpriteImage).(S) -> Unit): AnimatedSpriteImage
+inline fun <S> KWidget<S>.animatedSpriteImage(animation: Animation<TextureRegion>, init: (@Scene2dDsl AnimatedSpriteImage).(S) -> Unit): AnimatedSpriteImage
 {
     contract { callsInPlace(init, InvocationKind.EXACTLY_ONCE) }
     return actor(AnimatedSpriteImage(animation), init)
 }
 
-open class AnimatedSpriteImage(var animation: Animation<Sprite>): Image() {
+open class AnimatedSpriteImage(var animation: Animation<TextureRegion>): Image() {
     var pw = 0f
     var ph = 0f
     init {
-        pw = animation.keyFrames.first().width
-        ph = animation.keyFrames.first().height
+        pw = animation.keyFrames.first().regionWidth.toFloat()
+        ph = animation.keyFrames.first().regionHeight.toFloat()
     }
     var stateTime = 0f
     override fun act(delta: Float) {

@@ -25,10 +25,9 @@ import ktx.scene2d.*
 import statemachine.StateMachine
 import tru.AnimState
 import tru.Assets
-import tru.SpriteDirection
+import tru.CardinalDirection
 import ui.customactors.animatedSpriteImage
 import ui.customactors.boundLabel
-import kotlin.properties.Delegates
 
 object ApplicationFlags {
     val map = mutableMapOf("showEnemyPaths" to false, "showEnemyActionInfo" to false, "showCanSee" to false, "showMemory" to false)
@@ -140,7 +139,7 @@ class SetupScreen(gameState: StateMachine<GameState, GameEvent>) : BasicScreen(g
                 boundLabel({ playerModel.name })
                 boundLabel({ playerModel.selectedCharacter })
                 val ai = animatedSpriteImage(
-                    Assets.characterTurboAnims.first().animationFor(AnimState.Walk, SpriteDirection.South)
+                    Assets.characterTurboAnims.first().animationFor(AnimState.Walk, CardinalDirection.South)
                 ) {}
                 addActor(ai)
                 verticalGroup {
@@ -186,7 +185,7 @@ class SetupScreen(gameState: StateMachine<GameState, GameEvent>) : BasicScreen(g
                 playerModel.selectedAbleSpriteAnims = selectedItemListOf(
                     { anim ->
                         playerModel.selectedCharacter = anim.name
-                        ai.animation = anim.animationFor(AnimState.Walk, SpriteDirection.South)
+                        ai.animation = anim.animationFor(AnimState.Walk, CardinalDirection.South)
                     },
                     *Assets.characterTurboAnims.toTypedArray()
                 )

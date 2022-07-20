@@ -6,7 +6,7 @@ import ecs.components.gameplay.ObjectiveComponent
 import ecs.systems.graphics.GameConstants
 import tru.AnimState
 import tru.Assets
-import tru.SpriteDirection
+import tru.CardinalDirection
 
 class Player(val name: String, val isAiPlayer: Boolean = false) {
     init {
@@ -29,7 +29,7 @@ class Player(val name: String, val isAiPlayer: Boolean = false) {
     var selectedCharacterSpriteName = Assets.playerCharacters.keys.first()
     val selectedSprite get() = Assets.playerCharacters[selectedCharacterSpriteName]!!
     var currentAnimState: AnimState = AnimState.Idle
-    var currentSpriteDirection : SpriteDirection = SpriteDirection.South
+    var currentCardinalDirection : CardinalDirection = CardinalDirection.South
     private val startingLives = 3
 
     var lives = startingLives

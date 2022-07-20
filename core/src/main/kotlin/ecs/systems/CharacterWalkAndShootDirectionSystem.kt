@@ -7,7 +7,7 @@ import ecs.components.player.PlayerControlComponent
 import extensions.spriteDirection
 import ktx.ashley.allOf
 import physics.AshleyMappers
-import tru.SpriteDirection
+import tru.CardinalDirection
 
 
 class CharacterWalkAndShootDirectionSystem :
@@ -31,7 +31,7 @@ class CharacterWalkAndShootDirectionSystem :
         val characterComponent = AshleyMappers.animatedCharacter.get(entity)
         val controlComponet = AshleyMappers.playerControl.get(entity)
         if(controlComponet.waitsForRespawn) {
-            characterComponent.currentDirection = SpriteDirection.South
+            characterComponent.currentDirection = CardinalDirection.South
         } else {
             characterComponent.currentDirection = if(controlComponet.aiming) controlComponet.aimVector.spriteDirection() else controlComponet.walkVector.spriteDirection()
         }

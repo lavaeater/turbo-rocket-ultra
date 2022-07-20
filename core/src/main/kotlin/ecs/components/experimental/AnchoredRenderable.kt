@@ -1,4 +1,4 @@
-package ecs.components.gameplay
+package ecs.components.experimental
 
 import com.badlogic.gdx.graphics.g2d.Sprite
 import com.badlogic.gdx.math.Vector2
