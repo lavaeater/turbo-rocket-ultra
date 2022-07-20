@@ -143,7 +143,7 @@ class RenderSystem(
                 transform.position.y - originY
             val rotation =
                 if (textureRegionComponent.rotateWithTransform) transform.rotation * MathUtils.radiansToDegrees else 0f
-            
+
             batch.draw(
                 textureRegion,
                 x,
