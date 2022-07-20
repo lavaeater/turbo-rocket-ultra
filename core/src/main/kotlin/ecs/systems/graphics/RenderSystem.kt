@@ -104,10 +104,14 @@ class RenderSystem(
     fun createAdvancedShadowAffine(
         worldX: Float, worldY: Float,
         rotation: Float,
-        offsetX: Float, offsetY: Float,
-        originX: Float, originY: Float,
-        shearX: Float, shearY: Float,
-        scaleX: Float, scaleY: Float
+        offsetX: Float,
+        offsetY: Float,
+        originX: Float,
+        originY: Float,
+        shearX: Float,
+        shearY: Float,
+        scaleX: Float,
+        scaleY: Float
     ): Affine2? {
         val shearingAffine = Affine2()
         shearingAffine.setToShearing(shearX, shearY)
@@ -131,35 +135,45 @@ class RenderSystem(
 
         if (textureRegionComponent.isVisible) {
             val textureRegion = textureRegionComponent.textureRegion
-
+            val originX = textureRegion.regionWidth * textureRegionComponent.originX * textureRegionComponent.actualScale
+            val originY = textureRegion.regionHeight * textureRegionComponent.originY * textureRegionComponent.actualScale
+            val x =
+                transform.position.x - originX
+            val y =
+                transform.position.y - originY
+            val rotation =
+                if (textureRegionComponent.rotateWithTransform) transform.rotation * MathUtils.radiansToDegrees else 0f
+//
 //            val affine = createAdvancedShadowAffine(
-//                transform.position.x - sprite.originX - spriteComponent.actualOffsetX,
-//                transform.position.y - sprite.originY - spriteComponent.actualOffsetY,
-//                sprite.rotation,
-//                0f,
-//                0f,
-//                0f,
-//                0f,
+//                x,
+//                y,
+//                rotation,
+//                -textureRegion.regionWidth.toFloat(),
+//                textureRegion.regionHeight.toFloat(),
+//               originX,
+//                originY,
 //                0.5f,
 //                0f,
-//                sprite.scaleX,
-//                sprite.scaleY
+//                textureRegionComponent.actualScale,
+//                textureRegionComponent.actualScale / 2f
 //            )
-//            batch.setColor(0f, 0f, 0f, 1f)
-//            batch.draw(sprite, sprite.width, sprite.height, affine)
+//
+//            batch.setColor(0f, 0f, 0f, 0.8f)
+//            batch.draw(textureRegion, textureRegion.regionWidth.toFloat(), textureRegion.regionHeight.toFloat(), affine)
 //            batch.setColor(1f, 1f, 1f, 1f)
 
             batch.draw(
                 textureRegion,
-                transform.position.x - textureRegion.regionWidth * textureRegionComponent.originX * textureRegionComponent.actualScale,
-                transform.position.y - textureRegion.regionHeight * textureRegionComponent.originY * textureRegionComponent.actualScale,
+                x,
+                y,
                 0f,
                 0f,
                 textureRegion.regionWidth.toFloat(),
                 textureRegion.regionHeight.toFloat(),
                 textureRegionComponent.actualScale,
                 textureRegionComponent.actualScale,
-                if (textureRegionComponent.rotateWithTransform) transform.rotation * MathUtils.radiansToDegrees else 0f)
+                rotation
+            )
         }
     }
 
