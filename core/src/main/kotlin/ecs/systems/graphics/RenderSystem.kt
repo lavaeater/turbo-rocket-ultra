@@ -143,25 +143,7 @@ class RenderSystem(
                 transform.position.y - originY
             val rotation =
                 if (textureRegionComponent.rotateWithTransform) transform.rotation * MathUtils.radiansToDegrees else 0f
-//
-//            val affine = createAdvancedShadowAffine(
-//                x,
-//                y,
-//                rotation,
-//                -textureRegion.regionWidth.toFloat(),
-//                textureRegion.regionHeight.toFloat(),
-//               originX,
-//                originY,
-//                0.5f,
-//                0f,
-//                textureRegionComponent.actualScale,
-//                textureRegionComponent.actualScale / 2f
-//            )
-//
-//            batch.setColor(0f, 0f, 0f, 0.8f)
-//            batch.draw(textureRegion, textureRegion.regionWidth.toFloat(), textureRegion.regionHeight.toFloat(), affine)
-//            batch.setColor(1f, 1f, 1f, 1f)
-
+            
             batch.draw(
                 textureRegion,
                 x,
