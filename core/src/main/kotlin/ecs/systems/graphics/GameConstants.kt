@@ -2,6 +2,13 @@ package ecs.systems.graphics
 
 object GameConstants {
 
+    val isoFloorTileWidth = 321f
+    val isoWallWidth = 241f
+    val oldFloorWidth = 16f
+
+    val isoWallToFloorScale = isoFloorTileWidth / isoWallWidth
+    val isoToMapScale = oldFloorWidth / isoFloorTileWidth * 4f
+
     const val ENEMY_MEMORY_TIME = 5f
     const val MAX_RANDOM_SECTION_RECURSION_LEVEL = 4
     const val TOUCHING_DISTANCE = 2f

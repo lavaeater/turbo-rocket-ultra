@@ -179,4 +179,41 @@ class GridMapManager {
         }
     }
 
+    fun renderIso(batch: Batch, shapeDrawer: ShapeDrawer, deltaTime: Float, scale: Float = 1f) {
+        //1. sort the values... in some order? What order, really?
+        //* sort the sections...according to first x, then y, ascending
+        for(section in gridMap.values.sortedWith(object : Comparator<GridMapSection> {
+            override fun compare(s1: GridMapSection, s2: GridMapSection): Int {
+                if(s1.x == s2.x && s1.y == s2.y)
+                    return 0
+                if(s1.x == s2.x) {
+                    return s1.y.compareTo(s2.y)
+                }
+                return s1.x.compareTo(s2.x)
+            }
+
+        })) {
+            val sectionOffsetX = section.x * section.sectionWidth * scale
+            val sectionOffsetY = section.y * section.sectionHeight * scale
+            for ((y, row) in section.isoTiles.withIndex()) {
+                for ((x, tile) in row.withIndex()) {
+                    val tileX = x * tileWidth * tileScale * scale
+                    val tileY = y * tileHeight * tileScale * scale
+                    val actualX = tileX + sectionOffsetX
+                    val actualY = tileY + sectionOffsetY
+                    //this.x - this.y, (this.x + this.y) / 2)
+                    for (region in tile.renderables.regions) {
+                        batch.drawScaled(
+                            region.textureRegion,
+                            actualX - actualY,
+                            (actualX + actualY) / 2,
+                            tileScale * scale * tile.tileScale
+                        )
+                    }
+                }
+            }
+        }
+
+    }
+
 }

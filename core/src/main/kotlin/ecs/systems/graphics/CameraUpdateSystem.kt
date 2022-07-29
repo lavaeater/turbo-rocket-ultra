@@ -35,9 +35,13 @@ class CameraUpdateSystem(
 
     override fun update(deltaTime: Float) {
         super.update(deltaTime)
+
+        val x = transformComponents.map { it.position.x }.sum() / transformComponents.count().toFloat()
+        val y = transformComponents.map { it.position.y }.sum() / transformComponents.count().toFloat()
+
         cameraPosition.set(
-            transformComponents.map { it.position.x }.sum() / transformComponents.count().toFloat(),
-            transformComponents.map { it.position.y }.sum() / transformComponents.count().toFloat()
+            x - y,
+            (x + y) / 2
         )
 
         camera.position.lerp(

@@ -14,10 +14,12 @@ import com.badlogic.gdx.math.MathUtils
 import com.badlogic.gdx.scenes.scene2d.ui.Skin
 import com.badlogic.gdx.utils.Disposable
 import eater.injection.InjectionContext.Companion.inject
+import ecs.systems.graphics.CompassDirection
 import features.weapons.GunFrames
 import features.weapons.Weapon
 import ktx.scene2d.Scene2DSkin
 import map.snake.MapDirection
+import map.snake.TileAlignment
 import space.earlygrey.shapedrawer.ShapeDrawer
 
 
@@ -339,6 +341,56 @@ object Assets : Disposable {
         )
     }
 
+    /**
+     * Texture Regions:
+     * x: 4,
+     * width: 321
+     * space between 8
+     */
+    val isoFloorTiles by lazy {
+        val t = Texture(Gdx.files.internal("iso/floor.png"))
+        Array(4) { i ->
+            val x = 4 + i * 325
+            val y = 0
+            val w = 321
+            val h = 169
+            TextureRegion(t, x, y, w, h)
+        }.toList()
+    }
+
+    /**
+     * x 4
+     * y 10
+     * w 241
+     * h 179
+     *
+     * we have to rescale these fuckers...
+     */
+    val isoWallTiles by lazy {
+        val t = Texture(Gdx.files.internal("iso/wall.png"))
+        val x1 = 4
+        val x2 = x1 + 245
+        val x3 = x2 + 245
+        val x4 = x3 + 245
+        val trs = mapOf(
+            CompassDirection.West to TextureRegion(t, x1, 10, 241, 179),
+            CompassDirection.South to TextureRegion(t, x2, 10, 241, 179),
+            CompassDirection.East to TextureRegion(t, x3, 10, 241, 179),
+            CompassDirection.North to TextureRegion(t, x4, 10, 241, 179)
+        )
+        mapOf(
+            TileAlignment.Left to trs[CompassDirection.West]!!,
+            TileAlignment.TopLeft to trs[CompassDirection.North]!!,
+            TileAlignment.Top to trs[CompassDirection.North]!!,
+            TileAlignment.TopRight to trs[CompassDirection.East]!!,
+            TileAlignment.Right to trs[CompassDirection.East]!!,
+            TileAlignment.BottomRight to trs[CompassDirection.East]!!,
+            TileAlignment.Bottom to trs[CompassDirection.South]!!,
+            TileAlignment.BottomLeft to trs[CompassDirection.South]!!,
+
+            )
+    }
+
     val tileTexture by lazy {
         Texture(Gdx.files.internal("tiles/tiles.png"))
     }
@@ -355,6 +407,7 @@ object Assets : Disposable {
                             2 -> {} //ts["wall_end"] = TextureRegion(tileTexture, xTile * 16, yTile * 16, 16, 16)
                         }
                     }
+
                     2 -> {
                         if (xTile in 0 until 1)
                             ts["wall_end"] = TextureRegion(tileTexture, xTile * 16, yTile * 16, 16, 16)
@@ -549,7 +602,10 @@ fun Map<String, Map<AnimState, LpcCharacterAnim<TextureRegion>>>.getAnimationFor
     return this[character]!![anim]!!.animations[direction]!!
 }
 
-fun Map<String, Map<CardinalDirection, TextureRegion>>.getSpriteFor(weapon: Weapon, direction: CardinalDirection): TextureRegion {
+fun Map<String, Map<CardinalDirection, TextureRegion>>.getSpriteFor(
+    weapon: Weapon,
+    direction: CardinalDirection
+): TextureRegion {
     return this[weapon.textureName]!![direction]!!
 }
 

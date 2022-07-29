@@ -79,6 +79,7 @@ class RenderSystem(
         mutableMapOf("blue" to Color.BLUE, "red" to Color.RED, "green" to Color.GREEN, "yellow" to Color.YELLOW)
     private val sectorColor = Color(0f, 1f, 0f, 0.1f)
     private val pathNodeColor = Color(0f, 1f, 0f, 0.5f)
+    private val renderIso = true
 
     override fun update(deltaTime: Float) {
         Gdx.gl.glClearColor(0f, 0f, 0f, 1f)
@@ -92,7 +93,10 @@ class RenderSystem(
         vfxManager.cleanUpBuffers()
         vfxManager.beginInputCapture()
         batch.use {
-            mapManager.render(batch, shapeDrawer, deltaTime)
+            if(renderIso)
+                mapManager.renderIso(batch, shapeDrawer, deltaTime)
+            else
+                mapManager.render(batch, shapeDrawer, deltaTime)
             super.update(deltaTime)
         }
         vfxManager.endInputCapture()
@@ -146,8 +150,8 @@ class RenderSystem(
 
             batch.draw(
                 textureRegion,
-                x,
-                y,
+                x - y,
+                (x + y) / 2,
                 0f,
                 0f,
                 textureRegion.regionWidth.toFloat(),
