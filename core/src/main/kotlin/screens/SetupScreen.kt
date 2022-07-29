@@ -18,6 +18,7 @@ import gamestate.GameEvent
 import gamestate.GameState
 import input.Button
 import input.ControlMapper
+import input.GamepadControl
 import input.KeyboardControl
 import ktx.log.debug
 import ktx.scene2d.*

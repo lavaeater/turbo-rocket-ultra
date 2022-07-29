@@ -19,7 +19,7 @@ import ktx.app.KtxScreen
 import statemachine.StateMachine
 import tru.Assets
 
-abstract class BasicScreen(val gameState: StateMachine<GameState, GameEvent>) : KtxScreen, KtxInputAdapter {
+abstract class BasicScreen(val gameState: StateMachine<GameState, GameEvent>) : KtxScreen, KtxInputAdapter, ControllerListener {
 
     open val camera: OrthographicCamera by lazy { inject() }
     open val viewport: Viewport by lazy { inject<ExtendViewport>() }
