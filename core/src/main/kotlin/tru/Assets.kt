@@ -348,12 +348,12 @@ object Assets : Disposable {
      * space between 8
      */
     val isoFloorTiles by lazy {
-        val t = Texture(Gdx.files.internal("iso/floor.png"))
-        Array(4) { i ->
-            val x = i * 321
+        val t = Texture(Gdx.files.internal("iso/floor_new.png"))
+        Array(2) { i ->
+            val x = i * 32
             val y = 0
-            val w = 320
-            val h = 169
+            val w = 32
+            val h = 32
             TextureRegion(t, x, y, w, h)
         }.toList()
     }
@@ -367,28 +367,14 @@ object Assets : Disposable {
      * we have to rescale these fuckers...
      */
     val isoWallTiles by lazy {
-        val t = Texture(Gdx.files.internal("iso/wall.png"))
-        val x1 = 0
-        val x2 = x1 + 241
-        val x3 = x2 + 241
-        val x4 = x3 + 241
-        val trs = mapOf(
-            CompassDirection.West to TextureRegion(t, x1, 0, 241, 179),
-            CompassDirection.South to TextureRegion(t, x2, 0, 241, 179),
-            CompassDirection.East to TextureRegion(t, x3, 0, 241, 179),
-            CompassDirection.North to TextureRegion(t, x4, 0, 241, 179)
-        )
-        mapOf(
-            TileAlignment.Left to trs[CompassDirection.West]!!,
-            TileAlignment.TopLeft to trs[CompassDirection.North]!!,
-            TileAlignment.Top to trs[CompassDirection.North]!!,
-            TileAlignment.TopRight to trs[CompassDirection.East]!!,
-            TileAlignment.Right to trs[CompassDirection.East]!!,
-            TileAlignment.BottomRight to trs[CompassDirection.East]!!,
-            TileAlignment.Bottom to trs[CompassDirection.South]!!,
-            TileAlignment.BottomLeft to trs[CompassDirection.South]!!,
-
-            )
+        val t = Texture(Gdx.files.internal("iso/wall_new.png"))
+        Array(2) { i ->
+            val x = i * 32
+            val y = 0
+            val w = 32
+            val h = 32
+            TextureRegion(t, x, y, w, h)
+        }.toList()
     }
 
     val tileTexture by lazy {

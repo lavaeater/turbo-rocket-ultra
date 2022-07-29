@@ -6,7 +6,7 @@ object GameConstants {
     val isoWallWidth = 241f
     val oldFloorWidth = 16f
 
-    val isoWallToFloorScale = isoFloorTileWidth / isoWallWidth
+    val isoWallToFloorScale = isoFloorTileWidth / isoWallWidth * 2f
     val isoToMapScale = oldFloorWidth / isoFloorTileWidth * 2f
 
     const val ENEMY_MEMORY_TIME = 5f

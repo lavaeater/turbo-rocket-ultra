@@ -207,7 +207,7 @@ class GridMapManager {
                             region.textureRegion,
                             actualX - actualY,
                             (actualX + actualY) / 2,
-                            tileScale * scale * tile.tileScale
+                            tileScale * scale
                         )
                     }
                 }
