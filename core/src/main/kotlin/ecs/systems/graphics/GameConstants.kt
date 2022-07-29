@@ -7,7 +7,7 @@ object GameConstants {
     val oldFloorWidth = 16f
 
     val isoWallToFloorScale = isoFloorTileWidth / isoWallWidth
-    val isoToMapScale = oldFloorWidth / isoFloorTileWidth * 4f
+    val isoToMapScale = oldFloorWidth / isoFloorTileWidth * 2f
 
     const val ENEMY_MEMORY_TIME = 5f
     const val MAX_RANDOM_SECTION_RECURSION_LEVEL = 4
