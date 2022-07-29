@@ -1,12 +1,19 @@
 package gamestate
 
 
-sealed class GameState {
-    object Splash: GameState()
-    object Setup: GameState()
-    object Running: GameState()
-    object Paused: GameState()
-    object Ended: GameState()
-    object Editor: GameState()
+sealed class GameState(val name: String) {
+    object Splash: GameState("Splash")
+    object Setup: GameState("Setup")
+    object Running: GameState("Running")
+    object Paused: GameState("Paused")
+    object Ended: GameState("Ended")
+    object CharacterEditor: GameState("CharacterEditor")
+    object Concept: GameState("Concept")
+    object MapEditor: GameState("MapEditor")
+    object AnimEditor : GameState("AnimEditor")
+
+    override fun toString(): String {
+        return name
+    }
 }
 

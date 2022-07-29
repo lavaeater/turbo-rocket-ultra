@@ -1,9 +1,5 @@
 package statemachine
 
-/**
- * A transition between states when an [BaseEvent] occurs that goes
- * to a next [State]
- */
 class Edge<S,E>(private val event: E, private val targetState: S) {
     private val actionList = mutableListOf<(Edge<S, E>) -> Unit>()
 

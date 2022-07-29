@@ -3,20 +3,19 @@ package ecs.systems.ai.towers
 import com.badlogic.ashley.core.Entity
 import com.badlogic.ashley.systems.IteratingSystem
 import com.badlogic.gdx.ai.btree.Task
-import ecs.components.enemy.EnemyComponent
-import ecs.components.gameplay.TransformComponent
+import eater.ecs.components.AgentProperties
+import eater.ecs.components.TransformComponent
 import ecs.components.towers.FindTarget
 import ecs.components.towers.TargetInRange
 import ktx.ashley.allOf
-import physics.addComponent
-import physics.getComponent
+import eater.physics.addComponent
+import eater.physics.getComponent
 
 class TowerTargetFinderSystem : IteratingSystem(allOf(FindTarget::class, TransformComponent::class).get()) {
-    private val enemyFamily = allOf(EnemyComponent::class, TransformComponent::class).get()
+    private val enemyFamily = allOf(AgentProperties::class, TransformComponent::class).get()
     private val enemies get() = engine.getEntitiesFor(enemyFamily)
 
 
-    @OptIn(ExperimentalStdlibApi::class)
     override fun processEntity(entity: Entity, deltaTime: Float) {
         /*
         Tries to find a target within some range of the position given by transformcomponent.

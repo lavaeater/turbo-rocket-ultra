@@ -2,24 +2,21 @@ package ecs.systems
 
 import com.badlogic.ashley.core.Entity
 import com.badlogic.ashley.systems.IteratingSystem
-import ecs.components.graphics.renderables.AnimatedCharacterSprite
-import ecs.components.graphics.RenderableComponent
+import ecs.components.graphics.AnimatedCharacterComponent
 import ecs.components.player.PlayerControlComponent
+import extensions.spriteDirection
 import ktx.ashley.allOf
-import ktx.ashley.mapperFor
 import physics.AshleyMappers
-import tru.SpriteDirection
+import tru.CardinalDirection
 
 
 class CharacterWalkAndShootDirectionSystem :
     IteratingSystem(
         allOf(
-            RenderableComponent::class,
+            AnimatedCharacterComponent::class,
             PlayerControlComponent::class
-        ).get(), 10) {
+        ).get()) {
 
-    var characterAngle = 0f
-    val renderableMapper = mapperFor<RenderableComponent>()
     override fun processEntity(entity: Entity, deltaTime: Float) {
         /**
          * The difficult thing here is how we know if a character is walking or not... and what the character
@@ -31,17 +28,12 @@ class CharacterWalkAndShootDirectionSystem :
          * The current anim is managed by something else... the input system, obviously
          * The current anim is managed by something else... the input system, obviously
          */
-        val characterSprite = renderableMapper.get(entity).renderable as AnimatedCharacterSprite
-        val controlComponet = AshleyMappers.playerControlMapper.get(entity)
-        characterAngle = if(controlComponet.moving) controlComponet.walkVector.angleDeg() else controlComponet.aimVector.angleDeg()
-
-        when (characterAngle) {
-            in 150f..209f -> characterSprite.currentDirection = SpriteDirection.East
-            in 210f..329f -> characterSprite.currentDirection = SpriteDirection.North
-            in 330f..360f -> characterSprite.currentDirection = SpriteDirection.West
-            in 0f..29f -> characterSprite.currentDirection = SpriteDirection.West
-            in 30f..149f -> characterSprite.currentDirection = SpriteDirection.South
-            else -> characterSprite.currentDirection = SpriteDirection.South
+        val characterComponent = AshleyMappers.animatedCharacter.get(entity)
+        val controlComponet = AshleyMappers.playerControl.get(entity)
+        if(controlComponet.waitsForRespawn) {
+            characterComponent.currentDirection = CardinalDirection.South
+        } else {
+            characterComponent.currentDirection = if(controlComponet.aiming) controlComponet.aimVector.spriteDirection() else controlComponet.walkVector.spriteDirection()
         }
     }
 }

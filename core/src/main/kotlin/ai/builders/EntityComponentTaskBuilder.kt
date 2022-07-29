@@ -11,12 +11,11 @@ import tru.Builder
 class EntityComponentTaskBuilder<T: TaskComponent>(private val componentClass: Class<T>) : Builder<Task<Entity>> {
     lateinit var guardingTask: Task<Entity>
     inline fun <reified E: Component>unlessEntityHas() {
-        guardingTask = invert(HasComponentTask(E::class.java))
+        guardingTask = invertResultOf(HasComponentTask(E::class.java))
     }
     inline fun <reified E: Component>ifEntityHas() {
         guardingTask = HasComponentTask(E::class.java)
     }
-
 
     override fun build(): Task<Entity> = EntityComponentTask(componentClass).apply { if(::guardingTask.isInitialized) guard = guardingTask }
 }

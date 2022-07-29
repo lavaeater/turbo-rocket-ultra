@@ -4,22 +4,19 @@ import com.badlogic.ashley.core.Entity
 import com.badlogic.ashley.systems.IteratingSystem
 import com.badlogic.gdx.math.Circle
 import ecs.components.ai.NoticedSomething
-import ecs.components.enemy.EnemyComponent
-import ecs.components.gameplay.TransformComponent
+import eater.ecs.components.AgentProperties
 import ecs.components.player.FiredShotsComponent
 import ktx.ashley.allOf
-import ktx.ashley.mapperFor
+import physics.AshleyMappers
+import eater.physics.addComponent
 
 class EnemyHearsShotsSystem : IteratingSystem(allOf(FiredShotsComponent::class).get()) {
 
-    private val enemies get() = engine.getEntitiesFor(allOf(EnemyComponent::class).get())
-    private val transformMapper = mapperFor<TransformComponent>()
-    private val shotsFiredMapper = mapperFor<FiredShotsComponent>()
-    private val noticedMapper = mapperFor<NoticedSomething>()
+    private val enemies get() = engine.getEntitiesFor(allOf(AgentProperties::class).get())
     private val circle = Circle()
 
     override fun processEntity(entity: Entity, deltaTime: Float) {
-        val firedShotsComponent = shotsFiredMapper[entity]
+        val firedShotsComponent = AshleyMappers.firedShots.get(entity)
         if(firedShotsComponent.queue.isEmpty)
             return
 
@@ -27,18 +24,21 @@ class EnemyHearsShotsSystem : IteratingSystem(allOf(FiredShotsComponent::class).
 
         while(!firedShotsComponent.queue.isEmpty && index < 10) {
             val fc = firedShotsComponent.queue.removeLast()
-            circle.set(fc.x, fc.y, 50f)
+            circle.set(fc.first, fc.second)
             for (enemy in enemies) {
-                val enemyPosition = transformMapper[enemy].position
+                val enemyPosition = AshleyMappers.transform.get(enemy).position
                 if(circle.contains(enemyPosition) && (0..2).random()==0) {
-                    if(noticedMapper.has(enemy)) {
-                        noticedMapper[enemy].noticedWhere.set(fc)
+                    if(AshleyMappers.noticedSomething.has(enemy)) {
+                        AshleyMappers.noticedSomething.get(enemy).noticedWhere.set(fc.first)
                     } else {
-                        enemy.add(engine.createComponent(NoticedSomething::class.java).apply { noticedWhere.set(fc) })
+                        enemy.addComponent<NoticedSomething> {
+                            noticedWhere.set(fc.first)
+                        }
                     }
                 }
             }
             index++
         }
+        firedShotsComponent.queue.clear()
     }
 }

@@ -1,0 +1,67 @@
+g
+b
+b
+w
+w
+w
+w
+w
+w
+l
+l
+l
+l
+l
+w
+w
+w
+b
+b
+b
+w
+w
+w
+w
+w
+b
+l
+s
+-
+name
+4-level-four            
+start
+Never look back,
+never look towards the light.
+You are not IN the darkness
+You ARE the darkness - the terror
+To everyone that lives beneath
+us.
+
+success
+Nothing matters anymore.
+Right
+
+Wrong
+
+It's all the same, in the end.
+
+All that matters is that you press on,
+always downwards
+fail
+Never give up the dream
+The dream of a future
+free of varmint
+facts
+MaxEnemies:100:i
+MaxSpawnedEnemies:200:i
+AcceleratingSpawns:false:b
+AcceleratingSpawnsFactor:1.25:f
+EnemyKillCount:0:i
+TargetEnemyKillCount:0:i
+ShowEnemyKillCount:false:b
+
+stories
+start-story
+level-failed
+level-complete
+basic-story            

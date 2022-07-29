@@ -8,7 +8,7 @@ import com.badlogic.gdx.physics.box2d.World
 
 class PhysicsDebugRendererSystem(
     private val world: World,
-    private val camera: OrthographicCamera) : EntitySystem(1) {
+    private val camera: OrthographicCamera) : EntitySystem(8) {
 
     private val debugRenderer = Box2DDebugRenderer()
 

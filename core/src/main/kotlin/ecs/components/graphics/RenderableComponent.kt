@@ -1,10 +1,14 @@
 package ecs.components.graphics
 
 import com.badlogic.ashley.core.Component
-import ecs.components.graphics.renderables.NoOpRenderable
-import ecs.components.graphics.renderables.Renderable
+import com.badlogic.gdx.utils.Pool
 
-class RenderableComponent : Component {
-    var renderable: Renderable = NoOpRenderable()
-    val renderableType get() = renderable.renderableType
+class RenderableComponent: Component, Pool.Poolable {
+
+    var layer = 0
+    var renderableType: RenderableType = RenderableType.Sprite
+    override fun reset() {
+        layer = 0
+        renderableType = RenderableType.Sprite
+    }
 }

@@ -1,0 +1,3 @@
+[submodule "gdx-lava"]
+	path = gdx-lava
+	url = git@github.com:lavaeater/gdx-lava.git

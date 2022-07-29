@@ -3,7 +3,7 @@ package statemachine
 /**
  * Builds and operates state machines
  */
-class StateMachine<S, E> private constructor(private val initialState: S, private val globalStateAction: (S) -> Unit) {
+class StateMachine<S, E> private constructor(private val initialState: S, private val globalStateAction: (S, E?) -> Unit) {
     lateinit var currentState: State<S, E>
     private set
 
@@ -29,7 +29,7 @@ class StateMachine<S, E> private constructor(private val initialState: S, privat
     fun initialize() {
         currentState = getState(initialState)
         currentState.enter()
-        globalStateAction(currentState.state)
+        globalStateAction(currentState.state, null)
     }
 
     /**
@@ -48,15 +48,15 @@ class StateMachine<S, E> private constructor(private val initialState: S, privat
             state.enter()
 
             currentState = state
-            globalStateAction(currentState.state)
+            globalStateAction(currentState.state, e)
         } catch (exc: NoSuchElementException) {
-            throw IllegalStateException("This state doesn't support " +
+            throw IllegalStateException("This state (${currentState.state}) doesn't support " +
                     "transition on ${e}")
         }
     }
 
     companion object {
-        fun <S,E>buildStateMachine(initialState: S, globalStateAction: (S) -> Unit, init: StateMachine<S, E>.() -> Unit): StateMachine<S, E> {
+        fun <S,E>buildStateMachine(initialState: S, globalStateAction: (S, E?) -> Unit, init: StateMachine<S, E>.() -> Unit): StateMachine<S, E> {
             val stateMachine = StateMachine<S,E>(initialState, globalStateAction)
             stateMachine.init()
             return stateMachine

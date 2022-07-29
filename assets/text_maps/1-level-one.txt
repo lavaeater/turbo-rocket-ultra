@@ -1,0 +1,46 @@
+hcc
+w*l
+l*c
+s*g
+---
+name
+The entrance
+start
+Clean these cursed halls from varmint.
+Infected zombie-men roam our future dwellings
+and they have to be cleaned out to make
+room for healthy, tax-paying people!
+success
+Families.
+
+This is all about families.
+
+Families that will be able to move in here
+
+Thanks to you!
+
+fail
+We don't do this for ourselves, we do it for
+
+the families.
+
+Families that now will have to wait for the next
+
+crop of sewer-cleaners to help them out.
+
+facts
+MaxEnemies:1:i
+MaxSpawnedEnemies:1:i
+AcceleratingSpawns:false:b
+AcceleratingSpawnsFactor:1.25:f
+EnemyKillCount:0:i
+TargetEnemyKillCount:0:i
+ShowEnemyKillCount:false:b
+WaveSize:15:i
+StartingEnemyCount:5:i
+
+stories
+start-story
+level-failed
+level-complete
+basic-story            

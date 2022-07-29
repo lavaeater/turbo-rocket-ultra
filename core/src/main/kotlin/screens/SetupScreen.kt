@@ -1,62 +1,231 @@
 package screens
 
+import com.badlogic.gdx.Gdx
 import com.badlogic.gdx.Input
+import com.badlogic.gdx.controllers.Controller
+import com.badlogic.gdx.graphics.Color
 import com.badlogic.gdx.graphics.OrthographicCamera
+import com.badlogic.gdx.scenes.scene2d.Actor
+import com.badlogic.gdx.scenes.scene2d.Stage
+import com.badlogic.gdx.scenes.scene2d.ui.HorizontalGroup
+import com.badlogic.gdx.utils.Align
 import com.badlogic.gdx.utils.viewport.ExtendViewport
+import data.Player
+import data.Players
+import data.SelectedItemList
+import data.selectedItemListOf
 import gamestate.GameEvent
 import gamestate.GameState
-import gamestate.Player
-import gamestate.Players
+import input.Button
 import input.ControlMapper
 import input.KeyboardControl
-import ktx.graphics.use
-import ktx.math.vec2
+import ktx.log.debug
+import ktx.scene2d.*
 import statemachine.StateMachine
 import tru.AnimState
 import tru.Assets
-import tru.SpriteDirection
-import ui.BoundAnimationElement
-import ui.BoundTextElement
-import ui.CollectionContainerElement
+import tru.CardinalDirection
+import ui.customactors.animatedSpriteImage
+import ui.customactors.boundLabel
+
+object ApplicationFlags {
+    val map = mutableMapOf("showEnemyPaths" to false, "showEnemyActionInfo" to false, "showCanSee" to false, "showMemory" to false)
+    var showEnemyPaths by map
+    var showCanSee by map
+    var showEnemyActionInfo by map
+    var showMemory by map
+}
+
 
 class SetupScreen(gameState: StateMachine<GameState, GameEvent>) : BasicScreen(gameState) {
-
-    /*
-    Setup screen should be the classic "press x / space to join
-    When doing so, you get to see the actual character you are playing and
-
-    SHOULD be able to customize it.
-
-    That would be fudging fabulous.
-
-    Customizing would require that every character was like 300 sprites or something, but it could totally be worth
-    it.
-     */
     override val camera = OrthographicCamera()
     override val viewport = ExtendViewport(800f, 600f, camera)
 
+    private val defaultKeyMap = command("Default") {
+        setUp(Input.Keys.SPACE, "Toggle Player") { toggleKeyboardPlayer() }
+        setUp(Input.Keys.LEFT, "Prev Character") { changeSpriteKeyboard(-1) }
+        setUp(Input.Keys.RIGHT, "Next Character") { changeSpriteKeyboard(1) }
+        setUp(Input.Keys.ENTER, "Start Game") { startGame() }
+        setUp(Input.Keys.D, "Debug Mode On") { toggleDebugMode() }
+    }
+
+    private val debugModeKeyMap = command("Normal") {
+        setUp(Input.Keys.SPACE, "Toggle Player") { toggleKeyboardPlayer() }
+        setUp(Input.Keys.LEFT, "Prev Character") { changeSpriteKeyboard(-1) }
+        setUp(Input.Keys.RIGHT, "Next Character") { changeSpriteKeyboard(1) }
+        setUp(Input.Keys.ENTER, "Start Game") { startGame() }
+        setUp(Input.Keys.T, "Start Game with AI") { startGameWithAi() }
+        setUp(Input.Keys.C, "Concept Screen") { startConceptScreen() }
+        setUp(Input.Keys.A, "Animation Editor") { startAnimEditor() }
+        setUp(Input.Keys.UP, "Next map") { nextMap() }
+        setUp(Input.Keys.DOWN, "Previous map") { previousMap() }
+        setUp(Input.Keys.M, "Map Editor") {
+            gameState.acceptEvent(GameEvent.StartMapEditor)
+        }
+        setUp(Input.Keys.D, "Debug Mode Off") { toggleDebugMode() }
+    }
+
+    private var currentKeyMap = defaultKeyMap
+
+    private var debugMode = false
+    private fun toggleDebugMode() {
+        debugMode = !debugMode
+        if (debugMode)
+            currentKeyMap = debugModeKeyMap
+        else
+            currentKeyMap = defaultKeyMap
+    }
+
+    private fun startAnimEditor() {
+        gameState.acceptEvent(GameEvent.StartAnimEditor)
+    }
+
     val debug = false
     val shapeDrawer by lazy { Assets.shapeDrawer }
+    private val setupViewModel = SetupViewModel()
+    private val availableControllers get() = setupViewModel.availableControllers
 
     private val activePlayers = mutableListOf<Pair<ControlMapper, Player>>()
 
-    private val altUi = CollectionContainerElement(
-        activePlayers,
-        listOf(
-            BoundTextElement({ p -> p.second.selectedCharacterSpriteName }),
-            BoundTextElement({ p -> p.first.controllerId }),
-            BoundTextElement({ p -> p.second.kills.toString() }),
-            BoundTextElement({ p -> p.second.score.toString() }),
-            BoundAnimationElement( { p -> p.second.selectedSprite[AnimState.Walk]!!.animations[SpriteDirection.South]!! })
-        ), position = vec2(50f, 400f)
-    )
+    private val playerCards: HorizontalGroup by lazy {
+        scene2d.horizontalGroup {
+            setPosition(25f, 200f)
+            for (model in setupViewModel.availableControllers) {
+                addActor(cardForPlayerModel(model))
+            }
+        }
+    }
+
+    private val stage by lazy {
+        val aStage = Stage(viewport, batch)
+        aStage.isDebugAll = false
+        aStage.actors {
+            table {
+                boundLabel({ currentKeyMap.toString() })
+                boundLabel({mapNames.selectedItem})
+                setPosition(450f, 350f)
+                pack()
+            }
+        }
+        aStage.addActor(playerCards)
+        aStage
+    }
+
+    private fun cardForPlayerModel(playerModel: PlayerModel): Actor {
+        return scene2d.verticalGroup {
+            userObject = playerModel
+            isVisible = true
+            val notSelectedGroup = verticalGroup {
+                columnAlign(Align.left)
+                isVisible = true
+                verticalGroup {
+                    columnAlign(Align.left)
+                    horizontalGroup {
+                        label("Press ")
+                        when (playerModel) {
+                            is PlayerModel.Keyboard -> label("[Space]")
+                            is PlayerModel.GamePad -> image(Button.Cross.image)
+                        }
+
+                    }
+                    label(" to join")
+                }
+            }
+            addActor(notSelectedGroup)
+            val selectedGroup = verticalGroup {
+                columnAlign(Align.left)
+                isVisible = false
+                boundLabel({ playerModel.name })
+                boundLabel({ playerModel.selectedCharacter })
+                val ai = animatedSpriteImage(
+                    Assets.characterTurboAnims.first().animationFor(AnimState.Walk, CardinalDirection.South)
+                ) {}
+                addActor(ai)
+                verticalGroup {
+                    columnAlign(Align.left)
+                    horizontalGroup {
+                        label("Press ")
+                        when (playerModel) {
+                            is PlayerModel.Keyboard -> label("[Return]")
+                            is PlayerModel.GamePad -> image(Assets.ps4Buttons["square"]!!)
+                        }
+
+                    }
+                    label(" to start")
+                    label("")
+                    when (playerModel) {
+                        is PlayerModel.Keyboard -> {
+                            label("WASD - walk about")
+                            label("R - reload")
+                            label("Mouse - aim")
+                            label("B - build")
+                            label("LMB - shoot")
+                            label("Wheel - change weapon")
+                        }
+                        is PlayerModel.GamePad -> {
+                            label("Left Stick - move")
+                            label("Right Stick - aim")
+                            horizontalGroup {
+                                image(Button.Square.image)
+                                label(" - reload")
+                            }
+                            horizontalGroup {
+                                image(Button.Triangle.image)
+                                label(" - build")
+                            }
+                            horizontalGroup {
+                                image(Button.DPadLeft.image)
+                                image(Button.DPadRight.image)
+                                label(" - change weapon")
+                            }
+                        }
+                    }
+                }
+                playerModel.selectedAbleSpriteAnims = selectedItemListOf(
+                    { anim ->
+                        playerModel.selectedCharacter = anim.name
+                        ai.animation = anim.animationFor(AnimState.Walk, CardinalDirection.South)
+                    },
+                    *Assets.characterTurboAnims.toTypedArray()
+                )
+            }
+            addActor(selectedGroup)
+
+            playerModel.isSelectedCallback = { isSelected ->
+                selectedGroup.isVisible = isSelected
+                notSelectedGroup.isVisible = !isSelected
+                pack()
+            }
+
+            color = Color.RED
+        }
+    }
 
     override fun render(delta: Float) {
         super.render(delta)
-        batch.use {
-            altUi.render(batch, delta, debug)
-        }
+        stage.act(delta)
+        stage.draw()
+    }
 
+
+    override fun connected(controller: Controller) {
+        super.connected(controller)
+        val gp = availableControllers.firstOrNull { it is PlayerModel.GamePad && it.controller == controller }
+        if (gp == null) {
+            val newModel = PlayerModel.GamePad(controller)
+            availableControllers.add(newModel)
+            playerCards.addActor(cardForPlayerModel(newModel))
+        }
+    }
+
+    override fun disconnected(controller: Controller) {
+        super.disconnected(controller)
+        val gp = availableControllers.firstOrNull { it is PlayerModel.GamePad && it.controller == controller }
+        if (gp != null) {
+            val card = playerCards.children.firstOrNull { it.userObject == gp }
+            card?.remove()
+            availableControllers.remove(gp)
+        }
     }
 
     override fun resize(width: Int, height: Int) {
@@ -66,61 +235,123 @@ class SetupScreen(gameState: StateMachine<GameState, GameEvent>) : BasicScreen(g
         batch.projectionMatrix = camera.combined
     }
 
+    override fun keyDown(keycode: Int): Boolean {
+        return currentKeyMap.execute(keycode, KeyPress.Down)
+    }
+
     override fun keyUp(keycode: Int): Boolean {
-        return when(keycode) {
-            Input.Keys.SPACE -> toggleKeyboardPlayer()
-            Input.Keys.LEFT -> changeSpriteKeyboard(-1)
-            Input.Keys.RIGHT -> changeSpriteKeyboard(1)
-            Input.Keys.ENTER -> startGame()
-            Input.Keys.E -> startEditor()
-            else -> super.keyUp(keycode)
+        return currentKeyMap.execute(keycode, KeyPress.Up)
+    }
+
+    var mapNames = getMapList()
+
+    fun getMapList(): SelectedItemList<String> {
+        debug { Gdx.files.localStoragePath }
+        val mapFiles = Gdx.files.local("text_maps").list()
+        debug { "Have found ${mapFiles.size} files" }
+        return selectedItemListOf(*mapFiles.map { it.file().nameWithoutExtension }.toTypedArray())
+    }
+
+    fun checkMapList() {
+        val updatedList = getMapList()
+        if (updatedList.size > mapNames.size) {
+            mapNames = updatedList
         }
     }
 
-    private fun changeSpriteKeyboard(indexChange: Int): Boolean {
-        val playerPair = Players.players.filter { it.key.isKeyboard }.values.firstOrNull()
-        if(playerPair != null)
-            updateSprite(playerPair, indexChange)
+    private fun nextMap(): Boolean {
+        checkMapList()
+        mapNames.nextItem()
         return true
     }
 
-    private fun startGame(): Boolean {
+    private fun previousMap(): Boolean {
+        checkMapList()
+        mapNames.previousItem()
+        return true
+    }
+
+    private fun startConceptScreen(): Boolean {
+        gameState.acceptEvent(GameEvent.StartConcept)
+        return true
+    }
+
+    private fun changeSpriteKeyboard(indexChange: Int): Boolean {
+        availableControllers.first { it is PlayerModel.Keyboard }.apply {
+            if (indexChange < 0) this.selectedAbleSpriteAnims.previousItem() else this.selectedAbleSpriteAnims.nextItem()
+        }
+        return true
+    }
+
+
+    private fun startGameWithAi(): Boolean {
+        Players.players[KeyboardControl()] = Player("AI PLAYER", true).apply {
+            selectedCharacterSpriteName = Assets.characterTurboAnims.first().name
+        }
+        MapList.mapFileNames.clear()
+        for (name in mapNames.withSelectedItemFirst) {
+            MapList.mapFileNames.add(name)
+        }
         gameState.acceptEvent(GameEvent.StartedGame)
         return true
     }
 
-    private fun startEditor(): Boolean {
-        gameState.acceptEvent(GameEvent.StartEditor)
+    private fun startGame(): Boolean {
+        /* Take players we have here and add them to the game or something.
+        This is just a stop-over for later.
+         */
+        for (model in availableControllers.filter { it.isSelected }) {
+            when (model) {
+                is PlayerModel.Keyboard -> Players.players[KeyboardControl()] = Player(model.name).apply {
+                    selectedCharacterSpriteName = model.selectedAbleSpriteAnims.selectedItem.key
+                }
+                is PlayerModel.GamePad -> Players.players[GamepadControl(model.controller)] = Player(model.name).apply {
+                    selectedCharacterSpriteName = model.selectedAbleSpriteAnims.selectedItem.key
+                }
+            }
+
+        }
+        //
+
+        MapList.mapFileNames.clear()
+        for (name in mapNames.withSelectedItemFirst) {
+            MapList.mapFileNames.add(name)
+        }
+        gameState.acceptEvent(GameEvent.StartedGame)
         return true
     }
 
-    private fun updateSprite(player: Player, indexChange: Int) {
-        var currentIndex = Assets.playerCharacters.keys.indexOf(player.selectedCharacterSpriteName)
-        currentIndex += indexChange
-        if(currentIndex < 0)
-            currentIndex = Assets.playerCharacters.keys.count() - 1
-        else if(currentIndex > Assets.playerCharacters.keys.count() - 1)
-            currentIndex = 0
-
-        player.selectedCharacterSpriteName = Assets.playerCharacters.keys.toList()[currentIndex]
+    private fun startCharacterEditor(): Boolean {
+        gameState.acceptEvent(GameEvent.StartCharacterEditor)
+        return true
     }
 
-    private fun updatePlayers() {
-        activePlayers.clear()
-        activePlayers.addAll(Players.players.toList())
+
+    override fun buttonUp(controller: Controller, buttonCode: Int): Boolean {
+        return when (Button.getButton(buttonCode)) {
+            Button.Cross -> toggleController(controller)
+            Button.Square -> startGame()
+            Button.DPadLeft -> changeSprite(controller, -1)
+            Button.DPadRight -> changeSprite(controller, 1)
+            else -> super.buttonUp(controller, buttonCode)
+        }
+    }
+
+    private fun toggleController(controller: Controller): Boolean {
+        availableControllers.firstOrNull { it is PlayerModel.GamePad && it.controller == controller }?.toggle()
+        return true
+    }
+
+    private fun changeSprite(controller: Controller, indexChange: Int): Boolean {
+        availableControllers.first { it is PlayerModel.GamePad && it.controller == controller }.apply {
+            if (indexChange < 0) selectedAbleSpriteAnims.previousItem() else selectedAbleSpriteAnims.nextItem()
+        }
+        return true
     }
 
     private fun toggleKeyboardPlayer(): Boolean {
-        val toRemove = Players.players.filter { it.key.isKeyboard }.keys.firstOrNull()
-        return if(toRemove == null) {
-            Players.players[KeyboardControl()] = Player()
-            updatePlayers()
-            true
-        } else {
-            Players.players.remove(toRemove)
-            updatePlayers()
-            false
-        }
+        availableControllers.firstOrNull { it is PlayerModel.Keyboard }?.toggle()
+        return true
     }
 
 }

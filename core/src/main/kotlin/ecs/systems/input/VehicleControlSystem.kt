@@ -3,22 +3,25 @@ package ecs.systems.input
 import com.badlogic.ashley.core.Entity
 import com.badlogic.ashley.systems.IteratingSystem
 import com.badlogic.gdx.physics.box2d.Body
-import ecs.components.BodyComponent
+import eater.ecs.components.Box2d
+import eater.physics.body
+import eater.physics.forwardNormal
+import eater.physics.forwardVelocity
+import eater.physics.lateralVelocity
 import ecs.components.VehicleControlComponent
 import ktx.ashley.allOf
 import ktx.math.times
-import physics.*
 
 class VehicleControlSystem : IteratingSystem(
     allOf(
         VehicleControlComponent::class,
-        BodyComponent::class).get(), 10) {
+        Box2d::class).get()) {
 
     override fun processEntity(entity: Entity, deltaTime: Float) {
         val carBody = entity.body()
         handleFriction(carBody)
 
-        val vehicleControl = entity.vehicleControlComponent()
+        val vehicleControl = VehicleControlComponent.get(entity)
         handleInput(vehicleControl, carBody)
     }
 
@@ -35,7 +38,7 @@ class VehicleControlSystem : IteratingSystem(
         val forwardNormal = carBody.forwardVelocity()
         val currentForwardSpeed = forwardNormal.len()
         val dragForceMagnitude = -2 * currentForwardSpeed
-        carBody.applyForce(carBody.forwardVelocity() * dragForceMagnitude, carBody.worldCenter, true);
+        carBody.applyForce(carBody.forwardVelocity() * dragForceMagnitude, carBody.worldCenter, true)
     }
 
     private fun handleInput(vehicleControl: VehicleControlComponent, carBody: Body) {

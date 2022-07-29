@@ -1,9 +1,9 @@
 package tru
 
-import kotlinx.serialization.Serializable
+//import kotlinx.serialization.Serializable
 
-@Serializable
-sealed class AnimState() {
+//@Serializable
+sealed class AnimState {
     companion object {
         val animStates = listOf(Idle, Walk, StartAim, Aiming, Death, Run, Hurt, WalkWithGun, RunWithGun, PickUp, Climb, Roll, Shoot)
     }
@@ -11,30 +11,31 @@ sealed class AnimState() {
     override fun toString(): String {
         return this::class.toString().substringAfter(".").substringAfter("$").substringBefore("@")
     }
-    @Serializable
+//    @Serializable
     object Idle : AnimState()
-    @Serializable
+//    @Serializable
     object Walk : AnimState()
-    @Serializable
+//    @Serializable
     object Run : AnimState()
-    @Serializable
+//    @Serializable
     object Hurt : AnimState()
-    @Serializable
+//    @Serializable
     object WalkWithGun : AnimState()
-    @Serializable
+//    @Serializable
     object RunWithGun : AnimState()
-    @Serializable
+//    @Serializable
     object PickUp : AnimState()
-    @Serializable
+//    @Serializable
     object Climb : AnimState()
-    @Serializable
+//    @Serializable
     object Roll : AnimState()
-    @Serializable
+//    @Serializable
     object Shoot : AnimState()
-    @Serializable
+//    @Serializable
     object StartAim : AnimState()
-    @Serializable
+//    @Serializable
     object Aiming : AnimState()
-    @Serializable
+    object Slash : AnimState()
+//    @Serializable
     object Death : AnimState()
 }

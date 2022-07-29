@@ -1,0 +1,241 @@
+{
+com.badlogic.gdx.graphics.g2d.BitmapFont: {
+	commodore-64: {
+		file: commodore-64.fnt
+	}
+	november: {
+		file: november.fnt
+	}
+	orange_kid: {
+		file: orange kid.fnt
+	}
+}
+com.badlogic.gdx.graphics.Color: {
+	green: {
+		r: 1
+		g: 1
+		b: 1
+		a: 1
+	}
+	light_grey: {
+		r: 0.8
+		g: 0.8
+		b: 0.8
+		a: 1
+	}
+	white: {
+		r: 1
+		g: 1
+		b: 1
+		a: 1
+	}
+	red: {
+		r: 1
+		g: 1
+		b: 1
+		a: 1
+	}
+	foreground: {
+		r: 1
+		g: 0.43529412
+		b: 0
+		a: 1
+	}
+	text_shadow: {
+		r: 0.68666667
+		g: 0.30584356
+		b: 0.013733327
+		a: 1
+	}
+	dark_grey: {
+		r: 0.4
+		g: 0.4
+		b: 0.4
+		a: 1
+	}
+	background: {
+		r: 0.043137256
+		g: 0.047058824
+		b: 0.22352941
+		a: 1
+	}
+	black: {
+		r: 1
+		g: 1
+		b: 1
+		a: 1
+	}
+}
+com.badlogic.gdx.scenes.scene2d.ui.Skin$TintedDrawable: {
+	dialogDim: {
+		name: white
+		color: {
+			r: 0.2
+			g: 0.2
+			b: 0.2
+			a: 1
+		}
+	}
+}
+com.badlogic.gdx.scenes.scene2d.ui.Button$ButtonStyle: {
+	default: {
+		up: button
+		down: button-down
+	}
+	music: {
+		up: music-off
+		down: music
+		checked: music
+	}
+	sound: {
+		up: sound-off
+		down: sound
+		checked: sound
+	}
+	toggle: {
+		up: button
+		down: button-down
+		checked: button-down
+	}
+}
+com.badlogic.gdx.scenes.scene2d.ui.CheckBox$CheckBoxStyle: {
+	default: {
+		checkboxOn: check-box
+		checkboxOff: check-box-off
+		font: commodore-64
+	}
+	radio: {
+		checkboxOn: radio-button
+		checkboxOff: radio-button-off
+		font: commodore-64
+	}
+}
+com.badlogic.gdx.scenes.scene2d.ui.ImageButton$ImageButtonStyle: {
+	default: {
+		up: button
+		down: button-down
+	}
+}
+com.badlogic.gdx.scenes.scene2d.ui.Label$LabelStyle: {
+	default: {
+		font: november
+		fontColor: foreground
+	}
+	optional: {
+		font: commodore-64
+	}
+	error: {
+		font: commodore-64
+	}
+	title: {
+		font: commodore-64
+		background: button
+	}
+	november: {
+		font: november
+		fontColor: foreground
+	}
+}
+com.badlogic.gdx.scenes.scene2d.ui.ProgressBar$ProgressBarStyle: {
+	default-horizontal: {
+		background: progress-bar
+		knobBefore: progress-bar-knob
+	}
+	default-vertical: {
+		background: progress-bar
+		knobBefore: progress-bar-knob
+	}
+}
+com.badlogic.gdx.scenes.scene2d.ui.ScrollPane$ScrollPaneStyle: {
+	default: {
+		background: blue
+		hScroll: scroll-bar
+		hScrollKnob: scroll-bar-horizontal-knob
+		vScroll: scroll-bar
+		vScrollKnob: scroll-bar-vertical-knob
+	}
+}
+com.badlogic.gdx.scenes.scene2d.ui.Slider$SliderStyle: {
+	default-horizontal: {
+		background: slider
+		knob: slider-knob
+	}
+	default-vertical: {
+		background: slider
+		knob: slider-knob
+	}
+}
+com.badlogic.gdx.scenes.scene2d.ui.SplitPane$SplitPaneStyle: {
+	default-horizontal: {
+		handle: horizontal-split-pane
+	}
+	default-vertical: {
+		handle: vertical-split-pane
+	}
+}
+com.badlogic.gdx.scenes.scene2d.ui.TextButton$TextButtonStyle: {
+	default: {
+		font: commodore-64
+		fontColor: foreground
+		up: button
+		down: button-down
+	}
+	toggle: {
+		font: commodore-64
+		up: button
+		down: button-down
+		checked: button-down
+	}
+}
+com.badlogic.gdx.scenes.scene2d.ui.TextField$TextFieldStyle: {
+	default: {
+		font: commodore-64
+		fontColor: foreground
+		background: white
+		cursor: cursor-black
+		selection: light-blue
+		messageFont: commodore-64
+	}
+	nobg: {
+		font: commodore-64
+		fontColor: foreground
+		cursor: cursor
+		selection: white
+		messageFont: commodore-64
+	}
+}
+com.badlogic.gdx.scenes.scene2d.ui.TextTooltip$TextTooltipStyle: {
+	default: {
+		label: default
+	}
+}
+com.badlogic.gdx.scenes.scene2d.ui.Touchpad$TouchpadStyle: {
+	default: {
+		background: touchpad
+		knob: touchpad-knob
+	}
+}
+com.badlogic.gdx.scenes.scene2d.ui.Tree$TreeStyle: {
+	default: {
+		plus: plus
+		minus: minus
+		selection: progress-bar
+	}
+}
+com.badlogic.gdx.scenes.scene2d.ui.Window$WindowStyle: {
+	default: {
+		background: window
+		titleFont: commodore-64
+		titleFontColor: foreground
+	}
+	dialog: {
+		background: dialog
+		titleFont: commodore-64
+	}
+	dialog-modal: {
+		background: dialog
+		titleFont: commodore-64
+		stageBackground: blue
+	}
+}
+}

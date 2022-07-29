@@ -4,16 +4,13 @@ import com.badlogic.gdx.graphics.Color
 import com.badlogic.gdx.graphics.g2d.Batch
 import com.badlogic.gdx.graphics.g2d.TextureRegion
 import com.badlogic.gdx.math.Vector2
-import isometric.polygonFromPos
-import isometric.toIsometric
-import ktx.math.vec2
-import physics.drawScaled
+import eater.physics.drawScaled
 import space.earlygrey.shapedrawer.ShapeDrawer
 
-class RenderableTextureRegion(val textureRegion: TextureRegion) : Renderable {
+class RenderableTextureRegions(val regions: List<RenderableTextureRegion>) : Renderable {
     override val renderableType: RenderableType
-        get() = RenderableType.Texture
-    val isoPos = vec2()
+        get() = RenderableType.ListOfRenderables
+
     override fun render(
         position: Vector2,
         rotation: Float,
@@ -22,21 +19,34 @@ class RenderableTextureRegion(val textureRegion: TextureRegion) : Renderable {
         batch: Batch,
         shapeDrawer: ShapeDrawer
     ) {
-        position.toIsometric(isoPos)
-        val width = 2f
-        val height = 2f
+        regions.forEach { it.render(position, rotation, scale, animationStateTime, batch, shapeDrawer) }
+    }
+
+}
+
+class RenderableTextureRegion(val textureRegion: TextureRegion, val scale: Float = 1f, val offsetX: Float = 0f, val offsetY: Float = 0f) : Renderable {
+    override val renderableType: RenderableType
+        get() = RenderableType.Texture
+    override fun render(
+        position: Vector2,
+        rotation: Float,
+        scale: Float,
+        animationStateTime: Float,
+        batch: Batch,
+        shapeDrawer: ShapeDrawer
+    ) {
         val color = Color.GREEN
 
-        shapeDrawer.setColor(color)
-        shapeDrawer.filledPolygon(position.polygonFromPos(width, height))
 
         batch.drawScaled(
             this.textureRegion,
-            (isoPos.x + (this.textureRegion.regionWidth / 2 * scale)),
-            (isoPos.y + (this.textureRegion.regionHeight / 2 * scale)),
-            scale
+            position.x + (this.textureRegion.regionWidth / 2 * scale * this.scale) + (offsetX * scale * this.scale),
+            position.y + (this.textureRegion.regionHeight / 2 * scale * this.scale) + (offsetY * scale * this.scale),
+            scale * this.scale
         )
         //Debug thing
-        shapeDrawer.filledCircle(isoPos, .2f, Color.BLACK)
+        shapeDrawer.setColor(color)
+       // shapeDrawer.rectangle(position.x, position.y, width, height)
+       // shapeDrawer.filledCircle(position, .2f, Color.BLACK)
     }
 }

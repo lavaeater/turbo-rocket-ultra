@@ -1,43 +1,23 @@
 package ecs.components.fx
 
 import com.badlogic.ashley.core.Component
-import com.badlogic.gdx.graphics.Color
-import com.badlogic.gdx.graphics.g2d.Batch
+import com.badlogic.gdx.graphics.g2d.ParticleEffectPool
 import com.badlogic.gdx.math.Vector2
 import com.badlogic.gdx.utils.Pool
-import ecs.components.graphics.renderables.Renderable
-import ecs.components.graphics.renderables.RenderableType
-import isometric.toIsometric
 import ktx.math.vec2
-import space.earlygrey.shapedrawer.ShapeDrawer
+import tru.Assets
 
-class SplatterComponent(
-    var life: Float = 20f,
-    var color: Color = Color.RED,
-    var radius: Float = 1f) : Renderable, Component, Pool.Poolable {
-    override val renderableType: RenderableType
-        get() = RenderableType.Splatter
-
-    override fun render(
-        position: Vector2,
-        rotation: Float,
-        scale:Float,
-        animationStateTime: Float,
-        batch: Batch,
-        shapeDrawer: ShapeDrawer
-    ) {
-        val isoPos = position.toIsometric()
-        val radii = vec2(radius).toIsometric()
-
-        shapeDrawer.setColor(color)
-        //This might, just might, actually work
-        shapeDrawer.filledEllipse(isoPos.x, isoPos.y, radii.x, radii.y)
-    }
-
+class SplatterComponent : Component, Pool.Poolable {
+    var splatterEffect: ParticleEffectPool.PooledEffect = Assets.splatterEffectPool.obtain()
+    var started = false
+    var at: Vector2 = vec2()
+    var rotation: Float = 0f
     override fun reset() {
-        life = 20f
-        color = Color.RED
-        radius = 1f
+        at.setZero()
+        rotation = 0f
+        started = false
+        splatterEffect.free()
+        splatterEffect = Assets.splatterEffectPool.obtain()
     }
 }
 

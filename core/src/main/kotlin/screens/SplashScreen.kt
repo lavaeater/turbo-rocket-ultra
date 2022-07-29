@@ -24,9 +24,7 @@ class SplashScreen(gameState: StateMachine<GameState, GameEvent>) : UserInterfac
             rootTable = scene2d.table {
                 setFillParent(true)
                 image(Assets.splashTexture)
-                pad(10f)
             }
-
             stage.addActor(rootTable)
             needInit = false
         }
@@ -43,8 +41,6 @@ class SplashScreen(gameState: StateMachine<GameState, GameEvent>) : UserInterfac
         gameState.acceptEvent(GameEvent.LeftSplash)
         return true
     }
-
-
 
     override fun resize(width: Int, height: Int) {
         camera.setToOrtho(false)

@@ -1,0 +1,40 @@
+cb*
+c**
+c**
+c**
+c**
+ccc
+s*g
+---
+name
+6-level-six            
+start
+Are you really the hero?
+What even is this? Is this
+really our place to take back?
+Who decides on these matters?
+Don't question orders. Keep
+murdering. It will be for the
+best, in the end.
+
+success
+Go on, go on. You still have some left in you.
+fail
+I believed in you.
+We all did
+But I can see now that we
+were all deceived
+facts
+MaxEnemies:10:i
+MaxSpawnedEnemies:20:i
+AcceleratingSpawns:false:b
+AcceleratingSpawnsFactor:1.25:f
+EnemyKillCount:0:i
+TargetEnemyKillCount:0:i
+ShowEnemyKillCount:false:b
+
+stories
+start-story
+level-failed
+level-complete
+basic-story            

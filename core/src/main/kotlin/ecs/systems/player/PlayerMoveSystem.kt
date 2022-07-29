@@ -2,45 +2,37 @@ package ecs.systems.player
 
 import com.badlogic.ashley.core.Entity
 import com.badlogic.ashley.systems.IteratingSystem
-import ecs.components.BodyComponent
-import ecs.components.graphics.renderables.AnimatedCharacterSprite
-import ecs.components.graphics.RenderableComponent
+import eater.ecs.components.Box2d
+import ecs.components.graphics.AnimatedCharacterComponent
 import ecs.components.player.PlayerControlComponent
 import ktx.ashley.allOf
-import ktx.ashley.mapperFor
-import ktx.math.vec2
+import eater.physics.getComponent
 
-class PlayerMoveSystem(
-    private var speed: Float = 25f): IteratingSystem(
+class PlayerMoveSystem(): IteratingSystem(
     allOf(
         PlayerControlComponent::class,
-        BodyComponent::class,
-        RenderableComponent::class).get(), 10) {
-
-    private val pccMapper = mapperFor<PlayerControlComponent>()
-    private val bcMapper = mapperFor<BodyComponent>()
-    private val anMapper = mapperFor<RenderableComponent>()
-    private val rotatedWalkVector = vec2()
+        Box2d::class,
+        AnimatedCharacterComponent::class).get()) {
 
     override fun processEntity(entity: Entity, deltaTime: Float) {
-        val pcc = pccMapper.get(entity)
-        val bc = bcMapper.get(entity)
-        val csc = anMapper.get(entity)
-        if(csc.renderable is AnimatedCharacterSprite)
-            executeMove(pcc, bc, csc.renderable as AnimatedCharacterSprite)
+        val pcc = entity.getComponent<PlayerControlComponent>()
+        if(pcc.cooldownPropertyCheckIfDone(pcc::stunned, deltaTime)) {
+            val bc = Box2d.get(entity)
+            val csc = entity.getComponent<AnimatedCharacterComponent>()
+            executeMove(pcc, bc, csc)
+        }
     }
 
-    private var speedFactor = 1f
     private fun executeMove(
         playerControlComponent: PlayerControlComponent,
-        bodyComponent: BodyComponent,
-        animatedCharacterSprite: AnimatedCharacterSprite
+        bodyComponent: Box2d,
+        animatedCharacterComponent: AnimatedCharacterComponent
     ) {
-        speedFactor = if(playerControlComponent.triggerPulled) 0.2f else 1f
-        rotatedWalkVector.set(playerControlComponent.walkVector)
-        rotatedWalkVector.rotateDeg(-45f)
-        bodyComponent.body.setLinearVelocity(rotatedWalkVector.x * speed * speedFactor, rotatedWalkVector.y * speed * speedFactor)
 
-        animatedCharacterSprite.currentAnimState = playerControlComponent.playerAnimState
+        val vX = playerControlComponent.walkVector.x * playerControlComponent.actualSpeed
+        val vY = playerControlComponent.walkVector.y * playerControlComponent.actualSpeed
+        bodyComponent.body!!.setLinearVelocity(vX, vY)
+
+        animatedCharacterComponent.currentAnimState = playerControlComponent.playerAnimState
     }
 }

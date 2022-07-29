@@ -1,0 +1,49 @@
+cblblb
+*lwlwl
+*blglb
+*lwlwl
+*blblb
+*s****
+*c****
+*ccccc
+---------------------------------------------------------------
+name
+5-level-five            
+start
+Is there no end to the killing
+and the murder?
+Will you ever be able to wash out the blood?
+Will friends and family be able to rekindle
+what trace of humanity is still left in you?
+
+Or will they be able to tell - that you have
+
+changed?
+
+success
+Is there glory in this?
+No.
+Is there triumph to be had?
+No.
+All you hear are the whispers of
+the slave in your ear:
+"you are merely mortal"
+
+fail
+I cannot look upon you with my eyes.
+Leave. Never come back.
+
+facts
+MaxEnemies:10:i
+MaxSpawnedEnemies:20:i
+AcceleratingSpawns:false:b
+AcceleratingSpawnsFactor:1.25:f
+EnemyKillCount:0:i
+TargetEnemyKillCount:0:i
+ShowEnemyKillCount:false:b
+
+stories
+start-story
+level-failed
+level-complete
+basic-story            

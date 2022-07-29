@@ -1,1 +1,0 @@
-All Spritesheet (blocks) is in 64x64 and should be cut out in this way.

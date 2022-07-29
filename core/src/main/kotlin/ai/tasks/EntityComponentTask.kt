@@ -5,12 +5,13 @@ import com.badlogic.ashley.core.Entity
 import com.badlogic.gdx.ai.btree.Task
 import ecs.components.ai.TaskComponent
 
-
-
-
-class EntityComponentTask<T: TaskComponent>(private val componentClass: Class<T>) : EntityTask() {
+class EntityComponentTask<T: TaskComponent>() : EntityTask() {
+    lateinit var componentClass: Class<T>
+    constructor(componentClass: Class<T>) : this() {
+        this.componentClass = componentClass
+    }
+    @delegate: Transient
     private val mapper by lazy { ComponentMapper.getFor(componentClass) }
-    private val classInfo = componentClass.toString()
 
     override fun start() {
         entity.add(engine.createComponent(componentClass))
@@ -40,7 +41,12 @@ class EntityComponentTask<T: TaskComponent>(private val componentClass: Class<T>
         return if(!mapper.has(entity)) Status.FAILED else mapper[entity].status
     }
 
+    @delegate:Transient
+    val aComponent: T by lazy { engine.createComponent(componentClass) }
     override fun toString(): String {
-        return classInfo
+        return if(::componentClass.isInitialized)
+            aComponent.toString() //if(mapper.has(entity)) mapper.get(entity).toString() else ""
+        else
+            "Not ready to show my cards yet."
     }
 }

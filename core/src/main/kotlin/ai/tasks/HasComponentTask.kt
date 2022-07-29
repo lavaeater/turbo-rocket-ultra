@@ -5,18 +5,24 @@ import com.badlogic.ashley.core.ComponentMapper
 import com.badlogic.ashley.core.Entity
 import com.badlogic.gdx.ai.btree.Task
 
-class HasComponentTask<T: Component>(private val componentClass: Class<T>) : EntityTask() {
+class HasComponentTask<T: Component>() : EntityTask() {
+    lateinit var componentClass: Class<T>
+    constructor(componentClass: Class<T>): this() {
+        this.componentClass = componentClass
+    }
+    @delegate: Transient
     private val mapper by lazy { ComponentMapper.getFor(componentClass) }
     override fun copyTo(task: Task<Entity>?): Task<Entity> {
-        TODO("Not yet implemented")
+        return HasComponentTask(componentClass)
     }
 
-    @ExperimentalStdlibApi
     override fun execute(): Status {
         return if(mapper.has(entity)) Status.SUCCEEDED else Status.FAILED
     }
-    private val classInfo = componentClass.toString()
+
+    @delegate: Transient
+    private val aComponent by lazy { engine.createComponent(componentClass)}
     override fun toString(): String {
-        return classInfo
+        return if(::componentClass.isInitialized) "has $aComponent" else "not ready"
     }
 }

@@ -5,19 +5,18 @@ import com.badlogic.ashley.systems.IteratingSystem
 import com.badlogic.gdx.graphics.Color
 import com.badlogic.gdx.graphics.g2d.Batch
 import com.badlogic.gdx.graphics.g2d.PolygonSpriteBatch
-import ecs.components.gameplay.TransformComponent
+import eater.ecs.components.TransformComponent
+import eater.injection.InjectionContext.Companion.inject
 import ecs.components.towers.TargetInRange
 import ecs.components.towers.TowerComponent
-import injection.Context.inject
-import isometric.toIsometric
 import ktx.ashley.allOf
 import ktx.graphics.use
-import physics.getComponent
-import physics.hasComponent
+import eater.physics.getComponent
+import eater.physics.has
 import tru.Assets
 
 
-class TowerDebugSystem() :
+class TowerDebugSystem :
     IteratingSystem(
         allOf(
             TransformComponent::class,
@@ -34,15 +33,14 @@ class TowerDebugSystem() :
         }
     }
 
-    @OptIn(ExperimentalStdlibApi::class)
     override fun processEntity(entity: Entity, deltaTime: Float) {
-        if(entity.hasComponent<TargetInRange>()) {
+        if(entity.has<TargetInRange>()) {
             val transform = entity.getComponent<TransformComponent>()
             val targetPosition = entity.getComponent<TargetInRange>().targetPosition
             val aimTarget = entity.getComponent<TargetInRange>().aimTarget
 
-            shapeDrawer.line(transform.position.toIsometric(), targetPosition.toIsometric(), Color.BLUE, 0.2f)
-            shapeDrawer.line(transform.position.toIsometric(), aimTarget.toIsometric(), Color.RED, 0.05f)
+            shapeDrawer.line(transform.position, targetPosition, Color.BLUE, 0.2f)
+            shapeDrawer.line(transform.position, aimTarget, Color.RED, 0.05f)
         }
     }
 
