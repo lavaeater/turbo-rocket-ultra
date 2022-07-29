@@ -197,8 +197,8 @@ class GridMapManager {
             val sectionOffsetY = section.y * section.sectionHeight * scale
             for ((y, row) in section.isoTiles.withIndex()) {
                 for ((x, tile) in row.withIndex()) {
-                    val tileX = x * tileWidth * tileScale * scale
-                    val tileY = y * tileHeight * tileScale * scale
+                    val tileX = x * tileWidth * tileScale * scale + tileWidth * tileScale * scale
+                    val tileY = y * tileHeight * tileScale * scale - tileHeight / 2f * tileScale * scale
                     val actualX = tileX + sectionOffsetX
                     val actualY = tileY + sectionOffsetY
                     //this.x - this.y, (this.x + this.y) / 2)
