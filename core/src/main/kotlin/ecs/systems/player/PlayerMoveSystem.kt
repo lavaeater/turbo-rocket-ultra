@@ -7,6 +7,7 @@ import ecs.components.graphics.AnimatedCharacterComponent
 import ecs.components.player.PlayerControlComponent
 import ktx.ashley.allOf
 import eater.physics.getComponent
+import ktx.math.vec2
 
 class PlayerMoveSystem(): IteratingSystem(
     allOf(

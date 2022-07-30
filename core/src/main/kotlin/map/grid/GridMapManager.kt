@@ -19,6 +19,7 @@ import map.grid.GridMapSection.Companion.tileWidth
 import eater.physics.drawScaled
 import ecs.components.graphics.RenderableComponent
 import ecs.components.graphics.TextureRegionComponent
+import isometric.setToIso
 import ktx.ashley.entity
 import ktx.ashley.with
 import space.earlygrey.shapedrawer.ShapeDrawer
@@ -200,7 +201,7 @@ class GridMapManager {
                             this.originY = 0f
                         }
                         with<TransformComponent> {
-                            position.set(actualX, actualY)
+                            position.setToIso(actualX, actualY)
                         }
                         with<RenderableComponent>()
                     }

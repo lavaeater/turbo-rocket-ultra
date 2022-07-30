@@ -141,8 +141,8 @@ class RenderIsoSystem(
 
             batch.draw(
                 textureRegion,
-                x - y,
-                (x + y) / 2,
+                x,
+                y,
                 originX,
                 originY,
                 textureRegion.regionWidth.toFloat(),

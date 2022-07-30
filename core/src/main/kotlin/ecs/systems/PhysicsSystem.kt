@@ -15,6 +15,8 @@ import physics.AshleyMappers
 import physics.ContactManager
 import physics.ContactType
 import eater.physics.has
+import isometric.setToIso
+import isometric.toIsometric
 
 class PhysicsSystem(priority: Int) :
     IteratingSystem(allOf(Box2d::class, TransformComponent::class).get(), priority) {
@@ -27,7 +29,7 @@ class PhysicsSystem(priority: Int) :
         val bodyPosition = bodyComponent.body!!.position
         val bodyRotation = bodyComponent.body!!.angle
         val transformComponent = AshleyMappers.transform.get(entity)
-        transformComponent.position.set(bodyPosition)
+        transformComponent.position.setToIso(bodyPosition)
         transformComponent.rotation = bodyRotation
 
         if(transformComponent.feelsGravity) {

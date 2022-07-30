@@ -40,8 +40,8 @@ class IsoCameraUpdateSystem(
         val y = transformComponents.map { it.position.y }.sum() / transformComponents.count().toFloat()
 
         cameraPosition.set(
-            x - y,
-            (x + y) / 2
+            x,
+            y
         )
 
         camera.position.lerp(

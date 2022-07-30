@@ -80,8 +80,12 @@ class PlayerControlComponent(var controlMapper: ControlMapper, val player: Playe
     val compassDirection get() = aimVector.compassDirection()
     val mousePosition get() = controlMapper.mousePosition
     var latestHitPoint = vec2(0f, 0f)
+
+    /**
+     * Rotate negative 45 for isometric walking
+     */
     val walkVector: Vector2 = vec2(turning, thrust)
-        get() = field.set(turning, -thrust).nor()
+        get() = field.set(turning, -thrust).nor().rotateDeg(-45f)
     val turning: Float
         get() {
             return controlMapper.turning
