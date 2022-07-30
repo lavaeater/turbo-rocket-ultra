@@ -25,6 +25,7 @@ import ecs.components.ai.behavior.AmbleState
 import ecs.components.gameplay.DestroyComponent
 import ecs.components.graphics.RenderableComponent
 import ecs.systems.tileX
+import ecs.systems.tileY
 import isometric.toCartesian
 import ktx.ashley.allOf
 import ktx.graphics.use
@@ -32,6 +33,11 @@ import ktx.math.vec2
 import physics.*
 import screens.ApplicationFlags
 import tru.Assets
+import kotlin.math.abs
+
+fun Float.epsilonEquals(other: Float): Boolean {
+    return abs(this - other) < MathUtils.FLOAT_ROUNDING_ERROR
+}
 
 class RenderIsoSystem(
     private val batch: Batch,
@@ -44,21 +50,16 @@ class RenderIsoSystem(
         RenderableComponent::class,
         TransformComponent::class
     ).get(),
-    object : Comparator<Entity> {
-        override fun compare(p0: Entity, p1: Entity): Int {
-            val c0 = p0.transform().position.toCartesian()
-            val c1 = p1.transform().position.toCartesian()
-
-
+    Comparator<Entity> { p0, p1 ->
 
             val layer0 = p0.renderable().layer
             val layer1 = p1.renderable().layer
-            return if (layer0 == layer1) {
+            if (layer0 == layer1) {
                 val y0 = p0.transform().position.y
                 val y1 = p1.transform().position.y
                 val compareVal = y0.compareTo(y1)
                 if (compareVal != 0)
-                    return compareVal
+                    compareVal
                 else {
                     val x0 = p0.transform().position.y
                     val x1 = p1.transform().position.y
@@ -67,7 +68,6 @@ class RenderIsoSystem(
             } else {
                 layer0.compareTo(layer1)
             }
-        }
     }, priority
 ) {
     private val shapeDrawer by lazy { Assets.shapeDrawer }
@@ -138,7 +138,8 @@ class RenderIsoSystem(
             val textureRegion = textureRegionComponent.textureRegion
             val originX =
                 textureRegion.regionWidth * textureRegionComponent.originX * textureRegionComponent.actualScale
-            val originY = textureRegion.regionHeight * textureRegionComponent.originY * textureRegionComponent.actualScale
+            val originY =
+                textureRegion.regionHeight * textureRegionComponent.originY * textureRegionComponent.actualScale
             val x =
                 transform.position.x// - textureRegion.regionWidth * textureRegionComponent.actualScale
             val y =

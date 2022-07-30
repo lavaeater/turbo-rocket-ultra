@@ -132,25 +132,29 @@ class GridMapSection(
                     TileAlignment.Bottom -> if (connectionAlignments.contains(tileAlignment)) MapTile(
                         RenderableTextureRegions(
                             listOf(RenderableTextureRegion(Assets.isoFloorTiles.random()))
-                        ), true
+                        ), true,0
                     ) else MapTile(
                         RenderableTextureRegions(
                             listOf(RenderableTextureRegion(Assets.isoWallTiles.random()))
-                        ), false
+                        ), false,100
                     )
 
-                    TileAlignment.BottomLeft -> if (connectionAlignments.contains(TileAlignment.Left) && connectionAlignments.contains(
-                            TileAlignment.Bottom
-                        )
+                    TileAlignment.BottomLeft -> if (connectionAlignments.contains(TileAlignment.Left)
                     ) MapTile(
                         RenderableTextureRegions(
-                            listOf(RenderableTextureRegion(Assets.isoFloorTiles.random()))
-                        ), true
+                            listOf(RenderableTextureRegion(Assets.isoWallTiles.random()))
+                        ), false,100
+                    ) else if(connectionAlignments.contains(
+                            TileAlignment.Bottom
+                        )) MapTile(
+                        RenderableTextureRegions(
+                            listOf(RenderableTextureRegion(Assets.isoWallTiles.random()))
+                        ), false,0
                     ) else MapTile(
                         RenderableTextureRegions(
                             listOf(RenderableTextureRegion(Assets.isoWallTiles.random()))
-                        ), false
-                    )
+                            ), false,100
+                        )
 
                     TileAlignment.BottomRight -> if (connectionAlignments.contains(TileAlignment.Right) && connectionAlignments.contains(
                             TileAlignment.Bottom
@@ -158,47 +162,47 @@ class GridMapSection(
                     ) MapTile(
                         RenderableTextureRegions(
                             listOf(RenderableTextureRegion(Assets.isoFloorTiles.random()))
-                        ), true
+                        ), true,0
                     ) else MapTile(
                         RenderableTextureRegions(
                             listOf(RenderableTextureRegion(Assets.isoWallTiles.random()))
-                        ), false
+                        ), false,100
                     )
 
                     TileAlignment.Center -> MapTile(
                         RenderableTextureRegions(
                             listOf(RenderableTextureRegion(Assets.isoFloorTiles.random()))
-                        ), true
+                        ), true,0
                     )
 
                     TileAlignment.Left -> if (connectionAlignments.contains(tileAlignment)) MapTile(
                         RenderableTextureRegions(
                             listOf(RenderableTextureRegion(Assets.isoFloorTiles.random()))
-                        ), true
+                        ), true,0
                     ) else MapTile(
                         RenderableTextureRegions(
                             listOf(RenderableTextureRegion(Assets.isoWallTiles.random()))
-                        ), false
+                        ), false,0
                     )
 
                     TileAlignment.Right -> if (connectionAlignments.contains(tileAlignment)) MapTile(
                         RenderableTextureRegions(
                             listOf(RenderableTextureRegion(Assets.isoFloorTiles.random()))
-                        ), true
+                        ), true,0
                     ) else MapTile(
                         RenderableTextureRegions(
                             listOf(RenderableTextureRegion(Assets.isoWallTiles.random()))
-                        ), false
+                        ), false,100
                     )
 
                     TileAlignment.Top -> if (connectionAlignments.contains(tileAlignment)) MapTile(
                         RenderableTextureRegions(
                             listOf(RenderableTextureRegion(Assets.isoFloorTiles.random()))
-                        ), true
+                        ), true,0
                     ) else MapTile(
                         RenderableTextureRegions(
                             listOf(RenderableTextureRegion(Assets.isoWallTiles.random()))
-                        ), false
+                        ), false,0
                     )
 
                     TileAlignment.TopLeft -> if (connectionAlignments.contains(TileAlignment.Left) && connectionAlignments.contains(
@@ -207,15 +211,15 @@ class GridMapSection(
                     ) MapTile(
                         RenderableTextureRegions(
                             listOf(RenderableTextureRegion(Assets.isoFloorTiles.random()))
-                        ), true
+                        ), true,0
                     ) else if (connectionAlignments.contains(tileAlignment)) MapTile(
                         RenderableTextureRegions(
                             listOf(RenderableTextureRegion(Assets.isoWallTiles.random()))
-                        ), false
+                        ), false,0
                     ) else MapTile(
                         RenderableTextureRegions(
                             listOf(RenderableTextureRegion(Assets.isoWallTiles.random()))
-                        ), false
+                        ), false,0
                     )
 
                     TileAlignment.TopRight -> if (connectionAlignments.contains(TileAlignment.Right) && connectionAlignments.contains(
@@ -224,15 +228,15 @@ class GridMapSection(
                     ) MapTile(
                         RenderableTextureRegions(
                             listOf(RenderableTextureRegion(Assets.isoFloorTiles.random()))
-                        ), true
+                        ), true,0
                     ) else if (connectionAlignments.contains(tileAlignment)) MapTile(
                         RenderableTextureRegions(
                             listOf(RenderableTextureRegion(Assets.isoWallTiles.random()))
-                        ), false
+                        ), false,0
                     ) else MapTile(
                         RenderableTextureRegions(
                             listOf(RenderableTextureRegion(Assets.isoWallTiles.random()))
-                        ), false
+                        ), false,100
                     )
                 }
 
@@ -268,11 +272,11 @@ class GridMapSection(
                     TileAlignment.Bottom -> if (connectionAlignments.contains(tileAlignment)) MapTile(
                         RenderableTextureRegions(
                             listOf(RenderableTextureRegion(Assets.floorTiles.random()))
-                        ), true
+                        ), true,0
                     ) else MapTile(
                         RenderableTextureRegions(
                             listOf(RenderableTextureRegion(Assets.wallTiles.random()))
-                        ), false
+                        ), false,0
                     )
 
                     TileAlignment.BottomLeft -> if (connectionAlignments.contains(TileAlignment.Left) && connectionAlignments.contains(
@@ -281,11 +285,11 @@ class GridMapSection(
                     ) MapTile(
                         RenderableTextureRegions(
                             listOf(RenderableTextureRegion(Assets.floorTiles.random()))
-                        ), true
+                        ), true,0
                     ) else MapTile(
                         RenderableTextureRegions(
                             listOf(RenderableTextureRegion(Assets.wallTiles.random()))
-                        ), false
+                        ), false,0
                     )
 
                     TileAlignment.BottomRight -> if (connectionAlignments.contains(TileAlignment.Right) && connectionAlignments.contains(
@@ -294,47 +298,47 @@ class GridMapSection(
                     ) MapTile(
                         RenderableTextureRegions(
                             listOf(RenderableTextureRegion(Assets.floorTiles.random()))
-                        ), true
+                        ), true,0
                     ) else MapTile(
                         RenderableTextureRegions(
                             listOf(RenderableTextureRegion(Assets.wallTiles.random()))
-                        ), false
+                        ), false,0
                     )
 
                     TileAlignment.Center -> MapTile(
                         RenderableTextureRegions(
                             listOf(RenderableTextureRegion(Assets.floorTiles.random()))
-                        ), true
+                        ), true,0
                     )
 
                     TileAlignment.Left -> if (connectionAlignments.contains(tileAlignment)) MapTile(
                         RenderableTextureRegions(
                             listOf(RenderableTextureRegion(Assets.floorTiles.random()))
-                        ), true
+                        ), true,0
                     ) else MapTile(
                         RenderableTextureRegions(
                             listOf(RenderableTextureRegion(Assets.wallTiles.random()))
-                        ), false
+                        ), false,0
                     )
 
                     TileAlignment.Right -> if (connectionAlignments.contains(tileAlignment)) MapTile(
                         RenderableTextureRegions(
                             listOf(RenderableTextureRegion(Assets.floorTiles.random()))
-                        ), true
+                        ), true,0
                     ) else MapTile(
                         RenderableTextureRegions(
                             listOf(RenderableTextureRegion(Assets.wallTiles.random()))
-                        ), false
+                        ), false,0
                     )
 
                     TileAlignment.Top -> if (connectionAlignments.contains(tileAlignment)) MapTile(
                         RenderableTextureRegions(
                             listOf(RenderableTextureRegion(Assets.floorTiles.random()))
-                        ), true
+                        ), true,0
                     ) else MapTile(
                         RenderableTextureRegions(
                             listOf(RenderableTextureRegion(Assets.wallEndTile))
-                        ), false
+                        ), false,0
                     )
 
                     TileAlignment.TopLeft -> if (connectionAlignments.contains(TileAlignment.Left) && connectionAlignments.contains(
@@ -343,15 +347,15 @@ class GridMapSection(
                     ) MapTile(
                         RenderableTextureRegions(
                             listOf(RenderableTextureRegion(Assets.floorTiles.random()))
-                        ), true
+                        ), true,0
                     ) else if (connectionAlignments.contains(tileAlignment)) MapTile(
                         RenderableTextureRegions(
                             listOf(RenderableTextureRegion(Assets.wallEndTile))
-                        ), false
+                        ), false,0
                     ) else MapTile(
                         RenderableTextureRegions(
                             listOf(RenderableTextureRegion(Assets.wallTiles.random()))
-                        ), false
+                        ), false,0
                     )
 
                     TileAlignment.TopRight -> if (connectionAlignments.contains(TileAlignment.Right) && connectionAlignments.contains(
@@ -360,15 +364,15 @@ class GridMapSection(
                     ) MapTile(
                         RenderableTextureRegions(
                             listOf(RenderableTextureRegion(Assets.floorTiles.random()))
-                        ), true
+                        ), true,0
                     ) else if (connectionAlignments.contains(tileAlignment)) MapTile(
                         RenderableTextureRegions(
                             listOf(RenderableTextureRegion(Assets.wallEndTile))
-                        ), false
+                        ), false,100
                     ) else MapTile(
                         RenderableTextureRegions(
                             listOf(RenderableTextureRegion(Assets.wallTiles.random()))
-                        ), false
+                        ), false,100
                     )
                 }
             }

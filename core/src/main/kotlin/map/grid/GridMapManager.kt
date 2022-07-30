@@ -200,7 +200,9 @@ class GridMapManager {
                         with<TransformComponent> {
                             position.setToIso(anX, anY)
                         }
-                        with<RenderableComponent>()
+                        with<RenderableComponent> {
+                            layer = tile.drawLayer
+                        }
 
                         if(!buildableMap.containsKey(actualX))
                             buildableMap[actualX] = mutableMapOf()
