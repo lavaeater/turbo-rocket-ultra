@@ -4,7 +4,13 @@ import com.badlogic.ashley.core.Component
 import com.badlogic.gdx.graphics.g2d.Sprite
 import com.badlogic.gdx.graphics.g2d.TextureRegion
 import com.badlogic.gdx.utils.Pool
+import com.badlogic.gdx.utils.Pool.Poolable
 import ecs.systems.graphics.GameConstants
+
+class SeeThroughComponent: Component, Poolable {
+    override fun reset() {
+    }
+}
 
 class TextureRegionComponent : Component, Pool.Poolable {
     var updateTextureRegion: () -> Unit = {}

@@ -9,6 +9,7 @@ import com.badlogic.gdx.graphics.OrthographicCamera
 import com.badlogic.gdx.graphics.g2d.Batch
 import com.badlogic.gdx.math.Affine2
 import com.badlogic.gdx.math.MathUtils
+import com.badlogic.gdx.math.Rectangle
 import com.crashinvaders.vfx.VfxManager
 import com.crashinvaders.vfx.effects.ChainVfxEffect
 import eater.ecs.components.AgentProperties
@@ -24,9 +25,8 @@ import ecs.components.ai.Waypoint
 import ecs.components.ai.behavior.AmbleState
 import ecs.components.gameplay.DestroyComponent
 import ecs.components.graphics.RenderableComponent
-import ecs.systems.tileX
-import ecs.systems.tileY
-import isometric.toCartesian
+import ecs.components.graphics.SeeThroughComponent
+import ecs.components.graphics.TextureRegionComponent
 import ktx.ashley.allOf
 import ktx.graphics.use
 import ktx.math.vec2
@@ -38,6 +38,8 @@ import kotlin.math.abs
 fun Float.epsilonEquals(other: Float): Boolean {
     return abs(this - other) < MathUtils.FLOAT_ROUNDING_ERROR
 }
+
+class TransparencySystem
 
 class RenderIsoSystem(
     private val batch: Batch,
@@ -90,7 +92,7 @@ class RenderIsoSystem(
 
         camera.update(false) //True or false, what's the difference?
         batch.projectionMatrix = camera.combined
-        forceSort()
+//        forceSort() why force sort, when super.update does a sort?
 
         vfxManager.cleanUpBuffers()
         vfxManager.beginInputCapture()
@@ -130,9 +132,30 @@ class RenderIsoSystem(
             .preTranslate(worldX, worldY)
     }
 
-    private fun renderTextureRegion(entity: Entity) {
+    private val seeThroughFamily = allOf(SeeThroughComponent::class, TransformComponent::class, TextureRegionComponent::class).get()
+    private val seeThroughEntities get() = engine.getEntitiesFor(seeThroughFamily)
+    private val seeThroughRectangles: List<Rectangle> get() {
+        return seeThroughEntities.map {e ->
+            val tc = e.transform()
+            val tr = e.textureRegionComponent()
+            val originX =
+                tr.textureRegion.regionWidth * tr.originX * tr.actualScale
+            val originY =
+                tr.textureRegion.regionHeight * tr.originY * tr.actualScale
+            val stx = tc.position.x + originX
+            val sty = tc.position.y + originY
+            val tw = tr.textureRegion.regionWidth * tr.actualScale
+            val th = tr.textureRegion.regionHeight * tr.actualScale
+
+            Rectangle(stx, sty, tw, th)
+        }
+    }
+    private val seeThroughColor = Color(1f,1f,1f,0.5f)
+
+    private fun renderTextureRegion(entity: Entity, layer: Int) {
         val transform = entity.transform()
         val textureRegionComponent = entity.textureRegionComponent()
+        val checkSeeThrough = layer > 1
 
         if (textureRegionComponent.isVisible) {
             val textureRegion = textureRegionComponent.textureRegion
@@ -147,6 +170,17 @@ class RenderIsoSystem(
             val rotation =
                 if (textureRegionComponent.rotateWithTransform) transform.rotation * MathUtils.radiansToDegrees else 0f
 
+            batch.color = Color.WHITE
+            if(checkSeeThrough) {
+                val textureRectangle = Rectangle(
+                    x + originX,
+                    y + originY,
+                    textureRegion.regionWidth * textureRegionComponent.actualScale,
+                    textureRegion.regionHeight * textureRegionComponent.actualScale
+                )
+                if(seeThroughRectangles.any { it.overlaps(textureRectangle) })
+                    batch.color = seeThroughColor
+            }
             batch.draw(
                 textureRegion,
                 x,
@@ -185,8 +219,9 @@ class RenderIsoSystem(
     }
 
     override fun processEntity(entity: Entity, deltaTime: Float) {
-        when (entity.renderable().renderableType) {
-            is ecs.components.graphics.RenderableType.TextureRegion -> renderTextureRegion(entity)
+        val renderable = entity.renderable()
+        when (renderable.renderableType) {
+            is ecs.components.graphics.RenderableType.TextureRegion -> renderTextureRegion(entity, renderable.layer)
             is ecs.components.graphics.RenderableType.Effect -> renderEffect(entity, deltaTime)
         }
 

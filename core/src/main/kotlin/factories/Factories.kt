@@ -240,7 +240,7 @@ fun tower(
 //            offsetX = -4f
         }
         with<RenderableComponent> {
-            layer = 1
+            layer = 2
             renderableType = RenderableType.TextureRegion
         }
         with<MiniMapComponent> {
@@ -396,6 +396,7 @@ fun player(player: Player, mapper: ControlMapper, at: Vector2, debug: Boolean) {
             originY = 0.5f
             originX = 0.5f
         }
+        with<SeeThroughComponent>()
         with<RenderableComponent> {
             layer = 1
             renderableType = RenderableType.TextureRegion
@@ -518,7 +519,7 @@ fun randomLoot(at: Vector2, lootTable: LootTable) {
             textureRegion = Assets.lootBox
         }
         with<RenderableComponent> {
-            layer = 1
+            layer = 2
             renderableType = RenderableType.TextureRegion
         }
         with<LootComponent> {
@@ -554,7 +555,7 @@ fun lootBox(at: Vector2, lootDrop: List<ILoot>) {
             textureRegion = Assets.lootBox
         }
         with<RenderableComponent> {
-            layer = 1
+            layer = 2
             renderableType = RenderableType.TextureRegion
         }
         with<LootComponent> {
@@ -598,7 +599,7 @@ fun throwGrenade(
             rotateWithTransform = true
         }
         with<RenderableComponent> {
-            layer = 1
+            layer = 2
             renderableType = RenderableType.TextureRegion
         }
     }
@@ -643,7 +644,7 @@ fun throwMolotov(
             rotateWithTransform = true
         }
         with<RenderableComponent> {
-            layer = 1
+            layer = 2
             renderableType = RenderableType.TextureRegion
         }
     }
@@ -873,7 +874,7 @@ fun targetStation(
 //            offsetY = -4f
         }
         with<RenderableComponent> {
-            layer = 1
+            layer = 2
             renderableType = RenderableType.TextureRegion
         }
         with<MiniMapComponent> {
@@ -922,7 +923,7 @@ fun hackingStation(
             scale *= 1 / GridMapSection.tileScale
         }
         with<RenderableComponent> {
-            layer = 1
+            layer = 2
             renderableType = RenderableType.TextureRegion
         }
         with<MiniMapComponent> {
@@ -1026,7 +1027,7 @@ private fun EngineEntity.withBasicEnemyStuff(
     }
     with<Fitness>()
     with<RenderableComponent> {
-        layer = 1
+        layer = 2
         renderableType = RenderableType.TextureRegion
     }
     with<MiniMapComponent> {
@@ -1062,7 +1063,7 @@ fun blockade(
             //offsetY = //-4f
         }
         with<RenderableComponent> {
-            layer = 1
+            layer = 2
             renderableType = RenderableType.TextureRegion
         }
     }
@@ -1096,7 +1097,7 @@ fun spawner(
             scale = 4f
         }
         with<RenderableComponent> {
-            layer = 1
+            layer = 2
             renderableType = RenderableType.TextureRegion
         }
         with<EnemySpawnerComponent> {
@@ -1138,7 +1139,7 @@ fun objective(
             scale = 4f
         }
         with<RenderableComponent> {
-            layer = 1
+            layer = 2
             renderableType = RenderableType.TextureRegion
         }
         with<MiniMapComponent> {
