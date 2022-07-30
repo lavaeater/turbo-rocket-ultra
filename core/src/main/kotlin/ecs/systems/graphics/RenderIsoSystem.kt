@@ -24,6 +24,8 @@ import ecs.components.ai.Waypoint
 import ecs.components.ai.behavior.AmbleState
 import ecs.components.gameplay.DestroyComponent
 import ecs.components.graphics.RenderableComponent
+import ecs.systems.tileX
+import isometric.toCartesian
 import ktx.ashley.allOf
 import ktx.graphics.use
 import ktx.math.vec2
@@ -44,6 +46,11 @@ class RenderIsoSystem(
     ).get(),
     object : Comparator<Entity> {
         override fun compare(p0: Entity, p1: Entity): Int {
+            val c0 = p0.transform().position.toCartesian()
+            val c1 = p1.transform().position.toCartesian()
+
+
+
             val layer0 = p0.renderable().layer
             val layer1 = p1.renderable().layer
             return if (layer0 == layer1) {

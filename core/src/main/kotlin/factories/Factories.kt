@@ -919,11 +919,7 @@ fun hackingStation(
         }
         with<TextureRegionComponent> {
             textureRegion = Assets.isoTowers["objective"]!!
-            scale =  1 / GridMapSection.tileScale * scale
-//            originX = 0f
-//            originY = 0f
-            drawOrigin = true
-//            offsetY = -4f
+            scale *= 1 / GridMapSection.tileScale
         }
         with<RenderableComponent> {
             layer = 1
