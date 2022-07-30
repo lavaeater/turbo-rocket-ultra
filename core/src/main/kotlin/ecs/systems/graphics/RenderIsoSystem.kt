@@ -15,7 +15,7 @@ import com.crashinvaders.vfx.effects.ChainVfxEffect
 import eater.ecs.components.AgentProperties
 import eater.ecs.components.Memory
 import eater.ecs.components.TransformComponent
-import eater.injection.InjectionContext.Companion.inject
+import eater.injection.InjectionContext
 import eater.physics.addComponent
 import eater.physics.getComponent
 import eater.physics.has
@@ -32,7 +32,7 @@ import physics.*
 import screens.ApplicationFlags
 import tru.Assets
 
-class RenderSystem(
+class RenderIsoSystem(
     private val batch: Batch,
     private val debug: Boolean,
     private val rayHandler: RayHandler,
@@ -65,11 +65,11 @@ class RenderSystem(
         }
     }, priority
 ) {
-    private val mapManager by lazy { inject<GridMapManager>() }
+    private val mapManager by lazy { InjectionContext.inject<GridMapManager>() }
     private val shapeDrawer by lazy { Assets.shapeDrawer }
-    private val oldTvEffect by lazy { inject<List<ChainVfxEffect>>() }
+    private val oldTvEffect by lazy { InjectionContext.inject<List<ChainVfxEffect>>() }
     private val vfxManager by lazy {
-        inject<VfxManager>().apply {
+        InjectionContext.inject<VfxManager>().apply {
             for (fx in oldTvEffect) {
                 this.addEffect(fx)
             }
@@ -92,7 +92,7 @@ class RenderSystem(
         vfxManager.cleanUpBuffers()
         vfxManager.beginInputCapture()
         batch.use {
-            mapManager.render(batch, shapeDrawer, deltaTime)
+            mapManager.renderIso(batch, shapeDrawer, deltaTime)
             super.update(deltaTime)
         }
         vfxManager.endInputCapture()
@@ -148,8 +148,8 @@ class RenderSystem(
 
             batch.draw(
                 textureRegion,
-                x,
-                y,
+                x - y,
+                (x + y) / 2,
                 0f,
                 0f,
                 textureRegion.regionWidth.toFloat(),
@@ -332,4 +332,3 @@ class RenderSystem(
 
     val lineColor = Color(0f, 0f, 1f, 0.5f)
 }
-

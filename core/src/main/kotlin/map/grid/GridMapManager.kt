@@ -5,6 +5,7 @@ import com.badlogic.gdx.graphics.Color
 import com.badlogic.gdx.graphics.g2d.Batch
 import com.badlogic.gdx.physics.box2d.Body
 import com.badlogic.gdx.physics.box2d.BodyDef
+import eater.core.engine
 import eater.core.world
 import ecs.systems.graphics.GameConstants
 import factories.Box2dCategories
@@ -177,6 +178,14 @@ class GridMapManager {
 //            }
             section.lights.forEach { it.isActive = true }
         }
+    }
+
+    fun mapToEntities() {
+        val engine = engine()
+        /** No sorting needed, we'll do that later in the rendering system, right?
+         *
+         * So rendering will be done by a new ISO-rendering system, of course
+         */
     }
 
     fun renderIso(batch: Batch, shapeDrawer: ShapeDrawer, deltaTime: Float, scale: Float = 1f) {

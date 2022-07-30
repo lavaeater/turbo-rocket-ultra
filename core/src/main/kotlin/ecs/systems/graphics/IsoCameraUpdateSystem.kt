@@ -15,7 +15,7 @@ import ktx.math.vec2
 import ktx.math.vec3
 import eater.physics.getComponent
 
-class CameraUpdateSystem(
+class IsoCameraUpdateSystem(
     private val camera: OrthographicCamera,
     private val viewport: ExtendViewport
 ) :
@@ -40,8 +40,8 @@ class CameraUpdateSystem(
         val y = transformComponents.map { it.position.y }.sum() / transformComponents.count().toFloat()
 
         cameraPosition.set(
-            x,
-            y
+            x - y,
+            (x + y) / 2
         )
 
         camera.position.lerp(
