@@ -96,8 +96,8 @@ class GridMapManager {
         bodies.clear()
 
         for(section in gridMap.values) {
-            for ((x, column) in section.tiles.withIndex()) {
-                for ((y, tile) in column.withIndex()) {
+            for ((y, row) in section.isoTiles.withIndex()) {
+                for ((x, tile) in row.withIndex()) {
                     val actualX = section.x * GridMapSection.width + x
                     val actualY = section.y * GridMapSection.height + y
                     if(!buildableMap.containsKey(actualX))
@@ -184,21 +184,17 @@ class GridMapManager {
          * of the entities, ie be changed by physics systems etc. Or should they?
          */
         for(section in gridMap.values) {
-            val sectionOffsetX = section.x * section.sectionWidth * scale
-            val sectionOffsetY = section.y * section.sectionHeight * scale
             for ((y, row) in section.isoTiles.withIndex()) {
                 for ((x, tile) in row.withIndex()) {
-                    val tileX = x * tileWidth * tileScale * scale - tileWidth / 2f * tileScale * scale
-                    val tileY = y * tileHeight * tileScale * scale - tileHeight * tileScale * scale
-                    val actualX = tileX + sectionOffsetX
-                    val actualY = tileY + sectionOffsetY
+                    val actualX = x * tileWidth * tileScale - tileWidth * tileScale / 2 + section.x * tileWidth * tileScale * GridMapSection.width// x * tileWidth * tileScale * scale// - tileWidth * 2f * tileScale * scale
+                    val actualY = y * tileHeight * tileScale - tileHeight * tileScale / 2 + section.y * tileHeight * tileScale * GridMapSection.height//y * tileHeight * tileScale * scale// - tileHeight * 2f * tileScale * scale
                     //this.x - this.y, (this.x + this.y) / 2)
                     engine.entity {
                         with<TextureRegionComponent> {
                             textureRegion = tile.renderables.regions.first().textureRegion //This needs to be more convenient later
                             this.scale = 1 / tileScale * scale
-                            this.originX = 0f
-                            this.originY = 0f
+                            originX = 0f
+                            originY = 0f
                         }
                         with<TransformComponent> {
                             position.setToIso(actualX, actualY)

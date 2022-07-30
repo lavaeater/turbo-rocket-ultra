@@ -286,6 +286,11 @@ object Assets : Disposable {
         )
     }
 
+    val isoTowers by lazy {
+        val t = Texture(Gdx.files.internal("iso/towers.png"))
+        mapOf("obstacle" to TextureRegion(t, 0,0,32,32).apply { flip(false, true) },
+            "objective" to TextureRegion(t, 32,0,32,32).apply { flip(false, true) })
+    }
 
     val towers by lazy {
         mapOf(
@@ -341,12 +346,6 @@ object Assets : Disposable {
         )
     }
 
-    /**
-     * Texture Regions:
-     * x: 4,
-     * width: 321
-     * space between 8
-     */
     val isoFloorTiles by lazy {
         val t = Texture(Gdx.files.internal("iso/floor_new.png"))
         Array(2) { i ->
@@ -360,14 +359,6 @@ object Assets : Disposable {
         }.toList()
     }
 
-    /**
-     * x 4
-     * y 10
-     * w 241
-     * h 179
-     *
-     * we have to rescale these fuckers...
-     */
     val isoWallTiles by lazy {
         val t = Texture(Gdx.files.internal("iso/wall_new.png"))
         Array(2) { i ->

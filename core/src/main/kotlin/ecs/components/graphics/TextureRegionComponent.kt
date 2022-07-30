@@ -22,6 +22,7 @@ class TextureRegionComponent : Component, Pool.Poolable {
     var scale = 1f
     val actualScale: Float get() = scale * GameConstants.SCALE
     var isVisible = true
+    var drawOrigin = false
     override fun reset() {
         isVisible = true
         textureRegion = TextureRegion()

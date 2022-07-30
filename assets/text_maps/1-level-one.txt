@@ -1,6 +1,6 @@
 hcc
 w*l
-l*c
+h*c
 s*g
 ---
 name

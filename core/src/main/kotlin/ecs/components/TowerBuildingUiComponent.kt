@@ -12,7 +12,7 @@ import ui.new.Carousel
 class TowerBuildingUiComponent: Component, NoOpUserInterfaceControl(), Pool.Poolable {
     lateinit var controlMapper: ControlMapper
     val towers = listOf("machinegun", "flamethrower", "noise")
-    val ui = Carousel(towers, listOf(BoundTextureElement({t -> Assets.towers[t]!!})), offset = vec2(5f, 5f), position = vec2(50f, 400f))
+    val ui = Carousel(towers, listOf(BoundTextureElement({t -> Assets.isoTowers[t]!!})), offset = vec2(5f, 5f), position = vec2(50f, 400f))
     var cancel = false
     var select = false
 

@@ -50,6 +50,7 @@ import features.pickups.*
 import features.weapons.AmmoType
 import features.weapons.WeaponDefinition
 import input.ControlMapper
+import isometric.setToIso
 import ktx.actors.plusAssign
 import ktx.actors.repeatForever
 import ktx.ashley.EngineEntity
@@ -233,7 +234,7 @@ fun tower(
         }
         with<TransformComponent>()
         with<TextureRegionComponent> {
-            textureRegion = Assets.newTower
+            textureRegion = Assets.isoTowers["obstacle"]!!
             scale = 4f
 //            offsetX = -4f
         }
@@ -352,7 +353,9 @@ fun player(player: Player, mapper: ControlMapper, at: Vector2, debug: Boolean) {
             anims = Assets.characters[player.selectedCharacterSpriteName]!!
             currentAnim = anims.values.first().animations.values.first()
         }
-        with<TextureRegionComponent>()
+        with<TextureRegionComponent> {
+            drawOrigin = true
+        }
         with<RenderableComponent> {
             layer = 1
             renderableType = RenderableType.TextureRegion
@@ -825,8 +828,8 @@ fun targetStation(
         with<TargetComponent>()
         with<AttackableProperties>()
         with<TextureRegionComponent> {
-            textureRegion = Assets.towers["objective"]!!
-            scale = 4f
+            textureRegion = Assets.isoTowers["objective"]!!
+            scale = 1f
 //            offsetY = -4f
         }
         with<RenderableComponent> {
@@ -862,7 +865,7 @@ fun hackingStation(
     }
     val entity = engine().entity {
         with<Box2d> { body = box2dBody }
-        with<TransformComponent> { position.set(box2dBody.position) }
+        with<TransformComponent> { position.setToIso(box2dBody.position) }
         with<HackingComponent>()
         with<ComplexActionComponent> {
             scene2dTable = scene2d.table {
@@ -875,8 +878,11 @@ fun hackingStation(
             }
         }
         with<TextureRegionComponent> {
-            textureRegion = Assets.towers["objective"]!!
+            textureRegion = Assets.isoTowers["objective"]!!
             scale = 4f
+            originX = 0f
+            originY = 0f
+            drawOrigin = true
 //            offsetY = -4f
         }
         with<RenderableComponent> {
@@ -1047,7 +1053,7 @@ fun spawner(
         with<TransformComponent> { position.set(box2dBody.position) }
         with<ObstacleComponent>()
         with<TextureRegionComponent> {
-            textureRegion = Assets.towers["obstacle"]!!
+            textureRegion = Assets.isoTowers["obstacle"]!!
 //            offsetY = -4f
             scale = 4f
         }
@@ -1089,7 +1095,7 @@ fun objective(
         with<Box2d> { body = box2dBody }
         with<TransformComponent> { position.set(box2dBody.position) }
         with<TextureRegionComponent> {
-            textureRegion = Assets.towers["objective"]!!
+            textureRegion = Assets.isoTowers["objective"]!!
 //            offsetY = -4f
             scale = 4f
         }

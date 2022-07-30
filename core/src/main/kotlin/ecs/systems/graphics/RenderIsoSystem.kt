@@ -26,6 +26,7 @@ import ecs.components.gameplay.DestroyComponent
 import ecs.components.graphics.RenderableComponent
 import ktx.ashley.allOf
 import ktx.graphics.use
+import ktx.math.vec2
 import physics.*
 import screens.ApplicationFlags
 import tru.Assets
@@ -131,11 +132,11 @@ class RenderIsoSystem(
             val originX =
                 textureRegion.regionWidth * textureRegionComponent.originX * textureRegionComponent.actualScale
             val originY =
-                textureRegion.regionHeight * textureRegionComponent.originY * textureRegionComponent.actualScale
+                textureRegion.regionHeight * textureRegionComponent.originY * 2f * textureRegionComponent.actualScale
             val x =
-                transform.position.x// - originX
+                transform.position.x
             val y =
-                transform.position.y// - originY
+                transform.position.y// - ( textureRegion.regionHeight / 4f * textureRegionComponent.actualScale)
             val rotation =
                 if (textureRegionComponent.rotateWithTransform) transform.rotation * MathUtils.radiansToDegrees else 0f
 
@@ -151,6 +152,13 @@ class RenderIsoSystem(
                 textureRegionComponent.actualScale,
                 rotation
             )
+
+            if(textureRegionComponent.drawOrigin) {
+                shapeDrawer.filledCircle(vec2(x, y), 0.5f, Color.RED)
+                shapeDrawer.filledCircle(vec2(x + originX, y - originY), 0.25f, Color.BLUE)
+                shapeDrawer.rectangle(x + originX, y + originY, textureRegion.regionWidth * textureRegionComponent.actualScale, textureRegion.regionHeight * textureRegionComponent.actualScale, Color.BLUE, 0.1f)
+            }
+            //shapeDrawer.rectangle(x, y, textureRegion.regionWidth * textureRegionComponent.actualScale, textureRegion.regionHeight * textureRegionComponent.actualScale, Color.GREEN, 0.1f)
         }
     }
 
