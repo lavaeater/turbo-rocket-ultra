@@ -1,7 +1,6 @@
 package injection
 
 import audio.AudioPlayer
-import box2dLight.RayHandler
 import com.badlogic.ashley.core.Engine
 import com.badlogic.ashley.core.PooledEngine
 import com.badlogic.gdx.Input
@@ -81,7 +80,6 @@ object Context : InjectionContext() {
             })
             bindSingleton(AudioPlayer())
             bindSingleton(GridMapManager())
-            bindSingleton(RayHandler(inject(), 500, 500))
             bindSingleton(MessageHandler())
             bindSingleton(TurboStoryManager().apply {
                 inject<MessageHandler>().apply {
@@ -109,7 +107,7 @@ object Context : InjectionContext() {
         return PooledEngine().apply {
             addSystem(UpdateTimePieceSystem())
             addSystem(PhysicsSystem(0))
-            addSystem(CameraUpdateSystem(inject(), inject()))
+            addSystem(IsoCameraUpdateSystem(inject(), inject()))
             addSystem(PlayerMoveSystem())
             addSystem(PlayerHasBeenHereSystem())
             addSystem(KeyboardInputSystem())
@@ -136,10 +134,9 @@ object Context : InjectionContext() {
             addSystem(WeaponReloadSystem())
             addSystem(UpdatePlayerStatsSystem())
             addSystem(
-                RenderSystem(
+                RenderIsoSystem(
                     inject<PolygonSpriteBatch>() as Batch,
                     false,
-                    inject(),
                     inject(),
                     1,
                     false
@@ -147,12 +144,10 @@ object Context : InjectionContext() {
             )
 
             addSystem(RenderMiniMapSystem(2))
-            //We add this here now to make sure it is run AFTER the rendercycle
-//            addSystem(BehaviorTreeSystem(4))
+            addSystem(PhysicsDebugRendererSystem(inject(), inject()))
             addSystem(UtilityAiSystem())
             addSystem(UpdateActionsSystem())
             addSystem(UpdateMemorySystem())
-            addSystem(PlayerFlashlightSystem())
             addSystem(PlayerContextActionSystem())
             addSystem(DelayedEntityCreationSystem())
             addSystem(LootDropSystem())

@@ -19,10 +19,7 @@ import eater.physics.body
 import ecs.components.gameplay.ObjectiveComponent
 import ecs.components.graphics.CameraFollowComponent
 import ecs.components.player.PlayerComponent
-import ecs.systems.graphics.CameraUpdateSystem
 import ecs.systems.graphics.GameConstants.MAX_ENEMIES
-import ecs.systems.graphics.RenderMiniMapSystem
-import ecs.systems.graphics.RenderSystem
 import ecs.systems.input.GamepadInputSystem
 import ecs.systems.input.KeyboardInputSystem
 import ecs.systems.player.GameOverSystem
@@ -46,6 +43,7 @@ import eater.turbofacts.Factoids
 import eater.turbofacts.TurboFactsOfTheWorld
 import eater.turbofacts.TurboStoryManager
 import eater.turbofacts.factsOfTheWorld
+import ecs.systems.graphics.*
 import factories.enemy
 import ui.IUserInterface
 import kotlin.math.pow
@@ -77,7 +75,7 @@ class GameScreen(private val gameState: StateMachine<GameState, GameEvent>) : Kt
             Gdx.input.inputProcessor = engine.getSystem(KeyboardInputSystem::class.java)
             Controllers.addListener(engine.getSystem(GamepadInputSystem::class.java))
 
-            engine.getSystem<CameraUpdateSystem>().reset()
+            engine.getSystem<IsoCameraUpdateSystem>().reset()
             engine.removeAllEntities()
             CounterObject.currentLevel = 1
 
@@ -151,7 +149,7 @@ class GameScreen(private val gameState: StateMachine<GameState, GameEvent>) : Kt
             system.setProcessing(false)
 
         //Continue to render, though  gaah
-        engine.getSystem<RenderSystem>().setProcessing(true)
+        engine.getSystem<RenderIsoSystem>().setProcessing(true)
         engine.getSystem<RenderMiniMapSystem>().setProcessing(true)
 
         ui.pause()
@@ -246,7 +244,7 @@ class GameScreen(private val gameState: StateMachine<GameState, GameEvent>) : Kt
 
     private fun clearAllButPlayers() {
         //Pause rendering RIGHT NOW
-        engine.getSystem<RenderSystem>().setProcessing(false)
+        engine.getSystem<RenderIsoSystem>().setProcessing(false)
         engine.getSystem<RenderMiniMapSystem>().setProcessing(false)
         for (entity in engine.entities) {
             if (!entity.isPlayer() && !entity.hasWeapon()) {
@@ -260,7 +258,7 @@ class GameScreen(private val gameState: StateMachine<GameState, GameEvent>) : Kt
         }
         //Resume rendering
         //Continue to render, though  gaah
-        engine.getSystem<RenderSystem>().setProcessing(true)
+        engine.getSystem<RenderIsoSystem>().setProcessing(true)
         engine.getSystem<RenderMiniMapSystem>().setProcessing(true)
     }
 
@@ -276,7 +274,6 @@ class GameScreen(private val gameState: StateMachine<GameState, GameEvent>) : Kt
             level < MapList.mapFileNames.size -> loadMap(MapList.mapFiles[level - 1])
             else -> GridMapGenerator.generate(CounterObject.currentLength, level)
         }
-        mapManager.removeLights(mapManager.gridMap)
         mapManager.gridMap = map.first
         mapManager.sectionGraph = map.second
         CounterObject.numberOfObjectives = engine.getEntitiesFor(allOf(ObjectiveComponent::class).get()).count()

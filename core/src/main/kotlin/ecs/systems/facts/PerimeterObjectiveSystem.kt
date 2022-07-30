@@ -22,7 +22,7 @@ class PerimeterObjectiveSystem: IteratingSystem(allOf(PerimeterObjectiveComponen
         val transform = entity.transform()
         val perimeter = entity.perimeter()
         val objective = entity.objective()
-        val light = entity.light()
+
         if(perimeter.hasEntered) {
             perimeter.timeLeft -= deltaTime
             if(perimeter.firstEntry) {
@@ -37,7 +37,6 @@ class PerimeterObjectiveSystem: IteratingSystem(allOf(PerimeterObjectiveComponen
                 perimeter.firstEntry = true
         }
         objective.touched = perimeter.timeLeft <= 0f
-        light.light.isActive = objective.touched || perimeter.hasEntered
         perimeter.hasEntered = playerTransforms.any { it.position.dst(transform.position) < perimeter.distance }
     }
 }

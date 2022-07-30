@@ -1,6 +1,5 @@
 package ecs.systems.graphics
 
-import box2dLight.RayHandler
 import com.badlogic.ashley.core.Entity
 import com.badlogic.ashley.systems.SortedIteratingSystem
 import com.badlogic.gdx.Gdx
@@ -27,7 +26,6 @@ import ecs.components.gameplay.DestroyComponent
 import ecs.components.graphics.RenderableComponent
 import ktx.ashley.allOf
 import ktx.graphics.use
-import map.grid.GridMapManager
 import physics.*
 import screens.ApplicationFlags
 import tru.Assets
@@ -35,7 +33,6 @@ import tru.Assets
 class RenderIsoSystem(
     private val batch: Batch,
     private val debug: Boolean,
-    private val rayHandler: RayHandler,
     private val camera: OrthographicCamera,
     priority: Int,
     var playerDebug: Boolean
@@ -65,7 +62,6 @@ class RenderIsoSystem(
         }
     }, priority
 ) {
-    private val mapManager by lazy { InjectionContext.inject<GridMapManager>() }
     private val shapeDrawer by lazy { Assets.shapeDrawer }
     private val oldTvEffect by lazy { InjectionContext.inject<List<ChainVfxEffect>>() }
     private val vfxManager by lazy {
@@ -87,18 +83,15 @@ class RenderIsoSystem(
         camera.update(false) //True or false, what's the difference?
         batch.projectionMatrix = camera.combined
         forceSort()
-        rayHandler.setCombinedMatrix(camera)
 
         vfxManager.cleanUpBuffers()
         vfxManager.beginInputCapture()
         batch.use {
-            mapManager.renderIso(batch, shapeDrawer, deltaTime)
             super.update(deltaTime)
         }
         vfxManager.endInputCapture()
         vfxManager.applyEffects()
         vfxManager.renderToScreen()
-        rayHandler.updateAndRender()
     }
 
     fun createAdvancedShadowAffine(
@@ -129,7 +122,7 @@ class RenderIsoSystem(
             .preTranslate(worldX, worldY)
     }
 
-    private fun renderSpriteEntity(entity: Entity) {
+    private fun renderTextureRegion(entity: Entity) {
         val transform = entity.transform()
         val textureRegionComponent = entity.textureRegionComponent()
 
@@ -140,9 +133,9 @@ class RenderIsoSystem(
             val originY =
                 textureRegion.regionHeight * textureRegionComponent.originY * textureRegionComponent.actualScale
             val x =
-                transform.position.x - originX
+                transform.position.x// - originX
             val y =
-                transform.position.y - originY
+                transform.position.y// - originY
             val rotation =
                 if (textureRegionComponent.rotateWithTransform) transform.rotation * MathUtils.radiansToDegrees else 0f
 
@@ -150,8 +143,8 @@ class RenderIsoSystem(
                 textureRegion,
                 x - y,
                 (x + y) / 2,
-                0f,
-                0f,
+                originX,
+                originY,
                 textureRegion.regionWidth.toFloat(),
                 textureRegion.regionHeight.toFloat(),
                 textureRegionComponent.actualScale,
@@ -163,7 +156,7 @@ class RenderIsoSystem(
 
     override fun processEntity(entity: Entity, deltaTime: Float) {
         when (entity.renderable().renderableType) {
-            is ecs.components.graphics.RenderableType.Sprite -> renderSpriteEntity(entity)
+            is ecs.components.graphics.RenderableType.TextureRegion -> renderTextureRegion(entity)
             is ecs.components.graphics.RenderableType.Effect -> renderEffect(entity, deltaTime)
         }
 

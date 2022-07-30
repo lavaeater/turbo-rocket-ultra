@@ -354,7 +354,9 @@ object Assets : Disposable {
             val y = 0
             val w = 32
             val h = 32
-            TextureRegion(t, x, y, w, h)
+            TextureRegion(t, x, y, w, h).apply {
+                this.flip(false, true)
+            }
         }.toList()
     }
 
@@ -373,7 +375,9 @@ object Assets : Disposable {
             val y = 0
             val w = 32
             val h = 32
-            TextureRegion(t, x, y, w, h)
+            TextureRegion(t, x, y, w, h).apply {
+                this.flip(false, true)
+            }
         }.toList()
     }
 

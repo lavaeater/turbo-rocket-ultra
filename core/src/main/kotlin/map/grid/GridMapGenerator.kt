@@ -1,8 +1,6 @@
 package map.grid
 
 import ai.pathfinding.TileGraph
-import box2dLight.Light
-import box2dLight.RayHandler
 import com.badlogic.ashley.core.Engine
 import com.badlogic.gdx.math.Rectangle
 import eater.injection.InjectionContext.Companion.inject
@@ -14,7 +12,6 @@ import features.pickups.LootTable
 import features.pickups.WeaponLoot
 import features.weapons.AmmoType
 import features.weapons.WeaponDefinition
-
 import map.snake.MapDirection
 import map.snake.random
 import map.snake.randomPoint
@@ -27,7 +24,6 @@ import turbofacts.StoryHelper
 class GridMapGenerator {
     companion object {
         val engine by lazy { inject<Engine>() }
-        val rayHandler by lazy { inject<RayHandler>() }
         fun addObjective(bounds: Rectangle, perimeterObjectives: Boolean) {
             val position = bounds.randomPoint()
             objective(position.x, position.y, perimeterObjectives)
@@ -48,22 +44,11 @@ class GridMapGenerator {
         private val storyManager: TurboStoryManager by lazy { inject() }
 
         fun generateFromMapFile(mapData: MapData): Pair<Map<Coordinate, GridMapSection>, TileGraph> {
-            Light.setGlobalContactFilter(
-                Box2dCategories.lights,
-                0, Box2dCategories.allButSensors
-            )
-            rayHandler.setAmbientLight(.5f)
-            rayHandler.setBlurNum(3)
-
             factsOfTheWorld.setStringFact(mapData.name, Factoids.CurrentMapName)
             factsOfTheWorld.setStringFact(mapData.startMessage, Factoids.MapStartMessage)
             factsOfTheWorld.setStringFact(mapData.successMessage, Factoids.MapSuccessMessage)
             factsOfTheWorld.setStringFact(mapData.failMessage, Factoids.MapFailMessage)
             factsOfTheWorld.setFactsFromMap(mapData.facts)
-
-//            CounterObject.maxEnemies = mapData.maxEnemies
-//            CounterObject.maxSpawnedEnemies = mapData.maxSpawnedEnemies
-
             storyManager.addStories(*StoryHelper.allStories.filterKeys { mapData.storyKeys.contains(it) }.values.toTypedArray())
 
             return generateFromDefintion(mapData.mapDefinition)
@@ -142,14 +127,6 @@ class GridMapGenerator {
         }
 
         fun generate(length: Int, level: Int): Pair<Map<Coordinate, GridMapSection>, TileGraph> {
-            //TODO: Move this somewhere
-            Light.setGlobalContactFilter(
-                Box2dCategories.lights,
-                0, Box2dCategories.allButSensors
-            )
-            rayHandler.setAmbientLight(.5f)
-            rayHandler.setBlurNum(3)
-
             val width = length * 3
             val height = length * 3
             val map = Array(width) {

@@ -163,7 +163,7 @@ class RenderSystem(
 
     override fun processEntity(entity: Entity, deltaTime: Float) {
         when (entity.renderable().renderableType) {
-            is ecs.components.graphics.RenderableType.Sprite -> renderSpriteEntity(entity)
+            is ecs.components.graphics.RenderableType.TextureRegion -> renderSpriteEntity(entity)
             is ecs.components.graphics.RenderableType.Effect -> renderEffect(entity, deltaTime)
         }
 

@@ -239,7 +239,7 @@ fun tower(
         }
         with<RenderableComponent> {
             layer = 1
-            renderableType = RenderableType.Sprite
+            renderableType = RenderableType.TextureRegion
         }
         with<MiniMapComponent> {
             color = Color.GREEN
@@ -318,7 +318,7 @@ fun buildCursor(): Entity {
         }
         with<RenderableComponent> {
             layer = 2
-            renderableType = RenderableType.Sprite
+            renderableType = RenderableType.TextureRegion
         }
     }
     return entity
@@ -352,12 +352,10 @@ fun player(player: Player, mapper: ControlMapper, at: Vector2, debug: Boolean) {
             anims = Assets.characters[player.selectedCharacterSpriteName]!!
             currentAnim = anims.values.first().animations.values.first()
         }
-        with<TextureRegionComponent> {
-//            offsetY = -1f
-        }
+        with<TextureRegionComponent>()
         with<RenderableComponent> {
             layer = 1
-            renderableType = RenderableType.Sprite
+            renderableType = RenderableType.TextureRegion
         }
         with<MiniMapComponent> {
             color = Color.GREEN
@@ -377,8 +375,6 @@ fun player(player: Player, mapper: ControlMapper, at: Vector2, debug: Boolean) {
             weaponEntity = playerWeapon(this@entity.entity)
         }
         with<FiredShotsComponent>()
-        with<FlashlightComponent>()
-        with<WeaponLaserComponent>()
         with<AnchorPointsComponent> {
             points["green"] = vec2(0.5f, 0f)
             points["blue"] = vec2(-0.5f, -0.5f)
@@ -407,7 +403,7 @@ fun playerWeapon(playerEntity: Entity, anchor: String = "green"): Entity {
         }
         with<RenderableComponent> {
             layer = 1
-            renderableType = RenderableType.Sprite
+            renderableType = RenderableType.TextureRegion
         }
         val weapon = WeaponDefinition.spas12.getWeapon()
         with<WeaponComponent> {
@@ -480,7 +476,7 @@ fun randomLoot(at: Vector2, lootTable: LootTable) {
         }
         with<RenderableComponent> {
             layer = 1
-            renderableType = RenderableType.Sprite
+            renderableType = RenderableType.TextureRegion
         }
         with<LootComponent> {
             this.lootTable = lootTable
@@ -516,7 +512,7 @@ fun lootBox(at: Vector2, lootDrop: List<ILoot>) {
         }
         with<RenderableComponent> {
             layer = 1
-            renderableType = RenderableType.Sprite
+            renderableType = RenderableType.TextureRegion
         }
         with<LootComponent> {
             loot = lootDrop
@@ -560,7 +556,7 @@ fun throwGrenade(
         }
         with<RenderableComponent> {
             layer = 1
-            renderableType = RenderableType.Sprite
+            renderableType = RenderableType.TextureRegion
         }
     }
     box2dBody.userData = entity
@@ -605,7 +601,7 @@ fun throwMolotov(
         }
         with<RenderableComponent> {
             layer = 1
-            renderableType = RenderableType.Sprite
+            renderableType = RenderableType.TextureRegion
         }
     }
     box2dBody.userData = entity
@@ -638,7 +634,7 @@ fun bullet(at: Vector2, towards: Vector2, speed: Float, damage: Float, player: P
         }
         with<RenderableComponent> {
             layer = 1
-            renderableType = RenderableType.Sprite
+            renderableType = RenderableType.TextureRegion
         }
     }
     box2dBody.userData = entity
@@ -835,7 +831,7 @@ fun targetStation(
         }
         with<RenderableComponent> {
             layer = 1
-            renderableType = RenderableType.Sprite
+            renderableType = RenderableType.TextureRegion
         }
         with<MiniMapComponent> {
             color = Color.GREEN
@@ -885,17 +881,13 @@ fun hackingStation(
         }
         with<RenderableComponent> {
             layer = 1
-            renderableType = RenderableType.Sprite
+            renderableType = RenderableType.TextureRegion
         }
         with<MiniMapComponent> {
             color = Color.GREEN
         }
         with<ObjectiveComponent> {
             id = "I did this"
-        }
-        with<LightComponent> {
-            light.position = box2dBody.position
-            light.isStaticLight = true
         }
         with<ObstacleComponent>()
     }
@@ -991,7 +983,7 @@ private fun EngineEntity.withBasicEnemyStuff(
     with<Fitness>()
     with<RenderableComponent> {
         layer = 1
-        renderableType = RenderableType.Sprite
+        renderableType = RenderableType.TextureRegion
     }
     with<MiniMapComponent> {
         color = Color.RED
@@ -1027,7 +1019,7 @@ fun blockade(
         }
         with<RenderableComponent> {
             layer = 1
-            renderableType = RenderableType.Sprite
+            renderableType = RenderableType.TextureRegion
         }
     }
     box2dBody.userData = entity
@@ -1061,7 +1053,7 @@ fun spawner(
         }
         with<RenderableComponent> {
             layer = 1
-            renderableType = RenderableType.Sprite
+            renderableType = RenderableType.TextureRegion
         }
         with<EnemySpawnerComponent> {
             waveSize = FactsLikeThatMan.waveSize
@@ -1103,7 +1095,7 @@ fun objective(
         }
         with<RenderableComponent> {
             layer = 1
-            renderableType = RenderableType.Sprite
+            renderableType = RenderableType.TextureRegion
         }
         with<MiniMapComponent> {
             color = Color.GREEN
@@ -1112,10 +1104,6 @@ fun objective(
             id = "I did this"
         }
         with<ObstacleComponent>()
-        with<LightComponent> {
-            light.position = box2dBody.position
-            light.isStaticLight = true
-        }
         if (perimeterObjective)
             with<PerimeterObjectiveComponent>()
     }

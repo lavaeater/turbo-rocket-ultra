@@ -79,7 +79,7 @@ class IntentionSystem : IteratingSystem(allOf(IntentComponent::class).get()) {
                 }
                 with<TransformComponent>()
                 with<RenderableComponent> {
-                    renderableType = RenderableType.Sprite
+                    renderableType = RenderableType.TextureRegion
                 }
                 with<TextureRegionComponent> {
                     textureRegion = entity.buildModal().buildables.selectedItem.textureRegion

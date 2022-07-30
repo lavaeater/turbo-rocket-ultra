@@ -189,7 +189,6 @@ class ContactManager : ContactListener {
                 if (!objectiveComponent.touched)
                     contactType.player.getComponent<PlayerComponent>().player.touchObjective(objectiveComponent)
                 objectiveComponent.touched = true
-                contactType.objective.getComponent<LightComponent>().light.isActive = true
             }
             is ContactType.PlayerAndProjectile -> {
                 contactType.player.getComponent<AttackableProperties>().health -= 20
@@ -289,7 +288,6 @@ class ContactManager : ContactListener {
                             complexActionComponent.busy = false
                             if (it == ComplexActionResult.Success) {
                                 objectiveComponent.touched = true
-                                contactType.other.getComponent<LightComponent>().light.isActive = true
                                 playerControl.player.touchObjective(objectiveComponent)
                             }
                         }

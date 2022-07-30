@@ -7,6 +7,7 @@ import com.badlogic.gdx.physics.box2d.Body
 import com.badlogic.gdx.physics.box2d.BodyDef
 import eater.core.engine
 import eater.core.world
+import eater.ecs.components.TransformComponent
 import ecs.systems.graphics.GameConstants
 import factories.Box2dCategories
 import ktx.box2d.body
@@ -16,6 +17,10 @@ import map.grid.GridMapSection.Companion.tileHeight
 import map.grid.GridMapSection.Companion.tileScale
 import map.grid.GridMapSection.Companion.tileWidth
 import eater.physics.drawScaled
+import ecs.components.graphics.RenderableComponent
+import ecs.components.graphics.TextureRegionComponent
+import ktx.ashley.entity
+import ktx.ashley.with
 import space.earlygrey.shapedrawer.ShapeDrawer
 
 class GridMapManager {
@@ -24,14 +29,7 @@ class GridMapManager {
     set(value) {
         field = value
         fixBodies()
-    }
-
-    fun removeLights(oldMap: Map<Coordinate, GridMapSection>) {
-        for(section in oldMap.values) {
-            for(l in section.lights) {
-                l.remove(true)
-            }
-        }
+        mapToEntities()
     }
 
     private val bodies = mutableListOf<Body>()
@@ -147,7 +145,6 @@ class GridMapManager {
                     miniMapColor
                 )
             }
-            section.lights.forEach { it.isActive = true }
         }
     }
 
@@ -173,19 +170,43 @@ class GridMapManager {
                     }
                 }
             }
-//            for(point in section.safePoints) {
-//                shapeDrawer.rectangle(point.x - 0.5f, point.y - 0.5f, 1f, 1f, Color.GREEN)
-//            }
-            section.lights.forEach { it.isActive = true }
         }
     }
 
-    fun mapToEntities() {
+    fun mapToEntities(scale: Float = 1f) {
         val engine = engine()
         /** No sorting needed, we'll do that later in the rendering system, right?
          *
          * So rendering will be done by a new ISO-rendering system, of course
+         *
+         * Rendering shouldn't change coordinates, they should be handled in the transforms
+         * of the entities, ie be changed by physics systems etc. Or should they?
          */
+        for(section in gridMap.values) {
+            val sectionOffsetX = section.x * section.sectionWidth * scale
+            val sectionOffsetY = section.y * section.sectionHeight * scale
+            for ((y, row) in section.isoTiles.withIndex()) {
+                for ((x, tile) in row.withIndex()) {
+                    val tileX = x * tileWidth * tileScale * scale - tileWidth / 2f * tileScale * scale
+                    val tileY = y * tileHeight * tileScale * scale - tileHeight * tileScale * scale
+                    val actualX = tileX + sectionOffsetX
+                    val actualY = tileY + sectionOffsetY
+                    //this.x - this.y, (this.x + this.y) / 2)
+                    engine.entity {
+                        with<TextureRegionComponent> {
+                            textureRegion = tile.renderables.regions.first().textureRegion //This needs to be more convenient later
+                            this.scale = 1 / tileScale * scale
+                            this.originX = 0f
+                            this.originY = 0f
+                        }
+                        with<TransformComponent> {
+                            position.set(actualX, actualY)
+                        }
+                        with<RenderableComponent>()
+                    }
+                }
+            }
+        }
     }
 
     fun renderIso(batch: Batch, shapeDrawer: ShapeDrawer, deltaTime: Float, scale: Float = 1f) {
