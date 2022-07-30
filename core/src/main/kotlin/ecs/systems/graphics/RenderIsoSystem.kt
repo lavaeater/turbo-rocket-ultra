@@ -131,12 +131,11 @@ class RenderIsoSystem(
             val textureRegion = textureRegionComponent.textureRegion
             val originX =
                 textureRegion.regionWidth * textureRegionComponent.originX * textureRegionComponent.actualScale
-            val originY =
-                textureRegion.regionHeight * textureRegionComponent.originY * 2f * textureRegionComponent.actualScale
+            val originY = textureRegion.regionHeight * textureRegionComponent.originY * textureRegionComponent.actualScale
             val x =
-                transform.position.x
+                transform.position.x// - textureRegion.regionWidth * textureRegionComponent.actualScale
             val y =
-                transform.position.y// - ( textureRegion.regionHeight / 4f * textureRegionComponent.actualScale)
+                transform.position.y// - textureRegion.regionHeight * textureRegionComponent.actualScale// - ( textureRegion.regionHeight / 4f * textureRegionComponent.actualScale)
             val rotation =
                 if (textureRegionComponent.rotateWithTransform) transform.rotation * MathUtils.radiansToDegrees else 0f
 
@@ -153,10 +152,25 @@ class RenderIsoSystem(
                 rotation
             )
 
-            if(textureRegionComponent.drawOrigin) {
+            if (textureRegionComponent.drawOrigin) {
                 shapeDrawer.filledCircle(vec2(x, y), 0.5f, Color.RED)
-                shapeDrawer.filledCircle(vec2(x + originX, y - originY), 0.25f, Color.BLUE)
-                shapeDrawer.rectangle(x + originX, y + originY, textureRegion.regionWidth * textureRegionComponent.actualScale, textureRegion.regionHeight * textureRegionComponent.actualScale, Color.BLUE, 0.1f)
+                shapeDrawer.rectangle(
+                    x,
+                    y,
+                    textureRegion.regionWidth * textureRegionComponent.actualScale,
+                    textureRegion.regionHeight * textureRegionComponent.actualScale,
+                    Color.RED,
+                    0.1f
+                )
+                shapeDrawer.filledCircle(vec2(x + originX, y + originY), 0.25f, Color.BLUE)
+                shapeDrawer.rectangle(
+                    x + originX,
+                    y + originY,
+                    textureRegion.regionWidth * textureRegionComponent.actualScale,
+                    textureRegion.regionHeight * textureRegionComponent.actualScale,
+                    Color.BLUE,
+                    0.1f
+                )
             }
             //shapeDrawer.rectangle(x, y, textureRegion.regionWidth * textureRegionComponent.actualScale, textureRegion.regionHeight * textureRegionComponent.actualScale, Color.GREEN, 0.1f)
         }

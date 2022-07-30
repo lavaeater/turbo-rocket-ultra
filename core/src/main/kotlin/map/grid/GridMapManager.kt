@@ -29,7 +29,7 @@ class GridMapManager {
     var gridMap: Map<Coordinate, GridMapSection> = mapOf()
     set(value) {
         field = value
-        fixBodies()
+//        fixBodies()
         mapToEntities()
     }
 
@@ -186,20 +186,42 @@ class GridMapManager {
         for(section in gridMap.values) {
             for ((y, row) in section.isoTiles.withIndex()) {
                 for ((x, tile) in row.withIndex()) {
-                    val actualX = x * tileWidth * tileScale - tileWidth * tileScale / 2 + section.x * tileWidth * tileScale * GridMapSection.width// x * tileWidth * tileScale * scale// - tileWidth * 2f * tileScale * scale
-                    val actualY = y * tileHeight * tileScale - tileHeight * tileScale / 2 + section.y * tileHeight * tileScale * GridMapSection.height//y * tileHeight * tileScale * scale// - tileHeight * 2f * tileScale * scale
-                    //this.x - this.y, (this.x + this.y) / 2)
+                    val actualX = section.x * GridMapSection.width + x
+                    val actualY = section.y * GridMapSection.height + y
+
+                    val anX = x * tileWidth * tileScale - tileWidth * tileScale / 2 + section.x * tileWidth * tileScale * GridMapSection.width
+                    val anY = y * tileHeight * tileScale - tileHeight * tileScale / 2 + section.y * tileHeight * tileScale * GridMapSection.height
+
                     engine.entity {
                         with<TextureRegionComponent> {
                             textureRegion = tile.renderables.regions.first().textureRegion //This needs to be more convenient later
                             this.scale = 1 / tileScale * scale
-                            originX = 0f
-                            originY = 0f
                         }
                         with<TransformComponent> {
-                            position.setToIso(actualX, actualY)
+                            position.setToIso(anX, anY)
                         }
                         with<RenderableComponent>()
+
+                        if(!buildableMap.containsKey(actualX))
+                            buildableMap[actualX] = mutableMapOf()
+                        buildableMap[actualX]!![actualY] = tile.passable
+                        if(!visitedMap.containsKey(actualX))
+                            visitedMap[actualX] = mutableMapOf()
+                        visitedMap[actualX]!![actualY] = false
+
+                        if (!tile.passable) {
+                            val body = world().body {
+                                type = BodyDef.BodyType.StaticBody
+                                position.set(anX, anY)
+                                box(tileWidth * tileScale, tileHeight * tileScale) {
+                                    filter {
+                                        categoryBits = Box2dCategories.walls
+                                        maskBits = Box2dCategories.whatWallsHit
+                                    }
+                                }
+                            }
+                            bodies.add(body)
+                        }
                     }
                 }
             }

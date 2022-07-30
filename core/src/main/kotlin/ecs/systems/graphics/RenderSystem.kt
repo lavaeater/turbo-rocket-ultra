@@ -140,9 +140,9 @@ class RenderSystem(
             val originY =
                 textureRegion.regionHeight * textureRegionComponent.originY * textureRegionComponent.actualScale
             val x =
-                transform.position.x - originX
+                transform.position.x
             val y =
-                transform.position.y - originY
+                transform.position.y
             val rotation =
                 if (textureRegionComponent.rotateWithTransform) transform.rotation * MathUtils.radiansToDegrees else 0f
 
@@ -150,8 +150,8 @@ class RenderSystem(
                 textureRegion,
                 x,
                 y,
-                0f,
-                0f,
+                originX,
+                originY,
                 textureRegion.regionWidth.toFloat(),
                 textureRegion.regionHeight.toFloat(),
                 textureRegionComponent.actualScale,

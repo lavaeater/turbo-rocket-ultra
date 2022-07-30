@@ -14,8 +14,8 @@ class TextureRegionComponent : Component, Pool.Poolable {
             updateTextureRegion()
             return field
         }
-    var originX = 0.5f
-    var originY = 0.5f
+    var originX = 0f
+    var originY = 0f
     val extraTextureRegions = mutableMapOf<String, TextureRegion>()
     val extraSpriteAnchors = mutableMapOf<String, String>()
     var rotateWithTransform = false

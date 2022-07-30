@@ -63,6 +63,7 @@ import ktx.box2d.filter
 import ktx.math.random
 import ktx.math.vec2
 import ktx.scene2d.*
+import map.grid.GridMapSection
 import physics.*
 import screens.ApplicationFlags
 import screens.CounterObject
@@ -261,7 +262,6 @@ fun tower(
  *
  * 64 / 16 = 4, which is weird.
  */
-
 fun bodyForRegion(
     at: Vector2,
     colliderCategoryBits: Short,
@@ -312,6 +312,45 @@ fun bodyForRegion(
     return box2dBody
 }
 
+fun bodyForPlayer(
+    at: Vector2,
+    colliderCategoryBits: Short,
+    colliderMaskBits: Short,
+    detectorBits: Short,
+    detectorMaskBits: Short,
+    sensorBits: Short,
+    sensorMaskBits: Short,
+    pixelWidth: Int = 24,
+    pixelHeight: Int = 24
+): Body {
+    val widthInMeters = pixelWidth / PIXELS_PER_METER
+    val heightInMeters = pixelHeight / PIXELS_PER_METER
+
+    val box2dBody = world().body {
+        type = BodyDef.BodyType.DynamicBody
+        position.set(at)
+        fixedRotation = true
+        //Bottom projection box
+        box(widthInMeters, heightInMeters) {
+            density = PLAYER_DENSITY
+            filter {
+                categoryBits = colliderCategoryBits
+                maskBits = colliderMaskBits
+            }
+        }
+        circle(2.5f * heightInMeters, vec2(0f, 0f)) {
+            isSensor = true
+            filter {
+                categoryBits = sensorBits
+                maskBits = sensorMaskBits
+            }
+        }
+        linearDamping = SHIP_LINEAR_DAMPING
+        angularDamping = SHIP_ANGULAR_DAMPING
+    }
+    return box2dBody
+}
+
 fun buildCursor(): Entity {
     val entity = engine().entity {
         with<TransformComponent>()
@@ -332,7 +371,7 @@ fun player(player: Player, mapper: ControlMapper, at: Vector2, debug: Boolean) {
     whereas the other one symbolizes the characters actual body and is for hit detection
     from shots etc. Nice.
      */
-    val box2dBody = bodyForRegion(
+    val box2dBody = bodyForPlayer(
         at,
         Box2dCategories.players,
         Box2dCategories.whatPlayersHit,
@@ -354,7 +393,8 @@ fun player(player: Player, mapper: ControlMapper, at: Vector2, debug: Boolean) {
             currentAnim = anims.values.first().animations.values.first()
         }
         with<TextureRegionComponent> {
-            drawOrigin = true
+            originY = 0.5f
+            originX = 0.5f
         }
         with<RenderableComponent> {
             layer = 1
@@ -879,9 +919,9 @@ fun hackingStation(
         }
         with<TextureRegionComponent> {
             textureRegion = Assets.isoTowers["objective"]!!
-            scale = 4f
-            originX = 0f
-            originY = 0f
+            scale =  1 / GridMapSection.tileScale * scale
+//            originX = 0f
+//            originY = 0f
             drawOrigin = true
 //            offsetY = -4f
         }
@@ -985,6 +1025,8 @@ private fun EngineEntity.withBasicEnemyStuff(
     }
     with<TextureRegionComponent> {
         scale = spriteScale
+        originX = 0.5f
+        originY = 0.5f
     }
     with<Fitness>()
     with<RenderableComponent> {

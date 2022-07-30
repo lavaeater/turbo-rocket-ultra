@@ -144,7 +144,6 @@ object Context : InjectionContext() {
             )
 
             addSystem(RenderMiniMapSystem(2))
-            addSystem(PhysicsDebugRendererSystem(inject(), inject()))
             addSystem(UtilityAiSystem())
             addSystem(UpdateActionsSystem())
             addSystem(UpdateMemorySystem())
