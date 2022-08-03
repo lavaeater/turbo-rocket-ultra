@@ -1,5 +1,6 @@
 package screens
 
+import com.badlogic.gdx.Gdx
 import com.badlogic.gdx.Input
 import com.badlogic.gdx.graphics.Color
 import com.badlogic.gdx.math.Vector2
@@ -7,9 +8,7 @@ import gamestate.GameEvent
 import gamestate.GameState
 import isometric.toIsometric
 import ktx.graphics.use
-import ktx.math.ImmutableVector2
-import ktx.math.toMutable
-import ktx.math.vec2
+import ktx.math.*
 import statemachine.StateMachine
 import tru.Assets
 import kotlin.properties.Delegates.observable
@@ -95,22 +94,35 @@ class ConceptScreen(gameState: StateMachine<GameState, GameEvent>) : BasicScreen
         return true
     }
 
+    val screenMouse = vec3()
+    val mousePosition = vec2()
+    val mouseToCenter = vec2()
+    fun updateMouse() {
+        screenMouse.set(Gdx.input.x.toFloat(), Gdx.input.y.toFloat(),0f)
+        camera.unproject(screenMouse)
+        mousePosition.set(screenMouse.x, screenMouse.y)
+        mouseToCenter.set(mousePosition-line.center.toMutable())
+        line.rotation = mouseToCenter.angleDeg()-135f
+    }
     override fun render(delta: Float) {
+        updateMouse()
         camera.position.x = 0f
         camera.position.y = 0f
         camera.zoom = camera.zoom + 0.05f * zoom
-        line.rotation = line.rotation + rotation
+        //line.rotation = line.rotation + rotation
         super.render(delta)
         batch.use {
-            shapeDrawer.line(line.e1.toMutable(), line.e2.toMutable(), 1f)
-            shapeDrawer.filledCircle(line.e1.toMutable(), 2.5f, Color.GREEN)
-            shapeDrawer.filledCircle(line.e2.toMutable(), 2.5f, Color.BLUE)
-            shapeDrawer.filledCircle(line.center.toMutable(), 1.5f, Color.RED)
+//            shapeDrawer.line(line.e1.toMutable(), line.e2.toMutable(), 1f)
+//            shapeDrawer.filledCircle(line.e1.toMutable(), 2.5f, Color.GREEN)
+//            shapeDrawer.filledCircle(line.e2.toMutable(), 2.5f, Color.BLUE)
+//            shapeDrawer.filledCircle(line.center.toMutable(), 1.5f, Color.RED)
 
             shapeDrawer.line(line.e1.toMutable().toIsometric(), line.e2.toMutable().toIsometric(), 1f)
             shapeDrawer.filledCircle(line.e1.toMutable().toIsometric(), 2.5f, Color.GREEN)
             shapeDrawer.filledCircle(line.e2.toMutable().toIsometric(), 2.5f, Color.BLUE)
             shapeDrawer.filledCircle(line.center.toMutable().toIsometric(), 1.5f, Color.RED)
+            shapeDrawer.filledCircle(mousePosition, 1.5f, Color.RED)
+//            shapeDrawer.filledCircle(mousePosition.toIsometric(), 1.5f, Color.GREEN)
         }
     }
 }
