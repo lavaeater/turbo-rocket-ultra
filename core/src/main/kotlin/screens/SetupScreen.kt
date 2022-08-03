@@ -229,13 +229,6 @@ class SetupScreen(gameState: StateMachine<GameState, GameEvent>) : BasicScreen(g
         }
     }
 
-    override fun resize(width: Int, height: Int) {
-        camera.setToOrtho(false)
-        viewport.update(width, height, true)
-        camera.update()
-        batch.projectionMatrix = camera.combined
-    }
-
     override fun keyDown(keycode: Int): Boolean {
         return currentKeyMap.execute(keycode, KeyPress.Down)
     }

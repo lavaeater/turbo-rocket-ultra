@@ -77,13 +77,6 @@ class AnimEditorScreen(gameState: StateMachine<GameState, GameEvent>) : BasicScr
 
     }
 
-    override fun resize(width: Int, height: Int) {
-        camera.setToOrtho(false)
-        viewport.update(width, height, true)
-        camera.update()
-        batch.projectionMatrix = camera.combined
-    }
-
     override fun keyUp(keycode: Int): Boolean {
         return when (keycode) {
             Input.Keys.C -> nextInputter()

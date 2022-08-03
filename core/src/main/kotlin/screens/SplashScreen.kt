@@ -41,12 +41,5 @@ class SplashScreen(gameState: StateMachine<GameState, GameEvent>) : UserInterfac
         gameState.acceptEvent(GameEvent.LeftSplash)
         return true
     }
-
-    override fun resize(width: Int, height: Int) {
-        camera.setToOrtho(false)
-        viewport.update(width, height, true)
-        camera.update()
-        batch.projectionMatrix = camera.combined
-    }
 }
 

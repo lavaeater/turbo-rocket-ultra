@@ -56,10 +56,5 @@ class CharacterEditorScreen(gameState: StateMachine<GameState, GameEvent>) : Bas
 		}
 		charEditorView.update(delta)
 	}
-
-	override fun resize(width: Int, height: Int) {
-		//charEditorView.resize(width, height) //viewPort.update(width, height)
-		//batch.projectionMatrix = camera.combined
-	}
 }
 
