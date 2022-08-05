@@ -22,51 +22,78 @@ import kotlin.math.pow
  * beta = arccos((a^2 + c^2 - b^2)/ 2ac)
  * gamma = arccos((a^2 + b^2 - c^2) / 2ab)
  */
-class Triangle(val cornerA: Vector2, val b: Float, val c: Float, minA: Float, maxA: Float) {
+class Triangle(val position:Vector2, val b: Float, val c: Float, minA: Float, maxA: Float) {
 
+    val cornerA = vec2()
     private val aRange = minA..maxA
     var a = (minA + maxA) / 2f
     val cornerB = vec2()
     val cornerC = vec2()
+    val alphaRange = 15f..115f
+    var alpha = 0f
+
     var rotation = 0f
         set(value) {
             field = value
             update()
         }
-    val polygon = Polygon(
+    val polygonB = Polygon(
         floatArrayOf(
-            cornerA.x,cornerA.y,
             cornerC.x, cornerC.y,
-            cornerB.x, cornerB.y))
+            cornerB.x, cornerB.y,
+            cornerA.x, cornerA.y
+        )
+    )
 
-//        Polygon(
-//        floatArrayOf(
-//            cornerA.x,cornerA.y,
-//            cornerC.x, cornerC.y,
-//            cornerB.x, cornerB.y))
     init {
+        tryUpdateAlpha(alphaRange.start)
         update()
     }
+
     fun updateA(newA: Float) {
-        if (newA != a && aRange.contains(newA)) {
+        if (newA != a && tryUpdateAlpha(newA)) {
             a = newA
             update()
         }
     }
+
+    fun tryUpdateAlpha(newA: Float): Boolean {
+        val something = (b.pow(2) + c.pow(2) - newA.pow(2)) / (2 * b * c)
+        val angle = MathUtils.acos(something) * radiansToDegrees
+        if (alphaRange.contains(angle)) {
+            alpha = angle
+            return true
+        }
+        return false
+    }
+
     fun update() {
-        val something = (b.pow(2) + c.pow(2) - a.pow(2)) / (2 * b * c)
-        val alpha = MathUtils.acos(something) * radiansToDegrees
-        val vB = vec2(b).rotateAroundDeg(Vector2.Zero,alpha)
+        val vB = vec2(b).rotateAroundDeg(Vector2.Zero, alpha)
         cornerC.set(cornerA + vB)
         cornerB.set(cornerA + vec2(c))
         updatePolygon()
     }
 
     fun updatePolygon() {
-        polygon.setVertex(0, cornerA.x, cornerA.y)
-        polygon.setVertex(1, cornerC.x, cornerC.y)
-        polygon.setVertex(2, cornerB.x, cornerB.y)
-        polygon.rotation = rotation
+        polygonB.setOrigin(cornerC.x, cornerC.y)
+        polygonB.setVertex(2, cornerA.x, cornerA.y)
+        polygonB.setVertex(0, cornerC.x, cornerC.y)
+        polygonB.setVertex(1, cornerB.x, cornerB.y)
+        polygonB.setPosition(position.x - polygonB.originX, position.y - polygonB.originY)
+        polygonB.rotation = rotation
+    }
+
+    val arms: Array<Pair<Vector2, Vector2>> = arrayOf(Pair(vec2(), vec2()), Pair(vec2(), vec2()))
+        get() {
+            updateArms(field)
+            return field
+    }
+
+    private fun updateArms(arms: Array<Pair<Vector2, Vector2>>) {
+        polygonB.getVertex(0, arms[0].first)
+        polygonB.getVertex(2, arms[0].second)
+        polygonB.getVertex(2, arms[1].first)
+        polygonB.getVertex(1, arms[1].second)
     }
 }
 
@@ -146,12 +173,17 @@ class ConceptScreen(gameState: StateMachine<GameState, GameEvent>) : BasicScreen
 //            shapeDrawer.filledCircle(line.e1.toMutable().toIsometric(), 2.5f, Color.GREEN)
 //            shapeDrawer.filledCircle(line.e2.toMutable().toIsometric(), 2.5f, Color.BLUE)
 //            shapeDrawer.filledCircle(line.center.toMutable().toIsometric(), 1.5f, Color.RED)
-            shapeDrawer.line(triangle.cornerA, mousePosition, 1f)
+            shapeDrawer.line(triangle.position, mousePosition, 1f)
+
 
             shapeDrawer.filledCircle(mousePosition, 1.5f, Color.RED)
-            shapeDrawer.setColor(Color.GREEN)
-            shapeDrawer.filledPolygon(triangle.polygon)
-//            shapeDrawer.filledCircle(mousePosition.toIsometric(), 1.5f, Color.GREEN)
+            shapeDrawer.setColor(Color.YELLOW)
+            for(arm in triangle.arms) {
+                shapeDrawer.line(arm.first, arm.second)
+            }
+
+//            shapeDrawer.filledPolygon(triangle.polygonB)
+
 
         }
     }
