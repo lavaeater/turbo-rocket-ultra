@@ -10,6 +10,7 @@ import ktx.scene2d.actors
 import ktx.scene2d.dialog
 import ktx.scene2d.label
 import ktx.scene2d.scene2d
+import screens.ui.KeyPress
 import statemachine.StateMachine
 import tru.Assets
 import ui.CrawlDialog

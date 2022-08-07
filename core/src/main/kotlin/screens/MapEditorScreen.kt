@@ -17,6 +17,7 @@ import ktx.graphics.use
 import ktx.math.vec2
 import ktx.scene2d.*
 import map.grid.Coordinate
+import screens.ui.KeyPress
 import statemachine.StateMachine
 import tru.Assets
 import ui.customactors.boundLabel

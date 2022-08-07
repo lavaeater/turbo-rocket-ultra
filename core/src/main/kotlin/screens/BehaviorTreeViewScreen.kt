@@ -2,18 +2,7 @@ package screens
 
 import ai.Tree
 import com.badlogic.gdx.Gdx
-import com.badlogic.gdx.ai.btree.BehaviorTree
-import com.badlogic.gdx.ai.btree.Task
-import com.badlogic.gdx.ai.btree.branch.DynamicGuardSelector
-import com.badlogic.gdx.ai.btree.branch.Parallel
-import com.badlogic.gdx.ai.btree.branch.Selector
-import com.badlogic.gdx.ai.btree.decorator.AlwaysFail
-import com.badlogic.gdx.ai.btree.decorator.AlwaysSucceed
-import com.badlogic.gdx.ai.btree.decorator.Invert
 import com.badlogic.gdx.graphics.OrthographicCamera
-import com.badlogic.gdx.math.MathUtils.acos
-import com.badlogic.gdx.math.MathUtils.radiansToDegrees
-import com.badlogic.gdx.math.Vector2
 import com.badlogic.gdx.scenes.scene2d.Actor
 import com.badlogic.gdx.scenes.scene2d.Stage
 import com.badlogic.gdx.scenes.scene2d.ui.Label
@@ -24,6 +13,7 @@ import gamestate.GameEvent
 import gamestate.GameState
 import ktx.math.vec2
 import ktx.scene2d.*
+import screens.ui.KeyPress
 import statemachine.StateMachine
 import tru.Assets
 

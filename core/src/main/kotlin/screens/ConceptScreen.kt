@@ -3,128 +3,17 @@ package screens
 import com.badlogic.gdx.Gdx
 import com.badlogic.gdx.Input
 import com.badlogic.gdx.graphics.Color
-import com.badlogic.gdx.math.Vector2
 import gamestate.GameEvent
 import gamestate.GameState
-import isometric.toIsometric
+import graphics.ContainerGeometry
+import graphics.GeometryLine
 import ktx.graphics.use
 import ktx.math.minus
 import ktx.math.vec2
 import ktx.math.vec3
-import space.earlygrey.shapedrawer.ShapeDrawer
+import screens.ui.KeyPress
 import statemachine.StateMachine
 import tru.Assets
-import kotlin.properties.Delegates
-import kotlin.reflect.KProperty
-
-abstract class Geometry(offset: Vector2 = vec2(), rotation: Float = 0f) {
-    var worldX: Float by Delegates.observable(offset.x, ::setDirty)
-    var worldY: Float by Delegates.observable(offset.y, ::setDirty)
-    var localX: Float by Delegates.observable(offset.x, ::setDirty)
-    var localY: Float by Delegates.observable(offset.y, ::setDirty)
-    val worldPosition: Vector2 = vec2(worldX, worldY)
-        get() {
-            field.set(worldX, worldY)
-            return field
-        }
-    var worldRotation: Float by Delegates.observable(rotation, ::setDirty)
-    var localRotation: Float by Delegates.observable(rotation, ::setDirty)
-    val children = mutableListOf<Geometry>()
-    var dirty = true
-
-    /**
-     * Call this method from any properties that, when changed,
-     * will require recalculation of any other properties etc.
-     */
-    fun setDirty(prop: KProperty<*>, oldValue: Any, newValue: Any) {
-        if (oldValue != newValue)
-            setDirty()
-    }
-
-
-    private fun setDirty() {
-        dirty = true
-    }
-
-    /**
-     * Called from parent or engine with some kind of baseposition or something
-     * I suppose
-     */
-    protected fun update(parentPosition: Vector2 = Vector2.Zero, parentRotation: Float = 0f) {
-        worldX = parentPosition.x + localX
-        worldY = parentPosition.y + localY
-        worldRotation = parentRotation + localRotation
-        updateSelfIfDirty()
-        updateChildren()
-    }
-
-    private fun updateSelfIfDirty() {
-        if (dirty) {
-            updateSelf()
-            dirty = false
-        }
-    }
-
-    /**
-     * Override with functionality to update the geometry object
-     */
-    abstract fun updateSelf()
-
-    fun updateChildren() {
-        for (child in children) {
-            child.update(worldPosition, worldRotation)
-        }
-    }
-
-    abstract fun draw(shapeDrawer: ShapeDrawer)
-}
-
-class ContainerGeometry(position: Vector2, rotation: Float) : Geometry(position, rotation) {
-    override fun updateSelf() {
-    }
-
-    fun updateGeometry() {
-        update(worldPosition, worldRotation)
-    }
-
-    override fun draw(shapeDrawer: ShapeDrawer) {
-        for (child in children) {
-            child.draw(shapeDrawer)
-        }
-    }
-}
-
-class GeometryLine(c: Vector2, l: Float, val r: Float = 0f) : Geometry(c, r) {
-    constructor(
-        endPointOne: Vector2,
-        endPointTwo: Vector2
-    ) : this(
-        vec2(
-            endPointTwo.x - (endPointTwo.x - endPointOne.x) / 2f,
-            endPointTwo.y - (endPointTwo.y - endPointOne.y) / 2f
-        ), (endPointOne - endPointTwo).len(), (endPointTwo - endPointOne).angleDeg()
-    )
-
-    val actualRotation get() = worldRotation + r
-    var length: Float by Delegates.observable(l, ::setDirty)
-    var e1 = Vector2(0f, 0f)
-    var e2 = Vector2(0f, 0f)
-
-    override fun updateSelf() {
-        val lv = vec2(length / 2f).rotateAroundDeg(vec2(0f, 0f), actualRotation)
-        val ex = worldPosition.x + lv.x
-        val ey = worldPosition.y + lv.y
-        e1.set(ex, ey)
-        e2.set(-ex, -ey)
-    }
-
-    override fun draw(shapeDrawer: ShapeDrawer) {
-        shapeDrawer.line(e1.toIsometric(), e2.toIsometric(), 1f)
-        shapeDrawer.filledCircle(e1.toIsometric(), 2.5f, Color.GREEN)
-        shapeDrawer.filledCircle(e2.toIsometric(), 2.5f, Color.BLUE)
-        shapeDrawer.filledCircle(worldPosition.toIsometric(), 1.5f, Color.RED)
-    }
-}
 
 class ConceptScreen(gameState: StateMachine<GameState, GameEvent>) : BasicScreen(gameState) {
 
@@ -153,11 +42,12 @@ class ConceptScreen(gameState: StateMachine<GameState, GameEvent>) : BasicScreen
      * We are truly and deeply into the weeds, but push on, my friend.
      */
 
-    val baseGeometry = ContainerGeometry(vec2(), 0f).apply {
-        children.add(GeometryLine(vec2(), 25f, 90f))
+    val baseGeometry: ContainerGeometry by lazy {
+        val shoulderLine = GeometryLine(vec2(), 15f, 45f)
+        val rightArmLine = GeometryLine(shoulderLine.e1, 45f, 90f)
+
+        ContainerGeometry(vec2(), 0f).add(shoulderLine.add(rightArmLine)) as ContainerGeometry
     }
-
-
     var zoom = 0f
     var rotation = 0f
     var extension = 0f
@@ -198,8 +88,7 @@ class ConceptScreen(gameState: StateMachine<GameState, GameEvent>) : BasicScreen
         camera.unproject(screenMouse)
         mousePosition.set(screenMouse.x, screenMouse.y)
         mouseToCenter.set(mousePosition - baseGeometry.worldPosition)
-        baseGeometry.worldRotation = mouseToCenter.angleDeg()
-        baseGeometry.updateGeometry()
+        baseGeometry.worldRotation = mouseToCenter.angleDeg() - 90f
 //        line.rotation = mouseToCenter.angleDeg() - 135f
 //        triangle.updateInverseKinematic(mousePosition)
         //triangle.rotation = mouseToCenter.angleDeg()
@@ -207,6 +96,7 @@ class ConceptScreen(gameState: StateMachine<GameState, GameEvent>) : BasicScreen
 
     override fun render(delta: Float) {
         updateMouse()
+        baseGeometry.updateGeometry()
 //        triangle.updateA(triangle.a + extension)
 //        triangle.position.set(line.e1.toMutable())
         camera.position.x = 0f
