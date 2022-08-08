@@ -11,6 +11,7 @@ sealed class CardinalDirection {
         return this::class.toString().substringAfter(".").substringAfter("$").substringBefore("@")
     }
     object North : CardinalDirection()
+    object NorthEast : CardinalDirection()
     object East: CardinalDirection()
     object South: CardinalDirection()
     object West: CardinalDirection()

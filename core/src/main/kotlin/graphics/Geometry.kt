@@ -70,9 +70,9 @@ abstract class Geometry(offset: Vector2 = vec2(), rotation: Float = 0f) {
         }
     }
 
-    open fun draw(shapeDrawer: ShapeDrawer) {
+    open fun draw(shapeDrawer: ShapeDrawer, drawIso: Boolean = false) {
         for (child in children) {
-            child.draw(shapeDrawer)
+            child.draw(shapeDrawer, drawIso)
         }
     }
 }

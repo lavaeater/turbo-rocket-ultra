@@ -3,19 +3,32 @@ package screens
 import com.badlogic.gdx.Gdx
 import com.badlogic.gdx.Input
 import com.badlogic.gdx.graphics.Color
+import com.badlogic.gdx.graphics.Texture
+import com.badlogic.gdx.graphics.g2d.Animation
+import com.badlogic.gdx.graphics.g2d.Animation.PlayMode
+import com.badlogic.gdx.graphics.g2d.TextureRegion
 import gamestate.GameEvent
 import gamestate.GameState
 import graphics.ContainerGeometry
 import graphics.GeometryLine
+import isometric.toIsometric
+import ktx.collections.GdxArray
 import ktx.graphics.use
 import ktx.math.minus
 import ktx.math.vec2
 import ktx.math.vec3
 import screens.ui.KeyPress
 import statemachine.StateMachine
-import tru.Assets
+import tru.*
 
 class ConceptScreen(gameState: StateMachine<GameState, GameEvent>) : BasicScreen(gameState) {
+
+    val scoutTexture = Texture(Gdx.files.internal("sprites/scout/scout.png"))
+    val scoutNE = Animation<TextureRegion>(
+        0.1f, GdxArray(Array(5) {
+            TextureRegion(scoutTexture, it * 75, 0, 75, 75)
+        }), PlayMode.LOOP
+    )
 
     /**
      * What we want to do is basically what we did for anchor points, but perhaps
@@ -94,7 +107,10 @@ class ConceptScreen(gameState: StateMachine<GameState, GameEvent>) : BasicScreen
         //triangle.rotation = mouseToCenter.angleDeg()
     }
 
+    var elapsedTime = 0f
+    val scoutPosition = vec2()
     override fun render(delta: Float) {
+        elapsedTime += delta
         updateMouse()
         baseGeometry.updateGeometry()
 //        triangle.updateA(triangle.a + extension)
@@ -110,6 +126,9 @@ class ConceptScreen(gameState: StateMachine<GameState, GameEvent>) : BasicScreen
 //            shapeDrawer.filledCircle(line.e2.toMutable(), 2.5f, Color.BLUE)
 //            shapeDrawer.filledCircle(line.center.toMutable(), 1.5f, Color.RED)
 
+
+            scoutPosition.set(baseGeometry.worldX - 75 / 2, baseGeometry.worldY - 75 / 2)
+            batch.draw(scoutNE.getKeyFrame(elapsedTime), scoutPosition.x, scoutPosition.y)
             baseGeometry.draw(shapeDrawer)
 
             shapeDrawer.line(baseGeometry.worldPosition, mousePosition, 1f)

@@ -3,6 +3,7 @@ package graphics
 import com.badlogic.gdx.graphics.Color
 import com.badlogic.gdx.math.Vector2
 import graphics.Geometry
+import isometric.toIsometric
 import ktx.math.minus
 import ktx.math.vec2
 import space.earlygrey.shapedrawer.ShapeDrawer
@@ -18,11 +19,15 @@ class GeometryLine(c: Vector2, l: Float, val r: Float = 0f) : Geometry(c, r) {
             endPointTwo.y - (endPointTwo.y - endPointOne.y) / 2f
         ), (endPointOne - endPointTwo).len(), (endPointTwo - endPointOne).angleDeg()
     )
-
     val actualRotation get() = worldRotation + r
     var length: Float by Delegates.observable(l, ::setDirty)
     var e1 = Vector2(0f, 0f)
     var e2 = Vector2(0f, 0f)
+
+    init {
+        updateSelf()
+    }
+
 
     override fun updateSelf() {
         val lv = vec2(length / 2f).rotateAroundDeg(vec2(0f, 0f), actualRotation)
@@ -32,11 +37,18 @@ class GeometryLine(c: Vector2, l: Float, val r: Float = 0f) : Geometry(c, r) {
         e2.set(-ex, -ey)
     }
 
-    override fun draw(shapeDrawer: ShapeDrawer) {
-        super.draw(shapeDrawer)
-        shapeDrawer.line(e1, e2, 1f)
-        shapeDrawer.filledCircle(e1, 2.5f, Color.GREEN)
-        shapeDrawer.filledCircle(e2, 2.5f, Color.BLUE)
-        shapeDrawer.filledCircle(worldPosition, 1.5f, Color.RED)
+    override fun draw(shapeDrawer: ShapeDrawer, drawIso: Boolean) {
+        super.draw(shapeDrawer, drawIso)
+        if (drawIso) {
+            shapeDrawer.line(e1.toIsometric(), e2.toIsometric(), 1f)
+            shapeDrawer.filledCircle(e1.toIsometric(), 2.5f, Color.GREEN)
+            shapeDrawer.filledCircle(e2.toIsometric(), 2.5f, Color.BLUE)
+            shapeDrawer.filledCircle(worldPosition.toIsometric(), 1.5f, Color.RED)
+        } else {
+            shapeDrawer.line(e1, e2, 1f)
+            shapeDrawer.filledCircle(e1, 2.5f, Color.GREEN)
+            shapeDrawer.filledCircle(e2, 2.5f, Color.BLUE)
+            shapeDrawer.filledCircle(worldPosition, 1.5f, Color.RED)
+        }
     }
 }
