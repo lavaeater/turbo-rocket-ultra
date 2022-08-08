@@ -58,8 +58,9 @@ class ConceptScreen(gameState: StateMachine<GameState, GameEvent>) : BasicScreen
     val baseGeometry: ContainerGeometry by lazy {
         val shoulderLine = GeometryLine(vec2(), 15f, 45f)
         val rightArmLine = GeometryLine(shoulderLine.e1, 45f, 90f)
+        shoulderLine.add(rightArmLine)
 
-        ContainerGeometry(vec2(), 0f).add(shoulderLine.add(rightArmLine)) as ContainerGeometry
+        ContainerGeometry(vec2(), 0f).add(shoulderLine) as ContainerGeometry
     }
     var zoom = 0f
     var rotation = 0f
