@@ -24,11 +24,6 @@ class GeometryLine(c: Vector2, l: Float, val r: Float = 0f) : Geometry(c, r) {
     var e1 = Vector2(0f, 0f)
     var e2 = Vector2(0f, 0f)
 
-    init {
-        updateSelf()
-    }
-
-
     override fun updateSelf() {
         val lv = vec2(length / 2f).rotateAroundDeg(vec2(0f, 0f), actualRotation)
         val ex = worldPosition.x + lv.x
