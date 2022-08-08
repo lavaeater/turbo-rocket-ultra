@@ -27,6 +27,11 @@ abstract class Geometry(offset: Vector2 = vec2(), rotation: Float = 0f) {
     }
 
     /**
+     * Override with functionality to update the geometry object
+     */
+    abstract fun updateSelf()
+
+    /**
      * Call this method from any properties that, when changed,
      * will require recalculation of any other properties etc.
      */
@@ -59,10 +64,6 @@ abstract class Geometry(offset: Vector2 = vec2(), rotation: Float = 0f) {
         }
     }
 
-    /**
-     * Override with functionality to update the geometry object
-     */
-    abstract fun updateSelf()
 
     fun updateChildren() {
         for (child in children) {
