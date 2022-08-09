@@ -2,6 +2,7 @@ package screens
 
 import com.badlogic.gdx.Gdx
 import com.badlogic.gdx.Input
+import com.badlogic.gdx.Input.Buttons
 import com.badlogic.gdx.graphics.Color
 import com.badlogic.gdx.graphics.Texture
 import com.badlogic.gdx.graphics.g2d.Animation
@@ -13,6 +14,7 @@ import gamestate.GameEvent
 import gamestate.GameState
 import graphics.ContainerGeometry
 import graphics.GeometryLine
+import input.Button
 import isometric.toIsometric
 import ktx.collections.GdxArray
 import ktx.graphics.use
@@ -22,6 +24,7 @@ import ktx.math.vec3
 import screens.ui.KeyPress
 import statemachine.StateMachine
 import tru.*
+import java.text.FieldPosition
 import kotlin.properties.Delegates
 import kotlin.reflect.KProperty
 
@@ -65,6 +68,18 @@ class PointsCloud: DirtyClass() {
             return _actualPoints
         }
     var rotation by Delegates.observable(0f, ::setDirty)
+    fun rotate(degrees: Float) {
+        rotation += degrees
+    }
+
+    fun rotateFortyFive() {
+        rotate(45f)
+    }
+
+    fun addPoint(position: Vector2) {
+        points.add(position)
+        dirty = true
+    }
 
     fun update() {
         if(dirty) {
@@ -96,10 +111,8 @@ class ConceptScreen(gameState: StateMachine<GameState, GameEvent>) : BasicScreen
 
     val centerPoint = vec2(0f, 0f)
     val pointsCloud  = PointsCloud().apply {
-        points.add(vec2(50f, 50f))
-        points.add(vec2(-25f, 50f))
         points.add(vec2(0f, 50f))
-        points.add(vec2(15f, -50f))
+        points.add(vec2(50f, 0f))
     }
 //    val line = Line(vec2(12.5f, 0f), vec2(-12.5f, 0f))
 
@@ -133,8 +146,8 @@ class ConceptScreen(gameState: StateMachine<GameState, GameEvent>) : BasicScreen
     private val normalCommandMap = command("Normal") {
         setBoth(Input.Keys.Z, "Zoom in", { zoom = 0f }, { zoom = 1.0f })
         setBoth(Input.Keys.X, "Zoom out", { zoom = 0f }, { zoom = -1.0f })
-        setBoth(Input.Keys.A, "Rotate Left", { rotation = 0f }) { rotation = -1.0f }
-        setBoth(Input.Keys.D, "Rotate Right", { rotation = 0f }) { rotation = 1.0f }
+        setBoth(Input.Keys.A, "Rotate Left", { rotation = 0f }) { rotation = 1.0f }
+        setBoth(Input.Keys.D, "Rotate Right", { rotation = 0f }) { rotation = -1.0f }
         setBoth(Input.Keys.W, "Extend", { extension = 0f }) { extension = .1f }
         setBoth(Input.Keys.S, "Reverse", { extension = 0f }) { extension = -.1f }
     }
@@ -153,6 +166,9 @@ class ConceptScreen(gameState: StateMachine<GameState, GameEvent>) : BasicScreen
     }
 
     override fun touchUp(screenX: Int, screenY: Int, pointer: Int, button: Int): Boolean {
+        if(button == Buttons.LEFT) {
+            pointsCloud.addPoint(mousePosition.cpy())
+        }
         return true
     }
 
@@ -164,7 +180,6 @@ class ConceptScreen(gameState: StateMachine<GameState, GameEvent>) : BasicScreen
         camera.unproject(screenMouse)
         mousePosition.set(screenMouse.x, screenMouse.y)
         mouseToCenter.set(mousePosition - pointsCloud.position)
-        pointsCloud.rotation = mouseToCenter.angleDeg()
 //        baseGeometry.worldRotation = mouseToCenter.angleDeg() - 90f
 //        line.rotation = mouseToCenter.angleDeg() - 135f
 //        triangle.updateInverseKinematic(mousePosition)
@@ -191,12 +206,14 @@ class ConceptScreen(gameState: StateMachine<GameState, GameEvent>) : BasicScreen
 //            shapeDrawer.filledCircle(line.center.toMutable(), 1.5f, Color.RED)
 
 
-//            scoutPosition.set(baseGeometry.worldX - 75 / 2, baseGeometry.worldY - 75 / 2)
-//            batch.draw(scoutNE.getKeyFrame(elapsedTime), scoutPosition.x, scoutPosition.y)
+
 //            baseGeometry.draw(shapeDrawer)
 //
-            pointsCloud.worldX = MathUtils.lerp(pointsCloud.worldX, mousePosition.x, 0.01f)
-            pointsCloud.worldY = MathUtils.lerp(pointsCloud.worldY, mousePosition.y, 0.01f)
+//            pointsCloud.worldX = MathUtils.lerp(pointsCloud.worldX, mousePosition.x, 0.01f)
+//            pointsCloud.worldY = MathUtils.lerp(pointsCloud.worldY, mousePosition.y, 0.01f)
+            pointsCloud.rotation = pointsCloud.rotation + rotation
+            scoutPosition.set(pointsCloud.worldX - 75 / 2, pointsCloud.worldY - 75 / 2)
+            batch.draw(scoutNE.getKeyFrame(elapsedTime), scoutPosition.x, scoutPosition.y)
             for(point in pointsCloud.actualPoints) {
                 shapeDrawer.filledCircle(point, 1f, Color.RED)
             }
