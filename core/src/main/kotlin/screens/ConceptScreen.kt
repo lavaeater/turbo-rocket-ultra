@@ -8,14 +8,10 @@ import com.badlogic.gdx.graphics.Texture
 import com.badlogic.gdx.graphics.g2d.Animation
 import com.badlogic.gdx.graphics.g2d.Animation.PlayMode
 import com.badlogic.gdx.graphics.g2d.TextureRegion
-import com.badlogic.gdx.math.MathUtils
 import com.badlogic.gdx.math.Vector2
+import data.selectedItemListOf
 import gamestate.GameEvent
 import gamestate.GameState
-import graphics.ContainerGeometry
-import graphics.GeometryLine
-import input.Button
-import isometric.toIsometric
 import ktx.collections.GdxArray
 import ktx.graphics.use
 import ktx.math.minus
@@ -24,7 +20,6 @@ import ktx.math.vec3
 import screens.ui.KeyPress
 import statemachine.StateMachine
 import tru.*
-import java.text.FieldPosition
 import kotlin.properties.Delegates
 import kotlin.reflect.KProperty
 
@@ -51,7 +46,7 @@ open class DirtyClass {
     }
 }
 
-class PointsCloud: DirtyClass() {
+class PointsCloud : DirtyClass() {
     var worldX by Delegates.observable(0f, ::setDirty)
     var worldY by Delegates.observable(0f, ::setDirty)
     val position = vec2(worldX, worldY)
@@ -64,7 +59,7 @@ class PointsCloud: DirtyClass() {
     private val _actualPoints = mutableListOf<Vector2>()
     val actualPoints: List<Vector2>
         get() {
-           update()
+            update()
             return _actualPoints
         }
     var rotation by Delegates.observable(0f, ::setDirty)
@@ -82,9 +77,14 @@ class PointsCloud: DirtyClass() {
     }
 
     fun update() {
-        if(dirty) {
+        if (dirty) {
             _actualPoints.clear()
-            _actualPoints.addAll(points.map { p -> vec2(p.x + worldX, p.y + worldY).rotateAroundDeg(position, rotation) })
+            _actualPoints.addAll(points.map { p ->
+                vec2(p.x + worldX, p.y + worldY).rotateAroundDeg(
+                    position,
+                    rotation
+                )
+            })
             dirty = false
         }
     }
@@ -92,12 +92,86 @@ class PointsCloud: DirtyClass() {
 
 class ConceptScreen(gameState: StateMachine<GameState, GameEvent>) : BasicScreen(gameState) {
 
-    val scoutTexture = Texture(Gdx.files.internal("sprites/scout/scout.png"))
-    val scoutNE = Animation<TextureRegion>(
-        0.1f, GdxArray(Array(5) {
-            TextureRegion(scoutTexture, it * 75, 0, 75, 75)
-        }), PlayMode.LOOP
+    /**
+     * Idle : 0-7
+     * Shoot: 8-10
+     * Run: 11-18
+     * Reload: 19-31
+     * Death: 32-43
+     */
+    val sH = 88
+    val sW = 88
+
+    fun animForScout(column: Int, row: Int, frames: Int, flip: Boolean = false): Animation<TextureRegion> {
+        return animFor(column, row, sW, sH, frames, 12f, scoutTexture)
+    }
+
+    fun animFor(
+        column: Int = 0,
+        row: Int,
+        width: Int,
+        height: Int,
+        frames: Int,
+        fps: Float,
+        texture: Texture,
+        flip: Boolean = false
+    ): Animation<TextureRegion> {
+        return Animation(
+            (1f / fps), GdxArray(Array(frames) {
+                TextureRegion(texture, column * width + it * width, row * height, width, height).apply {
+                    flip(
+                        flip,
+                        false
+                    )
+                }
+            }), PlayMode.LOOP
+        )
+    }
+
+    val scoutTexture = Texture(Gdx.files.internal("sprites/scout/new_scout.png"))
+
+    val scoutIdleAnim = LpcCharacterAnim(
+        AnimState.Idle,
+        mapOf(
+            CardinalDirection.North to animForScout(0, 0, 8),
+            CardinalDirection.East to animForScout(0, 1, 8),
+            CardinalDirection.NorthEast to animForScout(0, 2, 8),
+            CardinalDirection.South to animForScout(0, 3, 8),
+            CardinalDirection.SouthEast to animForScout(0, 4, 8)
+        )
     )
+
+    val scoutShootAnim = LpcCharacterAnim(
+        AnimState.Shoot,
+        mapOf(
+            CardinalDirection.North to animForScout(8, 0, 3),
+            CardinalDirection.East to animForScout(8, 1, 3),
+            CardinalDirection.NorthEast to animForScout(8, 2, 3),
+            CardinalDirection.South to animForScout(8, 3, 3),
+            CardinalDirection.SouthEast to animForScout(8, 4, 3)
+        )
+    )
+
+    val scoutRunAnim = LpcCharacterAnim(
+        AnimState.Walk,
+        mapOf(
+            CardinalDirection.North to animForScout(11, 0, 8),
+            CardinalDirection.East to animForScout(11, 1, 8),
+            CardinalDirection.NorthEast to animForScout(11, 2, 8),
+            CardinalDirection.South to animForScout(11, 3, 8),
+            CardinalDirection.SouthEast to animForScout(11, 4, 8)
+        )
+    )
+
+    val anims = selectedItemListOf(scoutIdleAnim, scoutRunAnim, scoutShootAnim)
+    val directions = selectedItemListOf(
+        CardinalDirection.NorthEast,
+        CardinalDirection.East,
+        CardinalDirection.SouthEast,
+        CardinalDirection.South,
+        CardinalDirection.North
+    )
+
 
     /**
      * What we want to do is basically what we did for anchor points, but perhaps
@@ -110,7 +184,7 @@ class ConceptScreen(gameState: StateMachine<GameState, GameEvent>) : BasicScreen
      */
 
     val centerPoint = vec2(0f, 0f)
-    val pointsCloud  = PointsCloud().apply {
+    val pointsCloud = PointsCloud().apply {
         points.add(vec2(0f, 50f))
         points.add(vec2(50f, 0f))
     }
@@ -150,6 +224,10 @@ class ConceptScreen(gameState: StateMachine<GameState, GameEvent>) : BasicScreen
         setBoth(Input.Keys.D, "Rotate Right", { rotation = 0f }) { rotation = -1.0f }
         setBoth(Input.Keys.W, "Extend", { extension = 0f }) { extension = .1f }
         setBoth(Input.Keys.S, "Reverse", { extension = 0f }) { extension = -.1f }
+        setUp(Input.Keys.LEFT, "Previous State") { anims.previousItem() }
+        setUp(Input.Keys.RIGHT, "Next State") { anims.nextItem() }
+        setUp(Input.Keys.UP, "Previous State") { directions.previousItem() }
+        setUp(Input.Keys.DOWN, "Next State") { directions.nextItem() }
     }
     private val shapeDrawer by lazy { Assets.shapeDrawer }
 
@@ -166,7 +244,7 @@ class ConceptScreen(gameState: StateMachine<GameState, GameEvent>) : BasicScreen
     }
 
     override fun touchUp(screenX: Int, screenY: Int, pointer: Int, button: Int): Boolean {
-        if(button == Buttons.LEFT) {
+        if (button == Buttons.LEFT) {
             pointsCloud.addPoint(mousePosition.cpy())
         }
         return true
@@ -206,17 +284,26 @@ class ConceptScreen(gameState: StateMachine<GameState, GameEvent>) : BasicScreen
 //            shapeDrawer.filledCircle(line.center.toMutable(), 1.5f, Color.RED)
 
 
-
 //            baseGeometry.draw(shapeDrawer)
 //
 //            pointsCloud.worldX = MathUtils.lerp(pointsCloud.worldX, mousePosition.x, 0.01f)
 //            pointsCloud.worldY = MathUtils.lerp(pointsCloud.worldY, mousePosition.y, 0.01f)
             pointsCloud.rotation = pointsCloud.rotation + rotation
-            scoutPosition.set(pointsCloud.worldX - 75 / 2, pointsCloud.worldY - 75 / 2)
-            batch.draw(scoutNE.getKeyFrame(elapsedTime), scoutPosition.x, scoutPosition.y)
-            for(point in pointsCloud.actualPoints) {
+            scoutPosition.set(pointsCloud.worldX - sW / 2f, pointsCloud.worldY - sH / 2f)
+            batch.draw(
+                anims.selectedItem.animations[directions.selectedItem]!!.getKeyFrame(elapsedTime),
+                scoutPosition.x,
+                scoutPosition.y
+            )
+            shapeDrawer.filledCircle(scoutPosition, 1f, Color.GREEN)
+            scoutPosition.set(pointsCloud.worldX + sW / 2, pointsCloud.worldY + sH / 2)
+            shapeDrawer.filledCircle(scoutPosition, 1f, Color.YELLOW)
+            shapeDrawer.filledCircle(pointsCloud.position, 1f, Color.ORANGE)
+            for (point in pointsCloud.actualPoints) {
                 shapeDrawer.filledCircle(point, 1f, Color.RED)
             }
+
+
             //shapeDrawer.line(pointsCloud.position, mousePosition, 1f)
 
 

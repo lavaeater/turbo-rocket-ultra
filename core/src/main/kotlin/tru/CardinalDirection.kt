@@ -13,7 +13,10 @@ sealed class CardinalDirection {
     object North : CardinalDirection()
     object NorthEast : CardinalDirection()
     object East: CardinalDirection()
+    object SouthEast: CardinalDirection()
     object South: CardinalDirection()
+    object SouthWest: CardinalDirection()
     object West: CardinalDirection()
+    object NorthWest: CardinalDirection()
 }
 
