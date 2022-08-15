@@ -13,6 +13,7 @@ import data.selectedItemListOf
 import gamestate.GameEvent
 import gamestate.GameState
 import ktx.collections.GdxArray
+import ktx.collections.toGdxArray
 import ktx.graphics.use
 import ktx.math.minus
 import ktx.math.vec2
@@ -99,78 +100,39 @@ class ConceptScreen(gameState: StateMachine<GameState, GameEvent>) : BasicScreen
      * Reload: 19-31
      * Death: 32-43
      */
-    val sH = 88
-    val sW = 88
-
-    fun animForScout(column: Int, row: Int, frames: Int, flip: Boolean = false): Animation<TextureRegion> {
-        return animFor(column, row, sW, sH, frames, 12f, scoutTexture)
-    }
-
-    fun animFor(
-        column: Int = 0,
-        row: Int,
-        width: Int,
-        height: Int,
-        frames: Int,
-        fps: Float,
-        texture: Texture,
-        flip: Boolean = false
-    ): Animation<TextureRegion> {
-        return Animation(
-            (1f / fps), GdxArray(Array(frames) {
-                TextureRegion(texture, column * width + it * width, row * height, width, height).apply {
-                    flip(
-                        flip,
-                        false
-                    )
-                }
-            }), PlayMode.LOOP
-        )
-    }
-
-    val scoutTexture = Texture(Gdx.files.internal("sprites/scout/new_scout.png"))
-
-    val scoutIdleAnim = LpcCharacterAnim(
-        AnimState.Idle,
-        mapOf(
-            CardinalDirection.North to animForScout(0, 0, 8),
-            CardinalDirection.East to animForScout(0, 1, 8),
-            CardinalDirection.NorthEast to animForScout(0, 2, 8),
-            CardinalDirection.South to animForScout(0, 3, 8),
-            CardinalDirection.SouthEast to animForScout(0, 4, 8)
-        )
+    val offsetX = 0
+    val padX = 0
+    val padY = 0
+    val offsetY = 0
+    val scoutHeight = 150
+    val scoutWidth = 150
+    val scoutTextures = mapOf(
+        CardinalDirection.East to Texture(Gdx.files.internal("sprites/scout/scout_e_small.png")),
+        CardinalDirection.NorthEast to Texture(Gdx.files.internal("sprites/scout/scout_ne_small.png")),
+        CardinalDirection.North to Texture(Gdx.files.internal("sprites/scout/scout_n_small.png")),
+        CardinalDirection.SouthEast to Texture(Gdx.files.internal("sprites/scout/scout_se_small.png")),
+        CardinalDirection.South to Texture(Gdx.files.internal("sprites/scout/scout_s_small.png")),
+        CardinalDirection.SouthWest to Texture(Gdx.files.internal("sprites/scout/scout_sw_small.png")),
     )
 
-    val scoutShootAnim = LpcCharacterAnim(
-        AnimState.Shoot,
-        mapOf(
-            CardinalDirection.North to animForScout(8, 0, 3),
-            CardinalDirection.East to animForScout(8, 1, 3),
-            CardinalDirection.NorthEast to animForScout(8, 2, 3),
-            CardinalDirection.South to animForScout(8, 3, 3),
-            CardinalDirection.SouthEast to animForScout(8, 4, 3)
-        )
+    val animStates = mapOf(
+        AnimState.Idle to Pair(0, 8),
+        AnimState.Shoot to Pair(1, 3),
+        AnimState.Walk to Pair(2, 8),
+        AnimState.Death to Pair(4, 11)
     )
 
-    val scoutRunAnim = LpcCharacterAnim(
-        AnimState.Walk,
-        mapOf(
-            CardinalDirection.North to animForScout(11, 0, 8),
-            CardinalDirection.East to animForScout(11, 1, 8),
-            CardinalDirection.NorthEast to animForScout(11, 2, 8),
-            CardinalDirection.South to animForScout(11, 3, 8),
-            CardinalDirection.SouthEast to animForScout(11, 4, 8)
+    val scoutAnims: Map<AnimState, LpcCharacterAnim<TextureRegion>> = animStates.map { state ->
+        state.key to LpcCharacterAnim(state.key, CardinalDirection.scoutDirections.map {direction ->
+            direction to Animation(1f/8f, Array(state.value.second) { frame ->
+                TextureRegion(scoutTextures[direction]!!, frame * scoutWidth, state.value.first * scoutHeight, scoutWidth, scoutHeight)
+            }.toGdxArray(), Animation.PlayMode.LOOP)
+        }.toMap()
         )
-    )
+    }.toMap()
 
-    val anims = selectedItemListOf(scoutIdleAnim, scoutRunAnim, scoutShootAnim)
-    val directions = selectedItemListOf(
-        CardinalDirection.NorthEast,
-        CardinalDirection.East,
-        CardinalDirection.SouthEast,
-        CardinalDirection.South,
-        CardinalDirection.North
-    )
+    val anims = selectedItemListOf(AnimState.Idle, AnimState.Walk, AnimState.Shoot)
+    val directions = selectedItemListOf(*CardinalDirection.scoutDirections.toTypedArray())
 
 
     /**
@@ -289,14 +251,14 @@ class ConceptScreen(gameState: StateMachine<GameState, GameEvent>) : BasicScreen
 //            pointsCloud.worldX = MathUtils.lerp(pointsCloud.worldX, mousePosition.x, 0.01f)
 //            pointsCloud.worldY = MathUtils.lerp(pointsCloud.worldY, mousePosition.y, 0.01f)
             pointsCloud.rotation = pointsCloud.rotation + rotation
-            scoutPosition.set(pointsCloud.worldX - sW / 2f, pointsCloud.worldY - sH / 2f)
+            scoutPosition.set(pointsCloud.worldX - scoutWidth / 2f, pointsCloud.worldY - scoutHeight / 2f)
             batch.draw(
-                anims.selectedItem.animations[directions.selectedItem]!!.getKeyFrame(elapsedTime),
+                scoutAnims[anims.selectedItem]!!.animations[directions.selectedItem]!!.getKeyFrame(elapsedTime),
                 scoutPosition.x,
                 scoutPosition.y
             )
             shapeDrawer.filledCircle(scoutPosition, 1f, Color.GREEN)
-            scoutPosition.set(pointsCloud.worldX + sW / 2, pointsCloud.worldY + sH / 2)
+            scoutPosition.set(pointsCloud.worldX + scoutWidth / 2, pointsCloud.worldY + scoutHeight / 2)
             shapeDrawer.filledCircle(scoutPosition, 1f, Color.YELLOW)
             shapeDrawer.filledCircle(pointsCloud.position, 1f, Color.ORANGE)
             for (point in pointsCloud.actualPoints) {

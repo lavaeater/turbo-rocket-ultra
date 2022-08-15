@@ -6,6 +6,7 @@ package tru
 sealed class CardinalDirection {
     companion object {
         val spriteDirections = listOf(North, West, South, East)
+        val scoutDirections = listOf(North, NorthEast, East, SouthEast, South, SouthWest)
     }
     override fun toString(): String {
         return this::class.toString().substringAfter(".").substringAfter("$").substringBefore("@")
