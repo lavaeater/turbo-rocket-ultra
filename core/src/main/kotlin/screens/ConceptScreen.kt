@@ -6,22 +6,23 @@ import com.badlogic.gdx.Input.Buttons
 import com.badlogic.gdx.graphics.Color
 import com.badlogic.gdx.graphics.Texture
 import com.badlogic.gdx.graphics.g2d.Animation
-import com.badlogic.gdx.graphics.g2d.Animation.PlayMode
+import com.badlogic.gdx.graphics.g2d.Batch
 import com.badlogic.gdx.graphics.g2d.TextureRegion
 import com.badlogic.gdx.math.Vector2
+import com.badlogic.gdx.utils.viewport.ExtendViewport
 import data.selectedItemListOf
 import gamestate.GameEvent
 import gamestate.GameState
-import ktx.collections.GdxArray
+import isometric.toIsometric
 import ktx.collections.toGdxArray
 import ktx.graphics.use
-import ktx.math.minus
-import ktx.math.vec2
-import ktx.math.vec3
+import ktx.math.*
 import screens.ui.KeyPress
+import space.earlygrey.shapedrawer.ShapeDrawer
 import statemachine.StateMachine
 import tru.*
 import kotlin.properties.Delegates
+import kotlin.properties.Delegates.observable
 import kotlin.reflect.KProperty
 
 /**
@@ -33,17 +34,96 @@ import kotlin.reflect.KProperty
  *
  * Why have centerpoints and other bullshit, when I could just have like three vectors (points)
  * and rotate them all around the center? Wouldn't that be easier?
+ *
+ * Should I even do it like this, eh?
+ */
+
+/**
+ * A new idea for all of this, going back to what we had previously, is of course
+ * the hierarchical geometry, point clouds etc.
+ *
+ * But isn't that basically spine? What are we doing here? Will there ever be a new
+ * character sprite in this game? Do I want the scout character?
+ *
+ * Let's make a sort of requirement spec for the character sprite, in Obsidian
  */
 
 open class DirtyClass {
     var dirty = true
-    fun setDirty(prop: KProperty<*>, oldValue: Any, newValue: Any) {
+    fun setDirty(prop: KProperty<*>, oldValue: Any?, newValue: Any?) {
         if (oldValue != newValue)
             setDirty()
     }
 
-    fun setDirty() {
+    open fun setDirty() {
         dirty = true
+    }
+}
+
+class Node : DirtyClass() {
+    var color = Color.RED
+    var parent: Node? by observable(null, ::setDirty)
+    var position: ImmutableVector2 by observable(ImmutableVector2(0f, 0f), ::setDirty)
+    var actualPosition = vec2()
+    var rotation by observable(0f, ::setDirty)
+    val children = mutableListOf<Node>()
+    override fun setDirty() {
+        super.setDirty()
+        for (childNode in children) {
+            childNode.setDirty()
+        }
+    }
+
+    fun addChild(childNode: Node) {
+        childNode.parent = this
+        children.add(childNode)
+        setDirty()
+    }
+
+    fun removeChild(childNode: Node) {
+        if (children.remove(childNode)) {
+            childNode.parent = null
+            setDirty()
+        }
+    }
+
+    var rotateWithParent by observable(true, ::setDirty)
+    var updateAction: (Node, Float) -> Unit = { _, _ -> }
+    fun update(delta: Float) {
+        if (dirty) {
+            updateAction(this, delta)
+            if (parent != null) {
+                actualPosition.set(parent!!.actualPosition + position.toMutable())
+                if (rotateWithParent) {
+                    actualPosition.rotateAroundDeg(parent!!.actualPosition, parent!!.rotation)
+                    rotation = actualPosition.angleDeg()
+                }
+            } else {
+                actualPosition.set(position.toMutable())
+            }
+        }
+        for (childNode in children) {
+            childNode.update(delta)
+        }
+    }
+
+    fun drawIso(batch: Batch, shapeDrawer: ShapeDrawer, delta: Float) {
+        shapeDrawer.filledCircle(actualPosition.toIsometric(), 1f, color)
+        for (childNode in children) {
+            childNode.drawIso(batch, shapeDrawer, delta)
+        }
+    }
+
+    fun draw(batch: Batch, shapeDrawer: ShapeDrawer, delta: Float) {
+        shapeDrawer.filledCircle(actualPosition, 5f, color)
+        for (childNode in children) {
+            childNode.draw(batch, shapeDrawer, delta)
+        }
+        if(parent != null) {
+            shapeDrawer.setColor(color)
+            shapeDrawer.line(actualPosition, parent!!.actualPosition, 1f)
+            shapeDrawer.setColor(Color.WHITE)
+        }
     }
 }
 
@@ -91,6 +171,38 @@ class PointsCloud : DirtyClass() {
     }
 }
 
+/**
+ * My graphics can look any way they want - as long as they are unique and interesting.
+ *
+ * So, lets try triangles for legs,
+ *
+ * Lets try it out by drawing just dots and stuff for now.
+ */
+
+open class AnimatedSprite(texture: Texture) : TextureRegion(texture) {
+    /*
+    We assume a center based origin at first.
+     */
+    val position = vec2()
+    val offset = vec2(texture.width / 2f, texture.height / 2f)
+    val actualPosition: Vector2
+        get() {
+            return position - offset
+        }
+}
+
+class LayeredCharacter {
+    val position = vec2() //This is the center of the character, then head should be about one "meter" above this.
+    val headOffset = vec2(0f, 0.8f)
+    val leftEye = vec2(0.1f)
+    val rightEye = vec2(-0.1f)
+    val head by lazy { TextureRegion(Texture(Gdx.files.internal("sprites/layered/head.png"))) }
+    val eye by lazy { TextureRegion(Texture(Gdx.files.internal("sprites/layered/eye.png"))) }
+    fun draw(batch: Batch, delta: Float) {
+
+    }
+}
+
 class ConceptScreen(gameState: StateMachine<GameState, GameEvent>) : BasicScreen(gameState) {
 
     /**
@@ -100,6 +212,29 @@ class ConceptScreen(gameState: StateMachine<GameState, GameEvent>) : BasicScreen
      * Reload: 19-31
      * Death: 32-43
      */
+    override val viewport = ExtendViewport(16f, 12f)
+
+    val nodeTree = Node().apply {
+        addChild(Node().apply {
+            color = Color.YELLOW
+            position = ImmutableVector2(10f, 10f)
+            addChild(Node().apply {
+                position = ImmutableVector2(30f, -20f)
+                rotateWithParent = false
+                color = Color.ORANGE
+            })
+        })
+        addChild(Node().apply {
+            color = Color.GREEN
+            position = ImmutableVector2(30f, -20f)
+            addChild(Node().apply {
+                position = ImmutableVector2(30f, -20f)
+                color = Color.GREEN
+            })
+        })
+    }
+
+
     val offsetX = 0
     val padX = 0
     val padY = 0
@@ -123,11 +258,18 @@ class ConceptScreen(gameState: StateMachine<GameState, GameEvent>) : BasicScreen
     )
 
     val scoutAnims: Map<AnimState, LpcCharacterAnim<TextureRegion>> = animStates.map { state ->
-        state.key to LpcCharacterAnim(state.key, CardinalDirection.scoutDirections.map {direction ->
-            direction to Animation(1f/8f, Array(state.value.second) { frame ->
-                TextureRegion(scoutTextures[direction]!!, frame * scoutWidth, state.value.first * scoutHeight, scoutWidth, scoutHeight)
-            }.toGdxArray(), Animation.PlayMode.LOOP)
-        }.toMap()
+        state.key to LpcCharacterAnim(
+            state.key, CardinalDirection.scoutDirections.map { direction ->
+                direction to Animation(1f / 8f, Array(state.value.second) { frame ->
+                    TextureRegion(
+                        scoutTextures[direction]!!,
+                        frame * scoutWidth,
+                        state.value.first * scoutHeight,
+                        scoutWidth,
+                        scoutHeight
+                    )
+                }.toGdxArray(), Animation.PlayMode.LOOP)
+            }.toMap()
         )
     }.toMap()
 
@@ -182,8 +324,8 @@ class ConceptScreen(gameState: StateMachine<GameState, GameEvent>) : BasicScreen
     private val normalCommandMap = command("Normal") {
         setBoth(Input.Keys.Z, "Zoom in", { zoom = 0f }, { zoom = 1.0f })
         setBoth(Input.Keys.X, "Zoom out", { zoom = 0f }, { zoom = -1.0f })
-        setBoth(Input.Keys.A, "Rotate Left", { rotation = 0f }) { rotation = 1.0f }
-        setBoth(Input.Keys.D, "Rotate Right", { rotation = 0f }) { rotation = -1.0f }
+        setBoth(Input.Keys.A, "Rotate Left", { rotation = 0f }) { rotation = 5.0f }
+        setBoth(Input.Keys.D, "Rotate Right", { rotation = 0f }) { rotation = -5.0f }
         setBoth(Input.Keys.W, "Extend", { extension = 0f }) { extension = .1f }
         setBoth(Input.Keys.S, "Reverse", { extension = 0f }) { extension = -.1f }
         setUp(Input.Keys.LEFT, "Previous State") { anims.previousItem() }
@@ -250,20 +392,23 @@ class ConceptScreen(gameState: StateMachine<GameState, GameEvent>) : BasicScreen
 //
 //            pointsCloud.worldX = MathUtils.lerp(pointsCloud.worldX, mousePosition.x, 0.01f)
 //            pointsCloud.worldY = MathUtils.lerp(pointsCloud.worldY, mousePosition.y, 0.01f)
-            pointsCloud.rotation = pointsCloud.rotation + rotation
+//            pointsCloud.rotation = pointsCloud.rotation + rotation
             scoutPosition.set(pointsCloud.worldX - scoutWidth / 2f, pointsCloud.worldY - scoutHeight / 2f)
-            batch.draw(
-                scoutAnims[anims.selectedItem]!!.animations[directions.selectedItem]!!.getKeyFrame(elapsedTime),
-                scoutPosition.x,
-                scoutPosition.y
-            )
-            shapeDrawer.filledCircle(scoutPosition, 1f, Color.GREEN)
-            scoutPosition.set(pointsCloud.worldX + scoutWidth / 2, pointsCloud.worldY + scoutHeight / 2)
-            shapeDrawer.filledCircle(scoutPosition, 1f, Color.YELLOW)
-            shapeDrawer.filledCircle(pointsCloud.position, 1f, Color.ORANGE)
-            for (point in pointsCloud.actualPoints) {
-                shapeDrawer.filledCircle(point, 1f, Color.RED)
-            }
+//            batch.draw(
+//                scoutAnims[anims.selectedItem]!!.animations[directions.selectedItem]!!.getKeyFrame(elapsedTime),
+//                scoutPosition.x,
+//                scoutPosition.y
+//            )
+//            shapeDrawer.filledCircle(scoutPosition, 1f, Color.GREEN)
+//            scoutPosition.set(pointsCloud.worldX + scoutWidth / 2, pointsCloud.worldY + scoutHeight / 2)
+//            shapeDrawer.filledCircle(scoutPosition, 1f, Color.YELLOW)
+//            shapeDrawer.filledCircle(pointsCloud.position, 1f, Color.ORANGE)
+//            for (point in pointsCloud.actualPoints) {
+//                shapeDrawer.filledCircle(point, 1f, Color.RED)
+//            }
+            nodeTree.rotation = nodeTree.rotation + rotation
+            nodeTree.update(delta)
+            nodeTree.draw(batch, shapeDrawer, delta)
 
 
             //shapeDrawer.line(pointsCloud.position, mousePosition, 1f)
