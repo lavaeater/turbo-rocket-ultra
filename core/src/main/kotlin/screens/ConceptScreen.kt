@@ -8,6 +8,7 @@ import com.badlogic.gdx.graphics.Texture
 import com.badlogic.gdx.graphics.g2d.Animation
 import com.badlogic.gdx.graphics.g2d.Batch
 import com.badlogic.gdx.graphics.g2d.TextureRegion
+import com.badlogic.gdx.math.MathUtils
 import com.badlogic.gdx.math.Vector2
 import com.badlogic.gdx.utils.viewport.ExtendViewport
 import data.selectedItemListOf
@@ -119,7 +120,7 @@ class Node : DirtyClass() {
         for (childNode in children) {
             childNode.draw(batch, shapeDrawer, delta)
         }
-        if(parent != null) {
+        if (parent != null) {
             shapeDrawer.setColor(color)
             shapeDrawer.line(actualPosition, parent!!.actualPosition, 1f)
             shapeDrawer.setColor(Color.WHITE)
@@ -228,6 +229,35 @@ class ConceptScreen(gameState: StateMachine<GameState, GameEvent>) : BasicScreen
             color = Color.GREEN
             position = ImmutableVector2(30f, -20f)
             addChild(Node().apply {
+                val basePosition = position
+                var elapsedTime = 0f
+                var previousTime = 0f
+                val timeStep = 0.1f
+                val steps = 12
+                val modifier = -15f..15f
+                var currentStep = 0
+                updateAction = { node, delta ->
+                    elapsedTime += delta
+                    val diff = elapsedTime - previousTime
+                    if (diff > timeStep) {
+                        previousTime = elapsedTime
+                        if (currentStep >= steps) {
+                            currentStep = 0
+                        }
+                        val forward = currentStep < steps / 2 - 1
+                        val modValue = if (forward) MathUtils.lerp(
+                            modifier.start,
+                            modifier.endInclusive,
+                            ((currentStep.toFloat() + 1f) / (steps / 2f))
+                        ) else MathUtils.lerp(
+                            modifier.endInclusive,
+                            modifier.start,
+                            ((currentStep.toFloat() - (steps / 2f) + 1f) / (steps / 2f))
+                        )
+                        position = ImmutableVector2(basePosition.x + modValue, basePosition.y + modValue)
+                        currentStep++
+                    }
+                }
                 position = ImmutableVector2(30f, -20f)
                 color = Color.GREEN
             })
