@@ -14,6 +14,7 @@ import com.badlogic.gdx.utils.viewport.ExtendViewport
 import data.selectedItemListOf
 import gamestate.GameEvent
 import gamestate.GameState
+import isometric.toCartesian
 import isometric.toIsometric
 import ktx.collections.toGdxArray
 import ktx.graphics.use
@@ -21,10 +22,11 @@ import ktx.math.*
 import screens.ui.KeyPress
 import space.earlygrey.shapedrawer.ShapeDrawer
 import statemachine.StateMachine
-import tru.*
-import kotlin.properties.Delegates
+import tru.AnimState
+import tru.Assets
+import tru.CardinalDirection
+import tru.LpcCharacterAnim
 import kotlin.properties.Delegates.observable
-import kotlin.reflect.KProperty
 
 /**
  * I am fucking wasting my time, again, as per usual.
@@ -39,35 +41,15 @@ import kotlin.reflect.KProperty
  * Should I even do it like this, eh?
  */
 
-/**
- * A new idea for all of this, going back to what we had previously, is of course
- * the hierarchical geometry, point clouds etc.
- *
- * But isn't that basically spine? What are we doing here? Will there ever be a new
- * character sprite in this game? Do I want the scout character?
- *
- * Let's make a sort of requirement spec for the character sprite, in Obsidian
- */
-
-open class DirtyClass {
-    var dirty = true
-    fun setDirty(prop: KProperty<*>, oldValue: Any?, newValue: Any?) {
-        if (oldValue != newValue)
-            setDirty()
-    }
-
-    open fun setDirty() {
-        dirty = true
-    }
-}
-
-class Node : DirtyClass() {
+open class Node : DirtyClass() {
     var color = Color.RED
     var parent: Node? by observable(null, ::setDirty)
     var position: ImmutableVector2 by observable(ImmutableVector2(0f, 0f), ::setDirty)
     var actualPosition = vec2()
     var rotation by observable(0f, ::setDirty)
     val children = mutableListOf<Node>()
+    var rotateWithParent by observable(true, ::setDirty)
+    var updateAction: (Node, Float) -> Unit = { _, _ -> }
     override fun setDirty() {
         super.setDirty()
         for (childNode in children) {
@@ -88,8 +70,6 @@ class Node : DirtyClass() {
         }
     }
 
-    var rotateWithParent by observable(true, ::setDirty)
-    var updateAction: (Node, Float) -> Unit = { _, _ -> }
     fun update(delta: Float) {
         if (dirty) {
             updateAction(this, delta)
@@ -108,66 +88,48 @@ class Node : DirtyClass() {
         }
     }
 
-    fun drawIso(batch: Batch, shapeDrawer: ShapeDrawer, delta: Float) {
+    open fun drawIso(batch: Batch, shapeDrawer: ShapeDrawer, delta: Float) {
         shapeDrawer.filledCircle(actualPosition.toIsometric(), 1f, color)
         for (childNode in children) {
             childNode.drawIso(batch, shapeDrawer, delta)
         }
     }
 
-    fun draw(batch: Batch, shapeDrawer: ShapeDrawer, delta: Float) {
+    open fun draw(batch: Batch, shapeDrawer: ShapeDrawer, delta: Float) {
         shapeDrawer.filledCircle(actualPosition, 5f, color)
         for (childNode in children) {
             childNode.draw(batch, shapeDrawer, delta)
         }
-        if (parent != null) {
-            shapeDrawer.setColor(color)
-            shapeDrawer.line(actualPosition, parent!!.actualPosition, 1f)
-            shapeDrawer.setColor(Color.WHITE)
-        }
     }
 }
 
-class PointsCloud : DirtyClass() {
-    var worldX by Delegates.observable(0f, ::setDirty)
-    var worldY by Delegates.observable(0f, ::setDirty)
-    val position = vec2(worldX, worldY)
-        get() {
-            field.set(worldX, worldY)
-            return field
+/**
+ * I realize now that the character or whatever has to be considered
+ * from above when projecting it in isometric. So the offset of the eyes on a rotating
+ * head has to be considered in one way, and then then head rotating in a different way...
+ *
+ * But if we put everything arranged using a top-down view and also consider the
+ * z-coordinate, we should be fine
+ *
+ */
+
+class AnimatedSpriteNode(texture: Texture) : Node() {
+    val sprite = AnimatedSprite(texture)
+    override fun drawIso(batch: Batch, shapeDrawer: ShapeDrawer, delta: Float) {
+        val spritePos = vec2(actualPosition.x - sprite.offset.x, actualPosition.y - sprite.offset.y).toIsometric()
+        batch.draw(sprite, spritePos.x, spritePos.y)
+//        shapeDrawer.filledCircle(spritePos, 1f, color)
+        for (childNode in children) {
+            childNode.drawIso(batch, shapeDrawer, delta)
         }
-    val points = mutableListOf<Vector2>()
-
-    private val _actualPoints = mutableListOf<Vector2>()
-    val actualPoints: List<Vector2>
-        get() {
-            update()
-            return _actualPoints
-        }
-    var rotation by Delegates.observable(0f, ::setDirty)
-    fun rotate(degrees: Float) {
-        rotation += degrees
     }
 
-    fun rotateFortyFive() {
-        rotate(45f)
-    }
-
-    fun addPoint(position: Vector2) {
-        points.add(position)
-        dirty = true
-    }
-
-    fun update() {
-        if (dirty) {
-            _actualPoints.clear()
-            _actualPoints.addAll(points.map { p ->
-                vec2(p.x + worldX, p.y + worldY).rotateAroundDeg(
-                    position,
-                    rotation
-                )
-            })
-            dirty = false
+    override fun draw(batch: Batch, shapeDrawer: ShapeDrawer, delta: Float) {
+        val spritePos = vec2(actualPosition.x - sprite.offset.x, actualPosition.y - sprite.offset.y)
+        batch.draw(sprite, spritePos.x, spritePos.y)
+//        shapeDrawer.filledCircle(actualPosition, 1f, color)
+        for (childNode in children) {
+            childNode.draw(batch, shapeDrawer, delta)
         }
     }
 }
@@ -214,54 +176,124 @@ class ConceptScreen(gameState: StateMachine<GameState, GameEvent>) : BasicScreen
      * Death: 32-43
      */
     override val viewport = ExtendViewport(16f, 12f)
+    val head by lazy { Texture(Gdx.files.internal("sprites/layered/head.png")) }
+    val eye by lazy { Texture(Gdx.files.internal("sprites/layered/eye.png")) }
+
 
     val nodeTree = Node().apply {
         addChild(Node().apply {
             color = Color.YELLOW
             position = ImmutableVector2(10f, 10f)
-            addChild(Node().apply {
+            addChild(AnimatedSpriteNode(head).apply {
+                updateAction = getSmoothUpdateAction(this, true, 1f, vec2(5f, 0f))
                 position = ImmutableVector2(30f, -20f)
-                rotateWithParent = false
                 color = Color.ORANGE
+                rotateWithParent = false
+                addChild(AnimatedSpriteNode(eye).apply {
+                    rotateWithParent = false
+                    position = vec2(7.5f, 0f).toCartesian().toImmutable()
+                })
+                addChild(AnimatedSpriteNode(eye).apply {
+                    rotateWithParent = false
+                    position = vec2(-2.5f, 0f).toCartesian().toImmutable()
+                })
             })
         })
-        addChild(Node().apply {
-            color = Color.GREEN
-            position = ImmutableVector2(30f, -20f)
-            addChild(Node().apply {
-                val basePosition = position
-                var elapsedTime = 0f
-                var previousTime = 0f
-                val timeStep = 0.1f
-                val steps = 12
-                val modifier = -15f..15f
-                var currentStep = 0
-                updateAction = { node, delta ->
-                    elapsedTime += delta
-                    val diff = elapsedTime - previousTime
-                    if (diff > timeStep) {
-                        previousTime = elapsedTime
-                        if (currentStep >= steps) {
-                            currentStep = 0
-                        }
-                        val forward = currentStep < steps / 2 - 1
-                        val modValue = if (forward) MathUtils.lerp(
-                            modifier.start,
-                            modifier.endInclusive,
-                            ((currentStep.toFloat() + 1f) / (steps / 2f))
-                        ) else MathUtils.lerp(
-                            modifier.endInclusive,
-                            modifier.start,
-                            ((currentStep.toFloat() - (steps / 2f) + 1f) / (steps / 2f))
-                        )
-                        position = ImmutableVector2(basePosition.x + modValue, basePosition.y + modValue)
-                        currentStep++
-                    }
+    }
+
+    private fun getSmoothUpdateAction(
+        forNode: Node,
+        bounce: Boolean = true,
+        time: Float = 1f,
+        modifier: Vector2 = vec2(15f, 0f)
+    ): (Node, Float) -> Unit {
+        val basePosition = forNode.position
+        var elapsedTime = 0f
+        val modVector = vec2()
+        val minVector = vec2(-(modifier.x / 2f), -(modifier.y / 2f))
+        val maxVector = vec2(modifier.x / 2f, modifier.y / 2f)
+        return { node, delta ->
+            elapsedTime += delta
+            if (elapsedTime > time) {
+                elapsedTime = 0f
+            }
+            val currentFraction = MathUtils.norm(0f, time, elapsedTime)
+            if (bounce) {
+                val forward = (elapsedTime - time / 2f) < 0f
+                if (forward) {
+                    modVector.x = MathUtils.lerp(
+                        minVector.x,
+                        maxVector.x, currentFraction
+                    )
+                    modVector.y = MathUtils.lerp(
+                        minVector.y,
+                        maxVector.y, currentFraction
+                    )
+                } else {
+                    modVector.x = MathUtils.lerp(
+                        maxVector.x,
+                        minVector.x, currentFraction
+                    )
+                    modVector.y = MathUtils.lerp(
+                        maxVector.y,
+                        minVector.y, currentFraction
+                    )
                 }
-                position = ImmutableVector2(30f, -20f)
-                color = Color.GREEN
-            })
-        })
+            } else {
+                modVector.x = MathUtils.lerp(
+                    minVector.x,
+                    maxVector.x, currentFraction
+                )
+                modVector.y = MathUtils.lerp(
+                    minVector.y,
+                    maxVector.y, currentFraction
+                )
+            }
+            node.position = basePosition + modVector.toImmutable()
+        }
+    }
+
+    private fun getSteppedUpdateAction(
+        forNode: Node,
+        bounce: Boolean = true,
+        steps: Int = 6,
+        modifier: ClosedFloatingPointRange<Float> = -15f..15f
+    ): (Node, Float) -> Unit {
+        val basePosition = forNode.position
+        var elapsedTime = 0f
+        var previousTime = 0f
+        val timeStep = 1f / steps
+        var currentStep = 0
+        return { node, delta ->
+            elapsedTime += delta
+            val diff = elapsedTime - previousTime
+            if (diff > timeStep) {
+                previousTime = elapsedTime
+                if (currentStep >= steps) {
+                    currentStep = 0
+                }
+                val forward = currentStep < steps / 2 - 1
+
+                val fraction = MathUtils.norm(0f, steps.toFloat() - 1f, currentStep.toFloat())
+
+                val modValue = if (bounce) {
+                    if (forward) MathUtils.lerp(
+                        modifier.start,
+                        modifier.endInclusive, fraction
+                    ) else MathUtils.lerp(
+                        modifier.endInclusive,
+                        modifier.start, fraction
+                    )
+                } else
+                    MathUtils.lerp(
+                        modifier.start,
+                        modifier.endInclusive, fraction
+                    )
+
+                node.position = ImmutableVector2(basePosition.x + modValue, basePosition.y + modValue)
+                currentStep++
+            }
+        }
     }
 
 
@@ -438,7 +470,7 @@ class ConceptScreen(gameState: StateMachine<GameState, GameEvent>) : BasicScreen
 //            }
             nodeTree.rotation = nodeTree.rotation + rotation
             nodeTree.update(delta)
-            nodeTree.draw(batch, shapeDrawer, delta)
+            nodeTree.drawIso(batch, shapeDrawer, delta)
 
 
             //shapeDrawer.line(pointsCloud.position, mousePosition, 1f)
