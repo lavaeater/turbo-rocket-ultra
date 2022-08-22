@@ -83,6 +83,7 @@ build/
 .idea/caches/build_file_checksums.ser
 .idea/misc.xml
 .idea/runConfigurations.xml
+.idea/kotlinc.xml
 
 kotlin-ultimate/
 node_modules/
