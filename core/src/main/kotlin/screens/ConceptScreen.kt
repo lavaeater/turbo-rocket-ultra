@@ -6,7 +6,6 @@ import com.badlogic.gdx.Input.Buttons
 import com.badlogic.gdx.graphics.Color
 import com.badlogic.gdx.graphics.Texture
 import com.badlogic.gdx.graphics.g2d.Animation
-import com.badlogic.gdx.graphics.g2d.Batch
 import com.badlogic.gdx.graphics.g2d.TextureRegion
 import com.badlogic.gdx.math.MathUtils
 import com.badlogic.gdx.math.Vector2
@@ -15,156 +14,17 @@ import data.selectedItemListOf
 import gamestate.GameEvent
 import gamestate.GameState
 import isometric.toCartesian
-import isometric.toIsometric
 import ktx.collections.toGdxArray
 import ktx.graphics.use
 import ktx.math.*
+import screens.stuff.AnimatedSpriteNode
+import screens.stuff.Node
 import screens.ui.KeyPress
-import space.earlygrey.shapedrawer.ShapeDrawer
 import statemachine.StateMachine
 import tru.AnimState
 import tru.Assets
 import tru.CardinalDirection
 import tru.LpcCharacterAnim
-import kotlin.properties.Delegates.observable
-
-/**
- * I am fucking wasting my time, again, as per usual.
- *
- * Vectors can be rotated around other points, there is already support for transformations and stuff...
- *
- * I am so tired and anxious. What is the goal here? Am I just wasting my time?
- *
- * Why have centerpoints and other bullshit, when I could just have like three vectors (points)
- * and rotate them all around the center? Wouldn't that be easier?
- *
- * Should I even do it like this, eh?
- */
-
-open class Node : DirtyClass() {
-    var color = Color.RED
-    var parent: Node? by observable(null, ::setDirty)
-    var position: ImmutableVector2 by observable(ImmutableVector2(0f, 0f), ::setDirty)
-    var actualPosition = vec2()
-    var rotation by observable(0f, ::setDirty)
-    val children = mutableListOf<Node>()
-    var rotateWithParent by observable(true, ::setDirty)
-    var updateAction: (Node, Float) -> Unit = { _, _ -> }
-    override fun setDirty() {
-        super.setDirty()
-        for (childNode in children) {
-            childNode.setDirty()
-        }
-    }
-
-    fun addChild(childNode: Node) {
-        childNode.parent = this
-        children.add(childNode)
-        setDirty()
-    }
-
-    fun removeChild(childNode: Node) {
-        if (children.remove(childNode)) {
-            childNode.parent = null
-            setDirty()
-        }
-    }
-
-    fun update(delta: Float) {
-        if (dirty) {
-            updateAction(this, delta)
-            if (parent != null) {
-                actualPosition.set(parent!!.actualPosition + position.toMutable())
-                if (rotateWithParent) {
-                    actualPosition.rotateAroundDeg(parent!!.actualPosition, parent!!.rotation)
-                    rotation = actualPosition.angleDeg()
-                }
-            } else {
-                actualPosition.set(position.toMutable())
-            }
-        }
-        for (childNode in children) {
-            childNode.update(delta)
-        }
-    }
-
-    open fun drawIso(batch: Batch, shapeDrawer: ShapeDrawer, delta: Float) {
-        shapeDrawer.filledCircle(actualPosition.toIsometric(), 1f, color)
-        for (childNode in children) {
-            childNode.drawIso(batch, shapeDrawer, delta)
-        }
-    }
-
-    open fun draw(batch: Batch, shapeDrawer: ShapeDrawer, delta: Float) {
-        shapeDrawer.filledCircle(actualPosition, 5f, color)
-        for (childNode in children) {
-            childNode.draw(batch, shapeDrawer, delta)
-        }
-    }
-}
-
-/**
- * I realize now that the character or whatever has to be considered
- * from above when projecting it in isometric. So the offset of the eyes on a rotating
- * head has to be considered in one way, and then then head rotating in a different way...
- *
- * But if we put everything arranged using a top-down view and also consider the
- * z-coordinate, we should be fine
- *
- */
-
-class AnimatedSpriteNode(texture: Texture) : Node() {
-    val sprite = AnimatedSprite(texture)
-    override fun drawIso(batch: Batch, shapeDrawer: ShapeDrawer, delta: Float) {
-        val spritePos = vec2(actualPosition.x - sprite.offset.x, actualPosition.y - sprite.offset.y).toIsometric()
-        batch.draw(sprite, spritePos.x, spritePos.y)
-//        shapeDrawer.filledCircle(spritePos, 1f, color)
-        for (childNode in children) {
-            childNode.drawIso(batch, shapeDrawer, delta)
-        }
-    }
-
-    override fun draw(batch: Batch, shapeDrawer: ShapeDrawer, delta: Float) {
-        val spritePos = vec2(actualPosition.x - sprite.offset.x, actualPosition.y - sprite.offset.y)
-        batch.draw(sprite, spritePos.x, spritePos.y)
-//        shapeDrawer.filledCircle(actualPosition, 1f, color)
-        for (childNode in children) {
-            childNode.draw(batch, shapeDrawer, delta)
-        }
-    }
-}
-
-/**
- * My graphics can look any way they want - as long as they are unique and interesting.
- *
- * So, lets try triangles for legs,
- *
- * Lets try it out by drawing just dots and stuff for now.
- */
-
-open class AnimatedSprite(texture: Texture) : TextureRegion(texture) {
-    /*
-    We assume a center based origin at first.
-     */
-    val position = vec2()
-    val offset = vec2(texture.width / 2f, texture.height / 2f)
-    val actualPosition: Vector2
-        get() {
-            return position - offset
-        }
-}
-
-class LayeredCharacter {
-    val position = vec2() //This is the center of the character, then head should be about one "meter" above this.
-    val headOffset = vec2(0f, 0.8f)
-    val leftEye = vec2(0.1f)
-    val rightEye = vec2(-0.1f)
-    val head by lazy { TextureRegion(Texture(Gdx.files.internal("sprites/layered/head.png"))) }
-    val eye by lazy { TextureRegion(Texture(Gdx.files.internal("sprites/layered/eye.png"))) }
-    fun draw(batch: Batch, delta: Float) {
-
-    }
-}
 
 class ConceptScreen(gameState: StateMachine<GameState, GameEvent>) : BasicScreen(gameState) {
 
