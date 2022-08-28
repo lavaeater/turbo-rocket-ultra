@@ -41,7 +41,7 @@ class ConceptScreen(gameState: StateMachine<GameState, GameEvent>) : BasicScreen
      */
     override val viewport = ExtendViewport(16f, 12f)
     val head by lazy { Texture(Gdx.files.internal("sprites/layered/head.png")) }
-    val body by lazy { Texture(Gdx.files.internal("sprites/layered/body.png")) }
+    val body by lazy { Texture(Gdx.files.internal("sprites/layered/body2.png")) }
     val headTop by lazy { Texture(Gdx.files.internal("sprites/layered/head_top.png")) }
     val eye by lazy { Texture(Gdx.files.internal("sprites/layered/eye.png")) }
 
