@@ -66,21 +66,31 @@ class ConceptScreen(gameState: StateMachine<GameState, GameEvent>) : BasicScreen
 //        })
 //    }
 
-    val spriteNodeTree = Node3d().apply {
-        addChild(Node3d(vec3(0F, 10f, 0f), color = Color.RED).apply {
-            addChild(Node3d(vec3(0f, 0f, 10f), color = Color.ORANGE))
-            addChild(Node3d(vec3(10f, 0f, 0f), color = Color.YELLOW))
-        })
-    }
-
-//    val node3dTreespriteNodeTree = Node3d().apply {
-//        addChild(AnimatedSpriteNode3d(head, vec3(0f, 2f, 0f)).apply {
-//            addChild(AnimatedSpriteNode3d(eye, vec3(5f, 0f, 0f), color = Color.GREEN).apply {
-//                updateAction = getSmoothUpdateAction3d(this, true, 0.5f, vec3(5f, 0f, 0f))
-//            })
-//            addChild(AnimatedSpriteNode3d(eye, vec3(-5f, 0f, 0f), color = Color.BLUE))
+//    val spriteNodeTree = Node3d().apply {
+//        addChild(Node3d(vec3(0F, 10f, 0f), color = Color.RED).apply {
+//            addChild(Node3d(vec3(0f, 0f, 10f), color = Color.ORANGE))
+//            addChild(Node3d(vec3(10f, 0f, 0f), color = Color.YELLOW))
 //        })
 //    }
+
+    val spriteNodeTree = Node3d().apply {
+        addChild(AnimatedSpriteNode3d(head, vec3(0f, 11f, 0f)))
+        addChild(AnimatedSpriteNode3d(head, vec3(0f, 9f, 0f)))
+        addChild(AnimatedSpriteNode3d(head, vec3(0f, 10f, -1f)))
+        addChild(AnimatedSpriteNode3d(head, vec3(0f, 10f, 1f)).apply {
+
+            val eyeVector1 = vec2(10f).rotateAroundDeg(Vector2.Zero, 70f)
+            val eyeVector2 = vec2(10f).rotateAroundDeg(Vector2.Zero, 20f)
+
+
+            addChild(AnimatedSpriteNode3d(eye, vec3(eyeVector1.x, 2f, eyeVector1.y), color = Color.GREEN).apply {
+                updateAction = getSmoothUpdateAction3d(this, true, 0.5f, vec3(5f, 0f, 0f))
+            })
+            addChild(AnimatedSpriteNode3d(eye, vec3(eyeVector2.x, 2f, eyeVector2.y), color = Color.BLUE).apply {
+                updateAction = getSmoothUpdateAction3d(this, true, 0.5f, vec3(5f, 0f, 0f))
+            })
+        })
+    }
 
     private fun getSmoothUpdateAction(
         forNode: Node,
@@ -474,7 +484,7 @@ fun Node3d.flatAndSorted(): List<Node3d> {
     return listOf(
         this,
         *children.asSequence().selectRecursive { children.asSequence() }.toList().toTypedArray()
-    )//.sortedWith(compareBy<Node3d> { it.globalPosition3d.y }.thenBy { it.globalPosition3d.x }.thenBy { it.globalPosition3d.z })
+    ).sortedWith(compareBy<Node3d> { -it.globalPosition3d.z }.thenBy { it.globalPosition3d.y })//.thenBy { it.globalPosition3d.z })
 //    )// .sortedBy { it.globalPosition3d.z }
 }
 
