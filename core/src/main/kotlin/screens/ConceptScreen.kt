@@ -9,16 +9,20 @@ import com.badlogic.gdx.graphics.g2d.Animation
 import com.badlogic.gdx.graphics.g2d.TextureRegion
 import com.badlogic.gdx.math.MathUtils
 import com.badlogic.gdx.math.Vector2
+import com.badlogic.gdx.math.Vector3
 import com.badlogic.gdx.utils.viewport.ExtendViewport
 import data.selectedItemListOf
 import gamestate.GameEvent
 import gamestate.GameState
 import isometric.toCartesian
+import isometric.toIsometric
 import ktx.collections.toGdxArray
 import ktx.graphics.use
 import ktx.math.*
 import screens.stuff.AnimatedSpriteNode
+import screens.stuff.AnimatedSpriteNode3d
 import screens.stuff.Node
+import screens.stuff.Node3d
 import screens.ui.KeyPress
 import statemachine.StateMachine
 import tru.AnimState
@@ -37,29 +41,46 @@ class ConceptScreen(gameState: StateMachine<GameState, GameEvent>) : BasicScreen
      */
     override val viewport = ExtendViewport(16f, 12f)
     val head by lazy { Texture(Gdx.files.internal("sprites/layered/head.png")) }
+    val headTop by lazy { Texture(Gdx.files.internal("sprites/layered/head_top.png")) }
     val eye by lazy { Texture(Gdx.files.internal("sprites/layered/eye.png")) }
 
 
-    val nodeTree = Node().apply {
-        addChild(Node().apply {
-            color = Color.YELLOW
-            position = ImmutableVector2(10f, 10f)
-            addChild(AnimatedSpriteNode(head).apply {
-                updateAction = getSmoothUpdateAction(this, true, 1f, vec2(5f, 0f))
-                position = ImmutableVector2(30f, -20f)
-                color = Color.ORANGE
-                rotateWithParent = false
-                addChild(AnimatedSpriteNode(eye).apply {
-                    rotateWithParent = false
-                    position = vec2(7.5f, 0f).toCartesian().toImmutable()
-                })
-                addChild(AnimatedSpriteNode(eye).apply {
-                    rotateWithParent = false
-                    position = vec2(-2.5f, 0f).toCartesian().toImmutable()
-                })
-            })
+//    val nodeTree = Node().apply {
+//        addChild(Node().apply {
+//            color = Color.YELLOW
+//            position = ImmutableVector2(10f, 10f)
+//            addChild(AnimatedSpriteNode(head).apply {
+//                updateAction = getSmoothUpdateAction(this, true, 1f, vec2(5f, 0f))
+//                position = ImmutableVector2(30f, -20f)
+//                color = Color.ORANGE
+//                rotateWithParent = false
+//                addChild(AnimatedSpriteNode(eye).apply {
+//                    rotateWithParent = false
+//                    position = vec2(7.5f, 0f).toCartesian().toImmutable()
+//                })
+//                addChild(AnimatedSpriteNode(eye).apply {
+//                    rotateWithParent = false
+//                    position = vec2(-2.5f, 0f).toCartesian().toImmutable()
+//                })
+//            })
+//        })
+//    }
+
+    val spriteNodeTree = Node3d().apply {
+        addChild(Node3d(vec3(0F, 10f, 0f), color = Color.RED).apply {
+            addChild(Node3d(vec3(0f, 0f, 10f), color = Color.ORANGE))
+            addChild(Node3d(vec3(10f, 0f, 0f), color = Color.YELLOW))
         })
     }
+
+//    val node3dTreespriteNodeTree = Node3d().apply {
+//        addChild(AnimatedSpriteNode3d(head, vec3(0f, 2f, 0f)).apply {
+//            addChild(AnimatedSpriteNode3d(eye, vec3(5f, 0f, 0f), color = Color.GREEN).apply {
+//                updateAction = getSmoothUpdateAction3d(this, true, 0.5f, vec3(5f, 0f, 0f))
+//            })
+//            addChild(AnimatedSpriteNode3d(eye, vec3(-5f, 0f, 0f), color = Color.BLUE))
+//        })
+//    }
 
     private fun getSmoothUpdateAction(
         forNode: Node,
@@ -110,6 +131,70 @@ class ConceptScreen(gameState: StateMachine<GameState, GameEvent>) : BasicScreen
                 )
             }
             node.position = basePosition + modVector.toImmutable()
+        }
+    }
+
+    private fun getSmoothUpdateAction3d(
+        forNode: Node3d,
+        bounce: Boolean = true,
+        time: Float = 1f,
+        modifier: Vector3 = vec3(0f, 0f, 15f)
+    ): (Node3d, Float) -> Unit {
+        val basePosition = forNode.localPosition3d
+        var elapsedTime = 0f
+        val modVector = vec3()
+        val minVector = vec3(-(modifier.x / 2f), -(modifier.y / 2f), -(modifier.z / 2f))
+        val maxVector = vec3(modifier.x / 2f, modifier.y / 2f, modifier.z / 2f)
+        return { node, delta ->
+            elapsedTime += delta
+            if (elapsedTime > time) {
+                elapsedTime = 0f
+            }
+            val currentFraction = MathUtils.norm(0f, time, elapsedTime)
+            if (bounce) {
+                val forward = (elapsedTime - time / 2f) < 0f
+                if (forward) {
+                    modVector.x = MathUtils.lerp(
+                        minVector.x,
+                        maxVector.x, currentFraction
+                    )
+                    modVector.y = MathUtils.lerp(
+                        minVector.y,
+                        maxVector.y, currentFraction
+                    )
+                    modVector.z = MathUtils.lerp(
+                        minVector.z,
+                        maxVector.z, currentFraction
+                    )
+                } else {
+                    modVector.x = MathUtils.lerp(
+                        maxVector.x,
+                        minVector.x, currentFraction
+                    )
+                    modVector.y = MathUtils.lerp(
+                        maxVector.y,
+                        minVector.y, currentFraction
+                    )
+                    modVector.z = MathUtils.lerp(
+                        maxVector.z,
+                        minVector.z, currentFraction
+                    )
+                }
+            } else {
+                modVector.x = MathUtils.lerp(
+                    minVector.x,
+                    maxVector.x, currentFraction
+                )
+                modVector.y = MathUtils.lerp(
+                    minVector.y,
+                    maxVector.y, currentFraction
+                )
+                modVector.z = MathUtils.lerp(
+                    minVector.z,
+                    maxVector.z, currentFraction
+                )
+            }
+            node.localPosition3d = basePosition + modVector
         }
     }
 
@@ -244,10 +329,10 @@ class ConceptScreen(gameState: StateMachine<GameState, GameEvent>) : BasicScreen
 
 
     private val normalCommandMap = command("Normal") {
-        setBoth(Input.Keys.Z, "Zoom in", { zoom = 0f }, { zoom = 1.0f })
-        setBoth(Input.Keys.X, "Zoom out", { zoom = 0f }, { zoom = -1.0f })
-        setBoth(Input.Keys.A, "Rotate Left", { rotation = 0f }) { rotation = 5.0f }
-        setBoth(Input.Keys.D, "Rotate Right", { rotation = 0f }) { rotation = -5.0f }
+        setBoth(Input.Keys.Z, "Zoom in", { zoom = 0f }, { zoom = 0.1f })
+        setBoth(Input.Keys.X, "Zoom out", { zoom = 0f }, { zoom = -0.1f })
+        setBoth(Input.Keys.A, "Rotate Left", { rotation = 0f }) { rotation = 10f }
+        setBoth(Input.Keys.D, "Rotate Right", { rotation = 0f }) { rotation = -10f }
         setBoth(Input.Keys.W, "Extend", { extension = 0f }) { extension = .1f }
         setBoth(Input.Keys.S, "Reverse", { extension = 0f }) { extension = -.1f }
         setUp(Input.Keys.LEFT, "Previous State") { anims.previousItem() }
@@ -315,7 +400,7 @@ class ConceptScreen(gameState: StateMachine<GameState, GameEvent>) : BasicScreen
 //            pointsCloud.worldX = MathUtils.lerp(pointsCloud.worldX, mousePosition.x, 0.01f)
 //            pointsCloud.worldY = MathUtils.lerp(pointsCloud.worldY, mousePosition.y, 0.01f)
 //            pointsCloud.rotation = pointsCloud.rotation + rotation
-            scoutPosition.set(pointsCloud.worldX - scoutWidth / 2f, pointsCloud.worldY - scoutHeight / 2f)
+            // scoutPosition.set(pointsCloud.worldX - scoutWidth / 2f, pointsCloud.worldY - scoutHeight / 2f)
 //            batch.draw(
 //                scoutAnims[anims.selectedItem]!!.animations[directions.selectedItem]!!.getKeyFrame(elapsedTime),
 //                scoutPosition.x,
@@ -328,9 +413,38 @@ class ConceptScreen(gameState: StateMachine<GameState, GameEvent>) : BasicScreen
 //            for (point in pointsCloud.actualPoints) {
 //                shapeDrawer.filledCircle(point, 1f, Color.RED)
 //            }
-            nodeTree.rotation = nodeTree.rotation + rotation
-            nodeTree.update(delta)
-            nodeTree.drawIso(batch, shapeDrawer, delta)
+//            nodeTree.rotation = nodeTree.rotation + rotation
+//            nodeTree.update(delta)
+//            nodeTree.drawIso(batch, shapeDrawer, delta)
+//            node3dTree.update(delta)
+            //node3dTree.drawIso(batch, shapeDrawer, delta)
+            spriteNodeTree.rotateBy(rotation)
+            spriteNodeTree.update(delta)
+            for (node in spriteNodeTree.flatAndSorted()) {
+                val pos2d = vec2()
+                val pos = node.globalPosition3d
+                if(node is AnimatedSpriteNode3d) {
+                    batch.draw(node.sprite, pos2d.x + pos.x - node.sprite.offset.x, pos2d.y + pos.y - node.sprite.offset.y)
+                    pos2d.x += 50f
+                    batch.draw(node.sprite, pos2d.x + pos.y - node.sprite.offset.x, pos2d.y + pos.z - node.sprite.offset.y)
+                    pos2d.x += 50f
+                    batch.draw(node.sprite, pos2d.x + pos.z - node.sprite.offset.x, pos2d.y + pos.x - node.sprite.offset.y)
+                    pos2d.x += 50f
+                    batch.draw(node.sprite, pos2d.x + node.isoPosition.x - node.sprite.offset.x, pos2d.y + node.isoPosition.y - node.sprite.offset.y)
+                } else {
+                    shapeDrawer.filledCircle(pos2d.x + pos.x, pos2d.y + pos.y, 5f, node.color)
+                    pos2d.x += 50f
+                    shapeDrawer.filledCircle(pos2d.x + pos.y, pos2d.y + pos.z, 5f, node.color)
+                    pos2d.x += 50f
+                    shapeDrawer.filledCircle(pos2d.x + pos.z, pos2d.y + pos.x, 5f, node.color)
+                    pos2d.x += 50f
+                    shapeDrawer.filledCircle(pos2d.x + node.isoPosition.x, pos2d.y + node.isoPosition.y, 5f, node.color)
+                }
+
+//                node.drawIso(batch, shapeDrawer, delta, false)
+//                node.draw2d(batch, shapeDrawer, delta, false, vec2(50f, 0f))
+//                node.draw2d(batch, shapeDrawer, delta, false, vec2(-50f, 0f), true)
+            }
 
 
             //shapeDrawer.line(pointsCloud.position, mousePosition, 1f)
@@ -346,6 +460,28 @@ class ConceptScreen(gameState: StateMachine<GameState, GameEvent>) : BasicScreen
 
 
         }
+    }
+}
+
+/**
+ * Rething coordinates to be more standard, ie x horizontal, y vertical and then z as depth,
+ * because it makes more sense conceptually with what you want to do. It doesn't matter, but still.
+ *
+ *
+ */
+
+fun Node3d.flatAndSorted(): List<Node3d> {
+    return listOf(
+        this,
+        *children.asSequence().selectRecursive { children.asSequence() }.toList().toTypedArray()
+    )//.sortedWith(compareBy<Node3d> { it.globalPosition3d.y }.thenBy { it.globalPosition3d.x }.thenBy { it.globalPosition3d.z })
+//    )// .sortedBy { it.globalPosition3d.z }
+}
+
+fun <T> Sequence<T>.selectRecursive(recursiveSelector: T.() -> Sequence<T>): Sequence<T> = flatMap {
+    sequence {
+        yield(it)
+        yieldAll(it.recursiveSelector().selectRecursive(recursiveSelector))
     }
 }
 
