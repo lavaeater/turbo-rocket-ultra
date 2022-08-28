@@ -10,6 +10,7 @@ import ktx.math.vec2
 import screens.DirtyClass
 import space.earlygrey.shapedrawer.ShapeDrawer
 import kotlin.properties.Delegates
+import kotlin.properties.Delegates.observable
 
 /**
  * I am fucking wasting my time, again, as per usual.
@@ -26,12 +27,13 @@ import kotlin.properties.Delegates
 
 open class Node : DirtyClass() {
     var color = Color.RED
-    var parent: Node? by Delegates.observable(null, ::setDirty)
-    var position: ImmutableVector2 by Delegates.observable(ImmutableVector2(0f, 0f), ::setDirty)
+    var parent: Node? by observable(null, ::setDirty)
+    var position: ImmutableVector2 by observable(ImmutableVector2(0f, 0f), ::setDirty)
+    var height by observable(0f, ::setDirty)
     var actualPosition = vec2()
-    var rotation by Delegates.observable(0f, ::setDirty)
+    var rotation by observable(0f, ::setDirty)
     val children = mutableListOf<Node>()
-    var rotateWithParent by Delegates.observable(true, ::setDirty)
+    var rotateWithParent by observable(true, ::setDirty)
     var updateAction: (Node, Float) -> Unit = { _, _ -> }
     override fun setDirty() {
         super.setDirty()
