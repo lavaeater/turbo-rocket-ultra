@@ -41,6 +41,7 @@ class ConceptScreen(gameState: StateMachine<GameState, GameEvent>) : BasicScreen
      */
     override val viewport = ExtendViewport(16f, 12f)
     val head by lazy { Texture(Gdx.files.internal("sprites/layered/head.png")) }
+    val body by lazy { Texture(Gdx.files.internal("sprites/layered/body.png")) }
     val headTop by lazy { Texture(Gdx.files.internal("sprites/layered/head_top.png")) }
     val eye by lazy { Texture(Gdx.files.internal("sprites/layered/eye.png")) }
 
@@ -74,22 +75,26 @@ class ConceptScreen(gameState: StateMachine<GameState, GameEvent>) : BasicScreen
 //    }
 
     val spriteNodeTree = Node3d().apply {
-        addChild(AnimatedSpriteNode3d(head, vec3(0f, 11f, 0f)))
-        addChild(AnimatedSpriteNode3d(head, vec3(0f, 9f, 0f)))
-        addChild(AnimatedSpriteNode3d(head, vec3(0f, 10f, -1f)))
-        addChild(AnimatedSpriteNode3d(head, vec3(0f, 10f, 1f)).apply {
+        addChild(AnimatedSpriteNode3d(body, vec3(0f, 0f, 0f)).apply {
+            updateAction = getSmoothUpdateAction3d(this, true, 0.5f, vec3(0f, 5f, 0f))
+            addChild(AnimatedSpriteNode3d(head, vec3(0f, 31f, 0f)))
+            addChild(AnimatedSpriteNode3d(head, vec3(0f, 29f, 0f)))
+            addChild(AnimatedSpriteNode3d(head, vec3(0f, 30f, -1f)))
+            addChild(AnimatedSpriteNode3d(head, vec3(0f, 30f, 1f)).apply {
 
-            val eyeVector1 = vec2(10f).rotateAroundDeg(Vector2.Zero, 70f)
-            val eyeVector2 = vec2(10f).rotateAroundDeg(Vector2.Zero, 20f)
+                val eyeVector1 = vec2(10f).rotateAroundDeg(Vector2.Zero, 70f)
+                val eyeVector2 = vec2(10f).rotateAroundDeg(Vector2.Zero, 20f)
 
 
-            addChild(AnimatedSpriteNode3d(eye, vec3(eyeVector1.x, 2f, eyeVector1.y), color = Color.GREEN).apply {
-                updateAction = getSmoothUpdateAction3d(this, true, 0.5f, vec3(5f, 0f, 0f))
-            })
-            addChild(AnimatedSpriteNode3d(eye, vec3(eyeVector2.x, 2f, eyeVector2.y), color = Color.BLUE).apply {
-                updateAction = getSmoothUpdateAction3d(this, true, 0.5f, vec3(5f, 0f, 0f))
+                addChild(AnimatedSpriteNode3d(eye, vec3(eyeVector1.x, 2f, eyeVector1.y), color = Color.GREEN).apply {
+                    updateAction = getSmoothUpdateAction3d(this, true, 0.5f, vec3(5f, 0f, 0f))
+                })
+                addChild(AnimatedSpriteNode3d(eye, vec3(eyeVector2.x, 2f, eyeVector2.y), color = Color.BLUE).apply {
+                    updateAction = getSmoothUpdateAction3d(this, true, 0.5f, vec3(5f, 0f, 0f))
+                })
             })
         })
+
     }
 
     private fun getSmoothUpdateAction(
@@ -431,25 +436,27 @@ class ConceptScreen(gameState: StateMachine<GameState, GameEvent>) : BasicScreen
             spriteNodeTree.rotateBy(rotation)
             spriteNodeTree.update(delta)
             for (node in spriteNodeTree.flatAndSorted()) {
-                val pos2d = vec2()
-                val pos = node.globalPosition3d
-                if(node is AnimatedSpriteNode3d) {
-                    batch.draw(node.sprite, pos2d.x + pos.x - node.sprite.offset.x, pos2d.y + pos.y - node.sprite.offset.y)
-                    pos2d.x += 50f
-                    batch.draw(node.sprite, pos2d.x + pos.y - node.sprite.offset.x, pos2d.y + pos.z - node.sprite.offset.y)
-                    pos2d.x += 50f
-                    batch.draw(node.sprite, pos2d.x + pos.z - node.sprite.offset.x, pos2d.y + pos.x - node.sprite.offset.y)
-                    pos2d.x += 50f
-                    batch.draw(node.sprite, pos2d.x + node.isoPosition.x - node.sprite.offset.x, pos2d.y + node.isoPosition.y - node.sprite.offset.y)
-                } else {
-                    shapeDrawer.filledCircle(pos2d.x + pos.x, pos2d.y + pos.y, 5f, node.color)
-                    pos2d.x += 50f
-                    shapeDrawer.filledCircle(pos2d.x + pos.y, pos2d.y + pos.z, 5f, node.color)
-                    pos2d.x += 50f
-                    shapeDrawer.filledCircle(pos2d.x + pos.z, pos2d.y + pos.x, 5f, node.color)
-                    pos2d.x += 50f
-                    shapeDrawer.filledCircle(pos2d.x + node.isoPosition.x, pos2d.y + node.isoPosition.y, 5f, node.color)
-                }
+                node.drawIso(batch, shapeDrawer,delta, false)
+
+//                val pos2d = vec2()
+//                val pos = node.globalPosition3d
+//                if(node is AnimatedSpriteNode3d) {
+//                    batch.draw(node.sprite, pos2d.x + pos.x - node.sprite.offset.x, pos2d.y + pos.y - node.sprite.offset.y)
+//                    pos2d.x += 50f
+//                    batch.draw(node.sprite, pos2d.x + pos.y - node.sprite.offset.x, pos2d.y + pos.z - node.sprite.offset.y)
+//                    pos2d.x += 50f
+//                    batch.draw(node.sprite, pos2d.x + pos.z - node.sprite.offset.x, pos2d.y + pos.x - node.sprite.offset.y)
+//                    pos2d.x += 50f
+//                    batch.draw(node.sprite, pos2d.x + node.isoPosition.x - node.sprite.offset.x, pos2d.y + node.isoPosition.y - node.sprite.offset.y)
+//                } else {
+//                    shapeDrawer.filledCircle(pos2d.x + pos.x, pos2d.y + pos.y, 5f, node.color)
+//                    pos2d.x += 50f
+//                    shapeDrawer.filledCircle(pos2d.x + pos.y, pos2d.y + pos.z, 5f, node.color)
+//                    pos2d.x += 50f
+//                    shapeDrawer.filledCircle(pos2d.x + pos.z, pos2d.y + pos.x, 5f, node.color)
+//                    pos2d.x += 50f
+//                    shapeDrawer.filledCircle(pos2d.x + node.isoPosition.x, pos2d.y + node.isoPosition.y, 5f, node.color)
+//                }
 
 //                node.drawIso(batch, shapeDrawer, delta, false)
 //                node.draw2d(batch, shapeDrawer, delta, false, vec2(50f, 0f))
