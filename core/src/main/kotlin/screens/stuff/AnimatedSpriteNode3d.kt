@@ -27,13 +27,12 @@ class AnimatedSpriteNode3d(
     localPosition: Vector3 = vec3(),
     parent: Node3d? = null,
     color: Color = Color.WHITE,
-    updateAction: (Node3d, Float) -> Unit = { _, _ -> }
-) : Node3d(localPosition, parent, color, updateAction) {
+    updateActions: MutableList<(Node3d, Float) -> Unit> = mutableListOf()
+) : Node3d(localPosition, parent, color, updateActions) {
     val sprite = AnimatedSprite(texture)
     override fun drawIso(batch: Batch, shapeDrawer: ShapeDrawer, delta: Float, recursive: Boolean, offset: Vector2) {
         val spritePos = isoPosition - sprite.offset + offset.toIsometric()
         batch.draw(sprite, spritePos.x, spritePos.y)
-        shapeDrawer.filledCircle(isoPosition + offset.toIsometric(), 1f, color)
         if (recursive)
             for (childNode in children) {
                 childNode.drawIso(batch, shapeDrawer, delta, true, offset)

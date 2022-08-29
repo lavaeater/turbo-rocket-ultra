@@ -10,15 +10,13 @@ import ktx.math.*
 import screens.DirtyClass
 import space.earlygrey.shapedrawer.ShapeDrawer
 import kotlin.math.sqrt
-import kotlin.properties.Delegates
 import kotlin.properties.Delegates.observable
-import kotlin.reflect.KProperty
 
 open class Node3d(
     localPosition: Vector3 = vec3(),
     parent: Node3d? = null,
     color: Color = Color.WHITE,
-    var updateAction: (Node3d, Float) -> Unit = { _, _ -> }
+    val updateActions: MutableList<(Node3d, Float) -> Unit> = mutableListOf()
 ) : DirtyClass() {
     var color: Color by observable(color, ::setDirty)
     var rotateWithParent: Boolean by observable(true, ::setDirty)
@@ -27,7 +25,6 @@ open class Node3d(
     var localPosition3d by observable(localPosition, ::setDirty)
     val children = mutableListOf<Node3d>()
     private val rotationVector = vec2(0f,1f)
-
 
     fun rotateBy(degrees: Float) {
         if(!MathUtils.isZero(degrees)) {
@@ -78,7 +75,7 @@ open class Node3d(
     }
 
     fun update(delta: Float) {
-        updateAction(this, delta)
+        updateActions.forEach {it(this, delta) }
         if (dirty) {
             updatePosition3d()
             rotate()

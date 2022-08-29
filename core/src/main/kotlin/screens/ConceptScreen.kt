@@ -14,12 +14,9 @@ import com.badlogic.gdx.utils.viewport.ExtendViewport
 import data.selectedItemListOf
 import gamestate.GameEvent
 import gamestate.GameState
-import isometric.toCartesian
-import isometric.toIsometric
 import ktx.collections.toGdxArray
 import ktx.graphics.use
 import ktx.math.*
-import screens.stuff.AnimatedSpriteNode
 import screens.stuff.AnimatedSpriteNode3d
 import screens.stuff.Node
 import screens.stuff.Node3d
@@ -41,9 +38,13 @@ class ConceptScreen(gameState: StateMachine<GameState, GameEvent>) : BasicScreen
      */
     override val viewport = ExtendViewport(16f, 12f)
     val head by lazy { Texture(Gdx.files.internal("sprites/layered/head.png")) }
+    val hair by lazy { Texture(Gdx.files.internal("sprites/layered/hair.png")) }
+    val hand by lazy { Texture(Gdx.files.internal("sprites/layered/hand.png")) }
+    val leg by lazy { Texture(Gdx.files.internal("sprites/layered/leg.png")) }
     val body by lazy { Texture(Gdx.files.internal("sprites/layered/body2.png")) }
     val headTop by lazy { Texture(Gdx.files.internal("sprites/layered/head_top.png")) }
     val eye by lazy { Texture(Gdx.files.internal("sprites/layered/eye.png")) }
+    val mouth by lazy { Texture(Gdx.files.internal("sprites/layered/mouth.png")) }
 
 
 //    val nodeTree = Node().apply {
@@ -76,22 +77,40 @@ class ConceptScreen(gameState: StateMachine<GameState, GameEvent>) : BasicScreen
 
     val spriteNodeTree = Node3d().apply {
         addChild(AnimatedSpriteNode3d(body, vec3(0f, 0f, 0f)).apply {
-            updateAction = getSmoothUpdateAction3d(this, true, 0.5f, vec3(0f, 5f, 0f))
-            addChild(AnimatedSpriteNode3d(head, vec3(0f, 31f, 0f)))
-            addChild(AnimatedSpriteNode3d(head, vec3(0f, 29f, 0f)))
-            addChild(AnimatedSpriteNode3d(head, vec3(0f, 30f, -1f)))
-            addChild(AnimatedSpriteNode3d(head, vec3(0f, 30f, 1f)).apply {
+            updateActions += getSmoothUpdateAction3d(this, true, 0.5f, vec3(0f, 5f, 0f))
+            val handVector = vec2(15f, 0f).rotateAroundDeg(Vector2.Zero, 90f)
+            addChild(AnimatedSpriteNode3d(hand, vec3(handVector.x, 4f, handVector.y)).apply {
+                updateActions += getSmoothUpdateAction3d(this, true, 1f, vec3(5f, 10f, -5f))
+            })
+            handVector.rotateAroundDeg(Vector2.Zero, -180f)
+            addChild(AnimatedSpriteNode3d(hand, vec3(handVector.x, 4f, handVector.y)).apply {
+                updateActions += getSmoothUpdateAction3d(this, true, 1f, vec3(-5f, 10f, 5f))
+            })
 
-                val eyeVector1 = vec2(10f).rotateAroundDeg(Vector2.Zero, 70f)
-                val eyeVector2 = vec2(10f).rotateAroundDeg(Vector2.Zero, 20f)
+            val legVector = vec2(7f).rotateAroundDeg(Vector2.Zero, 90f)
+            addChild(AnimatedSpriteNode3d(leg, vec3(legVector.x, -15f, legVector.y)).apply {
+                updateActions += getSmoothUpdateAction3d(this, true, .5f, vec3(0f, -15f, 0f))
+            })
+            legVector.rotateAroundDeg(Vector2.Zero, -180f)
+            addChild(AnimatedSpriteNode3d(leg, vec3(legVector.x, -15f, legVector.y)).apply {
+                updateActions += getSmoothUpdateAction3d(this, true, .5f, vec3(0f, 15f, 0f))
+            })
+            addChild(AnimatedSpriteNode3d(head, vec3(0f, 17f, 0f)).apply {
+                addChild(AnimatedSpriteNode3d(hair, vec3(1f,5f, 1f)))
+                addChild(AnimatedSpriteNode3d(hair, vec3(-1f,5f, -1f)))
+                addChild(AnimatedSpriteNode3d(hair, vec3(1f,5f, -1f)))
+                addChild(AnimatedSpriteNode3d(hair, vec3(-1f,5f, 1f)))
+            })
+            addChild(AnimatedSpriteNode3d(head, vec3(0f, 15f, 0f)))
+            addChild(AnimatedSpriteNode3d(head, vec3(0f, 16f, -1f)))
+            addChild(AnimatedSpriteNode3d(head, vec3(0f, 16f, 1f)).apply {
 
+                val eyeVector1 = vec2(9f).rotateAroundDeg(Vector2.Zero, 30f)
+                val eyeVector2 = vec2(9f).rotateAroundDeg(Vector2.Zero, -30f)
 
-                addChild(AnimatedSpriteNode3d(eye, vec3(eyeVector1.x, 2f, eyeVector1.y), color = Color.GREEN).apply {
-                    updateAction = getSmoothUpdateAction3d(this, true, 0.5f, vec3(5f, 0f, 0f))
-                })
-                addChild(AnimatedSpriteNode3d(eye, vec3(eyeVector2.x, 2f, eyeVector2.y), color = Color.BLUE).apply {
-                    updateAction = getSmoothUpdateAction3d(this, true, 0.5f, vec3(5f, 0f, 0f))
-                })
+                addChild(AnimatedSpriteNode3d(mouth, vec3(8f, 1f, 0f), color = Color.GREEN))
+                addChild(AnimatedSpriteNode3d(eye, vec3(eyeVector1.x, 4f, eyeVector1.y), color = Color.GREEN))
+                addChild(AnimatedSpriteNode3d(eye, vec3(eyeVector2.x, 4f, eyeVector2.y), color = Color.BLUE))
             })
         })
 
