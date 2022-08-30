@@ -23,12 +23,13 @@ import space.earlygrey.shapedrawer.ShapeDrawer
  */
 
 class AnimatedSpriteNode3d(
+    name: String,
     texture: Texture,
     localPosition: Vector3 = vec3(),
     parent: Node3d? = null,
     color: Color = Color.WHITE,
     updateActions: MutableList<(Node3d, Float) -> Unit> = mutableListOf()
-) : Node3d(localPosition, parent, color, updateActions) {
+) : Node3d(name, localPosition, parent, color, updateActions) {
     val sprite = AnimatedSprite(texture)
     override fun drawIso(batch: Batch, shapeDrawer: ShapeDrawer, delta: Float, recursive: Boolean, offset: Vector2) {
         val spritePos = isoPosition - sprite.offset + offset.toIsometric()

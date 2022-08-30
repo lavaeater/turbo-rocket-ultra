@@ -13,6 +13,7 @@ import kotlin.math.sqrt
 import kotlin.properties.Delegates.observable
 
 open class Node3d(
+    name: String,
     localPosition: Vector3 = vec3(),
     parent: Node3d? = null,
     color: Color = Color.WHITE,

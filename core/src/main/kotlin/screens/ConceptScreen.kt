@@ -75,42 +75,44 @@ class ConceptScreen(gameState: StateMachine<GameState, GameEvent>) : BasicScreen
 //        })
 //    }
 
-    val spriteNodeTree = Node3d().apply {
-        addChild(AnimatedSpriteNode3d(body, vec3(0f, 0f, 0f)).apply {
+    val spriteNodeTree = Node3d("player").apply {
+        addChild(AnimatedSpriteNode3d("body", body, vec3(0f, 0f, 0f)).apply {
             updateActions += getSmoothUpdateAction3d(this, true, 0.5f, vec3(0f, 5f, 0f))
-            val handVector = vec2(15f, 0f).rotateAroundDeg(Vector2.Zero, 90f)
-            addChild(AnimatedSpriteNode3d(hand, vec3(handVector.x, 4f, handVector.y)).apply {
+            val armVector = vec2(15f, 0f).rotateAroundDeg(Vector2.Zero, 90f)
+            addChild(Node3d("left-shoulder", vec3(armVector.x, 8f, armVector.y)).apply {
                 updateActions += getSmoothUpdateAction3d(this, true, 1f, vec3(5f, 10f, -5f))
+                addChild(AnimatedSpriteNode3d("left-hand", hand, vec3(0f, -4f, 0f)))
             })
-            handVector.rotateAroundDeg(Vector2.Zero, -180f)
-            addChild(AnimatedSpriteNode3d(hand, vec3(handVector.x, 4f, handVector.y)).apply {
-                updateActions += getSmoothUpdateAction3d(this, true, 1f, vec3(-5f, 10f, 5f))
+            armVector.rotateAroundDeg(Vector2.Zero, -180f)
+            addChild(Node3d("right-shoulder", vec3(armVector.x, 8f, armVector.y)).apply {
+                updateActions += getSmoothUpdateAction3d(this, true, 1f, vec3(5f, 10f, -5f))
+                addChild(AnimatedSpriteNode3d("right-hand", hand, vec3(0f, -4f, 0f)))
             })
 
             val legVector = vec2(7f).rotateAroundDeg(Vector2.Zero, 90f)
-            addChild(AnimatedSpriteNode3d(leg, vec3(legVector.x, -15f, legVector.y)).apply {
+            addChild(AnimatedSpriteNode3d("leg",leg, vec3(legVector.x, -15f, legVector.y)).apply {
                 updateActions += getSmoothUpdateAction3d(this, true, .5f, vec3(0f, -15f, 0f))
             })
             legVector.rotateAroundDeg(Vector2.Zero, -180f)
-            addChild(AnimatedSpriteNode3d(leg, vec3(legVector.x, -15f, legVector.y)).apply {
+            addChild(AnimatedSpriteNode3d("leg",leg, vec3(legVector.x, -15f, legVector.y)).apply {
                 updateActions += getSmoothUpdateAction3d(this, true, .5f, vec3(0f, 15f, 0f))
             })
-            addChild(AnimatedSpriteNode3d(head, vec3(0f, 17f, 0f)).apply {
-                addChild(AnimatedSpriteNode3d(hair, vec3(1f,5f, 1f)))
-                addChild(AnimatedSpriteNode3d(hair, vec3(-1f,5f, -1f)))
-                addChild(AnimatedSpriteNode3d(hair, vec3(1f,5f, -1f)))
-                addChild(AnimatedSpriteNode3d(hair, vec3(-1f,5f, 1f)))
+            addChild(AnimatedSpriteNode3d("head",head, vec3(0f, 17f, 0f)).apply {
+                addChild(AnimatedSpriteNode3d("head",hair, vec3(1f,5f, 1f)))
+                addChild(AnimatedSpriteNode3d("head",hair, vec3(-1f,5f, -1f)))
+                addChild(AnimatedSpriteNode3d("head",hair, vec3(1f,5f, -1f)))
+                addChild(AnimatedSpriteNode3d("head",hair, vec3(-1f,5f, 1f)))
             })
-            addChild(AnimatedSpriteNode3d(head, vec3(0f, 15f, 0f)))
-            addChild(AnimatedSpriteNode3d(head, vec3(0f, 16f, -1f)))
-            addChild(AnimatedSpriteNode3d(head, vec3(0f, 16f, 1f)).apply {
+            addChild(AnimatedSpriteNode3d("head",head, vec3(0f, 15f, 0f)))
+            addChild(AnimatedSpriteNode3d("head",head, vec3(0f, 16f, -1f)))
+            addChild(AnimatedSpriteNode3d("head",head, vec3(0f, 16f, 1f)).apply {
 
                 val eyeVector1 = vec2(9f).rotateAroundDeg(Vector2.Zero, 30f)
                 val eyeVector2 = vec2(9f).rotateAroundDeg(Vector2.Zero, -30f)
 
-                addChild(AnimatedSpriteNode3d(mouth, vec3(8f, 1f, 0f), color = Color.GREEN))
-                addChild(AnimatedSpriteNode3d(eye, vec3(eyeVector1.x, 4f, eyeVector1.y), color = Color.GREEN))
-                addChild(AnimatedSpriteNode3d(eye, vec3(eyeVector2.x, 4f, eyeVector2.y), color = Color.BLUE))
+                addChild(AnimatedSpriteNode3d("mouth",mouth, vec3(8f, 1f, 0f), color = Color.GREEN))
+                addChild(AnimatedSpriteNode3d("eye",eye, vec3(eyeVector1.x, 4f, eyeVector1.y), color = Color.GREEN))
+                addChild(AnimatedSpriteNode3d("eye",eye, vec3(eyeVector2.x, 4f, eyeVector2.y), color = Color.BLUE))
             })
         })
 
@@ -165,6 +167,100 @@ class ConceptScreen(gameState: StateMachine<GameState, GameEvent>) : BasicScreen
                 )
             }
             node.position = basePosition + modVector.toImmutable()
+        }
+    }
+
+    private fun getRotationUpdateAction3d(
+        forNode: Node3d,
+        bounce: Boolean = true,
+        time: Float = 1f,
+        rotation: Vector3 = vec3()
+    ): (Node3d, Float) -> Unit {
+        val basePosition = forNode.localPosition3d
+        var elapsedTime = 0f
+        val modVector = vec3()
+        /*
+        This one is a bit interesting. Because what
+        we WANT to do is use THIS node as a rotation center
+        to rotate ALL immediate children (not recursively) around
+        this particular point somehow. doable
+
+        We create some kind of min-max-vectors, like before, but with
+        angles. Then we rotate all children around
+
+        Ah, but our rotation methods assume a rotation BY something,
+        which is different than simply taking the node and adding some values
+        to it. But it should.
+
+        It shouldn't rotate the global position, the global position should always be calculated
+        from the local position, which is what we change.
+
+        To make this easier, we can just do what we do below, where we change the local position
+        3d - which is w
+         */
+        val minVector = vec3(-(rotation.x / 2f), -(rotation.y / 2f), -(rotation.z / 2f))
+        val maxVector = vec3(rotation.x / 2f, rotation.y / 2f, rotation.z / 2f)
+        return { node, delta ->
+            elapsedTime += delta
+            if (elapsedTime > time) {
+                elapsedTime = 0f
+            }
+            val currentFraction = MathUtils.norm(0f, time, elapsedTime)
+            if (bounce) {
+                val forward = (elapsedTime - time / 2f) < 0f
+                if (forward) {
+                    modVector.x = MathUtils.lerp(
+                        minVector.x,
+                        maxVector.x, currentFraction
+                    )
+                    modVector.y = MathUtils.lerp(
+                        minVector.y,
+                        maxVector.y, currentFraction
+                    )
+                    modVector.z = MathUtils.lerp(
+                        minVector.z,
+                        maxVector.z, currentFraction
+                    )
+                } else {
+                    modVector.x = MathUtils.lerp(
+                        maxVector.x,
+                        minVector.x, currentFraction
+                    )
+                    modVector.y = MathUtils.lerp(
+                        maxVector.y,
+                        minVector.y, currentFraction
+                    )
+                    modVector.z = MathUtils.lerp(
+                        maxVector.z,
+                        minVector.z, currentFraction
+                    )
+                }
+            } else {
+                modVector.x = MathUtils.lerp(
+                    minVector.x,
+                    maxVector.x, currentFraction
+                )
+                modVector.y = MathUtils.lerp(
+                    minVector.y,
+                    maxVector.y, currentFraction
+                )
+                modVector.z = MathUtils.lerp(
+                    minVector.z,
+                    maxVector.z, currentFraction
+                )
+            }
+
+            /*
+            Ah, I know now.
+
+            The min value is actuall starting rotation - modValue
+            RotateBy is the value we should reach (new rotation) minus current
+            rotation.
+
+            There you goo.
+             */
+
+            //node.rotateBy(node.rotationAroundYAxis - modVector.y)
         }
     }
 
@@ -357,7 +453,8 @@ class ConceptScreen(gameState: StateMachine<GameState, GameEvent>) : BasicScreen
 //        cGeom
 //    }
     var zoom = 0f
-    var rotation = 0f
+    var rotationY = 0f
+    var rotationX = 0f
     var extension = 0f
 //    val triangle = Triangle(vec2(), 7.5f, 15f, 15f, 165f)
 
@@ -365,10 +462,10 @@ class ConceptScreen(gameState: StateMachine<GameState, GameEvent>) : BasicScreen
     private val normalCommandMap = command("Normal") {
         setBoth(Input.Keys.Z, "Zoom in", { zoom = 0f }, { zoom = 0.1f })
         setBoth(Input.Keys.X, "Zoom out", { zoom = 0f }, { zoom = -0.1f })
-        setBoth(Input.Keys.A, "Rotate Left", { rotation = 0f }) { rotation = 10f }
-        setBoth(Input.Keys.D, "Rotate Right", { rotation = 0f }) { rotation = -10f }
-        setBoth(Input.Keys.W, "Extend", { extension = 0f }) { extension = .1f }
-        setBoth(Input.Keys.S, "Reverse", { extension = 0f }) { extension = -.1f }
+        setBoth(Input.Keys.A, "Rotate Left", { rotationY = 0f }) { rotationY = 5f }
+        setBoth(Input.Keys.D, "Rotate Right", { rotationY = 0f }) { rotationY = -5f }
+        setBoth(Input.Keys.W, "Rotate X", { rotationX = 0f }) { rotationX = 5f }
+        setBoth(Input.Keys.S, "Rotate X", { rotationX = 0f }) { rotationX = -5f }
         setUp(Input.Keys.LEFT, "Previous State") { anims.previousItem() }
         setUp(Input.Keys.RIGHT, "Next State") { anims.nextItem() }
         setUp(Input.Keys.UP, "Previous State") { directions.previousItem() }
@@ -423,78 +520,13 @@ class ConceptScreen(gameState: StateMachine<GameState, GameEvent>) : BasicScreen
 //        line.rotation = line.rotation + rotation
         super.render(delta)
         batch.use {
-//            shapeDrawer.line(line.e1.toMutable(), line.e2.toMutable(), 1f)
-//            shapeDrawer.filledCircle(line.e1.toMutable(), 2.5f, Color.GREEN)
-//            shapeDrawer.filledCircle(line.e2.toMutable(), 2.5f, Color.BLUE)
-//            shapeDrawer.filledCircle(line.center.toMutable(), 1.5f, Color.RED)
-
-
-//            baseGeometry.draw(shapeDrawer)
-//
-//            pointsCloud.worldX = MathUtils.lerp(pointsCloud.worldX, mousePosition.x, 0.01f)
-//            pointsCloud.worldY = MathUtils.lerp(pointsCloud.worldY, mousePosition.y, 0.01f)
-//            pointsCloud.rotation = pointsCloud.rotation + rotation
-            // scoutPosition.set(pointsCloud.worldX - scoutWidth / 2f, pointsCloud.worldY - scoutHeight / 2f)
-//            batch.draw(
-//                scoutAnims[anims.selectedItem]!!.animations[directions.selectedItem]!!.getKeyFrame(elapsedTime),
-//                scoutPosition.x,
-//                scoutPosition.y
-//            )
-//            shapeDrawer.filledCircle(scoutPosition, 1f, Color.GREEN)
-//            scoutPosition.set(pointsCloud.worldX + scoutWidth / 2, pointsCloud.worldY + scoutHeight / 2)
-//            shapeDrawer.filledCircle(scoutPosition, 1f, Color.YELLOW)
-//            shapeDrawer.filledCircle(pointsCloud.position, 1f, Color.ORANGE)
-//            for (point in pointsCloud.actualPoints) {
-//                shapeDrawer.filledCircle(point, 1f, Color.RED)
-//            }
-//            nodeTree.rotation = nodeTree.rotation + rotation
-//            nodeTree.update(delta)
-//            nodeTree.drawIso(batch, shapeDrawer, delta)
-//            node3dTree.update(delta)
-            //node3dTree.drawIso(batch, shapeDrawer, delta)
-            spriteNodeTree.rotateBy(rotation)
+            spriteNodeTree.rotateY(rotationY)
             spriteNodeTree.update(delta)
             for (node in spriteNodeTree.flatAndSorted()) {
                 node.drawIso(batch, shapeDrawer,delta, false)
-
-//                val pos2d = vec2()
-//                val pos = node.globalPosition3d
-//                if(node is AnimatedSpriteNode3d) {
-//                    batch.draw(node.sprite, pos2d.x + pos.x - node.sprite.offset.x, pos2d.y + pos.y - node.sprite.offset.y)
-//                    pos2d.x += 50f
-//                    batch.draw(node.sprite, pos2d.x + pos.y - node.sprite.offset.x, pos2d.y + pos.z - node.sprite.offset.y)
-//                    pos2d.x += 50f
-//                    batch.draw(node.sprite, pos2d.x + pos.z - node.sprite.offset.x, pos2d.y + pos.x - node.sprite.offset.y)
-//                    pos2d.x += 50f
-//                    batch.draw(node.sprite, pos2d.x + node.isoPosition.x - node.sprite.offset.x, pos2d.y + node.isoPosition.y - node.sprite.offset.y)
-//                } else {
-//                    shapeDrawer.filledCircle(pos2d.x + pos.x, pos2d.y + pos.y, 5f, node.color)
-//                    pos2d.x += 50f
-//                    shapeDrawer.filledCircle(pos2d.x + pos.y, pos2d.y + pos.z, 5f, node.color)
-//                    pos2d.x += 50f
-//                    shapeDrawer.filledCircle(pos2d.x + pos.z, pos2d.y + pos.x, 5f, node.color)
-//                    pos2d.x += 50f
-//                    shapeDrawer.filledCircle(pos2d.x + node.isoPosition.x, pos2d.y + node.isoPosition.y, 5f, node.color)
-//                }
-
-//                node.drawIso(batch, shapeDrawer, delta, false)
-//                node.draw2d(batch, shapeDrawer, delta, false, vec2(50f, 0f))
-//                node.draw2d(batch, shapeDrawer, delta, false, vec2(-50f, 0f), true)
             }
 
-
-            //shapeDrawer.line(pointsCloud.position, mousePosition, 1f)
-
-
             shapeDrawer.filledCircle(mousePosition, 1.5f, Color.RED)
-//            shapeDrawer.setColor(Color.YELLOW)
-//            for (arm in triangle.arms) {
-//                shapeDrawer.line(arm.first.toIsometric(), arm.second.toIsometric())
-//            }
-
-//            shapeDrawer.filledPolygon(triangle.polygonB)
-
-
         }
     }
 }
