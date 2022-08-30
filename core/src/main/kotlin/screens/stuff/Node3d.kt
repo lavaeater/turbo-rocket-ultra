@@ -6,11 +6,47 @@ import com.badlogic.gdx.math.MathUtils
 import com.badlogic.gdx.math.Vector2
 import com.badlogic.gdx.math.Vector3
 import isometric.toIsometric
-import ktx.math.*
+import ktx.math.plus
+import ktx.math.vec2
+import ktx.math.vec3
 import screens.DirtyClass
 import space.earlygrey.shapedrawer.ShapeDrawer
 import kotlin.math.sqrt
 import kotlin.properties.Delegates.observable
+
+/**
+ * We need a skeleton in 3d, that's just it.
+ *
+ * So, a bone is a line in space, I would imagine.
+ *
+ * A line in 3d space has a start and an end. So to connect bones we need hierarchies,
+ * so, a bone is localpoints (offsets from zero), and has parents and children.
+ *
+ * This is the way.
+ *
+ * The skeleton could be separate from everything else, I suppose.
+ */
+
+
+fun Node3d.flatAndSorted(): List<Node3d> {
+    return listOf(
+        this,
+        *children.asSequence().selectRecursive { children.asSequence() }.toList().toTypedArray()
+    ).sortedWith(compareBy<Node3d> { -it.globalPosition3d.z }.thenBy { it.globalPosition3d.y })//.thenBy { it.globalPosition3d.z })
+//    )// .sortedBy { it.globalPosition3d.z }
+}
+
+fun <T> Sequence<T>.selectRecursive(recursiveSelector: T.() -> Sequence<T>): Sequence<T> = flatMap {
+    sequence {
+        yield(it)
+        yieldAll(it.recursiveSelector().selectRecursive(recursiveSelector))
+    }
+}
+
+fun Vector3.toIso() : Vector2 {
+    return vec2((this.x - this.z) / sqrt(2f), (this.x + 2 * this.y + this.z) / sqrt(6f))
+}
+
 
 open class Node3d(
     name: String,
@@ -49,7 +85,7 @@ open class Node3d(
              */
         if(rotateWithParent && parent != null) {
             rotateBy(parent!!.rotation - rotation)
-            globalPosition3d.rotate(Vector3.Y, rotation)
+            globalPosition3d.rotate(Vector3.Y, parent!!.rotation)
         }
     }
 
