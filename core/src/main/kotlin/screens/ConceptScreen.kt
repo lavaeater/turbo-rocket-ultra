@@ -5,7 +5,6 @@ import com.badlogic.gdx.Input
 import com.badlogic.gdx.Input.Buttons
 import com.badlogic.gdx.graphics.Color
 import com.badlogic.gdx.math.MathUtils
-import com.badlogic.gdx.math.Quaternion
 import com.badlogic.gdx.math.Vector3
 import com.badlogic.gdx.utils.viewport.ExtendViewport
 import data.selectedItemListOf
@@ -14,7 +13,6 @@ import gamestate.GameState
 import ktx.graphics.use
 import ktx.log.info
 import ktx.math.plus
-import ktx.math.unaryMinus
 import ktx.math.vec2
 import ktx.math.vec3
 import screens.stuff.Bone3d
@@ -29,114 +27,6 @@ fun IThing.toMap(): Map<String, IThing> {
         this,
         *children.asSequence().selectRecursive { children.asSequence() }.toList().toTypedArray()
     ).associateBy { it.name }
-}
-
-open class Bone(name: String, localPosition: Vector3, val boneLength: Float) : Thing(name, localPosition) {
-    var boneEnd: Vector3 = vec3()
-        private set
-        get() {
-            field.set(orientation.forward.cpy().scl(boneLength).add(position))
-            return field
-        }
-}
-
-sealed class CardinalOrientation(val name: String) {
-    object Up : CardinalOrientation("Up")
-    object Down : CardinalOrientation("Down")
-    object Forward : CardinalOrientation("Forward")
-    object Backwards : CardinalOrientation("Backwards")
-    object Left : CardinalOrientation("Left")
-    object Right : CardinalOrientation("Right")
-}
-
-open class Orientation {
-
-    val forward = vec3(0f, 0f, -1f) //towards screen
-    val up = vec3(0f, 1f, 0f)
-    val leftOrRight: Vector3
-        get() {
-            return forward.cpy().crs(up).nor()
-        }
-    val rightOrLeft: Vector3
-        get() {
-            return -leftOrRight
-        }
-
-    fun rotate(aroundUp: Float, left: Float, aroundForward: Float): Quaternion {
-        val q = Quaternion(up, aroundUp).mul(Quaternion(leftOrRight, left)).mul(Quaternion(forward, aroundForward))
-        q.transform(forward)
-        q.transform(up)
-        return q
-    }
-}
-
-interface IThing {
-    var forwardLimit: ClosedFloatingPointRange<Float>
-    var leftLimit: ClosedFloatingPointRange<Float>
-    var upLimit: ClosedFloatingPointRange<Float>
-    var name: String
-    val localPosition: Vector3
-    val orientation: Orientation
-    val forward: Vector3
-    val up: Vector3
-    val leftOrRight: Vector3
-    val reversePerp: Vector3
-    val position: Vector3
-    val allThings: Map<String, IThing>
-    val children: MutableSet<IThing>
-    var parent: IThing?
-    var rotateAroundUpEnabled: Boolean
-    var rotateAroundLeftEnabled: Boolean
-    var rotateAroundForwardEnabled: Boolean
-    fun addChild(child: IThing)
-    fun removeParent(child: IThing)
-    fun rotate(aroundUp: Float, left: Float, aroundForward: Float)
-}
-
-abstract class Thing(override var name: String, override val localPosition: Vector3) : IThing {
-    override var forwardLimit: ClosedFloatingPointRange<Float> = 0f..360f
-    override var leftLimit: ClosedFloatingPointRange<Float> = 0f..360f
-    override var upLimit: ClosedFloatingPointRange<Float> = 0f..360f
-    override val orientation = Orientation()
-    override val forward get() = orientation.forward
-    override val up get() = orientation.up
-    override val leftOrRight get() = orientation.leftOrRight
-    override val reversePerp get() = orientation.rightOrLeft
-
-    override val position: Vector3
-        get() {
-            return if (parent != null) parent!!.position + localPosition else localPosition
-        }
-    override val allThings get() = toMap()
-
-    override val children = mutableSetOf<IThing>()
-    override var parent: IThing? = null
-    override var rotateAroundUpEnabled: Boolean = true
-    override var rotateAroundLeftEnabled: Boolean = true
-    override var rotateAroundForwardEnabled: Boolean = true
-
-    override fun addChild(child: IThing) {
-        child.parent = this
-        children.add(child)
-    }
-
-    override fun removeParent(child: IThing) {
-        if (children.remove(child))
-            child.parent = null
-    }
-
-    override fun rotate(aroundUp: Float, left: Float, aroundForward: Float) {
-        val q = orientation.rotate(
-            if (rotateAroundUpEnabled) aroundUp else 0f,
-            if (rotateAroundLeftEnabled) left else 0f,
-            if (rotateAroundForwardEnabled) aroundForward else 0f)
-
-        for (child in children.asSequence().selectRecursive { children.asSequence() }.toList()) {
-            q.transform(child.localPosition)
-            q.transform(child.forward)
-            q.transform(child.up)
-        }
-    }
 }
 
 class ConceptScreen(gameState: StateMachine<GameState, GameEvent>) : BasicScreen(gameState) {
