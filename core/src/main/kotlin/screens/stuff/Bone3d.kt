@@ -1,9 +1,26 @@
 package screens.stuff
 
-import com.badlogic.gdx.math.Matrix4
 import com.badlogic.gdx.math.Quaternion
 import com.badlogic.gdx.math.Vector3
+import data.selectedItemListOf
 import ktx.math.plus
+
+//    private val skeleton = Bone3d("body", vec3(), vec3(0f, 10f, 0f)).apply {
+//        addChild(Bone3d("extremity", vec3(-2.5f, 0f, 0f), vec3(0f, 5f, 0f)))
+//    }
+
+//    private val skeleton = Bone3d("body", vec3(), vec3(0f, 10f, 0f)).apply {
+//        addChild(Bone3d("left-arm-upper", vec3(-2.5f, 0f, 0f), vec3(0f, 5f, 0f)).apply {
+//            addChild(Bone3d("left-arm-lower", vec3(0f, 0f, 0f), vec3(0f, 5f, 0f)))
+//        })
+//        addChild(Bone3d("right-arm-upper", vec3(2.5f, 0f, 0f), vec3(0f, 5f, 0f)).apply {
+//            addChild(Bone3d("right-arm-lower", vec3(0f, 0f, 0f), vec3(0f, 5f, 0f)))
+//        })
+//        addChild(Bone3d("right-leg", vec3(3f, -10f, 0f), vec3(0f, -10f, 0f)))
+//        addChild(Bone3d("left-leg", vec3(-3f, -10f, 0f), vec3(0f, -10f, 0f)))
+//    }
+
+//val boneList = selectedItemListOf(*skeleton.bones.values.toTypedArray())
 
 open class Bone3d(
     var name: String,
@@ -43,15 +60,87 @@ open class Bone3d(
         children.forEach { it.update(delta) }
     }
 
-    fun rotateBy(degrees: Float, axis: Vector3) {
-        val localNormalized = localStart.cpy().nor()
+    fun eulerian(yaw: Float, pitch: Float, roll: Float) {
 
-        val quaternion = Quaternion(axis, degrees)
-        val transform = Matrix4(quaternion)
-        localStart.rot(transform)
-        boneVector.rot(transform)
+
+        val yawning = Quaternion().setEulerAngles(yaw, 0f, 0f)
+        val pitching = Quaternion().setEulerAngles(0f, pitch, 0f)
+        val rolling = Quaternion().setEulerAngles(0f, 0f, roll)
+
+        val result = Quaternion(yawning).mul(pitching).mul(rolling)
+
+
+
+
+        result.transform(localStart)
+        result.transform(boneVector)
         for (child in children)
-            child.rotateBy(degrees, axis)
+            child.eulerian(yaw, pitch, roll)
+    }
+
+    fun rotateAround(xAxis: Float, yAxis: Float, zAxis: Float) {
+        /**
+         * I think local start shouldn't rotate, but boneVector should? Experiment!
+         *
+         * This is global rotation, used for rotating the entire skeleton
+         */
+        val q = Quaternion(Vector3.X, xAxis).mul(Quaternion(Vector3.Y, yAxis)).mul(Quaternion(Vector3.Z, zAxis))
+        q.transform(localStart)
+        q.transform(boneVector)
+        for(child in children)
+            child.rotateAround(xAxis, yAxis, zAxis)
+    }
+
+    fun rotateBy(x: Float, y: Float, z: Float) {
+        /*
+        To make it easy, to test, we are doing TWO rotations only
+
+        1st is around the axis that is perpendicular to the plane created
+        by this bone and the parent bone.
+
+        The 2nd is around the axis that is the parent bone.
+
+        The third would be roll, rotation around... itself?
+
+        Start with two, because that last one... is hard to grasp.
+
+        Rotations mean different things if we are with a parent or without a parent.
+
+        Ignore Z, man
+         */
+
+        if(parent == null) {
+            /*
+            We will rotate everything on unit axes
+             */
+            val q = Quaternion(Vector3.Z, x).mul(Quaternion(Vector3.Y, y))//.mul(Quaternion(Vector3.Z, z))
+            q.transform(localStart)
+            q.transform(boneVector)
+        } else {
+            /**
+             * This is almost correct.
+             * These things are different concepts.
+             *
+             * One is "bend a joint", basically.
+             *
+             * The other is "orient the entire bone a certain way in relation to other things.
+             *
+             * We must be able to do both things.
+             *
+             * So, in the case of rotating the body, we want to do that universally so just all points have
+             * the absolutely correct positions afterwards - this is most like different from the local
+             * rotation requirement. I, for instance, have no clear idea on how to rotate around Z in that case.
+             *
+             *
+             *
+             */
+            val xRotationAxis = parent!!.boneVector.cpy().nor()
+            val yRotationAxis = boneVector.cpy().crs(parent!!.boneVector).nor()
+
+            val q = Quaternion(xRotationAxis, x).mul(Quaternion(yRotationAxis, y))
+            q.transform(localStart)
+            q.transform(boneVector)
+        }
     }
 }
 
