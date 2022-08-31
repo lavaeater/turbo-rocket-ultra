@@ -53,6 +53,8 @@ class ConceptScreen(gameState: StateMachine<GameState, GameEvent>) : BasicScreen
             addChild(Bone("right-arm-lower", vec3(0f, 0f, -10f), 10f).apply {
                 rotateAroundForwardEnabled = false
                 rotateAroundUpEnabled = false
+                orientation.lMin = -180f
+                orientation.lMax = 0f
             })
         })
     }
