@@ -44,10 +44,9 @@ open class Bone3d(
     }
 
     fun rotateBy(degrees: Float, axis: Vector3) {
+        val localNormalized = localStart.cpy().nor()
 
-        
-
-    val quaternion = Quaternion(axis, degrees)
+        val quaternion = Quaternion(axis, degrees)
         val transform = Matrix4(quaternion)
         localStart.rot(transform)
         boneVector.rot(transform)
