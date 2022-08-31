@@ -273,7 +273,7 @@ object Node3dCreator {
         }
     }
     fun getSpriteNodeTree(): Node3d {
-        Node3d("player").apply {
+        return Node3d("player").apply {
             addChild(AnimatedSpriteNode3d("body", body, vec3(0f, 0f, 0f)).apply {
                 updateActions += getSmoothUpdateAction3d(this, true, 0.5f, vec3(0f, 5f, 0f))
                 val armVector = vec2(15f, 0f).rotateAroundDeg(Vector2.Zero, 90f)
