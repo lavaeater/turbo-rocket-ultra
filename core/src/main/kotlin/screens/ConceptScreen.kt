@@ -47,10 +47,14 @@ class ConceptScreen(gameState: StateMachine<GameState, GameEvent>) : BasicScreen
         rotateAroundUpEnabled = false
         addChild(Bone("head", vec3(0f, 5f, 0f), 3f).apply {
             rotate(0f, 90f, 0f)
+            rotateAroundLeftEnabled = false
+            rotateAroundUpEnabled = false
             attachments.add(AnimatedSprited3d(CharacterSprites.head, vec3(0f, 5f, -1f), this))
         })
         addChild(Bone("left-arm-upper", vec3(10f, 0f, 0f), 10f).apply {
+            rotateAroundUpEnabled = false
             addChild(Bone("left-arm-lower", vec3(0f, 0f, -10f), 16f).apply {
+                rotateAroundUpEnabled = false
                 addChild(Thing("left-hand", this.localPosition.cpy() + vec3(0f, 0f,-10f)).apply {
                     attachments.add(AnimatedSprited3d(CharacterSprites.hand, vec3(), this))
                 })
@@ -78,10 +82,10 @@ class ConceptScreen(gameState: StateMachine<GameState, GameEvent>) : BasicScreen
             thingList.selectedItem.rotateAgainstJoint(bend)
 
         if(!MathUtils.isZero(aroundParent))
-            thingList.selectedItem.rotateAroundParent(aroundParent)
+            thingList.selectedItem.rotateAroundParentForward(aroundParent)
 
         if(!MathUtils.isZero(aroundForward))
-            thingList.selectedItem.rotateAroundSelf(aroundForward)
+            thingList.selectedItem.rotateAroundParentUp(aroundForward)
 
 
         batch.use {
@@ -113,7 +117,7 @@ class ConceptScreen(gameState: StateMachine<GameState, GameEvent>) : BasicScreen
             batch.draw(attachment, p.x, p.y)
             shapeDrawer.filledCircle(p + attachment.offset, 1f, Color.ORANGE)
         }
-//        drawOrientation(bone.position, bone.orientation)
+        drawOrientation(bone.position, bone.orientation)
         shapeDrawer.setColor(Color.GRAY)
         shapeDrawer.line(bone.position.toIso(), bone.boneEnd.toIso())
         shapeDrawer.filledCircle(bone.position.toIso(), 1f, Color.GREEN)

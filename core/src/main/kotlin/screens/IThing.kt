@@ -52,8 +52,8 @@ interface IThing {
      *
      * This is clearly some angle around forward, of course. Hmm.
      */
-    fun rotateAroundParent(degrees: Float)
+    fun rotateAroundParentForward(degrees: Float)
     fun rotateAgainstJoint(degrees: Float)
-    fun rotateAroundSelf(degrees: Float)
+    fun rotateAroundParentUp(degrees: Float)
     fun rotate(q: Quaternion)
 }

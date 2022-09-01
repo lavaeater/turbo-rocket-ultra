@@ -79,18 +79,28 @@ open class Thing(override var name: String, override val localPosition: Vector3)
      *
      * This is clearly some angle around forward, of course. Hmm.
      */
-    override fun rotateAroundParent(degrees: Float) {
+    override fun rotateAroundParentForward(degrees: Float) {
+        if(parent == null) {
+            rotate(0f, 0f, degrees)
+            return
+        }
+        if(rotateAroundForwardEnabled) {
+            val pO = parent!!.orientation
+            val q = Quaternion(pO.forward, degrees)
+            rotate(q)
+        }
+    }
+
+    override fun rotateAroundParentUp(degrees: Float) {
         if(parent == null) {
             rotate(degrees, 0f, 0f)
             return
         }
-        val pO = parent!!.orientation
-        val q = Quaternion(pO.forward, degrees)
-        rotate(q)
-    }
-
-    override fun rotateAroundSelf(degrees: Float) {
-        rotate(0f,0f, degrees)
+        if(rotateAroundUpEnabled) {
+            val pO = parent!!.orientation
+            val q = Quaternion(pO.up, degrees)
+            rotate(q)
+        }
     }
 
     override fun rotateAgainstJoint(degrees: Float) {
@@ -98,9 +108,11 @@ open class Thing(override var name: String, override val localPosition: Vector3)
             rotate(0f, degrees, 0f)
             return
         }
-//        val pO = parent!!.orientation
-//        val q = Quaternion(forward.cpy().crs(pO.forward), degrees)
-        rotate(0f, degrees, 0f)
+        if(rotateAroundLeftEnabled) {
+            val pO = parent!!.orientation
+            val q = Quaternion(pO.leftOrRight, degrees)
+            rotate(q)
+        }
     }
 
     override fun rotate(q: Quaternion) {
