@@ -7,11 +7,18 @@ import com.badlogic.gdx.math.MathUtils
 import com.badlogic.gdx.math.Vector2
 import com.badlogic.gdx.math.Vector3
 import ktx.math.*
+import screens.CharacterSprites.body
+import screens.CharacterSprites.eye
+import screens.CharacterSprites.hair
+import screens.CharacterSprites.hand
+import screens.CharacterSprites.head
+import screens.CharacterSprites.leg
+import screens.CharacterSprites.mouth
 import screens.stuff.AnimatedSpriteNode3d
 import screens.stuff.Node
 import screens.stuff.Node3d
 
-object Node3dCreator {
+object CharacterSprites {
     val head by lazy { Texture(Gdx.files.internal("sprites/layered/head.png")) }
     val hair by lazy { Texture(Gdx.files.internal("sprites/layered/hair.png")) }
     val hand by lazy { Texture(Gdx.files.internal("sprites/layered/hand.png")) }
@@ -20,6 +27,10 @@ object Node3dCreator {
     val headTop by lazy { Texture(Gdx.files.internal("sprites/layered/head_top.png")) }
     val eye by lazy { Texture(Gdx.files.internal("sprites/layered/eye.png")) }
     val mouth by lazy { Texture(Gdx.files.internal("sprites/layered/mouth.png")) }
+}
+
+object Node3dCreator {
+
     private fun getSmoothUpdateAction(
         forNode: Node,
         bounce: Boolean = true,

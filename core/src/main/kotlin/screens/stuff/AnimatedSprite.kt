@@ -3,8 +3,12 @@ package screens.stuff
 import com.badlogic.gdx.graphics.Texture
 import com.badlogic.gdx.graphics.g2d.TextureRegion
 import com.badlogic.gdx.math.Vector2
+import com.badlogic.gdx.math.Vector3
 import ktx.math.minus
+import ktx.math.plus
 import ktx.math.vec2
+import ktx.math.vec3
+import screens.IThing
 
 /**
  * My graphics can look any way they want - as long as they are unique and interesting.
@@ -24,4 +28,8 @@ open class AnimatedSprite(texture: Texture) : TextureRegion(texture) {
         get() {
             return position - offset
         }
+}
+
+class AnimatedSprited3d(texture: Texture, val localPosition:Vector3 = vec3(), val parent: IThing): AnimatedSprite(texture) {
+    val position3d get() = parent.position + localPosition
 }

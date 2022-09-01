@@ -12,9 +12,11 @@ import gamestate.GameEvent
 import gamestate.GameState
 import ktx.graphics.use
 import ktx.log.info
+import ktx.math.minus
 import ktx.math.plus
 import ktx.math.vec2
 import ktx.math.vec3
+import screens.stuff.AnimatedSprited3d
 import screens.stuff.Bone3d
 import screens.stuff.selectRecursive
 import screens.stuff.toIso
@@ -33,29 +35,29 @@ class ConceptScreen(gameState: StateMachine<GameState, GameEvent>) : BasicScreen
     override val viewport = ExtendViewport(200f, 180f)
 
     var zoom = 0f
-    var aroundUp = 0f
-    var aroundLeft = 0f
+    var aroundParent = 0f
+    var bend = 0f
     var aroundForward = 0f
     var elapsedTime = 0f
     private val shapeDrawer by lazy { Assets.shapeDrawer }
 
-    val t = Bone("body", vec3(), 20f).apply {
+    val t = Bone("body", vec3(), 30f).apply {
         rotate(0f, -90f, 0f)
+        rotateAroundLeftEnabled = false
+        rotateAroundUpEnabled = false
+        addChild(Bone("head", vec3(0f, 5f, 0f), 3f).apply {
+            rotate(0f, 90f, 0f)
+            attachments.add(AnimatedSprited3d(CharacterSprites.head, vec3(0f, 5f, -1f), this))
+        })
         addChild(Bone("left-arm-upper", vec3(10f, 0f, 0f), 10f).apply {
-            rotateAroundUpEnabled = false
-            addChild(Bone("left-arm-lower", vec3(0f, 0f, -10f), 10f).apply {
-                rotateAroundForwardEnabled = false
-                rotateAroundUpEnabled = false
+            addChild(Bone("left-arm-lower", vec3(0f, 0f, -10f), 16f).apply {
+                addChild(Thing("left-hand", this.localPosition.cpy() + vec3(0f, 0f,-10f)).apply {
+                    attachments.add(AnimatedSprited3d(CharacterSprites.hand, vec3(), this))
+                })
             })
         })
         addChild(Bone("right-arm-upper", vec3(-10f, 0f, 0f), 10f).apply {
-            rotateAroundUpEnabled = false
-            addChild(Bone("right-arm-lower", vec3(0f, 0f, -10f), 10f).apply {
-                rotateAroundForwardEnabled = false
-                rotateAroundUpEnabled = false
-                orientation.lMin = -180f
-                orientation.lMax = 0f
-            })
+            addChild(Bone("right-arm-lower", vec3(0f, 0f, -10f), 16f).apply {})
         })
     }
 
@@ -69,8 +71,19 @@ class ConceptScreen(gameState: StateMachine<GameState, GameEvent>) : BasicScreen
         camera.zoom = camera.zoom + 0.05f * zoom
         super.render(delta)
 
-        if(!MathUtils.isZero(aroundUp) || !MathUtils.isZero(aroundLeft) || !MathUtils.isZero(aroundForward))
-            thingList.selectedItem.rotate(aroundUp, aroundLeft, aroundForward)
+//        if(!MathUtils.isZero(aroundParent) || !MathUtils.isZero(bend) || !MathUtils.isZero(aroundForward))
+//            thingList.selectedItem.rotate(aroundParent, bend, aroundForward)
+
+        if(!MathUtils.isZero(bend))
+            thingList.selectedItem.rotateAgainstJoint(bend)
+
+        if(!MathUtils.isZero(aroundParent))
+            thingList.selectedItem.rotateAroundParent(aroundParent)
+
+        if(!MathUtils.isZero(aroundForward))
+            thingList.selectedItem.rotateAroundSelf(aroundForward)
+
+
         batch.use {
             shapeDrawer.filledCircle(mousePosition, 1.5f, Color.RED)
 
@@ -86,35 +99,21 @@ class ConceptScreen(gameState: StateMachine<GameState, GameEvent>) : BasicScreen
         if (thing is Bone)
             drawBone(thing)
         else {
-            val position = vec2(-100f)
-            shapeDrawer.setColor(Color.BLUE)
-            shapeDrawer.line(
-                position + thing.position.toIso(),
-                position + thing.position.toIso() + thing.forward.toIso(),
-                .5f
-            )
-            shapeDrawer.setColor(Color.RED)
-            shapeDrawer.line(
-                position + thing.position.toIso(),
-                position + thing.position.toIso() + thing.up.toIso(),
-                .5f
-            )
-            shapeDrawer.setColor(Color.GREEN)
-            shapeDrawer.line(
-                position + thing.position.toIso(),
-                position + thing.position.toIso() + thing.leftOrRight.toIso(),
-                .5f
-            )
-            shapeDrawer.setColor(Color.WHITE)
-            shapeDrawer.filledCircle(position + thing.position.toIso(), 1f, Color.WHITE)
-            shapeDrawer.filledCircle(position + thing.position.toIso() + thing.forward.toIso(), 1f, Color.BLUE)
-            shapeDrawer.filledCircle(position + thing.position.toIso() + thing.up.toIso(), 1f, Color.RED)
-            shapeDrawer.filledCircle(position + thing.position.toIso() + thing.leftOrRight.toIso(), 1f, Color.GREEN)
+            for (attachment in thing.attachments) {
+                val p = attachment.position3d.toIso() - attachment.offset
+                batch.draw(attachment, p.x, p.y)
+                shapeDrawer.filledCircle(p + attachment.offset, 1f, Color.ORANGE)
+            }
         }
     }
 
     private fun drawBone(bone: Bone) {
-        //drawOrientation(bone.position, bone.orientation)
+        for (attachment in bone.attachments) {
+            val p = attachment.position3d.toIso() - attachment.offset
+            batch.draw(attachment, p.x, p.y)
+            shapeDrawer.filledCircle(p + attachment.offset, 1f, Color.ORANGE)
+        }
+//        drawOrientation(bone.position, bone.orientation)
         shapeDrawer.setColor(Color.GRAY)
         shapeDrawer.line(bone.position.toIso(), bone.boneEnd.toIso())
         shapeDrawer.filledCircle(bone.position.toIso(), 1f, Color.GREEN)
@@ -178,10 +177,10 @@ class ConceptScreen(gameState: StateMachine<GameState, GameEvent>) : BasicScreen
             thingList.nextItem()
             info { "Current bone: ${thingList.selectedItem.name}" }
         }
-        setBoth(Input.Keys.A, "Rotate Left", { aroundUp = 0f }) { aroundUp = 5f }
-        setBoth(Input.Keys.D, "Rotate Right", { aroundUp = 0f }) { aroundUp = -5f }
-        setBoth(Input.Keys.W, "Rotate X", { aroundLeft = 0f }) { aroundLeft = 5f }
-        setBoth(Input.Keys.S, "Rotate X", { aroundLeft = 0f }) { aroundLeft = -5f }
+        setBoth(Input.Keys.A, "Rotate Left", { aroundParent = 0f }) { aroundParent = 5f }
+        setBoth(Input.Keys.D, "Rotate Right", { aroundParent = 0f }) { aroundParent = -5f }
+        setBoth(Input.Keys.W, "Rotate X", { bend = 0f }) { bend = 5f }
+        setBoth(Input.Keys.S, "Rotate X", { bend = 0f }) { bend = -5f }
         setBoth(Input.Keys.Q, "Rotate Z", { aroundForward = 0f }) { aroundForward = -5f }
         setBoth(Input.Keys.E, "Rotate Z", { aroundForward = 0f }) { aroundForward = 5f }
     }
