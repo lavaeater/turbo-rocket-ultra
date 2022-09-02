@@ -20,7 +20,7 @@ interface IThing {
     val children: MutableSet<IThing>
     var parent: IThing?
     var rotateAroundUpEnabled: Boolean
-    var rotateAroundLeftEnabled: Boolean
+    var rotateAroundJointEnabled: Boolean
     var rotateAroundForwardEnabled: Boolean
     val attachments: MutableList<AnimatedSprited3d>
     fun addChild(child: IThing)

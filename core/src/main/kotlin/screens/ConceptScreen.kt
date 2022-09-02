@@ -41,27 +41,46 @@ class ConceptScreen(gameState: StateMachine<GameState, GameEvent>) : BasicScreen
     var elapsedTime = 0f
     private val shapeDrawer by lazy { Assets.shapeDrawer }
 
+    /*
+
+    I think the most important next step is handling range of motion
+    on all rotation axes. They must have a reference vector, somehow,
+    that we can compare with and decide if the rotation is acceptable or not.
+
+
+
+    And also - poses, and ways to go from one state to another, somehow, in an animation-way. Sort
+    of like keyframeing.
+     */
+
+
     val t = Bone("body", vec3(), 30f).apply {
         rotate(0f, -90f, 0f)
-        rotateAroundLeftEnabled = false
+        rotateAroundJointEnabled = false
         rotateAroundUpEnabled = false
         addChild(Bone("head", vec3(0f, 5f, 0f), 3f).apply {
             rotate(0f, 90f, 0f)
-            rotateAroundLeftEnabled = false
             rotateAroundUpEnabled = false
             attachments.add(AnimatedSprited3d(CharacterSprites.head, vec3(0f, 5f, -1f), this))
         })
         addChild(Bone("left-arm-upper", vec3(10f, 0f, 0f), 10f).apply {
-            rotateAroundUpEnabled = false
+            rotateAroundForwardEnabled = false
+            uRange = 15f..225f
+            jRange = -90f..225f
             addChild(Bone("left-arm-lower", vec3(0f, 0f, -10f), 16f).apply {
                 rotateAroundUpEnabled = false
+                rotateAroundForwardEnabled = false
+                jRange = 0f..180f
                 addChild(Thing("left-hand", this.localPosition.cpy() + vec3(0f, 0f,-10f)).apply {
                     attachments.add(AnimatedSprited3d(CharacterSprites.hand, vec3(), this))
                 })
             })
         })
         addChild(Bone("right-arm-upper", vec3(-10f, 0f, 0f), 10f).apply {
+            rotateAroundForwardEnabled = false
             addChild(Bone("right-arm-lower", vec3(0f, 0f, -10f), 16f).apply {})
+            rotateAroundUpEnabled = false
+            rotateAroundForwardEnabled = false
         })
     }
 
