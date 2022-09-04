@@ -22,6 +22,7 @@ import input.GamepadControl
 import input.KeyboardControl
 import ktx.log.debug
 import ktx.scene2d.*
+import screens.concepts.PlayerModel
 import screens.ui.KeyPress
 import statemachine.StateMachine
 import tru.AnimState

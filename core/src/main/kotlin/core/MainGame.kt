@@ -17,6 +17,7 @@ import statemachine.StateMachine
 import tru.Assets
 import eater.turbofacts.Factoids
 import eater.turbofacts.factsOfTheWorld
+import screens.concepts.ConceptScreen
 
 class MainGame : KtxGame<KtxScreen>(), DisposableRegistry by DisposableContainer() {
 

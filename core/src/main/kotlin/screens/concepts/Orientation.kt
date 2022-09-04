@@ -1,9 +1,11 @@
-package screens
+package screens.concepts
 
 import com.badlogic.gdx.math.Quaternion
 import com.badlogic.gdx.math.Vector3
 import ktx.math.unaryMinus
 import ktx.math.vec3
+
+
 
 open class Orientation {
     val forward = vec3(0f, 0f, -1f) //towards screen

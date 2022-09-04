@@ -1,4 +1,4 @@
-package screens
+package screens.concepts
 
 import com.badlogic.gdx.Gdx
 import com.badlogic.gdx.graphics.Color
@@ -7,13 +7,13 @@ import com.badlogic.gdx.math.MathUtils
 import com.badlogic.gdx.math.Vector2
 import com.badlogic.gdx.math.Vector3
 import ktx.math.*
-import screens.CharacterSprites.body
-import screens.CharacterSprites.eye
-import screens.CharacterSprites.hair
-import screens.CharacterSprites.hand
-import screens.CharacterSprites.head
-import screens.CharacterSprites.leg
-import screens.CharacterSprites.mouth
+import screens.concepts.CharacterSprites.body
+import screens.concepts.CharacterSprites.eye
+import screens.concepts.CharacterSprites.hair
+import screens.concepts.CharacterSprites.hand
+import screens.concepts.CharacterSprites.head
+import screens.concepts.CharacterSprites.leg
+import screens.concepts.CharacterSprites.mouth
 import screens.stuff.AnimatedSpriteNode3d
 import screens.stuff.Node
 import screens.stuff.Node3d

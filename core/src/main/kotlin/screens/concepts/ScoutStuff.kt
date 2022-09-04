@@ -1,4 +1,4 @@
-package screens
+package screens.concepts
 
 import com.badlogic.gdx.Gdx
 import com.badlogic.gdx.graphics.Texture

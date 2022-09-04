@@ -1,4 +1,4 @@
-package screens
+package screens.concepts
 
 import kotlin.reflect.KProperty
 
