@@ -17,7 +17,7 @@ open class Node(
     pitch: Float = 0f,
     roll: Float = 0f,
     var color: Color = Color.RED,
-    var scale: Float = 10f
+    var scale: Float = 1f
 ) {
     val direction = Direction3d(yaw, pitch, roll)
     val forward get() = direction.forward
@@ -25,7 +25,11 @@ open class Node(
     val right get() = direction.right
     val children = mutableSetOf<Node>()
     var parent: Node? = null
-    val position: Vector3 get() = if (parent == null) localPosition else parent!!.position + localPosition
+    open var position: Vector3 = vec3()
+        protected set
+        get() {
+            return if (parent == null) field.set(localPosition) else field.set(parent!!.position).add(localPosition)
+        }
     fun addChild(child: Node) {
         child.parent = this
         children.add(child)
@@ -76,6 +80,11 @@ open class Node(
 
     fun rotateAroundZ(degrees: Float) {
         val q = Quaternion(Vector3.Z, degrees)
+        rotate(q)
+    }
+
+    fun reset() {
+        val q = direction.reset()
         rotate(q)
     }
 

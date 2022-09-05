@@ -31,7 +31,7 @@ import space.earlygrey.shapedrawer.ShapeDrawer
  * Perhaps.
  */
 
-open class Direction3d(yaw: Float = 0f, pitch: Float = 0f, roll: Float = 0f) {
+open class Direction3d(val yaw: Float = 0f, val pitch: Float = 0f, val roll: Float = 0f) {
     val forward = Vector3(0f, 0f, -1f)
     val up = Vector3(0f, 1f, 0f)
     val right = Vector3(-1f, 0f, 0f)
@@ -39,8 +39,33 @@ open class Direction3d(yaw: Float = 0f, pitch: Float = 0f, roll: Float = 0f) {
     val down get() = -up
     val back get() = -forward
 
+    /**
+     * We need some kind of values for the angles, to be able to reset directions etc.
+     *
+    velocity.add(tmpV.set(acceleration).scl(delta));
+    position.add(tmpV.set(velocity).scl(delta));
+    final float speed = velocity.len();
+    final float angle = speed*delta*MathUtils.radiansToDegrees;
+    Vector3 axis = tmpV.set(velocity).scl(-1f/speed).crs(Vector3.Y);
+    tmpQ.set(axis, angle);
+    rotation.mulLeft(tmpQ);
+    transform.set(position, rotation);
+     *
+     */
+
+    fun reset() : Quaternion {
+        val rotateQuaternion = Quaternion().setFromCross(forward, Vector3.Y).mul(Quaternion().setFromCross(forward, Vector3.X)).mul(Quaternion().setFromCross(forward, Vector3.Z))
+
+        val y = -rotateQuaternion.getAngleAround(Vector3.Y)
+        val x = -rotateQuaternion.getAngleAround(Vector3.X)
+        val z = -rotateQuaternion.getAngleAround(Vector3.Z)
+
+        val antiQuat = Quaternion(Vector3.Y, y).mul(Quaternion(Vector3.X, x)).mul(Quaternion(Vector3.Z, z))
+        return antiQuat
+    }
+
     init {
-        val initialRotation = Quaternion().setEulerAngles(yaw, pitch, roll) //Might work?
+        val initialRotation = Quaternion().setEulerAngles(yaw, pitch, roll)
         rotate(initialRotation)
     }
 

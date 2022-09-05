@@ -35,9 +35,36 @@ class ConceptScreen(gameState: StateMachine<GameState, GameEvent>) : BasicScreen
     var elapsedTime = 0f
     private val shapeDrawer by lazy { Assets.shapeDrawer }
 
-    val node = Node("base", vec3(25f, 25f, 0f), 0f, 0f, 0f).apply {
-        addChild(Node("other thing", vec3(100f,0f,0f), 15f, 15f, 15f).apply {
-            addChild(Segment("a segmebt", vec3(0f, 50f, 0f),100f, Direction3d(25f, 0f,0f),Color.WHITE))
+    val totalLength = 180f
+    val head = totalLength / 8f
+    val torsoLength = head * 3f
+    val totalArmLength = head * 4f
+    val upperArmL = totalArmLength / 8f * 5f
+    val lowerArmL = totalArmLength / 8f * 3f
+    val upperLegL = head * 3f
+    val lowerLegL = head * 2f
+    val node = Node("base", vec3(0f, 0f, 0f), 0f, 0f, 0f).apply {
+        addChild(Segment("torso", vec3(0f,0f,0f), torsoLength, Direction3d(0f, 90f,0f), Color.GREEN).apply {
+            addChild(Segment("right-shoulder", vec3(0f,0f,0f), 15f, Direction3d(90f,0f,0f)).apply {
+                addChild(Segment("right-arm-upper", vec3(0f, 0f, 0f),upperArmL, Direction3d(0f, -90f,0f),Color.WHITE).apply {
+                    addChild(Segment("right-arm-lower", vec3(0f, 0f, 0f), lowerArmL, Direction3d(0f, -90f,0f)))
+                })
+            })
+            addChild(Segment("left-shoulder", vec3(0f,0f,0f), 15f, Direction3d(-90f,0f,0f)).apply {
+                addChild(Segment("left-arm-upper", vec3(0f, 0f, 0f),upperArmL, Direction3d(0f, -90f,0f),Color.WHITE).apply {
+                    addChild(Segment("left-arm-lower", vec3(0f, 0f, 0f), lowerArmL, Direction3d(0f, -90f,0f)))
+                })
+            })
+            addChild(Segment("right-hip", vec3(0f,-torsoLength,0f), 10f, Direction3d(90f,0f,0f)).apply {
+                addChild(Segment("right-leg-upper", vec3(0f, 0f, 0f),upperLegL, Direction3d(0f, -90f,0f),Color.WHITE).apply {
+                    addChild(Segment("right-leg-lower", vec3(0f, 0f, 0f), lowerLegL, Direction3d(0f, -90f,0f)))
+                })
+            })
+            addChild(Segment("left-hip", vec3(0f,-torsoLength,0f), 10f, Direction3d(-90f,0f,0f)).apply {
+                addChild(Segment("left-leg-upper", vec3(0f, 0f, 0f),upperLegL, Direction3d(0f, -90f,0f),Color.WHITE).apply {
+                    addChild(Segment("left-leg-lower", vec3(0f, 0f, 0f), lowerLegL, Direction3d(0f, -90f,0f)))
+                })
+            })
         })
     }
 
@@ -95,6 +122,7 @@ class ConceptScreen(gameState: StateMachine<GameState, GameEvent>) : BasicScreen
         setBoth(Input.Keys.S, "Rotate X", { rotY = 0f }) { rotY = 5f * modifier }
         setBoth(Input.Keys.Q, "Rotate Z", { rotForward = 0f }) { rotForward = 5f * modifier }
         setBoth(Input.Keys.E, "Rotate Z", { rotZ = 0f }) { rotZ = 5f * modifier }
+        setUp(Input.Keys.SPACE, "Rotate Z") { node.reset() }
         setBoth(Input.Keys.SHIFT_RIGHT, "inverse input", { modifier = 1f}) { modifier = -1f}
     }
 
