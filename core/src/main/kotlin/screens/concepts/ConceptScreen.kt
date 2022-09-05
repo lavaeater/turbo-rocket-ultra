@@ -35,7 +35,7 @@ class ConceptScreen(gameState: StateMachine<GameState, GameEvent>) : BasicScreen
     var elapsedTime = 0f
     private val shapeDrawer by lazy { Assets.shapeDrawer }
 
-    val totalLength = 180f
+    val totalLength = 90f
     val head = totalLength / 8f
     val torsoLength = head * 3f
     val totalArmLength = head * 4f
@@ -67,10 +67,7 @@ class ConceptScreen(gameState: StateMachine<GameState, GameEvent>) : BasicScreen
             })
         })
     }
-
-    val origin = Node("origin", scale = 100f)
-
-    val nodes = listOf(node, origin)
+    val nodes = listOf(node)
 
     val thingList = selectedItemListOf(*node.flatChildren.values.toTypedArray())
 

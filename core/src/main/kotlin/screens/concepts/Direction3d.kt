@@ -77,7 +77,7 @@ open class Direction3d(val yaw: Float = 0f, val pitch: Float = 0f, val roll: Flo
 
     private val destination = vec2()
 
-    fun renderIso(origin: Vector2, shapeDrawer: ShapeDrawer, scale: Float) {
+    fun renderIso(origin: Vector2, shapeDrawer: ShapeDrawer, scale: Float = 10f) {
         destination.toIsoFrom3d(forward).scl(scale)
         shapeDrawer.setColor(Color.BLUE)
         shapeDrawer.line(origin, origin + destination)

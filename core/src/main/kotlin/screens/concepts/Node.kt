@@ -53,6 +53,33 @@ open class Node(
         direction.renderIso(origin, shapeDrawer, scale)
     }
 
+    fun rotateAroundParentUp(degrees: Float) {
+        if(parent == null) {
+            rotateAroundUp(degrees)
+        } else {
+            val q = Quaternion(parent!!.direction.up, degrees)
+            rotate(q)
+        }
+    }
+
+    fun rotateAroundParentForward(degrees: Float) {
+        if(parent == null) {
+            rotateAroundForward(degrees)
+        } else {
+            val q = Quaternion(parent!!.direction.forward, degrees)
+            rotate(q)
+        }
+    }
+
+    fun rotateAroundParentRight(degrees: Float) {
+        if(parent == null) {
+            rotateAroundRight(degrees)
+        } else {
+            val q = Quaternion(parent!!.direction.right, degrees)
+            rotate(q)
+        }
+    }
+
     fun rotateAroundUp(degrees: Float) {
         val q = Quaternion(up, degrees)
         rotate(q)
