@@ -35,11 +35,15 @@ class ConceptScreen(gameState: StateMachine<GameState, GameEvent>) : BasicScreen
     var elapsedTime = 0f
     private val shapeDrawer by lazy { Assets.shapeDrawer }
 
-    val node = Node("base", vec3(), 0f, 0f, 0f).apply {
+    val node = Node("base", vec3(25f, 25f, 0f), 0f, 0f, 0f).apply {
         addChild(Node("other thing", vec3(100f,0f,0f), 15f, 15f, 15f).apply {
             addChild(Segment("a segmebt", vec3(0f, 50f, 0f),100f, Direction3d(25f, 0f,0f),Color.WHITE))
         })
     }
+
+    val origin = Node("origin", scale = 100f)
+
+    val nodes = listOf(node, origin)
 
     val thingList = selectedItemListOf(*node.flatChildren.values.toTypedArray())
 
@@ -69,8 +73,7 @@ class ConceptScreen(gameState: StateMachine<GameState, GameEvent>) : BasicScreen
 
         batch.use {
             shapeDrawer.filledCircle(mousePosition, 1.5f, Color.RED)
-            node.renderIso(shapeDrawer)
-
+            nodes.forEach { it.renderIso(shapeDrawer) }
         }
     }
 
