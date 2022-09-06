@@ -10,16 +10,23 @@ import ktx.math.vec3
 import screens.stuff.selectRecursive
 import space.earlygrey.shapedrawer.ShapeDrawer
 
-sealed class Direction(v: Vector3) : Vector3(v.x, v.y, v.z) {
-    class Up() : Direction(vec3(0f, 1f, 0f))
-    class Down() : Direction(vec3(0f, -1f, 0f))
-    class Forward() : Direction(vec3(0f, 0f, -1f))
-    class Back() : Direction(vec3(0f, 0f, 1f))
-    class Right() : Direction(vec3(-1f, 0f, 0f))
-    class Left() : Direction(vec3(1f, 0f, 0f))
+sealed class Direction(val name: String, v: Vector3) : Vector3(v.x, v.y, v.z) {
+    class Up() : Direction("UP", vec3(0f, 1f, 0f))
+    class Down() : Direction("DOWN", vec3(0f, -1f, 0f))
+    class Forward() : Direction("FORWARD", vec3(0f, 0f, -1f))
+    class Back() : Direction("BACK", vec3(0f, 0f, 1f))
+    class Right() : Direction("RIGHT", vec3(-1f, 0f, 0f))
+    class Left() : Direction("LEFT", vec3(1f, 0f, 0f))
+
+    override fun toString(): String {
+        return "$name: $x,$y,$z"
+    }
 }
 
-sealed class RotationDirection() {
+sealed class RotationDirection(val name: String) {
+    override fun toString(): String {
+        return "$name"
+    }
     fun getTargetRotation(node: Node, degrees: Float) : Float {
         var targetDegrees = degrees
         val currentRotation = node.rotations[this]!!
@@ -49,23 +56,22 @@ sealed class RotationDirection() {
     fun setRotation(node: Node, targetDegrees: Float) {
         node.rotations[this] = node.rotations[this]!! + targetDegrees
     }
-    object AroundUp : RotationDirection()
-    object AroundRight : RotationDirection()
+    object AroundUp : RotationDirection("AroundUp")
+    object AroundRight : RotationDirection("AroundRight")
 
-    object AroundForward : RotationDirection()
+    object AroundForward : RotationDirection("AroundForward")
 
-    object AroundY : RotationDirection()
+    object AroundY : RotationDirection("AroundY")
 
-    object AroundX : RotationDirection()
+    object AroundX : RotationDirection("AroundX")
 
-    object AroundZ : RotationDirection()
+    object AroundZ : RotationDirection("AroundZ")
 
-    object AroundParentUp : RotationDirection()
+    object AroundParentUp : RotationDirection("AroundParentUp")
 
-    object AroundParentForward : RotationDirection()
+    object AroundParentForward : RotationDirection("AroundParentForward")
 
-    object AroundParentRight : RotationDirection()
-    object AroundParentCross : RotationDirection()
+    object AroundParentRight : RotationDirection("AroundParentRight")
 
     companion object {
         val fullRange = 0f..360f
@@ -78,8 +84,7 @@ sealed class RotationDirection() {
             AroundZ to fullRange,
             AroundParentUp to fullRange,
             AroundParentRight to fullRange,
-            AroundParentForward to fullRange,
-            AroundParentCross to fullRange
+            AroundParentForward to fullRange
         )
         val rotationFuncs = mapOf<RotationDirection, (Node) -> Vector3>(
             AroundY to { _ -> Vector3.Y },
@@ -90,13 +95,7 @@ sealed class RotationDirection() {
             AroundRight to { node -> node.right },
             AroundParentForward to { node -> if(node.parent == null) node.forward else node.parent!!.forward },
             AroundParentRight to { node -> if(node.parent == null) node.right else node.parent!!.right },
-            AroundParentUp to { node -> if(node.parent == null) node.up else node.parent!!.up },
-            AroundParentCross to { node -> if(node.parent == null) node.right else {
-                val rotVec = node.parent!!.forward.cpy().crs(node.forward).nor()
-                if(rotVec.epsilonEquals(Vector3.Zero)) {
-                    node.parent!!.right
-                } else rotVec
-            } },
+            AroundParentUp to { node -> if(node.parent == null) node.up else node.parent!!.up }
         )
     }
 }

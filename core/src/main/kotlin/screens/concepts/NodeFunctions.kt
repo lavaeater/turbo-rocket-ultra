@@ -9,15 +9,35 @@ fun getArm(): Node {
     val lowerArmLength = armSegmentLength * 3f
     val shoulderLength = armSegmentLength / 2f
     return Node("base").apply {
-        addChild(Segment("shoulder", vec3(), shoulderLength, Direction3d(90f,0f,0f), rotationDirections = mapOf()).apply {
-            addChild(Segment("arm-upper", vec3(),upperArmLength, Direction3d(0f,90f,0f), rotationDirections = mapOf(RotationDirection.AroundRight to 0f..360f)).apply {
-                addChild(Segment("arm-lower", vec3(), lowerArmLength, Direction3d(0f,90f,0f), rotationDirections = mapOf(RotationDirection.AroundParentRight to 0f..180f)))
+        addChild(
+            Segment(
+                "shoulder",
+                vec3(),
+                shoulderLength,
+                Direction3d(90f, 0f, 0f),
+                rotationDirections = mapOf()
+            ).apply {
+                addChild(Segment(
+                    "arm-upper", vec3(), upperArmLength, Direction3d(0f, 90f, 0f), rotationDirections = mapOf(
+                        RotationDirection.AroundRight to 0f..360f,
+                        RotationDirection.AroundParentRight to 0f..90f
+                    )
+                ).apply {
+                    addChild(
+                        Segment(
+                            "arm-lower",
+                            vec3(),
+                            lowerArmLength,
+                            Direction3d(0f, 90f, 0f),
+                            rotationDirections = mapOf(RotationDirection.AroundParentRight to 0f..180f)
+                        )
+                    )
+                })
             })
-        })
     }
 }
 
-fun getCharacter() : Node {
+fun getCharacter(): Node {
     val totalLength = 90f
     val head = totalLength / 8f
     val torsoLength = head * 3f

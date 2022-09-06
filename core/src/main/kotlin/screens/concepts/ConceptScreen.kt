@@ -6,6 +6,7 @@ import com.badlogic.gdx.Input.Buttons
 import com.badlogic.gdx.graphics.Color
 import com.badlogic.gdx.math.MathUtils
 import com.badlogic.gdx.utils.viewport.ExtendViewport
+import eater.core.SelectedItemList
 import eater.core.selectedItemListOf
 import gamestate.GameEvent
 import gamestate.GameState
@@ -43,7 +44,7 @@ class ConceptScreen(gameState: StateMachine<GameState, GameEvent>) : BasicScreen
 
     val nodes = listOf(character)
 
-    val thingList = selectedItemListOf(*character.flatChildren.values.toTypedArray())
+    val rotateableNodes = selectedItemListOf(*character.flatChildren.filterValues { it.rotations.any() }.values.toTypedArray())
 
     override fun render(delta: Float) {
         elapsedTime += delta
@@ -54,20 +55,7 @@ class ConceptScreen(gameState: StateMachine<GameState, GameEvent>) : BasicScreen
         super.render(delta)
 
         if (!MathUtils.isZero(rotUp))
-            thingList.selectedItem.rotate(RotationDirection.AroundParentRight, rotUp)
-
-        if (!MathUtils.isZero(rotRight))
-            thingList.selectedItem.rotate(RotationDirection.AroundParentCross, rotRight)
-
-        if (!MathUtils.isZero(rotForward))
-            thingList.selectedItem.rotate(RotationDirection.AroundRight, rotForward)
-//
-//        if (!MathUtils.isZero(rotX))
-//            thingList.selectedItem.rotateAroundX(rotX)
-//        if (!MathUtils.isZero(rotY))
-//            thingList.selectedItem.rotateAroundY(rotY)
-//        if (!MathUtils.isZero(rotZ))
-//            thingList.selectedItem.rotateAroundZ(rotZ)
+            rotateableNodes.selectedItem.rotate(currentRotationList.selectedItem, rotUp)
 
         batch.use {
             shapeDrawer.filledCircle(mousePosition, 1.5f, Color.RED)
@@ -75,17 +63,30 @@ class ConceptScreen(gameState: StateMachine<GameState, GameEvent>) : BasicScreen
         }
     }
 
+    private val nodeRotationMap =
+        character.flatChildren.values.associateWith { selectedItemListOf(*it.rotations.keys.toTypedArray()) }
+    private val currentRotationList: SelectedItemList<RotationDirection> get() { return nodeRotationMap[rotateableNodes.selectedItem]!!}
 
     private val normalCommandMap = command("Normal") {
         setBoth(Input.Keys.Z, "Zoom in", { zoom = 0f }, { zoom = 0.1f })
         setBoth(Input.Keys.X, "Zoom out", { zoom = 0f }, { zoom = -0.1f })
         setUp(Input.Keys.LEFT, "Previous bone") {
-            thingList.previousItem()
-            info { "Current bone: ${thingList.selectedItem.name}" }
+            rotateableNodes.previousItem()
+            info { "Segment: ${rotateableNodes.selectedItem.name}" }
+            info { "Rotation: ${currentRotationList.selectedItem}" }
         }
         setUp(Input.Keys.RIGHT, "Next bone") {
-            thingList.nextItem()
-            info { "Current bone: ${thingList.selectedItem.name}" }
+            rotateableNodes.nextItem()
+            info { "Segment: ${rotateableNodes.selectedItem.name}" }
+            info { "Rotation: ${currentRotationList.selectedItem}" }
+        }
+        setUp(Input.Keys.UP, "Previous bone") {
+            currentRotationList.nextItem()
+            info { "Rotation: ${currentRotationList.selectedItem}" }
+        }
+        setUp(Input.Keys.DOWN, "Next bone") {
+            currentRotationList.previousItem()
+            info { "Rotation: ${currentRotationList.selectedItem}" }
         }
         setBoth(Input.Keys.W, "Rotate Left", { rotRight = 0f }) { rotRight = 5f  }
         setBoth(Input.Keys.S, "Rotate Right", { rotRight = 0f }) { rotRight = -5f  }
