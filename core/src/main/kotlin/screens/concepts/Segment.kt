@@ -15,8 +15,12 @@ open class Segment(
     localPosition: Vector3 = vec3(),
     var length: Float = 10f,
     val boneDirection3d: Direction3d = Direction3d(),
-    color: Color = Color.LIGHT_GRAY
-) : Node(name, localPosition, color = color) {
+    color: Color = Color.LIGHT_GRAY,
+    rotationDirections: Map<RotationDirection, ClosedFloatingPointRange<Float>> = RotationDirection.allRotations
+) : Node(name, localPosition, color = color, rotationDirections = rotationDirections) {
+    init {
+        direction = boneDirection3d
+    }
     var boneScaled = boneDirection3d.forward.cpy().scl(length)
         private set
         get() {
@@ -41,7 +45,7 @@ open class Segment(
     override fun renderIso(shapeDrawer: ShapeDrawer) {
         super.renderIso(shapeDrawer)
         origin.toIsoFrom3d(position)
-        boneDirection3d.renderIso(origin, shapeDrawer, scale)
+        //boneDirection3d.renderIso(origin, shapeDrawer, scale)
         shapeDrawer.filledCircle(origin, 1f, color)
 
         destination.toIsoFrom3d(boneEnd)

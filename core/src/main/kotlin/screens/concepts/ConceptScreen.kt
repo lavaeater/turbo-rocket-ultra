@@ -23,6 +23,10 @@ import tru.Assets
 
 class ConceptScreen(gameState: StateMachine<GameState, GameEvent>) : BasicScreen(gameState) {
     override val viewport = ExtendViewport(200f, 160f, 400f, 200f)
+    init {
+        camera.viewportHeight = 160f
+        camera.viewportWidth = 200f
+    }
 
     var zoom = 0f
     var rotRight = 0f
@@ -50,13 +54,13 @@ class ConceptScreen(gameState: StateMachine<GameState, GameEvent>) : BasicScreen
         super.render(delta)
 
         if (!MathUtils.isZero(rotUp))
-            thingList.selectedItem.rotateAroundParentUp(rotUp)
+            thingList.selectedItem.rotate(RotationDirection.AroundParentRight, rotUp)
 
         if (!MathUtils.isZero(rotRight))
-            thingList.selectedItem.rotateAroundParentRight(rotRight)
+            thingList.selectedItem.rotate(RotationDirection.AroundParentCross, rotRight)
 
         if (!MathUtils.isZero(rotForward))
-            thingList.selectedItem.rotateAroundParentForward(rotForward)
+            thingList.selectedItem.rotate(RotationDirection.AroundRight, rotForward)
 //
 //        if (!MathUtils.isZero(rotX))
 //            thingList.selectedItem.rotateAroundX(rotX)
