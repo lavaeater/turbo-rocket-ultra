@@ -46,6 +46,43 @@ class ConceptScreen(gameState: StateMachine<GameState, GameEvent>) : BasicScreen
 
     val rotateableNodes = selectedItemListOf(*character.flatChildren.filterValues { it.rotations.any() }.values.toTypedArray())
 
+    var mousePosition3d = vec3()
+        private set
+        get () {
+            field.set(mousePosition.x, mousePosition.y, -10f)
+            return field
+        }
+
+
+    fun pointArmAtMouse() {
+        /*
+
+        How do we do this the simplest way possible?
+
+        IN inverse kinematics, we work from outside in,
+        but I think I might want to work inside out, as an experiment.
+
+        We have to iterate over all segments to turn then towards the target.
+
+        I think we start outside in, first.
+
+        So we need to find the "outermost"
+
+        Nah, realistically, we shouldn't work with all segments, just
+        really the ones that are on a "fixed" point on the model, i.e. one that can't
+        turn itself - the shoulder for instance.
+
+        So, we can say that the body should always try to FACE the mouse pointer, in 3d.
+
+        lets just create a 3d point that we can move about in 3d space.
+
+        Let's also start presenting some information on the screen, perhaps?
+        
+
+         */
+
+    }
+
     override fun render(delta: Float) {
         elapsedTime += delta
         updateMouse()
@@ -56,6 +93,8 @@ class ConceptScreen(gameState: StateMachine<GameState, GameEvent>) : BasicScreen
 
         if (!MathUtils.isZero(rotUp))
             rotateableNodes.selectedItem.rotate(currentRotationList.selectedItem, rotUp)
+
+        pointArmAtMouse()
 
         batch.use {
             shapeDrawer.filledCircle(mousePosition, 1.5f, Color.RED)

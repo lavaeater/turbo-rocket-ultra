@@ -2,13 +2,14 @@ package screens.concepts
 
 import com.badlogic.gdx.graphics.Color
 import ktx.math.vec3
+import screens.concepts.RotationDirection.Companion.fullRange
 
 fun getArm(): Node {
     val armSegmentLength = 50f / 8f
     val upperArmLength = armSegmentLength * 5f
     val lowerArmLength = armSegmentLength * 3f
     val shoulderLength = armSegmentLength / 2f
-    return Node("base").apply {
+    return Node("base", rotationDirections = mapOf(RotationDirection.AroundY to fullRange)).apply {
         addChild(
             Segment(
                 "shoulder",
