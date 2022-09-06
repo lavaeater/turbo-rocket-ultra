@@ -32,9 +32,9 @@ import space.earlygrey.shapedrawer.ShapeDrawer
  */
 
 open class Direction3d(val yaw: Float = 0f, val pitch: Float = 0f, val roll: Float = 0f) {
-    val forward = Vector3(0f, 0f, -1f)
-    val up = Vector3(0f, 1f, 0f)
-    val right = Vector3(-1f, 0f, 0f)
+    val forward = Direction.Forward()
+    val up = Direction.Up()
+    val right = Direction.Right()
     val left get() = -right
     val down get() = -up
     val back get() = -forward

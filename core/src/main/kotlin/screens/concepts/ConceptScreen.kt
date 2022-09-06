@@ -22,7 +22,7 @@ import tru.Assets
 
 
 class ConceptScreen(gameState: StateMachine<GameState, GameEvent>) : BasicScreen(gameState) {
-    override val viewport = ExtendViewport(200f, 180f)
+    override val viewport = ExtendViewport(200f, 160f, 400f, 200f)
 
     var zoom = 0f
     var rotRight = 0f
@@ -35,41 +35,11 @@ class ConceptScreen(gameState: StateMachine<GameState, GameEvent>) : BasicScreen
     var elapsedTime = 0f
     private val shapeDrawer by lazy { Assets.shapeDrawer }
 
-    val totalLength = 90f
-    val head = totalLength / 8f
-    val torsoLength = head * 3f
-    val totalArmLength = head * 4f
-    val upperArmL = totalArmLength / 8f * 5f
-    val lowerArmL = totalArmLength / 8f * 3f
-    val upperLegL = head * 3f
-    val lowerLegL = head * 2f
-    val node = Node("base", vec3(0f, 0f, 0f), 0f, 0f, 0f).apply {
-        addChild(Segment("torso", vec3(0f,0f,0f), torsoLength, Direction3d(0f, 90f,0f), Color.GREEN).apply {
-            addChild(Segment("right-shoulder", vec3(0f,0f,0f), 15f, Direction3d(90f,0f,0f)).apply {
-                addChild(Segment("right-arm-upper", vec3(0f, 0f, 0f),upperArmL, Direction3d(0f, -90f,0f),Color.WHITE).apply {
-                    addChild(Segment("right-arm-lower", vec3(0f, 0f, 0f), lowerArmL, Direction3d(0f, -90f,0f)))
-                })
-            })
-            addChild(Segment("left-shoulder", vec3(0f,0f,0f), 15f, Direction3d(-90f,0f,0f)).apply {
-                addChild(Segment("left-arm-upper", vec3(0f, 0f, 0f),upperArmL, Direction3d(0f, -90f,0f),Color.WHITE).apply {
-                    addChild(Segment("left-arm-lower", vec3(0f, 0f, 0f), lowerArmL, Direction3d(0f, -90f,0f)))
-                })
-            })
-            addChild(Segment("right-hip", vec3(0f,-torsoLength,0f), 10f, Direction3d(90f,0f,0f)).apply {
-                addChild(Segment("right-leg-upper", vec3(0f, 0f, 0f),upperLegL, Direction3d(0f, -90f,0f),Color.WHITE).apply {
-                    addChild(Segment("right-leg-lower", vec3(0f, 0f, 0f), lowerLegL, Direction3d(0f, -90f,0f)))
-                })
-            })
-            addChild(Segment("left-hip", vec3(0f,-torsoLength,0f), 10f, Direction3d(-90f,0f,0f)).apply {
-                addChild(Segment("left-leg-upper", vec3(0f, 0f, 0f),upperLegL, Direction3d(0f, -90f,0f),Color.WHITE).apply {
-                    addChild(Segment("left-leg-lower", vec3(0f, 0f, 0f), lowerLegL, Direction3d(0f, -90f,0f)))
-                })
-            })
-        })
-    }
-    val nodes = listOf(node)
+    val character = getArm()
 
-    val thingList = selectedItemListOf(*node.flatChildren.values.toTypedArray())
+    val nodes = listOf(character)
+
+    val thingList = selectedItemListOf(*character.flatChildren.values.toTypedArray())
 
     override fun render(delta: Float) {
         elapsedTime += delta
@@ -80,20 +50,20 @@ class ConceptScreen(gameState: StateMachine<GameState, GameEvent>) : BasicScreen
         super.render(delta)
 
         if (!MathUtils.isZero(rotUp))
-            thingList.selectedItem.rotateAroundUp(rotUp)
+            thingList.selectedItem.rotateAroundParentUp(rotUp)
 
         if (!MathUtils.isZero(rotRight))
-            thingList.selectedItem.rotateAroundRight(rotRight)
+            thingList.selectedItem.rotateAroundParentRight(rotRight)
 
         if (!MathUtils.isZero(rotForward))
-            thingList.selectedItem.rotateAroundForward(rotForward)
-
-        if (!MathUtils.isZero(rotX))
-            thingList.selectedItem.rotateAroundX(rotX)
-        if (!MathUtils.isZero(rotY))
-            thingList.selectedItem.rotateAroundY(rotY)
-        if (!MathUtils.isZero(rotZ))
-            thingList.selectedItem.rotateAroundZ(rotZ)
+            thingList.selectedItem.rotateAroundParentForward(rotForward)
+//
+//        if (!MathUtils.isZero(rotX))
+//            thingList.selectedItem.rotateAroundX(rotX)
+//        if (!MathUtils.isZero(rotY))
+//            thingList.selectedItem.rotateAroundY(rotY)
+//        if (!MathUtils.isZero(rotZ))
+//            thingList.selectedItem.rotateAroundZ(rotZ)
 
         batch.use {
             shapeDrawer.filledCircle(mousePosition, 1.5f, Color.RED)
@@ -113,14 +83,13 @@ class ConceptScreen(gameState: StateMachine<GameState, GameEvent>) : BasicScreen
             thingList.nextItem()
             info { "Current bone: ${thingList.selectedItem.name}" }
         }
-        setBoth(Input.Keys.A, "Rotate Left", { rotRight = 0f }) { rotRight = 5f * modifier }
-        setBoth(Input.Keys.D, "Rotate Right", { rotX = 0f }) { rotX = 5f * modifier }
-        setBoth(Input.Keys.W, "Rotate X", { rotUp = 0f }) { rotUp = 5f * modifier }
-        setBoth(Input.Keys.S, "Rotate X", { rotY = 0f }) { rotY = 5f * modifier }
-        setBoth(Input.Keys.Q, "Rotate Z", { rotForward = 0f }) { rotForward = 5f * modifier }
-        setBoth(Input.Keys.E, "Rotate Z", { rotZ = 0f }) { rotZ = 5f * modifier }
-        setUp(Input.Keys.SPACE, "Rotate Z") { node.reset() }
-        setBoth(Input.Keys.SHIFT_RIGHT, "inverse input", { modifier = 1f}) { modifier = -1f}
+        setBoth(Input.Keys.W, "Rotate Left", { rotRight = 0f }) { rotRight = 5f  }
+        setBoth(Input.Keys.S, "Rotate Right", { rotRight = 0f }) { rotRight = -5f  }
+        setBoth(Input.Keys.A, "Rotate X", { rotUp = 0f }) { rotUp = 5f  }
+        setBoth(Input.Keys.D, "Rotate X", { rotUp = 0f }) { rotUp = -5f  }
+        setBoth(Input.Keys.Q, "Rotate Z", { rotForward = 0f }) { rotForward = 5f  }
+        setBoth(Input.Keys.E, "Rotate Z", { rotForward = 0f }) { rotForward = -5f  }
+        setUp(Input.Keys.SPACE, "Rotate Z") { character.reset() }
     }
 
 

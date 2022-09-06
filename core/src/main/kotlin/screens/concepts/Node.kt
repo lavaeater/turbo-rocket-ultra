@@ -10,6 +10,27 @@ import ktx.math.vec3
 import screens.stuff.selectRecursive
 import space.earlygrey.shapedrawer.ShapeDrawer
 
+sealed class Direction(v: Vector3) : Vector3(v.x, v.y, v.z) {
+    class Up(): Direction(vec3(0f,1f,0f))
+    class Down(): Direction(vec3(0f,-1f,0f))
+    class Forward(): Direction(vec3(0f,0f,-1f))
+    class Back(): Direction(vec3(0f,0f,1f))
+    class Right(): Direction(vec3(-1f,0f,0f))
+    class Left(): Direction(vec3(1f,0f,0f))
+}
+
+sealed class RotationDirection() {
+    object AroundUp: RotationDirection()
+    object AroundRight: RotationDirection()
+    object AroundForward: RotationDirection()
+    object AroundY: RotationDirection()
+    object AroundX: RotationDirection()
+    object AroundZ: RotationDirection()
+    object AroundParentUp: RotationDirection()
+    object AroundParentForward: RotationDirection()
+    object AroundParentRight: RotationDirection()
+}
+
 open class Node(
     var name: String,
     val localPosition: Vector3 = vec3(),
@@ -108,6 +129,20 @@ open class Node(
     fun rotateAroundZ(degrees: Float) {
         val q = Quaternion(Vector3.Z, degrees)
         rotate(q)
+    }
+
+    /**
+     * Final thoughts:
+     *
+     * Reduce back to less. Explore models consisting of Three segments
+     * and their joints respective to each other and how to handle them.
+     *
+     * We should always only ever need THREE rotations in some fashion,
+     * yaw, pitch and roll.
+     */
+
+    fun rotate(rotationDirection: RotationDirection, degrees: Float) {
+
     }
 
     fun reset() {
