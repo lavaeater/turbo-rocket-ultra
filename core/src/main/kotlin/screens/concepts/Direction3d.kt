@@ -39,6 +39,17 @@ open class Direction3d(val yaw: Float = 0f, val pitch: Float = 0f, val roll: Flo
     val down get() = -up
     val back get() = -forward
 
+    /*
+    I need some goddamned angles here!
+
+    I need to know every directions angle against the planes of the directions themselves, if you know what I mean.
+     */
+
+    companion object {
+        val thePlanes = Direction3d()
+    }
+
+
     /**
      * We need some kind of values for the angles, to be able to reset directions etc.
      *
@@ -77,18 +88,18 @@ open class Direction3d(val yaw: Float = 0f, val pitch: Float = 0f, val roll: Flo
 
     private val destination = vec2()
 
-    fun renderIso(origin: Vector2, shapeDrawer: ShapeDrawer, scale: Float = 10f) {
-        destination.toIsoFrom3d(forward).scl(scale)
+    fun renderIso(origin: Vector2, shapeDrawer: ShapeDrawer, scale: Float = 100f) {
+        destination.toIsoFrom3d(forward.cpy().scl(scale))
         shapeDrawer.setColor(Color.BLUE)
         shapeDrawer.line(origin, origin + destination)
-        shapeDrawer.filledCircle(origin + destination, 1f)
-        destination.toIsoFrom3d(up).scl(scale)
+        shapeDrawer.filledCircle(origin + destination, .25f)
+        destination.toIsoFrom3d(up.cpy().scl(scale))
         shapeDrawer.setColor(Color.GREEN)
         shapeDrawer.line(origin, origin + destination)
-        shapeDrawer.filledCircle(origin + destination, 1f)
-        destination.toIsoFrom3d(right).scl(scale)
+        shapeDrawer.filledCircle(origin + destination, .25f)
+        destination.toIsoFrom3d(right.cpy().scl(scale))
         shapeDrawer.setColor(Color.RED)
         shapeDrawer.line(origin, origin + destination)
-        shapeDrawer.filledCircle(origin + destination, 1f)
+        shapeDrawer.filledCircle(origin + destination, .25f)
     }
 }

@@ -5,6 +5,7 @@ import com.badlogic.gdx.Input
 import com.badlogic.gdx.Input.Buttons
 import com.badlogic.gdx.graphics.Color
 import com.badlogic.gdx.math.MathUtils
+import com.badlogic.gdx.math.Vector3
 import com.badlogic.gdx.utils.viewport.ExtendViewport
 import eater.core.SelectedItemList
 import eater.core.selectedItemListOf
@@ -16,14 +17,15 @@ import ktx.math.vec2
 import ktx.math.vec3
 import screens.BasicScreen
 import screens.command
+import screens.stuff.toIso
 import screens.ui.KeyPress
 import statemachine.StateMachine
 import tru.Assets
 
 
-
 class ConceptScreen(gameState: StateMachine<GameState, GameEvent>) : BasicScreen(gameState) {
     override val viewport = ExtendViewport(200f, 160f, 400f, 200f)
+
     init {
         camera.viewportHeight = 160f
         camera.viewportWidth = 200f
@@ -44,15 +46,11 @@ class ConceptScreen(gameState: StateMachine<GameState, GameEvent>) : BasicScreen
 
     val nodes = listOf(character)
 
-    val rotateableNodes = selectedItemListOf(*character.flatChildren.filterValues { it.rotations.any() }.values.toTypedArray())
+    val rotateableNodes =
+        selectedItemListOf(*character.flatChildren.filterValues { it.rotations.any() }.values.toTypedArray())
 
-    var mousePosition3d = vec3()
-        private set
-        get () {
-            field.set(mousePosition.x, mousePosition.y, -10f)
-            return field
-        }
-
+    val target3d = vec3()
+    val targetChangeVector = vec3()
 
     fun pointArmAtMouse() {
         /*
@@ -77,10 +75,48 @@ class ConceptScreen(gameState: StateMachine<GameState, GameEvent>) : BasicScreen
         lets just create a 3d point that we can move about in 3d space.
 
         Let's also start presenting some information on the screen, perhaps?
-        
 
+
+        So what is it everyone is saying about all this?
+
+        I think we have to start with measuring the distance to the target.
+
+        If the distance is less than the length of the segment chain - and yes, we
+        should probably think about not having them be able to be in weird places, right?
+
+        I think that's actually done, but I can code that in.
+
+        So, we start at outer. If we are too far away, we will rotate all segments so they point towards
+        target, outside in.
+
+        If we are closer than, we will iterate over outside in with rotations to try and get there.
+
+        Can we let the computer just do this like a complete retard?
          */
 
+//        val leaf = (character.getNode("arm-lower") as Segment)
+//
+//        val dst2 = leaf.boneEnd.dst2(mousePosition3d)
+        /**
+         * Hey, cool thought: the arm can only rotate around some
+         * axes - so how do we use that for IK?
+         *
+         * We can use it to calculate angles, for instance, against the
+         *
+         * x-z-plane
+         */
+        val dX = target3d.x - character.position.x
+        val dY = target3d.z - character.position.z
+
+        var theta = MathUtils.atan2(dX, dY) * MathUtils.radDeg
+        if(theta < 0f)
+            theta += 360f
+        val forwardXZ = vec2(character.forward.z, character.forward.x)
+        val currentTheta = forwardXZ.angleDeg()
+        val degrees = theta - currentTheta
+        info { "ct: $currentTheta" }
+        info { "forward dot with Y or something: ${character.forward.cpy().dot(Vector3.X) * MathUtils.radDeg}"}
+        character.rotate(RotationDirection.AroundY, degrees)
     }
 
     override fun render(delta: Float) {
@@ -94,17 +130,22 @@ class ConceptScreen(gameState: StateMachine<GameState, GameEvent>) : BasicScreen
         if (!MathUtils.isZero(rotUp))
             rotateableNodes.selectedItem.rotate(currentRotationList.selectedItem, rotUp)
 
+        target3d.add(targetChangeVector)
         pointArmAtMouse()
 
         batch.use {
             shapeDrawer.filledCircle(mousePosition, 1.5f, Color.RED)
             nodes.forEach { it.renderIso(shapeDrawer) }
+            shapeDrawer.filledCircle(target3d.toIso(), 0.5f, Color.GREEN)
         }
     }
 
     private val nodeRotationMap =
         character.flatChildren.values.associateWith { selectedItemListOf(*it.rotations.keys.toTypedArray()) }
-    private val currentRotationList: SelectedItemList<RotationDirection> get() { return nodeRotationMap[rotateableNodes.selectedItem]!!}
+    private val currentRotationList: SelectedItemList<RotationDirection>
+        get() {
+            return nodeRotationMap[rotateableNodes.selectedItem]!!
+        }
 
     private val normalCommandMap = command("Normal") {
         setBoth(Input.Keys.Z, "Zoom in", { zoom = 0f }, { zoom = 0.1f })
@@ -127,12 +168,19 @@ class ConceptScreen(gameState: StateMachine<GameState, GameEvent>) : BasicScreen
             currentRotationList.previousItem()
             info { "Rotation: ${currentRotationList.selectedItem}" }
         }
-        setBoth(Input.Keys.W, "Rotate Left", { rotRight = 0f }) { rotRight = 5f  }
-        setBoth(Input.Keys.S, "Rotate Right", { rotRight = 0f }) { rotRight = -5f  }
-        setBoth(Input.Keys.A, "Rotate X", { rotUp = 0f }) { rotUp = 5f  }
-        setBoth(Input.Keys.D, "Rotate X", { rotUp = 0f }) { rotUp = -5f  }
-        setBoth(Input.Keys.Q, "Rotate Z", { rotForward = 0f }) { rotForward = 5f  }
-        setBoth(Input.Keys.E, "Rotate Z", { rotForward = 0f }) { rotForward = -5f  }
+        setBoth(Input.Keys.W, "Rotate Left", { rotRight = 0f }) { rotRight = 5f }
+        setBoth(Input.Keys.S, "Rotate Right", { rotRight = 0f }) { rotRight = -5f }
+        setBoth(Input.Keys.A, "Rotate X", { rotUp = 0f }) { rotUp = 5f }
+        setBoth(Input.Keys.D, "Rotate X", { rotUp = 0f }) { rotUp = -5f }
+        setBoth(Input.Keys.Q, "Rotate Z", { rotForward = 0f }) { rotForward = 5f }
+        setBoth(Input.Keys.E, "Rotate Z", { rotForward = 0f }) { rotForward = -5f }
+        setBoth(Input.Keys.NUMPAD_8, "Target UP", { targetChangeVector.y = 0f }) { targetChangeVector.y = -1f }
+        setBoth(Input.Keys.NUMPAD_2, "Target DOWN", { targetChangeVector.y = 0f }) { targetChangeVector.y = 1f }
+        setBoth(Input.Keys.NUMPAD_4, "Target LEFT", { targetChangeVector.x = 0f }) { targetChangeVector.x = -1f }
+        setBoth(Input.Keys.NUMPAD_6, "Target RIGHT", { targetChangeVector.x = 0f }) { targetChangeVector.x = 1f }
+        setBoth(Input.Keys.NUMPAD_7, "Target Z", { targetChangeVector.z = 0f }) { targetChangeVector.z = -1f }
+        setBoth(Input.Keys.NUMPAD_1, "Target Z", { targetChangeVector.z = 0f }) { targetChangeVector.z = 1f }
+
         setUp(Input.Keys.SPACE, "Rotate Z") { character.reset() }
     }
 

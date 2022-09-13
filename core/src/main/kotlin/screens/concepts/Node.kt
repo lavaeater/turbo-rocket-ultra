@@ -1,10 +1,11 @@
 package screens.concepts
 
 import com.badlogic.gdx.graphics.Color
+import com.badlogic.gdx.math.MathUtils
 import com.badlogic.gdx.math.Quaternion
 import com.badlogic.gdx.math.Vector3
 import isometric.toIsoFrom3d
-import ktx.math.plus
+import ktx.log.info
 import ktx.math.vec2
 import ktx.math.vec3
 import screens.stuff.selectRecursive
@@ -29,28 +30,32 @@ sealed class RotationDirection(val name: String) {
     }
     fun getTargetRotation(node: Node, degrees: Float) : Float {
         var targetDegrees = degrees
-        val currentRotation = node.rotations[this]!!
-        val range = node.rotationDirections[this]!!
-        if(!range.contains(currentRotation)) {
-            targetDegrees = if(currentRotation < range.start) {
-                range.start - currentRotation
-            } else {
-                range.endInclusive - currentRotation
-            }
-        } else if(!range.contains(currentRotation + targetDegrees)) {
-            targetDegrees = if(targetDegrees < 0f) {
-                range.start - currentRotation
-            } else {
-                range.endInclusive - currentRotation
-            }
-        }
+//        val currentRotation = node.rotations[this]!!
+//        val range = node.rotationDirections[this]!!
+//        if(!range.contains(currentRotation)) {
+//            targetDegrees = if(currentRotation < range.start) {
+//                range.start - currentRotation
+//            } else {
+//                range.endInclusive - currentRotation
+//            }
+//        } else if(!range.contains(currentRotation + targetDegrees)) {
+//            targetDegrees = if(targetDegrees < 0f) {
+//                range.start - currentRotation
+//            } else {
+//                range.endInclusive - currentRotation
+//            }
+//        }
         return targetDegrees
     }
 
     open fun rotate(node: Node, degrees: Float) {
-        val targetDegrees = getTargetRotation(node, degrees)
+        var targetDegrees = getTargetRotation(node, degrees)
+        val speed = node.rotationSpeed
+        targetDegrees = MathUtils.clamp(targetDegrees, -speed, speed)
         setRotation(node, targetDegrees)
-        val q = Quaternion(rotationFuncs[this]!!(node), targetDegrees)
+        val rotationFuncGetter = rotationAxisFunctions.get(this)
+        val rotationAxis = rotationFuncGetter!!.invoke(node)
+        val q = Quaternion(rotationAxis, targetDegrees)
         node.rotate(q)
     }
     fun setRotation(node: Node, targetDegrees: Float) {
@@ -75,28 +80,33 @@ sealed class RotationDirection(val name: String) {
 
     companion object {
         val fullRange = 0f..360f
-        val allRotations = mapOf(
-            AroundUp to fullRange,
-            AroundRight to fullRange,
-            AroundForward to fullRange,
-            AroundY to fullRange,
-            AroundX to fullRange,
-            AroundZ to fullRange,
-            AroundParentUp to fullRange,
-            AroundParentRight to fullRange,
-            AroundParentForward to fullRange
-        )
-        val rotationFuncs = mapOf<RotationDirection, (Node) -> Vector3>(
-            AroundY to { _ -> Vector3.Y },
-            AroundX to { _ -> Vector3.X },
-            AroundZ to { _ -> Vector3.Z },
-            AroundUp to { node -> node.up },
-            AroundForward to { node -> node.forward },
-            AroundRight to { node -> node.right },
-            AroundParentForward to { node -> if(node.parent == null) node.forward else node.parent!!.forward },
-            AroundParentRight to { node -> if(node.parent == null) node.right else node.parent!!.right },
-            AroundParentUp to { node -> if(node.parent == null) node.up else node.parent!!.up }
-        )
+        val allRotations by lazy {
+            mapOf(
+                AroundUp to fullRange,
+                AroundRight to fullRange,
+                AroundForward to fullRange,
+                AroundY to fullRange,
+                AroundX to fullRange,
+                AroundZ to fullRange,
+                AroundParentUp to fullRange,
+                AroundParentRight to fullRange,
+                AroundParentForward to fullRange
+            )
+        }
+        val rotationAxisFunctions by lazy {
+            mapOf<RotationDirection, (Node) -> Vector3>(
+                AroundX to { node -> Vector3.X },
+                AroundZ to { node -> Vector3.Z },
+                AroundUp to { node -> node.up },
+                AroundForward to { node -> node.forward },
+                AroundY to { node -> Vector3.Y },
+                AroundY to { node -> Vector3.Y },
+                AroundRight to { node -> node.right },
+                AroundParentForward to { node -> if (node.parent == null) node.forward else node.parent!!.forward },
+                AroundParentRight to { node -> if (node.parent == null) node.right else node.parent!!.right },
+                AroundParentUp to { node -> if (node.parent == null) node.up else node.parent!!.up }
+            )
+        }
     }
 }
 
@@ -108,6 +118,7 @@ open class Node(
     roll: Float = 0f,
     var color: Color = Color.RED,
     var scale: Float = 1f,
+    val rotationSpeed:Float = 1f,
     val rotationDirections: Map<RotationDirection, ClosedFloatingPointRange<Float>> = RotationDirection.allRotations
 ) {
     var direction = Direction3d(yaw, pitch, roll)
@@ -122,6 +133,17 @@ open class Node(
         get() {
             return if (parent == null) field.set(localPosition) else field.set(parent!!.position).add(localPosition)
         }
+
+    fun getNode(name: String):Node? {
+        if(this.name == name)
+            return this else
+        {
+            for(child in children) {
+                return child.getNode(name)
+            }
+        }
+        return null
+    }
 
     fun addChild(child: Node) {
         child.parent = this
@@ -143,7 +165,8 @@ open class Node(
         origin.toIsoFrom3d(position)
         shapeDrawer.setColor(color)
         shapeDrawer.filledCircle(origin, 1f)
-        //direction.renderIso(origin, shapeDrawer, scale)
+        if(this !is Segment)
+            direction.renderIso(origin, shapeDrawer)
     }
 
     fun rotate(direction: RotationDirection, degrees: Float) {
