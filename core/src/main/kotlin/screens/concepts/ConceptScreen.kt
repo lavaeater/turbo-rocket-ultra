@@ -119,6 +119,11 @@ class ConceptScreen(gameState: StateMachine<GameState, GameEvent>) : BasicScreen
         character.rotate(RotationDirection.AroundY, degrees)
     }
 
+    val origo = vec3()
+    val yIndicator = vec3(0f,1000f,0f)
+    val zIndicator = vec3(0f,0f,-1000f)
+    val xIndicator = vec3(-1000f,0f,0f)
+
     override fun render(delta: Float) {
         elapsedTime += delta
         updateMouse()
@@ -126,6 +131,8 @@ class ConceptScreen(gameState: StateMachine<GameState, GameEvent>) : BasicScreen
         camera.position.y = 0f
         camera.zoom = camera.zoom + 0.05f * zoom
         super.render(delta)
+
+        info { "${character.direction.currentYaw}, ${character.direction.currentPitch}, ${character.direction.currentRoll}," }
 
         if (!MathUtils.isZero(rotUp))
             rotateableNodes.selectedItem.rotate(currentRotationList.selectedItem, rotUp)
@@ -137,6 +144,11 @@ class ConceptScreen(gameState: StateMachine<GameState, GameEvent>) : BasicScreen
             shapeDrawer.filledCircle(mousePosition, 1.5f, Color.RED)
             nodes.forEach { it.renderIso(shapeDrawer) }
             shapeDrawer.filledCircle(target3d.toIso(), 0.5f, Color.GREEN)
+
+
+            shapeDrawer.line(origo.toIso(), yIndicator.toIso())
+            shapeDrawer.line(origo.toIso(), xIndicator.toIso())
+            shapeDrawer.line(origo.toIso(), zIndicator.toIso())
         }
     }
 
@@ -180,7 +192,12 @@ class ConceptScreen(gameState: StateMachine<GameState, GameEvent>) : BasicScreen
         setBoth(Input.Keys.NUMPAD_6, "Target RIGHT", { targetChangeVector.x = 0f }) { targetChangeVector.x = 1f }
         setBoth(Input.Keys.NUMPAD_7, "Target Z", { targetChangeVector.z = 0f }) { targetChangeVector.z = -1f }
         setBoth(Input.Keys.NUMPAD_1, "Target Z", { targetChangeVector.z = 0f }) { targetChangeVector.z = 1f }
-
+        setBoth(Input.Keys.NUM_1, "Target UP", { targetChangeVector.y = 0f }) { targetChangeVector.y = -1f }
+        setBoth(Input.Keys.NUM_2, "Target DOWN", { targetChangeVector.y = 0f }) { targetChangeVector.y = 1f }
+        setBoth(Input.Keys.NUM_3, "Target LEFT", { targetChangeVector.x = 0f }) { targetChangeVector.x = -1f }
+        setBoth(Input.Keys.NUM_4, "Target RIGHT", { targetChangeVector.x = 0f }) { targetChangeVector.x = 1f }
+        setBoth(Input.Keys.NUM_5, "Target Z", { targetChangeVector.z = 0f }) { targetChangeVector.z = -1f }
+        setBoth(Input.Keys.NUM_6, "Target Z", { targetChangeVector.z = 0f }) { targetChangeVector.z = 1f }
         setUp(Input.Keys.SPACE, "Rotate Z") { character.reset() }
     }
 

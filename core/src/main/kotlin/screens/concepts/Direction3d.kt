@@ -43,12 +43,51 @@ open class Direction3d(val yaw: Float = 0f, val pitch: Float = 0f, val roll: Flo
     I need some goddamned angles here!
 
     I need to know every directions angle against the planes of the directions themselves, if you know what I mean.
+
+    So, the angle between the PLANE xz and a FORWARD vector is the angle between two vectors
+    1,0 (x = 1 and y = 0, where x is the z-forward (-1 really) and then a vector made from the
+    forward-vectors z and y components
+
+    Basically we calculate, in this case, the PITCH of the forward vector (can be done with any vector, I guess, or any direction,
+    if you know what I mean.
      */
+    private val vectorToCheck = vec2()
+    private val planeVector = vec2()
+
+    /**
+     * Pitch is the rotation of the forward vector's
+     *
+     */
+    val currentPitch: Float get() {
+        vectorToCheck.set(up.z, up.y)
+        planeVector.set(0f, 1f)
+        return vectorToCheck.angleDeg(planeVector)
+    }
+
+    /**
+     * This is the rotation of the forward-vector's x and z component
+     * compared to the xz-plane with z as -1
+     */
+    val currentYaw: Float get() {
+        vectorToCheck.set(forward.z, forward.x)
+        planeVector.set(-1f, 0f)
+        return vectorToCheck.angleDeg(planeVector)
+    }
+
+    /**
+     * Roll is conceptually weird, but it should be, instead,
+     * the left vectors' angle against the xz plane with x as 1
+     *
+     */
+    val currentRoll: Float get() {
+        vectorToCheck.set(right.x, right.y)
+        planeVector.set(1f, 0f)
+        return vectorToCheck.angleDeg(planeVector)
+    }
 
     companion object {
         val thePlanes = Direction3d()
     }
-
 
     /**
      * We need some kind of values for the angles, to be able to reset directions etc.
@@ -65,6 +104,11 @@ open class Direction3d(val yaw: Float = 0f, val pitch: Float = 0f, val roll: Flo
      */
 
     fun reset() : Quaternion {
+        /**
+         * To reset, just create a quaternion from the input values and
+         * use it to rotate this direction. Doh!
+         *
+         */
         val rotateQuaternion = Quaternion().setFromCross(forward, Vector3.Y).mul(Quaternion().setFromCross(forward, Vector3.X)).mul(Quaternion().setFromCross(forward, Vector3.Z))
 
         val y = -rotateQuaternion.getAngleAround(Vector3.Y)
