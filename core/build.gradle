@@ -30,7 +30,6 @@ dependencies {
 	api "com.rafaskoberg.gdx:typing-label:$typingLabelVersion"
 	api "com.strongjoshua:libgdx-inGameConsole:$inGameConsoleVersion"
 	api "com.sudoplay.joise:joise:$joiseVersion"
-	api "de.golfgl.gdxcontrollerutils:gdx-controllerutils-mapping:$controllerMappingVersion"
 	api "io.github.libktx:ktx-actors:$ktxVersion"
 	api "io.github.libktx:ktx-app:$ktxVersion"
 	api "io.github.libktx:ktx-ashley:$ktxVersion"

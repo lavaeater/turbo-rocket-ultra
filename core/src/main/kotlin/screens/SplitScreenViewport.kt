@@ -302,6 +302,7 @@ class SplitViewport(rootViewport: Viewport) : Viewport() {
             when (subView.sizeInformation.sizeType) {
                 SizeType.ABSOLUTE -> usedSize += subView.sizeInformation.size
                 SizeType.RELATIVE -> usedSize += subView.sizeInformation.size * totalSize
+                SizeType.REST -> usedSize += subView.sizeInformation.size
             }
         }
         return usedSize
