@@ -32,6 +32,7 @@ class WeaponUpdateSystem: IteratingSystem(
                 CardinalDirection.North -> spriteComponent.extraTextureRegions["gun"]?.flip(false, true)
                 CardinalDirection.South -> spriteComponent.extraTextureRegions["gun"]?.flip(false, true)
                 CardinalDirection.West -> spriteComponent.extraTextureRegions["gun"]?.flip(false, true)
+                else -> {}
             }
             if(weapon.handleKey != "") {
                 spriteComponent.extraSpriteAnchors["gun"] = weapon.handleKey

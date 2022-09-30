@@ -1,13 +1,18 @@
 package map.grid
 
+import box2dLight.ConeLight
+import box2dLight.RayHandler
 import com.badlogic.gdx.graphics.Color
 import com.badlogic.gdx.math.Rectangle
 import com.badlogic.gdx.math.Vector2
 import eater.core.world
+import eater.injection.InjectionContext.Companion.inject
 import ecs.components.graphics.renderables.RenderableTextureRegion
 import ecs.components.graphics.renderables.RenderableTextureRegions
+
 import ktx.box2d.Query
 import ktx.box2d.query
+import ktx.math.vec2
 import map.snake.*
 import eater.physics.getEntity
 import physics.hasObstacle
@@ -79,6 +84,34 @@ class GridMapSection(
         return itIsSafe
     }
 
+    val lights by lazy {
+        rayHandler.setShadows(true)
+        val lightDirections = MapDirection.directions.filter { !connections.contains(it) }
+
+        lightDirections.map { lightDirection ->
+            val lightPosition = vec2()
+            when (lightDirection) {
+                MapDirection.North -> lightPosition.set(innerBounds.horizontalCenter(), innerBounds.bottom())
+                MapDirection.East -> lightPosition.set(innerBounds.right(), innerBounds.verticalCenter())
+                MapDirection.South -> lightPosition.set(innerBounds.horizontalCenter(), innerBounds.top())
+                MapDirection.West -> lightPosition.set(innerBounds.left(), innerBounds.verticalCenter())
+            }
+            ConeLight(
+                rayHandler,
+                32,
+                directionColorMap[lightDirection]!!,//Color(.05f, .05f, .05f, 1f),
+                30f,
+                lightPosition.x,
+                lightPosition.y,
+                MapDirection.directionDegrees[lightDirection]!!,
+                90f
+            ).apply {
+                isStaticLight = false
+                isSoft = true
+            }
+        }
+    }
+
     companion object {
         const val width = 6
         const val height = 6
@@ -104,6 +137,7 @@ class GridMapSection(
     }
 
     private val connectionAlignments by lazy { connections.map { directionAlignment[it]!! }.flatten() }
+    val rayHandler by lazy { inject<RayHandler>() }
 
     val isoTiles by lazy {
         Array(height) { y ->

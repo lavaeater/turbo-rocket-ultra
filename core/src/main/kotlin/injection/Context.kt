@@ -1,6 +1,7 @@
 package injection
 
 import audio.AudioPlayer
+import box2dLight.RayHandler
 import com.badlogic.ashley.core.Engine
 import com.badlogic.ashley.core.PooledEngine
 import com.badlogic.gdx.Input
@@ -80,6 +81,7 @@ object Context : InjectionContext() {
             })
             bindSingleton(AudioPlayer())
             bindSingleton(GridMapManager())
+            bindSingleton(RayHandler(inject(), 500, 500))
             bindSingleton(MessageHandler())
             bindSingleton(TurboStoryManager().apply {
                 inject<MessageHandler>().apply {
@@ -107,10 +109,11 @@ object Context : InjectionContext() {
         return PooledEngine().apply {
             addSystem(UpdateTimePieceSystem())
             addSystem(PhysicsSystem(0))
-            addSystem(IsoCameraUpdateSystem(inject(), inject()))
+            addSystem(CameraUpdateSystem(inject(), inject()))
             addSystem(PlayerMoveSystem())
             addSystem(PlayerHasBeenHereSystem())
             addSystem(KeyboardInputSystem())
+            addSystem(GamepadInputSystem())
             addSystem(BodyDestroyerSystem(inject())) //world
             addSystem(CharacterWalkAndShootDirectionSystem())
             addSystem(PlayerShootingSystem(inject()))
@@ -133,10 +136,20 @@ object Context : InjectionContext() {
             addSystem(AnimationSystem())
             addSystem(WeaponReloadSystem())
             addSystem(UpdatePlayerStatsSystem())
+//            addSystem(
+//                RenderIsoSystem(
+//                    inject<PolygonSpriteBatch>() as Batch,
+//                    false,
+//                    inject(),
+//                    1,
+//                    false
+//                )
+//            )
             addSystem(
-                RenderIsoSystem(
+                RenderSystem(
                     inject<PolygonSpriteBatch>() as Batch,
                     false,
+                    inject(),
                     inject(),
                     1,
                     false
@@ -147,6 +160,7 @@ object Context : InjectionContext() {
             addSystem(UtilityAiSystem())
             addSystem(UpdateActionsSystem())
             addSystem(UpdateMemorySystem())
+            addSystem(PlayerFlashlightSystem())
             addSystem(PlayerContextActionSystem())
             addSystem(DelayedEntityCreationSystem())
             addSystem(LootDropSystem())
