@@ -9,12 +9,12 @@ import com.badlogic.gdx.physics.box2d.ContactImpulse
 import com.badlogic.gdx.physics.box2d.ContactListener
 import com.badlogic.gdx.physics.box2d.Manifold
 import eater.core.engine
-import eater.ecs.components.TransformComponent
+import eater.ecs.ashley.components.TransformComponent
 import ecs.components.AudioChannels
 import ecs.components.ai.AttackPoint
 import ecs.components.ai.CollidedWithObstacle
-import eater.ecs.components.AgentProperties
-import eater.ecs.components.Box2d
+import eater.ecs.ashley.components.AgentProperties
+import eater.ecs.ashley.components.Box2d
 import eater.injection.InjectionContext.Companion.inject
 import ecs.components.enemy.AttackableProperties
 import ecs.components.fx.ParticleEffectComponent

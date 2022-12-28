@@ -5,7 +5,7 @@ import com.badlogic.ashley.systems.IteratingSystem
 import com.badlogic.gdx.graphics.Color
 import com.badlogic.gdx.graphics.g2d.Batch
 import com.badlogic.gdx.graphics.g2d.PolygonSpriteBatch
-import eater.ecs.components.TransformComponent
+import eater.ecs.ashley.components.TransformComponent
 import eater.injection.InjectionContext.Companion.inject
 import ecs.components.towers.TargetInRange
 import ecs.components.towers.TowerComponent

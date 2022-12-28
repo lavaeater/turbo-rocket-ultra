@@ -4,7 +4,7 @@ import com.badlogic.ashley.core.Entity
 import com.badlogic.ashley.systems.IteratingSystem
 import com.badlogic.gdx.graphics.g2d.Batch
 import ecs.components.fx.ParticleEffectComponent
-import eater.ecs.components.TransformComponent
+import eater.ecs.ashley.components.TransformComponent
 import ktx.ashley.allOf
 
 class EffectRenderSystem(private val batch: Batch, priority:Int) : IteratingSystem(

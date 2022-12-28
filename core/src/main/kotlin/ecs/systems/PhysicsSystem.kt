@@ -2,11 +2,12 @@ package ecs.systems
 
 import com.badlogic.ashley.core.Entity
 import com.badlogic.ashley.systems.IteratingSystem
+import com.badlogic.gdx.math.MathUtils.radiansToDegrees
 import com.badlogic.gdx.math.Vector2
-import eater.ecs.components.Box2d
+import eater.ecs.ashley.components.Box2d
+import eater.ecs.ashley.components.TransformComponent
 import ecs.components.gameplay.GrenadeComponent
 import ecs.components.gameplay.MolotovComponent
-import eater.ecs.components.TransformComponent
 import eater.injection.InjectionContext.Companion.inject
 import ktx.ashley.allOf
 import ktx.math.vec2
@@ -20,7 +21,7 @@ class PhysicsSystem(priority: Int) :
     IteratingSystem(allOf(Box2d::class, TransformComponent::class).get(), priority) {
 
     val g = -10f //is y up or down?
-    val contactManager by lazy { inject<ContactManager>()}
+    private val contactManager by lazy { inject<ContactManager>()}
 
     override fun processEntity(entity: Entity, deltaTime: Float) {
         val bodyComponent = AshleyMappers.body.get(entity)
@@ -28,7 +29,7 @@ class PhysicsSystem(priority: Int) :
         val bodyRotation = bodyComponent.body!!.angle
         val transformComponent = AshleyMappers.transform.get(entity)
         transformComponent.position.set(bodyPosition)
-        transformComponent.rotation = bodyRotation
+        transformComponent.angleRadians = bodyRotation
 
         if(transformComponent.feelsGravity) {
             val body = bodyComponent.body!!
@@ -41,9 +42,6 @@ class PhysicsSystem(priority: Int) :
                 transformComponent.verticalSpeed += g * deltaTime
                 transformComponent.height += transformComponent.verticalSpeed//Modify with delta time?
 
-//                val bodySpeed = body.linearVelocity.cpy()
-//                val velChange = transformComponent.verticalSpeed - bodySpeed.y
-//                val impulse = body.mass * velChange
                 body.applyForce(vec2(0f, -g * deltaTime), body.worldCenter, true)
             } else {
                 transformComponent.verticalSpeed = 0f

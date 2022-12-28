@@ -17,9 +17,9 @@ import com.crashinvaders.vfx.effects.CrtEffect
 import com.crashinvaders.vfx.effects.OldTvEffect
 import com.strongjoshua.console.CommandExecutor
 import com.strongjoshua.console.GUIConsole
-import eater.ecs.systems.UpdateActionsSystem
-import eater.ecs.systems.UpdateMemorySystem
-import eater.ecs.systems.UtilityAiSystem
+import eater.ecs.ashley.systems.UpdateActionsSystem
+import eater.ecs.ashley.systems.UpdateMemorySystem
+import eater.ecs.ashley.systems.UtilityAiSystem
 import eater.injection.InjectionContext
 import eater.messaging.IMessage
 import eater.messaging.IMessageReceiver

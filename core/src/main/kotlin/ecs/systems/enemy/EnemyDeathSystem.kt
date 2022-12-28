@@ -3,8 +3,8 @@ package ecs.systems.enemy
 import audio.AudioPlayer
 import com.badlogic.ashley.core.Entity
 import com.badlogic.ashley.systems.IteratingSystem
+import eater.ecs.ashley.components.AgentProperties
 import ecs.components.AudioChannels
-import eater.ecs.components.AgentProperties
 import eater.physics.addComponent
 import eater.physics.getComponent
 import ecs.components.enemy.AttackableProperties

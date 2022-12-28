@@ -2,8 +2,8 @@ package ecs.systems.facts
 
 import com.badlogic.ashley.core.Entity
 import com.badlogic.ashley.systems.IteratingSystem
+import eater.ecs.ashley.components.TransformComponent
 import ecs.components.gameplay.PerimeterObjectiveComponent
-import eater.ecs.components.TransformComponent
 import eater.injection.InjectionContext.Companion.inject
 import ecs.components.player.PlayerComponent
 import ktx.ashley.allOf

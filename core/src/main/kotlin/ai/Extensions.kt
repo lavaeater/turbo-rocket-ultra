@@ -12,7 +12,7 @@ import com.badlogic.gdx.ai.btree.decorator.Invert
 import com.badlogic.gdx.math.Vector2
 import com.badlogic.gdx.utils.Queue
 import eater.core.world
-import eater.ecs.components.AgentProperties
+import eater.ecs.ashley.components.AgentProperties
 import eater.injection.InjectionContext.Companion.inject
 import eater.turbofacts.TurboFactsOfTheWorld
 import eater.turbofacts.stateBooleanFact

@@ -4,8 +4,8 @@ import audio.AudioPlayer
 import com.badlogic.ashley.core.Entity
 import com.badlogic.ashley.systems.IteratingSystem
 import com.badlogic.gdx.graphics.OrthographicCamera
+import eater.ecs.ashley.components.TransformComponent
 import ecs.components.AudioComponent
-import eater.ecs.components.TransformComponent
 import eater.injection.InjectionContext.Companion.inject
 import ktx.ashley.allOf
 import ktx.math.random

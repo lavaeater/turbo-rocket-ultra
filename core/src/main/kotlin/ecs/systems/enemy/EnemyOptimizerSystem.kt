@@ -1,7 +1,7 @@
 package ecs.systems.enemy
 
 import com.badlogic.ashley.systems.IntervalSystem
-import eater.ecs.components.AgentProperties
+import eater.ecs.ashley.components.AgentProperties
 import ecs.components.gameplay.DestroyComponent
 import ecs.systems.graphics.GameConstants.MAX_ENEMIES
 import ktx.ashley.allOf

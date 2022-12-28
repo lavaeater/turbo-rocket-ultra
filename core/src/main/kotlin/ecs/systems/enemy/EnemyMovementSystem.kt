@@ -5,11 +5,11 @@ import com.badlogic.ashley.systems.IteratingSystem
 import com.badlogic.gdx.graphics.Color
 import com.badlogic.gdx.math.Vector2
 import com.badlogic.gdx.physics.box2d.Body
-import eater.ecs.components.AgentProperties
-import eater.ecs.components.Box2d
+import eater.ecs.ashley.components.AgentProperties
+import eater.ecs.ashley.components.Box2d
+import eater.ecs.ashley.components.TransformComponent
 import ecs.components.enemy.AttackableProperties
 import ecs.components.gameplay.ObstacleComponent
-import eater.ecs.components.TransformComponent
 import eater.physics.getComponent
 import ktx.ashley.allOf
 import ktx.math.vec2

@@ -3,7 +3,7 @@ package ecs.systems.input
 import com.badlogic.ashley.core.Entity
 import com.badlogic.ashley.systems.IteratingSystem
 import com.badlogic.gdx.physics.box2d.Body
-import eater.ecs.components.Box2d
+import eater.ecs.ashley.components.Box2d
 import eater.physics.body
 import eater.physics.forwardNormal
 import eater.physics.forwardVelocity

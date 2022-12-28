@@ -2,7 +2,7 @@ package ecs.systems.player
 
 import com.badlogic.ashley.core.Entity
 import com.badlogic.ashley.systems.IteratingSystem
-import eater.ecs.components.TransformComponent
+import eater.ecs.ashley.components.TransformComponent
 import ecs.components.player.FlashlightComponent
 import ecs.components.player.PlayerControlComponent
 import ktx.ashley.allOf

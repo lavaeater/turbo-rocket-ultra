@@ -2,8 +2,9 @@ package ecs.systems
 
 import com.badlogic.ashley.core.Entity
 import com.badlogic.ashley.systems.IteratingSystem
+import com.badlogic.gdx.math.MathUtils.degreesToRadians
+import eater.ecs.ashley.components.TransformComponent
 import ecs.components.gameplay.AnchorPointsComponent
-import eater.ecs.components.TransformComponent
 import ktx.ashley.allOf
 import ktx.math.vec2
 import physics.anchors
@@ -26,7 +27,10 @@ class AnchorPointTransformationSystem(private val debug: Boolean) :
 
             But what is the rotation?
              */
-            val rotatedPoint = if(anchors.useDirectionVector) point.cpy().rotateRad(entity.playerControl().directionVector.angleRad()) else point.cpy().rotateRad(transform.rotation)
+            val rotatedPoint = if(anchors.useDirectionVector)
+                point.cpy().rotateRad(entity.playerControl().directionVector.angleRad())
+            else
+                point.cpy().rotateRad(transform.angleDegrees * degreesToRadians)
             anchors.transformedPoints[key]!!.set(transform.position).add(rotatedPoint.x, rotatedPoint.y / 2)
         }
     }

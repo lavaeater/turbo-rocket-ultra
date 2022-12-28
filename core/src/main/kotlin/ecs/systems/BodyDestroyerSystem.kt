@@ -3,7 +3,7 @@ package ecs.systems
 import com.badlogic.ashley.core.Entity
 import com.badlogic.ashley.systems.IteratingSystem
 import com.badlogic.gdx.physics.box2d.World
-import eater.ecs.components.Box2d
+import eater.ecs.ashley.components.Box2d
 import ecs.components.gameplay.DestroyComponent
 import ktx.ashley.allOf
 import ktx.ashley.remove

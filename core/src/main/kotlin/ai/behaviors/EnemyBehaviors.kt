@@ -8,9 +8,10 @@ import com.badlogic.ashley.core.Component
 import com.badlogic.ashley.core.Entity
 import com.badlogic.gdx.math.MathUtils
 import eater.ai.*
-import eater.ecs.components.AgentProperties
-import eater.ecs.components.Memory
-import eater.ecs.components.TransformComponent
+import eater.ai.ashley.*
+import eater.ecs.ashley.components.AgentProperties
+import eater.ecs.ashley.components.Memory
+import eater.ecs.ashley.components.TransformComponent
 import ecs.components.ai.behavior.*
 import ecs.components.enemy.AttackableProperties
 import ecs.components.gameplay.AnotherTargetComponent
@@ -33,8 +34,8 @@ import kotlin.reflect.full.starProjectedType
 object EnemyBehaviors {
     val panik = ConsideredActionWithState(
         "PANIK!",
-        {},
         { entity, state, deltaTime ->
+
             when (state.status) {
                 PanikStatus.NotStarted -> {
                     state.coolDown = 0f
@@ -49,17 +50,17 @@ object EnemyBehaviors {
                     }
                 }
             }
+            true
         },
         PanikState::class,
         0f..0.6f,
         InvertedConsideration("Am I dying?", healthConsideration),
-        DoIHaveThisComponentConsideration("Am I burning?", BurningComponent::class)
+        DoIHaveThisComponentConsideration(BurningComponent::class, "Am I burning?")
     )
 
     fun <T:Component>getAttackAction(targetComponentClass: KClass<T>): ConsideredActionWithState<AttackState> {
         return ConsideredActionWithState(
             "Attack Target",
-            {},
             { entity, state, deltaTime ->
                 //We can reset the cooldown right here to the correct values!
                 when (state.status) {
@@ -86,6 +87,7 @@ object EnemyBehaviors {
                         }
                     }
                 }
+                true
             },
             AttackState::class,
             0f..0.9f,
@@ -97,11 +99,14 @@ object EnemyBehaviors {
     val attackTarget = getAttackAction(TargetComponent::class)
     val attackAnotherTarget = getAttackAction(AnotherTargetComponent::class)
     val attackPlayer = getAttackAction(PlayerComponent::class)
+    val approachTarget = getApproachAction(TargetComponent::class)
+    val approachPlayer = getApproachAction(PlayerComponent::class)
+    val approachAnotherTarget = getApproachAction(AnotherTargetComponent::class)
+
 
     fun <T : Component> getApproachAction(targetComponentClass: KClass<T>) : ConsideredActionWithState<ApproachTargetState> {
         return ConsideredActionWithState(
             "Approach Player",
-            {debug { "Abort approach" }},
             { entity, state, deltaTime ->
                 when (state.status) {
                     ApproachTargetStatus.NotStarted -> {
@@ -151,16 +156,13 @@ object EnemyBehaviors {
                         }
                     }
                 }
+                true
             },
             ApproachTargetState::class,
             0.0f..0.9f,
             CanISeeThisConsideration(targetComponentClass)
         )
     }
-
-    val approachTarget = getApproachAction(TargetComponent::class)
-    val approachPlayer = getApproachAction(PlayerComponent::class)
-    val approachAnotherTarget = getApproachAction(AnotherTargetComponent::class)
 
     val amble = GenericActionWithState(
         "Amble",
@@ -187,6 +189,7 @@ object EnemyBehaviors {
                 }
                 AmbleStatus.NeedsWaypoint -> getWaypoint(entity, state, deltaTime)
             }
+            true
         }, AmbleState::class
     )
 

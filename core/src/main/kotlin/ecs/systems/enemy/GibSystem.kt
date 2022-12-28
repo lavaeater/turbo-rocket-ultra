@@ -3,7 +3,7 @@ package ecs.systems.enemy
 import com.badlogic.ashley.core.Entity
 import com.badlogic.ashley.systems.IteratingSystem
 import eater.core.world
-import eater.ecs.components.Box2d
+import eater.ecs.ashley.components.Box2d
 import ecs.components.fx.GibComponent
 import ecs.components.gameplay.DestroyComponent
 import ktx.ashley.allOf

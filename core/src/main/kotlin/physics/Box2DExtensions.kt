@@ -9,7 +9,7 @@ import com.badlogic.gdx.physics.box2d.Body
 import com.badlogic.gdx.physics.box2d.Contact
 import com.badlogic.gdx.physics.box2d.Fixture
 import data.Player
-import eater.ecs.components.AgentProperties
+import eater.ecs.ashley.components.AgentProperties
 import eater.physics.*
 import ecs.components.enemy.EnemySensorComponent
 import ecs.components.enemy.TackleComponent

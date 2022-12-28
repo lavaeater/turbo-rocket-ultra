@@ -12,9 +12,9 @@ import com.badlogic.gdx.math.Affine2
 import com.badlogic.gdx.math.MathUtils
 import com.crashinvaders.vfx.VfxManager
 import com.crashinvaders.vfx.effects.ChainVfxEffect
-import eater.ecs.components.AgentProperties
-import eater.ecs.components.Memory
-import eater.ecs.components.TransformComponent
+import eater.ecs.ashley.components.AgentProperties
+import eater.ecs.ashley.components.Memory
+import eater.ecs.ashley.components.TransformComponent
 import eater.injection.InjectionContext.Companion.inject
 import eater.physics.addComponent
 import eater.physics.getComponent
@@ -142,7 +142,7 @@ class RenderSystem(
             val y =
                 transform.position.y - originY
             val rotation =
-                if (textureRegionComponent.rotateWithTransform) transform.rotation * MathUtils.radiansToDegrees else 0f
+                if (textureRegionComponent.rotateWithTransform) transform.angleDegrees else 0f
 
             batch.draw(
                 textureRegion,

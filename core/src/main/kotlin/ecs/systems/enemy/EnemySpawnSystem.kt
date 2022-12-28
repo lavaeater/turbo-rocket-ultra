@@ -2,9 +2,9 @@ package ecs.systems.enemy
 
 import com.badlogic.ashley.core.Entity
 import com.badlogic.ashley.systems.IteratingSystem
-import eater.ecs.components.AgentProperties
+import eater.ecs.ashley.components.AgentProperties
+import eater.ecs.ashley.components.TransformComponent
 import ecs.components.enemy.EnemySpawnerComponent
-import eater.ecs.components.TransformComponent
 import factories.enemy
 import ktx.ashley.allOf
 import ktx.math.random

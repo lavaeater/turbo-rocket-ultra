@@ -17,12 +17,12 @@ import com.badlogic.gdx.physics.box2d.Body
 import com.badlogic.gdx.physics.box2d.BodyDef
 import com.badlogic.gdx.scenes.scene2d.Action
 import data.Player
-import eater.ai.AiComponent
 import eater.core.engine
 import eater.core.world
-import eater.ecs.components.AgentProperties
-import eater.ecs.components.Box2d
-import eater.ecs.components.TransformComponent
+import eater.ecs.ashley.components.AgentProperties
+import eater.ecs.ashley.components.AiComponent
+import eater.ecs.ashley.components.Box2d
+import eater.ecs.ashley.components.TransformComponent
 import eater.physics.addComponent
 import eater.turbofacts.FactsLikeThatMan
 import ecs.components.AudioComponent

@@ -5,9 +5,9 @@ import ai.tasks.EntityTask
 import com.badlogic.ashley.core.Component
 import com.badlogic.ashley.core.Entity
 import com.badlogic.gdx.ai.btree.Task
+import eater.ecs.ashley.components.TransformComponent
 import ecs.components.ai.Path
 import ecs.components.enemy.AttackableProperties
-import eater.ecs.components.TransformComponent
 import ktx.ashley.allOf
 import ktx.ashley.remove
 import physics.agentProps

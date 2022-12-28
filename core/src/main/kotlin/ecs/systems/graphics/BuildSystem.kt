@@ -6,7 +6,7 @@ import com.badlogic.gdx.graphics.Color
 import com.badlogic.gdx.graphics.g2d.PolygonSpriteBatch
 import com.badlogic.gdx.physics.box2d.Fixture
 import eater.core.world
-import eater.ecs.components.TransformComponent
+import eater.ecs.ashley.components.TransformComponent
 import eater.injection.InjectionContext.Companion.inject
 import ecs.components.player.PlayerControlComponent
 import ecs.systems.tileWorldX

@@ -2,9 +2,9 @@ package physics
 
 import com.badlogic.ashley.core.Entity
 import com.badlogic.gdx.math.Vector2
-import eater.ecs.components.AgentProperties
-import eater.ecs.components.Box2d
-import eater.ecs.components.TransformComponent
+import eater.ecs.ashley.components.AgentProperties
+import eater.ecs.ashley.components.Box2d
+import eater.ecs.ashley.components.TransformComponent
 import eater.physics.addComponent
 import ecs.components.AudioComponent
 import ecs.components.ai.BehaviorComponent
