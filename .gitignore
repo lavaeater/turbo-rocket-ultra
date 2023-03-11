@@ -50,6 +50,7 @@ build/
 *.iml
 !**/testData/**/*.iml
 .idea/**
+.idea/*
 
 kotlin-ultimate/
 node_modules/

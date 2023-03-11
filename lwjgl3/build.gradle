@@ -14,7 +14,6 @@ dependencies {
 	implementation "com.github.Hangman:TuningFork:$tuningForkVersion"
 	implementation "com.github.MrStahlfelge.gdx-websockets:common:$websocketVersion"
 	implementation project(':core')
-	implementation project(':gdx-lava')
 }
 
 def os = System.properties['os.name'].toLowerCase()
