@@ -55,4 +55,5 @@ dependencies {
 	api "space.earlygrey:shapedrawer:$shapeDrawerVersion"
 	api "space.earlygrey:simple-graphs:$simpleGraphsVersion"
 	api "org.jetbrains.kotlin:kotlin-reflect:$kotlinVersion"
+	implementation project(':gdx-lava')
 }
