@@ -58,6 +58,7 @@ class MainGame : KtxGame<KtxScreen>(), DisposableRegistry by DisposableContainer
                     edge(GameEvent.StartAnimEditor, GameState.AnimEditor) {}
                     edge(GameEvent.StartConcept, GameState.Concept) {}
                     edge(GameEvent.StartMapEditor, GameState.MapEditor) {}
+                    edge(GameEvent.StartCharacterEditor, GameState.CharacterEditor) {}
                 }
                 state(GameState.Running) {
                     action {
@@ -92,6 +93,10 @@ class MainGame : KtxGame<KtxScreen>(), DisposableRegistry by DisposableContainer
                     action { setScreen<AnimEditorScreen>() }
                     edge(GameEvent.StopAnimEditor, GameState.Setup) {}
                 }
+                state(GameState.CharacterEditor) {
+                    action { setScreen<CharacterEditorScreen>() }
+                    edge(GameEvent.StopCharacterEditor, GameState.Setup) {}
+                }
                 state(GameState.Concept) {
                     action { setScreen<ConceptScreen>() }
                     edge(GameEvent.StopConcept, GameState.Setup) {}
@@ -112,6 +117,7 @@ class MainGame : KtxGame<KtxScreen>(), DisposableRegistry by DisposableContainer
         addScreen(BehaviorTreeViewScreen(gameState))
         addScreen(ConceptScreen(gameState))
         addScreen(MapEditorScreen(gameState))
+        addScreen(CharacterEditorScreen(gameState))
         gameState.initialize()
     }
 }

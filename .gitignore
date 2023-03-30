@@ -60,3 +60,5 @@ local.properties
 buildSrcTmp/
 distTmp/
 outTmp/
+
+assets/localfiles/

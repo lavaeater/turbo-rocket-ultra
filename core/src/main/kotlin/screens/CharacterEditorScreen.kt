@@ -36,9 +36,9 @@ class CharacterEditorScreen(gameState: StateMachine<GameState, GameEvent>) : Bas
 		charEditorView.show()
 	}
 
-	val fps = 1f / 9f
-	var accDelta = 0f
-	var currentFrame = 1
+	private val fps = 1f / 9f
+	private var accDelta = 0f
+	private var currentFrame = 1
 
 	override fun render(delta: Float) {
 		Gdx.gl.glClearColor(0.3f, 0.5f, 0.8f, 1f)
@@ -58,8 +58,8 @@ class CharacterEditorScreen(gameState: StateMachine<GameState, GameEvent>) : Bas
 	}
 
 	override fun resize(width: Int, height: Int) {
-		//charEditorView.resize(width, height) //viewPort.update(width, height)
-		//batch.projectionMatrix = camera.combined
+		charEditorView.resize(width, height) //viewPort.update(width, height)
+		batch.projectionMatrix = camera.combined
 	}
 }
 

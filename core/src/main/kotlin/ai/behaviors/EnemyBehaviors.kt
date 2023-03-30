@@ -68,10 +68,9 @@ object EnemyBehaviors {
                         if (state.targetEntity != null && state.ready(deltaTime)) {
                             val agentProperties = AgentProperties.get(entity)
                             val targetEntity = state.targetEntity!!
-                            val attackableProperties = AttackableProperties.get(targetEntity)
                             val damage = agentProperties.meleeDamageRange.random()
-                            attackableProperties.takeDamage(damage, entity)
-                            debug { "Attack dealt $damage" }
+                            if(AttackableProperties.takeDamageSafe(targetEntity, entity, damage))
+                                debug { "Attack dealt $damage" }
                         }
                     }
                     AttackStatus.NotStarted -> {

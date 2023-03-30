@@ -35,6 +35,14 @@ class AttackableProperties: Component, Pool.Poolable {
         fun get(entity: Entity):AttackableProperties {
             return mapper.get(entity)
         }
+
+        fun takeDamageSafe(target: Entity, attacker: Entity, damage: Float) : Boolean {
+            return if(has(target)) {
+                get(target).takeDamage(damage, attacker)
+                true
+            } else false
+        }
+
         fun has(entity:Entity) : Boolean {
             return mapper.has(entity)
         }
