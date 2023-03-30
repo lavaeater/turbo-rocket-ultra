@@ -1,4 +1,4 @@
-package screens
+package screens.concepts
 
 import com.badlogic.gdx.math.MathUtils
 import com.badlogic.gdx.math.Polygon

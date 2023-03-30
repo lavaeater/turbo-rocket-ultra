@@ -8,7 +8,7 @@ import ktx.math.minus
 import ktx.math.plus
 import ktx.math.vec2
 import ktx.math.vec3
-import screens.IThing
+import screens.concepts.IThing
 
 /**
  * My graphics can look any way they want - as long as they are unique and interesting.

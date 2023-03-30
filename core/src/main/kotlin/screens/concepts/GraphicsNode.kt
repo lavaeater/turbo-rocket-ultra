@@ -1,4 +1,4 @@
-package screens
+package screens.concepts
 
 import com.badlogic.gdx.math.Vector2
 import ktx.math.plus

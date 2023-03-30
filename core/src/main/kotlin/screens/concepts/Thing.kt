@@ -1,4 +1,4 @@
-package screens
+package screens.concepts
 
 import com.badlogic.gdx.math.MathUtils
 import com.badlogic.gdx.math.Quaternion
@@ -6,6 +6,7 @@ import com.badlogic.gdx.math.Vector3
 import ktx.math.plus
 import screens.stuff.AnimatedSprited3d
 import screens.stuff.selectRecursive
+
 
 open class Thing(override var name: String, override val localPosition: Vector3) : IThing {
     override var forwardLimit: ClosedFloatingPointRange<Float> = 0f..360f
@@ -44,7 +45,8 @@ open class Thing(override var name: String, override val localPosition: Vector3)
         val q = orientation.getQuaternion(
             if (rotateAroundUpEnabled) aroundUp else 0f,
             if (rotateAroundJointEnabled) left else 0f,
-            if (rotateAroundForwardEnabled) aroundForward else 0f)
+            if (rotateAroundForwardEnabled) aroundForward else 0f
+        )
 
         rotate(q)
     }
@@ -68,7 +70,7 @@ open class Thing(override var name: String, override val localPosition: Vector3)
      */
 
     override fun angleToParent(): Float {
-        return if(parent == null) 0f
+        return if (parent == null) 0f
         else {
             MathUtils.acos(parent!!.orientation.forward.cpy().dot(orientation.forward))
         }
@@ -103,19 +105,19 @@ open class Thing(override var name: String, override val localPosition: Vector3)
     override fun rotateAroundParentForward(degrees: Float) {
         val newUp = rotationAroundForward + degrees
         var actualRotation = degrees
-        if(!fRange.contains(newUp)) {
-            if(newUp < fMin) {
+        if (!fRange.contains(newUp)) {
+            if (newUp < fMin) {
                 actualRotation = fMin - rotationAroundForward
-            } else if(newUp > fMax) {
+            } else if (newUp > fMax) {
                 actualRotation = fMax - rotationAroundForward
             }
         }
         rotationAroundForward += actualRotation
-        if(parent == null) {
+        if (parent == null) {
             rotate(0f, 0f, actualRotation)
             return
         }
-        if(rotateAroundForwardEnabled) {
+        if (rotateAroundForwardEnabled) {
             val pO = parent!!.orientation
             val q = Quaternion(pO.forward, actualRotation)
             rotate(q)
@@ -123,23 +125,22 @@ open class Thing(override var name: String, override val localPosition: Vector3)
     }
 
 
-
     override fun rotateAroundParentUp(degrees: Float) {
         val newUp = rotationAroundUp + degrees
         var actualRotation = degrees
-        if(!uRange.contains(newUp)) {
-            if(newUp < uMin) {
-                actualRotation =  uMin - rotationAroundUp
-            } else if(newUp > uMax) {
+        if (!uRange.contains(newUp)) {
+            if (newUp < uMin) {
+                actualRotation = uMin - rotationAroundUp
+            } else if (newUp > uMax) {
                 actualRotation = uMax - rotationAroundUp
             }
         }
         rotationAroundUp += actualRotation
-        if(parent == null) {
+        if (parent == null) {
             rotate(actualRotation, 0f, 0f)
             return
         }
-        if(rotateAroundUpEnabled) {
+        if (rotateAroundUpEnabled) {
             val pO = parent!!.orientation
             val q = Quaternion(pO.up, actualRotation)
             rotate(q)
@@ -149,19 +150,19 @@ open class Thing(override var name: String, override val localPosition: Vector3)
     override fun rotateAgainstJoint(degrees: Float) {
         val newUp = rotationAroundJoint + degrees
         var actualRotation = degrees
-        if(!jRange.contains(newUp)) {
-            if(newUp < jMin) {
+        if (!jRange.contains(newUp)) {
+            if (newUp < jMin) {
                 actualRotation = jMin - rotationAroundJoint
-            } else if(newUp > jMax) {
+            } else if (newUp > jMax) {
                 actualRotation = jMax - rotationAroundJoint
             }
         }
         rotationAroundJoint += actualRotation
-        if(parent == null) {
+        if (parent == null) {
             rotate(0f, actualRotation, 0f)
             return
         }
-        if(rotateAroundJointEnabled) {
+        if (rotateAroundJointEnabled) {
             val pO = parent!!.orientation
             val q = Quaternion(pO.leftOrRight, actualRotation)
             rotate(q)

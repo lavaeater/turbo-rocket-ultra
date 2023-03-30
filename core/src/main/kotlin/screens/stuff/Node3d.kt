@@ -9,7 +9,7 @@ import isometric.toIsometric
 import ktx.math.plus
 import ktx.math.vec2
 import ktx.math.vec3
-import screens.DirtyClass
+import screens.concepts.DirtyClass
 import space.earlygrey.shapedrawer.ShapeDrawer
 import kotlin.math.sqrt
 import kotlin.properties.Delegates.observable

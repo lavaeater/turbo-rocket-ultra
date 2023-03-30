@@ -1,4 +1,4 @@
-package screens
+package screens.concepts
 
 import com.badlogic.gdx.math.Quaternion
 import com.badlogic.gdx.math.Vector3

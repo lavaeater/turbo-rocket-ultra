@@ -29,8 +29,15 @@ class GridMapManager {
     var gridMap: Map<Coordinate, GridMapSection> = mapOf()
     set(value) {
         field = value
-//        fixBodies()
-        mapToEntities()
+        fixBodies()
+    }
+
+    fun removeLights(oldMap: Map<Coordinate, GridMapSection>) {
+        for(section in oldMap.values) {
+            for(l in section.lights) {
+                l.remove(true)
+            }
+        }
     }
 
     private val bodies = mutableListOf<Body>()

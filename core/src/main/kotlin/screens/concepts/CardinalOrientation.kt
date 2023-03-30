@@ -1,4 +1,4 @@
-package screens
+package screens.concepts
 
 sealed class CardinalOrientation(val name: String) {
     object Up : CardinalOrientation("Up")

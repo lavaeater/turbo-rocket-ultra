@@ -7,9 +7,8 @@ import ktx.math.ImmutableVector2
 import ktx.math.plus
 import ktx.math.toMutable
 import ktx.math.vec2
-import screens.DirtyClass
+import screens.concepts.DirtyClass
 import space.earlygrey.shapedrawer.ShapeDrawer
-import kotlin.properties.Delegates
 import kotlin.properties.Delegates.observable
 
 /**

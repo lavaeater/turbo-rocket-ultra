@@ -386,6 +386,7 @@ fun player(player: Player, mapper: ControlMapper, at: Vector2, debug: Boolean) {
             health = GameConstants.ENEMY_BASE_HEALTH * 10000f
         }
         with<CameraFollowComponent>()
+        with<FlashlightComponent>()
         with<Box2d> { body = box2dBody }
         with<TransformComponent>()
         with<AnimatedCharacterComponent> {
@@ -476,6 +477,7 @@ fun playerWeapon(playerEntity: Entity, anchor: String = "green"): Entity {
                     CardinalDirection.North -> w.textureRegionComponent().textureRegion.flip(false, false)
                     CardinalDirection.South -> w.textureRegionComponent().textureRegion.flip(false, false)
                     CardinalDirection.West -> w.textureRegionComponent().textureRegion.flip(false, true)
+                    else -> {}
                 }
             }
         }

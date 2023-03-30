@@ -3,7 +3,10 @@ package isometric
 import com.badlogic.gdx.math.Polygon
 import com.badlogic.gdx.math.Vector
 import com.badlogic.gdx.math.Vector2
+import com.badlogic.gdx.math.Vector3
 import ktx.math.vec2
+import screens.stuff.toIso
+import kotlin.math.sqrt
 
 
 fun Vector2.toIsometric(vector: Vector2) {
@@ -12,6 +15,11 @@ fun Vector2.toIsometric(vector: Vector2) {
 
 fun Vector2.setToIso(target: Vector2) {
     this.set(target.x - target.y, (target.x + target.y) / 2f)
+}
+
+fun Vector2.toIsoFrom3d(target: Vector3): Vector2 {
+    return this.set((target.x - target.z) / sqrt(2f), (target.x + 2 * target.y + target.z) / sqrt(6f))
+
 }
 
 fun Vector2.setToIso(x: Float, y: Float) {

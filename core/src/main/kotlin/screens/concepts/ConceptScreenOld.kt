@@ -1,4 +1,4 @@
-package screens
+package screens.concepts
 
 import com.badlogic.gdx.Input
 import com.badlogic.gdx.controllers.Controller
@@ -15,6 +15,7 @@ import input.Transform
 import ktx.graphics.use
 import ktx.math.vec2
 import ktx.math.vec3
+import screens.BasicScreen
 import statemachine.StateMachine
 import tru.Assets
 

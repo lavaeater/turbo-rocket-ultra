@@ -1,4 +1,4 @@
-package screens
+package screens.concepts
 
 import com.badlogic.gdx.Input
 import com.badlogic.gdx.graphics.Color
@@ -16,6 +16,9 @@ import map.snake.bottom
 import map.snake.left
 import map.snake.right
 import map.snake.top
+import screens.BasicScreen
+import screens.MousePosition
+import screens.command
 import space.earlygrey.shapedrawer.ShapeDrawer
 import statemachine.StateMachine
 import tru.Assets
