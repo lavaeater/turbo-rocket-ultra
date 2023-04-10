@@ -21,7 +21,7 @@ import gamePlay.weapons.WeaponDefinition
 import map.snake.MapDirection
 import map.snake.random
 import map.snake.randomPoint
-import screens.CounterObject
+import screens.concept.CounterObject
 import turbofacts.StoryHelper
 import kotlin.collections.filterKeys
 

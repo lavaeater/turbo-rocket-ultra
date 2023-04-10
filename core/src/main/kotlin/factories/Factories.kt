@@ -96,8 +96,8 @@ import ktx.math.random
 import ktx.math.vec2
 import ktx.scene2d.*
 import physics.*
-import screens.ApplicationFlags
-import screens.CounterObject
+import screens.ui.ApplicationFlags
+import screens.concept.CounterObject
 import animation.*
 import ui.customactors.boundLabel
 import ui.getUiThing

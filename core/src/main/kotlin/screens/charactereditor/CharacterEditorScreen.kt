@@ -1,4 +1,4 @@
-package screens
+package screens.charactereditor
 
 import characterEditor.CharacterEditorView
 import characterEditor.CharacterEditorViewModel
@@ -6,6 +6,7 @@ import com.badlogic.gdx.Gdx
 import com.badlogic.gdx.graphics.GL20
 import gamestate.GameEvent
 import gamestate.GameState
+import screens.basic.BasicScreen
 import spritesheet.LpcSheetDefinitionLoader
 import statemachine.StateMachine
 

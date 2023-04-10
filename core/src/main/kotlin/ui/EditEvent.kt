@@ -1,4 +1,4 @@
-package screens
+package screens.ui
 
 sealed class EditEvent {
     object EnterDialogMode : EditEvent()

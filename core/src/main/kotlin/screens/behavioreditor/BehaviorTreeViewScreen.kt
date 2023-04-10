@@ -1,4 +1,4 @@
-package screens
+package screens.behavioreditor
 
 import ai.behaviorTree.Tree
 import com.badlogic.gdx.Gdx
@@ -13,6 +13,10 @@ import gamestate.GameEvent
 import gamestate.GameState
 import ktx.math.vec2
 import ktx.scene2d.*
+import screens.basic.BasicScreen
+import screens.command.command
+import screens.command.CommandMap
+import screens.ui.KeyPress
 import statemachine.StateMachine
 import animation.Assets
 

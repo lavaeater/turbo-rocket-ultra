@@ -1,4 +1,4 @@
-package screens
+package screens.concept
 
 import turbofacts.Factoids
 import turbofacts.factsOfTheWorld

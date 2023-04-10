@@ -1,6 +1,7 @@
-package screens
+package screens.command
 
 import com.badlogic.gdx.Input
+import screens.ui.KeyPress
 
 class CommandMap(val name: String) {
     private val commands = mutableMapOf<Int, (KeyPress) -> Unit>()

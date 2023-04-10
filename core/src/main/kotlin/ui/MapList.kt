@@ -1,4 +1,4 @@
-package screens
+package screens.ui
 
 import map.grid.MapData
 import map.grid.MapLoader

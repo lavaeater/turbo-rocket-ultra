@@ -1,4 +1,4 @@
-package screens
+package screens.ui
 
 sealed class EditState {
     object Normal : EditState()

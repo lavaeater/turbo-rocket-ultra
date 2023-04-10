@@ -24,6 +24,13 @@ import ktx.inject.register
 import ktx.log.debug
 import screens.*
 import statemachine.StateMachine
+import tru.Assets
+import eater.turbofacts.Factoids
+import eater.turbofacts.factsOfTheWorld
+import screens.animeditor.AnimEditorScreen
+import screens.behavioreditor.BehaviorTreeViewScreen
+import screens.charactereditor.CharacterEditorScreen
+import screens.concept.InterpolationConceptScreen
 import animation.Assets
 import turbofacts.FactPersistence
 import turbofacts.Factoids
@@ -154,6 +161,16 @@ class MainGame : ApplicationAdapter(), DisposableRegistry by DisposableContainer
         screenManager.initialize(inputMultiplexer, Gdx.graphics.width, Gdx.graphics.height, false)
         Gdx.input.inputProcessor = inputMultiplexer
 
+        addScreen(SplashScreen(gameState))
+        addScreen(SetupScreen(gameState))
+        addScreen(gameScreen)
+        addScreen(PauseScreen(gameState))
+        addScreen(GameOverScreen(gameState))
+        addScreen(AnimEditorScreen(gameState))
+        addScreen(BehaviorTreeViewScreen(gameState))
+        addScreen(InterpolationConceptScreen(gameState))
+        addScreen(MapEditorScreen(gameState))
+        addScreen(CharacterEditorScreen(gameState))
         gameState.initialize()
     }
 
