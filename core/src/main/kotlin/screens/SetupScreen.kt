@@ -22,20 +22,17 @@ import input.GamepadControl
 import input.KeyboardControl
 import ktx.log.debug
 import ktx.scene2d.*
+import screens.basic.BasicScreen
+import screens.command.command
+import screens.ui.KeyPress
+import screens.ui.MapList
+import screens.ui.PlayerModel
 import statemachine.StateMachine
 import tru.AnimState
 import tru.Assets
 import tru.CardinalDirection
 import ui.customactors.animatedSpriteImage
 import ui.customactors.boundLabel
-
-object ApplicationFlags {
-    val map = mutableMapOf("showEnemyPaths" to false, "showEnemyActionInfo" to false, "showCanSee" to false, "showMemory" to false)
-    var showEnemyPaths by map
-    var showCanSee by map
-    var showEnemyActionInfo by map
-    var showMemory by map
-}
 
 
 class SetupScreen(gameState: StateMachine<GameState, GameEvent>) : BasicScreen(gameState) {

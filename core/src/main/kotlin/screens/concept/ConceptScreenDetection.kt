@@ -1,4 +1,4 @@
-package screens
+package screens.concept
 
 import com.badlogic.gdx.Input
 import com.badlogic.gdx.graphics.Color
@@ -11,6 +11,7 @@ import input.Transform
 import ktx.graphics.use
 import ktx.math.vec2
 import ktx.math.vec3
+import screens.basic.BasicScreen
 import statemachine.StateMachine
 import tru.Assets
 
@@ -35,7 +36,7 @@ class ConceptScreenDetection(gameState: StateMachine<GameState, GameEvent>) : Ba
         super.render(delta)
 
         player.rotate(rotation * delta)
-        4
+
         batch.use {
             shapeDrawer.pixelSize = 1f
             shapeDrawer.setColor(Color.RED)

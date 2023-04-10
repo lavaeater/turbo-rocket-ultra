@@ -3,6 +3,7 @@ package screens
 import gamestate.GameEvent
 import gamestate.GameState
 import ktx.actors.stage
+import screens.basic.BasicScreen
 import statemachine.StateMachine
 
 abstract class UserInterfaceScreen(gameState: StateMachine<GameState, GameEvent>) : BasicScreen(gameState) {

@@ -29,7 +29,7 @@ import ktx.ashley.allOf
 import ktx.graphics.use
 import map.grid.GridMapManager
 import physics.*
-import screens.ApplicationFlags
+import screens.ui.ApplicationFlags
 import tru.Assets
 
 class RenderSystem(

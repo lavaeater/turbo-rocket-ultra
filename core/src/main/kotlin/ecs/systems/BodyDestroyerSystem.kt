@@ -10,7 +10,7 @@ import ktx.ashley.remove
 import physics.AshleyMappers
 import physics.hasUiThing
 import physics.uiThing
-import screens.CounterObject
+import screens.concept.CounterObject
 
 class BodyDestroyerSystem(private val world: World) : IteratingSystem(
     allOf(

@@ -1,4 +1,4 @@
-package screens
+package screens.ui
 
 import com.badlogic.gdx.controllers.Controller
 import data.SelectedItemList

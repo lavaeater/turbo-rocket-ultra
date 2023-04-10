@@ -1,4 +1,4 @@
-package screens
+package screens.animeditor
 
 import com.badlogic.gdx.Gdx
 import com.badlogic.gdx.Input
@@ -10,6 +10,7 @@ import gamestate.GameEvent
 import gamestate.GameState
 import ktx.graphics.use
 import ktx.math.vec2
+import screens.basic.BasicScreen
 import screens.ui.Inputter
 import screens.ui.OtherPutter
 import statemachine.StateMachine

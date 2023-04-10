@@ -1,4 +1,4 @@
-package screens
+package screens.basic
 
 import audio.AudioPlayer
 import com.badlogic.gdx.Gdx

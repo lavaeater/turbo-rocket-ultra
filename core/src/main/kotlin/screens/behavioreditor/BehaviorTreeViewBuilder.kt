@@ -1,4 +1,4 @@
-package screens
+package screens.behavioreditor
 
 import ai.treeString
 import com.badlogic.gdx.ai.btree.Task

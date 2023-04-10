@@ -18,7 +18,7 @@ import features.weapons.WeaponDefinition
 import map.snake.MapDirection
 import map.snake.random
 import map.snake.randomPoint
-import screens.CounterObject
+import screens.concept.CounterObject
 import eater.turbofacts.Factoids
 import eater.turbofacts.TurboStoryManager
 import eater.turbofacts.factsOfTheWorld

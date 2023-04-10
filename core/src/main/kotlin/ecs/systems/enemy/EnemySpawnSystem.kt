@@ -10,7 +10,7 @@ import ktx.ashley.allOf
 import ktx.math.random
 import ktx.math.vec2
 import physics.AshleyMappers
-import screens.CounterObject
+import screens.concept.CounterObject
 import eater.turbofacts.Factoids
 import eater.turbofacts.factsOfTheWorld
 

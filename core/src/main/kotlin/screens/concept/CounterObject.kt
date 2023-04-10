@@ -1,4 +1,4 @@
-package screens
+package screens.concept
 
 import eater.turbofacts.Factoids
 import eater.turbofacts.factsOfTheWorld

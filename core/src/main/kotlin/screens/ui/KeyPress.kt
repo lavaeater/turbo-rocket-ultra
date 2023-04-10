@@ -1,4 +1,4 @@
-package screens
+package screens.ui
 
 sealed class KeyPress {
     object Up : KeyPress()

@@ -5,7 +5,6 @@ import com.badlogic.gdx.Input
 import com.badlogic.gdx.graphics.Color
 import com.badlogic.gdx.graphics.OrthographicCamera
 import com.badlogic.gdx.scenes.scene2d.Stage
-import com.badlogic.gdx.scenes.scene2d.actions.MoveToAction
 import com.badlogic.gdx.scenes.scene2d.ui.TextField
 import com.badlogic.gdx.utils.viewport.ExtendViewport
 import com.badlogic.gdx.utils.viewport.FitViewport
@@ -17,15 +16,16 @@ import ktx.graphics.use
 import ktx.math.vec2
 import ktx.scene2d.*
 import map.grid.Coordinate
+import screens.basic.BasicScreen
+import screens.command.CommandMap
+import screens.command.command
+import screens.ui.EditEvent
+import screens.ui.EditState
+import screens.ui.KeyPress
+import screens.ui.SectionDefinition
 import statemachine.StateMachine
 import tru.Assets
 import ui.customactors.boundLabel
-
-fun command(name: String, init: CommandMap.() -> Unit): CommandMap {
-    val command = CommandMap(name)
-    command.init()
-    return command
-}
 
 class MapEditorScreen(gameState: StateMachine<GameState, GameEvent>) : BasicScreen(gameState) {
     private fun stateUpdated(state: EditState, event: EditEvent?) {
@@ -448,17 +448,5 @@ basic-story
             cursorX = 0
 
         return true
-    }
-}
-
-fun boundMoveTo(xFunc: () -> Float, yFunc: () -> Float): BoundMoveToAction {
-    return BoundMoveToAction(xFunc, yFunc)
-}
-
-class BoundMoveToAction(val xFunc: () -> Float, val yFunc: () -> Float) : MoveToAction() {
-    override fun act(delta: Float): Boolean {
-        x = xFunc()
-        y = yFunc()
-        return super.act(delta)
     }
 }

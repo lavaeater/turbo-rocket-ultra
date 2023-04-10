@@ -17,6 +17,10 @@ import statemachine.StateMachine
 import tru.Assets
 import eater.turbofacts.Factoids
 import eater.turbofacts.factsOfTheWorld
+import screens.animeditor.AnimEditorScreen
+import screens.behavioreditor.BehaviorTreeViewScreen
+import screens.charactereditor.CharacterEditorScreen
+import screens.concept.InterpolationConceptScreen
 
 class MainGame : KtxGame<KtxScreen>(), DisposableRegistry by DisposableContainer() {
 
@@ -98,7 +102,7 @@ class MainGame : KtxGame<KtxScreen>(), DisposableRegistry by DisposableContainer
                     edge(GameEvent.StopCharacterEditor, GameState.Setup) {}
                 }
                 state(GameState.Concept) {
-                    action { setScreen<ConceptScreen>() }
+                    action { setScreen<InterpolationConceptScreen>() }
                     edge(GameEvent.StopConcept, GameState.Setup) {}
                 }
                 state(GameState.MapEditor) {
@@ -115,7 +119,7 @@ class MainGame : KtxGame<KtxScreen>(), DisposableRegistry by DisposableContainer
         addScreen(GameOverScreen(gameState))
         addScreen(AnimEditorScreen(gameState))
         addScreen(BehaviorTreeViewScreen(gameState))
-        addScreen(ConceptScreen(gameState))
+        addScreen(InterpolationConceptScreen(gameState))
         addScreen(MapEditorScreen(gameState))
         addScreen(CharacterEditorScreen(gameState))
         gameState.initialize()

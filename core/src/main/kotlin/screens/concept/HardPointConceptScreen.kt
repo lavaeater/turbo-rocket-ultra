@@ -1,4 +1,4 @@
-package screens
+package screens.concept
 
 import com.badlogic.gdx.Input
 import com.badlogic.gdx.graphics.OrthographicCamera
@@ -10,11 +10,14 @@ import ktx.scene2d.actors
 import ktx.scene2d.dialog
 import ktx.scene2d.label
 import ktx.scene2d.scene2d
+import screens.basic.BasicScreen
+import screens.command.command
+import screens.ui.KeyPress
 import statemachine.StateMachine
 import tru.Assets
 import ui.CrawlDialog
 
-class ConceptScreen(gameState: StateMachine<GameState, GameEvent>) : BasicScreen(gameState) {
+class HardPointConceptScreen(gameState: StateMachine<GameState, GameEvent>) : BasicScreen(gameState) {
     private var drawPointerBall = false
     private val valueSize = 10
     private val scores = arrayOf(arrayOf(0.25f, 0.5f, 0.75f), arrayOf(0.5f), arrayOf(0.25f, 0.75f))
