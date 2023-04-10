@@ -80,7 +80,7 @@ class HardPointConceptScreen(
         super.show()
     }
 
-    private val rotationSpeed = 25f
+    private val rotationSpeed = 50f
     private fun updateCharacter(delta: Float) {
         if(rotation != 0)
             character.forward.rotateDeg(rotation * rotationSpeed * delta)
@@ -95,7 +95,7 @@ class HardPointConceptScreen(
         renderInternal(delta)
     }
 
-    fun renderInternal(delta: Float) {
+    private fun renderInternal(delta: Float) {
         stateTime += delta
         batch.use {
             val region =
@@ -167,7 +167,7 @@ class Character {
     //the angle should be the cardinal directions angle for the anchor points - they are static!
     val worldAnchors
         get() = anchors.map {
-            it.key to worldPosition + it.value * 32f
+            it.key to worldPosition + (it.value * 32f).setAngleDeg(direction.cardinalAngle - it.value.angleDeg())
         }.toMap()
 
 }
