@@ -2,6 +2,7 @@ package screens.concept
 
 import com.badlogic.gdx.graphics.Color
 import com.badlogic.gdx.graphics.OrthographicCamera
+import com.badlogic.gdx.math.Vector
 import com.badlogic.gdx.math.Vector2
 import com.badlogic.gdx.utils.viewport.ExtendViewport
 import gamestate.GameEvent
@@ -9,6 +10,7 @@ import gamestate.GameState
 import ktx.graphics.use
 import ktx.math.plus
 import ktx.math.times
+import ktx.math.unaryMinus
 import ktx.math.vec2
 import screens.basic.BasicScreen
 import screens.command.command
@@ -89,21 +91,35 @@ class HardPointConceptScreen(
                 characterAnim.animations[AnimState.Idle]!!.animations[character.cardinalDirection]!!.getKeyFrame(
                     stateTime
                 )
-            it.draw(region, character.worldPosition.x, character.worldPosition.y)
+            it.draw(region, character.worldPosition.x - region.regionWidth / 2f, character.worldPosition.y - region.regionHeight / 2f)
             for ((key, point) in character.worldAnchors) {
-                shapeDrawer.filledCircle(point, 5f, if(key.contains("left")) Color.RED else Color.GREEN)
+                shapeDrawer.filledCircle(point, 5f, if (key.contains("left")) Color.RED else Color.GREEN)
             }
         }
     }
 }
 
 object CardinalToAngles {
-    private val cardinals = mapOf(
+    val cardinals = mapOf(
         241f..300f to CardinalDirection.South,
         301f..360f to CardinalDirection.East,
         0f..60f to CardinalDirection.East,
         61f..120f to CardinalDirection.North,
         121f..240f to CardinalDirection.West
+    )
+
+    val cardinalAbsoluteAngles = mapOf(
+        CardinalDirection.East to 0f,
+        CardinalDirection.South to 270f,
+        CardinalDirection.West to 180f,
+        CardinalDirection.North to 90f
+    )
+
+    val cardinalVectors = mapOf(
+        CardinalDirection.East to vec2(1f, 0f),
+        CardinalDirection.South to vec2(0f, -1f),
+        CardinalDirection.West to vec2(-1f, 0f),
+        CardinalDirection.North to vec2(0f, 1f)
     )
 
     fun angleToCardinal(angle: Float): CardinalDirection {
@@ -114,9 +130,11 @@ object CardinalToAngles {
 
 class Character {
     var worldPosition = vec2()
-    val worldDirection = vec2(1f, 0f)
-    val angleDegrees get() = worldDirection.angleDeg()
-    val cardinalDirection get() = CardinalToAngles.angleToCardinal(angleDegrees)
+    val direction = Direction()
+    val forward = direction.forward
+
+    val angleDegrees get() = direction.angleDegrees
+    val cardinalDirection get() = direction.cardinalDirection
     var width = 32f
     var height = 32f
     var scale = 1.0f
@@ -128,8 +146,29 @@ class Character {
     )
 
     //the angle should be the cardinal directions angle for the anchor points - they are static!
-    val worldAnchors get() = anchors.map {
-        it.key to worldPosition + it.value * 32f
-    }.toMap()
+    val worldAnchors
+        get() = anchors.map {
+            it.key to worldPosition + it.value * 32f
+        }.toMap()
 
 }
+
+
+
+class Direction {
+    val forward = vec2(1f, 0f)
+    var backward: Vector2 = vec2()
+        get() = field.set(forward).rotateDeg(180f)
+        private set
+    var left: Vector2 = vec2()
+        get() = field.set(forward).rotateDeg(90f)
+        private set
+    var right: Vector2 = vec2()
+        get() = field.set(forward).rotateDeg(-90f)
+        private set
+    val angleDegrees get() = forward.angleDeg()
+    val cardinalDirection get() = CardinalToAngles.angleToCardinal(angleDegrees)
+    val cardinalAngle get() = CardinalToAngles.cardinalAbsoluteAngles[cardinalDirection]!!
+    val cardinalForward get() = CardinalToAngles.cardinalVectors[cardinalDirection]!!
+}
+
