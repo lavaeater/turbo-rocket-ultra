@@ -1,5 +1,6 @@
 package screens.concept
 
+import com.badlogic.gdx.Input
 import com.badlogic.gdx.graphics.Color
 import com.badlogic.gdx.graphics.OrthographicCamera
 import com.badlogic.gdx.math.Vector
@@ -28,8 +29,11 @@ class HardPointConceptScreen(
     }
     private val characterAnim = Assets.characterTurboAnims.first { it.key == "boy" }
     private var stateTime = 0f
+    private var rotation = 0
 
     private val normalCommandMap = command("Normal") {
+        setBoth(Input.Keys.LEFT, "Rotate Left", { rotation = 0}, { rotation = 1})
+        setBoth(Input.Keys.RIGHT, "Rotate Right", { rotation = 0}, { rotation = -1})
 //        setUp(Input.Keys.SPACE, "Show the scrolling dialog") {
 //            CrawlDialog.showDialog(
 //                crawlDialog,
@@ -76,7 +80,14 @@ class HardPointConceptScreen(
         super.show()
     }
 
+    private val rotationSpeed = 25f
+    private fun updateCharacter(delta: Float) {
+        if(rotation != 0)
+            character.forward.rotateDeg(rotation * rotationSpeed * delta)
+    }
+
     override fun render(delta: Float) {
+        updateCharacter(delta)
         camera.position.set(character.worldPosition.x, character.worldPosition.y, 0f)
         super.render(delta)
         stage.act()
@@ -91,9 +102,17 @@ class HardPointConceptScreen(
                 characterAnim.animations[AnimState.Idle]!!.animations[character.cardinalDirection]!!.getKeyFrame(
                     stateTime
                 )
-            it.draw(region, character.worldPosition.x - region.regionWidth / 2f, character.worldPosition.y - region.regionHeight / 2f)
+            it.draw(
+                region,
+                character.worldPosition.x - region.regionWidth / 2f,
+                character.worldPosition.y - region.regionHeight / 2f
+            )
             for ((key, point) in character.worldAnchors) {
-                shapeDrawer.filledCircle(point, 5f, if (key.contains("left")) Color.RED else Color.GREEN)
+                shapeDrawer.filledCircle(
+                    point,
+                    5f,
+                    if (key.contains("left")) Color.RED else Color.GREEN
+                )
             }
         }
     }
@@ -152,7 +171,6 @@ class Character {
         }.toMap()
 
 }
-
 
 
 class Direction {
