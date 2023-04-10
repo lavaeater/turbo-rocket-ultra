@@ -30,6 +30,7 @@ import eater.turbofacts.factsOfTheWorld
 import screens.animeditor.AnimEditorScreen
 import screens.behavioreditor.BehaviorTreeViewScreen
 import screens.charactereditor.CharacterEditorScreen
+import screens.concept.HardPointConceptScreen
 import screens.concept.InterpolationConceptScreen
 import animation.Assets
 import turbofacts.FactPersistence
@@ -51,7 +52,7 @@ class MainGame : ApplicationAdapter(), DisposableRegistry by DisposableContainer
     private val gameOverScreen by lazy { GameOverScreen(gameState) }
     private val animEditorScreen by lazy { AnimEditorScreen(gameState) }
     private val behaviorTreeScreen by lazy { BehaviorTreeViewScreen(gameState) }
-    private val conceptScreen by lazy { ConceptScreen(gameState) }
+    private val hardpointConceptScreen by lazy { HardPointConceptScreen(gameState) }
     private val mapEditorScreen by lazy { MapEditorScreen(gameState) }
     private val characterEditorScreen by lazy { CharacterEditorScreen(gameState) }
     private val mutatorArenaScreen by lazy { MutatorArenaScreen(gameState) }
@@ -134,11 +135,11 @@ class MainGame : ApplicationAdapter(), DisposableRegistry by DisposableContainer
                     edge(GameEvent.StopAnimEditor, GameState.Setup) {}
                 }
                 state(GameState.CharacterEditor) {
-                    action { push(characterEditorScreen, SlidingInTransition(transitionBatch, SlidingDirection.UP, 0.35f)) }
+//                    action { push(characterEditorScreen, SlidingInTransition(transitionBatch, SlidingDirection.UP, 0.35f)) }
                     edge(GameEvent.StopCharacterEditor, GameState.Setup) {}
                 }
                 state(GameState.Concept) {
-                    action { push(conceptScreen, BlendingTransition(transitionBatch, 0.3f, Interpolation.fade)) }
+                    action { push(hardpointConceptScreen) }
                     edge(GameEvent.StopConcept, GameState.Setup) {}
                 }
                 state(GameState.MapEditor) {
@@ -161,16 +162,6 @@ class MainGame : ApplicationAdapter(), DisposableRegistry by DisposableContainer
         screenManager.initialize(inputMultiplexer, Gdx.graphics.width, Gdx.graphics.height, false)
         Gdx.input.inputProcessor = inputMultiplexer
 
-        addScreen(SplashScreen(gameState))
-        addScreen(SetupScreen(gameState))
-        addScreen(gameScreen)
-        addScreen(PauseScreen(gameState))
-        addScreen(GameOverScreen(gameState))
-        addScreen(AnimEditorScreen(gameState))
-        addScreen(BehaviorTreeViewScreen(gameState))
-        addScreen(InterpolationConceptScreen(gameState))
-        addScreen(MapEditorScreen(gameState))
-        addScreen(CharacterEditorScreen(gameState))
         gameState.initialize()
     }
 
