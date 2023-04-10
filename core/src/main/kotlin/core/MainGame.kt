@@ -20,6 +20,7 @@ import eater.turbofacts.factsOfTheWorld
 import screens.animeditor.AnimEditorScreen
 import screens.behavioreditor.BehaviorTreeViewScreen
 import screens.charactereditor.CharacterEditorScreen
+import screens.concept.HardPointConceptScreen
 import screens.concept.InterpolationConceptScreen
 
 class MainGame : KtxGame<KtxScreen>(), DisposableRegistry by DisposableContainer() {
@@ -98,11 +99,11 @@ class MainGame : KtxGame<KtxScreen>(), DisposableRegistry by DisposableContainer
                     edge(GameEvent.StopAnimEditor, GameState.Setup) {}
                 }
                 state(GameState.CharacterEditor) {
-                    action { setScreen<CharacterEditorScreen>() }
+//                    action { setScreen<CharacterEditorScreen>() }
                     edge(GameEvent.StopCharacterEditor, GameState.Setup) {}
                 }
                 state(GameState.Concept) {
-                    action { setScreen<InterpolationConceptScreen>() }
+                    action { setScreen<HardPointConceptScreen>() }
                     edge(GameEvent.StopConcept, GameState.Setup) {}
                 }
                 state(GameState.MapEditor) {
@@ -119,9 +120,9 @@ class MainGame : KtxGame<KtxScreen>(), DisposableRegistry by DisposableContainer
         addScreen(GameOverScreen(gameState))
         addScreen(AnimEditorScreen(gameState))
         addScreen(BehaviorTreeViewScreen(gameState))
-        addScreen(InterpolationConceptScreen(gameState))
+        addScreen(HardPointConceptScreen(gameState))
         addScreen(MapEditorScreen(gameState))
-        addScreen(CharacterEditorScreen(gameState))
+//        addScreen(CharacterEditorScreen(gameState))
         gameState.initialize()
     }
 }
