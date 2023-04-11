@@ -3,6 +3,8 @@ package screens.concept
 import com.badlogic.gdx.Input
 import com.badlogic.gdx.graphics.Color
 import com.badlogic.gdx.graphics.OrthographicCamera
+import com.badlogic.gdx.math.MathUtils
+import com.badlogic.gdx.math.Polygon
 import com.badlogic.gdx.math.Vector2
 import com.badlogic.gdx.utils.viewport.ExtendViewport
 import gamestate.GameEvent
@@ -17,6 +19,7 @@ import statemachine.StateMachine
 import tru.AnimState
 import tru.Assets
 import tru.CardinalDirection
+import kotlin.math.absoluteValue
 
 class HardPointConceptScreen(
     gameState: StateMachine<GameState, GameEvent>
@@ -66,6 +69,7 @@ class HardPointConceptScreen(
     private val rotationSpeed = 100f
     private fun updateCharacter(delta: Float) {
         character.aimVector.set(MousePosition.worldPosition2D - character.worldAnchors["rightshoulder"]!!).nor()
+        character.forward.setAngleDeg((MousePosition.worldPosition2D - character.worldPosition).angleDeg())
 
         if (rotation != 0)
             character.forward.rotateDeg(rotation * rotationSpeed * delta)
@@ -87,9 +91,6 @@ class HardPointConceptScreen(
         camera.position.set(character.worldPosition.x, character.worldPosition.y, 0f)
         updateCharacter(delta)
         super.render(delta)
-
-//          stage.act()
-//        stage.draw()
         renderInternal(delta)
     }
 
@@ -131,7 +132,23 @@ class HardPointConceptScreen(
             }
             renderAimVector()
             renderLineToMouse()
+            renderRifle()
         }
+    }
+
+    val rifle = Polygon(floatArrayOf(0f, 5f, 50f, 5f, 50f, -5f, 0f, -5f))
+
+    private fun renderRifle() {
+        val stop = MousePosition.worldPosition2D.cpy()
+        val start = character.worldAnchors["rightshoulder"]!!.cpy()
+        rifle.rotation = character.aimVector.angleDeg()
+        rifle.setPosition(start.x, start.y)
+        val scaleX = MathUtils.lerp(0.5f, 1f, character.aimVector.x.absoluteValue)
+        rifle.setScale(scaleX, 1f)
+
+        shapeDrawer.setColor(Color.GRAY)
+        shapeDrawer.filledPolygon(rifle)
+        shapeDrawer.setColor(Color.WHITE)
     }
 }
 
