@@ -4,11 +4,11 @@ import com.badlogic.gdx.Input
 import com.badlogic.gdx.graphics.Color
 import com.badlogic.gdx.math.MathUtils
 import com.badlogic.gdx.math.Polygon
-import com.badlogic.gdx.math.Vector2
 import gamestate.GameEvent
 import gamestate.GameState
 import ktx.graphics.use
-import ktx.math.*
+import ktx.math.minus
+import ktx.math.plus
 import screens.basic.BasicScreen
 import screens.command.command
 import screens.ui.KeyPress
@@ -17,6 +17,8 @@ import statemachine.StateMachine
 import tru.AnimState
 import tru.Assets
 import tru.CardinalDirection
+import kotlin.collections.component1
+import kotlin.collections.component2
 import kotlin.math.absoluteValue
 import kotlin.math.pow
 
@@ -76,8 +78,6 @@ class HardPointConceptScreen(
 
     override fun show() {
         super.show()
-        viewport.worldWidth = 200f
-        viewport.worldHeight = 150f
         camera.setToOrtho(false)
     }
 
@@ -202,99 +202,8 @@ class HardPointConceptScreen(
         shapeDrawer.line(rightShoulder, rightShoulder + rightUpperArmVector, Color.BROWN, 6f)
         shapeDrawer.line(rightShoulder + rightUpperArmVector, rightHandGripPoint, Color.BROWN, 6f)
     }
-
-}
-
-object CardinalToAngles {
-    val cardinals = mapOf(
-        221f..320f to CardinalDirection.South,
-        321f..360f to CardinalDirection.East,
-        0f..40f to CardinalDirection.East,
-        41f..140f to CardinalDirection.North,
-        141f..220f to CardinalDirection.West
-    )
-
-    val cardinalAbsoluteAngles = mapOf(
-        CardinalDirection.East to 0f,
-        CardinalDirection.South to 270f,
-        CardinalDirection.West to 180f,
-        CardinalDirection.North to 90f
-    )
-
-    val cardinalVectors = mapOf(
-        CardinalDirection.East to vec2(1f, 0f),
-        CardinalDirection.South to vec2(0f, -1f),
-        CardinalDirection.West to vec2(-1f, 0f),
-        CardinalDirection.North to vec2(0f, 1f)
-    )
-
-    fun angleToCardinal(angle: Float): CardinalDirection {
-        val dirKey = cardinals.keys.firstOrNull { it.contains(angle) }
-        return if (dirKey != null) cardinals[dirKey]!! else CardinalDirection.South
-    }
-}
-
-class Character {
-    var worldPosition = vec2()
-    val direction = Direction()
-    val forward = direction.forward
-
-    val angleDegrees get() = direction.angleDegrees
-    val cardinalDirection get() = direction.cardinalDirection
-    var width = 32f
-    var height = 32f
-    var scale = 1.0f
-    val center = Vector2.Zero.cpy()
-
-    private val anchors = mapOf(
-        CardinalDirection.East to
-                mapOf(
-                    "rightshoulder" to vec2(-0.25f, 0.5f),
-                    "leftshoulder" to vec2(0f, -0.25f)
-                ),
-        CardinalDirection.South to
-                mapOf(
-                    "rightshoulder" to vec2(0.25f, 0.5f),
-                    "leftshoulder" to vec2(0.25f, -0.5f)
-                ),
-        CardinalDirection.West to
-                mapOf(
-                    "rightshoulder" to vec2(0f, 0.25f),
-                    "leftshoulder" to vec2(-0.25f, -0.5f)
-                ),
-        CardinalDirection.North to
-                mapOf(
-                    "rightshoulder" to vec2(-0.25f, 0.5f),
-                    "leftshoulder" to vec2(-0.25f, -0.5f)
-                )
-    )
-
-    val aimVector = Vector2.X.cpy()
-
-    //the angle should be the cardinal directions angle for the anchor points - they are static!
-    val worldAnchors
-        get() = anchors[cardinalDirection]!!.map {
-            it.key to worldPosition + vec2().set(it.value.x, it.value.y * 0.5f).times(32f)
-                .setAngleDeg(direction.cardinalAngle - it.value.angleDeg())
-        }.toMap()
-
 }
 
 
-class Direction {
-    val forward = vec2(1f, 0f)
-    var backward: Vector2 = vec2()
-        get() = field.set(forward).rotateDeg(180f)
-        private set
-    var left: Vector2 = vec2()
-        get() = field.set(forward).rotateDeg(90f)
-        private set
-    var right: Vector2 = vec2()
-        get() = field.set(forward).rotateDeg(-90f)
-        private set
-    val angleDegrees get() = forward.angleDeg()
-    val cardinalDirection get() = CardinalToAngles.angleToCardinal(angleDegrees)
-    val cardinalAngle get() = CardinalToAngles.cardinalAbsoluteAngles[cardinalDirection]!!
-    val cardinalForward get() = CardinalToAngles.cardinalVectors[cardinalDirection]!!
-}
+
 
