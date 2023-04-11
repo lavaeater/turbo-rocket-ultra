@@ -140,6 +140,10 @@ class HardPointConceptScreen(
         val rightShoulder = character.worldAnchors["rightshoulder"]!!.cpy()
         val rightHandPosition = rightShoulder + character.aimVector.cpy().scl(5f)
         shapeDrawer.filledCircle(rightHandPosition, 4f, skinColor)
+        val upperArmLength = 3f
+        val lowerArmLength = 5f
+
+
         val leftHandPosition = rightShoulder + character.aimVector.cpy().scl(15f)
         shapeDrawer.filledCircle(leftHandPosition, 4f, skinColor)
     }
