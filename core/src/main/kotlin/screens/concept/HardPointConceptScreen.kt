@@ -2,11 +2,9 @@ package screens.concept
 
 import com.badlogic.gdx.Input
 import com.badlogic.gdx.graphics.Color
-import com.badlogic.gdx.graphics.OrthographicCamera
 import com.badlogic.gdx.math.MathUtils
 import com.badlogic.gdx.math.Polygon
 import com.badlogic.gdx.math.Vector2
-import com.badlogic.gdx.utils.viewport.ExtendViewport
 import gamestate.GameEvent
 import gamestate.GameState
 import ktx.graphics.use
@@ -94,52 +92,37 @@ class HardPointConceptScreen(
         renderInternal(delta)
     }
 
-    private fun renderAimVector() {
-        shapeDrawer.filledCircle(character.worldPosition + (character.aimVector.cpy().scl(25f)), 2.5f, Color.YELLOW)
-    }
+    private val drawMethods = mapOf(
+        CardinalDirection.East to listOf(::drawRegion, ::drawRifle),
+        CardinalDirection.South to listOf(::drawRegion, ::drawRifle),
+        CardinalDirection.West to listOf(::drawRifle, ::drawRegion),
+        CardinalDirection.North to listOf(::drawRifle, ::drawRegion)
+    )
 
-    private fun renderLineToMouse() {
-        val start = character.worldPosition + (character.aimVector.cpy().scl(25f))
-        val stop = MousePosition.worldPosition2D.cpy()
-        shapeDrawer.line(start, stop, Color.YELLOW)
-        shapeDrawer.filledCircle(start, 2f, Color.GREEN)
-        shapeDrawer.filledCircle(stop, 2f, Color.RED)
-        shapeDrawer.filledCircle(MousePosition.worldPosition2D, 5f, Color.WHITE)
-
-        start.set(character.worldAnchors["rightshoulder"]!!)
-
-        shapeDrawer.line(start, stop, Color.RED)
+    private fun drawRegion(character: Character) {
+        val region =
+            characterAnim.animations[AnimState.Idle]!!.animations[character.cardinalDirection]!!.getKeyFrame(
+                stateTime
+            )
+        batch.draw(
+            region,
+            character.worldPosition.x - region.regionWidth / 2f,
+            character.worldPosition.y - region.regionHeight / 2f
+        )
     }
 
     private fun renderInternal(delta: Float) {
         stateTime += delta
         batch.use {
-            val region =
-                characterAnim.animations[AnimState.Idle]!!.animations[character.cardinalDirection]!!.getKeyFrame(
-                    stateTime
-                )
-            it.draw(
-                region,
-                character.worldPosition.x - region.regionWidth / 2f,
-                character.worldPosition.y - region.regionHeight / 2f
-            )
-            for ((key, point) in character.worldAnchors) {
-                shapeDrawer.filledCircle(
-                    point,
-                    5f,
-                    if (key.contains("left")) Color.RED else Color.GREEN
-                )
-            }
-            renderAimVector()
-            renderLineToMouse()
-            renderRifle()
+            for(drawMethod in drawMethods[character.cardinalDirection]!!)
+                drawMethod(character)
         }
     }
 
-    val rifle = Polygon(floatArrayOf(0f, 5f, 50f, 5f, 50f, -5f, 0f, -5f))
+    private val rifle = Polygon(floatArrayOf(0f, 2f, 50f, 2f, 50f, -2f, 0f, -2f))
 
-    private fun renderRifle() {
-        val stop = MousePosition.worldPosition2D.cpy()
+    private fun drawRifle(character: Character) {
+        drawHandsAndArms(character)
         val start = character.worldAnchors["rightshoulder"]!!.cpy()
         rifle.rotation = character.aimVector.angleDeg()
         rifle.setPosition(start.x, start.y)
@@ -149,6 +132,16 @@ class HardPointConceptScreen(
         shapeDrawer.setColor(Color.GRAY)
         shapeDrawer.filledPolygon(rifle)
         shapeDrawer.setColor(Color.WHITE)
+    }
+
+    private val skinColor = Color(0.8f,0.6f, 0.5f, 1f)
+
+    private fun drawHandsAndArms(character: Character) {
+        val rightShoulder = character.worldAnchors["rightshoulder"]!!.cpy()
+        val rightHandPosition = rightShoulder + character.aimVector.cpy().scl(5f)
+        shapeDrawer.filledCircle(rightHandPosition, 4f, skinColor)
+        val leftHandPosition = rightShoulder + character.aimVector.cpy().scl(15f)
+        shapeDrawer.filledCircle(leftHandPosition, 4f, skinColor)
     }
 }
 
