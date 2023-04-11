@@ -5,6 +5,7 @@ import com.badlogic.gdx.graphics.Color
 import com.badlogic.gdx.math.MathUtils
 import com.badlogic.gdx.math.Polygon
 import com.badlogic.gdx.math.Vector2
+import extensions.angleTo
 import gamestate.GameEvent
 import gamestate.GameState
 import ktx.graphics.use
@@ -18,6 +19,7 @@ import tru.AnimState
 import tru.Assets
 import tru.CardinalDirection
 import kotlin.math.absoluteValue
+import kotlin.math.pow
 
 class HardPointConceptScreen(
     gameState: StateMachine<GameState, GameEvent>
@@ -114,38 +116,58 @@ class HardPointConceptScreen(
     private fun renderInternal(delta: Float) {
         stateTime += delta
         batch.use {
-            for(drawMethod in drawMethods[character.cardinalDirection]!!)
-                drawMethod(character)
+            drawRegion(character)
+            drawRifle(character)
+//            for (drawMethod in drawMethods[character.cardinalDirection]!!)
+//                drawMethod(character)
         }
     }
 
     private val rifle = Polygon(floatArrayOf(0f, 2f, 50f, 2f, 50f, -2f, 0f, -2f))
 
     private fun drawRifle(character: Character) {
-        drawHandsAndArms(character)
         val start = character.worldAnchors["rightshoulder"]!!.cpy()
         rifle.rotation = character.aimVector.angleDeg()
         rifle.setPosition(start.x, start.y)
         val scaleX = MathUtils.lerp(0.5f, 1f, character.aimVector.x.absoluteValue)
         rifle.setScale(scaleX, 1f)
 
-        shapeDrawer.setColor(Color.GRAY)
-        shapeDrawer.filledPolygon(rifle)
-        shapeDrawer.setColor(Color.WHITE)
+//        shapeDrawer.setColor(Color.GRAY)
+//        shapeDrawer.filledPolygon(rifle)
+//        shapeDrawer.setColor(Color.WHITE)
+        drawHandsAndArms(character)
     }
 
-    private val skinColor = Color(0.8f,0.6f, 0.5f, 1f)
+    private val skinColor = Color(0.8f, 0.6f, 0.5f, 1f)
 
     private fun drawHandsAndArms(character: Character) {
         val rightShoulder = character.worldAnchors["rightshoulder"]!!.cpy()
-        val rightHandPosition = rightShoulder + character.aimVector.cpy().scl(5f)
-        shapeDrawer.filledCircle(rightHandPosition, 4f, skinColor)
-        val upperArmLength = 3f
-        val lowerArmLength = 5f
+        val leftShoulder = character.worldAnchors["leftshoulder"]!!.cpy()
+        val rightGripLength = 5f
+        val rightHandDirection = character.aimVector.cpy().scl(rightGripLength)
+        shapeDrawer.filledCircle(rightShoulder + rightHandDirection, 4f, skinColor)
+        val upperArmLength = 5f
+        val lowerArmLength = 8f
 
+        val alpha =
+            MathUtils.acos((rightGripLength.pow(2) + upperArmLength.pow(2) - lowerArmLength.pow(2)) / (2 * upperArmLength * rightGripLength))
+        val rightUpperArmVector =
+            vec2(1f, 0f).setAngleDeg(rightHandDirection.angleDeg()).rotateRad(-alpha).scl(upperArmLength)
+        shapeDrawer.line(rightShoulder, rightShoulder + rightUpperArmVector, Color.GREEN, 3f)
+        shapeDrawer.line(rightShoulder + rightUpperArmVector, rightShoulder + rightHandDirection, Color.YELLOW, 3f)
 
-        val leftHandPosition = rightShoulder + character.aimVector.cpy().scl(15f)
-        shapeDrawer.filledCircle(leftHandPosition, 4f, skinColor)
+        val leftGripLength = 15f
+        val leftHandDirection = character.aimVector.cpy().scl(leftGripLength)
+        val leftHandGripPoint = rightShoulder + leftHandDirection
+        shapeDrawer.filledCircle(leftHandGripPoint, 4f, skinColor)
+        leftHandDirection.set(leftHandGripPoint).sub(leftShoulder).nor()
+        val leftDistance = leftHandGripPoint.dst(leftShoulder)
+
+        val beta =
+            MathUtils.acos((leftDistance.pow(2) + upperArmLength.pow(2) - lowerArmLength.pow(2)) / (2 * leftDistance * upperArmLength))
+        val leftUpperArmVector = leftHandDirection.cpy().rotateRad(beta).scl(upperArmLength)
+        shapeDrawer.line(leftShoulder, leftShoulder + leftUpperArmVector, Color.RED, 3f)
+        shapeDrawer.line(leftShoulder + leftUpperArmVector, leftHandGripPoint, Color.PINK, 3f)
     }
 }
 
