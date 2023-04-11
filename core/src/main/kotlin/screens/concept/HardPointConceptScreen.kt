@@ -3,19 +3,16 @@ package screens.concept
 import com.badlogic.gdx.Input
 import com.badlogic.gdx.graphics.Color
 import com.badlogic.gdx.graphics.OrthographicCamera
-import com.badlogic.gdx.math.Vector
 import com.badlogic.gdx.math.Vector2
 import com.badlogic.gdx.utils.viewport.ExtendViewport
 import gamestate.GameEvent
 import gamestate.GameState
 import ktx.graphics.use
-import ktx.math.plus
-import ktx.math.times
-import ktx.math.unaryMinus
-import ktx.math.vec2
+import ktx.math.*
 import screens.basic.BasicScreen
 import screens.command.command
 import screens.ui.KeyPress
+import screens.ui.MousePosition
 import statemachine.StateMachine
 import tru.AnimState
 import tru.Assets
@@ -32,8 +29,8 @@ class HardPointConceptScreen(
     private var rotation = 0
 
     private val normalCommandMap = command("Normal") {
-        setBoth(Input.Keys.LEFT, "Rotate Left", { rotation = 0}, { rotation = 1})
-        setBoth(Input.Keys.RIGHT, "Rotate Right", { rotation = 0}, { rotation = -1})
+        setBoth(Input.Keys.LEFT, "Rotate Left", { rotation = 0 }, { rotation = 1 })
+        setBoth(Input.Keys.RIGHT, "Rotate Right", { rotation = 0 }, { rotation = -1 })
 //        setUp(Input.Keys.SPACE, "Show the scrolling dialog") {
 //            CrawlDialog.showDialog(
 //                crawlDialog,
@@ -49,16 +46,6 @@ class HardPointConceptScreen(
 //        }
     }
     private val shapeDrawer by lazy { Assets.shapeDrawer }
-
-    private val stage by lazy {
-        val aStage = ktx.actors.stage(batch, ExtendViewport(800f, 600f, OrthographicCamera()))
-//        aStage.actors {
-//            label(scoreAvgs.joinToString() + "\n" + scoresInterpolated.joinToString()).apply {
-//                setFontScale(0.5f)
-//            }
-//        }
-        aStage
-    }
 
     override fun keyUp(keycode: Int): Boolean {
         return normalCommandMap.execute(keycode, KeyPress.Up)
@@ -76,23 +63,51 @@ class HardPointConceptScreen(
         return true
     }
 
-    override fun show() {
-        super.show()
-    }
-
-    private val rotationSpeed = 50f
+    private val rotationSpeed = 100f
     private fun updateCharacter(delta: Float) {
-        if(rotation != 0)
+        character.aimVector.set(MousePosition.worldPosition2D - character.worldAnchors["rightshoulder"]!!).nor()
+
+        if (rotation != 0)
             character.forward.rotateDeg(rotation * rotationSpeed * delta)
     }
 
+    override fun show() {
+        super.show()
+        viewport.worldWidth = 800f
+        viewport.worldHeight = 600f
+        camera.setToOrtho(false)
+    }
+
+    override fun resize(width: Int, height: Int) {
+        viewport.update(width, height)
+        batch.projectionMatrix = camera.combined
+    }
+
     override fun render(delta: Float) {
-        updateCharacter(delta)
         camera.position.set(character.worldPosition.x, character.worldPosition.y, 0f)
+        updateCharacter(delta)
         super.render(delta)
-        stage.act()
-        stage.draw()
+
+//          stage.act()
+//        stage.draw()
         renderInternal(delta)
+    }
+
+    private fun renderAimVector() {
+        shapeDrawer.filledCircle(character.worldPosition + (character.aimVector.cpy().scl(25f)), 2.5f, Color.YELLOW)
+    }
+
+    private fun renderLineToMouse() {
+        val start = character.worldPosition + (character.aimVector.cpy().scl(25f))
+        val stop = MousePosition.worldPosition2D.cpy()
+        shapeDrawer.line(start, stop, Color.YELLOW)
+        shapeDrawer.filledCircle(start, 2f, Color.GREEN)
+        shapeDrawer.filledCircle(stop, 2f, Color.RED)
+        shapeDrawer.filledCircle(MousePosition.worldPosition2D, 5f, Color.WHITE)
+
+        start.set(character.worldAnchors["rightshoulder"]!!)
+
+        shapeDrawer.line(start, stop, Color.RED)
     }
 
     private fun renderInternal(delta: Float) {
@@ -114,6 +129,8 @@ class HardPointConceptScreen(
                     if (key.contains("left")) Color.RED else Color.GREEN
                 )
             }
+            renderAimVector()
+            renderLineToMouse()
         }
     }
 }
@@ -159,15 +176,18 @@ class Character {
     var scale = 1.0f
     val center = Vector2.Zero.cpy()
 
-    val anchors = mapOf(
-        "rightshoulder" to vec2(0f, -0.25f),
-        "leftshoulder" to vec2(0f, 0.25f)
+    private val anchors = mapOf(
+        "rightshoulder" to vec2(0.1f, 0.5f),
+        "leftshoulder" to vec2(0.1f, -0.5f)
     )
+
+    var aimVector = Vector2.X.cpy()
 
     //the angle should be the cardinal directions angle for the anchor points - they are static!
     val worldAnchors
         get() = anchors.map {
-            it.key to worldPosition + (it.value * 32f).setAngleDeg(direction.cardinalAngle - it.value.angleDeg())
+            it.key to worldPosition + vec2().set(it.value.x, it.value.y * 0.5f).times(32f)
+                .setAngleDeg(direction.cardinalAngle - it.value.angleDeg())
         }.toMap()
 
 }

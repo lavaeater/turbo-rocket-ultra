@@ -23,6 +23,8 @@ object MousePosition {
         return toWorld(Gdx.input.x, Gdx.input.y)
     }
 
+    val worldPosition2D get() = toWorld()
+
     const val margin = 2.5f
     const val minX = 0f + margin
     const val maxX = GameConstants.GAME_HEIGHT - margin
