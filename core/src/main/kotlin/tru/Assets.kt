@@ -16,6 +16,8 @@ import com.badlogic.gdx.utils.Disposable
 import eater.injection.InjectionContext.Companion.inject
 import features.weapons.GunFrames
 import features.weapons.Weapon
+import ktx.assets.DisposableContainer
+import ktx.assets.DisposableRegistry
 import ktx.scene2d.Scene2DSkin
 import map.snake.MapDirection
 import space.earlygrey.shapedrawer.ShapeDrawer
@@ -24,9 +26,7 @@ import space.earlygrey.shapedrawer.ShapeDrawer
 /**
  * Actually load assets using the asset manager, maan
  */
-object Assets : Disposable {
-
-    lateinit var am: AssetManager
+object Assets : DisposableRegistry by DisposableContainer() {
 
     private val disposables = mutableListOf<Disposable>()
 
@@ -470,11 +470,11 @@ object Assets : Disposable {
         font32
     }
 
-    fun load(): AssetManager {
-        am = AssetManager()
+    fun load() {
+        val am = AssetManager()
         fixScene2dSkin()
         fixFlip()
-        return am
+        am.alsoRegister()
     }
 
     private fun fixFlip() {
@@ -524,9 +524,6 @@ object Assets : Disposable {
 
     private fun fixScene2dSkin() {
         Scene2DSkin.defaultSkin = Skin(Gdx.files.internal("skins/my-skin/uiskin.json"))
-    }
-
-    override fun dispose() {
     }
 }
 

@@ -2,13 +2,21 @@ package extensions
 
 import com.badlogic.gdx.math.MathUtils
 import com.badlogic.gdx.math.Vector2
+import ecs.systems.graphics.GameConstants
 import ktx.math.vec2
-import screens.ui.MousePosition
 import tru.CardinalDirection
+
+object MouseMarginConstants {
+    const val margin = 2.5f
+    const val minX = 0f + margin
+    const val maxX = GameConstants.GAME_HEIGHT - margin
+    const val maxY = GameConstants.GAME_HEIGHT - margin
+    const val minY = 0f + margin
+}
 
 
 fun Vector2.worldToNorm(): Vector2 {
-    return this.worldToNorm(MousePosition.minX, MousePosition.maxX, MousePosition.minY, MousePosition.maxY)
+    return this.worldToNorm(MouseMarginConstants.minX, MouseMarginConstants.maxX, MouseMarginConstants.minY, MouseMarginConstants.maxY)
 }
 
 fun Vector2.worldToNorm(minX: Float, maxX: Float, minY: Float, maxY: Float): Vector2 {
@@ -16,7 +24,7 @@ fun Vector2.worldToNorm(minX: Float, maxX: Float, minY: Float, maxY: Float): Vec
 }
 
 fun Vector2.normToWorld(): Vector2 {
-    return normToWorld(MousePosition.minX, MousePosition.maxX, MousePosition.minY, MousePosition.maxY)
+    return normToWorld(MouseMarginConstants.minX, MouseMarginConstants.maxX, MouseMarginConstants.minY, MouseMarginConstants.maxY)
 }
 
 fun Vector2.normToWorld(minX: Float, maxX: Float, minY: Float, maxY: Float): Vector2 {

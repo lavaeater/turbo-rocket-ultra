@@ -12,7 +12,7 @@ import ktx.math.plus
 import screens.basic.BasicScreen
 import screens.command.command
 import screens.ui.KeyPress
-import screens.ui.MousePosition
+import eater.input.mouse.MousePosition
 import statemachine.StateMachine
 import tru.AnimState
 import tru.Assets

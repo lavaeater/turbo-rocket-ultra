@@ -1,10 +1,9 @@
-package screens.ui
+package eater.input.mouse
 
 import com.badlogic.gdx.Gdx
 import com.badlogic.gdx.graphics.OrthographicCamera
 import com.badlogic.gdx.math.Vector2
 import eater.injection.InjectionContext.Companion.inject
-import ecs.systems.graphics.GameConstants
 import ktx.math.vec2
 import ktx.math.vec3
 
@@ -24,10 +23,4 @@ object MousePosition {
     }
 
     val worldPosition2D get() = toWorld()
-
-    const val margin = 2.5f
-    const val minX = 0f + margin
-    const val maxX = GameConstants.GAME_HEIGHT - margin
-    const val maxY = GameConstants.GAME_HEIGHT - margin
-    const val minY = 0f + margin
 }

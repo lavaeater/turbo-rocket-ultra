@@ -23,7 +23,13 @@ import screens.charactereditor.CharacterEditorScreen
 import screens.concept.HardPointConceptScreen
 import screens.concept.InterpolationConceptScreen
 
-class MainGame : KtxGame<KtxScreen>(), DisposableRegistry by DisposableContainer() {
+class MainGame : KtxGame<KtxScreen>() {
+
+    override fun dispose() {
+        super.dispose()
+        Assets.dispose()
+    }
+
 
     val gameState: StateMachine<GameState, GameEvent> by lazy {
         inject()
@@ -112,7 +118,7 @@ class MainGame : KtxGame<KtxScreen>(), DisposableRegistry by DisposableContainer
                 }
             })
         }
-        Assets.load().alsoRegister()
+        Assets.load()
         addScreen(SplashScreen(gameState))
         addScreen(SetupScreen(gameState))
         addScreen(gameScreen)
