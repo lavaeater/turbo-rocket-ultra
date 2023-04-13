@@ -15,6 +15,7 @@ import com.crashinvaders.vfx.effects.ChainVfxEffect
 import eater.ecs.ashley.components.AgentProperties
 import eater.ecs.ashley.components.Memory
 import eater.ecs.ashley.components.TransformComponent
+import eater.ecs.ashley.components.character.Character
 import eater.injection.InjectionContext.Companion.inject
 import eater.physics.addComponent
 import eater.physics.getComponent
@@ -25,6 +26,7 @@ import ecs.components.ai.Waypoint
 import ecs.components.ai.behavior.AmbleState
 import ecs.components.gameplay.DestroyComponent
 import ecs.components.graphics.RenderableComponent
+import ecs.components.graphics.RenderableType
 import ktx.ashley.allOf
 import ktx.graphics.use
 import map.grid.GridMapManager
@@ -159,10 +161,16 @@ class RenderSystem(
         }
     }
 
+    fun renderCharacterWithArms(entity: Entity, deltaTime: Float) {
+        val character = Character.get(entity)
+
+    }
+
     override fun processEntity(entity: Entity, deltaTime: Float) {
         when (entity.renderable().renderableType) {
-            is ecs.components.graphics.RenderableType.Sprite -> renderSpriteEntity(entity)
-            is ecs.components.graphics.RenderableType.Effect -> renderEffect(entity, deltaTime)
+            RenderableType.Effect -> renderSpriteEntity(entity)
+            RenderableType.Sprite -> renderEffect(entity, deltaTime)
+            RenderableType.CharacterWithArms -> renderCharacterWithArms(entity, deltaTime)
         }
 
         if (entity.isEnemy()) {
