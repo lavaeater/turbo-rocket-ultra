@@ -3,25 +3,21 @@ package core
 import data.Players
 import eater.injection.InjectionContext
 import eater.injection.InjectionContext.Companion.inject
+import eater.turbofacts.Factoids
+import eater.turbofacts.factsOfTheWorld
 import gamestate.GameEvent
 import gamestate.GameState
 import injection.Context
 import ktx.app.KtxGame
 import ktx.app.KtxScreen
-import ktx.assets.DisposableContainer
-import ktx.assets.DisposableRegistry
 import ktx.inject.register
 import ktx.log.debug
 import screens.*
-import statemachine.StateMachine
-import tru.Assets
-import eater.turbofacts.Factoids
-import eater.turbofacts.factsOfTheWorld
 import screens.animeditor.AnimEditorScreen
 import screens.behavioreditor.BehaviorTreeViewScreen
-import screens.charactereditor.CharacterEditorScreen
 import screens.concept.HardPointConceptScreen
-import screens.concept.InterpolationConceptScreen
+import statemachine.StateMachine
+import tru.Assets
 
 class MainGame : KtxGame<KtxScreen>() {
 
