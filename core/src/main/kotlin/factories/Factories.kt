@@ -23,6 +23,7 @@ import eater.ecs.ashley.components.AgentProperties
 import eater.ecs.ashley.components.AiComponent
 import eater.ecs.ashley.components.Box2d
 import eater.ecs.ashley.components.TransformComponent
+import eater.ecs.ashley.components.character.CharacterComponent
 import eater.input.CardinalDirection
 import eater.physics.addComponent
 import eater.turbofacts.FactsLikeThatMan
@@ -353,6 +354,7 @@ fun player(player: Player, mapper: ControlMapper, at: Vector2, debug: Boolean) {
             anims = Assets.characters[player.selectedCharacterSpriteName]!!
             currentAnim = anims.values.first().animations.values.first()
         }
+        with<CharacterComponent>()
         with<TextureRegionComponent> {
 //            offsetY = -1f
         }

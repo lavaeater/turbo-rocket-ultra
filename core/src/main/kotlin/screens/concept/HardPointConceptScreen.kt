@@ -4,7 +4,7 @@ import com.badlogic.gdx.Input
 import com.badlogic.gdx.graphics.Color
 import com.badlogic.gdx.math.MathUtils
 import com.badlogic.gdx.math.Polygon
-import eater.ecs.ashley.components.character.Character
+import eater.ecs.ashley.components.character.CharacterComponent
 import gamestate.GameEvent
 import gamestate.GameState
 import ktx.graphics.use
@@ -26,7 +26,7 @@ import kotlin.math.pow
 class HardPointConceptScreen(
     gameState: StateMachine<GameState, GameEvent>
 ) : BasicScreen(gameState) {
-    private val character = Character().apply {
+    private val character = CharacterComponent().apply {
         worldPosition.set(200f, 200f)
     }
     private val characterAnim = Assets.characterTurboAnims.first { it.key == "boy" }
@@ -94,14 +94,14 @@ class HardPointConceptScreen(
         renderInternal(delta)
     }
 
-    private val drawMethods = mapOf(
+    private val drawMethods: Map<CardinalDirection, List<(CharacterComponent)->Unit>> = mapOf(
         CardinalDirection.East to listOf(::drawLeftHand, ::drawRegion, ::drawRifle, ::drawRightHand),
         CardinalDirection.South to listOf(::drawRegion, ::drawLeftHand, ::drawRightHand, ::drawRifle),
         CardinalDirection.West to listOf(::drawRightHand, ::drawRifle, ::drawRegion, ::drawLeftHand),
         CardinalDirection.North to listOf(::drawLeftHand, ::drawRightHand, ::drawRifle, ::drawRegion)
     )
 
-    private fun drawRegion(character: Character) {
+    private fun drawRegion(character: CharacterComponent) {
         val region =
             characterAnim.animations[AnimState.Idle]!!.animations[character.cardinalDirection]!!.getKeyFrame(
                 stateTime
@@ -113,7 +113,7 @@ class HardPointConceptScreen(
         )
     }
 
-    fun drawAnchors(character: Character) {
+    fun drawAnchors(character: CharacterComponent) {
         for ((key, point) in character.worldAnchors) {
             shapeDrawer.filledCircle(
                 point,
@@ -151,7 +151,7 @@ class HardPointConceptScreen(
 
     private val rifle = Polygon(floatArrayOf(0f, 2f, 50f, 2f, 50f, -2f, 0f, -2f))
 
-    private fun drawRifle(character: Character) {
+    private fun drawRifle(character: CharacterComponent) {
         val start = character.worldAnchors["rightshoulder"]!!.cpy()
         rifle.rotation = character.aimVector.angleDeg()
         rifle.setPosition(start.x, start.y)
@@ -165,7 +165,7 @@ class HardPointConceptScreen(
 
     private val skinColor = Color(0.8f, 0.6f, 0.5f, 1f)
 
-    fun drawLeftHand(character: Character) {
+    fun drawLeftHand(character: CharacterComponent) {
         val rightShoulder = character.worldAnchors["rightshoulder"]!!.cpy()
         val leftShoulder = character.worldAnchors["leftshoulder"]!!.cpy()
         val lowerArmLength = 24f
@@ -184,7 +184,7 @@ class HardPointConceptScreen(
         shapeDrawer.line(leftShoulder + leftUpperArmVector, leftHandGripPoint, Color.BROWN, 6f)
     }
 
-    fun drawRightHand(character: Character) {
+    fun drawRightHand(character: CharacterComponent) {
         val rightShoulder = character.worldAnchors["rightshoulder"]!!.cpy()
         val rightGripLength = 8f
         val rightHandDirection = character.aimVector.cpy().scl(rightGripLength).scl(MathUtils.lerp(0.5f, 1f, character.aimVector.x.absoluteValue))

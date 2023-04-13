@@ -15,25 +15,20 @@ import com.crashinvaders.vfx.effects.ChainVfxEffect
 import eater.ecs.ashley.components.AgentProperties
 import eater.ecs.ashley.components.Memory
 import eater.ecs.ashley.components.TransformComponent
-import eater.ecs.ashley.components.character.Character
 import eater.injection.InjectionContext.Companion.inject
-import eater.physics.addComponent
 import eater.physics.getComponent
 import eater.physics.has
 import ecs.components.ai.Path
 import ecs.components.ai.SeenPlayerPositions
 import ecs.components.ai.Waypoint
 import ecs.components.ai.behavior.AmbleState
-import ecs.components.gameplay.DestroyComponent
 import ecs.components.graphics.RenderableComponent
-import ecs.components.graphics.RenderableType
 import ktx.ashley.allOf
 import ktx.graphics.use
 import map.grid.GridMapManager
 import physics.*
 import screens.ui.ApplicationFlags
 import tru.Assets
-
 class RenderSystem(
     private val batch: Batch,
     private val debug: Boolean,
@@ -48,8 +43,8 @@ class RenderSystem(
     ).get(),
     object : Comparator<Entity> {
         override fun compare(p0: Entity, p1: Entity): Int {
-            val layer0 = p0.renderable().layer
-            val layer1 = p1.renderable().layer
+            val layer0 = RenderableComponent.get(p0).layer
+            val layer1 = RenderableComponent.get(p1).layer
             return if (layer0 == layer1) {
                 val y0 = p0.transform().position.y
                 val y1 = p1.transform().position.y
@@ -131,47 +126,8 @@ class RenderSystem(
             .preTranslate(worldX, worldY)
     }
 
-    private fun renderSpriteEntity(entity: Entity) {
-        val transform = entity.transform()
-        val textureRegionComponent = entity.textureRegionComponent()
-
-        if (textureRegionComponent.isVisible) {
-            val textureRegion = textureRegionComponent.textureRegion
-            val originX = textureRegion.regionWidth * textureRegionComponent.originX * textureRegionComponent.actualScale
-            val originY = textureRegion.regionHeight * textureRegionComponent.originY * textureRegionComponent.actualScale
-            val x =
-                transform.position.x - originX
-            val y =
-                transform.position.y - originY
-            val rotation =
-                if (textureRegionComponent.rotateWithTransform) transform.angleDegrees else 0f
-
-            batch.draw(
-                textureRegion,
-                x,
-                y,
-                0f,
-                0f,
-                textureRegion.regionWidth.toFloat(),
-                textureRegion.regionHeight.toFloat(),
-                textureRegionComponent.actualScale,
-                textureRegionComponent.actualScale,
-                rotation
-            )
-        }
-    }
-
-    fun renderCharacterWithArms(entity: Entity, deltaTime: Float) {
-        val character = Character.get(entity)
-
-    }
-
     override fun processEntity(entity: Entity, deltaTime: Float) {
-        when (entity.renderable().renderableType) {
-            RenderableType.Effect -> renderSpriteEntity(entity)
-            RenderableType.Sprite -> renderEffect(entity, deltaTime)
-            RenderableType.CharacterWithArms -> renderCharacterWithArms(entity, deltaTime)
-        }
+        RenderableComponent.get(entity).renderableType.render(entity, deltaTime)
 
         if (entity.isEnemy()) {
             renderEnemyDebugStuff(entity)
@@ -209,7 +165,6 @@ class RenderSystem(
             }
         }
     }
-
 
     private fun renderCanSee(entity: Entity, ap: AgentProperties) {
         val position = entity.transform().position
@@ -279,55 +234,6 @@ class RenderSystem(
                     }
                 }
                 previous.set(node)
-            }
-        }
-    }
-
-    private fun renderEffect(entity: Entity, deltaTime: Float) {
-        if (entity.hasSplatter()) {
-            val component = entity.splatterEffect()
-            val effect = component.splatterEffect
-            if (effect.isComplete) {
-                engine.removeEntity(entity)
-            }
-            if (!component.started) {
-                component.started = true
-                val emitter = effect.emitters.first()
-                emitter.setPosition(component.at.x, component.at.y)
-                val amplitude: Float = (emitter.angle.highMax - emitter.angle.highMin) / 2f
-                emitter.angle.setHigh(component.rotation + amplitude, component.rotation - amplitude)
-                emitter.angle.setLow(component.rotation)
-                emitter.start()
-            }
-            effect.update(deltaTime)
-            effect.draw(batch)
-        }
-
-        if (entity.hasEffect()) {
-            val effectComponent = entity.effect()
-            if (effectComponent.ready) {
-                val transform = entity.transform()
-                val effect = effectComponent.effect
-                if (effect.isComplete) {
-                    entity.addComponent<DestroyComponent>()
-                }
-                for (emitter in effect.emitters) {
-                    emitter.setPosition(transform.position.x, transform.position.y)
-                    if (!effectComponent.started) {
-                        val amplitude: Float = (emitter.angle.highMax - emitter.angle.highMin) / 2f
-                        emitter.angle.setHigh(
-                            effectComponent.rotation + amplitude,
-                            effectComponent.rotation - amplitude
-                        )
-                        emitter.angle.setLow(effectComponent.rotation)
-                        emitter.start()
-                    }
-                }
-                if (!effectComponent.started) {
-                    effectComponent.started = true
-                }
-                effect.update(deltaTime)
-                effect.draw(batch)
             }
         }
     }

@@ -250,10 +250,6 @@ fun Entity.textureRegionComponent(): TextureRegionComponent {
     return AshleyMappers.textureRegion.get(this)
 }
 
-fun Entity.renderable(): RenderableComponent {
-    return AshleyMappers.renderable.get(this)
-}
-
 fun Entity.hasSprite(): Boolean {
     return AshleyMappers.textureRegion.has(this)
 }

@@ -23,10 +23,6 @@ import eater.ecs.ashley.systems.UtilityAiSystem
 import eater.injection.InjectionContext
 import eater.messaging.IMessage
 import eater.messaging.IMessageReceiver
-import ecs.systems.AnchorPointTransformationSystem
-import ecs.systems.BodyDestroyerSystem
-import ecs.systems.CharacterWalkAndShootDirectionSystem
-import ecs.systems.PhysicsSystem
 import ecs.systems.ai.*
 import ecs.systems.ai.towers.TowerShootSystem
 import ecs.systems.ai.towers.TowerTargetFinderSystem
@@ -54,6 +50,7 @@ import eater.messaging.MessageHandler
 import physics.ContactManager
 import eater.turbofacts.TurboFactsOfTheWorld
 import eater.turbofacts.TurboStoryManager
+import ecs.systems.*
 import ui.Hud
 import ui.IUserInterface
 
@@ -109,6 +106,7 @@ object Context : InjectionContext() {
         return PooledEngine().apply {
             addSystem(UpdateTimePieceSystem())
             addSystem(PhysicsSystem(0))
+            addSystem(UpdateCharacterSystem())
             addSystem(CameraUpdateSystem(inject(), inject()))
             addSystem(PlayerMoveSystem())
             addSystem(PlayerHasBeenHereSystem())
