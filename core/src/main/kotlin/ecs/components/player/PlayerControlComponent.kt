@@ -7,7 +7,7 @@ import com.badlogic.gdx.utils.Pool
 import data.Player
 import ecs.systems.graphics.CompassDirection
 import ecs.systems.graphics.GameConstants
-import input.ControlMapper
+import eater.input.ControlMapper
 import ktx.ashley.mapperFor
 import ktx.math.vec2
 import tru.AnimState

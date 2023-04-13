@@ -7,7 +7,7 @@ import com.badlogic.gdx.math.MathUtils
 import com.badlogic.gdx.utils.viewport.ExtendViewport
 import gamestate.GameEvent
 import gamestate.GameState
-import input.Transform
+import eater.input.Transform
 import ktx.graphics.use
 import ktx.math.vec2
 import ktx.math.vec3

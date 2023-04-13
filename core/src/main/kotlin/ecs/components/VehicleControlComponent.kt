@@ -2,7 +2,7 @@ package ecs.components
 
 import com.badlogic.ashley.core.Component
 import com.badlogic.ashley.core.Entity
-import input.ControlMapper
+import eater.input.ControlMapper
 import ktx.ashley.mapperFor
 
 class VehicleControlComponent(

@@ -11,7 +11,7 @@ import eater.injection.InjectionContext.Companion.inject
 import ecs.components.intent.IntendsTo
 import gamestate.GameEvent
 import gamestate.GameState
-import input.KeyboardControl
+import eater.input.KeyboardControl
 import ktx.app.KtxInputAdapter
 import ktx.ashley.allOf
 import eater.physics.getComponent

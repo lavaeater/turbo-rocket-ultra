@@ -1,6 +1,6 @@
 package data
 
-import input.ControlMapper
+import eater.input.ControlMapper
 
 object Players {
     val players = mutableMapOf<ControlMapper, Player>()

@@ -9,10 +9,10 @@ import eater.injection.InjectionContext.Companion.inject
 import ecs.components.intent.IntendsTo
 import gamestate.GameEvent
 import gamestate.GameState
-import input.Axis
-import input.Axis.Companion.valueOK
-import input.Button
-import input.GamepadControl
+import eater.input.Axis
+import eater.input.Axis.Companion.valueOK
+import eater.input.Button
+import eater.input.GamepadControl
 import input.entityFor
 import ktx.ashley.allOf
 import eater.physics.getComponent

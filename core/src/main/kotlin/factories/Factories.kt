@@ -49,7 +49,7 @@ import ecs.systems.graphics.GameConstants.SHIP_LINEAR_DAMPING
 import features.pickups.*
 import features.weapons.AmmoType
 import features.weapons.WeaponDefinition
-import input.ControlMapper
+import eater.input.ControlMapper
 import ktx.actors.plusAssign
 import ktx.actors.repeatForever
 import ktx.ashley.EngineEntity

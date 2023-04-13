@@ -26,7 +26,7 @@ import factories.explosionEffectEntity
 import factories.splatterEntity
 import features.pickups.AmmoLoot
 import features.pickups.WeaponLoot
-import input.Button
+import eater.input.Button
 import ktx.ashley.allOf
 import ktx.ashley.remove
 import ktx.math.random

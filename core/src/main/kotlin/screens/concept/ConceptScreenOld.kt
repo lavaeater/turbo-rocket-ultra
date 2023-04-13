@@ -9,9 +9,9 @@ import com.badlogic.gdx.math.MathUtils
 import com.badlogic.gdx.utils.viewport.ExtendViewport
 import gamestate.GameEvent
 import gamestate.GameState
-import input.Axis
-import input.GamepadControl
-import input.Transform
+import eater.input.Axis
+import eater.input.GamepadControl
+import eater.input.Transform
 import ktx.graphics.use
 import ktx.math.vec2
 import ktx.math.vec3

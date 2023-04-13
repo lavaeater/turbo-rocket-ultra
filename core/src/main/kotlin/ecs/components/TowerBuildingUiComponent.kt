@@ -2,8 +2,8 @@ package ecs.components
 
 import com.badlogic.ashley.core.Component
 import com.badlogic.gdx.utils.Pool
-import input.ControlMapper
-import input.NoOpUserInterfaceControl
+import eater.input.ControlMapper
+import eater.input.NoOpUserInterfaceControl
 import ktx.math.vec2
 import tru.Assets
 import ui.new.BoundTextureElement

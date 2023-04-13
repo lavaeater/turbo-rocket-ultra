@@ -30,7 +30,7 @@ import factories.enemy
 import factories.player
 import gamestate.GameEvent
 import gamestate.GameState
-import input.KeyboardControl
+import eater.input.KeyboardControl
 import ktx.app.KtxScreen
 import ktx.ashley.allOf
 import ktx.ashley.getSystem

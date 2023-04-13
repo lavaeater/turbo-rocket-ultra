@@ -16,10 +16,10 @@ import data.SelectedItemList
 import data.selectedItemListOf
 import gamestate.GameEvent
 import gamestate.GameState
-import input.Button
-import input.ControlMapper
-import input.GamepadControl
-import input.KeyboardControl
+import eater.input.Button
+import eater.input.ControlMapper
+import eater.input.GamepadControl
+import eater.input.KeyboardControl
 import ktx.log.debug
 import ktx.scene2d.*
 import screens.basic.BasicScreen
