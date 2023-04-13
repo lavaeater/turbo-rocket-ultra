@@ -12,9 +12,7 @@ import eater.injection.InjectionContext.Companion.inject
 import eater.input.CardinalDirection
 import eater.physics.addComponent
 import ecs.components.gameplay.DestroyComponent
-import ecs.components.player.PlayerControlComponent
 import ktx.math.plus
-import ktx.math.times
 import physics.*
 import space.earlygrey.shapedrawer.ShapeDrawer
 import kotlin.math.absoluteValue
@@ -90,10 +88,8 @@ sealed class RenderableType {
 
             if (textureRegionComponent.isVisible) {
                 val textureRegion = textureRegionComponent.textureRegion
-                val originX =
-                    textureRegion.regionWidth * textureRegionComponent.originX * textureRegionComponent.actualScale
-                val originY =
-                    textureRegion.regionHeight * textureRegionComponent.originY * textureRegionComponent.actualScale
+                val originX = textureRegion.regionWidth * textureRegionComponent.originX * textureRegionComponent.actualScale
+                val originY = textureRegion.regionHeight * textureRegionComponent.originY * textureRegionComponent.actualScale
                 val x =
                     transform.position.x - originX
                 val y =
@@ -121,23 +117,20 @@ sealed class RenderableType {
     object CharacterWithArms : RenderableType() {
         private val skinColor = Color(0.8f, 0.6f, 0.5f, 1f)
         private val rifle = Polygon(floatArrayOf(0f, 2f, 50f, 2f, 50f, -2f, 0f, -2f))
-        private var drawRifleAndArms = true
 
         private fun drawRifle(entity: Entity, character: CharacterComponent) {
-            if (drawRifleAndArms) {
-                val start = character.worldAnchors["rightshoulder"]!!.cpy()
-                rifle.rotation = character.aimVector.angleDeg()
-                rifle.setPosition(start.x, start.y)
-                val scaleX = MathUtils.lerp(0.5f, 1f, character.aimVector.x.absoluteValue)
-                rifle.setScale(scaleX * character.scale, 1f * character.scale)
+            val start = character.worldAnchors["rightshoulder"]!!.cpy()
+            rifle.rotation = character.aimVector.angleDeg()
+            rifle.setPosition(start.x, start.y)
+            val scaleX = MathUtils.lerp(0.5f, 1f, character.aimVector.x.absoluteValue)
+            rifle.setScale(scaleX, 1f)
 
-                shapeDrawer.setColor(Color.GRAY)
-                shapeDrawer.filledPolygon(rifle)
-                shapeDrawer.setColor(Color.WHITE)
-            }
+            shapeDrawer.setColor(Color.GRAY)
+            shapeDrawer.filledPolygon(rifle)
+            shapeDrawer.setColor(Color.WHITE)
         }
 
-        private val drawMethods: Map<CardinalDirection, List<(Entity, CharacterComponent) -> Unit>> = mapOf(
+        private val drawMethods: Map<CardinalDirection, List<(Entity, CharacterComponent)->Unit>> = mapOf(
             CardinalDirection.East to listOf(::drawLeftHand, ::drawRegion, ::drawRifle, ::drawRightHand),
             CardinalDirection.South to listOf(::drawRegion, ::drawLeftHand, ::drawRightHand, ::drawRifle),
             CardinalDirection.West to listOf(::drawRightHand, ::drawRifle, ::drawRegion, ::drawLeftHand),
@@ -150,10 +143,8 @@ sealed class RenderableType {
 
             if (textureRegionComponent.isVisible) {
                 val textureRegion = textureRegionComponent.textureRegion
-                val originX =
-                    textureRegion.regionWidth * textureRegionComponent.originX * textureRegionComponent.actualScale
-                val originY =
-                    textureRegion.regionHeight * textureRegionComponent.originY * textureRegionComponent.actualScale
+                val originX = textureRegion.regionWidth * textureRegionComponent.originX * textureRegionComponent.actualScale
+                val originY = textureRegion.regionHeight * textureRegionComponent.originY * textureRegionComponent.actualScale
                 val x =
                     transform.position.x - originX
                 val y =
@@ -177,54 +168,46 @@ sealed class RenderableType {
         }
 
         private fun drawLeftHand(entity: Entity, character: CharacterComponent) {
-            if (drawRifleAndArms) {
-                val rightShoulder = character.worldAnchors["rightshoulder"]!!.cpy()
-                val leftShoulder = character.worldAnchors["leftshoulder"]!!.cpy()
-                val lowerArmLength = 24f * character.scale
-                val upperArmLength = lowerArmLength * 5f / 8f
-                val leftGripLength = 20f * character.scale
-                val leftHandDirection = character.aimVector.cpy().scl(leftGripLength)
-                    .scl(MathUtils.lerp(0.5f, 1f, character.aimVector.x.absoluteValue))
-                val leftHandGripPoint = (rightShoulder + leftHandDirection)
-                shapeDrawer.filledCircle(leftHandGripPoint, 4f * character.scale, skinColor)
-                leftHandDirection.set(leftHandGripPoint).sub(leftShoulder).nor()
-                val leftDistance = leftHandGripPoint.dst(leftShoulder)
+            val rightShoulder = character.worldAnchors["rightshoulder"]!!.cpy()
+            val leftShoulder = character.worldAnchors["leftshoulder"]!!.cpy()
+            val lowerArmLength = 24f
+            val upperArmLength = lowerArmLength * 5f / 8f
+            val leftGripLength = 20f
+            val leftHandDirection = character.aimVector.cpy().scl(leftGripLength).scl(MathUtils.lerp(0.5f, 1f, character.aimVector.x.absoluteValue))
+            val leftHandGripPoint = rightShoulder + leftHandDirection
+            shapeDrawer.filledCircle(leftHandGripPoint, 4f, skinColor)
+            leftHandDirection.set(leftHandGripPoint).sub(leftShoulder).nor()
+            val leftDistance = leftHandGripPoint.dst(leftShoulder)
 
             val beta =
                 MathUtils.acos((leftDistance.pow(2) + upperArmLength.pow(2) - lowerArmLength.pow(2)) / (2 * leftDistance * upperArmLength))
             val leftUpperArmVector = leftHandDirection.cpy().rotateRad(beta).scl(upperArmLength).scl(MathUtils.lerp(0.5f, 1f, character.aimVector.x.absoluteValue))
-            shapeDrawer.line(leftShoulder, leftShoulder + leftUpperArmVector, Color.BROWN, 6f * character.scale)
-            shapeDrawer.line(leftShoulder + leftUpperArmVector, leftHandGripPoint, Color.BROWN, 6f * character.scale)
+            shapeDrawer.line(leftShoulder, leftShoulder + leftUpperArmVector, Color.BROWN, 6f)
+            shapeDrawer.line(leftShoulder + leftUpperArmVector, leftHandGripPoint, Color.BROWN, 6f)
         }
 
         private fun drawRightHand(entity: Entity, character: CharacterComponent) {
-            if (drawRifleAndArms) {
-                val rightShoulder = character.worldAnchors["rightshoulder"]!!.cpy()
-                val rightGripLength = 8f * character.scale
-                val rightHandDirection = character.aimVector.cpy().scl(rightGripLength)
-                    .scl(MathUtils.lerp(0.5f, 1f, character.aimVector.x.absoluteValue))
-                val rightHandGripPoint = rightShoulder + rightHandDirection
-                shapeDrawer.filledCircle(rightHandGripPoint, 4f * character.scale, skinColor)
+            val rightShoulder = character.worldAnchors["rightshoulder"]!!.cpy()
+            val rightGripLength = 8f
+            val rightHandDirection = character.aimVector.cpy().scl(rightGripLength).scl(MathUtils.lerp(0.5f, 1f, character.aimVector.x.absoluteValue))
+            val rightHandGripPoint = rightShoulder + rightHandDirection
+            shapeDrawer.filledCircle(rightHandGripPoint, 4f, skinColor)
 
-                val lowerArmLength = 12f * character.scale
-                val upperArmLength = lowerArmLength * 5f / 8f * character.scale
-                rightHandDirection.set(rightHandGripPoint).sub(rightShoulder).nor()
-                val rightDistance = rightHandGripPoint.dst(rightShoulder)
+            val lowerArmLength = 12f
+            val upperArmLength = lowerArmLength * 5f / 8f
+            rightHandDirection.set(rightHandGripPoint).sub(rightShoulder).nor()
+            val rightDistance = rightHandGripPoint.dst(rightShoulder)
 
-                val beta =
-                    MathUtils.acos((rightDistance.pow(2) + upperArmLength.pow(2) - lowerArmLength.pow(2)) / (2 * rightDistance * upperArmLength))
+            val beta =
+                MathUtils.acos((rightDistance.pow(2) + upperArmLength.pow(2) - lowerArmLength.pow(2)) / (2 * rightDistance * upperArmLength))
 
             val rightUpperArmVector = rightHandDirection.cpy().rotateRad(-beta).scl(upperArmLength).scl(MathUtils.lerp(0.5f, 1f, character.aimVector.x.absoluteValue))
-            shapeDrawer.line(rightShoulder, rightShoulder + rightUpperArmVector, Color.BROWN, 6f * character.scale)
-            shapeDrawer.line(rightShoulder + rightUpperArmVector, rightHandGripPoint, Color.BROWN, 6f * character.scale)
+            shapeDrawer.line(rightShoulder, rightShoulder + rightUpperArmVector, Color.BROWN, 6f)
+            shapeDrawer.line(rightShoulder + rightUpperArmVector, rightHandGripPoint, Color.BROWN, 6f)
         }
 
         override fun render(entity: Entity, delta: Float) {
             val character = CharacterComponent.get(entity)
-            drawRifleAndArms = true
-            if(PlayerControlComponent.has(entity) && !PlayerControlComponent.get(entity).aiming) {
-                drawRifleAndArms = false
-            }
             for (drawMethod in drawMethods[character.cardinalDirection]!!)
                 drawMethod(entity, character)
         }

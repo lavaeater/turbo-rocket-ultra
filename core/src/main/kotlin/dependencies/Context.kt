@@ -22,38 +22,39 @@ import com.crashinvaders.vfx.effects.CrtEffect
 import com.crashinvaders.vfx.effects.OldTvEffect
 import com.strongjoshua.console.CommandExecutor
 import com.strongjoshua.console.GUIConsole
-import systems.UpdateActionsSystem
-import systems.UpdateMemorySystem
-import systems.UtilityAiSystem
-import messaging.IMessage
-import messaging.IMessageReceiver
-import messaging.MessageHandler
-import turbofacts.TurboFactsOfTheWorld
-import turbofacts.TurboStoryManager
-import systems.AnchorPointTransformationSystem
-import systems.BodyDestroyerSystem
-import systems.CharacterWalkAndShootDirectionSystem
-import systems.PhysicsSystem
-import systems.ai.towers.TowerShootSystem
-import systems.ai.towers.TowerTargetFinderSystem
-import systems.facts.FactSystem
-import systems.facts.PerimeterObjectiveSystem
-import systems.fx.DelayedEntityCreationSystem
-import systems.graphics.GameConstants.GAME_HEIGHT
-import systems.graphics.GameConstants.GAME_WIDTH
-import systems.input.GamepadInputSystem
-import systems.input.InputActionHandler
-import systems.input.KeyboardInputSystem
-import systems.intent.CalculatePositionSystem
-import systems.intent.CalculateRotationSystem
-import systems.intent.IntentionSystem
-import systems.intent.RunFunctionsSystem
-import systems.pickups.LootDropSystem
+import eater.ecs.ashley.systems.UpdateActionsSystem
+import eater.ecs.ashley.systems.UpdateMemorySystem
+import eater.ecs.ashley.systems.UtilityAiSystem
+import eater.injection.InjectionContext
+import eater.messaging.IMessage
+import eater.messaging.IMessageReceiver
+import ecs.systems.ai.*
+import ecs.systems.ai.towers.TowerShootSystem
+import ecs.systems.ai.towers.TowerTargetFinderSystem
+import ecs.systems.enemy.*
+import ecs.systems.facts.FactSystem
+import ecs.systems.facts.PerimeterObjectiveSystem
+import ecs.systems.fx.DelayedEntityCreationSystem
+import ecs.systems.graphics.*
+import ecs.systems.graphics.GameConstants.GAME_HEIGHT
+import ecs.systems.graphics.GameConstants.GAME_WIDTH
+import ecs.systems.input.InputActionHandler
+import ecs.systems.input.GamepadInputSystem
+import ecs.systems.input.KeyboardInputSystem
+import ecs.systems.intent.CalculatePositionSystem
+import ecs.systems.intent.CalculateRotationSystem
+import ecs.systems.intent.IntentionSystem
+import ecs.systems.intent.RunFunctionsSystem
+import ecs.systems.pickups.LootDropSystem
+import ecs.systems.player.*
 import ktx.box2d.createWorld
 import map.grid.GridMapManager
 import messaging.Message
 import physics.BodyEntityMapper
 import physics.ContactManager
+import eater.turbofacts.TurboFactsOfTheWorld
+import eater.turbofacts.TurboStoryManager
+import ecs.systems.*
 import systems.ai.AudioSystem
 import systems.ai.BurningSystem
 import systems.ai.DestroyAfterCooldownSystem
@@ -161,6 +162,7 @@ object Context : InjectionContext() {
             )
             addSystem(UpdateTimePieceSystem())
             addSystem(PhysicsSystem(0))
+            addSystem(UpdateCharacterSystem())
             addSystem(CameraUpdateSystem(inject(), inject()))
             addSystem(PlayerMoveSystem())
             addSystem(PlayerHasBeenHereSystem())

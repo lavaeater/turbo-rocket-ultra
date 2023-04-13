@@ -19,6 +19,41 @@ import com.badlogic.gdx.physics.box2d.BodyDef
 import com.badlogic.gdx.scenes.scene2d.Action
 import physics.addComponent
 import data.Player
+import eater.core.engine
+import eater.core.world
+import eater.ecs.ashley.components.AgentProperties
+import eater.ecs.ashley.components.AiComponent
+import eater.ecs.ashley.components.Box2d
+import eater.ecs.ashley.components.TransformComponent
+import eater.ecs.ashley.components.character.CharacterComponent
+import eater.input.CardinalDirection
+import eater.physics.addComponent
+import eater.turbofacts.FactsLikeThatMan
+import ecs.components.AudioComponent
+import ecs.components.ai.BehaviorComponent
+import ecs.components.enemy.*
+import ecs.components.fx.CreateEntityComponent
+import ecs.components.fx.GibComponent
+import ecs.components.fx.ParticleEffectComponent
+import ecs.components.fx.SplatterComponent
+import ecs.components.gameplay.*
+import ecs.components.graphics.*
+import ecs.components.intent.CalculatedPositionComponent
+import ecs.components.intent.CalculatedRotationComponent
+import ecs.components.intent.FunctionsComponent
+import ecs.components.pickups.LootComponent
+import ecs.components.pickups.LootDropComponent
+import ecs.components.player.*
+import ecs.components.towers.TowerComponent
+import ecs.systems.graphics.GameConstants
+import ecs.systems.graphics.GameConstants.PIXELS_PER_METER
+import ecs.systems.graphics.GameConstants.PLAYER_DENSITY
+import ecs.systems.graphics.GameConstants.SHIP_ANGULAR_DAMPING
+import ecs.systems.graphics.GameConstants.SHIP_LINEAR_DAMPING
+import features.pickups.*
+import features.weapons.AmmoType
+import features.weapons.WeaponDefinition
+import eater.input.ControlMapper
 import core.engine
 import core.world
 import components.AgentProperties
@@ -385,6 +420,7 @@ fun player(player: Player, mapper: ControlMapper, at: Vector2, debug: Boolean) {
             anims = Assets.characters[player.selectedCharacterSpriteName]!!
             currentAnim = anims.values.first().animations.values.first()
         }
+        with<CharacterComponent>()
         with<TextureRegionComponent> {
 //            offsetY = -1f
         }

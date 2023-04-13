@@ -3,11 +3,12 @@ package systems
 import com.badlogic.ashley.core.Entity
 import com.badlogic.ashley.systems.IteratingSystem
 import com.badlogic.gdx.math.Vector2
-import components.Box2d
-import components.TransformComponent
-import components.gameplay.GrenadeComponent
-import components.gameplay.MolotovComponent
-import dependencies.InjectionContext.Companion.inject
+import eater.ecs.ashley.components.Box2d
+import eater.ecs.ashley.components.TransformComponent
+import eater.injection.InjectionContext.Companion.inject
+import eater.physics.has
+import ecs.components.gameplay.GrenadeComponent
+import ecs.components.gameplay.MolotovComponent
 import ktx.ashley.allOf
 import ktx.math.vec2
 import map.grid.GridMapSection
@@ -53,9 +54,6 @@ class PhysicsSystem(priority: Int) :
                     contactManager.handleMolotovHittingAnything(ContactType.MolotovHittingAnything(entity))
                 }
             }
-
-
-
         }
     }
 }

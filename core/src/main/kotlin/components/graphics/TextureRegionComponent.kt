@@ -4,8 +4,21 @@ import com.badlogic.ashley.core.Component
 import com.badlogic.gdx.graphics.g2d.TextureRegion
 import com.badlogic.gdx.utils.Pool
 import systems.graphics.GameConstants
+import ktx.ashley.mapperFor
 
 class TextureRegionComponent : Component, Pool.Poolable {
+
+    companion object {
+        val mapper = mapperFor<TextureRegionComponent>()
+        fun has(entity: Entity): Boolean {
+            return mapper.has(entity)
+        }
+
+        fun get(entity: Entity): TextureRegionComponent {
+            return mapper.get(entity)
+        }
+    }
+
     var updateTextureRegion: () -> Unit = {}
 
     var textureRegion = TextureRegion()
