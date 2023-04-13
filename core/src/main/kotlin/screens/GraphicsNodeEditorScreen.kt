@@ -19,7 +19,7 @@ import map.snake.top
 import screens.basic.BasicScreen
 import screens.command.command
 import screens.ui.GraphicsNode
-import input.mouse.MousePosition
+import eater.input.mouse.MousePosition
 import space.earlygrey.shapedrawer.ShapeDrawer
 import statemachine.StateMachine
 import tru.Assets
