@@ -6,7 +6,7 @@ import ecs.components.gameplay.ObjectiveComponent
 import ecs.systems.graphics.GameConstants
 import tru.AnimState
 import tru.Assets
-import tru.CardinalDirection
+import eater.input.CardinalDirection
 
 class Player(val name: String, val isAiPlayer: Boolean = false) {
     init {

@@ -1,6 +1,7 @@
 package tru
 
 import com.badlogic.gdx.graphics.g2d.Animation
+import eater.input.CardinalDirection
 
 /**
  * Animations START on one row and have the following three rows included

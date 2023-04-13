@@ -30,7 +30,7 @@ import screens.ui.PlayerModel
 import statemachine.StateMachine
 import tru.AnimState
 import tru.Assets
-import tru.CardinalDirection
+import eater.input.CardinalDirection
 import ui.customactors.animatedSpriteImage
 import ui.customactors.boundLabel
 

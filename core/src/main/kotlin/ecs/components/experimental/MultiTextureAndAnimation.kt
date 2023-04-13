@@ -6,7 +6,7 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion
 import com.badlogic.gdx.utils.Pool
 import tru.AnimState
 import tru.LpcCharacterAnim
-import tru.CardinalDirection
+import eater.input.CardinalDirection
 
 /**
  * DO not make it more complicated at this juncture. Exploring using

@@ -23,6 +23,7 @@ import eater.ecs.ashley.components.AgentProperties
 import eater.ecs.ashley.components.AiComponent
 import eater.ecs.ashley.components.Box2d
 import eater.ecs.ashley.components.TransformComponent
+import eater.input.CardinalDirection
 import eater.physics.addComponent
 import eater.turbofacts.FactsLikeThatMan
 import ecs.components.AudioComponent

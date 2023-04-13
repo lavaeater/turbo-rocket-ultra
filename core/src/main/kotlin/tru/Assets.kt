@@ -14,6 +14,7 @@ import com.badlogic.gdx.math.MathUtils
 import com.badlogic.gdx.scenes.scene2d.ui.Skin
 import com.badlogic.gdx.utils.Disposable
 import eater.injection.InjectionContext.Companion.inject
+import eater.input.CardinalDirection
 import features.weapons.GunFrames
 import features.weapons.Weapon
 import ktx.assets.DisposableContainer

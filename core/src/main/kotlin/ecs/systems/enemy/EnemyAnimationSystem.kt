@@ -9,7 +9,7 @@ import ecs.components.graphics.AnimatedCharacterComponent
 import ktx.ashley.allOf
 import physics.*
 import tru.AnimState
-import tru.CardinalDirection
+import eater.input.CardinalDirection
 
 class EnemyAnimationSystem : IteratingSystem(
     allOf(

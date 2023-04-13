@@ -14,7 +14,7 @@ import ktx.math.vec2
 import eater.physics.drawScaled
 import tru.AnimDef
 import tru.AnimState
-import tru.CardinalDirection
+import eater.input.CardinalDirection
 
 
 class AnimationEditorElement(

@@ -11,7 +11,7 @@ import physics.textureRegionComponent
 import physics.weapon
 import tru.AnimState
 import tru.Assets
-import tru.CardinalDirection
+import eater.input.CardinalDirection
 
 
 class WeaponUpdateSystem: IteratingSystem(

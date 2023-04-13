@@ -4,7 +4,7 @@ import com.badlogic.gdx.math.MathUtils
 import com.badlogic.gdx.math.Vector2
 import ecs.systems.graphics.GameConstants
 import ktx.math.vec2
-import tru.CardinalDirection
+import eater.input.CardinalDirection
 
 object MouseMarginConstants {
     const val margin = 2.5f

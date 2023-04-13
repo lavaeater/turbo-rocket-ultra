@@ -7,7 +7,7 @@ import ecs.components.player.PlayerControlComponent
 import extensions.spriteDirection
 import ktx.ashley.allOf
 import physics.AshleyMappers
-import tru.CardinalDirection
+import eater.input.CardinalDirection
 
 
 class CharacterWalkAndShootDirectionSystem :

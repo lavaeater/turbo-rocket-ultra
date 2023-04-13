@@ -4,6 +4,7 @@ import com.badlogic.gdx.Input
 import com.badlogic.gdx.graphics.Color
 import com.badlogic.gdx.math.MathUtils
 import com.badlogic.gdx.math.Polygon
+import eater.ecs.ashley.components.character.Character
 import gamestate.GameEvent
 import gamestate.GameState
 import ktx.graphics.use
@@ -16,7 +17,7 @@ import eater.input.mouse.MousePosition
 import statemachine.StateMachine
 import tru.AnimState
 import tru.Assets
-import tru.CardinalDirection
+import eater.input.CardinalDirection
 import kotlin.collections.component1
 import kotlin.collections.component2
 import kotlin.math.absoluteValue

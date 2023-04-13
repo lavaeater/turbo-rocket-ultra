@@ -3,8 +3,8 @@ package tru
 import com.badlogic.gdx.Gdx
 import com.badlogic.gdx.graphics.Texture
 import com.badlogic.gdx.graphics.g2d.Animation
-import com.badlogic.gdx.graphics.g2d.Sprite
 import com.badlogic.gdx.graphics.g2d.TextureRegion
+import eater.input.CardinalDirection
 import ktx.collections.toGdxArray
 
 data class TurboCharacterAnim(val key: String, val name: String, val animations: Map<AnimState, LpcCharacterAnim<TextureRegion>>) {
