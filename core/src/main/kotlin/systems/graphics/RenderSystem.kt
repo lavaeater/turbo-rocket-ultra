@@ -129,8 +129,47 @@ class RenderSystem(
             .preTranslate(worldX, worldY)
     }
 
+    private fun renderSpriteEntity(entity: Entity) {
+        val transform = entity.transform()
+        val textureRegionComponent = entity.textureRegionComponent()
+
+        if (textureRegionComponent.isVisible) {
+            val textureRegion = textureRegionComponent.textureRegion
+            val originX = textureRegion.regionWidth * textureRegionComponent.originX * textureRegionComponent.actualScale
+            val originY = textureRegion.regionHeight * textureRegionComponent.originY * textureRegionComponent.actualScale
+            val x =
+                transform.position.x - originX
+            val y =
+                transform.position.y - originY
+            val rotation =
+                if (textureRegionComponent.rotateWithTransform) transform.angleDegrees else 0f
+
+            batch.draw(
+                textureRegion,
+                x,
+                y,
+                0f,
+                0f,
+                textureRegion.regionWidth.toFloat(),
+                textureRegion.regionHeight.toFloat(),
+                textureRegionComponent.actualScale,
+                textureRegionComponent.actualScale,
+                rotation
+            )
+        }
+    }
+
+    fun renderCharacterWithArms(entity: Entity, deltaTime: Float) {
+        val character = Character.get(entity)
+
+    }
+
     override fun processEntity(entity: Entity, deltaTime: Float) {
-        RenderableComponent.get(entity).renderableType.render(entity, deltaTime)
+        when (entity.renderable().renderableType) {
+            RenderableType.Effect -> renderSpriteEntity(entity)
+            RenderableType.Sprite -> renderEffect(entity, deltaTime)
+            RenderableType.CharacterWithArms -> renderCharacterWithArms(entity, deltaTime)
+        }
 
         if (entity.isEnemy()) {
             renderEnemyDebugStuff(entity)
