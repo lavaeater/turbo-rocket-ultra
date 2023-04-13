@@ -1,17 +1,9 @@
-package eater.input.mouse
+package twodee.input.mouse
 
 import com.badlogic.gdx.Gdx
 import com.badlogic.gdx.graphics.OrthographicCamera
 import com.badlogic.gdx.math.Vector2
-<<<<<<<< HEAD:core/src/main/kotlin/ui/MousePosition.kt
-import systems.graphics.GameConstants
-import dependencies.InjectionContext.Companion.inject
-|||||||| parent of 5aa06093 (Moved mouse position object to Gdx-lava project):core/src/main/kotlin/screens/ui/MousePosition.kt
-import eater.injection.InjectionContext.Companion.inject
-import ecs.systems.graphics.GameConstants
-========
-import eater.injection.InjectionContext.Companion.inject
->>>>>>>> 5aa06093 (Moved mouse position object to Gdx-lava project):gdx-lava/src/main/kotlin/eater/input/mouse/MousePosition.kt
+import twodee.injection.InjectionContext.Companion.inject
 import ktx.math.vec2
 import ktx.math.vec3
 
