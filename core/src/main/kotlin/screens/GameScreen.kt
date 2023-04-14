@@ -73,8 +73,7 @@ class GameScreen(private val gameState: StateMachine<GameState, GameEvent>) : Kt
 
         initializeIfNeeded()
         if (running) {
-            //TODO: Change yDown to false
-            camera.setToOrtho(true, viewPort.maxWorldWidth, viewPort.maxWorldHeight)
+            camera.setToOrtho(false, viewPort.maxWorldWidth, viewPort.maxWorldHeight)
             Gdx.input.inputProcessor = engine.getSystem(KeyboardInputSystem::class.java)
             Controllers.addListener(engine.getSystem(GamepadInputSystem::class.java))
 

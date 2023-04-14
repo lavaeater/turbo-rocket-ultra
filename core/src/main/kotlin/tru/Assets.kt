@@ -463,7 +463,6 @@ object Assets : DisposableRegistry by DisposableContainer() {
         parameter.size = 12
         parameter.magFilter = Texture.TextureFilter.Linear
         parameter.minFilter = Texture.TextureFilter.Linear
-        parameter.flip = true
         val font32 = generator.generateFont(parameter) // font size 32 pixels
 
         font32.data.setScale(0.1f)
@@ -479,31 +478,34 @@ object Assets : DisposableRegistry by DisposableContainer() {
     }
 
     private fun fixFlip() {
-        for (t in towers.values)
-            t.flip(true, true)
+//        for (t in towers.values)
+//            t.flip(true, true)
+//
+//        newTower.flip(true, true)
+//
+//        for (t in aiDebugBadges.values)
+//            t.flip(true, false)
 
-        newTower.flip(true, true)
-
-        for (t in aiDebugBadges.values)
-            t.flip(true, false)
 
         for (c in playerCharacters.values)
             for (a in c.values)
                 for (b in a.animations.values)
                     for (d in b.keyFrames) {
                         d.flip(true, true)
-
+                        d.flip(true, true)
                     }
         for (c in enemies.values)
             for (a in c.values)
                 for (b in a.animations.values)
                     for (d in b.keyFrames) {
                         d.flip(true, true)
+                        d.flip(true, true)
                     }
         for (c in bosses.values) {
             for (a in c.values)
                 for (b in a.animations.values)
                     for (d in b.keyFrames) {
+                        d.flip(true, true)
                         d.flip(true, true)
                     }
         }

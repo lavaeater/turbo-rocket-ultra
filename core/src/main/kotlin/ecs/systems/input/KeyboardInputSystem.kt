@@ -35,8 +35,8 @@ class KeyboardInputSystem :
         if (::keyboardControl.isInitialized) {
             if (!keyboardControl.requireSequencePress) {
                 when (keycode) {
-                    Input.Keys.W -> keyboardControl.thrust = 1f
-                    Input.Keys.S -> keyboardControl.thrust = -1f
+                    Input.Keys.W -> keyboardControl.thrust = -1f
+                    Input.Keys.S -> keyboardControl.thrust = 1f
                     Input.Keys.A -> keyboardControl.turning = -1f
                     Input.Keys.D -> keyboardControl.turning = 1f
                     Input.Keys.Z -> zoom = 1f

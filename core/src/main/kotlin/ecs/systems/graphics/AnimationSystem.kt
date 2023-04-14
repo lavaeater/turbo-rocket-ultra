@@ -5,8 +5,6 @@ import com.badlogic.ashley.systems.IteratingSystem
 import ecs.components.graphics.AnimatedCharacterComponent
 import ecs.components.graphics.TextureRegionComponent
 import ktx.ashley.allOf
-import physics.animation
-import physics.textureRegionComponent
 
 class AnimationSystem : IteratingSystem(allOf(TextureRegionComponent::class, AnimatedCharacterComponent::class).get()) {
     private var animationStateTime = 0f
@@ -17,9 +15,28 @@ class AnimationSystem : IteratingSystem(allOf(TextureRegionComponent::class, Ani
     }
 
     override fun processEntity(entity: Entity, deltaTime: Float) {
-        val animationComponent = entity.animation()
-        animationComponent.currentAnim = animationComponent.anims[animationComponent.currentAnimState]!!.animations[animationComponent.currentDirection]!!
-        val spriteComponent = entity.textureRegionComponent()
-        spriteComponent.textureRegion = animationComponent.currentAnim.getKeyFrame(animationStateTime)
+        val animationComponent = AnimatedCharacterComponent.get(entity)
+        if (
+            animationComponent
+                .anims
+                .containsKey(animationComponent.currentAnimState) &&
+            animationComponent
+                .anims[animationComponent.currentAnimState]!!
+                .animations.containsKey(
+                    animationComponent.currentDirection
+                )
+        ) {
+            animationComponent.currentAnim =
+                animationComponent
+                    .anims[animationComponent.currentAnimState]!!
+                    .animations[animationComponent.currentDirection]!!
+            val spriteComponent = TextureRegionComponent.get(entity)
+            spriteComponent.textureRegion =
+                animationComponent
+                    .currentAnim
+                    .getKeyFrame(animationStateTime)
+        } else {
+            val what = "what the hell?"
+        }
     }
 }
