@@ -2,6 +2,7 @@ package ecs.systems
 
 import com.badlogic.ashley.core.Entity
 import com.badlogic.ashley.systems.IteratingSystem
+import eater.ecs.ashley.components.character.CardinalToAngles
 import ecs.components.graphics.AnimatedCharacterComponent
 import ecs.components.player.PlayerControlComponent
 import extensions.spriteDirection
@@ -15,7 +16,8 @@ class CharacterWalkAndShootDirectionSystem :
         allOf(
             AnimatedCharacterComponent::class,
             PlayerControlComponent::class
-        ).get()) {
+        ).get()
+    ) {
 
     override fun processEntity(entity: Entity, deltaTime: Float) {
         /**
@@ -30,10 +32,14 @@ class CharacterWalkAndShootDirectionSystem :
          */
         val characterComponent = AshleyMappers.animatedCharacter.get(entity)
         val controlComponet = AshleyMappers.playerControl.get(entity)
-        if(controlComponet.waitsForRespawn) {
+        if (controlComponet.waitsForRespawn) {
             characterComponent.currentDirection = CardinalDirection.South
         } else {
-            characterComponent.currentDirection = if(controlComponet.aiming) controlComponet.aimVector.spriteDirection() else controlComponet.walkVector.spriteDirection()
+            characterComponent.currentDirection =
+                if (controlComponet.aiming)
+                    CardinalToAngles.angleToCardinal(controlComponet.aimVector.angleDeg())
+                else
+                    CardinalToAngles.angleToCardinal(controlComponet.walkVector.angleDeg())
         }
     }
 }
