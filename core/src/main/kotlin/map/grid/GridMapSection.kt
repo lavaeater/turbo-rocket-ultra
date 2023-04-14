@@ -144,18 +144,20 @@ class GridMapSection(
             Array(height) { y ->
                 val tileAlignment = when (x) {
                     0 -> when (y) {
-                        0 -> TileAlignment.TopLeft
-                        height - 1 -> TileAlignment.BottomLeft
+                        0 -> TileAlignment.BottomLeft
+                        height - 1 -> TileAlignment.TopLeft
                         else -> TileAlignment.Left
                     }
+
                     width - 1 -> when (y) {
-                        0 -> TileAlignment.TopRight
-                        height - 1 -> TileAlignment.BottomRight
+                        0 -> TileAlignment.BottomRight
+                        height - 1 -> TileAlignment.TopRight
                         else -> TileAlignment.Right
                     }
+
                     else -> when (y) {
-                        0 -> TileAlignment.Top
-                        height - 1 -> TileAlignment.Bottom
+                        0 -> TileAlignment.Bottom
+                        height - 1 -> TileAlignment.Top
                         else -> TileAlignment.Center
                     }
                 }
@@ -170,6 +172,7 @@ class GridMapSection(
                             listOf(RenderableTextureRegion(Assets.wallTiles.random()))
                         ), false
                     )
+
                     TileAlignment.BottomLeft -> if (connectionAlignments.contains(TileAlignment.Left) && connectionAlignments.contains(
                             TileAlignment.Bottom
                         )
@@ -182,6 +185,7 @@ class GridMapSection(
                             listOf(RenderableTextureRegion(Assets.wallTiles.random()))
                         ), false
                     )
+
                     TileAlignment.BottomRight -> if (connectionAlignments.contains(TileAlignment.Right) && connectionAlignments.contains(
                             TileAlignment.Bottom
                         )
@@ -194,11 +198,13 @@ class GridMapSection(
                             listOf(RenderableTextureRegion(Assets.wallTiles.random()))
                         ), false
                     )
+
                     TileAlignment.Center -> MapTile(
                         RenderableTextureRegions(
                             listOf(RenderableTextureRegion(Assets.floorTiles.random()))
                         ), true
                     )
+
                     TileAlignment.Left -> if (connectionAlignments.contains(tileAlignment)) MapTile(
                         RenderableTextureRegions(
                             listOf(RenderableTextureRegion(Assets.floorTiles.random()))
@@ -208,6 +214,7 @@ class GridMapSection(
                             listOf(RenderableTextureRegion(Assets.wallTiles.random()))
                         ), false
                     )
+
                     TileAlignment.Right -> if (connectionAlignments.contains(tileAlignment)) MapTile(
                         RenderableTextureRegions(
                             listOf(RenderableTextureRegion(Assets.floorTiles.random()))
@@ -217,6 +224,7 @@ class GridMapSection(
                             listOf(RenderableTextureRegion(Assets.wallTiles.random()))
                         ), false
                     )
+
                     TileAlignment.Top -> if (connectionAlignments.contains(tileAlignment)) MapTile(
                         RenderableTextureRegions(
                             listOf(RenderableTextureRegion(Assets.floorTiles.random()))
@@ -226,6 +234,7 @@ class GridMapSection(
                             listOf(RenderableTextureRegion(Assets.wallEndTile))
                         ), false
                     )
+
                     TileAlignment.TopLeft -> if (connectionAlignments.contains(TileAlignment.Left) && connectionAlignments.contains(
                             TileAlignment.Top
                         )
@@ -242,6 +251,7 @@ class GridMapSection(
                             listOf(RenderableTextureRegion(Assets.wallTiles.random()))
                         ), false
                     )
+
                     TileAlignment.TopRight -> if (connectionAlignments.contains(TileAlignment.Right) && connectionAlignments.contains(
                             TileAlignment.Top
                         )

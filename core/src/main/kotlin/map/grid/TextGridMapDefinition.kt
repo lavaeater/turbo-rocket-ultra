@@ -26,7 +26,7 @@ fun convert(imagePath: String): TextGridMapDefinition {
         }
     }
     pixMap.dispose()
-    return TextGridMapDefinition(lines)
+    return TextGridMapDefinition(lines.reversed())
 }
 
 /**
@@ -79,7 +79,7 @@ class TextGridMapDefinition(val def: List<String>) : IGridMapDefinition {
             val mapHeight = def.size
             val s = Array(mapWidth) { x ->
                 Array(mapHeight) { y ->
-                    def[y][x]
+                    def[mapHeight - y - 1][x]
                 }
             }
             return s

@@ -69,8 +69,11 @@ class GridMapGenerator {
             return generateFromDefintion(mapData.mapDefinition)
         }
 
-        fun generateFromDefintion(def: TextGridMapDefinition, perimeterObjectives: Boolean = false): Pair<Map<Coordinate, GridMapSection>, TileGraph> {
-                        val tileMap = mutableMapOf<Coordinate, GridMapSection>()
+        fun generateFromDefintion(
+            def: TextGridMapDefinition,
+            perimeterObjectives: Boolean = false
+        ): Pair<Map<Coordinate, GridMapSection>, TileGraph> {
+            val tileMap = mutableMapOf<Coordinate, GridMapSection>()
             val graph = TileGraph()
 
             var index = 0
@@ -106,10 +109,10 @@ class GridMapGenerator {
                         if (def.hasBoss(coordinate))
                             addBoss(section.innerBounds, CounterObject.currentLevel)
 
-                        if(def.hasHackingStation(coordinate))
+                        if (def.hasHackingStation(coordinate))
                             addHackingStation(section.innerBounds, CounterObject.currentLevel)
 
-                        if(def.hasTarget(coordinate))
+                        if (def.hasTarget(coordinate))
                             addTargetStation(section.innerBounds, CounterObject.currentLevel)
 
                         if (def.hasLoot(coordinate)) {
@@ -260,7 +263,7 @@ class GridMapGenerator {
                         }
                     }
             }
-            return Pair(tileMap,graph)
+            return Pair(tileMap, graph)
 
         }
 
