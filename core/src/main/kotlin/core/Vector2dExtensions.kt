@@ -31,6 +31,8 @@ fun Vector2.normToWorld(minX: Float, maxX: Float, minY: Float, maxY: Float): Vec
     return vec2(MathUtils.lerp(minX, maxX, x), MathUtils.lerp(minY, maxY, y))
 }
 fun Vector2.spriteDirection(): CardinalDirection {
+
+
     return when (this.angleDeg()) {
         in 150f..209f -> CardinalDirection.East
         in 210f..329f -> CardinalDirection.North
