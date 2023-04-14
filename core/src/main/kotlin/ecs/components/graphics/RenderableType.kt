@@ -13,6 +13,7 @@ import eater.input.CardinalDirection
 import eater.physics.addComponent
 import ecs.components.gameplay.DestroyComponent
 import ktx.math.plus
+import ktx.math.times
 import physics.*
 import space.earlygrey.shapedrawer.ShapeDrawer
 import kotlin.math.absoluteValue
@@ -123,7 +124,7 @@ sealed class RenderableType {
             rifle.rotation = character.aimVector.angleDeg()
             rifle.setPosition(start.x, start.y)
             val scaleX = MathUtils.lerp(0.5f, 1f, character.aimVector.x.absoluteValue)
-            rifle.setScale(scaleX, 1f)
+            rifle.setScale(scaleX * character.scale, 1f * character.scale)
 
             shapeDrawer.setColor(Color.GRAY)
             shapeDrawer.filledPolygon(rifle)
@@ -170,31 +171,31 @@ sealed class RenderableType {
         private fun drawLeftHand(entity: Entity, character: CharacterComponent) {
             val rightShoulder = character.worldAnchors["rightshoulder"]!!.cpy()
             val leftShoulder = character.worldAnchors["leftshoulder"]!!.cpy()
-            val lowerArmLength = 24f
+            val lowerArmLength = 24f * character.scale
             val upperArmLength = lowerArmLength * 5f / 8f
-            val leftGripLength = 20f
+            val leftGripLength = 20f * character.scale
             val leftHandDirection = character.aimVector.cpy().scl(leftGripLength).scl(MathUtils.lerp(0.5f, 1f, character.aimVector.x.absoluteValue))
-            val leftHandGripPoint = rightShoulder + leftHandDirection
-            shapeDrawer.filledCircle(leftHandGripPoint, 4f, skinColor)
+            val leftHandGripPoint = (rightShoulder + leftHandDirection)
+            shapeDrawer.filledCircle(leftHandGripPoint, 4f * character.scale, skinColor)
             leftHandDirection.set(leftHandGripPoint).sub(leftShoulder).nor()
             val leftDistance = leftHandGripPoint.dst(leftShoulder)
 
             val beta =
                 MathUtils.acos((leftDistance.pow(2) + upperArmLength.pow(2) - lowerArmLength.pow(2)) / (2 * leftDistance * upperArmLength))
             val leftUpperArmVector = leftHandDirection.cpy().rotateRad(beta).scl(upperArmLength).scl(MathUtils.lerp(0.5f, 1f, character.aimVector.x.absoluteValue))
-            shapeDrawer.line(leftShoulder, leftShoulder + leftUpperArmVector, Color.BROWN, 6f)
-            shapeDrawer.line(leftShoulder + leftUpperArmVector, leftHandGripPoint, Color.BROWN, 6f)
+            shapeDrawer.line(leftShoulder, leftShoulder + leftUpperArmVector, Color.BROWN, 6f * character.scale)
+            shapeDrawer.line(leftShoulder + leftUpperArmVector, leftHandGripPoint, Color.BROWN, 6f * character.scale)
         }
 
         private fun drawRightHand(entity: Entity, character: CharacterComponent) {
             val rightShoulder = character.worldAnchors["rightshoulder"]!!.cpy()
-            val rightGripLength = 8f
+            val rightGripLength = 8f * character.scale
             val rightHandDirection = character.aimVector.cpy().scl(rightGripLength).scl(MathUtils.lerp(0.5f, 1f, character.aimVector.x.absoluteValue))
             val rightHandGripPoint = rightShoulder + rightHandDirection
-            shapeDrawer.filledCircle(rightHandGripPoint, 4f, skinColor)
+            shapeDrawer.filledCircle(rightHandGripPoint, 4f * character.scale, skinColor)
 
-            val lowerArmLength = 12f
-            val upperArmLength = lowerArmLength * 5f / 8f
+            val lowerArmLength = 12f * character.scale
+            val upperArmLength = lowerArmLength * 5f / 8f * character.scale
             rightHandDirection.set(rightHandGripPoint).sub(rightShoulder).nor()
             val rightDistance = rightHandGripPoint.dst(rightShoulder)
 
@@ -202,8 +203,8 @@ sealed class RenderableType {
                 MathUtils.acos((rightDistance.pow(2) + upperArmLength.pow(2) - lowerArmLength.pow(2)) / (2 * rightDistance * upperArmLength))
 
             val rightUpperArmVector = rightHandDirection.cpy().rotateRad(-beta).scl(upperArmLength).scl(MathUtils.lerp(0.5f, 1f, character.aimVector.x.absoluteValue))
-            shapeDrawer.line(rightShoulder, rightShoulder + rightUpperArmVector, Color.BROWN, 6f)
-            shapeDrawer.line(rightShoulder + rightUpperArmVector, rightHandGripPoint, Color.BROWN, 6f)
+            shapeDrawer.line(rightShoulder, rightShoulder + rightUpperArmVector, Color.BROWN, 6f * character.scale)
+            shapeDrawer.line(rightShoulder + rightUpperArmVector, rightHandGripPoint, Color.BROWN, 6f * character.scale)
         }
 
         override fun render(entity: Entity, delta: Float) {
