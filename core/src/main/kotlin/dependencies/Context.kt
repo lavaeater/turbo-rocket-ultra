@@ -11,11 +11,10 @@ import components.AiComponent
 import components.ai.BehaviorComponent
 import ktx.ashley.allOf
 import com.badlogic.gdx.Input
-import com.badlogic.gdx.graphics.Camera
-import com.badlogic.gdx.graphics.OrthographicCamera
-import com.badlogic.gdx.graphics.Pixmap
+import com.badlogic.gdx.graphics.*
 import com.badlogic.gdx.graphics.g2d.Batch
 import com.badlogic.gdx.graphics.g2d.PolygonSpriteBatch
+import com.badlogic.gdx.graphics.g2d.TextureRegion
 import com.badlogic.gdx.utils.viewport.ExtendViewport
 import com.crashinvaders.vfx.VfxManager
 import com.crashinvaders.vfx.effects.BloomEffect
@@ -86,10 +85,20 @@ import ui.Hud
 import ui.IUserInterface
 
 object Context : InjectionContext() {
+    private val shapeDrawerRegion: TextureRegion by lazy {
+        val pixmap = Pixmap(1, 1, Pixmap.Format.RGBA8888)
+        pixmap.setColor(Color.WHITE)
+        pixmap.drawPixel(0, 0)
+        val texture = Texture(pixmap) //remember to dispose of later
+        pixmap.dispose()
+        TextureRegion(texture, 0, 0, 1, 1)
+    }
+
     fun initializeContext() {
         buildContext {
             bindSingleton(BodyEntityMapper())
             bindSingleton(PolygonSpriteBatch())
+            bindSingleton(ShapeDrawer(inject<PolygonSpriteBatch>() as Batch, shapeDrawerRegion))
             bindSingleton(InputActionHandler())
             bindSingleton(OrthographicCamera())
             bindSingleton<IUserInterface> { Hud(inject<PolygonSpriteBatch>() as Batch, false) }

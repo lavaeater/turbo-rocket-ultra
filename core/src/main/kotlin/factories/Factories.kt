@@ -390,7 +390,7 @@ fun player(player: Player, mapper: ControlMapper, at: Vector2, debug: Boolean) {
         }
         with<RenderableComponent> {
             layer = 1
-            renderableType = RenderableType.Sprite
+            renderableType = RenderableType.CharacterWithArms
         }
         with<MiniMapComponent> {
             color = Color.GREEN
