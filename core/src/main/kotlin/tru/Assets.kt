@@ -301,7 +301,7 @@ object Assets : DisposableRegistry by DisposableContainer() {
     }
 
     val lootBox by lazy {
-        TextureRegion(Texture(Gdx.files.internal("sprites/loot/lootbox.png"))).apply { flip(false, true) }
+        TextureRegion(Texture(Gdx.files.internal("sprites/loot/lootbox.png")))
     }
     val arrowTexture by lazy {
         Texture(Gdx.files.internal("sprites/arrows.png"))
