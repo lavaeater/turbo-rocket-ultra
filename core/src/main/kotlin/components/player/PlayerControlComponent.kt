@@ -47,8 +47,8 @@ class PlayerControlComponent(var controlMapper: ControlMapper, val player: Playe
         get() {
             return when {
                 waitsForRespawn -> AnimState.Death
-                aiming -> AnimState.Aiming
-                triggerPulled -> AnimState.Aiming
+                aiming -> AnimState.Walk
+                triggerPulled -> AnimState.Walk
                 moving -> AnimState.Walk
                 else -> AnimState.Idle
             }
