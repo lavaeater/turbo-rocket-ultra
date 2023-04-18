@@ -123,8 +123,10 @@ sealed class RenderableType {
         private val skinColor = Color(0.8f, 0.6f, 0.5f, 1f)
         private val rifle = Polygon(floatArrayOf(0f, 2f, 50f, 2f, 50f, -2f, 0f, -2f))
         private var drawRifleAndArms = true
+        private var drawDebug = false
+        private var aimX = 0f
+        private var aimY = 0f
 
-        private var drawDebug = true
 
         private fun drawDebug(character: CharacterComponent) {
             if (drawDebug) {
@@ -145,13 +147,25 @@ sealed class RenderableType {
         }
 
         private fun renderAimVector(character: CharacterComponent) {
-            shapeDrawer.filledCircle(character.worldPosition + (character.aimVector.cpy().scl(25f * character.scale)), 2.5f * character.scale, Color.YELLOW)
+            shapeDrawer.filledCircle(
+                character
+                    .worldPosition + (
+                        character
+                            .aimVector
+                            .cpy()
+                            .scl(
+                                25f * character.scale
+                            )
+                        ),
+                2.5f * character.scale,
+                Color.YELLOW
+            )
         }
 
         private fun renderLineToMouse(character: CharacterComponent) {
             val start = character.worldPosition + (character.aimVector.cpy().scl(25f * character.scale))
             val stop = MousePosition.worldPosition2D.cpy()
-            shapeDrawer.line(start, stop, Color.YELLOW,  character.scale)
+            shapeDrawer.line(start, stop, Color.YELLOW, character.scale)
             shapeDrawer.filledCircle(start, 2f * character.scale, Color.GREEN)
             shapeDrawer.filledCircle(stop, 2f * character.scale, Color.RED)
             shapeDrawer.filledCircle(MousePosition.worldPosition2D, 5f * character.scale, Color.WHITE)
@@ -221,17 +235,51 @@ sealed class RenderableType {
                 val lowerArmLength = 24f * character.scale
                 val upperArmLength = lowerArmLength * 5f / 8f
                 val leftGripLength = 20f * character.scale
-                val leftHandDirection = character.aimVector.cpy().scl(leftGripLength)
-                    .scl(MathUtils.lerp(0.5f, 1f, character.aimVector.x.absoluteValue))
+                val leftHandDirection =
+                    character
+                        .aimVector
+                        .cpy()
+                        .scl(leftGripLength)
+                        .scl(
+                            MathUtils
+                                .lerp(
+                                    0.5f,
+                                    1f,
+                                    character
+                                        .aimVector
+                                        .x
+                                        .absoluteValue
+                                )
+                        )
                 val leftHandGripPoint = (rightShoulder + leftHandDirection)
                 shapeDrawer.filledCircle(leftHandGripPoint, 4f * character.scale, skinColor)
                 leftHandDirection.set(leftHandGripPoint).sub(leftShoulder).nor()
                 val leftDistance = leftHandGripPoint.dst(leftShoulder)
 
                 val beta =
-                    MathUtils.acos((leftDistance.pow(2) + upperArmLength.pow(2) - lowerArmLength.pow(2)) / (2 * leftDistance * upperArmLength))
-                val leftUpperArmVector = leftHandDirection.cpy().rotateRad(beta).scl(upperArmLength)
-                    .scl(MathUtils.lerp(0.5f, 1f, character.aimVector.x.absoluteValue))
+                    MathUtils.acos(
+                        (
+                                leftDistance.pow(2) +
+                                        upperArmLength.pow(2) -
+                                        lowerArmLength.pow(2)) /
+                                (2 * leftDistance * upperArmLength)
+                    )
+
+                val leftUpperArmVector =
+                    leftHandDirection
+                        .cpy()
+                        .rotateRad(beta)
+                        .scl(upperArmLength)
+                        .scl(
+                            MathUtils.lerp(
+                                0.5f,
+                                1f,
+                                character
+                                    .aimVector
+                                    .x
+                                    .absoluteValue
+                            )
+                        )
                 shapeDrawer.line(leftShoulder, leftShoulder + leftUpperArmVector, Color.BROWN, 6f * character.scale)
                 shapeDrawer.line(
                     leftShoulder + leftUpperArmVector,
@@ -273,8 +321,10 @@ sealed class RenderableType {
 
         override fun render(entity: Entity, delta: Float) {
             val character = CharacterComponent.get(entity)
+            aimX = character.aimVector.x
+            aimY = character.aimVector.y
             drawRifleAndArms = true
-            if(PlayerControlComponent.has(entity) && !PlayerControlComponent.get(entity).aiming) {
+            if (PlayerControlComponent.has(entity) && !PlayerControlComponent.get(entity).aiming) {
                 drawRifleAndArms = false
             }
             for (drawMethod in drawMethods[character.cardinalDirection]!!)
