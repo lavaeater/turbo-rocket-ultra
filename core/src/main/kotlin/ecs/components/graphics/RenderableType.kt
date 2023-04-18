@@ -120,7 +120,7 @@ sealed class RenderableType {
         private val skinColor = Color(0.8f, 0.6f, 0.5f, 1f)
         private val rifle = Polygon(floatArrayOf(0f, 2f, 50f, 2f, 50f, -2f, 0f, -2f))
         private var drawRifleAndArms = true
-        private var drawDebug = false
+        private var drawDebug = true
         private var aimX = 0f
         private var aimY = 0f
 
@@ -133,7 +133,7 @@ sealed class RenderableType {
             }
         }
 
-        fun drawAnchors(character: CharacterComponent) {
+        private fun drawAnchors(character: CharacterComponent) {
             for ((key, point) in character.worldAnchors) {
                 shapeDrawer.filledCircle(
                     point,
@@ -185,10 +185,10 @@ sealed class RenderableType {
         }
 
         private val drawMethods: Map<CardinalDirection, List<(Entity, CharacterComponent)->Unit>> = mapOf(
-            CardinalDirection.East to listOf(::drawLeftHand, ::drawRegion, ::drawRifle, ::drawRightHand),
-            CardinalDirection.South to listOf(::drawRegion, ::drawLeftHand, ::drawRightHand, ::drawRifle),
-            CardinalDirection.West to listOf(::drawRightHand, ::drawRifle, ::drawRegion, ::drawLeftHand),
-            CardinalDirection.North to listOf(::drawLeftHand, ::drawRightHand, ::drawRifle, ::drawRegion)
+            CardinalDirection.East to listOf(::drawLeftArm, ::drawTorso, ::drawRifle, ::drawRightHand),
+            CardinalDirection.South to listOf(::drawTorso, ::drawLeftArm, ::drawRightHand, ::drawRifle),
+            CardinalDirection.West to listOf(::drawRightHand, ::drawRifle, ::drawTorso, ::drawLeftArm),
+            CardinalDirection.North to listOf(::drawLeftArm, ::drawRightHand, ::drawRifle, ::drawTorso)
         )
 
         private fun drawRegion(entity: Entity, character: CharacterComponent) {
@@ -221,7 +221,77 @@ sealed class RenderableType {
             }
         }
 
-        private fun drawLeftHand(entity: Entity, character: CharacterComponent) {
+        /**
+         * The torso could very well consist of drawing FOUR polygons
+         */
+        private fun drawTorso(entity: Entity, character: CharacterComponent) {
+            /**
+             * The torso is drawn as a polygon that changes as we go about our day.
+             * The points defining the polygon are
+             *
+             * The right shoulder
+             * The left shoulder
+             * The right hip
+             * The left hip
+             */
+            val rightShoulder = character.worldAnchors["rightshoulder"]!!.cpy()
+            val leftShoulder = character.worldAnchors["leftshoulder"]!!.cpy()
+            val rightHip = rightShoulder.cpy().sub(0f, 5f)
+            val leftHip = leftShoulder.cpy().sub(0f, 5f)
+
+            val rsf = character.worldAnchors["rightsf"]!!.cpy()
+            val lsf = character.worldAnchors["leftsf"]!!.cpy()
+
+            shapeDrawer.setColor(Color.BLUE)
+            shapeDrawer.filledPolygon(
+                floatArrayOf(
+                    rightShoulder.x,
+                    rightShoulder.y,
+                    leftShoulder.x,
+                    leftShoulder.y,
+                    leftHip.x,
+                    leftHip.y,
+                    rightHip.x,
+                    rightHip.y
+                )
+            )
+            shapeDrawer.setColor(Color.CYAN)
+            shapeDrawer.filledPolygon(
+                floatArrayOf(
+                    rightShoulder.x,
+                    rightShoulder.y,
+                    leftShoulder.x,
+                    leftShoulder.y,
+                    lsf.x,
+                    lsf.y,
+                    rsf.x,
+                    rsf.y
+                )
+            )
+//            rightShoulder
+//            leftShoulder
+//            rightHip
+//            leftHip
+
+//            shapeDrawer.setColor(Color.WHITE)
+        }
+
+        private fun drawLeftArm(entity: Entity, character: CharacterComponent) {
+            /**
+             * What is a leftarm?
+             *
+             * It is a bunch of points that are defined somehow
+             * that we then want to draw lines and circles in relation to
+             *
+             * So, the left arm consists of:
+             *
+             * The Right Shoulder: a vector
+             * The Left Shoulder: a vector
+             * An Aim Vector
+             * A Grip Point - defined as a distance N from the right shoulder in the direction of the aim vector
+             * An upper arm - defined as a unit vector pointing from shoulder to grip point, rotated by angle Beta and scaled by the length of the upper arm
+             *
+             */
             val rightShoulder = character.worldAnchors["rightshoulder"]!!.cpy()
             val leftShoulder = character.worldAnchors["leftshoulder"]!!.cpy()
             val lowerArmLength = 24f
@@ -231,12 +301,18 @@ sealed class RenderableType {
                         )
             val leftHandGripPoint = rightShoulder + leftHandDirection
             shapeDrawer.filledCircle(leftHandGripPoint, 4f, skinColor)
-            leftHandDirection.set(leftHandGripPoint).sub(leftShoulder).nor()
+            // set the direction to a unit vector pointing FROM the shoulder TO the hand
+                leftHandDirection
+                    .set(leftHandGripPoint)
+                    .sub(leftShoulder)
+                    .nor()
+
+                // calculate distance from shoulder to hand
             val leftDistance = leftHandGripPoint.dst(leftShoulder)
 
-            val beta =
+            // calculate angle between shoulder and upper armval beta =
                 MathUtils.acos((leftDistance.pow(2) + upperArmLength.pow(2) - lowerArmLength.pow(2)) / (2 * leftDistance * upperArmLength))
-            val leftUpperArmVector = leftHandDirection.cpy().rotateRad(beta).scl(upperArmLength).scl(MathUtils.lerp(0.5f, 1f, character.aimVector.x.absoluteValue)
+            val leftUpperArmVector = leftHandDirection.cpy().rotateRad(beta).scl(upperArmLength).scl(MathUtils.lerp(0.5f, 1f, character.aimVector.y.absoluteValue)
                         )
             shapeDrawer.line(leftShoulder, leftShoulder + leftUpperArmVector, Color.BROWN, 6f)
             shapeDrawer.line(leftShoulder + leftUpperArmVector, leftHandGripPoint, Color.BROWN, 6f)
@@ -278,3 +354,31 @@ sealed class RenderableType {
     }
 
 }
+
+/**
+ * What is a leftarm?
+ *
+ * It is a bunch of points that are defined somehow
+ * that we then want to draw lines and circles in relation to
+ *
+ * So, the left arm consists of:
+ *
+ * The Right Shoulder: a vector
+ * The Left Shoulder: a vector
+ * An Aim Vector
+ * A Grip Point - defined as a distance N from the right shoulder in the direction of the aim vector
+ * An upper arm - defined as a unit vector pointing from shoulder to grip point, rotated by angle Beta and scaled by the length of the upper arm
+ *
+ * OK; this actually seems quite hard to generalize, because it isn't general
+ *
+ * This is the definition of the LEFT arm, but the RIGHT arm doesn't need the left shoulder
+ * and so on. Having them in their own functions is probably fine for now, but there is probably
+ * some sweet generalizations to be made here.
+ *
+ * Lets do a torso!
+ */
+
+class ParameterizedVectorThingie {
+
+}
+
