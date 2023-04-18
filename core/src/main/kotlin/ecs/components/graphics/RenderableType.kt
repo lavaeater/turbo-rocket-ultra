@@ -10,6 +10,7 @@ import eater.ecs.ashley.components.TransformComponent
 import eater.ecs.ashley.components.character.CharacterComponent
 import eater.injection.InjectionContext.Companion.inject
 import eater.input.CardinalDirection
+import eater.input.mouse.MousePosition
 import eater.physics.addComponent
 import ecs.components.gameplay.DestroyComponent
 import ecs.components.player.PlayerControlComponent
@@ -122,6 +123,43 @@ sealed class RenderableType {
         private val skinColor = Color(0.8f, 0.6f, 0.5f, 1f)
         private val rifle = Polygon(floatArrayOf(0f, 2f, 50f, 2f, 50f, -2f, 0f, -2f))
         private var drawRifleAndArms = true
+
+        private var drawDebug = true
+
+        private fun drawDebug(character: CharacterComponent) {
+            if (drawDebug) {
+                drawAnchors(character)
+                renderAimVector(character)
+                renderLineToMouse(character)
+            }
+        }
+
+        fun drawAnchors(character: CharacterComponent) {
+            for ((key, point) in character.worldAnchors) {
+                shapeDrawer.filledCircle(
+                    point,
+                    5f * character.scale,
+                    if (key.contains("left")) Color.RED else Color.GREEN
+                )
+            }
+        }
+
+        private fun renderAimVector(character: CharacterComponent) {
+            shapeDrawer.filledCircle(character.worldPosition + (character.aimVector.cpy().scl(25f * character.scale)), 2.5f * character.scale, Color.YELLOW)
+        }
+
+        private fun renderLineToMouse(character: CharacterComponent) {
+            val start = character.worldPosition + (character.aimVector.cpy().scl(25f * character.scale))
+            val stop = MousePosition.worldPosition2D.cpy()
+            shapeDrawer.line(start, stop, Color.YELLOW,  character.scale)
+            shapeDrawer.filledCircle(start, 2f * character.scale, Color.GREEN)
+            shapeDrawer.filledCircle(stop, 2f * character.scale, Color.RED)
+            shapeDrawer.filledCircle(MousePosition.worldPosition2D, 5f * character.scale, Color.WHITE)
+
+            start.set(character.worldAnchors["rightshoulder"]!!)
+
+            shapeDrawer.line(start, stop, Color.RED, character.scale)
+        }
 
         private fun drawRifle(entity: Entity, character: CharacterComponent) {
             if (drawRifleAndArms) {
@@ -241,6 +279,8 @@ sealed class RenderableType {
             }
             for (drawMethod in drawMethods[character.cardinalDirection]!!)
                 drawMethod(entity, character)
+
+            drawDebug(character)
         }
     }
 
