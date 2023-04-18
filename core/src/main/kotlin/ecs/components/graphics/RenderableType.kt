@@ -4,6 +4,7 @@ import com.badlogic.ashley.core.Engine
 import com.badlogic.ashley.core.Entity
 import com.badlogic.gdx.graphics.Color
 import com.badlogic.gdx.graphics.g2d.PolygonSpriteBatch
+import com.badlogic.gdx.graphics.g2d.SpriteBatch
 import com.badlogic.gdx.math.MathUtils
 import com.badlogic.gdx.math.Polygon
 import eater.ecs.ashley.components.TransformComponent
@@ -17,6 +18,7 @@ import ecs.components.player.PlayerControlComponent
 import ktx.math.plus
 import physics.*
 import space.earlygrey.shapedrawer.ShapeDrawer
+import tru.Assets
 import kotlin.math.absoluteValue
 import kotlin.math.pow
 
@@ -242,38 +244,50 @@ sealed class RenderableType {
              */
             val rightShoulder = character.worldAnchors["rightshoulder"]!!.cpy()
             val leftShoulder = character.worldAnchors["leftshoulder"]!!.cpy()
-            val rightHip = rightShoulder.cpy().sub(0f, 5f)
-            val leftHip = leftShoulder.cpy().sub(0f, 5f)
+            val rightHip = rightShoulder.cpy().sub(0f, 2f)
+            val leftHip = leftShoulder.cpy().sub(0f, 2f)
+            val sprite = Assets.torsoSprite
 
-            val rsf = character.worldAnchors["rightsf"]!!.cpy()
-            val lsf = character.worldAnchors["leftsf"]!!.cpy()
+            val vertices = sprite.vertices
+            vertices[SpriteBatch.X1]
+            vertices[SpriteBatch.Y1]
+            vertices[SpriteBatch.X2]
+            vertices[SpriteBatch.Y2]
+            vertices[SpriteBatch.X3]
+            vertices[SpriteBatch.Y3]
+            vertices[SpriteBatch.X4]
+            vertices[SpriteBatch.Y1]
 
-            shapeDrawer.setColor(Color.BLUE)
-            shapeDrawer.filledPolygon(
-                floatArrayOf(
-                    rightShoulder.x,
-                    rightShoulder.y,
-                    leftShoulder.x,
-                    leftShoulder.y,
-                    leftHip.x,
-                    leftHip.y,
-                    rightHip.x,
-                    rightHip.y
-                )
-            )
-            shapeDrawer.setColor(Color.CYAN)
-            shapeDrawer.filledPolygon(
-                floatArrayOf(
-                    rightShoulder.x,
-                    rightShoulder.y,
-                    leftShoulder.x,
-                    leftShoulder.y,
-                    lsf.x,
-                    lsf.y,
-                    rsf.x,
-                    rsf.y
-                )
-            )
+
+//            val rsf = character.worldAnchors["rightsf"]!!.cpy()
+//            val lsf = character.worldAnchors["leftsf"]!!.cpy()
+
+//            shapeDrawer.setColor(Color.BLUE)
+//            shapeDrawer.filledPolygon(
+//                floatArrayOf(
+//                    rightShoulder.x,
+//                    rightShoulder.y,
+//                    leftShoulder.x,
+//                    leftShoulder.y,
+//                    leftHip.x,
+//                    leftHip.y,
+//                    rightHip.x,
+//                    rightHip.y
+//                )
+//            )
+//            shapeDrawer.setColor(Color.CYAN)
+//            shapeDrawer.filledPolygon(
+//                floatArrayOf(
+//                    rightShoulder.x,
+//                    rightShoulder.y,
+//                    leftShoulder.x,
+//                    leftShoulder.y,
+//                    lsf.x,
+//                    lsf.y,
+//                    rsf.x,
+//                    rsf.y
+//                )
+//            )
 //            rightShoulder
 //            leftShoulder
 //            rightHip

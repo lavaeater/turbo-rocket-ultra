@@ -444,6 +444,10 @@ object Assets : DisposableRegistry by DisposableContainer() {
         ShapeDrawer(inject<PolygonSpriteBatch>() as Batch, shapeDrawerRegion)
     }
 
+    val torsoSprite by lazy {
+        Sprite(Texture(Gdx.files.internal("sprites/boy/torso_front.png")))
+    }
+
 //    val objectSprites by lazy { SpriteLoader.initObjectSprites() }
 
     val soundEffects: Map<String, Sound> by lazy {
