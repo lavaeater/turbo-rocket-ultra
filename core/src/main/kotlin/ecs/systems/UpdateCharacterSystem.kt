@@ -12,9 +12,10 @@ class UpdateCharacterSystem: IteratingSystem(allOf(TransformComponent::class, Ch
     override fun processEntity(entity: Entity, deltaTime: Float) {
         val transformComponent = TransformComponent.get(entity)
         val characterComponent = CharacterComponent.get(entity)
+        val playerControlComponent = PlayerControlComponent.get(entity)
         characterComponent.worldPosition.set(transformComponent.position)
-        characterComponent.angleDegrees = transformComponent.angleDegrees
-        characterComponent.aimVector.set(PlayerControlComponent.get(entity).aimVector)
+        characterComponent.angleDegrees = playerControlComponent.aimVector.angleDeg()
+        characterComponent.aimVector.set(playerControlComponent.aimVector)
         characterComponent.scale = TextureRegionComponent.get(entity).actualScale
     }
 }
