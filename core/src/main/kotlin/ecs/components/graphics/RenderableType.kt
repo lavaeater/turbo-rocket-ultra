@@ -4,7 +4,6 @@ import com.badlogic.ashley.core.Engine
 import com.badlogic.ashley.core.Entity
 import com.badlogic.gdx.graphics.Color
 import com.badlogic.gdx.graphics.g2d.PolygonSpriteBatch
-import com.badlogic.gdx.graphics.g2d.SpriteBatch
 import com.badlogic.gdx.math.MathUtils
 import com.badlogic.gdx.math.Polygon
 import eater.ecs.ashley.components.TransformComponent
@@ -242,22 +241,38 @@ sealed class RenderableType {
              * The right hip
              * The left hip
              */
-            val rightShoulder = character.worldAnchors["rightshoulder"]!!.cpy()
-            val leftShoulder = character.worldAnchors["leftshoulder"]!!.cpy()
-            val rightHip = rightShoulder.cpy().sub(0f, 2f)
-            val leftHip = leftShoulder.cpy().sub(0f, 2f)
+            val rsf = character.worldAnchors["rightsf"]!!.cpy()
+            val lsf = character.worldAnchors["leftsf"]!!.cpy()
+            val rhf = rsf.cpy().sub(0f, 2f)
+            val lhf = lsf.cpy().sub(0f, 2f)
+
             val sprite = Assets.torsoSprite
+            sprite.setPosition(character.worldPosition.x, character.worldPosition.y)
 
             val vertices = sprite.vertices
-            vertices[SpriteBatch.X1]
-            vertices[SpriteBatch.Y1]
-            vertices[SpriteBatch.X2]
-            vertices[SpriteBatch.Y2]
-            vertices[SpriteBatch.X3]
-            vertices[SpriteBatch.Y3]
-            vertices[SpriteBatch.X4]
-            vertices[SpriteBatch.Y1]
+            vertices[MyReadableConstants.TopLeftX] = rsf.x
+            vertices[MyReadableConstants.TopLeftY] = rsf.y
+            vertices[MyReadableConstants.TopRightX] = lsf.x
+            vertices[MyReadableConstants.TopRightY] = lsf.y
+            vertices[MyReadableConstants.BottomRightX] = rhf.x
+            vertices[MyReadableConstants.BottomRightY] = rhf.y
+            vertices[MyReadableConstants.BottomLeftX] = lhf.x
+            vertices[MyReadableConstants.BottomLeftY] = lhf.y
 
+            batch.draw(sprite.texture, vertices, 0, vertices.size)
+            val rsb = character.worldAnchors["rightsb"]!!.cpy()
+            val lsb = character.worldAnchors["leftsb"]!!.cpy()
+            val rhb = rsb.cpy().sub(0f, 2f)
+            val lhb = lsb.cpy().sub(0f, 2f)
+            vertices[MyReadableConstants.TopLeftX] = rsb.x
+            vertices[MyReadableConstants.TopLeftY] = rsb.y
+            vertices[MyReadableConstants.TopRightX] = lsb.x
+            vertices[MyReadableConstants.TopRightY] = lsb.y
+            vertices[MyReadableConstants.BottomRightX] = rhb.x
+            vertices[MyReadableConstants.BottomRightY] = rhb.y
+            vertices[MyReadableConstants.BottomLeftX] = lhb.x
+            vertices[MyReadableConstants.BottomLeftY] = lhb.y
+            batch.draw(sprite.texture, vertices, 0, vertices.size)
 
 //            val rsf = character.worldAnchors["rightsf"]!!.cpy()
 //            val lsf = character.worldAnchors["leftsf"]!!.cpy()
@@ -453,8 +468,25 @@ sealed class RenderableType {
  *
  * Lets do a torso!
  */
-
-class ParameterizedVectorThingie {
-
+object MyReadableConstants {
+    const val BottomLeftX = 0
+    const val BottomLeftY = 1
+    const val C1 = 2
+    const val U1 = 3
+    const val V1 = 4
+    const val TopRightX = 5
+    const val TopRightY = 6
+    const val C2 = 7
+    const val U2 = 8
+    const val V2 = 9
+    const val TopLeftX = 10
+    const val TopLeftY = 11
+    const val C3 = 12
+    const val U3 = 13
+    const val V3 = 14
+    const val BottomRightX = 15
+    const val BottomRightY = 16
+    const val C4 = 17
+    const val U4 = 18
+    const val V4 = 19
 }
-
