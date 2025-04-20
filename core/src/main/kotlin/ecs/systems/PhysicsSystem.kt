@@ -2,7 +2,6 @@ package ecs.systems
 
 import com.badlogic.ashley.core.Entity
 import com.badlogic.ashley.systems.IteratingSystem
-import com.badlogic.gdx.math.MathUtils.radiansToDegrees
 import com.badlogic.gdx.math.Vector2
 import eater.ecs.ashley.components.Box2d
 import eater.ecs.ashley.components.TransformComponent
@@ -25,14 +24,14 @@ class PhysicsSystem(priority: Int) :
 
     override fun processEntity(entity: Entity, deltaTime: Float) {
         val bodyComponent = AshleyMappers.body.get(entity)
-        val bodyPosition = bodyComponent.body!!.position
-        val bodyRotation = bodyComponent.body!!.angle
+        val bodyPosition = bodyComponent.body.position
+        val bodyRotation = bodyComponent.body.angle
         val transformComponent = AshleyMappers.transform.get(entity)
         transformComponent.position.set(bodyPosition)
         transformComponent.angleRadians = bodyRotation
 
         if(transformComponent.feelsGravity) {
-            val body = bodyComponent.body!!
+            val body = bodyComponent.body
             /**
              * We must first accelerate
              */
@@ -46,7 +45,7 @@ class PhysicsSystem(priority: Int) :
             } else {
                 transformComponent.verticalSpeed = 0f
                 transformComponent.height = 0f
-                bodyComponent.body!!.linearVelocity = vec2(bodyComponent.body!!.linearVelocity.x, 0f)
+                bodyComponent.body.linearVelocity = vec2(bodyComponent.body.linearVelocity.x, 0f)
                 if(entity.has<GrenadeComponent>()) {
                     contactManager.handleGrenadeHittingAnything(ContactType.GrenadeHittingAnything(entity))
                 }

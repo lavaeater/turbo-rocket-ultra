@@ -7,6 +7,7 @@ import com.badlogic.gdx.math.MathUtils
 abstract class AiAction(val name: String, val scoreRange: ClosedFloatingPointRange<Float> = 0f..1f) {
     val considerations = mutableListOf<Consideration>()
     lateinit var interpolation: Interpolation
+
     var score: Float = 0f
     protected set
 

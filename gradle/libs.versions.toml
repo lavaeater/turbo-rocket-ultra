@@ -46,7 +46,6 @@ ashley = { module = "com.badlogicgames.ashley:ashley", version.ref = "ashley" }
 bladeInk = { module = "com.bladecoder.ink:blade-ink", version.ref = "bladeInk" }
 box2dlights = { module = "com.badlogicgames.box2dlights:box2dlights", version.ref = "box2dlights" }
 colorful = { module = "com.github.tommyettinger:colorful", version.ref = "colorful" }
-controllerMapping = { module = "com.github.MrStahlfelge.gdx-controllers:mapping", version.ref = "controllerMapping" }
 gdx = { module = "com.badlogicgames.gdx:gdx", version.ref = "gdx" }
 gdxBox2d = { module = "com.badlogicgames.gdx:gdx-box2d", version.ref = "gdx" }
 gdxControllers = { module = "com.badlogicgames.gdx-controllers:gdx-controllers-core", version.ref = "gdxControllers" }
@@ -86,7 +85,6 @@ shapeDrawer = { module = "space.earlygrey:shapedrawer", version.ref = "shapeDraw
 simpleGraphs = { module = "space.earlygrey:simple-graphs", version.ref = "simpleGraphs" }
 tenPatch = { module = "com.github.raeleus.TenPatch:tenpatch", version.ref = "tenPatch" }
 tinyVG = { module = "com.github.lyze237:gdx-TinyVG", version.ref = "tinyVG" }
-tuningFork = { module = "com.github.Hangman:TuningFork", version.ref = "tuningFork" }
 utlisBox2d = { module = "com.github.tommyettinger:libgdx-utils-box2d", version.ref = "utlisBox2d" }
 utlis = { module = "com.github.tommyettinger:libgdx-utils", version.ref = "utlis" }
 websocket = { module = "com.github.MrStahlfelge.gdx-websockets:core", version.ref = "websocket" }
