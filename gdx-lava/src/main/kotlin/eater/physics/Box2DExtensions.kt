@@ -25,8 +25,15 @@ object AshleyMapperStore {
         val type = typeOf<T>()
         if (!mappers.containsKey(type))
             mappers[type] = mapperFor<T>()
-        return mappers[type] as ComponentMapper<T>
+        val mapper = mappers[type]
+        if (mapper is ComponentMapper<*>) {
+            @Suppress("UNCHECKED_CAST")
+            return mapper as ComponentMapper<T>
+        } else {
+            throw IllegalStateException("No mapper for type $type")
+        }
     }
+
     val mappers = mutableMapOf<KType, ComponentMapper<*>>()
 }
 
@@ -82,7 +89,7 @@ inline fun <reified T : Component> Entity.getComponent(): T {
     return AshleyMapperStore.getMapper<T>().get(this)
 }
 
-fun Contact.noSensors() : Boolean {
+fun Contact.noSensors(): Boolean {
     return !this.fixtureA.isSensor && !this.fixtureB.isSensor
 }
 
@@ -96,15 +103,16 @@ inline fun <reified T : Component> Contact.atLeastOneHas(): Boolean {
 }
 
 inline fun <reified T : Component> Contact.justOneHas(): Boolean {
-        val fOne = this.fixtureA.isEntity() && this.fixtureA.getEntity()
-            .has<T>()
+    val fOne = this.fixtureA.isEntity() && this.fixtureA.getEntity()
+        .has<T>()
     val fTwo = this.fixtureB.isEntity() && this.fixtureB.getEntity().has<T>()
     return fOne xor fTwo
 }
 
-inline fun<reified T: Component> getEntityThatHas(entityOne: Entity, entityTwo: Entity): Entity {
-    return if(entityOne.has<T>()) entityOne else entityTwo
+inline fun <reified T : Component> getEntityThatHas(entityOne: Entity, entityTwo: Entity): Entity {
+    return if (entityOne.has<T>()) entityOne else entityTwo
 }
+
 inline fun <reified T : Component> Contact.bothHaveComponent(): Boolean {
     if (this.bothAreEntities()) {
         val mapper = AshleyMapperStore.getMapper<T>()
@@ -120,14 +128,16 @@ fun Contact.getOtherEntity(entity: Entity): Entity {
 }
 
 inline fun <reified T : Component> Contact.getEntityFor(): Entity {
-    return if(this.fixtureA.isEntity() && this.fixtureA.getEntity().has<T>()) this.fixtureA.getEntity() else this.fixtureB.getEntity()
+    return if (this.fixtureA.isEntity() && this.fixtureA.getEntity()
+            .has<T>()
+    ) this.fixtureA.getEntity() else this.fixtureB.getEntity()
 }
 
-fun Contact.eitherIsSensor() : Boolean {
+fun Contact.eitherIsSensor(): Boolean {
     return this.fixtureA.isSensor || this.fixtureB.isSensor
 }
 
-fun Contact.bothAreSensors() : Boolean {
+fun Contact.bothAreSensors(): Boolean {
     return this.fixtureA.isSensor && this.fixtureB.isSensor
 }
 
