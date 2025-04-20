@@ -1,0 +1,101 @@
+# Version catalog for dependencies
+# Example entry:
+# [versions]
+# junit = "4.13.2"
+# [libraries]
+# junit = { module = "junit:junit", version.ref = "junit" }
+
+[versions]
+ai = "1.8.2"
+ashley = "1.7.4"
+bladeInk = "1.1.2"
+box2dlights = "1.5"
+colorful = "0.8.4"
+controllerMapping = "2.3.0"
+gdx = "1.11.0"
+gdxControllers = "2.2.2"
+gdxVfxCore = "0.5.1"
+gdxVfxEffects = "0.5.1"
+hackLights = "dd08b55956"
+ingameconsole = "1.0.0"
+joise = "1.1.0"
+kotlin = "1.8.0"
+kotlinxCoroutines = "1.6.4"
+ktx = "1.11.0-rc5"
+makeSomeNoise = "0.4"
+regExodus = "0.1.15"
+screenManager = "0.6.7"
+shapeDrawer = "2.6.0"
+simpleGraphs = "3.0.0"
+tenPatch = "5.2.3"
+tinyVG = "734cf98aad"
+tuningFork = "0.2.2"
+utlisBox2d = "0.13.7"
+utlis = "0.13.7"
+websocket = "1.9.10.3"
+anim8 = "0.3.13"
+kryoNet = "2.22.7"
+kryo = "5.3.0"
+noise4j = "0.1.0"
+typingLabel = "1.3.0"
+textratypist = "0.7.3"
+
+[libraries]
+ai = { module = "com.badlogicgames.gdx:gdx-ai", version.ref = "ai" }
+ashley = { module = "com.badlogicgames.ashley:ashley", version.ref = "ashley" }
+bladeInk = { module = "com.bladecoder.ink:blade-ink", version.ref = "bladeInk" }
+box2dlights = { module = "com.badlogicgames.box2dlights:box2dlights", version.ref = "box2dlights" }
+colorful = { module = "com.github.tommyettinger:colorful", version.ref = "colorful" }
+controllerMapping = { module = "com.github.MrStahlfelge.gdx-controllers:mapping", version.ref = "controllerMapping" }
+gdx = { module = "com.badlogicgames.gdx:gdx", version.ref = "gdx" }
+gdxBox2d = { module = "com.badlogicgames.gdx:gdx-box2d", version.ref = "gdx" }
+gdxControllers = { module = "com.badlogicgames.gdx-controllers:gdx-controllers-core", version.ref = "gdxControllers" }
+gdxVfxCore = { module = "com.crashinvaders.vfx:gdx-vfx-core", version.ref = "gdxVfxCore" }
+gdxVfxEffects = { module = "com.crashinvaders.vfx:gdx-vfx-effects", version.ref = "gdxVfxEffects" }
+gdxFreetype = { module = "com.badlogicgames.gdx:gdx-freetype", version.ref = "gdx" }
+hackLights = { module = "com.github.aliasifk:HackLights", version.ref = "hackLights" }
+ingameconsole = { module = "com.strongjoshua:libgdx-inGameConsole", version.ref = "ingameconsole" }
+joise = { module = "com.sudoplay.joise:joise", version.ref = "joise" }
+kotlin = { module = "org.jetbrains.kotlin:kotlin-stdlib", version.ref = "kotlin" }
+kotlinReflect = { module = "org.jetbrains.kotlin:kotlin-reflect", version.ref = "kotlin" }
+kotlinxCoroutines = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-core", version.ref = "kotlinxCoroutines" }
+ktxActors = { module = "io.github.libktx:ktx-actors", version.ref = "ktx" }
+ktxApp = { module = "io.github.libktx:ktx-app", version.ref = "ktx" }
+ktxAshley = { module = "io.github.libktx:ktx-ashley", version.ref = "ktx" }
+ktxAssets = { module = "io.github.libktx:ktx-assets", version.ref = "ktx" }
+ktxAssetsAsync = { module = "io.github.libktx:ktx-assets-async", version.ref = "ktx" }
+ktxAsync = { module = "io.github.libktx:ktx-async", version.ref = "ktx" }
+ktxBox2d = { module = "io.github.libktx:ktx-box2d", version.ref = "ktx" }
+ktxCollections = { module = "io.github.libktx:ktx-collections", version.ref = "ktx" }
+ktxFreetype = { module = "io.github.libktx:ktx-freetype", version.ref = "ktx" }
+ktxGraphics = { module = "io.github.libktx:ktx-graphics", version.ref = "ktx" }
+ktxI18n = { module = "io.github.libktx:ktx-i18n", version.ref = "ktx" }
+ktxInject = { module = "io.github.libktx:ktx-inject", version.ref = "ktx" }
+ktxJson = { module = "io.github.libktx:ktx-json", version.ref = "ktx" }
+ktxLog = { module = "io.github.libktx:ktx-log", version.ref = "ktx" }
+ktxMath = { module = "io.github.libktx:ktx-math", version.ref = "ktx" }
+ktxPreferences = { module = "io.github.libktx:ktx-preferences", version.ref = "ktx" }
+ktxReflect = { module = "io.github.libktx:ktx-reflect", version.ref = "ktx" }
+ktxScene2d = { module = "io.github.libktx:ktx-scene2d", version.ref = "ktx" }
+ktxStyle = { module = "io.github.libktx:ktx-style", version.ref = "ktx" }
+ktxTiled = { module = "io.github.libktx:ktx-tiled", version.ref = "ktx" }
+makeSomeNoise = { module = "com.github.tommyettinger:make_some_noise", version.ref = "makeSomeNoise" }
+regExodus = { module = "com.github.tommyettinger:regexodus", version.ref = "regExodus" }
+screenManager = { module = "com.github.crykn:libgdx-screenmanager", version.ref = "screenManager" }
+shapeDrawer = { module = "space.earlygrey:shapedrawer", version.ref = "shapeDrawer" }
+simpleGraphs = { module = "space.earlygrey:simple-graphs", version.ref = "simpleGraphs" }
+tenPatch = { module = "com.github.raeleus.TenPatch:tenpatch", version.ref = "tenPatch" }
+tinyVG = { module = "com.github.lyze237:gdx-TinyVG", version.ref = "tinyVG" }
+tuningFork = { module = "com.github.Hangman:TuningFork", version.ref = "tuningFork" }
+utlisBox2d = { module = "com.github.tommyettinger:libgdx-utils-box2d", version.ref = "utlisBox2d" }
+utlis = { module = "com.github.tommyettinger:libgdx-utils", version.ref = "utlis" }
+websocket = { module = "com.github.MrStahlfelge.gdx-websockets:core", version.ref = "websocket" }
+anim8 = { module = "com.github.tommyettinger:anim8-gdx", version.ref = "anim8" }
+kryoNet = { module = "com.github.crykn:kryonet", version.ref = "kryoNet" }
+kryo = { module = "com.esotericsoftware:kryo", version.ref = "kryo" }
+noise4j = { module = "com.github.czyzby:noise4j", version.ref = "noise4j" }
+typingLabel = { module = "com.rafaskoberg.gdx:typing-label", version.ref = "typingLabel" }
+textratypist = { module = "com.github.tommyettinger:textratypist", version.ref = "textratypist" }
+
+[plugins]
+kotlin-jvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "kotlin" }

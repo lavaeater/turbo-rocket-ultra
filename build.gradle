@@ -9,18 +9,7 @@ buildscript {
 		maven { url 'https://s01.oss.sonatype.org/content/repositories/snapshots/' }
 	}
 	dependencies {
-		classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlinVersion"
-
-		// This follows advice from https://blog.gradle.org/log4j-vulnerability
-		constraints {
-			classpath("org.apache.logging.log4j:log4j-core") {
-				version {
-					strictly("[2.17, 3[")
-					prefer("2.17.0")
-				}
-				because("CVE-2021-44228, CVE-2021-45046, CVE-2021-45105: Log4j vulnerable to remote code execution and other critical security vulnerabilities")
-			}
-		}
+		classpath libs.kotlin
 	}
 }
 
@@ -31,7 +20,7 @@ allprojects {
 
 configure(subprojects) {
 	apply plugin: 'java-library'
-	apply plugin: 'kotlin'
+	// Root project does not need to apply the kotlin plugin via plugins block
 	sourceCompatibility = 1.8
 	compileJava {
 		options.incremental = true
@@ -39,12 +28,12 @@ configure(subprojects) {
 	dependencies {
 		// This follows advice from https://blog.gradle.org/log4j-vulnerability
 		constraints {
-			implementation("org.apache.logging.log4j:log4j-core") {
+			implementation('org.apache.logging.log4j:log4j-core') {
 				version {
-					strictly("[2.17, 3[")
-					prefer("2.17.0")
+					strictly('[2.17, 3[')
+					prefer('2.17.0')
 				}
-				because("CVE-2021-44228, CVE-2021-45046, CVE-2021-45105: Log4j vulnerable to remote code execution and other critical security vulnerabilities")
+				because('CVE-2021-44228, CVE-2021-45046, CVE-2021-45105: Log4j vulnerable to remote code execution and other critical security vulnerabilities')
 			}
 		}
 	}

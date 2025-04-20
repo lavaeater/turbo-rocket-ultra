@@ -1,7 +1,13 @@
-apply plugin: 'application'
+plugins {
+    alias(libs.plugins.kotlin.jvm)
+    id 'application'
+}
 
 sourceSets.main.resources.srcDirs += [ rootProject.file('assets').path ]
-mainClassName = 'turbo.core.lwjgl3.Lwjgl3Launcher'
+
+application {
+    mainClass = 'turbo.core.lwjgl3.Lwjgl3Launcher'
+}
 eclipse.project.name = appName + '-lwjgl3'
 sourceCompatibility = 1.8
 
@@ -43,7 +49,7 @@ jar {
 	}
 // setting the manifest makes the JAR runnable.
 	manifest {
-		attributes 'Main-Class': project.mainClassName
+		attributes 'Main-Class': application.mainClass
 	}
 // this last step may help on some OSes that need extra instruction to make runnable JARs.
 	doLast {

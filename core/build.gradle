@@ -1,59 +1,65 @@
-[compileJava, compileTestJava]*.options*.encoding = 'UTF-8'
+plugins {
+    alias(libs.plugins.kotlin.jvm)
+}
+
+tasks.withType(JavaCompile).configureEach {
+    options.encoding = 'UTF-8'
+}
 eclipse.project.name = appName + '-core'
 
 dependencies {
-	api "com.badlogicgames.ashley:ashley:$ashleyVersion"
-	api "com.badlogicgames.box2dlights:box2dlights:$box2dlightsVersion"
-	api "com.badlogicgames.gdx-controllers:gdx-controllers-core:$gdxControllersVersion"
-	api "com.badlogicgames.gdx:gdx-ai:$aiVersion"
-	api "com.badlogicgames.gdx:gdx-box2d:$gdxVersion"
-	api "com.badlogicgames.gdx:gdx-freetype:$gdxVersion"
-	api "com.badlogicgames.gdx:gdx:$gdxVersion"
-	api "com.bladecoder.ink:blade-ink:$bladeInkVersion"
-	api "com.crashinvaders.vfx:gdx-vfx-core:$gdxVfxCoreVersion"
-	api "com.crashinvaders.vfx:gdx-vfx-effects:$gdxVfxEffectsVersion"
-	api "com.esotericsoftware:kryo:$kryoVersion"
-	api "com.github.MrStahlfelge.gdx-websockets:core:$websocketVersion"
-	api "com.github.aliasifk:HackLights:$hackLightsVersion"
-	api "com.github.crykn:kryonet:$kryoNetVersion"
-	api "com.github.crykn:libgdx-screenmanager:$screenManagerVersion"
-	api "com.github.czyzby:noise4j:$noise4jVersion"
-	api "com.github.lyze237:gdx-TinyVG:$tinyVGVersion"
-	api "com.github.raeleus.TenPatch:tenpatch:$tenPatchVersion"
-	api "com.github.tommyettinger:anim8-gdx:$anim8Version"
-	api "com.github.tommyettinger:colorful:$colorfulVersion"
-	api "com.github.tommyettinger:libgdx-utils-box2d:$utilsBox2dVersion"
-	api "com.github.tommyettinger:libgdx-utils:$utilsVersion"
-	api "com.github.tommyettinger:make_some_noise:$makeSomeNoiseVersion"
-	api "com.github.tommyettinger:regexodus:$regExodusVersion"
-	api "com.github.tommyettinger:textratypist:$textratypistVersion"
-	api "com.rafaskoberg.gdx:typing-label:$typingLabelVersion"
-	api "com.strongjoshua:libgdx-inGameConsole:$inGameConsoleVersion"
-	api "com.sudoplay.joise:joise:$joiseVersion"
-	api "io.github.libktx:ktx-actors:$ktxVersion"
-	api "io.github.libktx:ktx-app:$ktxVersion"
-	api "io.github.libktx:ktx-ashley:$ktxVersion"
-	api "io.github.libktx:ktx-assets-async:$ktxVersion"
-	api "io.github.libktx:ktx-assets:$ktxVersion"
-	api "io.github.libktx:ktx-async:$ktxVersion"
-	api "io.github.libktx:ktx-box2d:$ktxVersion"
-	api "io.github.libktx:ktx-collections:$ktxVersion"
-	api "io.github.libktx:ktx-freetype:$ktxVersion"
-	api "io.github.libktx:ktx-graphics:$ktxVersion"
-	api "io.github.libktx:ktx-i18n:$ktxVersion"
-	api "io.github.libktx:ktx-inject:$ktxVersion"
-	api "io.github.libktx:ktx-json:$ktxVersion"
-	api "io.github.libktx:ktx-log:$ktxVersion"
-	api "io.github.libktx:ktx-math:$ktxVersion"
-	api "io.github.libktx:ktx-preferences:$ktxVersion"
-	api "io.github.libktx:ktx-reflect:$ktxVersion"
-	api "io.github.libktx:ktx-scene2d:$ktxVersion"
-	api "io.github.libktx:ktx-style:$ktxVersion"
-	api "io.github.libktx:ktx-tiled:$ktxVersion"
-	api "org.jetbrains.kotlin:kotlin-stdlib:$kotlinVersion"
-	api "org.jetbrains.kotlinx:kotlinx-coroutines-core:$kotlinxCoroutinesVersion"
-	api "space.earlygrey:shapedrawer:$shapeDrawerVersion"
-	api "space.earlygrey:simple-graphs:$simpleGraphsVersion"
-	api "org.jetbrains.kotlin:kotlin-reflect:$kotlinVersion"
-	implementation project(':gdx-lava')
+    api libs.ashley
+    api libs.box2dlights
+    api libs.gdxControllers
+    api libs.ai
+    api libs.gdx
+    api libs.gdxBox2d
+    api libs.gdxFreetype
+    api libs.bladeInk
+    api libs.gdxVfxCore
+    api libs.gdxVfxEffects
+    api libs.kryo
+    api libs.websocket
+    api libs.hackLights
+    api libs.kryoNet
+    api libs.screenManager
+    api libs.noise4j
+    api libs.tinyVG
+    api libs.tenPatch
+    api libs.anim8
+    api libs.colorful
+    api libs.utlisBox2d
+    api libs.utlis
+    api libs.makeSomeNoise
+    api libs.regExodus
+    api libs.textratypist
+    api libs.typingLabel
+    api libs.ingameconsole
+    api libs.joise
+    api libs.ktxActors
+    api libs.ktxApp
+    api libs.ktxAshley
+    api libs.ktxAssetsAsync
+    api libs.ktxAssets
+    api libs.ktxAsync
+    api libs.ktxBox2d
+    api libs.ktxCollections
+    api libs.ktxFreetype
+    api libs.ktxGraphics
+    api libs.ktxI18n
+    api libs.ktxInject
+    api libs.ktxJson
+    api libs.ktxLog
+    api libs.ktxMath
+    api libs.ktxPreferences
+    api libs.ktxReflect
+    api libs.ktxScene2d
+    api libs.ktxStyle
+    api libs.ktxTiled
+    api libs.kotlin
+    api libs.kotlinxCoroutines
+    api libs.shapeDrawer
+    api libs.simpleGraphs
+    api libs.kotlinReflect
+    implementation project(':gdx-lava')
 }
