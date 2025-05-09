@@ -184,7 +184,7 @@ class AnimationEditorElement(
         var x = startCol
         var y = startRow
 
-        for (frame in 0 until numberOfFrames) {
+        (0 until numberOfFrames).forEach { _ ->
             shapeDrawer.filledRectangle(
                 (x * spriteWidth).toFloat(),
                 (gridRowForY(y) * spriteHeight).toFloat(),

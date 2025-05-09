@@ -170,7 +170,7 @@ class ConversationPresenter(
 
   }
 
-  private fun stateChanged(state: ConversationState, event: ConversationEvent?) {
+  private fun stateChanged(state: ConversationState, _event: ConversationEvent?) {
     when (state) {
       ConversationState.NotStarted -> stateMachine.acceptEvent(ConversationEvent.ConversationStarted)
       ConversationState.Ended -> conversationEnded()

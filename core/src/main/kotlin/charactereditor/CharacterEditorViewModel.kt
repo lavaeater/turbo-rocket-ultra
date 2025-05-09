@@ -7,9 +7,9 @@ import kotlin.properties.Delegates.observable
 
 
 class CharacterEditorViewModel(spriteSheetCategories: List<LpcSpriteSheetCategoryDefinition>) : ViewModelBase() {
-	private var categories = spriteSheetCategories.map { it.name to it }.toMap()
+	private var categories = spriteSheetCategories.associateBy { it.name }
 
-	/**
+    /**
 	 * This one stays an observable, we want it to clear
 	 * stuff and do "more" than the simple "notify a change has occured"
 	 */
@@ -20,7 +20,8 @@ class CharacterEditorViewModel(spriteSheetCategories: List<LpcSpriteSheetCategor
 	}
 
 	private val isFemale: Boolean get() = gender == "female"
-	private val selectedSpriteSheets = categories.keys.map { it to SpriteSheet.EmptySpriteSheet() as SpriteSheet }.toMap().toMutableMap()
+	private val selectedSpriteSheets =
+        categories.keys.associateWith { SpriteSheet.EmptySpriteSheet() as SpriteSheet }.toMutableMap()
 	private var currentCategoryIndex = 0
 	private var currentSpriteSheetIndex = 0
 
