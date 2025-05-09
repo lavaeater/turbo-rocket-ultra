@@ -106,7 +106,7 @@ object EnemyBehaviors {
     fun <T : Component> getApproachAction(targetComponentClass: KClass<T>) : ConsideredActionWithState<ApproachTargetState> {
         return ConsideredActionWithState(
             "Approach Player",
-            { entity, state, deltaTime ->
+            { entity, state, _ ->
                 when (state.status) {
                     ApproachTargetStatus.NotStarted -> {
                         /**
