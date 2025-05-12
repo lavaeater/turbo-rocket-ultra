@@ -63,6 +63,7 @@ class LpcSpriteSheetHelper(val basePath: String = "localfiles/lpc/") {
 	}
 
 	private fun findSpriteSheetsRecursive(spriteSheets: MutableCollection<LpcSpriteSheetDefinition>, path:String) {
+		val something = files.localStoragePath;
 		val dirs = files.local(path).list(FileFilter { it.isDirectory }).map { it.path() }
 		for (dir in dirs) {
 			findSpriteSheetsRecursive(spriteSheets, dir)

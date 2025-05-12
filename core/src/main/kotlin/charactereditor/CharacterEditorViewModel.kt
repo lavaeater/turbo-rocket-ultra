@@ -21,7 +21,7 @@ class CharacterEditorViewModel(spriteSheetCategories: List<LpcSpriteSheetCategor
 
 	private val isFemale: Boolean get() = gender == "female"
 	private val selectedSpriteSheets =
-        categories.keys.associateWith { SpriteSheet.EmptySpriteSheet() }.toMutableMap()
+        categories.keys.associateWith { SpriteSheet.EmptySpriteSheet() as SpriteSheet }.toMutableMap()
 	private var currentCategoryIndex = 0
 	private var currentSpriteSheetIndex = 0
 
