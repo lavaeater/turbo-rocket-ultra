@@ -22,7 +22,6 @@ dependencies {
     api libs.websocket
     api libs.hackLights
     api libs.kryoNet
-    api libs.screenManager
     api libs.noise4j
     api libs.tinyVG
     api libs.tenPatch

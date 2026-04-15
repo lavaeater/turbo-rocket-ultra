@@ -29,7 +29,6 @@ dependencies {
     api libs.ktxReflect
     api libs.ktxScene2d
     api libs.ktxStyle
-    api libs.kotlin
     api libs.shapeDrawer
     api libs.gdxBox2d
     implementation libs.kotlinReflect
