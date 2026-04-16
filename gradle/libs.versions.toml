@@ -9,7 +9,6 @@
 ai = "1.8.2"
 ashley = "1.7.4"
 bladeInk = "1.1.2"
-box2dlights = "gdx1.13.1-SNAPSHOT"
 colorful = "0.8.4"
 controllerMapping = "2.3.0"
 gdx = "1.11.0"
@@ -44,7 +43,6 @@ textratypist = "0.7.3"
 ai = { module = "com.badlogicgames.gdx:gdx-ai", version.ref = "ai" }
 ashley = { module = "com.badlogicgames.ashley:ashley", version.ref = "ashley" }
 bladeInk = { module = "com.bladecoder.ink:blade-ink", version.ref = "bladeInk" }
-box2dlights = { module = "com.github.lavaeater:box2dlights", version.ref = "box2dlights" }
 colorful = { module = "com.github.tommyettinger:colorful", version.ref = "colorful" }
 gdx = { module = "com.badlogicgames.gdx:gdx", version.ref = "gdx" }
 gdxBox2d = { module = "com.badlogicgames.gdx:gdx-box2d", version.ref = "gdx" }

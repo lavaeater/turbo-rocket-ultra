@@ -5,6 +5,9 @@ plugins {
 tasks.withType(JavaCompile).configureEach {
     options.encoding = 'UTF-8'
 }
+compileKotlin {
+    kotlinOptions.jvmTarget = '1.8'
+}
 eclipse.project.name = appName + '-lava'
 
 dependencies {
@@ -32,5 +35,5 @@ dependencies {
     api libs.shapeDrawer
     api libs.gdxBox2d
     implementation libs.kotlinReflect
-    api libs.box2dlights
+    api project(':box2dlights')
 }
