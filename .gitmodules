@@ -1,4 +1,4 @@
 [submodule "box2dlights"]
 	path = box2dlights
-	url = https://github.com/lavaeater/box2dlights
+	url = git@github.com:lavaeater/box2dlights.git
 	branch = gdx1.13.1
