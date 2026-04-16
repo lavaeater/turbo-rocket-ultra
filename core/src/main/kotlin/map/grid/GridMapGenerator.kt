@@ -3,6 +3,7 @@ package map.grid
 import ai.pathfinding.TileGraph
 import box2dLight.Light
 import box2dLight.RayHandler
+import box2dLight.p3d.P3dLightManager
 import com.badlogic.ashley.core.Engine
 import com.badlogic.gdx.math.Rectangle
 import eater.injection.InjectionContext.Companion.inject
@@ -27,7 +28,7 @@ import turbofacts.StoryHelper
 class GridMapGenerator {
     companion object {
         val engine by lazy { inject<Engine>() }
-        val rayHandler by lazy { inject<RayHandler>() }
+        val rayHandler by lazy { inject<P3dLightManager>() }
         fun addObjective(bounds: Rectangle, perimeterObjectives: Boolean) {
             val position = bounds.randomPoint()
             objective(position.x, position.y, perimeterObjectives)
@@ -53,7 +54,7 @@ class GridMapGenerator {
                 0, Box2dCategories.allButSensors
             )
             rayHandler.setAmbientLight(.5f)
-            rayHandler.setBlurNum(3)
+            rayHandler.blurNum = 3
 
             factsOfTheWorld.setStringFact(mapData.name, Factoids.CurrentMapName)
             factsOfTheWorld.setStringFact(mapData.startMessage, Factoids.MapStartMessage)
@@ -132,12 +133,12 @@ class GridMapGenerator {
         }
 
         private fun addHackingStation(bounds: Rectangle, level: Int) {
-            var position = bounds.randomPoint()
+            val position = bounds.randomPoint()
             hackingStation(position, level)
         }
 
         private fun addTargetStation(bounds: Rectangle, level: Int) {
-            var position = bounds.randomPoint()
+            val position = bounds.randomPoint()
             targetStation(position, level)
         }
 

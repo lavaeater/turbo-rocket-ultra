@@ -28,7 +28,7 @@ class GridMapManager {
     fun removeLights(oldMap: Map<Coordinate, GridMapSection>) {
         for(section in oldMap.values) {
             for(l in section.lights) {
-                l.remove(true)
+                l.remove()
             }
         }
     }

@@ -1,7 +1,5 @@
 package ecs.components.player
 
-import box2dLight.ConeLight
-import box2dLight.RayHandler
 import box2dLight.p3d.P3dConeLight
 import box2dLight.p3d.P3dLightManager
 import com.badlogic.ashley.core.Component
