@@ -2,6 +2,8 @@ package injection
 
 import audio.AudioPlayer
 import box2dLight.RayHandler
+import box2dLight.base.BaseLightHandler
+import box2dLight.p3d.P3dLightManager
 import com.badlogic.ashley.core.Engine
 import com.badlogic.ashley.core.PooledEngine
 import com.badlogic.gdx.Input
@@ -81,7 +83,9 @@ object Context : InjectionContext() {
             })
             bindSingleton(AudioPlayer())
             bindSingleton(GridMapManager())
-            bindSingleton(RayHandler(inject(), 500, 500))
+            val rayHandler = P3dLightManager(inject(),500, 500)
+            bindSingleton<BaseLightHandler>(rayHandler)
+            bindSingleton<P3dLightManager>(rayHandler)
             bindSingleton(MessageHandler())
             bindSingleton(TurboStoryManager().apply {
                 inject<MessageHandler>().apply {
