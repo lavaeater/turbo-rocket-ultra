@@ -1,7 +1,5 @@
 package map.snake
 
-import box2dLight.PointLight
-import box2dLight.RayHandler
 import box2dLight.p3d.P3dLightManager
 import box2dLight.p3d.P3dPointLight
 import com.badlogic.gdx.graphics.Color

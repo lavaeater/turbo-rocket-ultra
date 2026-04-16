@@ -1,8 +1,7 @@
 package map.grid
 
 import ai.pathfinding.TileGraph
-import box2dLight.Light
-import box2dLight.RayHandler
+import box2dLight.p3d.P3dLight
 import box2dLight.p3d.P3dLightManager
 import com.badlogic.ashley.core.Engine
 import com.badlogic.gdx.math.Rectangle
@@ -49,7 +48,7 @@ class GridMapGenerator {
         private val storyManager: TurboStoryManager by lazy { inject() }
 
         fun generateFromMapFile(mapData: MapData): Pair<Map<Coordinate, GridMapSection>, TileGraph> {
-            Light.setGlobalContactFilter(
+            P3dLight.setGlobalContactFilter(
                 Box2dCategories.lights,
                 0, Box2dCategories.allButSensors
             )
@@ -144,7 +143,7 @@ class GridMapGenerator {
 
         fun generate(length: Int, level: Int): Pair<Map<Coordinate, GridMapSection>, TileGraph> {
             //TODO: Move this somewhere
-            Light.setGlobalContactFilter(
+            P3dLight.setGlobalContactFilter(
                 Box2dCategories.lights,
                 0, Box2dCategories.allButSensors
             )

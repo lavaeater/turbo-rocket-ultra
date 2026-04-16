@@ -23,7 +23,7 @@ dependencies {
     api libs.gdxVfxEffects
     api libs.kryo
     api libs.websocket
-    api libs.hackLights
+
     api libs.kryoNet
     api libs.noise4j
     api libs.tinyVG
