@@ -83,9 +83,7 @@ object Context : InjectionContext() {
             })
             bindSingleton(AudioPlayer())
             bindSingleton(GridMapManager())
-            val rayHandler = P3dLightManager(inject(),500, 500)
-            bindSingleton<BaseLightHandler>(rayHandler)
-            bindSingleton<P3dLightManager>(rayHandler)
+            bindSingleton(P3dLightManager(inject(),500, 500))
             bindSingleton(MessageHandler())
             bindSingleton(TurboStoryManager().apply {
                 inject<MessageHandler>().apply {
