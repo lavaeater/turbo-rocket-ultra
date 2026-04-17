@@ -22,8 +22,8 @@ import com.badlogic.gdx.math.Vector2
 import com.badlogic.gdx.physics.box2d.Fixture
 import com.badlogic.gdx.physics.box2d.QueryCallback
 import com.badlogic.gdx.physics.box2d.World
+import common.ashley.components.Box2dSteerable
 import common.physics.addComponent
-import eater.ecs.ashley.components.Box2dSteerable
 import physics.getEntity
 
 /** A `Box2dSquareAABBProximity` is a [Proximity] that queries the world for all fixtures that potentially overlap the

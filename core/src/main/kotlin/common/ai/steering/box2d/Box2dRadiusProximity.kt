@@ -15,13 +15,9 @@
  */
 package common.ai.steering.box2d
 
-import com.badlogic.ashley.core.Entity
 import com.badlogic.gdx.ai.steer.Steerable
-import com.badlogic.gdx.ai.steer.SteerableAdapter
 import com.badlogic.gdx.math.Vector2
-import com.badlogic.gdx.physics.box2d.Fixture
 import com.badlogic.gdx.physics.box2d.World
-import eater.physics.addComponent
 
 /** A `Box2dRadiusProximity` is a [Proximity] that queries the world for all fixtures that potentially overlap the
  * circle having the specified detection radius and whose center is the owner position.
