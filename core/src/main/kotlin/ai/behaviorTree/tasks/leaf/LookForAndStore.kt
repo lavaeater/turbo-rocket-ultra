@@ -21,7 +21,7 @@ import components.TransformComponent
 import common.core.world
 import common.physics.getEntity
 import common.physics.isEntity
-import common.ai.ashley.canISeeYouFromHere
+import ai.utility.canISeeYouFromHere
 
 /**
  * Evolve this idea later, of being able to define some kind of storage

@@ -13,12 +13,10 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package common.ai.steering.box2d
+package ai.steering
 
-import com.badlogic.ashley.core.Entity
 import com.badlogic.gdx.ai.steer.Steerable
 import com.badlogic.gdx.math.Vector2
-import com.badlogic.gdx.physics.box2d.Fixture
 import com.badlogic.gdx.physics.box2d.World
 
 /** A `Box2dFieldOfViewProximity` is a [Proximity] that queries the world for all fixtures that potentially overlap the

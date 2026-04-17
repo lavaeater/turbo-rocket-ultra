@@ -3,7 +3,7 @@ package components
 import com.badlogic.ashley.core.Component
 import com.badlogic.ashley.core.Entity
 import com.badlogic.gdx.utils.Pool
-import common.ai.ashley.AiAction
+import ai.utility.AiAction
 import ktx.ashley.mapperFor
 
 class AiComponent : Component, Pool.Poolable {

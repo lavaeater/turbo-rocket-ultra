@@ -1,4 +1,4 @@
-package common.ai.ashley
+package ai.utility
 
 import com.badlogic.gdx.math.MathUtils
 import com.badlogic.gdx.math.Vector2

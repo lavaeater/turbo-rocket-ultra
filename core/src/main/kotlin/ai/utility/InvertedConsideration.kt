@@ -1,4 +1,4 @@
-package common.ai.ashley
+package ai.utility
 
 class InvertedConsideration(
     name: String,

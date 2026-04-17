@@ -1,4 +1,4 @@
-package common.ai.ashley
+package ai.utility
 
 import com.badlogic.ashley.core.Component
 import com.badlogic.ashley.core.ComponentMapper

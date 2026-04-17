@@ -1,4 +1,4 @@
-package common.ai.ashley
+package ai.utility
 
 import com.badlogic.ashley.core.Component
 import com.badlogic.ashley.core.ComponentMapper
@@ -15,7 +15,7 @@ import kotlin.reflect.KClass
  *
  * Something like that.
  */
-class AddComponentIfConsiderationIsTrueAction<ToAdd: Component>(name: String, scoreRange: ClosedFloatingPointRange<Float>, private val componentToAdd: KClass<ToAdd>, vararg consideration: common.ai.ashley.Consideration) : common.ai.ashley.AiAction(name, scoreRange) {
+class AddComponentIfConsiderationIsTrueAction<ToAdd: Component>(name: String, scoreRange: ClosedFloatingPointRange<Float>, private val componentToAdd: KClass<ToAdd>, vararg consideration: Consideration) : AiAction(name, scoreRange) {
     init {
         considerations.addAll(consideration)
     }

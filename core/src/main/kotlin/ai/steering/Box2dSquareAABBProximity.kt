@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package common.ai.steering.box2d
+package ai.steering
 
 import com.badlogic.gdx.ai.steer.Proximity
 import com.badlogic.gdx.ai.steer.Proximity.ProximityCallback
