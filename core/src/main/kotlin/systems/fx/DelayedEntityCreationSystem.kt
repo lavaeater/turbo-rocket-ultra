@@ -1,4 +1,4 @@
-package ecs.systems.fx
+package systems.fx
 
 import com.badlogic.ashley.core.Entity
 import com.badlogic.ashley.systems.IteratingSystem

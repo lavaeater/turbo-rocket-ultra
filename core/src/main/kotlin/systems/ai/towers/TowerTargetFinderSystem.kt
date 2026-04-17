@@ -1,4 +1,4 @@
-package ecs.systems.ai.towers
+package systems.ai.towers
 
 import com.badlogic.ashley.core.Entity
 import com.badlogic.ashley.systems.IteratingSystem

@@ -10,7 +10,7 @@ import com.badlogic.gdx.math.Vector2
 import physics.addComponent
 import components.ai.PositionTarget
 import components.ai.StuckComponent
-import ecs.systems.graphics.GameConstants
+import systems.graphics.GameConstants
 import ktx.log.debug
 import physics.*
 import kotlin.reflect.KClass

@@ -15,10 +15,10 @@ import com.badlogic.gdx.utils.Align
 import com.badlogic.gdx.utils.Queue
 import com.badlogic.gdx.utils.viewport.ExtendViewport
 import data.Players
-import injection.InjectionContext.Companion.inject
+import dependencies.InjectionContext.Companion.inject
 import messaging.IMessage
 import components.enemy.AttackableProperties
-import ecs.systems.graphics.GameConstants
+import systems.graphics.GameConstants
 import ktx.actors.along
 import ktx.actors.plusAssign
 import ktx.actors.then

@@ -1,11 +1,11 @@
 package core
 
 import data.Players
-import injection.InjectionContext
-import injection.InjectionContext.Companion.inject
+import dependencies.InjectionContext
+import dependencies.InjectionContext.Companion.inject
 import gamestate.GameEvent
 import gamestate.GameState
-import injection.Context
+import dependencies.Context
 import ktx.app.KtxGame
 import ktx.app.KtxScreen
 import ktx.assets.DisposableContainer

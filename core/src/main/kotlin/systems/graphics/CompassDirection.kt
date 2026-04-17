@@ -1,4 +1,4 @@
-package ecs.systems.graphics
+package systems.graphics
 
 import map.grid.Coordinate
 

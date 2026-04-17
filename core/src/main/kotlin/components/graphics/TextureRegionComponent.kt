@@ -1,10 +1,9 @@
 package components.graphics
 
 import com.badlogic.ashley.core.Component
-import com.badlogic.gdx.graphics.g2d.Sprite
 import com.badlogic.gdx.graphics.g2d.TextureRegion
 import com.badlogic.gdx.utils.Pool
-import ecs.systems.graphics.GameConstants
+import systems.graphics.GameConstants
 
 class TextureRegionComponent : Component, Pool.Poolable {
     var updateTextureRegion: () -> Unit = {}

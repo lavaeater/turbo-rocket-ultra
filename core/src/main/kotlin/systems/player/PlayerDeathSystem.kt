@@ -1,4 +1,4 @@
-package ecs.systems.player
+package systems.player
 
 import com.badlogic.ashley.core.Entity
 import com.badlogic.ashley.systems.IteratingSystem
@@ -8,7 +8,7 @@ import components.enemy.AttackableProperties
 import components.player.PlayerComponent
 import components.player.PlayerControlComponent
 import components.player.PlayerIsRespawning
-import ecs.systems.graphics.GameConstants
+import systems.graphics.GameConstants
 import ktx.ashley.allOf
 import physics.getComponent
 import physics.has

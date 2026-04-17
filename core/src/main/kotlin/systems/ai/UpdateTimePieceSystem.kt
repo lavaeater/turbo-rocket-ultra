@@ -1,4 +1,4 @@
-package ecs.systems.ai
+package systems.ai
 
 import com.badlogic.ashley.core.EntitySystem
 import com.badlogic.gdx.ai.GdxAI

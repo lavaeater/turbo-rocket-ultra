@@ -1,4 +1,4 @@
-package ecs.systems.graphics
+package systems.graphics
 
 import com.badlogic.ashley.core.Entity
 import com.badlogic.ashley.systems.IteratingSystem
@@ -9,8 +9,6 @@ import com.badlogic.gdx.utils.viewport.ExtendViewport
 import components.TransformComponent
 import physics.getComponent
 import components.graphics.CameraFollowComponent
-import ecs.systems.graphics.GameConstants.GAME_HEIGHT
-import ecs.systems.graphics.GameConstants.GAME_WIDTH
 import ktx.ashley.allOf
 import ktx.math.vec2
 import ktx.math.vec3
@@ -46,13 +44,13 @@ class CameraUpdateSystem(
 
         viewport.minWorldWidth =
             (transformComponents.maxOf { it.position.x } - transformComponents.minOf { it.position.x } + 30f).coerceIn(
-                GAME_WIDTH,
-                GAME_WIDTH * 5
+                GameConstants.GAME_WIDTH,
+                GameConstants.GAME_WIDTH * 5
             )
         viewport.minWorldHeight =
             (transformComponents.maxOf { it.position.y } - transformComponents.minOf { it.position.y } + 30f).coerceIn(
-                GAME_HEIGHT,
-                GAME_HEIGHT * 5
+                GameConstants.GAME_HEIGHT,
+                GameConstants.GAME_HEIGHT * 5
             )
         viewport.update(Gdx.graphics.width, Gdx.graphics.height)
         camera.update()

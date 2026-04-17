@@ -5,8 +5,8 @@ import com.badlogic.ashley.core.Entity
 import com.badlogic.gdx.math.Vector2
 import com.badlogic.gdx.utils.Pool
 import data.Player
-import ecs.systems.graphics.CompassDirection
-import ecs.systems.graphics.GameConstants
+import systems.graphics.CompassDirection
+import systems.graphics.GameConstants
 import input.ControlMapper
 import ktx.ashley.mapperFor
 import ktx.math.vec2

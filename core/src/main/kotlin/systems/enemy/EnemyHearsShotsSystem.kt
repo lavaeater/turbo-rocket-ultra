@@ -1,4 +1,4 @@
-package ecs.systems.enemy
+package systems.enemy
 
 import com.badlogic.ashley.core.Entity
 import com.badlogic.ashley.systems.IteratingSystem

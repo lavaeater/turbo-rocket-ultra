@@ -1,4 +1,4 @@
-package ecs.systems.facts
+package systems.facts
 
 import com.badlogic.ashley.systems.IntervalSystem
 import components.enemy.BossComponent

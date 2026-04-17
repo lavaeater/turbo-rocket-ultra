@@ -1,6 +1,6 @@
 package turbofacts
 
-import injection.InjectionContext.Companion.inject
+import dependencies.InjectionContext.Companion.inject
 import messaging.MessageHandler
 import gamestate.GameEvent
 import gamestate.GameState

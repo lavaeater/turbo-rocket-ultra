@@ -1,4 +1,4 @@
-package ecs.systems.player
+package systems.player
 
 import com.badlogic.ashley.systems.IntervalSystem
 import components.enemy.AttackableProperties

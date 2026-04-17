@@ -1,4 +1,4 @@
-package ecs.systems.player
+package systems.player
 
 import audio.AudioPlayer
 import com.badlogic.ashley.core.Entity
@@ -16,8 +16,8 @@ import components.player.WeaponEntityComponent
 import factories.bullet
 import factories.throwGrenade
 import factories.throwMolotov
-import features.weapons.Weapon
-import features.weapons.WeaponType
+import gamePlay.weapons.Weapon
+import gamePlay.weapons.WeaponType
 import ktx.ashley.allOf
 import ktx.math.random
 import ktx.math.vec2

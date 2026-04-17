@@ -1,4 +1,4 @@
-package ecs.systems
+package systems
 
 import com.badlogic.ashley.core.Entity
 import com.badlogic.ashley.systems.IteratingSystem
@@ -10,6 +10,7 @@ import ktx.math.vec2
 import physics.anchors
 import physics.playerControl
 import physics.transform
+import kotlin.collections.iterator
 
 class AnchorPointTransformationSystem(private val debug: Boolean) :
     IteratingSystem(allOf(TransformComponent::class, AnchorPointsComponent::class).get()) {

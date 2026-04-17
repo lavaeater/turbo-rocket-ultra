@@ -1,4 +1,4 @@
-package ecs.systems.ai.towers
+package systems.ai.towers
 
 import com.badlogic.ashley.core.Entity
 import com.badlogic.ashley.systems.IteratingSystem
@@ -9,7 +9,7 @@ import data.Players
 import components.Box2d
 import components.TransformComponent
 import components.enemy.AttackableProperties
-import injection.InjectionContext.Companion.inject
+import dependencies.InjectionContext.Companion.inject
 import physics.getComponent
 import physics.getEntity
 import physics.has

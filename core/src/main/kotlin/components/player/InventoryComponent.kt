@@ -3,8 +3,8 @@ package components.player
 import com.badlogic.ashley.core.Component
 import com.badlogic.gdx.utils.Pool
 import ui.selectedItemListOf
-import features.weapons.AmmoType
-import features.weapons.Weapon
+import gamePlay.weapons.AmmoType
+import gamePlay.weapons.Weapon
 
 class InventoryComponent: Component, Pool.Poolable {
     val weapons get() = InventoryComponent.weapons

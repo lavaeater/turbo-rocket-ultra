@@ -6,7 +6,7 @@ import com.badlogic.gdx.math.MathUtils
 import com.badlogic.gdx.math.Rectangle
 import com.badlogic.gdx.math.Vector2
 import com.badlogic.gdx.physics.box2d.World
-import injection.InjectionContext
+import dependencies.InjectionContext
 import ktx.math.vec2
 
 fun world(): World {

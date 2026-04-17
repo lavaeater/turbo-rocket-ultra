@@ -1,4 +1,4 @@
-package ecs.systems.graphics
+package systems.graphics
 
 import com.badlogic.ashley.core.Entity
 import com.badlogic.ashley.systems.IteratingSystem
@@ -6,7 +6,7 @@ import com.badlogic.gdx.graphics.Color
 import com.badlogic.gdx.graphics.g2d.Batch
 import com.badlogic.gdx.graphics.g2d.PolygonSpriteBatch
 import components.TransformComponent
-import injection.InjectionContext.Companion.inject
+import dependencies.InjectionContext.Companion.inject
 import physics.getComponent
 import components.player.PlayerControlComponent
 import ktx.ashley.allOf

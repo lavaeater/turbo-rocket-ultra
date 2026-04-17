@@ -6,7 +6,7 @@ import com.badlogic.gdx.graphics.g2d.Batch
 import com.badlogic.gdx.physics.box2d.Body
 import com.badlogic.gdx.physics.box2d.BodyDef
 import core.world
-import ecs.systems.graphics.GameConstants
+import systems.graphics.GameConstants
 import factories.Box2dCategories
 import ktx.box2d.body
 import ktx.box2d.box

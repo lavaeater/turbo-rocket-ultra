@@ -1,7 +1,7 @@
 package story.conversation
 
 import data.IAgent
-import injection.InjectionContext.Companion.inject
+import dependencies.InjectionContext.Companion.inject
 
 
 class InternalConversation(private val startingStepKey:String, private val conversationSteps: Map<String, ConversationStep>, override val antagonist: IAgent = EmptyAgent()) : IConversation {

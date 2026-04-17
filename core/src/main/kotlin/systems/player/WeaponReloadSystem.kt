@@ -1,14 +1,14 @@
-package ecs.systems.player
+package systems.player
 
 import audio.AudioPlayer
 import com.badlogic.ashley.core.Entity
 import com.badlogic.ashley.systems.IteratingSystem
-import injection.InjectionContext.Companion.inject
+import dependencies.InjectionContext.Companion.inject
 import components.player.InventoryComponent
 import components.player.IsReloadingComponent
 import components.player.WeaponEntityComponent
 import components.player.doWeHaveAny
-import features.weapons.ReloadType
+import gamePlay.weapons.ReloadType
 import ktx.ashley.allOf
 import ktx.ashley.remove
 import physics.inventory

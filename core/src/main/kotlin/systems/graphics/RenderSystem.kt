@@ -1,4 +1,4 @@
-package ecs.systems.graphics
+package systems.graphics
 
 import box2dLight.RayHandler
 import com.badlogic.ashley.core.Entity
@@ -15,7 +15,7 @@ import com.crashinvaders.vfx.effects.ChainVfxEffect
 import components.AgentProperties
 import components.Memory
 import components.TransformComponent
-import injection.InjectionContext.Companion.inject
+import dependencies.InjectionContext.Companion.inject
 import physics.addComponent
 import physics.getComponent
 import physics.has
@@ -32,6 +32,7 @@ import map.grid.GridMapManager
 import physics.*
 import screens.ApplicationFlags
 import tru.Assets
+import kotlin.collections.iterator
 
 class RenderSystem(
     private val batch: Batch,

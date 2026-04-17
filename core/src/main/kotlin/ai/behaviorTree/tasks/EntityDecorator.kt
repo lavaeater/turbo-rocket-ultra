@@ -4,7 +4,7 @@ import com.badlogic.ashley.core.Engine
 import com.badlogic.ashley.core.Entity
 import com.badlogic.gdx.ai.btree.Decorator
 import com.badlogic.gdx.ai.btree.Task
-import injection.InjectionContext.Companion.inject
+import dependencies.InjectionContext.Companion.inject
 
 fun EntityDecorator.invertDecorator() : EntityDecorator {
     val rr = when(this) {

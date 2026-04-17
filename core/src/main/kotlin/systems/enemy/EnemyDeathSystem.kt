@@ -1,4 +1,4 @@
-package ecs.systems.enemy
+package systems.enemy
 
 import audio.AudioPlayer
 import com.badlogic.ashley.core.Entity

@@ -5,7 +5,7 @@ import com.badlogic.gdx.scenes.scene2d.Action
 import com.badlogic.gdx.scenes.scene2d.actions.Actions
 import com.badlogic.gdx.scenes.scene2d.ui.Dialog
 import com.badlogic.gdx.scenes.scene2d.ui.Label
-import injection.InjectionContext.Companion.inject
+import dependencies.InjectionContext.Companion.inject
 import gamestate.GameEvent
 import gamestate.GameState
 import ktx.actors.centerPosition

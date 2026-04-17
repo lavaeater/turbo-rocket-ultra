@@ -49,7 +49,7 @@ The game uses [Ashley](https://github.com/libgdx/ashley) ECS throughout `core/`:
 
 ### Dependency Injection
 
-`core/.../injection/InjectionContext.kt` provides singleton factories. Systems and screens use `inject<Type>()` (KTX inject) to get cameras, viewports, the Ashley engine, Box2D world, audio, UI, etc. Lazily initialized.
+`core/.../dependencies/InjectionContext.kt` provides singleton factories. Systems and screens use `inject<Type>()` (KTX inject) to get cameras, viewports, the Ashley engine, Box2D world, audio, UI, etc. Lazily initialized.
 
 ### Physics
 

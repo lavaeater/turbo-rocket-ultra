@@ -2,7 +2,7 @@ package components.player
 
 import com.badlogic.ashley.core.Component
 import com.badlogic.gdx.utils.Pool
-import features.weapons.WeaponDefinition
+import gamePlay.weapons.WeaponDefinition
 
 class WeaponComponent: Component, Pool.Poolable {
     var reloading = false

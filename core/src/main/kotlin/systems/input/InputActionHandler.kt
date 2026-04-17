@@ -1,4 +1,4 @@
-package ecs.systems.input
+package systems.input
 
 import com.badlogic.ashley.core.Entity
 import components.intent.IntendsTo

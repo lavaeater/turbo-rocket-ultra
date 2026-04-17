@@ -3,7 +3,7 @@ package map.snake
 import box2dLight.PointLight
 import box2dLight.RayHandler
 import com.badlogic.gdx.graphics.Color
-import injection.InjectionContext.Companion.inject
+import dependencies.InjectionContext.Companion.inject
 import components.graphics.renderables.RenderableTextureRegion
 import components.graphics.renderables.RenderableTextureRegions
 

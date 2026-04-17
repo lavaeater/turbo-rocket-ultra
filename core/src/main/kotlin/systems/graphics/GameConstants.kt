@@ -1,4 +1,4 @@
-package ecs.systems.graphics
+package systems.graphics
 
 object GameConstants {
 

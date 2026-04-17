@@ -2,8 +2,8 @@ package components.pickups
 
 import com.badlogic.ashley.core.Component
 import com.badlogic.gdx.utils.Pool
-import features.pickups.ILootTable
-import features.pickups.LootTable
+import gamePlay.pickups.ILootTable
+import gamePlay.pickups.LootTable
 import ktx.math.vec2
 
 class LootDropComponent : Component, Pool.Poolable {

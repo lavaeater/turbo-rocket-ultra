@@ -10,7 +10,7 @@ import com.badlogic.gdx.graphics.OrthographicCamera
 import com.badlogic.gdx.graphics.g2d.PolygonSpriteBatch
 import com.badlogic.gdx.utils.viewport.ExtendViewport
 import com.badlogic.gdx.utils.viewport.Viewport
-import injection.InjectionContext.Companion.inject
+import dependencies.InjectionContext.Companion.inject
 import gamestate.GameEvent
 import gamestate.GameState
 import ktx.app.KtxInputAdapter

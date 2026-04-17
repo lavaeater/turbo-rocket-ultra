@@ -5,7 +5,7 @@ import box2dLight.RayHandler
 import com.badlogic.ashley.core.Component
 import com.badlogic.gdx.graphics.Color
 import com.badlogic.gdx.utils.Pool
-import injection.InjectionContext.Companion.inject
+import dependencies.InjectionContext.Companion.inject
 import factories.Box2dCategories
 
 class WeaponLaserComponent: Component, Pool.Poolable {

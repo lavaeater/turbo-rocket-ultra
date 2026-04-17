@@ -30,10 +30,10 @@ import components.gameplay.AnotherTargetComponent
 import components.gameplay.BurningComponent
 import components.gameplay.TargetComponent
 import components.player.PlayerComponent
-import ecs.systems.graphics.GameConstants
-import ecs.systems.graphics.GameConstants.TOUCHING_DISTANCE
-import ecs.systems.sectionX
-import ecs.systems.sectionY
+import systems.graphics.GameConstants
+import systems.graphics.GameConstants.TOUCHING_DISTANCE
+import systems.sectionX
+import systems.sectionY
 import ktx.log.debug
 import ktx.math.minus
 import ktx.math.random

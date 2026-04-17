@@ -3,7 +3,7 @@ package components.enemy
 import com.badlogic.ashley.core.Component
 import com.badlogic.ashley.core.Entity
 import com.badlogic.gdx.utils.Pool
-import ecs.systems.graphics.GameConstants
+import systems.graphics.GameConstants
 import ktx.ashley.mapperFor
 import ktx.math.random
 

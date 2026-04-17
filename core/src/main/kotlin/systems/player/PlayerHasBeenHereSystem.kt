@@ -1,12 +1,12 @@
-package ecs.systems.player
+package systems.player
 
 import com.badlogic.ashley.core.Entity
 import com.badlogic.ashley.systems.IteratingSystem
 import components.TransformComponent
-import injection.InjectionContext.Companion.inject
+import dependencies.InjectionContext.Companion.inject
 import components.player.PlayerControlComponent
-import ecs.systems.sectionX
-import ecs.systems.sectionY
+import systems.sectionX
+import systems.sectionY
 import ktx.ashley.allOf
 import map.grid.GridMapManager
 import physics.getComponent

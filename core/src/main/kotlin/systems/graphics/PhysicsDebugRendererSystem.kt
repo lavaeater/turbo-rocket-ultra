@@ -1,4 +1,4 @@
-package ecs.systems.graphics
+package systems.graphics
 
 import com.badlogic.ashley.core.EntitySystem
 import com.badlogic.gdx.graphics.OrthographicCamera

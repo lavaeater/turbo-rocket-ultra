@@ -1,4 +1,4 @@
-package ecs.systems.intent
+package systems.intent
 
 import com.badlogic.ashley.core.Entity
 import com.badlogic.ashley.systems.IteratingSystem
@@ -11,9 +11,9 @@ import components.intent.CalculatedPositionComponent
 import components.intent.IntendsTo
 import components.intent.IntentComponent
 import components.player.BuildModeComponent
-import ecs.systems.graphics.CompassDirection
-import ecs.systems.tileWorldX
-import ecs.systems.tileWorldY
+import systems.graphics.CompassDirection
+import systems.tileWorldX
+import systems.tileWorldY
 import ktx.ashley.allOf
 import ktx.ashley.entity
 import ktx.ashley.remove

@@ -1,10 +1,10 @@
-package ecs.systems.graphics
+package systems.graphics
 
 import com.badlogic.ashley.core.Entity
 import com.badlogic.ashley.systems.IteratingSystem
 import com.badlogic.gdx.graphics.OrthographicCamera
 import components.TransformComponent
-import injection.InjectionContext.Companion.inject
+import dependencies.InjectionContext.Companion.inject
 import components.graphics.TextureRegionComponent
 import ktx.ashley.allOf
 import physics.transform

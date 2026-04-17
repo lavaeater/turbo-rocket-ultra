@@ -1,10 +1,10 @@
-package ecs.systems.facts
+package systems.facts
 
 import com.badlogic.ashley.core.Entity
 import com.badlogic.ashley.systems.IteratingSystem
 import components.TransformComponent
 import components.gameplay.PerimeterObjectiveComponent
-import injection.InjectionContext.Companion.inject
+import dependencies.InjectionContext.Companion.inject
 import components.player.PlayerComponent
 import ktx.ashley.allOf
 import messaging.Message

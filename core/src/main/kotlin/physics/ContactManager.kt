@@ -19,7 +19,7 @@ import components.gameplay.GrenadeComponent
 import components.player.InventoryComponent
 import components.player.PlayerWaitsForRespawn
 import core.engine
-import injection.InjectionContext.Companion.inject
+import dependencies.InjectionContext.Companion.inject
 import messaging.MessageHandler
 import components.AudioChannels
 import components.ai.AttackPoint
@@ -41,8 +41,8 @@ import components.player.WeaponComponent
 import factories.delayedFireEntity
 import factories.explosionEffectEntity
 import factories.splatterEntity
-import features.pickups.AmmoLoot
-import features.pickups.WeaponLoot
+import gamePlay.pickups.AmmoLoot
+import gamePlay.pickups.WeaponLoot
 import input.Button
 import ktx.ashley.allOf
 import ktx.ashley.remove

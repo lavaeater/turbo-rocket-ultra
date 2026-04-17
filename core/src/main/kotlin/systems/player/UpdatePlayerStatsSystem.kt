@@ -1,4 +1,4 @@
-package ecs.systems.player
+package systems.player
 
 import com.badlogic.ashley.core.Entity
 import com.badlogic.ashley.systems.IteratingSystem

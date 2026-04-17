@@ -1,4 +1,4 @@
-package ecs.systems
+package systems
 
 import com.badlogic.ashley.core.Entity
 import com.badlogic.ashley.systems.IteratingSystem
@@ -7,7 +7,7 @@ import components.Box2d
 import components.TransformComponent
 import components.gameplay.GrenadeComponent
 import components.gameplay.MolotovComponent
-import injection.InjectionContext.Companion.inject
+import dependencies.InjectionContext.Companion.inject
 import ktx.ashley.allOf
 import ktx.math.vec2
 import map.grid.GridMapSection

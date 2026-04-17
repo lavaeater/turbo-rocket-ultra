@@ -1,6 +1,6 @@
 package turbofacts
 
-import injection.InjectionContext.Companion.inject
+import dependencies.InjectionContext.Companion.inject
 
 sealed class Criterion {
     abstract val factKey: String
