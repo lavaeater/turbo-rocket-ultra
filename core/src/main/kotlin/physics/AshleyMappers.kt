@@ -5,7 +5,6 @@ import com.badlogic.gdx.math.Vector2
 import components.AgentProperties
 import components.Box2d
 import components.TransformComponent
-import common.physics.addComponent
 import ecs.components.AudioComponent
 import ecs.components.ai.BehaviorComponent
 import ecs.components.ai.CollidedWithObstacle

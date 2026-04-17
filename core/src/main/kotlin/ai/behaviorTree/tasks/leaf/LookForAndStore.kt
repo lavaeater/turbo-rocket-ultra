@@ -18,9 +18,9 @@ import physics.transform
 import kotlin.reflect.KClass
 
 import components.TransformComponent
-import common.core.world
-import common.physics.getEntity
-import common.physics.isEntity
+import core.world
+import physics.getEntity
+import physics.isEntity
 import ai.utility.canISeeYouFromHere
 
 /**

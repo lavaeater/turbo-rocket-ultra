@@ -5,8 +5,8 @@ import box2dLight.RayHandler
 import com.badlogic.gdx.graphics.Color
 import com.badlogic.gdx.math.Rectangle
 import com.badlogic.gdx.math.Vector2
-import common.core.world
-import common.injection.InjectionContext.Companion.inject
+import core.world
+import common.InjectionContext.Companion.inject
 import ecs.components.graphics.renderables.RenderableTextureRegion
 import ecs.components.graphics.renderables.RenderableTextureRegions
 
@@ -14,9 +14,9 @@ import ktx.box2d.Query
 import ktx.box2d.query
 import ktx.math.vec2
 import map.snake.*
-import common.physics.getEntity
+import physics.getEntity
 import physics.hasObstacle
-import common.physics.isEntity
+import physics.isEntity
 import tru.Assets
 
 class GridMapSection(

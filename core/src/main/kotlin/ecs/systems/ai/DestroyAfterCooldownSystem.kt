@@ -2,7 +2,7 @@ package ecs.systems.ai
 
 import com.badlogic.ashley.core.Entity
 import com.badlogic.ashley.systems.IteratingSystem
-import common.physics.addComponent
+import physics.addComponent
 import ecs.components.gameplay.DestroyAfterCoolDownComponent
 import ecs.components.gameplay.DestroyComponent
 import ktx.ashley.allOf

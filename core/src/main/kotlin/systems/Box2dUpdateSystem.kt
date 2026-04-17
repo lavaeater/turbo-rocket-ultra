@@ -5,7 +5,7 @@ import com.badlogic.ashley.systems.IteratingSystem
 import components.Box2d
 import components.Remove
 import components.TransformComponent
-import common.core.world
+import core.world
 import ktx.ashley.allOf
 import ktx.ashley.exclude
 

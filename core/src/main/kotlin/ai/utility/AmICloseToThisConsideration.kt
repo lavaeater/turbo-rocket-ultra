@@ -3,7 +3,7 @@ package ai.utility
 import com.badlogic.ashley.core.Component
 import com.badlogic.ashley.core.Entity
 import components.TransformComponent
-import common.core.engine
+import core.engine
 import ktx.ashley.allOf
 import kotlin.reflect.KClass
 import kotlin.reflect.full.starProjectedType

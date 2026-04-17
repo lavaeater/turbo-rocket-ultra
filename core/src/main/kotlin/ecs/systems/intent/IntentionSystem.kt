@@ -3,7 +3,7 @@ package ecs.systems.intent
 import com.badlogic.ashley.core.Entity
 import com.badlogic.ashley.systems.IteratingSystem
 import components.TransformComponent
-import common.physics.addComponent
+import physics.addComponent
 import ecs.components.graphics.RenderableComponent
 import ecs.components.graphics.RenderableType
 import ecs.components.graphics.TextureRegionComponent

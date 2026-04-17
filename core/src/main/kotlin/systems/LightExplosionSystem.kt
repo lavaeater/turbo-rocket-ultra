@@ -6,7 +6,7 @@ import com.badlogic.gdx.math.MathUtils.norm
 import components.LightComponent
 import components.LightExplosion
 import components.Remove
-import common.physics.addComponent
+import physics.addComponent
 import ktx.ashley.allOf
 import ktx.ashley.exclude
 

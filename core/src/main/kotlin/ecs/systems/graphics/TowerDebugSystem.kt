@@ -6,13 +6,13 @@ import com.badlogic.gdx.graphics.Color
 import com.badlogic.gdx.graphics.g2d.Batch
 import com.badlogic.gdx.graphics.g2d.PolygonSpriteBatch
 import components.TransformComponent
-import common.injection.InjectionContext.Companion.inject
+import common.InjectionContext.Companion.inject
 import ecs.components.towers.TargetInRange
 import ecs.components.towers.TowerComponent
 import ktx.ashley.allOf
 import ktx.graphics.use
-import common.physics.getComponent
-import common.physics.has
+import physics.getComponent
+import physics.has
 import tru.Assets
 
 

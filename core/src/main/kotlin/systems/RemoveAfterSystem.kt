@@ -2,7 +2,7 @@ package systems
 
 import com.badlogic.ashley.core.Entity
 import com.badlogic.ashley.systems.IteratingSystem
-import common.physics.addComponent
+import physics.addComponent
 import ktx.ashley.allOf
 import ktx.ashley.remove
 import components.Remove

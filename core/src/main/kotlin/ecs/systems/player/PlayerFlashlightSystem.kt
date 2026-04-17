@@ -6,7 +6,7 @@ import components.TransformComponent
 import ecs.components.player.FlashlightComponent
 import ecs.components.player.PlayerControlComponent
 import ktx.ashley.allOf
-import common.physics.getComponent
+import physics.getComponent
 
 class PlayerFlashlightSystem : IteratingSystem(
     allOf(

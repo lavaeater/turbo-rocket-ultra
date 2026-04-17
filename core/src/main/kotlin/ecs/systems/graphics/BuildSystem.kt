@@ -6,8 +6,8 @@ import com.badlogic.gdx.graphics.Color
 import com.badlogic.gdx.graphics.g2d.PolygonSpriteBatch
 import com.badlogic.gdx.physics.box2d.Fixture
 import components.TransformComponent
-import common.core.world
-import common.injection.InjectionContext.Companion.inject
+import core.world
+import common.InjectionContext.Companion.inject
 import ecs.components.player.PlayerControlComponent
 import ecs.systems.tileWorldX
 import ecs.systems.tileWorldY

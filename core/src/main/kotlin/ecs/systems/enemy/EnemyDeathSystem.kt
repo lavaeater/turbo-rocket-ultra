@@ -4,8 +4,8 @@ import audio.AudioPlayer
 import com.badlogic.ashley.core.Entity
 import com.badlogic.ashley.systems.IteratingSystem
 import components.AgentProperties
-import common.physics.addComponent
-import common.physics.getComponent
+import physics.addComponent
+import physics.getComponent
 import common.turbofacts.Factoids
 import common.turbofacts.TurboFactsOfTheWorld
 import common.turbofacts.addToIntStat

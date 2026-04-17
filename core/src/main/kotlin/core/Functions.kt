@@ -1,4 +1,4 @@
-package common.core
+package core
 
 import com.badlogic.ashley.core.Engine
 import com.badlogic.gdx.graphics.Color
@@ -6,25 +6,15 @@ import com.badlogic.gdx.math.MathUtils
 import com.badlogic.gdx.math.Rectangle
 import com.badlogic.gdx.math.Vector2
 import com.badlogic.gdx.physics.box2d.World
-import common.injection.InjectionContext.Companion.inject
+import common.InjectionContext
 import ktx.math.vec2
 
-fun<T> selectedItemListOf(selectedItemUpdated: (Int, T)-> Unit = {_,_ ->}, vararg items: T): SelectedItemList<T> {
-    val list = SelectedItemList(selectedItemUpdated, items.toList())
-    return list
-}
-
-fun<T> selectedItemListOf(vararg items: T): SelectedItemList<T> {
-    val list = SelectedItemList({ _, _ ->  }, items.toList())
-    return list
-}
-
 fun world(): World {
-    return inject()
+    return InjectionContext.Companion.inject()
 }
 
 fun engine() : Engine {
-    return inject()
+    return InjectionContext.Companion.inject()
 }
 
 fun String.toColor(): Color {

@@ -15,10 +15,10 @@ import com.crashinvaders.vfx.effects.ChainVfxEffect
 import components.AgentProperties
 import components.Memory
 import components.TransformComponent
-import common.injection.InjectionContext.Companion.inject
-import common.physics.addComponent
-import common.physics.getComponent
-import common.physics.has
+import common.InjectionContext.Companion.inject
+import physics.addComponent
+import physics.getComponent
+import physics.has
 import ecs.components.ai.Path
 import ecs.components.ai.SeenPlayerPositions
 import ecs.components.ai.Waypoint

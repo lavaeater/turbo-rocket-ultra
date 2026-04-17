@@ -7,14 +7,14 @@ import components.Box2d
 import components.TransformComponent
 import ecs.components.gameplay.GrenadeComponent
 import ecs.components.gameplay.MolotovComponent
-import common.injection.InjectionContext.Companion.inject
+import common.InjectionContext.Companion.inject
 import ktx.ashley.allOf
 import ktx.math.vec2
 import map.grid.GridMapSection
 import physics.AshleyMappers
 import physics.ContactManager
 import physics.ContactType
-import common.physics.has
+import physics.has
 
 class PhysicsSystem(priority: Int) :
     IteratingSystem(allOf(Box2d::class, TransformComponent::class).get(), priority) {

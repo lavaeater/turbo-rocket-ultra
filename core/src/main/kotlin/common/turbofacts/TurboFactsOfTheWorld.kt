@@ -1,6 +1,6 @@
 package common.turbofacts
 
-import common.injection.InjectionContext.Companion.inject
+import common.InjectionContext.Companion.inject
 
 
 fun multiKey(vararg key: String): String {

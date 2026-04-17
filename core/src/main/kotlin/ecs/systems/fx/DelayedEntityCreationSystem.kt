@@ -2,7 +2,7 @@ package ecs.systems.fx
 
 import com.badlogic.ashley.core.Entity
 import com.badlogic.ashley.systems.IteratingSystem
-import common.physics.getComponent
+import physics.getComponent
 import ecs.components.fx.CreateEntityComponent
 import ktx.ashley.allOf
 

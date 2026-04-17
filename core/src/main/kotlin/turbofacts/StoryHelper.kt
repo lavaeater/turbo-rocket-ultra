@@ -1,6 +1,6 @@
 package turbofacts
 
-import common.injection.InjectionContext.Companion.inject
+import common.InjectionContext.Companion.inject
 import common.messaging.MessageHandler
 import common.turbofacts.Factoids
 import common.turbofacts.TurboStory

@@ -1,8 +1,8 @@
 package core
 
 import data.Players
-import common.injection.InjectionContext
-import common.injection.InjectionContext.Companion.inject
+import common.InjectionContext
+import common.InjectionContext.Companion.inject
 import gamestate.GameEvent
 import gamestate.GameState
 import injection.Context

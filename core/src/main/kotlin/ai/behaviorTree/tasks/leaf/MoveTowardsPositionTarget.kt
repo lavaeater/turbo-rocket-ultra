@@ -7,7 +7,7 @@ import com.badlogic.ashley.core.ComponentMapper
 import com.badlogic.ashley.core.Entity
 import com.badlogic.gdx.ai.btree.Task
 import com.badlogic.gdx.math.Vector2
-import common.physics.addComponent
+import physics.addComponent
 import ecs.components.ai.PositionTarget
 import ecs.components.ai.StuckComponent
 import ecs.systems.graphics.GameConstants

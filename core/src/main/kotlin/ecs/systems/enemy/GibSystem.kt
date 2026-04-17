@@ -2,14 +2,14 @@ package ecs.systems.enemy
 
 import com.badlogic.ashley.core.Entity
 import com.badlogic.ashley.systems.IteratingSystem
-import common.core.world
+import core.world
 import components.Box2d
 import ecs.components.fx.GibComponent
 import ecs.components.gameplay.DestroyComponent
 import ktx.ashley.allOf
 import ktx.ashley.remove
 import physics.AshleyMappers
-import common.physics.addComponent
+import physics.addComponent
 
 class GibSystem : IteratingSystem(allOf(GibComponent::class).get()) {
     override fun processEntity(entity: Entity, deltaTime: Float) {

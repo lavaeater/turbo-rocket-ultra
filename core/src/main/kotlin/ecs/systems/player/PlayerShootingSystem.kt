@@ -9,7 +9,7 @@ import ai.utility.canISeeYouFromHere
 import components.AgentProperties
 import ecs.components.enemy.AttackableProperties
 import components.TransformComponent
-import common.physics.getComponent
+import physics.getComponent
 import ecs.components.intent.IntendsTo
 import ecs.components.player.PlayerControlComponent
 import ecs.components.player.WeaponEntityComponent

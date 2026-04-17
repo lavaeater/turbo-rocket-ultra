@@ -1,7 +1,6 @@
 package ai.behaviorTree.tasks.leaf
 
-import common.injection.InjectionContext.Companion.inject
-import injection.Context
+import common.InjectionContext.Companion.inject
 import map.grid.Coordinate
 import map.grid.GridMapManager
 

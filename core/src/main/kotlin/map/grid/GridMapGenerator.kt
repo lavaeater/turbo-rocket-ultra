@@ -6,7 +6,7 @@ import box2dLight.Light.setGlobalContactFilter
 import box2dLight.RayHandler
 import com.badlogic.ashley.core.Engine
 import com.badlogic.gdx.math.Rectangle
-import common.injection.InjectionContext.Companion.inject
+import common.InjectionContext.Companion.inject
 import common.turbofacts.Factoids
 import common.turbofacts.TurboStoryManager
 import common.turbofacts.factsOfTheWorld

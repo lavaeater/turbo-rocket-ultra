@@ -3,7 +3,7 @@ package ai.behaviorTree.tasks
 import com.badlogic.ashley.core.Engine
 import com.badlogic.ashley.core.Entity
 import com.badlogic.gdx.ai.btree.LeafTask
-import common.core.engine
+import core.engine
 import common.turbofacts.TurboFactsOfTheWorld
 import common.turbofacts.factsOfTheWorld
 import tru.Assets

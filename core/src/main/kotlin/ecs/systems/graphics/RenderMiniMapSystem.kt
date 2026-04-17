@@ -4,7 +4,7 @@ import com.badlogic.ashley.core.Entity
 import com.badlogic.ashley.systems.SortedIteratingSystem
 import com.badlogic.gdx.graphics.OrthographicCamera
 import components.TransformComponent
-import common.injection.InjectionContext.Companion.inject
+import common.InjectionContext.Companion.inject
 import ecs.components.graphics.MiniMapComponent
 import ecs.components.graphics.RenderableComponent
 import ecs.components.graphics.Shape

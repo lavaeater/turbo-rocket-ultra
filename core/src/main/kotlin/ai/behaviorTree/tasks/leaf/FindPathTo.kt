@@ -4,7 +4,7 @@ import ai.behaviorTree.tasks.EntityTask
 import ai.findPathFromTo
 import com.badlogic.ashley.core.Entity
 import com.badlogic.gdx.ai.btree.Task
-import common.physics.addComponent
+import physics.addComponent
 import ecs.components.ai.CoordinateStorageComponent
 import ecs.components.ai.Path
 import ktx.ashley.remove

@@ -21,7 +21,7 @@ import com.strongjoshua.console.GUIConsole
 import systems.UpdateActionsSystem
 import systems.UpdateMemorySystem
 import systems.UtilityAiSystem
-import common.injection.InjectionContext
+import common.InjectionContext
 import common.messaging.IMessage
 import common.messaging.IMessageReceiver
 import common.messaging.MessageHandler

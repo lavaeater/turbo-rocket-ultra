@@ -17,10 +17,10 @@ import com.badlogic.gdx.math.Vector2
 import com.badlogic.gdx.physics.box2d.Body
 import com.badlogic.gdx.physics.box2d.BodyDef
 import com.badlogic.gdx.scenes.scene2d.Action
-import common.physics.addComponent
+import physics.addComponent
 import data.Player
-import common.core.engine
-import common.core.world
+import core.engine
+import core.world
 import components.AgentProperties
 import components.AiComponent
 import components.Box2d

@@ -4,7 +4,7 @@ import com.badlogic.gdx.graphics.g2d.Batch
 import com.badlogic.gdx.graphics.g2d.TextureRegion
 import com.badlogic.gdx.math.Rectangle
 import com.badlogic.gdx.math.Vector2
-import common.physics.drawScaled
+import physics.drawScaled
 import ktx.math.vec2
 
 open class BoundTextureElement<T: Any>(

@@ -4,7 +4,7 @@ import com.badlogic.gdx.graphics.g2d.Animation
 import com.badlogic.gdx.graphics.g2d.Batch
 import com.badlogic.gdx.graphics.g2d.Sprite
 import com.badlogic.gdx.math.Vector2
-import common.physics.drawScaled
+import physics.drawScaled
 import ktx.math.vec2
 
 open class BoundAnimationElement<T: Any>(valueFunc: (T) -> Animation<Sprite>,

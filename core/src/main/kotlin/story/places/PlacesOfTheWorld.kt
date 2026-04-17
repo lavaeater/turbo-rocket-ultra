@@ -1,7 +1,7 @@
 package story.places
 
 import data.Player
-import common.injection.InjectionContext.Companion.inject
+import common.InjectionContext.Companion.inject
 import common.turbofacts.factsOfTheWorld
 import gamestate.GameEvent
 import gamestate.GameState

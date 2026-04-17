@@ -15,7 +15,7 @@ import com.badlogic.gdx.utils.Align
 import com.badlogic.gdx.utils.Queue
 import com.badlogic.gdx.utils.viewport.ExtendViewport
 import data.Players
-import common.injection.InjectionContext.Companion.inject
+import common.InjectionContext.Companion.inject
 import common.messaging.IMessage
 import ecs.components.enemy.AttackableProperties
 import ecs.systems.graphics.GameConstants
@@ -28,8 +28,8 @@ import ktx.scene2d.*
 import messaging.Message
 import common.messaging.MessageHandler
 import common.messaging.IMessageReceiver
-import common.physics.getComponent
-import common.physics.has
+import physics.getComponent
+import physics.has
 import physics.*
 import common.turbofacts.Factoids
 import common.turbofacts.factsOfTheWorld

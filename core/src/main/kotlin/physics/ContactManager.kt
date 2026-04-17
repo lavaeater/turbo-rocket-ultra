@@ -13,14 +13,9 @@ import com.badlogic.gdx.physics.box2d.Manifold
 import components.AgentProperties
 import components.Box2d
 import components.TransformComponent
-import common.core.engine
-import common.injection.InjectionContext.Companion.inject
+import core.engine
+import common.InjectionContext.Companion.inject
 import common.messaging.MessageHandler
-import common.physics.addComponent
-import common.physics.body
-import common.physics.getComponent
-import common.physics.getEntity
-import common.physics.has
 import ecs.components.AudioChannels
 import ecs.components.ai.AttackPoint
 import ecs.components.ai.CollidedWithObstacle

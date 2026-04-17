@@ -9,11 +9,11 @@ import data.Players
 import components.Box2d
 import components.TransformComponent
 import ecs.components.enemy.AttackableProperties
-import common.injection.InjectionContext.Companion.inject
-import common.physics.getComponent
-import common.physics.getEntity
-import common.physics.has
-import common.physics.isEntity
+import common.InjectionContext.Companion.inject
+import physics.getComponent
+import physics.getEntity
+import physics.has
+import physics.isEntity
 import ecs.components.towers.Shoot
 import ecs.components.towers.TargetInRange
 import factories.splatterEntity

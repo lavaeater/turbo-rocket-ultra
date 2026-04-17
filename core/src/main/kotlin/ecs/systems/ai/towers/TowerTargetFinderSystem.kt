@@ -8,8 +8,8 @@ import components.TransformComponent
 import ecs.components.towers.FindTarget
 import ecs.components.towers.TargetInRange
 import ktx.ashley.allOf
-import common.physics.addComponent
-import common.physics.getComponent
+import physics.addComponent
+import physics.getComponent
 
 class TowerTargetFinderSystem : IteratingSystem(allOf(FindTarget::class, TransformComponent::class).get()) {
     private val enemyFamily = allOf(AgentProperties::class, TransformComponent::class).get()

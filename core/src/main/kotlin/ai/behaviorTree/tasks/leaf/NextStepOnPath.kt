@@ -3,9 +3,9 @@ package ai.behaviorTree.tasks.leaf
 import ai.behaviorTree.tasks.EntityTask
 import com.badlogic.ashley.core.Entity
 import com.badlogic.gdx.ai.btree.Task
-import common.physics.addComponent
-import common.physics.getComponent
-import common.physics.has
+import physics.addComponent
+import physics.getComponent
+import physics.has
 import ecs.components.ai.Path
 import ecs.components.ai.Waypoint
 import ktx.ashley.remove

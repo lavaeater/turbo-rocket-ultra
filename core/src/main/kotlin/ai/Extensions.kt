@@ -12,10 +12,10 @@ import com.badlogic.gdx.ai.btree.decorator.Invert
 import com.badlogic.gdx.math.Vector2
 import com.badlogic.gdx.utils.Queue
 import components.AgentProperties
-import common.core.world
-import common.injection.InjectionContext.Companion.inject
-import common.physics.getEntity
-import common.physics.isEntity
+import core.world
+import common.InjectionContext.Companion.inject
+import physics.getEntity
+import physics.isEntity
 import common.turbofacts.TurboFactsOfTheWorld
 import common.turbofacts.stateBooleanFact
 import ktx.box2d.Query

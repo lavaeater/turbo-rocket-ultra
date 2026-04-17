@@ -14,8 +14,8 @@ import com.crashinvaders.vfx.VfxManager
 import com.crashinvaders.vfx.effects.ChainVfxEffect
 import com.strongjoshua.console.GUIConsole
 import data.Players
-import common.injection.InjectionContext.Companion.inject
-import common.physics.body
+import common.InjectionContext.Companion.inject
+import physics.body
 import ecs.components.gameplay.ObjectiveComponent
 import ecs.components.graphics.CameraFollowComponent
 import ecs.components.player.PlayerComponent
@@ -26,7 +26,6 @@ import ecs.systems.graphics.RenderSystem
 import ecs.systems.input.GamepadInputSystem
 import ecs.systems.input.KeyboardInputSystem
 import ecs.systems.player.GameOverSystem
-import factories.addUiThing
 import factories.enemy
 import factories.player
 import gamestate.GameEvent
@@ -46,7 +45,6 @@ import common.turbofacts.Factoids
 import common.turbofacts.TurboFactsOfTheWorld
 import common.turbofacts.TurboStoryManager
 import common.turbofacts.factsOfTheWorld
-import factories.enemy
 import ui.IUserInterface
 import kotlin.math.pow
 import kotlin.math.roundToInt

@@ -5,7 +5,7 @@ import components.AgentProperties
 import ecs.components.gameplay.DestroyComponent
 import ecs.systems.graphics.GameConstants.MAX_ENEMIES
 import ktx.ashley.allOf
-import common.physics.addComponent
+import physics.addComponent
 
 class EnemyOptimizerSystem : IntervalSystem(5f) {
 

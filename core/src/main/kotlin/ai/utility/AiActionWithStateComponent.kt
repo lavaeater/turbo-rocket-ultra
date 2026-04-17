@@ -3,7 +3,7 @@ package ai.utility
 import com.badlogic.ashley.core.Component
 import com.badlogic.ashley.core.ComponentMapper
 import com.badlogic.ashley.core.Entity
-import common.core.engine
+import core.engine
 import kotlin.reflect.KClass
 
 abstract class AiActionWithStateComponent<T: Component>(name: String, private val stateComponentClass: KClass<T>): AiAction(name) {

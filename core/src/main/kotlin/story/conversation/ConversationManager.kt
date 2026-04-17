@@ -1,6 +1,6 @@
 package story.conversation
 
-import common.injection.InjectionContext.Companion.inject
+import common.InjectionContext.Companion.inject
 import gamestate.GameEvent
 import gamestate.GameState
 import statemachine.StateMachine

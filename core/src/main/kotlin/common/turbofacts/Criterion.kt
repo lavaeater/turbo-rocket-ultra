@@ -1,6 +1,6 @@
 package common.turbofacts
 
-import common.injection.InjectionContext.Companion.inject
+import common.InjectionContext.Companion.inject
 
 sealed class Criterion {
     abstract val factKey: String

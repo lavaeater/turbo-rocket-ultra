@@ -1,4 +1,4 @@
-package common.extensions
+package extensions
 
 import com.badlogic.gdx.graphics.g2d.PolygonSpriteBatch
 import com.badlogic.gdx.graphics.g2d.TextureRegion
@@ -7,7 +7,10 @@ import com.badlogic.gdx.scenes.scene2d.ui.Label
 import com.badlogic.gdx.scenes.scene2d.ui.ProgressBar
 import com.badlogic.gdx.scenes.scene2d.ui.Skin
 import ktx.actors.txt
-import ktx.scene2d.*
+import ktx.scene2d.KWidget
+import ktx.scene2d.Scene2DSkin
+import ktx.scene2d.Scene2dDsl
+import ktx.scene2d.actor
 import kotlin.contracts.ExperimentalContracts
 import kotlin.contracts.InvocationKind
 import kotlin.contracts.contract
@@ -29,7 +32,6 @@ fun TextureRegion.draw(batch: PolygonSpriteBatch, position: Vector2, rotation: F
         rotation
     )
 }
-
 
 
 @Scene2dDsl
@@ -87,16 +89,3 @@ fun Int.without(flag: Int) = this and flag.inv()
 fun Short.has(flag: Short) = flag and this == flag
 fun Short.with(flag: Short) = this or flag
 fun Short.without(flag: Short) = this and flag.inv()
-
-
-//@Scene2dDsl
-//@OptIn(ExperimentalContracts::class)
-//inline fun <S> KWidget<S>.typingLabel(
-//    text: CharSequence,
-//    style: String = defaultStyle,
-//    skin: Skin = Scene2DSkin.defaultSkin,
-//    init: (@Scene2dDsl TypingLabel).(S) -> Unit = {}
-//): TypingLabel {
-//    contract { callsInPlace(init, InvocationKind.EXACTLY_ONCE) }
-//    return actor(TypingLabel(text, skin, style), init)
-//}

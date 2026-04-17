@@ -5,7 +5,7 @@ import com.badlogic.ashley.core.Entity
 import com.badlogic.ashley.systems.IteratingSystem
 import com.badlogic.gdx.graphics.OrthographicCamera
 import components.TransformComponent
-import common.injection.InjectionContext.Companion.inject
+import common.InjectionContext.Companion.inject
 import ecs.components.AudioComponent
 import ktx.ashley.allOf
 import ktx.math.random

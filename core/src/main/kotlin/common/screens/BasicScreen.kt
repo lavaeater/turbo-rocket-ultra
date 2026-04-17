@@ -8,7 +8,7 @@ import com.badlogic.gdx.graphics.g2d.PolygonSpriteBatch
 import com.badlogic.gdx.utils.viewport.ExtendViewport
 import com.badlogic.gdx.utils.viewport.Viewport
 import common.core.MainGame
-import common.injection.InjectionContext.Companion.inject
+import common.InjectionContext.Companion.inject
 import common.input.CommandMap
 import common.input.KeyPress
 import ktx.app.KtxInputAdapter

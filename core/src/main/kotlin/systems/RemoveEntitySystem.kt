@@ -2,7 +2,7 @@ package systems
 
 import com.badlogic.ashley.core.Entity
 import com.badlogic.ashley.systems.IteratingSystem
-import common.core.world
+import core.world
 import components.Box2d
 import components.Remove
 import ktx.ashley.allOf

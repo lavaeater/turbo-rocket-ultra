@@ -6,11 +6,11 @@ import com.badlogic.gdx.physics.box2d.Fixture
 import components.AgentProperties
 import components.Memory
 import components.TransformComponent
-import common.core.engine
-import common.core.world
-import common.physics.createComponent
-import common.physics.getEntity
-import common.physics.isEntity
+import core.engine
+import core.world
+import physics.createComponent
+import physics.getEntity
+import physics.isEntity
 import ktx.ashley.allOf
 import ktx.box2d.RayCast
 import ktx.box2d.rayCast

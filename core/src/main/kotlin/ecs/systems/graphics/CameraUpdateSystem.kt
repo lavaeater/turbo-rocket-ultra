@@ -7,7 +7,7 @@ import com.badlogic.gdx.graphics.OrthographicCamera
 import com.badlogic.gdx.math.Vector2
 import com.badlogic.gdx.utils.viewport.ExtendViewport
 import components.TransformComponent
-import common.physics.getComponent
+import physics.getComponent
 import ecs.components.graphics.CameraFollowComponent
 import ecs.systems.graphics.GameConstants.GAME_HEIGHT
 import ecs.systems.graphics.GameConstants.GAME_WIDTH

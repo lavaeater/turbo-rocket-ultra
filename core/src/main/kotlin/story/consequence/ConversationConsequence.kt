@@ -1,7 +1,7 @@
 package story.consequence
 
 import com.bladecoder.ink.runtime.Story
-import common.injection.InjectionContext.Companion.inject
+import common.InjectionContext.Companion.inject
 import common.turbofacts.Factoid
 import common.turbofacts.TurboRule
 import common.turbofacts.factsOfTheWorld

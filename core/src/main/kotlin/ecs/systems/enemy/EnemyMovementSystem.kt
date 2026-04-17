@@ -8,7 +8,7 @@ import com.badlogic.gdx.physics.box2d.Body
 import components.AgentProperties
 import ecs.components.enemy.AttackableProperties
 import ecs.components.gameplay.ObstacleComponent
-import common.physics.getComponent
+import physics.getComponent
 import ktx.ashley.allOf
 import ktx.math.vec2
 import physics.*
