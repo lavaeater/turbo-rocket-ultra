@@ -11,8 +11,11 @@ import com.badlogic.gdx.physics.box2d.ContactImpulse
 import com.badlogic.gdx.physics.box2d.ContactListener
 import com.badlogic.gdx.physics.box2d.Manifold
 import common.ashley.components.AgentProperties
+import common.ashley.components.Box2d
 import common.ashley.components.TransformComponent
+import common.core.engine
 import common.injection.InjectionContext.Companion.inject
+import common.messaging.MessageHandler
 import common.physics.addComponent
 import common.physics.body
 import common.physics.getComponent
@@ -39,7 +42,6 @@ import ktx.scene2d.image
 import ktx.scene2d.label
 import ktx.scene2d.table
 import messaging.Message
-import eater.messaging.MessageHandler
 import screens.CounterObject
 import tru.Assets
 import kotlin.math.pow

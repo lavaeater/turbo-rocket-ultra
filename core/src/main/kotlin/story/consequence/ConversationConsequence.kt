@@ -1,14 +1,14 @@
 package story.consequence
 
 import com.bladecoder.ink.runtime.Story
-import eater.injection.InjectionContext.Companion.inject
+import common.injection.InjectionContext.Companion.inject
+import common.turbofacts.Factoid
+import common.turbofacts.TurboRule
+import common.turbofacts.factsOfTheWorld
 import gamestate.GameEvent
 import gamestate.GameState
 import statemachine.StateMachine
 import story.conversation.ConversationManager
-import eater.turbofacts.Factoid
-import eater.turbofacts.TurboRule
-import eater.turbofacts.factsOfTheWorld
 
 class ConversationConsequence(
     val story: Story,

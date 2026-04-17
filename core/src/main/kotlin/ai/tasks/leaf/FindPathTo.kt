@@ -7,7 +7,6 @@ import com.badlogic.gdx.ai.btree.Task
 import ecs.components.ai.CoordinateStorageComponent
 import ecs.components.ai.Path
 import ktx.ashley.remove
-import eater.physics.addComponent
 import kotlin.reflect.KClass
 
 class FindPathTo<T: CoordinateStorageComponent>(private val componentClass: KClass<T>) : EntityTask() {
