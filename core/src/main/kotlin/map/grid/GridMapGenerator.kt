@@ -143,7 +143,7 @@ class GridMapGenerator {
         }
 
         fun generate(length: Int, level: Int): Pair<Map<Coordinate, GridMapSection>, TileGraph> {
-            setGlobalContactFilter(
+            Light.setGlobalContactFilter(
                 Box2dCategories.lights,
                 0, Box2dCategories.allButSensors
             )

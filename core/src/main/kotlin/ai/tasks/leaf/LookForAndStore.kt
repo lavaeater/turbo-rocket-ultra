@@ -101,7 +101,7 @@ class LookForAndStore<ToLookFor : Component, ToStoreIn : PositionStorageComponen
                 RayCast.CONTINUE
             }
 
-            if (closestFixture != null && closestFixture.isEntity() && inrangeEntities.contains(closestFixture.getEntity())) {
+            if (closestFixture != null && closestFixture!!.isEntity() && inrangeEntities.contains(closestFixture!!.getEntity())) {
                 debug { "LookForAndStore - entity at $entityPosition can be seen " }
                 seenEntityPositions.add(entityPosition)
             }

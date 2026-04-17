@@ -75,9 +75,9 @@ class CanISeeThisConsideration<ToLookFor : Component>(
                 RayCast.CONTINUE
             }
 
-            if (closestFixture != null && closestFixture.isEntity() && inRange.contains(closestFixture.getEntity())) {
+            if (closestFixture != null && closestFixture!!.isEntity() && inRange.contains(closestFixture!!.getEntity())) {
                 debug { "CanISeeThisConsideration - entity at $entityPosition can be seen" }
-                val e = closestFixture.getEntity()
+                val e = closestFixture!!.getEntity()
                 seenEntities[e] = memory.memoryLifeSpan
             }
         }
