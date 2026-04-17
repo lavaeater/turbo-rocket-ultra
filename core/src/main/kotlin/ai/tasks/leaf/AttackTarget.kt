@@ -5,13 +5,13 @@ import ai.tasks.EntityTask
 import com.badlogic.ashley.core.Component
 import com.badlogic.ashley.core.Entity
 import com.badlogic.gdx.ai.btree.Task
-import eater.ecs.ashley.components.TransformComponent
+import common.ashley.components.TransformComponent
+import common.physics.getComponent
 import ecs.components.ai.Path
 import ecs.components.enemy.AttackableProperties
 import ktx.ashley.allOf
 import ktx.ashley.remove
 import physics.agentProps
-import eater.physics.getComponent
 import physics.transform
 import kotlin.reflect.KClass
 

@@ -2,8 +2,8 @@ package common.ashley.systems
 
 import com.badlogic.ashley.core.Entity
 import com.badlogic.ashley.systems.IteratingSystem
-import eater.ecs.ashley.components.BodyControl
-import eater.ecs.ashley.components.Box2d
+import common.ashley.components.BodyControl
+import common.ashley.components.Box2d
 import ktx.ashley.allOf
 import ktx.math.times
 

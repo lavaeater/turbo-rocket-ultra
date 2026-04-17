@@ -7,10 +7,10 @@ import com.badlogic.gdx.graphics.OrthographicCamera
 import com.badlogic.gdx.graphics.g2d.PolygonSpriteBatch
 import com.badlogic.gdx.utils.viewport.ExtendViewport
 import com.badlogic.gdx.utils.viewport.Viewport
-import eater.core.MainGame
-import eater.injection.InjectionContext.Companion.inject
-import eater.input.CommandMap
-import eater.input.KeyPress
+import common.core.MainGame
+import common.injection.InjectionContext.Companion.inject
+import common.input.CommandMap
+import common.input.KeyPress
 import ktx.app.KtxInputAdapter
 import ktx.app.KtxScreen
 import ktx.assets.disposeSafely

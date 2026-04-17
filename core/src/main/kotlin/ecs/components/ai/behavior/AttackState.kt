@@ -1,5 +1,4 @@
 package ecs.components.ai.behavior
-import kotlin.properties.Delegates
 
 import com.badlogic.ashley.core.Component
 import com.badlogic.ashley.core.Entity
