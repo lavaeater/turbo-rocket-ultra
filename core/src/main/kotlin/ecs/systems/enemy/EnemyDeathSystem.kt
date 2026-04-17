@@ -6,9 +6,9 @@ import com.badlogic.ashley.systems.IteratingSystem
 import components.AgentProperties
 import physics.addComponent
 import physics.getComponent
-import common.turbofacts.Factoids
-import common.turbofacts.TurboFactsOfTheWorld
-import common.turbofacts.addToIntStat
+import turbofacts.Factoids
+import turbofacts.TurboFactsOfTheWorld
+import turbofacts.addToIntStat
 import ecs.components.AudioChannels
 import ecs.components.enemy.AttackableProperties
 import ecs.components.gameplay.DestroyComponent

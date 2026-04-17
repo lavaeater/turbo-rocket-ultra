@@ -7,7 +7,7 @@ import com.badlogic.gdx.Input
 import com.badlogic.gdx.graphics.OrthographicCamera
 import com.badlogic.gdx.math.Vector2
 import components.TransformComponent
-import common.InjectionContext.Companion.inject
+import injection.InjectionContext.Companion.inject
 import ecs.components.intent.IntendsTo
 import gamestate.GameEvent
 import gamestate.GameState

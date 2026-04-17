@@ -1,4 +1,4 @@
-package common.world
+package world
 
 data class TileChunk<T: Tile>(val key: ChunkKey, val tilesPerSide: Int, private val factory: (Int, Int) -> T) {
     constructor(x: Int, y: Int, tilesPerSide: Int, factory: (Int, Int) -> T) : this(ChunkKey(x, y), tilesPerSide, factory)

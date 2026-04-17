@@ -1,4 +1,4 @@
-package common.world
+package world
 
 data class ChunkKey(val chunkX: Int, val chunkY: Int) {
     companion object {

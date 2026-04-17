@@ -21,12 +21,11 @@ import com.strongjoshua.console.GUIConsole
 import systems.UpdateActionsSystem
 import systems.UpdateMemorySystem
 import systems.UtilityAiSystem
-import common.InjectionContext
-import common.messaging.IMessage
-import common.messaging.IMessageReceiver
-import common.messaging.MessageHandler
-import common.turbofacts.TurboFactsOfTheWorld
-import common.turbofacts.TurboStoryManager
+import messaging.IMessage
+import messaging.IMessageReceiver
+import messaging.MessageHandler
+import turbofacts.TurboFactsOfTheWorld
+import turbofacts.TurboStoryManager
 import ecs.systems.AnchorPointTransformationSystem
 import ecs.systems.BodyDestroyerSystem
 import ecs.systems.CharacterWalkAndShootDirectionSystem

@@ -11,8 +11,8 @@ import ktx.math.random
 import ktx.math.vec2
 import physics.AshleyMappers
 import screens.CounterObject
-import common.turbofacts.Factoids
-import common.turbofacts.factsOfTheWorld
+import turbofacts.Factoids
+import turbofacts.factsOfTheWorld
 
 class EnemySpawnSystem : IteratingSystem(allOf(EnemySpawnerComponent::class, TransformComponent::class).get()) {
     private val enemyCount get() = engine.getEntitiesFor(allOf(AgentProperties::class).get()).count()

@@ -15,7 +15,7 @@ import com.crashinvaders.vfx.effects.ChainVfxEffect
 import components.AgentProperties
 import components.Memory
 import components.TransformComponent
-import common.InjectionContext.Companion.inject
+import injection.InjectionContext.Companion.inject
 import physics.addComponent
 import physics.getComponent
 import physics.has

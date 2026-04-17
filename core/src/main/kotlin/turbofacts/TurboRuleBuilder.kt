@@ -1,4 +1,4 @@
-package common.turbofacts
+package turbofacts
 
 class TurboRuleBuilder : Builder<TurboRule> {
     var name = "Rule Name"

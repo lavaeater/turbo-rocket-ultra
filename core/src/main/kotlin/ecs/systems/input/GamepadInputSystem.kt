@@ -5,7 +5,7 @@ import com.badlogic.ashley.systems.IteratingSystem
 import com.badlogic.gdx.controllers.Controller
 import com.badlogic.gdx.controllers.ControllerListener
 import data.Players
-import common.InjectionContext.Companion.inject
+import injection.InjectionContext.Companion.inject
 import ecs.components.intent.IntendsTo
 import gamestate.GameEvent
 import gamestate.GameState

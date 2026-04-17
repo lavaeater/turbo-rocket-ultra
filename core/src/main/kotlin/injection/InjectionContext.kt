@@ -1,4 +1,4 @@
-package common
+package injection
 
 import ktx.inject.Context
 

@@ -1,4 +1,4 @@
-package common.world
+package world
 
 sealed class TileDirection(val x: Int, val y: Int) {
     object West : TileDirection(-1, 0)

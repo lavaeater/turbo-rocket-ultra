@@ -1,4 +1,4 @@
-package common.input
+package input
 
 import com.badlogic.gdx.Input
 

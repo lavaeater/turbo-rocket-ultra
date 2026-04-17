@@ -1,4 +1,4 @@
-package common.input
+package input
 
 sealed class KeyPress {
     object Up : KeyPress()

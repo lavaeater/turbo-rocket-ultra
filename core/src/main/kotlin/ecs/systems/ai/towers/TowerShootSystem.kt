@@ -9,7 +9,7 @@ import data.Players
 import components.Box2d
 import components.TransformComponent
 import ecs.components.enemy.AttackableProperties
-import common.InjectionContext.Companion.inject
+import injection.InjectionContext.Companion.inject
 import physics.getComponent
 import physics.getEntity
 import physics.has

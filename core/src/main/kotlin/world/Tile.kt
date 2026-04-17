@@ -1,4 +1,4 @@
-package common.world
+package world
 
 interface Tile {
     val neighbours: MutableList<Tile>

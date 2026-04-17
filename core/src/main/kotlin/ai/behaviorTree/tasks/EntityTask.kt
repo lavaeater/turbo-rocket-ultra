@@ -4,8 +4,8 @@ import com.badlogic.ashley.core.Engine
 import com.badlogic.ashley.core.Entity
 import com.badlogic.gdx.ai.btree.LeafTask
 import core.engine
-import common.turbofacts.TurboFactsOfTheWorld
-import common.turbofacts.factsOfTheWorld
+import turbofacts.TurboFactsOfTheWorld
+import turbofacts.factsOfTheWorld
 import tru.Assets
 
 abstract class EntityTask : LeafTask<Entity>() {

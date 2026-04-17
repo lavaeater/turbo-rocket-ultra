@@ -6,10 +6,10 @@ import box2dLight.Light.setGlobalContactFilter
 import box2dLight.RayHandler
 import com.badlogic.ashley.core.Engine
 import com.badlogic.gdx.math.Rectangle
-import common.InjectionContext.Companion.inject
-import common.turbofacts.Factoids
-import common.turbofacts.TurboStoryManager
-import common.turbofacts.factsOfTheWorld
+import injection.InjectionContext.Companion.inject
+import turbofacts.Factoids
+import turbofacts.TurboStoryManager
+import turbofacts.factsOfTheWorld
 import ecs.systems.tileWorldX
 import ecs.systems.tileWorldY
 import factories.*

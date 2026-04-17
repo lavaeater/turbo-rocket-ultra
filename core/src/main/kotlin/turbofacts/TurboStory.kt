@@ -1,4 +1,4 @@
-package common.turbofacts
+package turbofacts
 
 data class TurboStory(
     val name: String,

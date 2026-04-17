@@ -7,7 +7,7 @@ import components.Box2d
 import components.TransformComponent
 import ecs.components.gameplay.GrenadeComponent
 import ecs.components.gameplay.MolotovComponent
-import common.InjectionContext.Companion.inject
+import injection.InjectionContext.Companion.inject
 import ktx.ashley.allOf
 import ktx.math.vec2
 import map.grid.GridMapSection

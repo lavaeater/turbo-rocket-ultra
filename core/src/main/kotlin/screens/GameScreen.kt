@@ -14,7 +14,7 @@ import com.crashinvaders.vfx.VfxManager
 import com.crashinvaders.vfx.effects.ChainVfxEffect
 import com.strongjoshua.console.GUIConsole
 import data.Players
-import common.InjectionContext.Companion.inject
+import injection.InjectionContext.Companion.inject
 import physics.body
 import ecs.components.gameplay.ObjectiveComponent
 import ecs.components.graphics.CameraFollowComponent
@@ -41,10 +41,10 @@ import map.snake.randomPoint
 import physics.*
 import statemachine.StateMachine
 import tru.Assets
-import common.turbofacts.Factoids
-import common.turbofacts.TurboFactsOfTheWorld
-import common.turbofacts.TurboStoryManager
-import common.turbofacts.factsOfTheWorld
+import turbofacts.Factoids
+import turbofacts.TurboFactsOfTheWorld
+import turbofacts.TurboStoryManager
+import turbofacts.factsOfTheWorld
 import ui.IUserInterface
 import kotlin.math.pow
 import kotlin.math.roundToInt

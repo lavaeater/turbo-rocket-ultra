@@ -1,4 +1,4 @@
-package common.turbofacts
+package turbofacts
 
 class TurboRule(val name: String, val criteria: List<Criterion>) {
     fun checkRule(): Boolean {

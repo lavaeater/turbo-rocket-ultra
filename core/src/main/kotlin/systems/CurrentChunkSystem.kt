@@ -5,9 +5,9 @@ import com.badlogic.ashley.systems.IteratingSystem
 import com.badlogic.gdx.physics.box2d.Body
 import components.Box2d
 import components.CameraFollow
-import common.world.ITileManager
-import common.world.tileX
-import common.world.tileY
+import world.ITileManager
+import world.tileX
+import world.tileY
 import ktx.ashley.allOf
 
 fun Entity.body(): Body {

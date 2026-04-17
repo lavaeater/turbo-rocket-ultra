@@ -14,8 +14,8 @@ import components.AgentProperties
 import components.Box2d
 import components.TransformComponent
 import core.engine
-import common.InjectionContext.Companion.inject
-import common.messaging.MessageHandler
+import injection.InjectionContext.Companion.inject
+import messaging.MessageHandler
 import ecs.components.AudioChannels
 import ecs.components.ai.AttackPoint
 import ecs.components.ai.CollidedWithObstacle

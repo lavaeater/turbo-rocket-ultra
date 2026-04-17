@@ -4,11 +4,11 @@ import com.badlogic.ashley.core.Entity
 import com.badlogic.ashley.systems.IteratingSystem
 import components.TransformComponent
 import ecs.components.gameplay.PerimeterObjectiveComponent
-import common.InjectionContext.Companion.inject
+import injection.InjectionContext.Companion.inject
 import ecs.components.player.PlayerComponent
 import ktx.ashley.allOf
 import messaging.Message
-import common.messaging.MessageHandler
+import messaging.MessageHandler
 import physics.light
 import physics.objective
 import physics.perimeter

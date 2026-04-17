@@ -25,7 +25,7 @@ import components.AgentProperties
 import components.AiComponent
 import components.Box2d
 import components.TransformComponent
-import common.turbofacts.FactsLikeThatMan
+import turbofacts.FactsLikeThatMan
 import ecs.components.AudioComponent
 import ecs.components.ai.BehaviorComponent
 import ecs.components.enemy.*

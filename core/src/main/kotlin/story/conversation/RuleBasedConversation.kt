@@ -1,7 +1,7 @@
 package story.conversation
 
 import data.IAgent
-import common.turbofacts.TurboRule
+import turbofacts.TurboRule
 
 class RuleBasedConversation : IConversation {
   val rules = mutableSetOf<TurboRule>()

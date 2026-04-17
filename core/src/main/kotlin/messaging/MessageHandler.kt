@@ -1,4 +1,4 @@
-package common.messaging
+package messaging
 
 import com.badlogic.gdx.utils.Queue
 import kotlin.reflect.KClass

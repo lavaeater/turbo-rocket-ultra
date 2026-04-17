@@ -2,7 +2,7 @@ package map.snake
 
 import box2dLight.Light
 import box2dLight.RayHandler
-import common.InjectionContext.Companion.inject
+import injection.InjectionContext.Companion.inject
 import factories.Box2dCategories
 
 

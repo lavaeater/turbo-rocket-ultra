@@ -1,7 +1,7 @@
 package screens
 
-import common.turbofacts.Factoids
-import common.turbofacts.factsOfTheWorld
+import turbofacts.Factoids
+import turbofacts.factsOfTheWorld
 
 object CounterObject {
     val factsOfTheWorld by lazy { factsOfTheWorld() }

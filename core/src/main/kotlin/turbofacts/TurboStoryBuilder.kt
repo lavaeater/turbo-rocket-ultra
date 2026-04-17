@@ -1,4 +1,4 @@
-package common.turbofacts
+package turbofacts
 
 class TurboStoryBuilder: Builder<TurboStory> {
     var name = "Story"

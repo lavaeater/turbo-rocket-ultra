@@ -1,8 +1,9 @@
-package common.world
+package world
 
 import com.badlogic.gdx.math.MathUtils
 import com.badlogic.gdx.math.Vector2
 import com.badlogic.gdx.physics.box2d.Body
+import kotlin.collections.iterator
 
 fun Body.tileX(tileSize: Float): Int {
     return this.position.tileX(tileSize)

@@ -1,4 +1,4 @@
-package common.turbofacts
+package turbofacts
 
 sealed class Factoid(val key: String) {
     sealed class Fact<T>(key: String, var value: T) : Factoid(key) {

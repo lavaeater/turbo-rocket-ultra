@@ -1,4 +1,4 @@
-package common.turbofacts
+package turbofacts
 object FactsLikeThatMan {
     var waveSize : Int
         get() {

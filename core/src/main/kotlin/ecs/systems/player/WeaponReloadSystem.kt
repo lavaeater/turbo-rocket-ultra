@@ -3,7 +3,7 @@ package ecs.systems.player
 import audio.AudioPlayer
 import com.badlogic.ashley.core.Entity
 import com.badlogic.ashley.systems.IteratingSystem
-import common.InjectionContext.Companion.inject
+import injection.InjectionContext.Companion.inject
 import ecs.components.player.InventoryComponent
 import ecs.components.player.IsReloadingComponent
 import ecs.components.player.WeaponEntityComponent

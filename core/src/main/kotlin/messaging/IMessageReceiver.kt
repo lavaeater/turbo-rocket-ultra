@@ -1,4 +1,4 @@
-package common.messaging
+package messaging
 
 import kotlin.reflect.KClass
 

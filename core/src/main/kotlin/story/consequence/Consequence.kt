@@ -1,7 +1,7 @@
 package story.consequence
 
-import common.turbofacts.Factoid
-import common.turbofacts.TurboRule
+import turbofacts.Factoid
+import turbofacts.TurboRule
 
 interface Consequence {
   var rule: TurboRule

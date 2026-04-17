@@ -13,11 +13,11 @@ import com.badlogic.gdx.math.Vector2
 import com.badlogic.gdx.utils.Queue
 import components.AgentProperties
 import core.world
-import common.InjectionContext.Companion.inject
+import injection.InjectionContext.Companion.inject
 import physics.getEntity
 import physics.isEntity
-import common.turbofacts.TurboFactsOfTheWorld
-import common.turbofacts.stateBooleanFact
+import turbofacts.TurboFactsOfTheWorld
+import turbofacts.stateBooleanFact
 import ktx.box2d.Query
 import ktx.box2d.query
 import ktx.math.random

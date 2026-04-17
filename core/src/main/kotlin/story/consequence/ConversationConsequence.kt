@@ -1,10 +1,10 @@
 package story.consequence
 
 import com.bladecoder.ink.runtime.Story
-import common.InjectionContext.Companion.inject
-import common.turbofacts.Factoid
-import common.turbofacts.TurboRule
-import common.turbofacts.factsOfTheWorld
+import injection.InjectionContext.Companion.inject
+import turbofacts.Factoid
+import turbofacts.TurboRule
+import turbofacts.factsOfTheWorld
 import gamestate.GameEvent
 import gamestate.GameState
 import statemachine.StateMachine

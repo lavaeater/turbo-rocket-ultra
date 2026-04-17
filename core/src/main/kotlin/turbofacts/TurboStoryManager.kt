@@ -1,4 +1,4 @@
-package common.turbofacts
+package turbofacts
 
 class TurboStoryManager {
     private var isActive = false

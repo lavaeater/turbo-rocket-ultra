@@ -6,7 +6,7 @@ import com.badlogic.gdx.graphics.Color
 import com.badlogic.gdx.graphics.g2d.Batch
 import com.badlogic.gdx.graphics.g2d.PolygonSpriteBatch
 import components.TransformComponent
-import common.InjectionContext.Companion.inject
+import injection.InjectionContext.Companion.inject
 import physics.getComponent
 import ecs.components.player.PlayerControlComponent
 import ktx.ashley.allOf

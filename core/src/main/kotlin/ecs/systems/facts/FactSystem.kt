@@ -5,8 +5,8 @@ import ecs.components.enemy.BossComponent
 import ecs.components.gameplay.ObjectiveComponent
 import ktx.ashley.allOf
 import physics.getComponent
-import common.turbofacts.Factoids
-import common.turbofacts.factsOfTheWorld
+import turbofacts.Factoids
+import turbofacts.factsOfTheWorld
 
 /***
  * Takes fact-setting rules and sets facts if these rules are indeed
