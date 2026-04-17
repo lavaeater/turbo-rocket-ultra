@@ -1,7 +1,7 @@
 package messaging
 
 import com.badlogic.gdx.math.Vector2
-import eater.messaging.IMessage
+import common.messaging.IMessage
 import ecs.components.player.ComplexActionComponent
 import ecs.components.player.PlayerControlComponent
 

@@ -6,7 +6,10 @@ import box2dLight.Light.setGlobalContactFilter
 import box2dLight.RayHandler
 import com.badlogic.ashley.core.Engine
 import com.badlogic.gdx.math.Rectangle
-import eater.injection.InjectionContext.Companion.inject
+import common.injection.InjectionContext.Companion.inject
+import common.turbofacts.Factoids
+import common.turbofacts.TurboStoryManager
+import common.turbofacts.factsOfTheWorld
 import ecs.systems.tileWorldX
 import ecs.systems.tileWorldY
 import factories.*
@@ -19,10 +22,8 @@ import map.snake.MapDirection
 import map.snake.random
 import map.snake.randomPoint
 import screens.CounterObject
-import eater.turbofacts.Factoids
-import eater.turbofacts.TurboStoryManager
-import eater.turbofacts.factsOfTheWorld
 import turbofacts.StoryHelper
+import kotlin.collections.filterKeys
 
 class GridMapGenerator {
     companion object {
@@ -142,7 +143,6 @@ class GridMapGenerator {
         }
 
         fun generate(length: Int, level: Int): Pair<Map<Coordinate, GridMapSection>, TileGraph> {
-            //TODO: Move this somewhere
             setGlobalContactFilter(
                 Box2dCategories.lights,
                 0, Box2dCategories.allButSensors

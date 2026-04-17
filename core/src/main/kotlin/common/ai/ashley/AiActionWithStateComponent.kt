@@ -3,8 +3,7 @@ package common.ai.ashley
 import com.badlogic.ashley.core.Component
 import com.badlogic.ashley.core.ComponentMapper
 import com.badlogic.ashley.core.Entity
-import eater.core.engine
-import ktx.log.info
+import common.core.engine
 import kotlin.reflect.KClass
 
 abstract class AiActionWithStateComponent<T: Component>(name: String, private val stateComponentClass: KClass<T>): AiAction(name) {

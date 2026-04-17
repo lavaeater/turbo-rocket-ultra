@@ -1,11 +1,18 @@
 package turbofacts
 
-import eater.injection.InjectionContext.Companion.inject
-import eater.turbofacts.*
+import common.injection.InjectionContext.Companion.inject
+import common.messaging.MessageHandler
+import common.turbofacts.Factoids
+import common.turbofacts.TurboStory
+import common.turbofacts.factsOfTheWorld
+import common.turbofacts.intEquals
+import common.turbofacts.intMoreThan
+import common.turbofacts.isFalse
+import common.turbofacts.isTrue
+import common.turbofacts.story
 import gamestate.GameEvent
 import gamestate.GameState
 import messaging.Message
-import eater.messaging.MessageHandler
 import statemachine.StateMachine
 
 object StoryHelper {

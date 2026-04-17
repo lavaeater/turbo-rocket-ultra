@@ -58,10 +58,8 @@ dependencies {
     api libs.ktxScene2d
     api libs.ktxStyle
     api libs.ktxTiled
-    api libs.kotlin
     api libs.kotlinxCoroutines
     api libs.shapeDrawer
     api libs.simpleGraphs
     api libs.kotlinReflect
-    implementation project(':gdx-lava')
 }

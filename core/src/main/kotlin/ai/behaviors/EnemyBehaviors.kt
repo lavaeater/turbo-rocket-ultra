@@ -7,11 +7,16 @@ import ai.tasks.leaf.SectionFindingMethods
 import com.badlogic.ashley.core.Component
 import com.badlogic.ashley.core.Entity
 import com.badlogic.gdx.math.MathUtils
-import eater.ai.*
-import eater.ai.ashley.*
-import eater.ecs.ashley.components.AgentProperties
-import eater.ecs.ashley.components.Memory
-import eater.ecs.ashley.components.TransformComponent
+import common.ai.ashley.AmICloseToThisConsideration
+import common.ai.ashley.CanISeeThisConsideration
+import common.ai.ashley.Consideration
+import common.ai.ashley.ConsideredActionWithState
+import common.ai.ashley.DoIHaveThisComponentConsideration
+import common.ai.ashley.GenericActionWithState
+import common.ai.ashley.InvertedConsideration
+import common.ashley.components.AgentProperties
+import common.ashley.components.Memory
+import common.ashley.components.TransformComponent
 import ecs.components.ai.behavior.*
 import ecs.components.enemy.AttackableProperties
 import ecs.components.gameplay.AnotherTargetComponent
@@ -42,6 +47,7 @@ object EnemyBehaviors {
                     state.coolDownRange = 0.25f..1.5f
                     state.status = PanikStatus.Paniking
                 }
+
                 PanikStatus.Paniking -> {
                     if (state.ready(deltaTime)) {
                         val agentProps = AgentProperties.get(entity)
@@ -186,6 +192,7 @@ object EnemyBehaviors {
                     state.status =
                         AmbleStatus.FindingTargetCoordinate
                 }
+
                 AmbleStatus.NeedsWaypoint -> getWaypoint(entity, state, deltaTime)
             }
             true
