@@ -2,8 +2,8 @@ package common.ai.ashley
 
 import com.badlogic.ashley.core.Component
 import com.badlogic.ashley.core.Entity
-import eater.core.engine
-import eater.ecs.ashley.components.TransformComponent
+import common.ashley.components.TransformComponent
+import common.core.engine
 import ktx.ashley.allOf
 import kotlin.reflect.KClass
 import kotlin.reflect.full.starProjectedType

@@ -18,15 +18,16 @@ import com.crashinvaders.vfx.effects.CrtEffect
 import com.crashinvaders.vfx.effects.OldTvEffect
 import com.strongjoshua.console.CommandExecutor
 import com.strongjoshua.console.GUIConsole
-import eater.ecs.ashley.systems.UpdateActionsSystem
-import eater.ecs.ashley.systems.UpdateMemorySystem
-import eater.ecs.ashley.systems.UtilityAiSystem
-import eater.injection.InjectionContext
-import eater.messaging.IMessage
-import eater.messaging.IMessageReceiver
-import eater.messaging.MessageHandler
-import eater.turbofacts.TurboFactsOfTheWorld
-import eater.turbofacts.TurboStoryManager
+import common.ashley.systems.UpdateActionsSystem
+import common.ashley.systems.UpdateMemorySystem
+import common.ashley.systems.UtilityAiSystem
+import common.injection.InjectionContext
+import common.injection.InjectionContext.Companion.inject
+import common.messaging.IMessage
+import common.messaging.IMessageReceiver
+import common.messaging.MessageHandler
+import common.turbofacts.TurboFactsOfTheWorld
+import common.turbofacts.TurboStoryManager
 import ecs.systems.AnchorPointTransformationSystem
 import ecs.systems.BodyDestroyerSystem
 import ecs.systems.CharacterWalkAndShootDirectionSystem
@@ -125,7 +126,7 @@ object Context : InjectionContext() {
             addSystem(BodyDestroyerSystem(inject())) //world
             addSystem(CharacterWalkAndShootDirectionSystem())
             addSystem(PlayerShootingSystem(inject()))
-            addSystem(EnemyDeathSystem(audioPlayer = inject(), factsOfTheWorld = inject()))
+            addSystem(EnemyDeathSystem(audioPlayer = inject(), factsOfTheWorld = inject<TurboFactsOfTheWorld>()))
             addSystem(EnemyMovementSystem(true))
             addSystem(PerimeterObjectiveSystem())
             addSystem(EnemyAnimationSystem())
@@ -165,7 +166,7 @@ object Context : InjectionContext() {
             addSystem(PlayerContextActionSystem())
             addSystem(DelayedEntityCreationSystem())
             addSystem(LootDropSystem())
-            addSystem(AimingAidSystem(debug = false, renderRedDot = false))
+            addSystem(AimingAidSystem(renderRedDot = false))
             addSystem(GibSystem())
             addSystem(FactSystem())
             addSystem(FrustumCullingSystem())

@@ -3,14 +3,14 @@ package common.ai.ashley
 import com.badlogic.ashley.core.Component
 import com.badlogic.ashley.core.Entity
 import com.badlogic.gdx.physics.box2d.Fixture
-import eater.core.engine
-import eater.core.world
-import eater.ecs.ashley.components.AgentProperties
-import eater.ecs.ashley.components.Memory
-import eater.ecs.ashley.components.TransformComponent
-import eater.physics.createComponent
-import eater.physics.getEntity
-import eater.physics.isEntity
+import common.ashley.components.AgentProperties
+import common.ashley.components.Memory
+import common.ashley.components.TransformComponent
+import common.core.engine
+import common.core.world
+import common.physics.createComponent
+import common.physics.getEntity
+import common.physics.isEntity
 import ktx.ashley.allOf
 import ktx.box2d.RayCast
 import ktx.box2d.rayCast
@@ -76,9 +76,9 @@ class CanISeeThisConsideration<ToLookFor : Component>(
                 RayCast.CONTINUE
             }
 
-            if (closestFixture != null && closestFixture!!.isEntity() && inRange.contains(closestFixture!!.getEntity())) {
+            if (closestFixture != null && closestFixture.isEntity() && inRange.contains(closestFixture.getEntity())) {
                 debug { "CanISeeThisConsideration - entity at $entityPosition can be seen" }
-                val e = closestFixture!!.getEntity()
+                val e = closestFixture.getEntity()
                 seenEntities[e] = memory.memoryLifeSpan
             }
         }

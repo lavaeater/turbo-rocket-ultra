@@ -5,17 +5,17 @@ import com.badlogic.ashley.systems.IteratingSystem
 import com.badlogic.gdx.graphics.Color
 import com.badlogic.gdx.graphics.g2d.Batch
 import com.badlogic.gdx.graphics.g2d.PolygonSpriteBatch
-import eater.ecs.ashley.components.TransformComponent
-import eater.injection.InjectionContext.Companion.inject
+import common.ashley.components.TransformComponent
+import common.injection.InjectionContext.Companion.inject
+import common.physics.getComponent
 import ecs.components.player.PlayerControlComponent
 import ktx.ashley.allOf
 import ktx.graphics.use
 import ktx.math.vec2
-import eater.physics.getComponent
 import tru.Assets
 
 
-class AimingAidSystem(private val debug: Boolean, private val renderRedDot: Boolean) :
+class AimingAidSystem(private val renderRedDot: Boolean) :
     IteratingSystem(
         allOf(
             TransformComponent::class,
