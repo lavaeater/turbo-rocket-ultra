@@ -6,8 +6,8 @@ import com.badlogic.gdx.ai.btree.Task
 import physics.addComponent
 import physics.getComponent
 import physics.has
-import ecs.components.ai.Path
-import ecs.components.ai.Waypoint
+import components.ai.Path
+import components.ai.Waypoint
 import ktx.ashley.remove
 import ktx.log.debug
 

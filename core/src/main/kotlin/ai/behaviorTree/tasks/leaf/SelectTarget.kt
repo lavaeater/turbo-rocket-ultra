@@ -4,8 +4,8 @@ import ai.behaviorTree.tasks.EntityTask
 import com.badlogic.ashley.core.ComponentMapper
 import com.badlogic.ashley.core.Entity
 import com.badlogic.gdx.ai.btree.Task
-import ecs.components.ai.PositionStorageComponent
-import ecs.components.ai.PositionTarget
+import components.ai.PositionStorageComponent
+import components.ai.PositionTarget
 import kotlin.reflect.KClass
 
 class SelectTarget<Targets : PositionStorageComponent, TargetStorage : PositionTarget>(

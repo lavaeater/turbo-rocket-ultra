@@ -4,8 +4,8 @@ import box2dLight.PointLight
 import box2dLight.RayHandler
 import com.badlogic.gdx.graphics.Color
 import injection.InjectionContext.Companion.inject
-import ecs.components.graphics.renderables.RenderableTextureRegion
-import ecs.components.graphics.renderables.RenderableTextureRegions
+import components.graphics.renderables.RenderableTextureRegion
+import components.graphics.renderables.RenderableTextureRegions
 
 import tru.Assets
 

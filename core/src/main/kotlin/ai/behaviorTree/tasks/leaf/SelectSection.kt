@@ -4,7 +4,7 @@ import ai.behaviorTree.tasks.EntityTask
 import ai.pathfinding.TileGraph
 import com.badlogic.ashley.core.Entity
 import com.badlogic.gdx.ai.btree.Task
-import ecs.components.ai.CoordinateStorageComponent
+import components.ai.CoordinateStorageComponent
 import ecs.systems.sectionX
 import ecs.systems.sectionY
 import ktx.log.debug

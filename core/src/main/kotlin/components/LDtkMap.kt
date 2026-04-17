@@ -7,7 +7,8 @@ import com.badlogic.gdx.math.Rectangle
 import com.badlogic.gdx.math.Vector2
 import com.badlogic.gdx.physics.box2d.Body
 import com.badlogic.gdx.utils.Pool
-import common.core.world
+import core.world
+
 import ktx.ashley.mapperFor
 import ktx.math.vec2
 

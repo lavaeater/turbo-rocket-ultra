@@ -5,8 +5,8 @@ import ai.findPathFromTo
 import com.badlogic.ashley.core.Entity
 import com.badlogic.gdx.ai.btree.Task
 import physics.addComponent
-import ecs.components.ai.CoordinateStorageComponent
-import ecs.components.ai.Path
+import components.ai.CoordinateStorageComponent
+import components.ai.Path
 import ktx.ashley.remove
 import kotlin.reflect.KClass
 

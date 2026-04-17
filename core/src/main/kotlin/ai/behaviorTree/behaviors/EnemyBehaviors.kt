@@ -25,11 +25,11 @@ import ai.utility.InvertedConsideration
 import components.AgentProperties
 import components.Memory
 import components.TransformComponent
-import ecs.components.enemy.AttackableProperties
-import ecs.components.gameplay.AnotherTargetComponent
-import ecs.components.gameplay.BurningComponent
-import ecs.components.gameplay.TargetComponent
-import ecs.components.player.PlayerComponent
+import components.enemy.AttackableProperties
+import components.gameplay.AnotherTargetComponent
+import components.gameplay.BurningComponent
+import components.gameplay.TargetComponent
+import components.player.PlayerComponent
 import ecs.systems.graphics.GameConstants
 import ecs.systems.graphics.GameConstants.TOUCHING_DISTANCE
 import ecs.systems.sectionX

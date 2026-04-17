@@ -7,8 +7,8 @@ import com.badlogic.gdx.math.Rectangle
 import com.badlogic.gdx.math.Vector2
 import core.world
 import injection.InjectionContext.Companion.inject
-import ecs.components.graphics.renderables.RenderableTextureRegion
-import ecs.components.graphics.renderables.RenderableTextureRegions
+import components.graphics.renderables.RenderableTextureRegion
+import components.graphics.renderables.RenderableTextureRegions
 
 import ktx.box2d.Query
 import ktx.box2d.query

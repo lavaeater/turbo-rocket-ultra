@@ -2,7 +2,7 @@ package components
 
 import com.badlogic.ashley.core.Entity
 import com.badlogic.gdx.utils.Pool
-import ecs.components.ai.CoolDownComponent
+import components.ai.CoolDownComponent
 import ktx.ashley.mapperFor
 
 class PanikState : CoolDownComponent(), Pool.Poolable {

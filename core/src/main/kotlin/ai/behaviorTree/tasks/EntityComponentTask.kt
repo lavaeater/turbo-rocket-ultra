@@ -3,7 +3,7 @@ package ai.behaviorTree.tasks
 import com.badlogic.ashley.core.ComponentMapper
 import com.badlogic.ashley.core.Entity
 import com.badlogic.gdx.ai.btree.Task
-import ecs.components.ai.TaskComponent
+import components.ai.TaskComponent
 
 class EntityComponentTask<T: TaskComponent>() : EntityTask() {
     lateinit var componentClass: Class<T>

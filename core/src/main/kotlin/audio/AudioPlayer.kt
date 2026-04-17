@@ -2,7 +2,7 @@ package audio
 
 import com.badlogic.gdx.audio.Sound
 import com.badlogic.gdx.utils.Queue
-import ecs.components.AudioChannels
+import components.AudioChannels
 import tru.Assets
 
 class SoundChannel(val name: String, var volume: Float) {

@@ -20,15 +20,12 @@ import ai.behaviorTree.builders.tree
 import ai.behaviorTree.builders.tryInTurn
 import com.badlogic.ashley.core.Entity
 import com.badlogic.gdx.ai.btree.Task
-import ecs.components.ai.AmblingEndpoint
-import ecs.components.ai.AttackPoint
-import ecs.components.ai.Path
-import ecs.components.ai.SeenPlayerPositions
-import ecs.components.ai.Waypoint
-import ecs.components.player.PlayerComponent
-import ecs.components.towers.FindTarget
-import ecs.components.towers.Shoot
-import ecs.components.towers.TargetInRange
+import components.ai.AttackPoint
+import components.ai.Path
+import components.ai.SeenPlayerPositions
+import components.ai.Waypoint
+import components.player.PlayerComponent
+import components.towers.TargetInRange
 
 fun <T> useThisGuard(task: Task<T>): Task<T> {
     return task
@@ -49,8 +46,8 @@ object Tree {
             exitOnFirstThatSucceeds {
 
                 doThis(exitOnFirstThatFails {
-                    expectSuccess(findSection<AmblingEndpoint>())
-                    expectFailure(invertResultOf(findPathTo<AmblingEndpoint>()))
+                    expectSuccess(findSection<components.ai.AmblingEndpoint>())
+                    expectFailure(invertResultOf(findPathTo<components.ai.AmblingEndpoint>()))
                 })
                     .ifThis(entityDoesNotHave<Path>())
 
@@ -59,7 +56,7 @@ object Tree {
 
                 doThis(runInTurnUntilFirstFailure {
                     expectSuccess(rotate(15f))
-                    expectFailure(fail(lookForAndStore<PlayerComponent, SeenPlayerPositions>(true)))
+                    expectFailure(fail(lookForAndStore<PlayerComponent, components.ai.SeenPlayerPositions>(true)))
                 })
                     .ifThis(entityDoesNotHave<SeenPlayerPositions>())
 
@@ -71,7 +68,7 @@ object Tree {
                 )
                     .ifThis(entityHas<AttackPoint>())
 
-                doThis(selectTarget<SeenPlayerPositions, AttackPoint>())
+                doThis(selectTarget<components.ai.SeenPlayerPositions, AttackPoint>())
                     .ifThis(entityHas<SeenPlayerPositions>())
 
                 doThis(invertResultOf(moveTowardsPositionTarget<Waypoint>()))
@@ -82,8 +79,8 @@ object Tree {
 
     fun getTowerBehaviorTree() = tree<Entity> {
         add(runInTurnUntilFirstFailure {
-            first(entityDo<FindTarget>())
-            then(entityDo<Shoot> { ifEntityHas<TargetInRange>() })
+            first(entityDo<components.towers.FindTarget>())
+            then(entityDo<components.towers.Shoot> { ifEntityHas<TargetInRange>() })
         })
     }
 }

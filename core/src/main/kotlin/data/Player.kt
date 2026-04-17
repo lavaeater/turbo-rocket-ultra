@@ -2,7 +2,7 @@ package data
 
 import com.badlogic.ashley.core.Entity
 import com.badlogic.gdx.physics.box2d.Body
-import ecs.components.gameplay.ObjectiveComponent
+import components.gameplay.ObjectiveComponent
 import ecs.systems.graphics.GameConstants
 import tru.AnimState
 import tru.Assets

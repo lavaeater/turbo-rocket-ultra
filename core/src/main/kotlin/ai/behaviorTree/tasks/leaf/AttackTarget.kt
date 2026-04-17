@@ -7,8 +7,8 @@ import com.badlogic.ashley.core.Entity
 import com.badlogic.gdx.ai.btree.Task
 import components.TransformComponent
 import physics.getComponent
-import ecs.components.ai.Path
-import ecs.components.enemy.AttackableProperties
+import components.ai.Path
+import components.enemy.AttackableProperties
 import ktx.ashley.allOf
 import ktx.ashley.remove
 import physics.agentProps

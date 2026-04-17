@@ -16,9 +16,9 @@ import com.strongjoshua.console.GUIConsole
 import data.Players
 import injection.InjectionContext.Companion.inject
 import physics.body
-import ecs.components.gameplay.ObjectiveComponent
-import ecs.components.graphics.CameraFollowComponent
-import ecs.components.player.PlayerComponent
+import components.gameplay.ObjectiveComponent
+import components.graphics.CameraFollowComponent
+import components.player.PlayerComponent
 import ecs.systems.graphics.CameraUpdateSystem
 import ecs.systems.graphics.GameConstants.MAX_ENEMIES
 import ecs.systems.graphics.RenderMiniMapSystem
