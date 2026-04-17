@@ -33,55 +33,6 @@ fun TextureRegion.draw(batch: PolygonSpriteBatch, position: Vector2, rotation: F
     )
 }
 
-
-@Scene2dDsl
-@OptIn(ExperimentalContracts::class)
-inline fun <S> KWidget<S>.boundLabel(
-    noinline textFunction: () -> String,
-    skin: Skin = Scene2DSkin.defaultSkin,
-    init: (@Scene2dDsl BoundLabel).(S) -> Unit = {}
-): Label {
-    contract { callsInPlace(init, InvocationKind.EXACTLY_ONCE) }
-    return actor(BoundLabel(textFunction, skin), init)
-}
-
-
-open class BoundLabel(private val textFunction: () -> String, skin: Skin = Scene2DSkin.defaultSkin) :
-    Label(textFunction(), skin) {
-    override fun act(delta: Float) {
-        txt = textFunction()
-        super.act(delta)
-    }
-}
-
-open class BoundProgressBar(
-    private val valueFunction: () -> Float,
-    min: Float,
-    max: Float,
-    stepSize: Float,
-    skin: Skin = Scene2DSkin.defaultSkin
-) : ProgressBar(min, max, stepSize, false, skin) {
-    override fun act(delta: Float) {
-        value = valueFunction()
-        super.act(delta)
-    }
-}
-
-@Scene2dDsl
-@OptIn(ExperimentalContracts::class)
-inline fun <S> KWidget<S>.boundProgressBar(
-    noinline valueFunction: () -> Float,
-    min: Float = 0f,
-    max: Float = 1f,
-    step: Float = 0.01f,
-    skin: Skin = Scene2DSkin.defaultSkin,
-    init: (@Scene2dDsl BoundProgressBar).(S) -> Unit = {}
-): BoundProgressBar {
-    contract { callsInPlace(init, InvocationKind.EXACTLY_ONCE) }
-    return actor(BoundProgressBar(valueFunction, min, max, step, skin), init)
-}
-
-
 fun Int.has(flag: Int) = flag and this == flag
 fun Int.with(flag: Int) = this or flag
 fun Int.without(flag: Int) = this and flag.inv()

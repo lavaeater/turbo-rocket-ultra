@@ -1,7 +1,7 @@
 package screens
 
 import com.badlogic.gdx.controllers.Controller
-import data.SelectedItemList
+import ui.SelectedItemList
 import ktx.log.debug
 import tru.Assets
 import tru.TurboCharacterAnim

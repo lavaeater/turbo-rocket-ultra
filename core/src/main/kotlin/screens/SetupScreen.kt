@@ -12,8 +12,8 @@ import com.badlogic.gdx.utils.Align
 import com.badlogic.gdx.utils.viewport.ExtendViewport
 import data.Player
 import data.Players
-import data.SelectedItemList
-import data.selectedItemListOf
+import ui.SelectedItemList
+import ui.selectedItemListOf
 import gamestate.GameEvent
 import gamestate.GameState
 import input.Button
