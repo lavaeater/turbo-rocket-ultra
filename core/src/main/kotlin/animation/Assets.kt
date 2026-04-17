@@ -1,4 +1,4 @@
-package tru
+package animation
 
 import audio.TurboSound
 import com.badlogic.gdx.Gdx

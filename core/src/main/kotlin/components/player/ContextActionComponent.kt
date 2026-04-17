@@ -11,7 +11,7 @@ import factories.tower
 import ktx.math.vec2
 import ktx.scene2d.scene2d
 import ktx.scene2d.table
-import tru.Assets
+import animation.Assets
 
 sealed class Buildable(val name: String, val textureRegion: TextureRegion) {
     open fun buildIt(at: Vector2) {}

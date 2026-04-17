@@ -22,7 +22,7 @@ import map.grid.GridMapSection.Companion.tileHeight
 import map.grid.GridMapSection.Companion.tileScale
 import map.grid.GridMapSection.Companion.tileWidth
 import physics.*
-import tru.Assets
+import animation.Assets
 
 
 //Should render after map, before entities, that's the best...

@@ -7,7 +7,7 @@ import dependencies.InjectionContext.Companion.inject
 import components.graphics.renderables.RenderableTextureRegion
 import components.graphics.renderables.RenderableTextureRegions
 
-import tru.Assets
+import animation.Assets
 
 class SnakeMapSection(
     val x: Int,

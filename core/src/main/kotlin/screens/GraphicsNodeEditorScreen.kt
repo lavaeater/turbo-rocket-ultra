@@ -18,7 +18,7 @@ import map.snake.right
 import map.snake.top
 import space.earlygrey.shapedrawer.ShapeDrawer
 import statemachine.StateMachine
-import tru.Assets
+import animation.Assets
 import kotlin.math.absoluteValue
 
 class GraphicsNodeEditorScreen(gameState: StateMachine<GameState, GameEvent>) : BasicScreen(gameState) {

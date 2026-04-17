@@ -6,7 +6,7 @@ import com.badlogic.ashley.core.Component
 import com.badlogic.ashley.core.Entity
 import com.badlogic.gdx.ai.btree.Task
 import components.ai.TaskComponent
-import tru.Builder
+import animation.Builder
 
 class EntityComponentTaskBuilder<T: TaskComponent>(private val componentClass: Class<T>) : Builder<Task<Entity>> {
     lateinit var guardingTask: Task<Entity>

@@ -12,7 +12,7 @@ import components.player.PlayerControlComponent
 import ktx.ashley.allOf
 import ktx.graphics.use
 import ktx.math.vec2
-import tru.Assets
+import animation.Assets
 
 
 class AimingAidSystem(private val renderRedDot: Boolean) :

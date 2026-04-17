@@ -10,10 +10,10 @@ import gamestate.GameEvent
 import gamestate.GameState
 import ktx.graphics.use
 import ktx.math.vec2
-import screens.ui.Inputter
-import screens.ui.OtherPutter
+import ui.Inputter
+import ui.OtherPutter
 import statemachine.StateMachine
-import tru.Assets
+import animation.Assets
 import ui.new.*
 
 class AnimEditorScreen(gameState: StateMachine<GameState, GameEvent>) : BasicScreen(gameState) {

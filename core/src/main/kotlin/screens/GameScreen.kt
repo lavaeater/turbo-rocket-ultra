@@ -40,7 +40,7 @@ import map.grid.*
 import map.snake.randomPoint
 import physics.*
 import statemachine.StateMachine
-import tru.Assets
+import animation.Assets
 import turbofacts.Factoids
 import turbofacts.TurboFactsOfTheWorld
 import turbofacts.TurboStoryManager

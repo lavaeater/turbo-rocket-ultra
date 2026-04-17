@@ -31,7 +31,7 @@ import ktx.graphics.use
 import map.grid.GridMapManager
 import physics.*
 import screens.ApplicationFlags
-import tru.Assets
+import animation.Assets
 import kotlin.collections.iterator
 
 class RenderSystem(

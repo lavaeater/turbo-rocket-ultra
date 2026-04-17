@@ -1,4 +1,4 @@
-package wastelandui
+package ui.wastelandui
 
 import com.badlogic.gdx.graphics.Color
 import com.badlogic.gdx.scenes.scene2d.Stage
@@ -18,7 +18,7 @@ import ktx.scene2d.table
 import ktx.scene2d.textButton
 import statemachine.StateMachine
 import story.conversation.IConversation
-import tru.Assets
+import animation.Assets
 
 class ConversationPresenter(
     override val s: Stage,

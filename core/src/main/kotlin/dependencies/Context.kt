@@ -105,9 +105,8 @@ object Context : InjectionContext() {
             bindSingleton(AudioPlayer())
             bindSingleton(GridMapManager())
             val rayHandlerOptions = RayHandlerOptions().apply {
-//                diffuse = true
-//                gammaCorrection = true
-
+                diffuse = false
+                gammaCorrection = true
                 pseudo3d = true
             }
             bindSingleton(RayHandler(inject(), rayHandlerOptions))

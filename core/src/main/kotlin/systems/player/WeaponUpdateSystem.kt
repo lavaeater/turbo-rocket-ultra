@@ -9,9 +9,9 @@ import ktx.ashley.allOf
 import physics.animation
 import physics.textureRegionComponent
 import physics.weapon
-import tru.AnimState
-import tru.Assets
-import tru.CardinalDirection
+import animation.AnimState
+import animation.Assets
+import animation.CardinalDirection
 
 
 class WeaponUpdateSystem: IteratingSystem(

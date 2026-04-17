@@ -17,7 +17,7 @@ import map.snake.*
 import physics.getEntity
 import physics.hasObstacle
 import physics.isEntity
-import tru.Assets
+import animation.Assets
 
 class GridMapSection(
     val coordinate: Coordinate,

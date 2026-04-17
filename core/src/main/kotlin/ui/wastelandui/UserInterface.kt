@@ -1,4 +1,4 @@
-package wastelandui
+package ui.wastelandui
 
 import com.badlogic.gdx.InputMultiplexer
 import com.badlogic.gdx.graphics.Color
@@ -16,7 +16,7 @@ import ktx.scene2d.scene2d
 import ktx.scene2d.table
 import statemachine.StateMachine
 import story.conversation.IConversation
-import tru.Assets
+import animation.Assets
 import turbofacts.Factoids
 import turbofacts.TurboFactsOfTheWorld
 

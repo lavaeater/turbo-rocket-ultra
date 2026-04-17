@@ -98,7 +98,7 @@ import ktx.scene2d.*
 import physics.*
 import screens.ApplicationFlags
 import screens.CounterObject
-import tru.*
+import animation.*
 import ui.customactors.boundLabel
 import ui.getUiThing
 import kotlin.experimental.or
@@ -111,7 +111,7 @@ fun gibs(at: Vector2, gibAngle: Float = 1000f) {
     for (i in Assets.enemyGibs) {
         val angle = if (gibAngle == 1000f) (1f..359f).random() else gibAngle
         val force = vec2((15f..60f).random(), 0f).setAngleDeg(angle + (-25..25).random())
-        val gibBody = world().body {
+        val body = world().body {
             type = BodyDef.BodyType.DynamicBody
             position.set(at.x - 2f, at.y - 2f)
             linearDamping = 5f
@@ -137,16 +137,16 @@ fun gibs(at: Vector2, gibAngle: Float = 1000f) {
                 position.set(at)
             }
             with<Box2d> {
-                body = gibBody
+                this.body = body
             }
             with<GibComponent> {
                 coolDownRange = 1f..3f
                 coolDown = coolDownRange.random()
             }
         }
-        registerEntity(gibBody, gibEntity)
-        gibBody.userData = LightData(1f, true)
-        gibBody.applyLinearImpulse(force.scl(gibBody.mass), gibBody.getWorldPoint(localPoint).cpy(), true)
+        registerEntity(body, gibEntity)
+        body.userData = LightData(1f, true)
+        body.applyLinearImpulse(force.scl(body.mass), body.getWorldPoint(localPoint).cpy(), true)
     }
 }
 
@@ -196,7 +196,7 @@ fun explosionEffectEntity(at: Vector2) {
 }
 
 fun fireEntity(at: Vector2, linearVelocity: Vector2, player: Player) {
-    val box2dBody = world().body {
+    val body = world().body {
         type = BodyDef.BodyType.DynamicBody
         position.set(at)
         linearDamping = 5f
@@ -217,11 +217,11 @@ fun fireEntity(at: Vector2, linearVelocity: Vector2, player: Player) {
             }
         }
     }
-    box2dBody.applyLinearImpulse(linearVelocity.scl(box2dBody.mass), box2dBody.getWorldPoint(Vector2.X), true)
+    body.applyLinearImpulse(linearVelocity.scl(body.mass), body.getWorldPoint(Vector2.X), true)
     val entity = engine().entity {
         with<TransformComponent>()
         with<Box2d> {
-            body = box2dBody
+            this.body = body
         }
         with<ParticleEffectComponent> {
             effect = Assets.fireEffectPool.obtain()
@@ -238,7 +238,7 @@ fun fireEntity(at: Vector2, linearVelocity: Vector2, player: Player) {
             coolDown = (5f..25f).random()
         }
     }
-    registerEntity(box2dBody, entity)
+    registerEntity(body, entity)
 }
 
 fun tower(

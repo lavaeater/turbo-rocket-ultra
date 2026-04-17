@@ -17,7 +17,7 @@ import factories.gibs
 import factories.lootBox
 import ktx.ashley.allOf
 import physics.*
-import tru.Assets
+import animation.Assets
 
 object FitnessTracker {
     val fitnessData = mutableListOf<FitnessData>()

@@ -52,7 +52,7 @@ import ktx.scene2d.label
 import ktx.scene2d.table
 import messaging.Message
 import screens.CounterObject
-import tru.Assets
+import animation.Assets
 import kotlin.math.pow
 import kotlin.math.roundToInt
 

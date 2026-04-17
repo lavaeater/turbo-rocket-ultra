@@ -11,7 +11,7 @@ import ktx.ashley.allOf
 import ktx.math.random
 import physics.audio
 import physics.transform
-import wastelandui.toVec2
+import ui.wastelandui.toVec2
 
 class AudioSystem : IteratingSystem(allOf(AudioComponent::class, TransformComponent::class).get()) {
     private val audioPlayer by lazy { inject<AudioPlayer>() }

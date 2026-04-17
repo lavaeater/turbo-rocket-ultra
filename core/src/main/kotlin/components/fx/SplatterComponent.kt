@@ -5,7 +5,7 @@ import com.badlogic.gdx.graphics.g2d.ParticleEffectPool
 import com.badlogic.gdx.math.Vector2
 import com.badlogic.gdx.utils.Pool
 import ktx.math.vec2
-import tru.Assets
+import animation.Assets
 
 class SplatterComponent : Component, Pool.Poolable {
     var splatterEffect: ParticleEffectPool.PooledEffect = Assets.splatterEffectPool.obtain()

@@ -1,4 +1,4 @@
-package tru
+package animation
 
 import com.badlogic.gdx.graphics.g2d.Animation
 

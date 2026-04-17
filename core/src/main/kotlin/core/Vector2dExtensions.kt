@@ -4,7 +4,7 @@ import com.badlogic.gdx.math.MathUtils
 import com.badlogic.gdx.math.Vector2
 import ktx.math.vec2
 import screens.MousePosition
-import tru.CardinalDirection
+import animation.CardinalDirection
 
 
 fun Vector2.worldToNorm(): Vector2 {

@@ -8,7 +8,7 @@ import ktx.scene2d.image
 import ktx.scene2d.scene2d
 import ktx.scene2d.table
 import statemachine.StateMachine
-import tru.Assets
+import animation.Assets
 
 class SplashScreen(gameState: StateMachine<GameState, GameEvent>) : UserInterfaceScreen(gameState) {
     override fun show() {

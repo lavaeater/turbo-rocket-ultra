@@ -14,7 +14,7 @@ import gamestate.GameState
 import ktx.math.vec2
 import ktx.scene2d.*
 import statemachine.StateMachine
-import tru.Assets
+import animation.Assets
 
 /*
 I think custom classes is the way to go.

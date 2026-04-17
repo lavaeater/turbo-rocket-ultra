@@ -14,7 +14,7 @@ import ktx.inject.register
 import ktx.log.debug
 import screens.*
 import statemachine.StateMachine
-import tru.Assets
+import animation.Assets
 import turbofacts.Factoids
 import turbofacts.factsOfTheWorld
 

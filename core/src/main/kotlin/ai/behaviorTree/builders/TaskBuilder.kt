@@ -2,7 +2,7 @@ package ai.behaviorTree.builders
 
 import ai.behaviorTree.BehaviorTreeMarker
 import com.badlogic.gdx.ai.btree.Task
-import tru.Builder
+import animation.Builder
 
 @BehaviorTreeMarker
 abstract class TaskBuilder<T>: Builder<Task<T>> {

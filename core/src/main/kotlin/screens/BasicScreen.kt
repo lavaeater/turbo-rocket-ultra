@@ -16,7 +16,7 @@ import gamestate.GameState
 import ktx.app.KtxInputAdapter
 import ktx.app.KtxScreen
 import statemachine.StateMachine
-import tru.Assets
+import animation.Assets
 
 abstract class BasicScreen(val gameState: StateMachine<GameState, GameEvent>) : KtxScreen, KtxInputAdapter, ControllerListener {
 

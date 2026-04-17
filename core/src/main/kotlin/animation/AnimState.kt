@@ -1,4 +1,4 @@
-package tru
+package animation
 
 //import kotlinx.serialization.Serializable
 

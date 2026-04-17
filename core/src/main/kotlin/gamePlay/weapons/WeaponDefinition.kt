@@ -1,7 +1,7 @@
 package gamePlay.weapons
 
 import com.badlogic.gdx.audio.Sound
-import tru.Assets
+import animation.Assets
 
 /**
  *

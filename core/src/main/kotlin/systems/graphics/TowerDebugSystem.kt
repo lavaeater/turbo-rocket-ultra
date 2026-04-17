@@ -13,7 +13,7 @@ import ktx.ashley.allOf
 import ktx.graphics.use
 import physics.getComponent
 import physics.has
-import tru.Assets
+import animation.Assets
 
 
 class TowerDebugSystem :

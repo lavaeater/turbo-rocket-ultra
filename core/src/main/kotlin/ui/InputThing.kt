@@ -1,4 +1,4 @@
-package screens.ui
+package ui
 
 interface InputThing {
     val name: String

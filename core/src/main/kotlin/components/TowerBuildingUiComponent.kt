@@ -5,7 +5,7 @@ import com.badlogic.gdx.utils.Pool
 import input.ControlMapper
 import input.NoOpUserInterfaceControl
 import ktx.math.vec2
-import tru.Assets
+import animation.Assets
 import ui.new.BoundTextureElement
 import ui.new.Carousel
 

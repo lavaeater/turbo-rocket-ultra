@@ -1,4 +1,4 @@
-package screens.ui
+package ui
 
 class Inputter(override val name: String, val inputMap: Map<Int, () -> Unit>) : InputThing {
     override fun handleInput(keyCode: Int): Boolean {

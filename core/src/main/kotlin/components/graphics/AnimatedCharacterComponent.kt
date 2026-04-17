@@ -2,12 +2,11 @@ package components.graphics
 
 import com.badlogic.ashley.core.Component
 import com.badlogic.gdx.graphics.g2d.Animation
-import com.badlogic.gdx.graphics.g2d.Sprite
 import com.badlogic.gdx.graphics.g2d.TextureRegion
 import com.badlogic.gdx.utils.Pool
-import tru.AnimState
-import tru.LpcCharacterAnim
-import tru.CardinalDirection
+import animation.AnimState
+import animation.LpcCharacterAnim
+import animation.CardinalDirection
 
 class AnimatedCharacterComponent: Component, Pool.Poolable {
     var anims: Map<AnimState, LpcCharacterAnim<TextureRegion>> = emptyMap()

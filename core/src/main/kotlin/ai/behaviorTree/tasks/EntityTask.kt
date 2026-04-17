@@ -6,7 +6,7 @@ import com.badlogic.gdx.ai.btree.LeafTask
 import core.engine
 import turbofacts.TurboFactsOfTheWorld
 import turbofacts.factsOfTheWorld
-import tru.Assets
+import animation.Assets
 
 abstract class EntityTask : LeafTask<Entity>() {
     @delegate: Transient

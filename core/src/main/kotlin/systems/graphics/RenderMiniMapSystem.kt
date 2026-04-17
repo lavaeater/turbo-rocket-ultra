@@ -14,7 +14,7 @@ import ktx.math.vec2
 import map.grid.GridMapManager
 import physics.AshleyMappers
 import physics.renderable
-import tru.Assets
+import animation.Assets
 
 class RenderMiniMapSystem(priority: Int): SortedIteratingSystem(allOf(RenderableComponent::class, TransformComponent::class, MiniMapComponent::class).get(),
     Comparator<Entity> { p0, p1 -> p1.renderable().layer.compareTo(p0.renderable().layer) }, priority) {

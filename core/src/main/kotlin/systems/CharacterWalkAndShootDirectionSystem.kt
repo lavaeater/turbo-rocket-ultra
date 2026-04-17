@@ -7,7 +7,7 @@ import components.player.PlayerControlComponent
 import core.spriteDirection
 import ktx.ashley.allOf
 import physics.AshleyMappers
-import tru.CardinalDirection
+import animation.CardinalDirection
 
 
 class CharacterWalkAndShootDirectionSystem :

@@ -16,7 +16,7 @@ import ktx.graphics.use
 import ktx.math.vec2
 import ktx.math.vec3
 import statemachine.StateMachine
-import tru.Assets
+import animation.Assets
 
 class ConceptScreenOld(gameState: StateMachine<GameState, GameEvent>) : BasicScreen(gameState) {
     /*

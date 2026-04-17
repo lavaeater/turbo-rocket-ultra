@@ -1,6 +1,6 @@
 package input
 
-import tru.Assets
+import animation.Assets
 
 sealed class Button(val playstationButtonName: String) {
     val image by lazy { Assets.ps4Buttons[playstationButtonName]!! }

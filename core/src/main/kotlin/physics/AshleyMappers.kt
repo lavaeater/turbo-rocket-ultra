@@ -52,8 +52,8 @@ import components.player.PlayerIsRespawning
 import components.player.WeaponComponent
 import components.player.WeaponEntityComponent
 import ktx.ashley.mapperFor
-import tru.Assets
-import tru.getRandomSoundFor
+import animation.Assets
+import animation.getRandomSoundFor
 import ui.UiThingComponent
 
 object AshleyMappers {

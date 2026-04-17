@@ -8,8 +8,8 @@ import components.enemy.AttackableProperties
 import components.graphics.AnimatedCharacterComponent
 import ktx.ashley.allOf
 import physics.*
-import tru.AnimState
-import tru.CardinalDirection
+import animation.AnimState
+import animation.CardinalDirection
 
 class EnemyAnimationSystem : IteratingSystem(
     allOf(

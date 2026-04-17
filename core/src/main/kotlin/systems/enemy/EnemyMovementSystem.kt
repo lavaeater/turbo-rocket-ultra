@@ -12,7 +12,7 @@ import physics.getComponent
 import ktx.ashley.allOf
 import ktx.math.vec2
 import physics.*
-import tru.Assets
+import animation.Assets
 import components.Box2d
 import components.TransformComponent
 

@@ -4,9 +4,9 @@ import com.badlogic.ashley.core.Entity
 import com.badlogic.gdx.physics.box2d.Body
 import components.gameplay.ObjectiveComponent
 import systems.graphics.GameConstants
-import tru.AnimState
-import tru.Assets
-import tru.CardinalDirection
+import animation.AnimState
+import animation.Assets
+import animation.CardinalDirection
 
 class Player(val name: String, val isAiPlayer: Boolean = false) {
     init {

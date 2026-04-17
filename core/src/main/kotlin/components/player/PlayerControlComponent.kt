@@ -10,7 +10,7 @@ import systems.graphics.GameConstants
 import input.ControlMapper
 import ktx.ashley.mapperFor
 import ktx.math.vec2
-import tru.AnimState
+import animation.AnimState
 import kotlin.reflect.KMutableProperty
 
 /**

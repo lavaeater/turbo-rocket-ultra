@@ -11,7 +11,7 @@ import ktx.scene2d.dialog
 import ktx.scene2d.label
 import ktx.scene2d.scene2d
 import statemachine.StateMachine
-import tru.Assets
+import animation.Assets
 import ui.CrawlDialog
 
 class ConceptScreen(gameState: StateMachine<GameState, GameEvent>) : BasicScreen(gameState) {
