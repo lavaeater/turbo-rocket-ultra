@@ -1,7 +1,8 @@
 package story.consequence
 
-import eater.turbofacts.Factoid
-import eater.turbofacts.TurboRule
+import common.turbofacts.Factoid
+import common.turbofacts.TurboRule
+
 
 class EmptyConsequence : Consequence {
   override fun apply() {

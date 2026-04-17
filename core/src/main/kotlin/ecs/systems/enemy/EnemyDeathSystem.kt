@@ -3,10 +3,13 @@ package ecs.systems.enemy
 import audio.AudioPlayer
 import com.badlogic.ashley.core.Entity
 import com.badlogic.ashley.systems.IteratingSystem
-import eater.ecs.ashley.components.AgentProperties
+import common.ashley.components.AgentProperties
+import common.physics.addComponent
+import common.physics.getComponent
+import common.turbofacts.Factoids
+import common.turbofacts.TurboFactsOfTheWorld
+import common.turbofacts.addToIntStat
 import ecs.components.AudioChannels
-import eater.physics.addComponent
-import eater.physics.getComponent
 import ecs.components.enemy.AttackableProperties
 import ecs.components.gameplay.DestroyComponent
 import ecs.components.player.PlayerControlComponent
@@ -15,9 +18,6 @@ import factories.lootBox
 import ktx.ashley.allOf
 import physics.*
 import tru.Assets
-import eater.turbofacts.Factoids
-import eater.turbofacts.TurboFactsOfTheWorld
-import eater.turbofacts.addToIntStat
 
 object FitnessTracker {
     val fitnessData = mutableListOf<FitnessData>()
