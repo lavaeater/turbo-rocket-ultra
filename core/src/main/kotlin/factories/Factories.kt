@@ -145,7 +145,7 @@ fun gibs(at: Vector2, gibAngle: Float = 1000f) {
             }
         }
         registerEntity(body, gibEntity)
-        body.userData = LightData(1f, true)
+        body.fixtureList.forEach { it.userData = LightData(1f, true) }
         body.applyLinearImpulse(force.scl(body.mass), body.getWorldPoint(localPoint).cpy(), true)
     }
 }
@@ -282,7 +282,7 @@ fun tower(
     }
     entity.addComponent<BehaviorComponent> { tree = Tree.getTowerBehaviorTree().apply { `object` = entity } }
     registerEntity(body, entity)
-    body.userData = LightData(4f, true)
+    body.fixtureList.forEach { it.userData = LightData(4f, true) }
 }
 
 /**
@@ -423,7 +423,7 @@ fun player(player: Player, mapper: ControlMapper, at: Vector2, debug: Boolean) {
     player.entity.add(mapper)
     player.entity.add(PlayerControlComponent(mapper, player))
     registerEntity(body, player.entity)
-    body.userData = LightData(2f, true)
+    body.fixtureList.forEach { it.userData = LightData(2f, true) }
 
     player.body = body
     player.isReady = true
@@ -521,7 +521,7 @@ fun randomLoot(at: Vector2, lootTable: LootTable) {
         }
     }
     registerEntity(body, entity)
-    body.userData = LightData(2f, true)
+    body.fixtureList.forEach { it.userData = LightData(2f, true) }
 }
 
 fun lootBox(at: Vector2, lootDrop: List<ILoot>) {
@@ -558,7 +558,7 @@ fun lootBox(at: Vector2, lootDrop: List<ILoot>) {
         }
     }
     registerEntity(body, entity)
-    body.userData = LightData(2f, true)
+    body.fixtureList.forEach { it.userData = LightData(2f, true) }
 }
 
 fun throwGrenade(
@@ -724,7 +724,7 @@ fun enemy(at: Vector2, choice: Boolean, init: EngineEntity.() -> Unit = {}): Ent
     }
 
     registerEntity(body, entity)
-    body.userData = LightData(2f, true)
+    body.fixtureList.forEach { it.userData = LightData(2f, true) }
 
     CounterObject.enemyCount++
     return entity
@@ -764,7 +764,7 @@ fun oldenemy(at: Vector2, init: EngineEntity.() -> Unit = {}): Entity {
     }
 
     registerEntity(body, entity)
-    body.userData = LightData(2f, true)
+    body.fixtureList.forEach { it.userData = LightData(2f, true) }
 
     CounterObject.enemyCount++
     return entity
@@ -888,7 +888,7 @@ fun targetStation(
     }
 
     registerEntity(body, entity)
-    body.userData = LightData(4f, true)
+    body.fixtureList.forEach { it.userData = LightData(4f, true) }
 }
 
 fun hackingStation(
@@ -944,7 +944,7 @@ fun hackingStation(
         with<ObstacleComponent>()
     }
     registerEntity(body, entity)
-    body.userData = LightData(4f, true)
+    body.fixtureList.forEach { it.userData = LightData(4f, true) }
 }
 
 /**
@@ -998,7 +998,7 @@ fun boss(at: Vector2, level: Int) {
         }
     }
     registerEntity(body, entity)
-    body.userData = LightData(8f, true)
+    body.fixtureList.forEach { it.userData = LightData(8f, true) }
     CounterObject.enemyCount++
 }
 
@@ -1078,7 +1078,7 @@ fun blockade(
     }
 
     registerEntity(body, entity)
-    body.userData = LightData(2f, true)
+    body.fixtureList.forEach { it.userData = LightData(2f, true) }
 }
 
 fun spawner(
@@ -1120,7 +1120,7 @@ fun spawner(
     }
 
     registerEntity(body, entity)
-    body.userData = LightData(4f, true)
+    body.fixtureList.forEach { it.userData = LightData(4f, true) }
 
     return entity
 }
@@ -1171,7 +1171,7 @@ fun objective(
             with<PerimeterObjectiveComponent>()
     }
     registerEntity(body, entity)
-    body.userData = LightData(4f, true)
+    body.fixtureList.forEach { it.userData = LightData(4f, true) }
     return body
 }
 
