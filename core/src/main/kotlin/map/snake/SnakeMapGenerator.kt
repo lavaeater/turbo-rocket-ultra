@@ -1,16 +1,16 @@
 package map.snake
 
-import box2dLight.p3d.P3dLight
-import box2dLight.p3d.P3dLightManager
+import box2dLight.Light
+import box2dLight.RayHandler
 import eater.injection.InjectionContext.Companion.inject
 import factories.Box2dCategories
 
 
 class SnakeMapGenerator {
     companion object {
-        val rayHandler by lazy { inject<P3dLightManager>() }
+        val rayHandler by lazy { inject<RayHandler>() }
         fun generate(minMax: IntRange = 16..32): SnakeMapSection {
-            P3dLight.setGlobalContactFilter(Box2dCategories.lights,
+            Light.setGlobalContactFilter(Box2dCategories.lights,
                 0, Box2dCategories.allButSensors)
             rayHandler.setAmbientLight(.7f)
             rayHandler.setBlurNum(3)

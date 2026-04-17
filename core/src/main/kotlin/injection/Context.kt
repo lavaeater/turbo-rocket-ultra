@@ -2,8 +2,7 @@ package injection
 
 import audio.AudioPlayer
 import box2dLight.RayHandler
-import box2dLight.base.BaseLightHandler
-import box2dLight.p3d.P3dLightManager
+import box2dLight.RayHandlerOptions
 import com.badlogic.ashley.core.Engine
 import com.badlogic.ashley.core.PooledEngine
 import com.badlogic.gdx.Input
@@ -25,6 +24,9 @@ import eater.ecs.ashley.systems.UtilityAiSystem
 import eater.injection.InjectionContext
 import eater.messaging.IMessage
 import eater.messaging.IMessageReceiver
+import eater.messaging.MessageHandler
+import eater.turbofacts.TurboFactsOfTheWorld
+import eater.turbofacts.TurboStoryManager
 import ecs.systems.AnchorPointTransformationSystem
 import ecs.systems.BodyDestroyerSystem
 import ecs.systems.CharacterWalkAndShootDirectionSystem
@@ -39,8 +41,8 @@ import ecs.systems.fx.DelayedEntityCreationSystem
 import ecs.systems.graphics.*
 import ecs.systems.graphics.GameConstants.GAME_HEIGHT
 import ecs.systems.graphics.GameConstants.GAME_WIDTH
-import ecs.systems.input.InputActionHandler
 import ecs.systems.input.GamepadInputSystem
+import ecs.systems.input.InputActionHandler
 import ecs.systems.input.KeyboardInputSystem
 import ecs.systems.intent.CalculatePositionSystem
 import ecs.systems.intent.CalculateRotationSystem
@@ -49,13 +51,9 @@ import ecs.systems.intent.RunFunctionsSystem
 import ecs.systems.pickups.LootDropSystem
 import ecs.systems.player.*
 import ktx.box2d.createWorld
-import ktx.inject.Context
 import map.grid.GridMapManager
 import messaging.Message
-import eater.messaging.MessageHandler
 import physics.ContactManager
-import eater.turbofacts.TurboFactsOfTheWorld
-import eater.turbofacts.TurboStoryManager
 import ui.Hud
 import ui.IUserInterface
 
@@ -83,7 +81,12 @@ object Context : InjectionContext() {
             })
             bindSingleton(AudioPlayer())
             bindSingleton(GridMapManager())
-            bindSingleton(P3dLightManager(inject(),500, 500))
+            val rayHandlerOptions = RayHandlerOptions().apply {
+                diffuse = true
+                gammaCorrection = true
+                pseudo3d = true
+            }
+            bindSingleton(RayHandler(inject(),rayHandlerOptions))
             bindSingleton(MessageHandler())
             bindSingleton(TurboStoryManager().apply {
                 inject<MessageHandler>().apply {

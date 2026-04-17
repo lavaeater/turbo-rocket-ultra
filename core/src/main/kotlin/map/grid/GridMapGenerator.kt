@@ -1,8 +1,9 @@
 package map.grid
 
 import ai.pathfinding.TileGraph
-import box2dLight.p3d.P3dLight
-import box2dLight.p3d.P3dLightManager
+import box2dLight.Light
+import box2dLight.Light.setGlobalContactFilter
+import box2dLight.RayHandler
 import com.badlogic.ashley.core.Engine
 import com.badlogic.gdx.math.Rectangle
 import eater.injection.InjectionContext.Companion.inject
@@ -14,7 +15,6 @@ import features.pickups.LootTable
 import features.pickups.WeaponLoot
 import features.weapons.AmmoType
 import features.weapons.WeaponDefinition
-
 import map.snake.MapDirection
 import map.snake.random
 import map.snake.randomPoint
@@ -27,7 +27,7 @@ import turbofacts.StoryHelper
 class GridMapGenerator {
     companion object {
         val engine by lazy { inject<Engine>() }
-        val rayHandler by lazy { inject<P3dLightManager>() }
+        val rayHandler by lazy { inject<RayHandler>() }
         fun addObjective(bounds: Rectangle, perimeterObjectives: Boolean) {
             val position = bounds.randomPoint()
             objective(position.x, position.y, perimeterObjectives)
@@ -48,7 +48,7 @@ class GridMapGenerator {
         private val storyManager: TurboStoryManager by lazy { inject() }
 
         fun generateFromMapFile(mapData: MapData): Pair<Map<Coordinate, GridMapSection>, TileGraph> {
-            P3dLight.setGlobalContactFilter(
+            setGlobalContactFilter(
                 Box2dCategories.lights,
                 0, Box2dCategories.allButSensors
             )
@@ -143,7 +143,7 @@ class GridMapGenerator {
 
         fun generate(length: Int, level: Int): Pair<Map<Coordinate, GridMapSection>, TileGraph> {
             //TODO: Move this somewhere
-            P3dLight.setGlobalContactFilter(
+            setGlobalContactFilter(
                 Box2dCategories.lights,
                 0, Box2dCategories.allButSensors
             )

@@ -1,6 +1,6 @@
 package ecs.systems.graphics
 
-import box2dLight.p3d.P3dLightManager
+import box2dLight.RayHandler
 import com.badlogic.ashley.core.Entity
 import com.badlogic.ashley.systems.SortedIteratingSystem
 import com.badlogic.gdx.Gdx
@@ -35,7 +35,7 @@ import tru.Assets
 class RenderSystem(
     private val batch: Batch,
     private val debug: Boolean,
-    private val rayHandler: P3dLightManager,
+    private val rayHandler: RayHandler,
     private val camera: OrthographicCamera,
     priority: Int,
     var playerDebug: Boolean

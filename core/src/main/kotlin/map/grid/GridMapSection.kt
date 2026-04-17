@@ -1,7 +1,7 @@
 package map.grid
 
-import box2dLight.p3d.P3dConeLight
-import box2dLight.p3d.P3dLightManager
+import box2dLight.ConeLight
+import box2dLight.RayHandler
 import com.badlogic.gdx.graphics.Color
 import com.badlogic.gdx.math.Rectangle
 import com.badlogic.gdx.math.Vector2
@@ -96,7 +96,7 @@ class GridMapSection(
                 MapDirection.South -> lightPosition.set(innerBounds.horizontalCenter(), innerBounds.top())
                 MapDirection.West -> lightPosition.set(innerBounds.left(), innerBounds.verticalCenter())
             }
-            P3dConeLight(
+            ConeLight(
                 rayHandler,
                 32,
                 directionColorMap[lightDirection]!!,//Color(.05f, .05f, .05f, 1f),
@@ -107,7 +107,7 @@ class GridMapSection(
                 90f
             ).apply {
                 isStaticLight = false
-                height = 2f
+                height = 4f
             }
         }
     }
@@ -137,7 +137,7 @@ class GridMapSection(
     }
 
     val connectionAlignments by lazy { connections.map { directionAlignment[it]!! }.flatten() }
-    val rayHandler by lazy { inject<P3dLightManager>() }
+    val rayHandler by lazy { inject<RayHandler>() }
 
     val tiles by lazy {
         Array(width) { x ->
