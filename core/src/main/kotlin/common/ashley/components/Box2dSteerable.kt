@@ -25,8 +25,8 @@ import com.badlogic.gdx.ai.utils.Location
 import com.badlogic.gdx.math.Vector2
 import com.badlogic.gdx.physics.box2d.Body
 import com.badlogic.gdx.utils.Pool
-import eater.ai.steering.box2d.Box2dLocation
-import eater.ai.steering.box2d.Box2dSteeringUtils
+import common.ai.steering.box2d.Box2dLocation
+import common.ai.steering.box2d.Box2dSteeringUtils
 import ktx.ashley.mapperFor
 import ktx.math.vec2
 

@@ -15,7 +15,6 @@
  */
 package common.ai.steering.box2d
 
-import com.badlogic.ashley.core.Entity
 import com.badlogic.gdx.ai.steer.Proximity
 import com.badlogic.gdx.ai.steer.Proximity.ProximityCallback
 import com.badlogic.gdx.ai.steer.Steerable
@@ -23,8 +22,8 @@ import com.badlogic.gdx.math.Vector2
 import com.badlogic.gdx.physics.box2d.Fixture
 import com.badlogic.gdx.physics.box2d.QueryCallback
 import com.badlogic.gdx.physics.box2d.World
+import common.physics.addComponent
 import eater.ecs.ashley.components.Box2dSteerable
-import eater.physics.addComponent
 import physics.getEntity
 
 /** A `Box2dSquareAABBProximity` is a [Proximity] that queries the world for all fixtures that potentially overlap the
@@ -71,22 +70,18 @@ open class Box2dSquareAABBProximity(
     }
 
     protected open fun getSteerable(fixture: Fixture): Steerable<Vector2>? {
-        val entity = getEntity(fixture.body)
+        val entity = getEntity(fixture.body) ?: return null
+        return if (Box2dSteerable.has(entity)) Box2dSteerable.get(entity) else
+            entity.addComponent<Box2dSteerable> {
+                isIndependentFacing = false
+                body = fixture.body
+                maxLinearSpeed = 0f
+                maxLinearAcceleration = 0f
+                maxAngularAcceleration = 0f
+                maxAngularSpeed = 0f
+                boundingRadius = 0f
+            }
 
-        return if (entity == null)
-            null
-        else {
-            if (Box2dSteerable.has(entity)) Box2dSteerable.get(entity) else
-                entity.addComponent<Box2dSteerable> {
-                    isIndependentFacing = false
-                    body = fixture.body
-                    maxLinearSpeed = 0f
-                    maxLinearAcceleration = 0f
-                    maxAngularAcceleration = 0f
-                    maxAngularSpeed = 0f
-                    boundingRadius = 0f
-                }
-        }
     }
 
     protected open fun accept(steerable: Steerable<Vector2>?): Boolean {

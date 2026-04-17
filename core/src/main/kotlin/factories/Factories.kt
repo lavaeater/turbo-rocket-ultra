@@ -17,6 +17,7 @@ import com.badlogic.gdx.math.Vector2
 import com.badlogic.gdx.physics.box2d.Body
 import com.badlogic.gdx.physics.box2d.BodyDef
 import com.badlogic.gdx.scenes.scene2d.Action
+import common.physics.addComponent
 import data.Player
 import eater.core.engine
 import eater.core.world
@@ -24,8 +25,6 @@ import eater.ecs.ashley.components.AgentProperties
 import eater.ecs.ashley.components.AiComponent
 import eater.ecs.ashley.components.Box2d
 import eater.ecs.ashley.components.TransformComponent
-import eater.injection.InjectionContext.Companion.inject
-import eater.physics.addComponent
 import eater.turbofacts.FactsLikeThatMan
 import ecs.components.AudioComponent
 import ecs.components.ai.BehaviorComponent
