@@ -254,6 +254,7 @@ class GameScreen(private val gameState: StateMachine<GameState, GameEvent>) : Kt
             if (!entity.isPlayer() && !entity.hasWeapon()) {
                 if (entity.hasBody()) {
                     val body = entity.body()
+                    removeEntity(body)
                     world.destroyBody(body)
                 }
                 entity.removeAll()

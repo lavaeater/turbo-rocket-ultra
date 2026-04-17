@@ -4,6 +4,7 @@ import ai.Tree
 import ai.behaviors.EnemyBehaviors
 import ai.tasks.EntityComponentTask
 import ai.tasks.EntityTask
+import box2dLight.LightData
 import com.badlogic.ashley.core.Entity
 import com.badlogic.gdx.ai.btree.BehaviorTree
 import com.badlogic.gdx.ai.btree.Task
@@ -23,6 +24,7 @@ import eater.ecs.ashley.components.AgentProperties
 import eater.ecs.ashley.components.AiComponent
 import eater.ecs.ashley.components.Box2d
 import eater.ecs.ashley.components.TransformComponent
+import eater.injection.InjectionContext.Companion.inject
 import eater.physics.addComponent
 import eater.turbofacts.FactsLikeThatMan
 import ecs.components.AudioComponent
@@ -70,7 +72,6 @@ import ui.customactors.boundLabel
 import ui.getUiThing
 import kotlin.experimental.or
 
-
 fun enemy(x: Float = 0f, y: Float = 0f, choice: Boolean) {
     enemy(vec2(x, y), choice)
 }
@@ -112,9 +113,9 @@ fun gibs(at: Vector2, gibAngle: Float = 1000f) {
                 coolDown = coolDownRange.random()
             }
         }
-        gibBody.userData = gibEntity
+        registerEntity(gibBody, gibEntity)
+        gibBody.userData = LightData(1f, true)
         gibBody.applyLinearImpulse(force.scl(gibBody.mass), gibBody.getWorldPoint(localPoint).cpy(), true)
-        //gibBody.applyAngularImpulse(50f, true)
     }
 }
 
@@ -186,7 +187,7 @@ fun fireEntity(at: Vector2, linearVelocity: Vector2, player: Player) {
         }
     }
     box2dBody.applyLinearImpulse(linearVelocity.scl(box2dBody.mass), box2dBody.getWorldPoint(Vector2.X), true)
-    box2dBody.userData = engine().entity {
+    val entity = engine().entity {
         with<TransformComponent>()
         with<Box2d> {
             body = box2dBody
@@ -206,6 +207,7 @@ fun fireEntity(at: Vector2, linearVelocity: Vector2, player: Player) {
             coolDown = (5f..25f).random()
         }
     }
+    registerEntity(box2dBody, entity)
 }
 
 fun tower(
@@ -221,15 +223,15 @@ fun tower(
     width can then be used to create the projection on the floor of the sprite object,
     given a proper anchor etc.
      */
-    val towerBody = world().body {
+    val body = world().body {
         type = BodyDef.BodyType.StaticBody
         position.set(x, y)
         box(width, height) {}
     }
 
-    val towerEntity = engine().entity {
+    val entity = engine().entity {
         with<Box2d> {
-            body = towerBody
+            this.body = body
         }
         with<TransformComponent>()
         with<TextureRegionComponent> {
@@ -247,9 +249,9 @@ fun tower(
         with<TowerComponent>()
         with<ObstacleComponent>()
     }
-    towerEntity.addComponent<BehaviorComponent> { tree = Tree.getTowerBehaviorTree().apply { `object` = towerEntity } }
-    towerBody.userData = towerEntity
-
+    entity.addComponent<BehaviorComponent> { tree = Tree.getTowerBehaviorTree().apply { `object` = entity } }
+    registerEntity(body, entity)
+    body.userData = LightData(4f, true)
 }
 
 /**
@@ -331,7 +333,7 @@ fun player(player: Player, mapper: ControlMapper, at: Vector2, debug: Boolean) {
     whereas the other one symbolizes the characters actual body and is for hit detection
     from shots etc. Nice.
      */
-    val box2dBody = bodyForRegion(
+    val body = bodyForRegion(
         at,
         Box2dCategories.players,
         Box2dCategories.whatPlayersHit,
@@ -346,7 +348,7 @@ fun player(player: Player, mapper: ControlMapper, at: Vector2, debug: Boolean) {
             health = GameConstants.ENEMY_BASE_HEALTH * 10000f
         }
         with<CameraFollowComponent>()
-        with<Box2d> { body = box2dBody }
+        with<Box2d> { this.body = body }
         with<TransformComponent>()
         with<AnimatedCharacterComponent> {
             anims = Assets.characters[player.selectedCharacterSpriteName]!!
@@ -389,9 +391,10 @@ fun player(player: Player, mapper: ControlMapper, at: Vector2, debug: Boolean) {
     }
     player.entity.add(mapper)
     player.entity.add(PlayerControlComponent(mapper, player))
-    box2dBody.userData = player.entity
+    registerEntity(body, player.entity)
+    body.userData = LightData(2f, true)
 
-    player.body = box2dBody
+    player.body = body
     player.isReady = true
 //    playerWeapon(entity, "green")
 }
@@ -454,7 +457,7 @@ fun semicircle(): List<Vector2> {
 }
 
 fun randomLoot(at: Vector2, lootTable: LootTable) {
-    val box2dBody = world().body {
+    val body = world().body {
         type = BodyDef.BodyType.StaticBody
         position.set(at)
         fixedRotation = true
@@ -473,8 +476,8 @@ fun randomLoot(at: Vector2, lootTable: LootTable) {
         }
     }
     val entity = engine().entity {
-        with<Box2d> { body = box2dBody }
-        with<TransformComponent> { position.set(box2dBody.position) }
+        with<Box2d> { this.body = body }
+        with<TransformComponent> { position.set(body.position) }
         with<TextureRegionComponent> {
             textureRegion = Assets.lootBox
         }
@@ -486,11 +489,12 @@ fun randomLoot(at: Vector2, lootTable: LootTable) {
             this.lootTable = lootTable
         }
     }
-    box2dBody.userData = entity
+    registerEntity(body, entity)
+    body.userData = LightData(2f, true)
 }
 
 fun lootBox(at: Vector2, lootDrop: List<ILoot>) {
-    val box2dBody = world().body {
+    val body = world().body {
         type = BodyDef.BodyType.StaticBody
         position.set(at)
         fixedRotation = true
@@ -509,8 +513,8 @@ fun lootBox(at: Vector2, lootDrop: List<ILoot>) {
         }
     }
     val entity = engine().entity {
-        with<Box2d> { body = box2dBody }
-        with<TransformComponent> { position.set(box2dBody.position) }
+        with<Box2d> { this.body = body }
+        with<TransformComponent> { position.set(body.position) }
         with<TextureRegionComponent> {
             textureRegion = Assets.lootBox
         }
@@ -522,7 +526,8 @@ fun lootBox(at: Vector2, lootDrop: List<ILoot>) {
             loot = lootDrop
         }
     }
-    box2dBody.userData = entity
+    registerEntity(body, entity)
+    body.userData = LightData(2f, true)
 }
 
 fun throwGrenade(
@@ -531,7 +536,7 @@ fun throwGrenade(
     speed: Float,
     player: Player
 ) {
-    val box2dBody = world().body {
+    val body = world().body {
         type = BodyDef.BodyType.DynamicBody
         position.set(at)
         linearVelocity.set(towards.cpy().setLength(speed))
@@ -545,12 +550,12 @@ fun throwGrenade(
         }
     }
     val entity = engine().entity {
-        with<Box2d> { body = box2dBody }
+        with<Box2d> { this.body = body }
         with<GrenadeComponent> {
             this.player = player
         }
         with<TransformComponent> {
-            position.set(box2dBody.position)
+            position.set(body.position)
             feelsGravity = true
             verticalSpeed = 5f
         }
@@ -563,7 +568,7 @@ fun throwGrenade(
             renderableType = RenderableType.Sprite
         }
     }
-    box2dBody.userData = entity
+    registerEntity(body, entity)
     CounterObject.bulletCount++
 }
 
@@ -573,7 +578,7 @@ fun throwMolotov(
     speed: Float,
     player: Player
 ) {
-    val box2dBody = world().body {
+    val body = world().body {
         type = BodyDef.BodyType.DynamicBody
         position.set(at)
         linearVelocity.set(towards.cpy().setLength(speed))
@@ -587,7 +592,7 @@ fun throwMolotov(
         }
     }
     val entity = engine().entity {
-        with<Box2d> { body = box2dBody }
+        with<Box2d> { this.body = body }
         with<MolotovComponent> {
             this.player = player
         }
@@ -595,7 +600,7 @@ fun throwMolotov(
             effect = Assets.fireEffectPool.obtain()
         }
         with<TransformComponent> {
-            position.set(box2dBody.position)
+            position.set(body.position)
             feelsGravity = true
             verticalSpeed = 5f
         }
@@ -608,12 +613,13 @@ fun throwMolotov(
             renderableType = RenderableType.Sprite
         }
     }
-    box2dBody.userData = entity
+
+    registerEntity(body, entity)
     CounterObject.bulletCount++
 }
 
 fun bullet(at: Vector2, towards: Vector2, speed: Float, damage: Float, player: Player) {
-    val box2dBody = world().body {
+    val body = world().body {
         type = BodyDef.BodyType.DynamicBody
         position.set(at)
         linearVelocity.set(towards.cpy().setLength(speed))
@@ -627,12 +633,12 @@ fun bullet(at: Vector2, towards: Vector2, speed: Float, damage: Float, player: P
         }
     }
     val entity = engine().entity {
-        with<Box2d> { body = box2dBody }
+        with<Box2d> { this.body = body }
         with<BulletComponent> {
             this.damage = damage
             this.player = player
         }
-        with<TransformComponent> { position.set(box2dBody.position) }
+        with<TransformComponent> { position.set(body.position) }
         with<TextureRegionComponent> {
             textureRegion = Assets.bullet
         }
@@ -641,12 +647,13 @@ fun bullet(at: Vector2, towards: Vector2, speed: Float, damage: Float, player: P
             renderableType = RenderableType.Sprite
         }
     }
-    box2dBody.userData = entity
+    registerEntity(body, entity)
+
     CounterObject.bulletCount++
 }
 
 fun enemy(at: Vector2, choice: Boolean, init: EngineEntity.() -> Unit = {}): Entity {
-    val box2dBody = bodyForRegion(
+    val body = bodyForRegion(
         at,
         Box2dCategories.enemies,
         Box2dCategories.whatEnemiesHit,
@@ -656,7 +663,7 @@ fun enemy(at: Vector2, choice: Boolean, init: EngineEntity.() -> Unit = {}): Ent
         Box2dCategories.players
     )
     val entity = engine().entity {
-        withBasicEnemyStuff(box2dBody, Assets.enemies.values.random())
+        withBasicEnemyStuff(body, Assets.enemies.values.random())
         with<LootDropComponent> {
             WeaponDefinition.weapons.forEach { lootTable.contents.add(WeaponLoot(it, 5f)) }
             lootTable.contents.add(AmmoLoot(AmmoType.NineMilliMeters, 17..51, 10f))
@@ -685,14 +692,16 @@ fun enemy(at: Vector2, choice: Boolean, init: EngineEntity.() -> Unit = {}): Ent
         init(this)
     }
 
-    box2dBody.userData = entity
+    registerEntity(body, entity)
+    body.userData = LightData(2f, true)
+
     CounterObject.enemyCount++
     return entity
 }
 
 fun oldenemy(at: Vector2, init: EngineEntity.() -> Unit = {}): Entity {
 
-    val box2dBody = bodyForRegion(
+    val body = bodyForRegion(
         at,
         Box2dCategories.enemies,
         Box2dCategories.whatEnemiesHit,
@@ -702,7 +711,7 @@ fun oldenemy(at: Vector2, init: EngineEntity.() -> Unit = {}): Entity {
         Box2dCategories.players
     )
     val entity = engine().entity {
-        withBasicEnemyStuff(box2dBody, Assets.enemies.values.random())
+        withBasicEnemyStuff(body, Assets.enemies.values.random())
         with<LootDropComponent> {
             WeaponDefinition.weapons.forEach { lootTable.contents.add(WeaponLoot(it, 5f)) }
             lootTable.contents.add(AmmoLoot(AmmoType.NineMilliMeters, 17..51, 10f))
@@ -723,7 +732,9 @@ fun oldenemy(at: Vector2, init: EngineEntity.() -> Unit = {}): Entity {
         init(this)
     }
 
-    box2dBody.userData = entity
+    registerEntity(body, entity)
+    body.userData = LightData(2f, true)
+
     CounterObject.enemyCount++
     return entity
 }
@@ -812,7 +823,7 @@ fun targetStation(
     width: Float = 4f,
     height: Float = 4f
 ) {
-    val box2dBody = world().body {
+    val body = world().body {
         type = BodyDef.BodyType.StaticBody
         position.set(at)
         box(width, height) {
@@ -824,8 +835,8 @@ fun targetStation(
         }
     }
     val entity = engine().entity {
-        with<Box2d> { body = box2dBody }
-        with<TransformComponent> { position.set(box2dBody.position) }
+        with<Box2d> { this.body = body }
+        with<TransformComponent> { position.set(body.position) }
         with<TargetComponent>()
         with<AttackableProperties>()
         with<TextureRegionComponent> {
@@ -844,7 +855,9 @@ fun targetStation(
             id = "I did this"
         }
     }
-    box2dBody.userData = entity
+
+    registerEntity(body, entity)
+    body.userData = LightData(4f, true)
 }
 
 fun hackingStation(
@@ -853,7 +866,7 @@ fun hackingStation(
     width: Float = 4f,
     height: Float = 4f
 ) {
-    val box2dBody = world().body {
+    val body = world().body {
         type = BodyDef.BodyType.StaticBody
         position.set(at)
         box(width, height) {
@@ -865,8 +878,8 @@ fun hackingStation(
         }
     }
     val entity = engine().entity {
-        with<Box2d> { body = box2dBody }
-        with<TransformComponent> { position.set(box2dBody.position) }
+        with<Box2d> { this.body = body }
+        with<TransformComponent> { position.set(body.position) }
         with<HackingComponent>()
         with<ComplexActionComponent> {
             scene2dTable = scene2d.table {
@@ -894,12 +907,13 @@ fun hackingStation(
             id = "I did this"
         }
         with<LightComponent> {
-            light.position = box2dBody.position
+            light.position = body.position
             light.isStaticLight = true
         }
         with<ObstacleComponent>()
     }
-    box2dBody.userData = entity
+    registerEntity(body, entity)
+    body.userData = LightData(4f, true)
 }
 
 /**
@@ -908,7 +922,7 @@ fun hackingStation(
  */
 fun boss(at: Vector2, level: Int) {
 
-    val box2dBody = bodyForRegion(
+    val body = bodyForRegion(
         at,
         Box2dCategories.enemies,
         Box2dCategories.all,
@@ -924,7 +938,7 @@ fun boss(at: Vector2, level: Int) {
 
     val entity = engine().entity {
         withBasicEnemyStuff(
-            box2dBody,
+            body,
             Assets.bosses.values.random(),
             90f,
             10f, 10f,
@@ -952,7 +966,8 @@ fun boss(at: Vector2, level: Int) {
             tree = Tree.nowWithAttacks().apply { `object` = this@entity.entity }
         }
     }
-    box2dBody.userData = entity
+    registerEntity(body, entity)
+    body.userData = LightData(8f, true)
     CounterObject.enemyCount++
 }
 
@@ -1005,7 +1020,7 @@ fun blockade(
     width: Float = 4f,
     height: Float = 4f
 ) {
-    val box2dBody = world().body {
+    val body = world().body {
         type = BodyDef.BodyType.StaticBody
         position.set(x, y)
         box(width, height) {
@@ -1016,8 +1031,8 @@ fun blockade(
         }
     }
     val entity = engine().entity {
-        with<Box2d> { body = box2dBody }
-        with<TransformComponent> { position.set(box2dBody.position) }
+        with<Box2d> { this.body = body }
+        with<TransformComponent> { position.set(body.position) }
         with<BlockadeComponent>()
         with<ObstacleComponent>()
         with<TextureRegionComponent> {
@@ -1030,14 +1045,16 @@ fun blockade(
             renderableType = RenderableType.Sprite
         }
     }
-    box2dBody.userData = entity
+
+    registerEntity(body, entity)
+    body.userData = LightData(2f, true)
 }
 
 fun spawner(
     tileX: Float = 0f,
     tileY: Float = 0f
 ): Entity {
-    val box2dBody = world().body {
+    val body = world().body {
         type = BodyDef.BodyType.StaticBody
         position.set(tileX, tileY)
         box(
@@ -1051,8 +1068,8 @@ fun spawner(
         }
     }
     val entity = engine().entity {
-        with<Box2d> { body = box2dBody }
-        with<TransformComponent> { position.set(box2dBody.position) }
+        with<Box2d> { this.body = body }
+        with<TransformComponent> { position.set(body.position) }
         with<ObstacleComponent>()
         with<TextureRegionComponent> {
             textureRegion = Assets.towers["obstacle"]!!
@@ -1070,7 +1087,10 @@ fun spawner(
             color = Color.PINK
         }
     }
-    box2dBody.userData = entity
+
+    registerEntity(body, entity)
+    body.userData = LightData(4f, true)
+
     return entity
 }
 
@@ -1081,7 +1101,7 @@ fun objective(
     width: Float = 4f,
     height: Float = 4f
 ): Body {
-    val box2dBody = world().body {
+    val body = world().body {
         type = BodyDef.BodyType.StaticBody
         position.set(x, y)
         box(width, height) {
@@ -1094,8 +1114,8 @@ fun objective(
     }
 
     val entity = engine().entity {
-        with<Box2d> { body = box2dBody }
-        with<TransformComponent> { position.set(box2dBody.position) }
+        with<Box2d> { this.body = body }
+        with<TransformComponent> { position.set(body.position) }
         with<TextureRegionComponent> {
             textureRegion = Assets.towers["objective"]!!
 //            offsetY = -4f
@@ -1113,14 +1133,15 @@ fun objective(
         }
         with<ObstacleComponent>()
         with<LightComponent> {
-            light.position = box2dBody.position
+            light.position = body.position
             light.isStaticLight = true
         }
         if (perimeterObjective)
             with<PerimeterObjectiveComponent>()
     }
-    box2dBody.userData = entity
-    return box2dBody
+    registerEntity(body, entity)
+    body.userData = LightData(4f, true)
+    return body
 }
 
 fun <T> Task<T>.prettyPrint(level: Int = 0): String {

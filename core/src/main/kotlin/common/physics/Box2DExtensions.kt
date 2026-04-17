@@ -17,6 +17,7 @@ import eater.ecs.ashley.components.Box2d
 import ktx.ashley.has
 import ktx.ashley.mapperFor
 import ktx.math.times
+import physics.getEntity
 import kotlin.reflect.KType
 import kotlin.reflect.typeOf
 
@@ -54,24 +55,24 @@ fun Entity.body(): Body {
 
 
 fun Contact.eitherIsEntity(): Boolean {
-    return this.fixtureA.body.userData is Entity || this.fixtureB.body.userData is Entity
+    return getEntity(this.fixtureA.body) != null || getEntity(this.fixtureB.body) != null
 }
 
 fun Contact.bothAreEntities(): Boolean {
-    return this.fixtureA.body.userData is Entity && this.fixtureB.body.userData is Entity
+    return getEntity(this.fixtureA.body) != null && getEntity(this.fixtureB.body) != null
 }
 
 fun Body.isEnemy(): Boolean {
-    return (userData as Entity).has<AgentProperties>()
+    return getEntity(this)?.has<AgentProperties>() == true
 }
 
 
 fun Fixture.isEntity(): Boolean {
-    return this.body.userData is Entity
+    return getEntity(this.body) != null
 }
 
 fun Fixture.getEntity(): Entity {
-    return this.body.userData as Entity
+    return getEntity(this.body)!!
 }
 
 inline fun <reified T : Component> Entity.has(): Boolean {

@@ -9,6 +9,7 @@ import ktx.ashley.allOf
 import ktx.ashley.remove
 import physics.AshleyMappers
 import physics.hasUiThing
+import physics.removeEntity
 import physics.uiThing
 import screens.CounterObject
 
@@ -20,6 +21,7 @@ class BodyDestroyerSystem(private val world: World) : IteratingSystem(
     override fun processEntity(entity: Entity, deltaTime: Float) {
         if(AshleyMappers.body.has(entity)) {
             val bodyComponent = AshleyMappers.body.get(entity)
+            removeEntity(bodyComponent.body)
             world.destroyBody(bodyComponent.body)
             entity.remove<Box2d>()
         }

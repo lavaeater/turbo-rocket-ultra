@@ -26,23 +26,23 @@ fun Entity.playerControlComponent(): PlayerControlComponent {
 }
 
 fun Body.isEnemy(): Boolean {
-    return (userData as Entity).has<AgentProperties>()
+    return getEntity(this)?.has<AgentProperties>() == true
 }
 
 fun Body.isPlayer(): Boolean {
-    return (userData as Entity).has<PlayerComponent>()
+    return getEntity(this)?.has<PlayerComponent>() == true
 }
 
 fun Body.playerComponent(): PlayerComponent {
-    return (userData as Entity).getComponent()
+    return getEntity(this)!!.getComponent()
 }
 
 fun Body.player(): Player {
-    return (userData as Entity).getComponent<PlayerComponent>().player
+    return getEntity(this)!!.getComponent<PlayerComponent>().player
 }
 
 fun Fixture.isPlayer(): Boolean {
-    return this.body.userData is Entity && (this.body.isPlayer())
+    return this.body.isPlayer()
 }
 
 inline fun <reified T : Component> Contact.atLeastOneHas(): Boolean {

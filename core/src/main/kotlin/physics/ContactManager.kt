@@ -2,8 +2,11 @@ package physics
 
 import audio.AudioPlayer
 import com.badlogic.ashley.core.Engine
+import com.badlogic.ashley.core.Entity
+import com.badlogic.gdx.Gdx
 import com.badlogic.gdx.Input
 import com.badlogic.gdx.math.Vector2
+import com.badlogic.gdx.physics.box2d.Body
 import com.badlogic.gdx.physics.box2d.Contact
 import com.badlogic.gdx.physics.box2d.ContactImpulse
 import com.badlogic.gdx.physics.box2d.ContactListener
@@ -85,10 +88,36 @@ object InputSequenceGenerator {
     }
 }
 
+fun registerEntity(body: Body, entity: Entity) {
+    inject<BodyEntityMapper>().registerEntity(body, entity)
+}
+
+fun getEntity(body: Body):Entity? {
+    return inject<BodyEntityMapper>().getEntity(body)
+}
+
+fun removeEntity(body: Body) {
+    inject<BodyEntityMapper>().removeEntity(body)
+}
+
+class BodyEntityMapper {
+    val bodyEntityMap = HashMap<Body, Entity>()
+    fun registerEntity(body: Body, entity: Entity) {
+        bodyEntityMap[body] = entity
+    }
+    fun getEntity(body: Body): Entity? {
+        return bodyEntityMap[body]
+    }
+
+    fun removeEntity(body: Body) {
+        bodyEntityMap.remove(body)
+    }
+}
+
 class ContactManager : ContactListener {
-    private val engine by lazy { inject<Engine>() }
-    private val messageHandler by lazy { inject<MessageHandler>() }
-    private val audioPlayer by lazy { inject<AudioPlayer>() }
+    val engine by lazy { inject<Engine>() }
+    val messageHandler by lazy { inject<MessageHandler>() }
+    val audioPlayer by lazy { inject<AudioPlayer>() }
 
     override fun beginContact(contact: Contact) {
         when (val contactType = contact.thisIsAContactBetween()) {
@@ -112,6 +141,7 @@ class ContactManager : ContactListener {
                     splatterAngle
                 )
             }
+
             is ContactType.EnemyAndDamage -> {
                 val enemy = contactType.enemy
                 enemy.fitnessDown()
@@ -125,6 +155,7 @@ class ContactManager : ContactListener {
 
 
             }
+
             is ContactType.EnemySensesPlayer -> {
                 val enemy = contactType.enemy
                 enemy.fitnessUp()
@@ -137,15 +168,19 @@ class ContactManager : ContactListener {
                             .apply { this.position = playerEntity.transform().position })
                 }
             }
+
             is ContactType.MolotovHittingAnything -> {
                 handleMolotovHittingAnything(contactType)
             }
+
             is ContactType.SomeEntityAndDamage -> {
                 //No op for now
             }
+
             is ContactType.PlayerAndDamage -> {
                 //No op for now
             }
+
             is ContactType.PlayerAndLoot -> {
 
                 val playerEntity = contactType.player
@@ -154,7 +189,7 @@ class ContactManager : ContactListener {
                 val lootComponent = lootEntity.getComponent<LootComponent>()
                 val lootPosition = lootEntity.getComponent<TransformComponent>().position
                 //Add a simple randomness to this, to begin with
-                if((1..10).random() == 1)
+                if ((1..10).random() == 1)
                     audioPlayer.playOnChannel(playerEntity.playerControl().player.playerId, "players", "loot-found")
 
                 val looted =
@@ -168,11 +203,12 @@ class ContactManager : ContactListener {
 
                             inventory.ammo[loot.ammoType] = inventory.ammo[loot.ammoType]!! + loot.amount
                         }
+
                         is WeaponLoot -> {
                             val gun = loot.weaponDefinition.getWeapon()
                             if (!inventory.weapons.any { it.name == gun.name }) {
                                 inventory.weapons.add(gun)
-                                if(!inventory.ammo.containsKey(gun.ammoType))
+                                if (!inventory.ammo.containsKey(gun.ammoType))
                                     inventory.ammo[gun.ammoType] = 0
                             }
                             if (!playerEntity.has<WeaponComponent>())
@@ -184,6 +220,7 @@ class ContactManager : ContactListener {
                 }
                 lootEntity.safeDestroy()
             }
+
             is ContactType.PlayerAndObjective -> {
                 val objectiveComponent = contactType.objective.getComponent<ObjectiveComponent>()
                 if (!objectiveComponent.touched)
@@ -191,9 +228,11 @@ class ContactManager : ContactListener {
                 objectiveComponent.touched = true
                 contactType.objective.getComponent<LightComponent>().light.isActive = true
             }
+
             is ContactType.PlayerAndProjectile -> {
                 contactType.player.getComponent<AttackableProperties>().health -= 20
             }
+
             is ContactType.PlayerAndSomeoneWhoTackles -> {
                 val enemy = contactType.tackler
                 enemy.fitnessUp()
@@ -211,9 +250,11 @@ class ContactManager : ContactListener {
                 )
                 player.getComponent<AttackableProperties>().health -= (5..40).random()
             }
+
             is ContactType.PlayerCloseToPlayer -> {
                 //Some other stuff could be done here.
             }
+
             is ContactType.PlayerAndDeadPlayer -> {
                 val deadPlayer = contactType.deadPlayer
                 val livingPlayer = contactType.livingPlayer
@@ -240,6 +281,7 @@ class ContactManager : ContactListener {
                     }
                 }
             }
+
             is ContactType.EnemyAndEnemy -> {
                 /*
                 This actually kinda works for the new behavior, this is the new information sent to this particular enemy
@@ -250,12 +292,15 @@ class ContactManager : ContactListener {
                 val enemyBEntity = contactType.enemyTwo
 
             }
+
             ContactType.Unknown -> {
 
             }
+
             is ContactType.DamageAndWall -> {
                 //No op for now
             }
+
             is ContactType.PlayerAndComplexAction -> {
                 val playerControl = contactType.player.playerControl()
                 val playerPosition = contactType.player.transform().position
@@ -304,9 +349,11 @@ class ContactManager : ContactListener {
                     )
                 }
             }
+
             is ContactType.GrenadeHittingAnything -> {
                 handleGrenadeHittingAnything(contactType)
             }
+
             is ContactType.EnemyAndObstacle -> {
                 handleEnemyHittingObstacle(contactType)
             }

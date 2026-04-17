@@ -25,6 +25,7 @@ import com.badlogic.gdx.physics.box2d.QueryCallback
 import com.badlogic.gdx.physics.box2d.World
 import eater.ecs.ashley.components.Box2dSteerable
 import eater.physics.addComponent
+import physics.getEntity
 
 /** A `Box2dSquareAABBProximity` is a [Proximity] that queries the world for all fixtures that potentially overlap the
  * square AABB built around the circle having the specified detection radius and whose center is the owner position.
@@ -70,10 +71,11 @@ open class Box2dSquareAABBProximity(
     }
 
     protected open fun getSteerable(fixture: Fixture): Steerable<Vector2>? {
-        return if (fixture.body.userData == null)
+        val entity = getEntity(fixture.body)
+
+        return if (entity == null)
             null
         else {
-            val entity = fixture.body.userData as Entity
             if (Box2dSteerable.has(entity)) Box2dSteerable.get(entity) else
                 entity.addComponent<Box2dSteerable> {
                     isIndependentFacing = false

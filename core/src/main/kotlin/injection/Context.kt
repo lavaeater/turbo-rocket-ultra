@@ -53,6 +53,7 @@ import ecs.systems.player.*
 import ktx.box2d.createWorld
 import map.grid.GridMapManager
 import messaging.Message
+import physics.BodyEntityMapper
 import physics.ContactManager
 import ui.Hud
 import ui.IUserInterface
@@ -60,6 +61,7 @@ import ui.IUserInterface
 object Context : InjectionContext() {
     fun initializeContext() {
         buildContext {
+            bindSingleton(BodyEntityMapper())
             bindSingleton(PolygonSpriteBatch())
             bindSingleton(InputActionHandler())
             bindSingleton(OrthographicCamera())
@@ -82,11 +84,12 @@ object Context : InjectionContext() {
             bindSingleton(AudioPlayer())
             bindSingleton(GridMapManager())
             val rayHandlerOptions = RayHandlerOptions().apply {
-                diffuse = true
-                gammaCorrection = true
+//                diffuse = true
+//                gammaCorrection = true
+
                 pseudo3d = true
             }
-            bindSingleton(RayHandler(inject(),rayHandlerOptions))
+            bindSingleton(RayHandler(inject(), rayHandlerOptions))
             bindSingleton(MessageHandler())
             bindSingleton(TurboStoryManager().apply {
                 inject<MessageHandler>().apply {
