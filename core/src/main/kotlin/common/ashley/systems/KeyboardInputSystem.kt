@@ -5,10 +5,10 @@ import com.badlogic.ashley.systems.IteratingSystem
 import com.badlogic.gdx.Gdx
 import com.badlogic.gdx.Input.Keys
 import com.badlogic.gdx.graphics.OrthographicCamera
-import eater.ecs.ashley.components.BodyControl
-import eater.ecs.ashley.components.KeyboardAndMouseInput
-import eater.ecs.ashley.components.Remove
-import eater.ecs.ashley.components.TransformComponent
+import common.ashley.components.BodyControl
+import common.ashley.components.KeyboardAndMouseInput
+import common.ashley.components.Remove
+import common.ashley.components.TransformComponent
 import ktx.ashley.allOf
 import ktx.ashley.exclude
 import ktx.math.vec2

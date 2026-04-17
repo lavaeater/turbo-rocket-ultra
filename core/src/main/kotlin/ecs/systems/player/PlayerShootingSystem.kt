@@ -5,11 +5,11 @@ import com.badlogic.ashley.core.Entity
 import com.badlogic.ashley.systems.IteratingSystem
 import com.badlogic.gdx.math.Polygon
 import com.badlogic.gdx.math.Vector2
-import eater.ai.ashley.canISeeYouFromHere
-import eater.ecs.ashley.components.AgentProperties
+import common.ai.ashley.canISeeYouFromHere
+import common.ashley.components.AgentProperties
 import ecs.components.enemy.AttackableProperties
-import eater.ecs.ashley.components.TransformComponent
-import eater.physics.getComponent
+import common.ashley.components.TransformComponent
+import common.physics.getComponent
 import ecs.components.intent.IntendsTo
 import ecs.components.player.PlayerControlComponent
 import ecs.components.player.WeaponEntityComponent

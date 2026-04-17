@@ -3,7 +3,7 @@ package common.ai.ashley
 import com.badlogic.ashley.core.Component
 import com.badlogic.ashley.core.ComponentMapper
 import com.badlogic.ashley.core.Entity
-import eater.core.engine
+import common.core.engine
 import kotlin.reflect.KClass
 
 class GenericActionWithState<T: Component>(name: String,

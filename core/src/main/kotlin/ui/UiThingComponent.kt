@@ -3,7 +3,7 @@ package ui
 import com.badlogic.ashley.core.Component
 import com.badlogic.gdx.scenes.scene2d.Actor
 import com.badlogic.gdx.utils.Pool
-import eater.injection.InjectionContext.Companion.inject
+import common.injection.InjectionContext.Companion.inject
 
 
 /**

@@ -2,8 +2,8 @@ package common.ashley.systems
 
 import com.badlogic.ashley.core.Entity
 import com.badlogic.ashley.systems.IteratingSystem
-import eater.ecs.ashley.components.GeneralMemory
-import eater.ecs.ashley.components.Memory
+import common.ashley.components.GeneralMemory
+import common.ashley.components.Memory
 import ktx.ashley.allOf
 import kotlin.reflect.KType
 

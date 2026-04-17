@@ -1,6 +1,6 @@
 package ai.tasks.leaf
 
-import eater.injection.InjectionContext.Companion.inject
+import common.injection.InjectionContext.Companion.inject
 import injection.Context
 import map.grid.Coordinate
 import map.grid.GridMapManager

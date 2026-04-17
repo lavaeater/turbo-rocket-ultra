@@ -5,7 +5,7 @@ import com.badlogic.gdx.graphics.Color
 import com.badlogic.gdx.graphics.g2d.Batch
 import com.badlogic.gdx.physics.box2d.Body
 import com.badlogic.gdx.physics.box2d.BodyDef
-import eater.core.world
+import common.core.world
 import ecs.systems.graphics.GameConstants
 import factories.Box2dCategories
 import ktx.box2d.body
@@ -14,7 +14,7 @@ import ktx.box2d.filter
 import map.grid.GridMapSection.Companion.tileHeight
 import map.grid.GridMapSection.Companion.tileScale
 import map.grid.GridMapSection.Companion.tileWidth
-import eater.physics.drawScaled
+import common.physics.drawScaled
 import space.earlygrey.shapedrawer.ShapeDrawer
 
 class GridMapManager {

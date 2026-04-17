@@ -1,7 +1,7 @@
 package story.consequence
 
-import eater.turbofacts.Factoid
-import eater.turbofacts.TurboRule
+import common.turbofacts.Factoid
+import common.turbofacts.TurboRule
 
 class SimpleConsequence(private val applier:()->Unit): Consequence {
   override fun apply() {

@@ -6,7 +6,7 @@ import com.badlogic.gdx.math.MathUtils
 import com.badlogic.gdx.math.Rectangle
 import com.badlogic.gdx.math.Vector2
 import com.badlogic.gdx.physics.box2d.World
-import eater.injection.InjectionContext.Companion.inject
+import common.injection.InjectionContext.Companion.inject
 import ktx.math.vec2
 
 fun<T> selectedItemListOf(selectedItemUpdated: (Int, T)-> Unit = {_,_ ->}, vararg items: T): SelectedItemList<T> {

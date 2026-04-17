@@ -2,9 +2,9 @@ package common.ashley.systems
 
 import com.badlogic.ashley.core.Entity
 import com.badlogic.ashley.systems.IteratingSystem
-import eater.core.world
-import eater.ecs.ashley.components.Box2d
-import eater.ecs.ashley.components.Remove
+import common.core.world
+import common.ashley.components.Box2d
+import common.ashley.components.Remove
 import ktx.ashley.allOf
 import ktx.ashley.remove
 

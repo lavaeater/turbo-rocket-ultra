@@ -2,13 +2,13 @@ package ecs.systems.facts
 
 import com.badlogic.ashley.core.Entity
 import com.badlogic.ashley.systems.IteratingSystem
-import eater.ecs.ashley.components.TransformComponent
+import common.ashley.components.TransformComponent
 import ecs.components.gameplay.PerimeterObjectiveComponent
-import eater.injection.InjectionContext.Companion.inject
+import common.injection.InjectionContext.Companion.inject
 import ecs.components.player.PlayerComponent
 import ktx.ashley.allOf
 import messaging.Message
-import eater.messaging.MessageHandler
+import common.messaging.MessageHandler
 import physics.light
 import physics.objective
 import physics.perimeter

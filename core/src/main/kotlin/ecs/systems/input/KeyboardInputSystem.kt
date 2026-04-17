@@ -6,15 +6,15 @@ import com.badlogic.gdx.Gdx
 import com.badlogic.gdx.Input
 import com.badlogic.gdx.graphics.OrthographicCamera
 import com.badlogic.gdx.math.Vector2
-import eater.ecs.ashley.components.TransformComponent
-import eater.injection.InjectionContext.Companion.inject
+import common.ashley.components.TransformComponent
+import common.injection.InjectionContext.Companion.inject
 import ecs.components.intent.IntendsTo
 import gamestate.GameEvent
 import gamestate.GameState
 import input.KeyboardControl
 import ktx.app.KtxInputAdapter
 import ktx.ashley.allOf
-import eater.physics.getComponent
+import common.physics.getComponent
 import physics.intendTo
 import statemachine.StateMachine
 

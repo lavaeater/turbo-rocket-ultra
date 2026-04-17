@@ -5,7 +5,7 @@ import box2dLight.RayHandler
 import com.badlogic.ashley.core.Component
 import com.badlogic.gdx.graphics.Color
 import com.badlogic.gdx.utils.Pool
-import eater.injection.InjectionContext.Companion.inject
+import common.injection.InjectionContext.Companion.inject
 
 class FlashlightComponent: Component, Pool.Poolable {
     val rayHandler by lazy { inject<RayHandler>() }

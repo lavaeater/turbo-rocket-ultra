@@ -2,11 +2,11 @@ package ecs.systems.player
 
 import com.badlogic.ashley.core.Entity
 import com.badlogic.ashley.systems.IteratingSystem
-import eater.ecs.ashley.components.Box2d
+import common.ashley.components.Box2d
 import ecs.components.graphics.AnimatedCharacterComponent
 import ecs.components.player.PlayerControlComponent
 import ktx.ashley.allOf
-import eater.physics.getComponent
+import common.physics.getComponent
 
 class PlayerMoveSystem(): IteratingSystem(
     allOf(

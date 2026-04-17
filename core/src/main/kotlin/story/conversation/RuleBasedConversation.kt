@@ -1,7 +1,7 @@
 package story.conversation
 
 import data.IAgent
-import eater.turbofacts.TurboRule
+import common.turbofacts.TurboRule
 
 class RuleBasedConversation : IConversation {
   val rules = mutableSetOf<TurboRule>()

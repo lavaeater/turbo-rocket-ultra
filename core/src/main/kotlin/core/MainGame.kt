@@ -1,8 +1,8 @@
 package core
 
 import data.Players
-import eater.injection.InjectionContext
-import eater.injection.InjectionContext.Companion.inject
+import common.injection.InjectionContext
+import common.injection.InjectionContext.Companion.inject
 import gamestate.GameEvent
 import gamestate.GameState
 import injection.Context
@@ -15,8 +15,8 @@ import ktx.log.debug
 import screens.*
 import statemachine.StateMachine
 import tru.Assets
-import eater.turbofacts.Factoids
-import eater.turbofacts.factsOfTheWorld
+import common.turbofacts.Factoids
+import common.turbofacts.factsOfTheWorld
 
 class MainGame : KtxGame<KtxScreen>(), DisposableRegistry by DisposableContainer() {
 

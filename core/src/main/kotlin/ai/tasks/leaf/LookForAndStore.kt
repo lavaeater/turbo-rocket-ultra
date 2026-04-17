@@ -7,9 +7,6 @@ import com.badlogic.ashley.core.Entity
 import com.badlogic.gdx.ai.btree.Task
 import com.badlogic.gdx.math.Vector2
 import com.badlogic.gdx.physics.box2d.Fixture
-import eater.ai.ashley.canISeeYouFromHere
-import eater.core.world
-import eater.ecs.ashley.components.TransformComponent
 import ecs.components.ai.PositionStorageComponent
 import ktx.ashley.allOf
 import ktx.box2d.RayCast
@@ -17,10 +14,14 @@ import ktx.box2d.rayCast
 import ktx.log.debug
 import ktx.math.vec2
 import physics.agentProps
-import eater.physics.getEntity
-import eater.physics.isEntity
 import physics.transform
 import kotlin.reflect.KClass
+
+import common.ashley.components.TransformComponent
+import common.core.world
+import common.physics.getEntity
+import common.physics.isEntity
+import common.ai.ashley.canISeeYouFromHere
 
 /**
  * Evolve this idea later, of being able to define some kind of storage
@@ -100,7 +101,7 @@ class LookForAndStore<ToLookFor : Component, ToStoreIn : PositionStorageComponen
                 RayCast.CONTINUE
             }
 
-            if (closestFixture != null && closestFixture!!.isEntity() && inrangeEntities.contains(closestFixture!!.getEntity())) {
+            if (closestFixture != null && closestFixture.isEntity() && inrangeEntities.contains(closestFixture.getEntity())) {
                 debug { "LookForAndStore - entity at $entityPosition can be seen " }
                 seenEntityPositions.add(entityPosition)
             }

@@ -1,11 +1,11 @@
 package ecs.systems.enemy
 
 import com.badlogic.ashley.systems.IntervalSystem
-import eater.ecs.ashley.components.AgentProperties
+import common.ashley.components.AgentProperties
 import ecs.components.gameplay.DestroyComponent
 import ecs.systems.graphics.GameConstants.MAX_ENEMIES
 import ktx.ashley.allOf
-import eater.physics.addComponent
+import common.physics.addComponent
 
 class EnemyOptimizerSystem : IntervalSystem(5f) {
 

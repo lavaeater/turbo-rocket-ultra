@@ -4,9 +4,9 @@ import com.badlogic.ashley.systems.IntervalSystem
 import ecs.components.enemy.BossComponent
 import ecs.components.gameplay.ObjectiveComponent
 import ktx.ashley.allOf
-import eater.physics.getComponent
-import eater.turbofacts.Factoids
-import eater.turbofacts.factsOfTheWorld
+import common.physics.getComponent
+import common.turbofacts.Factoids
+import common.turbofacts.factsOfTheWorld
 
 /***
  * Takes fact-setting rules and sets facts if these rules are indeed

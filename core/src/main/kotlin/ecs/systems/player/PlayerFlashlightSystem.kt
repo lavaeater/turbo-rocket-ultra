@@ -2,11 +2,11 @@ package ecs.systems.player
 
 import com.badlogic.ashley.core.Entity
 import com.badlogic.ashley.systems.IteratingSystem
-import eater.ecs.ashley.components.TransformComponent
+import common.ashley.components.TransformComponent
 import ecs.components.player.FlashlightComponent
 import ecs.components.player.PlayerControlComponent
 import ktx.ashley.allOf
-import eater.physics.getComponent
+import common.physics.getComponent
 
 class PlayerFlashlightSystem : IteratingSystem(
     allOf(

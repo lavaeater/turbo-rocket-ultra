@@ -3,7 +3,7 @@ package screens
 import com.badlogic.gdx.Gdx
 import com.badlogic.gdx.graphics.OrthographicCamera
 import com.badlogic.gdx.math.Vector2
-import eater.injection.InjectionContext.Companion.inject
+import common.injection.InjectionContext.Companion.inject
 import ecs.systems.graphics.GameConstants
 import injection.Context
 import ktx.math.vec2

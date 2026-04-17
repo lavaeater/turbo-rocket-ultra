@@ -1,7 +1,7 @@
 package story.conversation
 
 import data.IAgent
-import eater.turbofacts.factsOfTheWorld
+import common.turbofacts.factsOfTheWorld
 
 class InlineConvo(override val protagonist: IAgent, override val antagonist: IAgent = EmptyAgent(), val antagonistLines: Map<Int, List<String>> = mapOf()) : IConversation {
 

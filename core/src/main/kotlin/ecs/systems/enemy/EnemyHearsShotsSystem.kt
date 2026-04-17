@@ -3,12 +3,12 @@ package ecs.systems.enemy
 import com.badlogic.ashley.core.Entity
 import com.badlogic.ashley.systems.IteratingSystem
 import com.badlogic.gdx.math.Circle
-import eater.ecs.ashley.components.AgentProperties
 import ecs.components.ai.NoticedSomething
 import ecs.components.player.FiredShotsComponent
 import ktx.ashley.allOf
 import physics.AshleyMappers
-import eater.physics.addComponent
+import common.physics.addComponent
+import common.ashley.components.AgentProperties
 
 class EnemyHearsShotsSystem : IteratingSystem(allOf(FiredShotsComponent::class).get()) {
 

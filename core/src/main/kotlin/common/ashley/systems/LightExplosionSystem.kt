@@ -3,10 +3,10 @@ package common.ashley.systems
 import com.badlogic.ashley.core.Entity
 import com.badlogic.ashley.systems.IteratingSystem
 import com.badlogic.gdx.math.MathUtils.norm
-import eater.ecs.ashley.components.LightComponent
-import eater.ecs.ashley.components.LightExplosion
-import eater.ecs.ashley.components.Remove
-import eater.physics.addComponent
+import common.ashley.components.LightComponent
+import common.ashley.components.LightExplosion
+import common.ashley.components.Remove
+import common.physics.addComponent
 import ktx.ashley.allOf
 import ktx.ashley.exclude
 

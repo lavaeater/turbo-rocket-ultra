@@ -1,8 +1,8 @@
 package story.places
 
 import data.Player
-import eater.injection.InjectionContext.Companion.inject
-import eater.turbofacts.factsOfTheWorld
+import common.injection.InjectionContext.Companion.inject
+import common.turbofacts.factsOfTheWorld
 import gamestate.GameEvent
 import gamestate.GameState
 

@@ -2,12 +2,12 @@ package ecs.systems.player
 
 import com.badlogic.ashley.core.Entity
 import com.badlogic.ashley.systems.IteratingSystem
-import eater.ecs.ashley.components.TransformComponent
+import common.ashley.components.TransformComponent
 import ecs.components.player.PlayerControlComponent
 import ecs.components.player.WeaponComponent
 import ecs.components.player.WeaponLaserComponent
 import ktx.ashley.allOf
-import eater.physics.getComponent
+import common.physics.getComponent
 
 /**
  * We need a cool-down system, which determines the rate of fire.

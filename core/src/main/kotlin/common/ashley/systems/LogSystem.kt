@@ -2,7 +2,7 @@ package common.ashley.systems
 
 import com.badlogic.ashley.core.Entity
 import com.badlogic.ashley.systems.IntervalIteratingSystem
-import eater.ecs.ashley.components.LogComponent
+import common.ashley.components.LogComponent
 import ktx.ashley.allOf
 import ktx.log.info
 

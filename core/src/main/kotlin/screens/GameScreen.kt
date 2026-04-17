@@ -14,8 +14,8 @@ import com.crashinvaders.vfx.VfxManager
 import com.crashinvaders.vfx.effects.ChainVfxEffect
 import com.strongjoshua.console.GUIConsole
 import data.Players
-import eater.injection.InjectionContext.Companion.inject
-import eater.physics.body
+import common.injection.InjectionContext.Companion.inject
+import common.physics.body
 import ecs.components.gameplay.ObjectiveComponent
 import ecs.components.graphics.CameraFollowComponent
 import ecs.components.player.PlayerComponent
@@ -42,10 +42,10 @@ import map.snake.randomPoint
 import physics.*
 import statemachine.StateMachine
 import tru.Assets
-import eater.turbofacts.Factoids
-import eater.turbofacts.TurboFactsOfTheWorld
-import eater.turbofacts.TurboStoryManager
-import eater.turbofacts.factsOfTheWorld
+import common.turbofacts.Factoids
+import common.turbofacts.TurboFactsOfTheWorld
+import common.turbofacts.TurboStoryManager
+import common.turbofacts.factsOfTheWorld
 import factories.enemy
 import ui.IUserInterface
 import kotlin.math.pow

@@ -2,10 +2,10 @@ package common.ashley.systems
 
 import com.badlogic.ashley.core.Entity
 import com.badlogic.ashley.systems.IteratingSystem
-import eater.ecs.ashley.components.BodyControl
-import eater.ecs.ashley.components.Flashlight
-import eater.ecs.ashley.components.Remove
-import eater.ecs.ashley.components.TransformComponent
+import common.ashley.components.BodyControl
+import common.ashley.components.Flashlight
+import common.ashley.components.Remove
+import common.ashley.components.TransformComponent
 import ktx.ashley.allOf
 import ktx.ashley.exclude
 import ktx.math.times

@@ -3,13 +3,13 @@ package ecs.systems.ai.towers
 import com.badlogic.ashley.core.Entity
 import com.badlogic.ashley.systems.IteratingSystem
 import com.badlogic.gdx.ai.btree.Task
-import eater.ecs.ashley.components.AgentProperties
-import eater.ecs.ashley.components.TransformComponent
+import common.ashley.components.AgentProperties
+import common.ashley.components.TransformComponent
 import ecs.components.towers.FindTarget
 import ecs.components.towers.TargetInRange
 import ktx.ashley.allOf
-import eater.physics.addComponent
-import eater.physics.getComponent
+import common.physics.addComponent
+import common.physics.getComponent
 
 class TowerTargetFinderSystem : IteratingSystem(allOf(FindTarget::class, TransformComponent::class).get()) {
     private val enemyFamily = allOf(AgentProperties::class, TransformComponent::class).get()
