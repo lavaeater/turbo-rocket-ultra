@@ -2,12 +2,12 @@ package ecs.systems.ai
 
 import com.badlogic.ashley.core.Entity
 import com.badlogic.ashley.systems.IteratingSystem
+import common.physics.getComponent
 import ecs.components.enemy.AttackableProperties
 import ecs.components.fx.ParticleEffectComponent
 import ecs.components.gameplay.BurningComponent
 import ktx.ashley.allOf
 import ktx.ashley.remove
-import eater.physics.getComponent
 
 class BurningSystem: IteratingSystem(allOf(BurningComponent::class, AttackableProperties::class).get()) {
     override fun processEntity(entity: Entity, deltaTime: Float) {

@@ -2,7 +2,7 @@ package ecs.systems.intent
 
 import com.badlogic.ashley.core.Entity
 import com.badlogic.ashley.systems.IteratingSystem
-import eater.ecs.ashley.components.TransformComponent
+import common.ashley.components.TransformComponent
 import ecs.components.intent.CalculatedPositionComponent
 import ecs.components.intent.CalculatedRotationComponent
 import ecs.components.intent.FunctionsComponent

@@ -4,8 +4,8 @@ import com.badlogic.ashley.core.Entity
 import com.badlogic.gdx.Gdx
 import com.badlogic.gdx.graphics.OrthographicCamera
 import com.badlogic.gdx.utils.viewport.ExtendViewport
-import eater.ecs.ashley.components.LDtkMap
-import eater.ecs.ashley.components.TransformComponent
+import common.ashley.components.LDtkMap
+import common.ashley.components.TransformComponent
 import ktx.ashley.allOf
 import ktx.math.vec3
 

@@ -6,14 +6,14 @@ import com.badlogic.gdx.Gdx
 import com.badlogic.gdx.graphics.OrthographicCamera
 import com.badlogic.gdx.math.Vector2
 import com.badlogic.gdx.utils.viewport.ExtendViewport
-import eater.ecs.ashley.components.TransformComponent
+import common.ashley.components.TransformComponent
+import common.physics.getComponent
 import ecs.components.graphics.CameraFollowComponent
 import ecs.systems.graphics.GameConstants.GAME_HEIGHT
 import ecs.systems.graphics.GameConstants.GAME_WIDTH
 import ktx.ashley.allOf
 import ktx.math.vec2
 import ktx.math.vec3
-import eater.physics.getComponent
 
 class CameraUpdateSystem(
     private val camera: OrthographicCamera,

@@ -15,7 +15,6 @@ import ktx.ashley.allOf
 import ktx.box2d.RayCast
 import ktx.box2d.rayCast
 import ktx.log.debug
-import ktx.log.info
 import ktx.math.vec2
 import kotlin.reflect.KClass
 import kotlin.reflect.full.starProjectedType
@@ -76,7 +75,7 @@ class CanISeeThisConsideration<ToLookFor : Component>(
                 RayCast.CONTINUE
             }
 
-            if (closestFixture != null && closestFixture.isEntity() && inRange.contains(closestFixture.getEntity())) {
+            if ((closestFixture != null) && closestFixture.isEntity() && inRange.contains(closestFixture.getEntity())) {
                 debug { "CanISeeThisConsideration - entity at $entityPosition can be seen" }
                 val e = closestFixture.getEntity()
                 seenEntities[e] = memory.memoryLifeSpan
