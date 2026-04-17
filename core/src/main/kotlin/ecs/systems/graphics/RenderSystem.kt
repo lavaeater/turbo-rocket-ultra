@@ -12,9 +12,9 @@ import com.badlogic.gdx.math.Affine2
 import com.badlogic.gdx.math.MathUtils
 import com.crashinvaders.vfx.VfxManager
 import com.crashinvaders.vfx.effects.ChainVfxEffect
-import common.ashley.components.AgentProperties
-import common.ashley.components.Memory
-import common.ashley.components.TransformComponent
+import components.AgentProperties
+import components.Memory
+import components.TransformComponent
 import common.injection.InjectionContext.Companion.inject
 import common.physics.addComponent
 import common.physics.getComponent
@@ -22,7 +22,7 @@ import common.physics.has
 import ecs.components.ai.Path
 import ecs.components.ai.SeenPlayerPositions
 import ecs.components.ai.Waypoint
-import ecs.components.ai.behavior.AmbleState
+import components.AmbleState
 import ecs.components.gameplay.DestroyComponent
 import ecs.components.graphics.RenderableComponent
 import ktx.ashley.allOf

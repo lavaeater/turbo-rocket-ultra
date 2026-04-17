@@ -3,7 +3,7 @@ package ecs.systems.fx
 import com.badlogic.ashley.core.Entity
 import com.badlogic.ashley.systems.IteratingSystem
 import com.badlogic.gdx.graphics.g2d.Batch
-import common.ashley.components.TransformComponent
+import components.TransformComponent
 import ecs.components.fx.ParticleEffectComponent
 import ktx.ashley.allOf
 

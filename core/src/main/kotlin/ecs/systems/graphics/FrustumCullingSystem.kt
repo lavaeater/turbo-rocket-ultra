@@ -3,7 +3,7 @@ package ecs.systems.graphics
 import com.badlogic.ashley.core.Entity
 import com.badlogic.ashley.systems.IteratingSystem
 import com.badlogic.gdx.graphics.OrthographicCamera
-import common.ashley.components.TransformComponent
+import components.TransformComponent
 import common.injection.InjectionContext.Companion.inject
 import ecs.components.graphics.TextureRegionComponent
 import ktx.ashley.allOf

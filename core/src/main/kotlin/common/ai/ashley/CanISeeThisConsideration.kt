@@ -3,9 +3,9 @@ package common.ai.ashley
 import com.badlogic.ashley.core.Component
 import com.badlogic.ashley.core.Entity
 import com.badlogic.gdx.physics.box2d.Fixture
-import common.ashley.components.AgentProperties
-import common.ashley.components.Memory
-import common.ashley.components.TransformComponent
+import components.AgentProperties
+import components.Memory
+import components.TransformComponent
 import common.core.engine
 import common.core.world
 import common.physics.createComponent

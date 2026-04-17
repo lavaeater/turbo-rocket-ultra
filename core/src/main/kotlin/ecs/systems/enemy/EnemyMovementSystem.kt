@@ -5,7 +5,7 @@ import com.badlogic.ashley.systems.IteratingSystem
 import com.badlogic.gdx.graphics.Color
 import com.badlogic.gdx.math.Vector2
 import com.badlogic.gdx.physics.box2d.Body
-import common.ashley.components.AgentProperties
+import components.AgentProperties
 import ecs.components.enemy.AttackableProperties
 import ecs.components.gameplay.ObstacleComponent
 import common.physics.getComponent
@@ -13,8 +13,8 @@ import ktx.ashley.allOf
 import ktx.math.vec2
 import physics.*
 import tru.Assets
-import common.ashley.components.Box2d
-import common.ashley.components.TransformComponent
+import components.Box2d
+import components.TransformComponent
 
 
 class EnemyMovementSystem(private val flocking: Boolean) : IteratingSystem(

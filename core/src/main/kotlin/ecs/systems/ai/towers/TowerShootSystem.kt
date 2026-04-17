@@ -6,8 +6,8 @@ import com.badlogic.gdx.ai.btree.Task
 import com.badlogic.gdx.physics.box2d.Fixture
 import com.badlogic.gdx.physics.box2d.World
 import data.Players
-import common.ashley.components.Box2d
-import common.ashley.components.TransformComponent
+import components.Box2d
+import components.TransformComponent
 import ecs.components.enemy.AttackableProperties
 import common.injection.InjectionContext.Companion.inject
 import common.physics.getComponent

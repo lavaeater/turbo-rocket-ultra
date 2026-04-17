@@ -2,7 +2,7 @@ package ecs.systems.enemy
 
 import com.badlogic.ashley.core.Entity
 import com.badlogic.ashley.systems.IteratingSystem
-import common.ashley.components.AgentProperties
+import components.AgentProperties
 import common.physics.getComponent
 import ecs.components.enemy.AttackableProperties
 import ecs.components.graphics.AnimatedCharacterComponent

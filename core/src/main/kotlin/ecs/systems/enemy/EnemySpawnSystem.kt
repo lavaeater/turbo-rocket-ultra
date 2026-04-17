@@ -2,8 +2,8 @@ package ecs.systems.enemy
 
 import com.badlogic.ashley.core.Entity
 import com.badlogic.ashley.systems.IteratingSystem
-import common.ashley.components.AgentProperties
-import common.ashley.components.TransformComponent
+import components.AgentProperties
+import components.TransformComponent
 import ecs.components.enemy.EnemySpawnerComponent
 import factories.enemy
 import ktx.ashley.allOf

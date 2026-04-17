@@ -3,8 +3,8 @@ package ecs.systems
 import com.badlogic.ashley.core.Entity
 import com.badlogic.ashley.systems.IteratingSystem
 import com.badlogic.gdx.math.Vector2
-import common.ashley.components.Box2d
-import common.ashley.components.TransformComponent
+import components.Box2d
+import components.TransformComponent
 import ecs.components.gameplay.GrenadeComponent
 import ecs.components.gameplay.MolotovComponent
 import common.injection.InjectionContext.Companion.inject

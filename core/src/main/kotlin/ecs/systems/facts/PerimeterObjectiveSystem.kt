@@ -2,7 +2,7 @@ package ecs.systems.facts
 
 import com.badlogic.ashley.core.Entity
 import com.badlogic.ashley.systems.IteratingSystem
-import common.ashley.components.TransformComponent
+import components.TransformComponent
 import ecs.components.gameplay.PerimeterObjectiveComponent
 import common.injection.InjectionContext.Companion.inject
 import ecs.components.player.PlayerComponent

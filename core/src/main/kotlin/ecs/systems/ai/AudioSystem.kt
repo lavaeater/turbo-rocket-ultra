@@ -4,7 +4,7 @@ import audio.AudioPlayer
 import com.badlogic.ashley.core.Entity
 import com.badlogic.ashley.systems.IteratingSystem
 import com.badlogic.gdx.graphics.OrthographicCamera
-import common.ashley.components.TransformComponent
+import components.TransformComponent
 import common.injection.InjectionContext.Companion.inject
 import ecs.components.AudioComponent
 import ktx.ashley.allOf

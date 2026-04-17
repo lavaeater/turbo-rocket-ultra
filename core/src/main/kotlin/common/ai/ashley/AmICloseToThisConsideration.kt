@@ -2,7 +2,7 @@ package common.ai.ashley
 
 import com.badlogic.ashley.core.Component
 import com.badlogic.ashley.core.Entity
-import common.ashley.components.TransformComponent
+import components.TransformComponent
 import common.core.engine
 import ktx.ashley.allOf
 import kotlin.reflect.KClass

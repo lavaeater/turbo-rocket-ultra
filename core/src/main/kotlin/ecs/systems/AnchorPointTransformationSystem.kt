@@ -3,7 +3,7 @@ package ecs.systems
 import com.badlogic.ashley.core.Entity
 import com.badlogic.ashley.systems.IteratingSystem
 import com.badlogic.gdx.math.MathUtils.degreesToRadians
-import common.ashley.components.TransformComponent
+import components.TransformComponent
 import ecs.components.gameplay.AnchorPointsComponent
 import ktx.ashley.allOf
 import ktx.math.vec2

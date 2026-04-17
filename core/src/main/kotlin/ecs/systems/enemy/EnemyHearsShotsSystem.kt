@@ -8,7 +8,7 @@ import ecs.components.player.FiredShotsComponent
 import ktx.ashley.allOf
 import physics.AshleyMappers
 import common.physics.addComponent
-import common.ashley.components.AgentProperties
+import components.AgentProperties
 
 class EnemyHearsShotsSystem : IteratingSystem(allOf(FiredShotsComponent::class).get()) {
 

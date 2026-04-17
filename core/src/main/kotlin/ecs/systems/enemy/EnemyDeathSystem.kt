@@ -3,7 +3,7 @@ package ecs.systems.enemy
 import audio.AudioPlayer
 import com.badlogic.ashley.core.Entity
 import com.badlogic.ashley.systems.IteratingSystem
-import common.ashley.components.AgentProperties
+import components.AgentProperties
 import common.physics.addComponent
 import common.physics.getComponent
 import common.turbofacts.Factoids

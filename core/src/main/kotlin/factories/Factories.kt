@@ -1,9 +1,9 @@
 package factories
 
-import ai.Tree
-import ai.behaviors.EnemyBehaviors
-import ai.tasks.EntityComponentTask
-import ai.tasks.EntityTask
+import ai.behaviorTree.Tree
+import ai.behaviorTree.behaviors.EnemyBehaviors
+import ai.behaviorTree.tasks.EntityComponentTask
+import ai.behaviorTree.tasks.EntityTask
 import box2dLight.LightData
 import com.badlogic.ashley.core.Entity
 import com.badlogic.gdx.ai.btree.BehaviorTree
@@ -21,10 +21,10 @@ import common.physics.addComponent
 import data.Player
 import common.core.engine
 import common.core.world
-import common.ashley.components.AgentProperties
-import common.ashley.components.AiComponent
-import common.ashley.components.Box2d
-import common.ashley.components.TransformComponent
+import components.AgentProperties
+import components.AiComponent
+import components.Box2d
+import components.TransformComponent
 import common.turbofacts.FactsLikeThatMan
 import ecs.components.AudioComponent
 import ecs.components.ai.BehaviorComponent

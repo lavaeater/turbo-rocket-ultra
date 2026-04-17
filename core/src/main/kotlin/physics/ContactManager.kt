@@ -10,9 +10,9 @@ import com.badlogic.gdx.physics.box2d.Contact
 import com.badlogic.gdx.physics.box2d.ContactImpulse
 import com.badlogic.gdx.physics.box2d.ContactListener
 import com.badlogic.gdx.physics.box2d.Manifold
-import common.ashley.components.AgentProperties
-import common.ashley.components.Box2d
-import common.ashley.components.TransformComponent
+import components.AgentProperties
+import components.Box2d
+import components.TransformComponent
 import common.core.engine
 import common.injection.InjectionContext.Companion.inject
 import common.messaging.MessageHandler

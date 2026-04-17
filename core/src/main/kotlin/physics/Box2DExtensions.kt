@@ -8,7 +8,7 @@ import com.badlogic.gdx.math.MathUtils
 import com.badlogic.gdx.physics.box2d.Body
 import com.badlogic.gdx.physics.box2d.Contact
 import com.badlogic.gdx.physics.box2d.Fixture
-import common.ashley.components.AgentProperties
+import components.AgentProperties
 import common.physics.AshleyMapperStore
 import common.physics.bothAreEntities
 import common.physics.eitherIsEntity

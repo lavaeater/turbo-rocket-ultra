@@ -11,8 +11,8 @@ import com.badlogic.gdx.math.Vector2
 import com.badlogic.gdx.physics.box2d.Body
 import com.badlogic.gdx.physics.box2d.Contact
 import com.badlogic.gdx.physics.box2d.Fixture
-import common.ashley.components.AgentProperties
-import common.ashley.components.Box2d
+import components.AgentProperties
+import components.Box2d
 import common.core.engine
 import ktx.ashley.has
 import ktx.ashley.mapperFor

@@ -18,11 +18,10 @@ import com.crashinvaders.vfx.effects.CrtEffect
 import com.crashinvaders.vfx.effects.OldTvEffect
 import com.strongjoshua.console.CommandExecutor
 import com.strongjoshua.console.GUIConsole
-import common.ashley.systems.UpdateActionsSystem
-import common.ashley.systems.UpdateMemorySystem
-import common.ashley.systems.UtilityAiSystem
+import systems.UpdateActionsSystem
+import systems.UpdateMemorySystem
+import systems.UtilityAiSystem
 import common.injection.InjectionContext
-import common.injection.InjectionContext.Companion.inject
 import common.messaging.IMessage
 import common.messaging.IMessageReceiver
 import common.messaging.MessageHandler

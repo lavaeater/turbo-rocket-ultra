@@ -11,7 +11,7 @@ import com.badlogic.gdx.ai.btree.decorator.AlwaysSucceed
 import com.badlogic.gdx.ai.btree.decorator.Invert
 import com.badlogic.gdx.math.Vector2
 import com.badlogic.gdx.utils.Queue
-import common.ashley.components.AgentProperties
+import components.AgentProperties
 import common.core.world
 import common.injection.InjectionContext.Companion.inject
 import common.physics.getEntity

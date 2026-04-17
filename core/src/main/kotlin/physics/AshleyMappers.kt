@@ -2,9 +2,9 @@ package physics
 
 import com.badlogic.ashley.core.Entity
 import com.badlogic.gdx.math.Vector2
-import common.ashley.components.AgentProperties
-import common.ashley.components.Box2d
-import common.ashley.components.TransformComponent
+import components.AgentProperties
+import components.Box2d
+import components.TransformComponent
 import common.physics.addComponent
 import ecs.components.AudioComponent
 import ecs.components.ai.BehaviorComponent

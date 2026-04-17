@@ -6,9 +6,9 @@ import com.badlogic.ashley.systems.IteratingSystem
 import com.badlogic.gdx.math.Polygon
 import com.badlogic.gdx.math.Vector2
 import common.ai.ashley.canISeeYouFromHere
-import common.ashley.components.AgentProperties
+import components.AgentProperties
 import ecs.components.enemy.AttackableProperties
-import common.ashley.components.TransformComponent
+import components.TransformComponent
 import common.physics.getComponent
 import ecs.components.intent.IntendsTo
 import ecs.components.player.PlayerControlComponent
