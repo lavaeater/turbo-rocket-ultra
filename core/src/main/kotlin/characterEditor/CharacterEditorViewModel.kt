@@ -161,6 +161,16 @@ class CharacterEditorViewModel(spriteSheetCategories: List<LpcSpriteSheetCategor
         currentAnim = renderableThing.nextAnim()
     }
 
+    fun nextSpriteSheetFor(catName: String) {
+        selectCategoryByName(catName)
+        nextSpriteSheet()
+    }
+
+    fun previousSpriteSheetFor(catName: String) {
+        selectCategoryByName(catName)
+        previousSpriteSheet()
+    }
+
     fun nextSpriteSheet() {
         currentSpriteSheetIndex = (currentSpriteSheetIndex + 1).clampIndex(currentSpriteSheets.size)
         updateCurrentSpritesheet()
