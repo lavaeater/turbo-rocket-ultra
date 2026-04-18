@@ -1,27 +1,20 @@
 package ai.behaviorTree.tasks.leaf
 
 import ai.behaviorTree.tasks.EntityTask
+import ai.utility.canISeeYouFromHere
+import ai.utility.hasLineOfSight
 import com.badlogic.ashley.core.Component
 import com.badlogic.ashley.core.ComponentMapper
 import com.badlogic.ashley.core.Entity
 import com.badlogic.gdx.ai.btree.Task
 import com.badlogic.gdx.math.Vector2
-import com.badlogic.gdx.physics.box2d.Fixture
+import components.TransformComponent
 import components.ai.PositionStorageComponent
 import ktx.ashley.allOf
-import ktx.box2d.RayCast
-import ktx.box2d.rayCast
 import ktx.log.debug
-import ktx.math.vec2
 import physics.agentProps
 import physics.transform
 import kotlin.reflect.KClass
-
-import components.TransformComponent
-import core.world
-import physics.getEntity
-import physics.isEntity
-import ai.utility.canISeeYouFromHere
 
 /**
  * Evolve this idea later, of being able to define some kind of storage
@@ -82,27 +75,8 @@ class LookForAndStore<ToLookFor : Component, ToStoreIn : PositionStorageComponen
         val seenEntityPositions = mutableListOf<Vector2>()
         for (potential in inrangeEntities) {
             val entityPosition = potential.transform().position
-            var lowestFraction = 1f
-            var closestFixture: Fixture? = null
-            val pointOfHit = vec2()
-            val hitNormal = vec2()
-
-
-            world().rayCast(
-                agentPosition,
-                entityPosition
-            ) { fixture, point, normal, fraction ->
-                if (fraction < lowestFraction) {
-                    lowestFraction = fraction
-                    closestFixture = fixture
-                    pointOfHit.set(point)
-                    hitNormal.set(normal)
-                }
-                RayCast.CONTINUE
-            }
-
-            if (closestFixture != null && closestFixture!!.isEntity() && inrangeEntities.contains(closestFixture!!.getEntity())) {
-                debug { "LookForAndStore - entity at $entityPosition can be seen " }
+            if (hasLineOfSight(agentPosition, entityPosition, potential)) {
+                debug { "LookForAndStore - entity at $entityPosition can be seen" }
                 seenEntityPositions.add(entityPosition)
             }
         }

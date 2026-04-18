@@ -2,20 +2,13 @@ package ai.utility
 
 import com.badlogic.ashley.core.Component
 import com.badlogic.ashley.core.Entity
-import com.badlogic.gdx.physics.box2d.Fixture
 import components.AgentProperties
 import components.Memory
 import components.TransformComponent
 import core.engine
-import core.world
 import physics.createComponent
-import physics.getEntity
-import physics.isEntity
 import ktx.ashley.allOf
-import ktx.box2d.RayCast
-import ktx.box2d.rayCast
 import ktx.log.debug
-import ktx.math.vec2
 import kotlin.reflect.KClass
 import kotlin.reflect.full.starProjectedType
 
@@ -56,29 +49,9 @@ class CanISeeThisConsideration<ToLookFor : Component>(
         debug { "CanISeeThisConsideration found ${inRange.size} entities in range and in the field of view" }
         for (potential in inRange) {
             val entityPosition = TransformComponent.get(potential).position
-            var lowestFraction = 1f
-            var closestFixture: Fixture? = null
-            val pointOfHit = vec2()
-            val hitNormal = vec2()
-
-
-            world().rayCast(
-                agentPosition,
-                entityPosition
-            ) { fixture, point, normal, fraction ->
-                if (fraction < lowestFraction) {
-                    lowestFraction = fraction
-                    closestFixture = fixture
-                    pointOfHit.set(point)
-                    hitNormal.set(normal)
-                }
-                RayCast.CONTINUE
-            }
-
-            if (closestFixture != null && closestFixture!!.isEntity() && inRange.contains(closestFixture!!.getEntity())) {
+            if (hasLineOfSight(agentPosition, entityPosition, potential)) {
                 debug { "CanISeeThisConsideration - entity at $entityPosition can be seen" }
-                val e = closestFixture!!.getEntity()
-                seenEntities[e] = memory.memoryLifeSpan
+                seenEntities[potential] = memory.memoryLifeSpan
             }
         }
         return if (seenEntities.any() ) {
