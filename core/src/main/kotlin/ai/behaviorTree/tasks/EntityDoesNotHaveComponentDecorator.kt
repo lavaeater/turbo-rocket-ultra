@@ -11,7 +11,7 @@ class EntityDoesNotHaveComponentDecorator<T : Component>(child: Task<Entity>, va
     private val mapper by lazy { ComponentMapper.getFor(componentClass) }
 
     override fun copyTo(task: Task<Entity>?): Task<Entity> {
-        TODO("Not yet implemented")
+        return EntityDoesNotHaveComponentDecorator(getChild(0).cloneTask(), componentClass)
     }
 
     override fun childRunning(runningTask: Task<Entity>?, reporter: Task<Entity>?) {

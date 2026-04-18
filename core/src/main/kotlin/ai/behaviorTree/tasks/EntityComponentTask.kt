@@ -34,7 +34,7 @@ class EntityComponentTask<T: TaskComponent>() : EntityTask() {
     }
 
     override fun copyTo(task: Task<Entity>?): Task<Entity> {
-        TODO("Not yet implemented")
+        return EntityComponentTask(componentClass)
     }
 
     override fun execute(): Status {

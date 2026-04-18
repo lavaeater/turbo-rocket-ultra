@@ -12,7 +12,7 @@ import kotlin.reflect.KClass
 
 class FindPathTo<T: CoordinateStorageComponent>(private val componentClass: KClass<T>) : EntityTask() {
     override fun copyTo(task: Task<Entity>?): Task<Entity> {
-        TODO("Not yet implemented")
+        return FindPathTo(componentClass)
     }
 
     override fun execute(): Status {

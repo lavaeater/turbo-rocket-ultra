@@ -32,7 +32,7 @@ class MoveTowardsPositionTarget<T: PositionTarget>(private val run: Boolean = fa
     }
 
     override fun copyTo(task: Task<Entity>?): Task<Entity> {
-        TODO("Not yet implemented")
+        return MoveTowardsPositionTarget(run, componentClass)
     }
 
 

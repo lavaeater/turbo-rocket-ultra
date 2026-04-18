@@ -40,7 +40,7 @@ class LookForAndStore<ToLookFor : Component, ToStoreIn : PositionStorageComponen
     private val stop: Boolean
 ) : EntityTask() {
     override fun copyTo(task: Task<Entity>?): Task<Entity> {
-        TODO("Not yet implemented")
+        return LookForAndStore(componentClass, storageComponentClass, stop)
     }
 
     private val entitiesToLookForFamily = allOf(componentClass, TransformComponent::class).get()
