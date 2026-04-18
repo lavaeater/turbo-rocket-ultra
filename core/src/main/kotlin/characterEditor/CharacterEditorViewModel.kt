@@ -131,11 +131,16 @@ class CharacterEditorViewModel(spriteSheetCategories: List<LpcSpriteSheetCategor
 
     /** Clears the currently browsed category's selected layer (sets it to empty). */
     fun clearCurrentLayer() {
-        selectedSpriteSheets[currentCategoryName] = SpriteSheet.EmptySpriteSheet()
+        clearLayerFor(currentCategoryName)
         currentSpriteSheetIndex = 0
         currentSpriteSheetName = ""
         currentTags = ""
         subName = ""
+    }
+
+    /** Clears the selected layer for any category by name without changing the current browse position. */
+    fun clearLayerFor(categoryName: String) {
+        selectedSpriteSheets[categoryName] = SpriteSheet.EmptySpriteSheet()
         updateRenderableThing()
     }
 
