@@ -27,7 +27,7 @@ class AttackTarget<T : Component>(private val targetComponentClass: KClass<T>) :
     }
 
     override fun copyTo(task: Task<Entity>?): Task<Entity> {
-        TODO("Not yet implemented")
+        return AttackTarget(targetComponentClass)
     }
 
     override fun execute(): Status {

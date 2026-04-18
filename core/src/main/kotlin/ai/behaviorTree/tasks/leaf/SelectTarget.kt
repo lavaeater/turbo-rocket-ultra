@@ -9,14 +9,14 @@ import components.ai.PositionTarget
 import kotlin.reflect.KClass
 
 class SelectTarget<Targets : PositionStorageComponent, TargetStorage : PositionTarget>(
-    targets: KClass<Targets>,
+    private val targets: KClass<Targets>,
     private val targetStorage: KClass<TargetStorage>
 ) : EntityTask() {
     private val targetsMapper by lazy { ComponentMapper.getFor(targets.java) }
     private val targetMapper by lazy { ComponentMapper.getFor(targetStorage.java) }
 
     override fun copyTo(task: Task<Entity>?): Task<Entity> {
-        TODO("Not yet implemented")
+        return SelectTarget(targets, targetStorage)
     }
 
     override fun execute(): Status {

@@ -4,7 +4,12 @@ import audio.AudioPlayer
 import box2dLight.RayHandler
 import box2dLight.RayHandlerOptions
 import com.badlogic.ashley.core.Engine
+import com.badlogic.ashley.core.Entity
+import com.badlogic.ashley.core.EntityListener
 import com.badlogic.ashley.core.PooledEngine
+import components.AiComponent
+import components.ai.BehaviorComponent
+import ktx.ashley.allOf
 import com.badlogic.gdx.Input
 import com.badlogic.gdx.graphics.Camera
 import com.badlogic.gdx.graphics.OrthographicCamera
@@ -76,6 +81,7 @@ import systems.player.PlayerMoveSystem
 import systems.player.PlayerShootingSystem
 import systems.player.UpdatePlayerStatsSystem
 import systems.player.WeaponReloadSystem
+import systems.ai.ConversationTriggerSystem
 import ui.Hud
 import ui.IUserInterface
 
@@ -127,6 +133,7 @@ object Context : InjectionContext() {
                 }
             })
             bindSingleton(TurboFactsOfTheWorld { key -> inject<MessageHandler>().sendMessage(Message.FactUpdated(key)) })
+            bindSingleton(story.conversation.ConversationManager(inject()))
             bindSingleton(getEngine())
             bindSingleton(listOf(BloomEffect(), CrtEffect(), OldTvEffect()))
             bindSingleton(VfxManager(Pixmap.Format.RGBA8888))
@@ -135,6 +142,14 @@ object Context : InjectionContext() {
 
     private fun getEngine(): Engine {
         return PooledEngine().apply {
+            addEntityListener(
+                allOf(AiComponent::class, BehaviorComponent::class).get(),
+                object : EntityListener {
+                    override fun entityAdded(entity: Entity) =
+                        error("Entity has both AiComponent (utility AI) and BehaviorComponent (behavior tree) — each entity must use exactly one AI system")
+                    override fun entityRemoved(entity: Entity) {}
+                }
+            )
             addSystem(UpdateTimePieceSystem())
             addSystem(PhysicsSystem(0))
             addSystem(CameraUpdateSystem(inject(), inject()))
@@ -179,6 +194,7 @@ object Context : InjectionContext() {
             //We add this here now to make sure it is run AFTER the rendercycle
 //            addSystem(BehaviorTreeSystem(4))
             addSystem(UtilityAiSystem())
+            addSystem(ConversationTriggerSystem())
             addSystem(UpdateActionsSystem())
             addSystem(UpdateMemorySystem())
             addSystem(PlayerFlashlightSystem())

@@ -18,7 +18,7 @@ class NextStepOnPath : EntityTask() {
     }
 
     override fun copyTo(task: Task<Entity>?): Task<Entity> {
-        TODO("Not yet implemented")
+        return NextStepOnPath()
     }
 
     override fun execute(): Status {

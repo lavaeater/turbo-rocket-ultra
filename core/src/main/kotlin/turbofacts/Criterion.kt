@@ -231,3 +231,19 @@ sealed class IntVersusInt : IntCriteria() {
     }
 
 }
+
+sealed class StringListCriteria : Criterion()
+
+class StringListContains(override val factKey: String, private val value: String) : StringListCriteria() {
+    override fun checkRule(): Boolean = facts.getStringList(factKey).value.contains(value)
+}
+
+class StringListSize(override val factKey: String, private val expected: Int, private val checker: (Int, Int) -> Boolean) : StringListCriteria() {
+    override fun checkRule(): Boolean = checker(facts.getStringList(factKey).value.size, expected)
+
+    companion object {
+        fun moreThan(factKey: String, size: Int) = StringListSize(factKey, size) { a, b -> a > b }
+        fun lessThan(factKey: String, size: Int) = StringListSize(factKey, size) { a, b -> a < b }
+        fun equals(factKey: String, size: Int)   = StringListSize(factKey, size) { a, b -> a == b }
+    }
+}

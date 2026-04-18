@@ -195,6 +195,28 @@ class Hud(private val batch: Batch, debugAll: Boolean) : IUserInterface, IMessag
             pauseBlurb.isVisible = false
     }
 
+    private var conversationPresenter: ui.wastelandui.IConversationPresenter? = null
+
+    override fun runConversation(
+        conversation: story.conversation.IConversation,
+        function: () -> Unit,
+        showProtagonistPortrait: Boolean,
+        showAntagonistPortrait: Boolean
+    ) {
+        conversationPresenter?.dispose()
+        conversationPresenter = ui.wastelandui.ConversationPresenter(
+            stage,
+            conversation,
+            {
+                conversationPresenter?.dispose()
+                conversationPresenter = null
+                function()
+            },
+            showProtagonistPortrait,
+            showAntagonistPortrait
+        )
+    }
+
     /***
      * This is a story method, this should be generalized to support more
      * dynamic stuff.

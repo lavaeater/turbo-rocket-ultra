@@ -14,6 +14,7 @@ sealed class GameEvent(val name: String) {
     object StopConcept : GameEvent("StopConcept")
     object ExitMapEditor : GameEvent("ExitMapEditor")
     object StartMapEditor : GameEvent("StartMapEditor")
+    object StartedConversation : GameEvent("StartedConversation")
     object DialogEvent : GameEvent("DialogEvent")
     object LevelComplete : GameEvent("LevelComplete")
     object StartAnimEditor: GameEvent("StartAnimEditor")

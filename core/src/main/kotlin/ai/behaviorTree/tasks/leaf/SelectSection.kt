@@ -21,7 +21,7 @@ import kotlin.reflect.KClass
  */
 class SelectSection<T: CoordinateStorageComponent>(private val componentClass: KClass<T>, private val method: (Coordinate, Int, Int) -> Coordinate?) : EntityTask() {
     override fun copyTo(task: Task<Entity>?): Task<Entity> {
-        TODO("Not yet implemented")
+        return SelectSection(componentClass, method)
     }
 
     override fun execute(): Status {

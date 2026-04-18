@@ -1,7 +1,7 @@
 package factories
 
 import ai.behaviorTree.Tree
-import ai.behaviorTree.behaviors.EnemyBehaviors
+import ai.utility.behaviors.EnemyBehaviors
 import ai.behaviorTree.tasks.EntityComponentTask
 import ai.behaviorTree.tasks.EntityTask
 import box2dLight.LightData
@@ -994,7 +994,7 @@ fun boss(at: Vector2, level: Int) {
         with<BossComponent> {}
 
         bt = with {
-            tree = Tree.nowWithAttacks().apply { `object` = this@entity.entity }
+            tree = Tree.bossBehaviorTree().apply { `object` = this@entity.entity }
         }
     }
     registerEntity(body, entity)
@@ -1173,6 +1173,29 @@ fun objective(
     registerEntity(body, entity)
     body.fixtureList.forEach { it.userData = LightData(4f, true) }
     return body
+}
+
+fun conversationNpc(
+    at: Vector2,
+    inkJsonPath: String,
+    triggerRadius: Float = 3f,
+    repeatable: Boolean = false,
+    afterConversation: () -> Unit = {}
+): Entity {
+    val inkStory = com.bladecoder.ink.runtime.Story(story.conversation.InkLoader().readStoryJson(inkJsonPath))
+    val agent = story.conversation.EmptyAgent()
+    val conversation = story.conversation.InkConversation(inkStory, agent, agent)
+
+    val entity = engine().entity {
+        with<TransformComponent> { position.set(at.x, at.y) }
+        with<components.ai.ConversationComponent> {
+            this.conversation = conversation
+            this.triggerRadius = triggerRadius
+            this.repeatable = repeatable
+            this.afterConversation = afterConversation
+        }
+    }
+    return entity
 }
 
 fun <T> Task<T>.prettyPrint(level: Int = 0): String {

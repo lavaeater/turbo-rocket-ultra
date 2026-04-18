@@ -8,5 +8,6 @@ data class MapData(
     val mapFile: String,
     val facts: Map<String, Any>,
     val storyKeys: List<String>,
-    val mapDefinition: TextGridMapDefinition
+    val mapDefinition: TextGridMapDefinition,
+    val storiesFile: String = ""
 )

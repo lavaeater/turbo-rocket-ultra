@@ -15,6 +15,7 @@ import ktx.log.debug
 import screens.*
 import statemachine.StateMachine
 import animation.Assets
+import turbofacts.FactPersistence
 import turbofacts.Factoids
 import turbofacts.factsOfTheWorld
 
@@ -66,6 +67,7 @@ class MainGame : KtxGame<KtxScreen>(), DisposableRegistry by DisposableContainer
                         gameScreen.resume()
                     }
                     edge(GameEvent.PausedGame, GameState.Paused) {}
+                    edge(GameEvent.StartedConversation, GameState.Conversation) {}
                     edge(GameEvent.GameOver, GameState.Setup) {
                         action {
                             /*
@@ -89,6 +91,14 @@ class MainGame : KtxGame<KtxScreen>(), DisposableRegistry by DisposableContainer
                     edge(GameEvent.ResumedGame, GameState.Running) {}
                     edge(GameEvent.ExitedGame, GameState.Setup) {}
                 }
+                state(GameState.Conversation) {
+                    action {
+                        gameScreen.pause()
+                    }
+                    edge(GameEvent.DialogEvent, GameState.Running) {
+                        action { gameScreen.resume() }
+                    }
+                }
                 state(GameState.AnimEditor) {
                     action { setScreen<AnimEditorScreen>() }
                     edge(GameEvent.StopAnimEditor, GameState.Setup) {}
@@ -107,6 +117,10 @@ class MainGame : KtxGame<KtxScreen>(), DisposableRegistry by DisposableContainer
                 }
             })
         }
+        val facts = factsOfTheWorld()
+        FactPersistence.load(facts)
+        facts.setBooleanFact(FactPersistence.saveExists(), Factoids.SaveExists)
+
         Assets.load().alsoRegister()
         addScreen(SplashScreen(gameState))
         addScreen(SetupScreen(gameState))
@@ -119,5 +133,10 @@ class MainGame : KtxGame<KtxScreen>(), DisposableRegistry by DisposableContainer
         addScreen(MapEditorScreen(gameState))
         addScreen(CharacterEditorScreen(gameState))
         gameState.initialize()
+    }
+
+    override fun dispose() {
+        FactPersistence.save(factsOfTheWorld())
+        super.dispose()
     }
 }

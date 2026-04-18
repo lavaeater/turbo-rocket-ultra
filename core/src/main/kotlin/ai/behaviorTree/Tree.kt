@@ -10,10 +10,13 @@ import ai.behaviorTree.builders.fail
 import ai.behaviorTree.builders.findPathTo
 import ai.behaviorTree.builders.findSection
 import ai.behaviorTree.builders.getNextStepOnPath
+import ai.behaviorTree.builders.grabAndThrowPlayer
 import ai.behaviorTree.builders.invertResultOf
 import ai.behaviorTree.builders.lookForAndStore
 import ai.behaviorTree.builders.moveTowardsPositionTarget
+import ai.behaviorTree.builders.playerIsInGrabRange
 import ai.behaviorTree.builders.rotate
+import ai.behaviorTree.builders.rushPlayer
 import ai.behaviorTree.builders.runInTurnUntilFirstFailure
 import ai.behaviorTree.builders.selectTarget
 import ai.behaviorTree.builders.tree
@@ -73,6 +76,26 @@ object Tree {
 
                 doThis(invertResultOf(moveTowardsPositionTarget<Waypoint>()))
                     .ifThis(entityHas<Waypoint>())
+            }
+        )
+    }
+
+    fun bossBehaviorTree() = tree<Entity> {
+        root(
+            exitOnFirstThatSucceeds {
+                // Highest priority: grab the player if right on top of them
+                doThis(grabAndThrowPlayer(grabRange = 2f, stunDuration = 1.5f, throwForce = 25f, damage = 30f))
+                    .ifThis(playerIsInGrabRange(2f))
+
+                // Rush: charge at the player's position at the moment of decision (dodgeable)
+                doThis(rushPlayer(damage = 20f))
+
+                // Fallback: look around for the player
+                doThis(runInTurnUntilFirstFailure {
+                    expectSuccess(rotate(30f))
+                    expectFailure(fail(lookForAndStore<PlayerComponent, SeenPlayerPositions>(false)))
+                })
+                    .ifThis(entityDoesNotHave<SeenPlayerPositions>())
             }
         )
     }

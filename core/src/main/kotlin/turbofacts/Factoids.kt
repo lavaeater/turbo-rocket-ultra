@@ -47,4 +47,7 @@ object Factoids {
 
     //PlayerFacts
     const val LivingPlayerCount = "LivingPlayerCount"
+
+    //Persistence
+    const val SaveExists = "SaveExists"
 }

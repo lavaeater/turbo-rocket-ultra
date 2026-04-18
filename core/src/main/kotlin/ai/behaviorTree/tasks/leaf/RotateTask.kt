@@ -9,7 +9,7 @@ import physics.agentProps
 class RotateTask(private val degrees: Float, private val counterClockwise: Boolean = true) : EntityTask() {
     private var rotatedSoFar = 0f
     override fun copyTo(task: Task<Entity>?): Task<Entity> {
-        TODO("Not yet implemented")
+        return RotateTask(degrees, counterClockwise)
     }
 
     override fun execute(): Status {

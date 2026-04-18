@@ -279,7 +279,7 @@ class GameScreen(private val gameState: StateMachine<GameState, GameEvent>) : Kt
         }
         mapManager.removeLights(mapManager.gridMap)
         mapManager.gridMap = map.first
-        mapManager.sectionGraph = map.second
+        mapManager.sectionGraph = map.second.also { it.clearCache() }
         CounterObject.numberOfObjectives = engine.getEntitiesFor(allOf(ObjectiveComponent::class).get()).count()
         movePlayersToStart()
     }

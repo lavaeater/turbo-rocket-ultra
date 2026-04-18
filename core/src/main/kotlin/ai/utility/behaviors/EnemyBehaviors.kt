@@ -1,6 +1,6 @@
-package ai.behaviorTree.behaviors
+package ai.utility.behaviors
 
-import ai.behaviorTree.behaviors.EnemyConsiderations.healthConsideration
+import ai.utility.behaviors.EnemyConsiderations.healthConsideration
 import ai.findPathFromTo
 import ai.pathfinding.TileGraph
 import ai.behaviorTree.tasks.leaf.SectionFindingMethods
