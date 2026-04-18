@@ -994,7 +994,7 @@ fun boss(at: Vector2, level: Int) {
         with<BossComponent> {}
 
         bt = with {
-            tree = Tree.nowWithAttacks().apply { `object` = this@entity.entity }
+            tree = Tree.bossBehaviorTree().apply { `object` = this@entity.entity }
         }
     }
     registerEntity(body, entity)

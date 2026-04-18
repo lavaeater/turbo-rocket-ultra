@@ -10,6 +10,9 @@ import ai.behaviorTree.tasks.leaf.RotateTask
 import ai.behaviorTree.tasks.leaf.SectionFindingMethods
 import ai.behaviorTree.tasks.leaf.SelectSection
 import ai.behaviorTree.tasks.leaf.SelectTarget
+import ai.behaviorTree.tasks.leaf.boss.GrabAndThrowPlayer
+import ai.behaviorTree.tasks.leaf.boss.PlayerIsInGrabRange
+import ai.behaviorTree.tasks.leaf.boss.RushPlayer
 import com.badlogic.ashley.core.Component
 import com.badlogic.ashley.core.Entity
 import com.badlogic.gdx.ai.btree.Task
@@ -94,4 +97,9 @@ inline fun <reified T : Component> onlyIfEntityDoesNotHave(task: Task<Entity>): 
     task.guard = ComponentExistenceGuard(false, T::class)
     return task
 }
+
+fun playerIsInGrabRange(range: Float) = PlayerIsInGrabRange(range)
+fun rushPlayer(damage: Float = 20f) = RushPlayer(damage)
+fun grabAndThrowPlayer(grabRange: Float = 2f, stunDuration: Float = 1.5f, throwForce: Float = 25f, damage: Float = 30f) =
+    GrabAndThrowPlayer(grabRange, stunDuration, throwForce, damage)
 
