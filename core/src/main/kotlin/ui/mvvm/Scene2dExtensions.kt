@@ -49,5 +49,17 @@ inline fun <S> KWidget<S>.commandTextButton(
 		skin: Skin = Scene2DSkin.defaultSkin,
 		init: CommandTextButton.(S) -> Unit = {}) = actor(CommandTextButton(text, command, skin, style), init)
 
+inline fun <S> KWidget<S>.commandTextButton(
+		text: String,
+		command: Command,
+		style: String = defaultStyle,
+		skin: Skin = Scene2DSkin.defaultSkin,
+		init: CommandTextButton.(S) -> Unit = {}): CommandTextButton {
+	val button = CommandTextButton(text, command.execute, skin, style)
+	button.isDisabled = !command.canExecute
+	command.onCanExecuteChanged = { button.isDisabled = !it }
+	return actor(button, init)
+}
+
 class CommandTextButton(text: String, override val command:()->Unit, skin: Skin, style: String): TextButton(text, skin, style),
 	CommandWidget

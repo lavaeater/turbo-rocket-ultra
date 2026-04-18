@@ -1,7 +1,7 @@
 package ui.mvvm
 
 interface Command {
-	val canExecute: Boolean
+	var canExecute: Boolean
 	var onCanExecuteChanged : ((Boolean) -> Unit)?
 	val execute: (() -> Unit)
 }

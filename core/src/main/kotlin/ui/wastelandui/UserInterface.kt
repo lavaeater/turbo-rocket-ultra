@@ -4,6 +4,7 @@ import com.badlogic.gdx.InputMultiplexer
 import com.badlogic.gdx.graphics.Color
 import com.badlogic.gdx.graphics.OrthographicCamera
 import com.badlogic.gdx.graphics.g2d.Batch
+import com.badlogic.gdx.math.Vector2
 import com.badlogic.gdx.scenes.scene2d.Stage
 import com.badlogic.gdx.scenes.scene2d.ui.Label
 import com.badlogic.gdx.utils.Align
@@ -19,6 +20,7 @@ import story.conversation.IConversation
 import animation.Assets
 import turbofacts.Factoids
 import turbofacts.TurboFactsOfTheWorld
+import ui.IUserInterface
 
 class UserInterface(
     private val batch: Batch,
@@ -123,40 +125,10 @@ class UserInterface(
     stage.addActor(rootTable)
   }
 
-  override fun showSplashScreen() {
-    /*
-    Set up timer. Show splash screen.
-    When timer fires, remove splash screen, send resume game event. Yay!
-     */
-
-//    val splashScreen = scene2table {
-//      image(Assets.splashScreen) {
-//        setScaling(Scaling.fit)
-//        scaleBy(4.0f)
-//      }.cell()
-//      setFillParent(true)
-//      isVisible = true
-//      bottom()
-//      left()
-//    }
-//    stage.addActor(splashScreen)
-//    Timer.instance().clear()
-//
-//    Timer.instance().scheduleTask(object : Timer.Task() {
-//      override fun run() {
-//        stage.actors.removeValue(splashScreen, true)
-//        gameState.handleEvent(GameEvents.GameResumed)
-//      }
-//    }, 3f)
-//  }
-  }
-
-
-  override fun showInventory() {
-//    inventoryTable.isVisible = true
-  }
-
-  override fun hideInventory() {
-//    inventoryTable.isVisible = false
-  }
+  override fun show() {}
+  override fun hide() {}
+  override fun reset() {}
+  override fun pause() {}
+  override fun resume() {}
+  override fun worldToHudPosition(worldPosition: Vector2): Vector2 = worldPosition
 }

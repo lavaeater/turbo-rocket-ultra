@@ -6,8 +6,11 @@ import com.badlogic.gdx.graphics.g2d.Batch
 import com.badlogic.gdx.scenes.scene2d.Actor
 import com.badlogic.gdx.scenes.scene2d.Group
 import com.badlogic.gdx.scenes.scene2d.Stage
+import com.badlogic.gdx.scenes.scene2d.ui.Button
+import com.badlogic.gdx.scenes.scene2d.ui.Label
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener
 import com.badlogic.gdx.utils.viewport.ExtendViewport
+import kotlin.reflect.KProperty0
 
 abstract class ViewBase<VM: ViewModelBase>(private val batch: Batch, val viewModel:VM, private val handleInput: Boolean = true):
 	View {
@@ -84,6 +87,32 @@ abstract class ViewBase<VM: ViewModelBase>(private val batch: Batch, val viewMod
 		hudViewPort.apply()
 		batch.projectionMatrix = stage.camera.combined
 	}
+
+	/**
+	 * Type-safe property binding. Registers [update] to be called immediately with the
+	 * current value and again whenever the ViewModel property changes.
+	 *
+	 * Call this from [initLayout] as an alternative to [BindableLabel] when you want
+	 * compile-time safety over the reflection-based approach.
+	 *
+	 * Example:
+	 *   bind(viewModel::currentCategoryName) { categoryLabel.setText(it) }
+	 */
+	protected fun <T : Any> bind(prop: KProperty0<T>, update: (T) -> Unit) {
+		update(prop.get())
+		viewModel.addPropertyChangedHandler { name, value ->
+			@Suppress("UNCHECKED_CAST")
+			if (name == prop.name) update(value as T)
+		}
+	}
+
+	/** Convenience: bind a String ViewModel property to a Scene2D [Label]'s text. */
+	protected fun bindLabel(prop: KProperty0<String>, label: Label) =
+		bind(prop) { label.setText(it) }
+
+	/** Convenience: bind a Boolean ViewModel property to a [Button]'s enabled state. */
+	protected fun bindEnabled(prop: KProperty0<Boolean>, button: Button) =
+		bind(prop) { button.isDisabled = !it }
 
 	companion object {
 		private const val aspectRatio = 16 / 9
