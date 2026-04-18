@@ -6,7 +6,9 @@ data class LpcSpriteSheetDefinition(
     private val explicitIsMale: Boolean? = null,
     private val explicitIsFemale: Boolean? = null,
     /** Directory containing per-animation PNGs. Null for legacy combined-sheet layers. */
-    val variantFolder: String? = null
+    val variantFolder: String? = null,
+    /** The variant key this definition represents, e.g. "male", "female", "muscular". */
+    val variantKey: String? = null
 ) {
     val tags: Set<String> get() = path.split("/", "_", ".").distinct().toSet()
     val isFemale: Boolean get() = explicitIsFemale ?: tags.any { it.contains("female") }

@@ -193,7 +193,8 @@ object LpcSheetDefinitionLoader {
                 displayName = def.name,
                 explicitIsMale = isMale,
                 explicitIsFemale = isFemale,
-                variantFolder = folderPath
+                variantFolder = folderPath,
+                variantKey = variantKey
             )
         }
     }
