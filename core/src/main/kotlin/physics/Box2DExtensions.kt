@@ -1,77 +1,59 @@
 package physics
 
 import com.badlogic.ashley.core.Component
+import com.badlogic.ashley.core.ComponentMapper
+import com.badlogic.ashley.core.Engine
 import com.badlogic.ashley.core.Entity
 import com.badlogic.gdx.graphics.g2d.Batch
 import com.badlogic.gdx.graphics.g2d.TextureRegion
 import com.badlogic.gdx.math.MathUtils
+import com.badlogic.gdx.math.Vector2
 import com.badlogic.gdx.physics.box2d.Body
 import com.badlogic.gdx.physics.box2d.Contact
 import com.badlogic.gdx.physics.box2d.Fixture
+import components.AgentProperties
+import components.Box2d
+import components.gameplay.BulletComponent
+import components.gameplay.GrenadeComponent
+import components.gameplay.ShotComponent
+import core.engine
 import data.Player
-import eater.ecs.ashley.components.AgentProperties
-import eater.physics.*
-import ecs.components.enemy.EnemySensorComponent
-import ecs.components.enemy.TackleComponent
-import ecs.components.gameplay.*
-import ecs.components.pickups.LootComponent
-import ecs.components.player.ComplexActionComponent
-import ecs.components.player.PlayerComponent
-import ecs.components.player.PlayerControlComponent
-import ecs.components.player.PlayerWaitsForRespawn
+import components.enemy.EnemySensorComponent
+import components.enemy.TackleComponent
+import components.gameplay.DamageEffectComponent
+import components.gameplay.MolotovComponent
+import components.gameplay.ObjectiveComponent
+import components.pickups.LootComponent
+import components.player.ComplexActionComponent
+import components.player.PlayerComponent
+import components.player.PlayerControlComponent
+import components.player.PlayerWaitsForRespawn
 import ktx.ashley.has
+import ktx.ashley.mapperFor
+import ktx.math.times
+import kotlin.reflect.KType
+import kotlin.reflect.typeOf
 
 fun Entity.playerControlComponent(): PlayerControlComponent {
     return this.getComponent()
 }
 
-fun Body.isEnemy(): Boolean {
-    return (userData as Entity).has<AgentProperties>()
-}
-
 fun Body.isPlayer(): Boolean {
-    return (userData as Entity).has<PlayerComponent>()
+    return getEntity(this)?.has<PlayerComponent>() == true
 }
 
 fun Body.playerComponent(): PlayerComponent {
-    return (userData as Entity).getComponent()
+    return getEntity(this)!!.getComponent()
 }
 
 fun Body.player(): Player {
-    return (userData as Entity).getComponent<PlayerComponent>().player
+    return getEntity(this)!!.getComponent<PlayerComponent>().player
 }
 
 fun Fixture.isPlayer(): Boolean {
-    return this.body.userData is Entity && (this.body.isPlayer())
+    return this.body.isPlayer()
 }
 
-inline fun <reified T : Component> Contact.atLeastOneHas(): Boolean {
-    if (this.eitherIsEntity()) {
-        return if (this.fixtureA.isEntity() && this.fixtureA.getEntity()
-                .has<T>()
-        ) true else this.fixtureB.isEntity() && this.fixtureB.getEntity().has<T>()
-    }
-    return false
-}
-
-inline fun <reified T : Component> Contact.justOneHas(): Boolean {
-        val fOne = this.fixtureA.isEntity() && this.fixtureA.getEntity()
-            .has<T>()
-    val fTwo = this.fixtureB.isEntity() && this.fixtureB.getEntity().has<T>()
-    return fOne xor fTwo
-}
-
-inline fun<reified T: Component> getEntityThatHas(entityOne: Entity, entityTwo: Entity): Entity {
-    return if(entityOne.has<T>()) entityOne else entityTwo
-}
-inline fun <reified T : Component> Contact.bothHaveComponent(): Boolean {
-    if (this.bothAreEntities()) {
-        val mapper = AshleyMapperStore.getMapper<T>()
-        return this.fixtureA.getEntity().has(mapper) &&
-                this.fixtureB.getEntity().has(mapper)
-    }
-    return false
-}
 
 fun Contact.getPlayerFor(): Player {
     return this.getEntityFor<PlayerComponent>().getComponent<PlayerComponent>().player
@@ -249,4 +231,117 @@ fun Contact.thisIsAContactBetween(): ContactType {
         return ContactType.GrenadeHittingAnything(grenade)
     }
     return ContactType.Unknown
+}
+
+object AshleyMapperStore {
+    inline fun <reified T : Component> getMapper(): ComponentMapper<T> {
+        val type = typeOf<T>()
+        if (!mappers.containsKey(type))
+            mappers[type] = mapperFor<T>()
+        return mappers[type] as ComponentMapper<T>
+    }
+    val mappers = mutableMapOf<KType, ComponentMapper<*>>()
+}
+
+fun Body.rightNormal(): Vector2 {
+    return this.getWorldVector(Vector2.X)
+}
+
+fun Body.lateralVelocity(): Vector2 {
+    val rightNormal = this.rightNormal()
+    return rightNormal * this.linearVelocity.dot(rightNormal)
+}
+
+fun Body.forwardNormal(): Vector2 {
+    return this.getWorldVector(Vector2.Y)
+}
+
+fun Body.forwardVelocity(): Vector2 {
+    val forwardNormal = this.forwardNormal()
+    return forwardNormal * this.linearVelocity.dot(forwardNormal)
+}
+
+fun Entity.body(): Body {
+    return getComponent<Box2d>().body
+}
+
+
+fun Contact.eitherIsEntity(): Boolean {
+    return getEntity(this.fixtureA.body) != null || getEntity(this.fixtureB.body) != null
+}
+
+fun Contact.bothAreEntities(): Boolean {
+    return getEntity(this.fixtureA.body) != null && getEntity(this.fixtureB.body) != null
+}
+
+fun Body.isEnemy(): Boolean {
+    return getEntity(this)?.has<AgentProperties>() == true
+}
+
+
+fun Fixture.isEntity(): Boolean {
+    return getEntity(this.body) != null
+}
+
+fun Fixture.getEntity(): Entity {
+    return getEntity(this.body)!!
+}
+
+inline fun <reified T : Component> Entity.has(): Boolean {
+    return AshleyMapperStore.getMapper<T>().has(this)
+}
+
+inline fun <reified T : Component> Entity.getComponent(): T {
+    return AshleyMapperStore.getMapper<T>().get(this)
+}
+
+fun Contact.noSensors() : Boolean {
+    return !this.fixtureA.isSensor && !this.fixtureB.isSensor
+}
+
+inline fun <reified T : Component> Contact.atLeastOneHas(): Boolean {
+    if (this.eitherIsEntity()) {
+        return if (this.fixtureA.isEntity() && this.fixtureA.getEntity()
+                .has<T>()
+        ) true else this.fixtureB.isEntity() && this.fixtureB.getEntity().has<T>()
+    }
+    return false
+}
+
+inline fun <reified T : Component> Contact.justOneHas(): Boolean {
+        val fOne = this.fixtureA.isEntity() && this.fixtureA.getEntity()
+            .has<T>()
+    val fTwo = this.fixtureB.isEntity() && this.fixtureB.getEntity().has<T>()
+    return fOne xor fTwo
+}
+
+inline fun<reified T: Component> getEntityThatHas(entityOne: Entity, entityTwo: Entity): Entity {
+    return if(entityOne.has<T>()) entityOne else entityTwo
+}
+
+inline fun <reified T : Component> Contact.bothHaveComponent(): Boolean {
+    if (this.bothAreEntities()) {
+        val mapper = AshleyMapperStore.getMapper<T>()
+        return this.fixtureA.getEntity().has(mapper) &&
+                this.fixtureB.getEntity().has(mapper)
+    }
+    return false
+}
+
+fun Contact.bothAreSensors() : Boolean {
+    return this.fixtureA.isSensor && this.fixtureB.isSensor
+}
+
+inline fun <reified T : Component> Entity.addComponent(block: T.() -> Unit = {}): T {
+    val c = component(block)
+    this.add(c)
+    return c
+}
+
+inline fun <reified T : Component> component(block: T.() -> Unit = {}): T {
+    return engine().createComponent(block)
+}
+
+inline fun <reified T : Component> Engine.createComponent(block: T.() -> Unit = {}): T {
+    return this.createComponent(T::class.java).apply(block)
 }

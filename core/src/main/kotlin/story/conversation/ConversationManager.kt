@@ -1,10 +1,10 @@
 package story.conversation
 
-import eater.injection.InjectionContext.Companion.inject
+import dependencies.InjectionContext.Companion.inject
 import gamestate.GameEvent
 import gamestate.GameState
 import statemachine.StateMachine
-import wastelandui.IUserInterface
+import ui.wastelandui.IUserInterface
 
 class ConversationManager(
     private val ui: IUserInterface

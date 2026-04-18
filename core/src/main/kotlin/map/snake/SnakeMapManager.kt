@@ -5,10 +5,10 @@ import com.badlogic.gdx.math.Rectangle
 import com.badlogic.gdx.math.Vector2
 import com.badlogic.gdx.physics.box2d.Body
 import com.badlogic.gdx.physics.box2d.BodyDef
-import eater.core.world
+import core.world
 import ktx.box2d.body
 import ktx.box2d.box
-import eater.physics.drawScaled
+import physics.drawScaled
 import space.earlygrey.shapedrawer.ShapeDrawer
 
 class SnakeMapManager(

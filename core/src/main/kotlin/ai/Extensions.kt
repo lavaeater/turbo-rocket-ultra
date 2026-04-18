@@ -11,20 +11,20 @@ import com.badlogic.gdx.ai.btree.decorator.AlwaysSucceed
 import com.badlogic.gdx.ai.btree.decorator.Invert
 import com.badlogic.gdx.math.Vector2
 import com.badlogic.gdx.utils.Queue
-import eater.core.world
-import eater.ecs.ashley.components.AgentProperties
-import eater.injection.InjectionContext.Companion.inject
-import eater.turbofacts.TurboFactsOfTheWorld
-import eater.turbofacts.stateBooleanFact
+import components.AgentProperties
+import core.world
+import dependencies.InjectionContext.Companion.inject
+import physics.getEntity
+import physics.isEntity
+import turbofacts.TurboFactsOfTheWorld
+import turbofacts.stateBooleanFact
 import ktx.box2d.Query
 import ktx.box2d.query
 import ktx.math.random
 import ktx.math.vec2
 import map.grid.Coordinate
 import map.grid.GridMapManager
-import eater.physics.getEntity
 import physics.hasObstacle
-import eater.physics.isEntity
 
 fun progressPath(enemyComponent: AgentProperties, currentPosition: Vector2): Boolean {
     if (enemyComponent.needsNewNextPosition && !enemyComponent.path.isEmpty) {

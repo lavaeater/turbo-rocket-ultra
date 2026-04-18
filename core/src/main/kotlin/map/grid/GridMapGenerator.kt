@@ -2,27 +2,28 @@ package map.grid
 
 import ai.pathfinding.TileGraph
 import box2dLight.Light
+import box2dLight.Light.setGlobalContactFilter
 import box2dLight.RayHandler
 import com.badlogic.ashley.core.Engine
 import com.badlogic.gdx.math.Rectangle
-import eater.injection.InjectionContext.Companion.inject
-import ecs.systems.tileWorldX
-import ecs.systems.tileWorldY
+import dependencies.InjectionContext.Companion.inject
+import turbofacts.Factoids
+import turbofacts.TurboStoryManager
+import turbofacts.factsOfTheWorld
+import systems.tileWorldX
+import systems.tileWorldY
 import factories.*
-import features.pickups.AmmoLoot
-import features.pickups.LootTable
-import features.pickups.WeaponLoot
-import features.weapons.AmmoType
-import features.weapons.WeaponDefinition
-
+import gamePlay.pickups.AmmoLoot
+import gamePlay.pickups.LootTable
+import gamePlay.pickups.WeaponLoot
+import gamePlay.weapons.AmmoType
+import gamePlay.weapons.WeaponDefinition
 import map.snake.MapDirection
 import map.snake.random
 import map.snake.randomPoint
 import screens.CounterObject
-import eater.turbofacts.Factoids
-import eater.turbofacts.TurboStoryManager
-import eater.turbofacts.factsOfTheWorld
 import turbofacts.StoryHelper
+import kotlin.collections.filterKeys
 
 class GridMapGenerator {
     companion object {
@@ -48,12 +49,12 @@ class GridMapGenerator {
         private val storyManager: TurboStoryManager by lazy { inject() }
 
         fun generateFromMapFile(mapData: MapData): Pair<Map<Coordinate, GridMapSection>, TileGraph> {
-            Light.setGlobalContactFilter(
+            setGlobalContactFilter(
                 Box2dCategories.lights,
                 0, Box2dCategories.allButSensors
             )
             rayHandler.setAmbientLight(.5f)
-            rayHandler.setBlurNum(3)
+            rayHandler.blurNum = 3
 
             factsOfTheWorld.setStringFact(mapData.name, Factoids.CurrentMapName)
             factsOfTheWorld.setStringFact(mapData.startMessage, Factoids.MapStartMessage)
@@ -132,17 +133,16 @@ class GridMapGenerator {
         }
 
         private fun addHackingStation(bounds: Rectangle, level: Int) {
-            var position = bounds.randomPoint()
+            val position = bounds.randomPoint()
             hackingStation(position, level)
         }
 
         private fun addTargetStation(bounds: Rectangle, level: Int) {
-            var position = bounds.randomPoint()
+            val position = bounds.randomPoint()
             targetStation(position, level)
         }
 
         fun generate(length: Int, level: Int): Pair<Map<Coordinate, GridMapSection>, TileGraph> {
-            //TODO: Move this somewhere
             Light.setGlobalContactFilter(
                 Box2dCategories.lights,
                 0, Box2dCategories.allButSensors

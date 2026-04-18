@@ -2,7 +2,7 @@ package ui.builders
 
 import com.badlogic.gdx.math.Vector2
 import ktx.math.vec2
-import tru.Builder
+import animation.Builder
 import ui.simple.ContainerBaseActor
 import ui.simple.SimpleActor
 import ui.simple.SpacedContainer

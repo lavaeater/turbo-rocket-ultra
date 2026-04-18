@@ -12,8 +12,8 @@ import com.badlogic.gdx.utils.Align
 import com.badlogic.gdx.utils.viewport.ExtendViewport
 import data.Player
 import data.Players
-import data.SelectedItemList
-import data.selectedItemListOf
+import ui.SelectedItemList
+import ui.selectedItemListOf
 import gamestate.GameEvent
 import gamestate.GameState
 import input.Button
@@ -23,9 +23,9 @@ import input.KeyboardControl
 import ktx.log.debug
 import ktx.scene2d.*
 import statemachine.StateMachine
-import tru.AnimState
-import tru.Assets
-import tru.CardinalDirection
+import animation.AnimState
+import animation.Assets
+import animation.CardinalDirection
 import ui.customactors.animatedSpriteImage
 import ui.customactors.boundLabel
 

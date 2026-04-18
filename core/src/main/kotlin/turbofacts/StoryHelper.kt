@@ -1,11 +1,10 @@
 package turbofacts
 
-import eater.injection.InjectionContext.Companion.inject
-import eater.turbofacts.*
+import dependencies.InjectionContext.Companion.inject
+import messaging.MessageHandler
 import gamestate.GameEvent
 import gamestate.GameState
 import messaging.Message
-import eater.messaging.MessageHandler
 import statemachine.StateMachine
 
 object StoryHelper {

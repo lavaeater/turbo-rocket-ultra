@@ -9,12 +9,12 @@ import com.badlogic.gdx.graphics.g2d.Animation
 import com.badlogic.gdx.graphics.g2d.Batch
 import com.badlogic.gdx.graphics.g2d.TextureRegion
 import com.badlogic.gdx.math.Vector2
+import physics.drawScaled
 import ktx.collections.toGdxArray
 import ktx.math.vec2
-import eater.physics.drawScaled
-import tru.AnimDef
-import tru.AnimState
-import tru.CardinalDirection
+import animation.AnimDef
+import animation.AnimState
+import animation.CardinalDirection
 
 
 class AnimationEditorElement(

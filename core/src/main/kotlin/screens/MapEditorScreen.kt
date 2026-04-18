@@ -18,7 +18,7 @@ import ktx.math.vec2
 import ktx.scene2d.*
 import map.grid.Coordinate
 import statemachine.StateMachine
-import tru.Assets
+import animation.Assets
 import ui.customactors.boundLabel
 
 fun command(name: String, init: CommandMap.() -> Unit): CommandMap {

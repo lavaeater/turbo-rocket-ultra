@@ -1,6 +1,6 @@
 package ui
 
-import ecs.components.ai.SeenPlayerPositions
+import components.ai.SeenPlayerPositions
 import audio.AudioPlayer
 import com.badlogic.gdx.Gdx
 import com.badlogic.gdx.graphics.OrthographicCamera
@@ -15,10 +15,10 @@ import com.badlogic.gdx.utils.Align
 import com.badlogic.gdx.utils.Queue
 import com.badlogic.gdx.utils.viewport.ExtendViewport
 import data.Players
-import eater.injection.InjectionContext.Companion.inject
-import eater.messaging.IMessage
-import ecs.components.enemy.AttackableProperties
-import ecs.systems.graphics.GameConstants
+import dependencies.InjectionContext.Companion.inject
+import messaging.IMessage
+import components.enemy.AttackableProperties
+import systems.graphics.GameConstants
 import ktx.actors.along
 import ktx.actors.plusAssign
 import ktx.actors.then
@@ -26,13 +26,13 @@ import ktx.math.vec2
 import ktx.math.vec3
 import ktx.scene2d.*
 import messaging.Message
-import eater.messaging.MessageHandler
-import eater.messaging.IMessageReceiver
-import eater.physics.getComponent
-import eater.physics.has
+import messaging.MessageHandler
+import messaging.IMessageReceiver
+import physics.getComponent
+import physics.has
 import physics.*
-import eater.turbofacts.Factoids
-import eater.turbofacts.factsOfTheWorld
+import turbofacts.Factoids
+import turbofacts.factsOfTheWorld
 import ui.customactors.boundLabel
 import ui.customactors.boundProgressBar
 import ui.customactors.repeatingTexture

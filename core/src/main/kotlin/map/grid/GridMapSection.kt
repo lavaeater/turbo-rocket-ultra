@@ -5,19 +5,19 @@ import box2dLight.RayHandler
 import com.badlogic.gdx.graphics.Color
 import com.badlogic.gdx.math.Rectangle
 import com.badlogic.gdx.math.Vector2
-import eater.core.world
-import eater.injection.InjectionContext.Companion.inject
-import ecs.components.graphics.renderables.RenderableTextureRegion
-import ecs.components.graphics.renderables.RenderableTextureRegions
+import core.world
+import dependencies.InjectionContext.Companion.inject
+import components.graphics.renderables.RenderableTextureRegion
+import components.graphics.renderables.RenderableTextureRegions
 
 import ktx.box2d.Query
 import ktx.box2d.query
 import ktx.math.vec2
 import map.snake.*
-import eater.physics.getEntity
+import physics.getEntity
 import physics.hasObstacle
-import eater.physics.isEntity
-import tru.Assets
+import physics.isEntity
+import animation.Assets
 
 class GridMapSection(
     val coordinate: Coordinate,
@@ -107,7 +107,7 @@ class GridMapSection(
                 90f
             ).apply {
                 isStaticLight = false
-                isSoft = true
+                height = 4f
             }
         }
     }

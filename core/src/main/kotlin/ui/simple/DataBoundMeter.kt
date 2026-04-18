@@ -4,7 +4,7 @@ import com.badlogic.gdx.graphics.Color
 import com.badlogic.gdx.graphics.g2d.Batch
 import com.badlogic.gdx.math.Vector2
 import ktx.math.vec2
-import tru.Assets
+import animation.Assets
 
 class DataBoundMeter(
     val valueFunction: () -> Float,

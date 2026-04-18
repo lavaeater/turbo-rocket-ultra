@@ -5,11 +5,14 @@ plugins {
 tasks.withType(JavaCompile).configureEach {
     options.encoding = 'UTF-8'
 }
+compileKotlin {
+    kotlinOptions.jvmTarget = '1.8'
+}
 eclipse.project.name = appName + '-core'
 
 dependencies {
     api libs.ashley
-    api libs.box2dlights
+    api project(':box2dlights')
     api libs.gdxControllers
     api libs.ai
     api libs.gdx
@@ -20,7 +23,7 @@ dependencies {
     api libs.gdxVfxEffects
     api libs.kryo
     api libs.websocket
-    api libs.hackLights
+
     api libs.kryoNet
     api libs.noise4j
     api libs.tinyVG
@@ -55,10 +58,8 @@ dependencies {
     api libs.ktxScene2d
     api libs.ktxStyle
     api libs.ktxTiled
-    api libs.kotlin
     api libs.kotlinxCoroutines
     api libs.shapeDrawer
     api libs.simpleGraphs
     api libs.kotlinReflect
-    implementation project(':gdx-lava')
 }

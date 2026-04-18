@@ -1,9 +1,8 @@
 package messaging
 
 import com.badlogic.gdx.math.Vector2
-import eater.messaging.IMessage
-import ecs.components.player.ComplexActionComponent
-import ecs.components.player.PlayerControlComponent
+import components.player.ComplexActionComponent
+import components.player.PlayerControlComponent
 
 sealed class Message: IMessage {
     class ShowProgressBar(val maxTime: Float, val worldPosition: Vector2, val progress: () -> Float) : Message()

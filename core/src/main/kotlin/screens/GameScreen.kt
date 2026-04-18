@@ -14,19 +14,18 @@ import com.crashinvaders.vfx.VfxManager
 import com.crashinvaders.vfx.effects.ChainVfxEffect
 import com.strongjoshua.console.GUIConsole
 import data.Players
-import eater.injection.InjectionContext.Companion.inject
-import eater.physics.body
-import ecs.components.gameplay.ObjectiveComponent
-import ecs.components.graphics.CameraFollowComponent
-import ecs.components.player.PlayerComponent
-import ecs.systems.graphics.CameraUpdateSystem
-import ecs.systems.graphics.GameConstants.MAX_ENEMIES
-import ecs.systems.graphics.RenderMiniMapSystem
-import ecs.systems.graphics.RenderSystem
-import ecs.systems.input.GamepadInputSystem
-import ecs.systems.input.KeyboardInputSystem
-import ecs.systems.player.GameOverSystem
-import factories.addUiThing
+import dependencies.InjectionContext.Companion.inject
+import physics.body
+import components.gameplay.ObjectiveComponent
+import components.graphics.CameraFollowComponent
+import components.player.PlayerComponent
+import systems.graphics.CameraUpdateSystem
+import systems.graphics.GameConstants.MAX_ENEMIES
+import systems.graphics.RenderMiniMapSystem
+import systems.graphics.RenderSystem
+import systems.input.GamepadInputSystem
+import systems.input.KeyboardInputSystem
+import systems.player.GameOverSystem
 import factories.enemy
 import factories.player
 import gamestate.GameEvent
@@ -41,12 +40,11 @@ import map.grid.*
 import map.snake.randomPoint
 import physics.*
 import statemachine.StateMachine
-import tru.Assets
-import eater.turbofacts.Factoids
-import eater.turbofacts.TurboFactsOfTheWorld
-import eater.turbofacts.TurboStoryManager
-import eater.turbofacts.factsOfTheWorld
-import factories.enemy
+import animation.Assets
+import turbofacts.Factoids
+import turbofacts.TurboFactsOfTheWorld
+import turbofacts.TurboStoryManager
+import turbofacts.factsOfTheWorld
 import ui.IUserInterface
 import kotlin.math.pow
 import kotlin.math.roundToInt
@@ -254,6 +252,7 @@ class GameScreen(private val gameState: StateMachine<GameState, GameEvent>) : Kt
             if (!entity.isPlayer() && !entity.hasWeapon()) {
                 if (entity.hasBody()) {
                     val body = entity.body()
+                    removeEntity(body)
                     world.destroyBody(body)
                 }
                 entity.removeAll()

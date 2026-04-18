@@ -1,0 +1,19 @@
+package systems.ai
+
+import com.badlogic.ashley.core.Entity
+import com.badlogic.ashley.systems.IteratingSystem
+import physics.addComponent
+import components.gameplay.DestroyAfterCoolDownComponent
+import components.gameplay.DestroyComponent
+import ktx.ashley.allOf
+import physics.AshleyMappers
+
+class DestroyAfterCooldownSystem: IteratingSystem(allOf(DestroyAfterCoolDownComponent::class).get()) {
+    override fun processEntity(entity: Entity, deltaTime: Float) {
+        val damageEffectComponent = AshleyMappers.destroyAfterCooldown.get(entity)
+        damageEffectComponent.coolDown -= deltaTime
+        if(damageEffectComponent.coolDown <= 0f) {
+            entity.addComponent<DestroyComponent>()
+        }
+    }
+}

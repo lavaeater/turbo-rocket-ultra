@@ -3,11 +3,11 @@ package map.snake
 import box2dLight.PointLight
 import box2dLight.RayHandler
 import com.badlogic.gdx.graphics.Color
-import eater.injection.InjectionContext.Companion.inject
-import ecs.components.graphics.renderables.RenderableTextureRegion
-import ecs.components.graphics.renderables.RenderableTextureRegions
+import dependencies.InjectionContext.Companion.inject
+import components.graphics.renderables.RenderableTextureRegion
+import components.graphics.renderables.RenderableTextureRegions
 
-import tru.Assets
+import animation.Assets
 
 class SnakeMapSection(
     val x: Int,
@@ -36,11 +36,13 @@ class SnakeMapSection(
     private fun createLights() {
         val lightX = (x * width * 16f * tileScale * scale) / 2 // + tileWidth * tileScale * scale
         val lightY = (y * height * 16f * tileScale * scale) / 2// + tileHeight * tileScale * scale
-        val pointLight = PointLight(rayHandler, 64, Color(.05f, .05f, .05f, 1f), 10f, lightX, lightY)
+        val pointLight = PointLight(rayHandler, 64, Color(.05f, .05f, .05f, 1f), 10f, lightX, lightY).apply {
+            isActive = true
+            height = 4.0f
+        }
 
-        rayHandler.setShadows(true)
+        rayHandler.isShadows = true
         pointLight.isStaticLight = false
-        pointLight.isSoft = true
 
         lights.add(pointLight)
     }

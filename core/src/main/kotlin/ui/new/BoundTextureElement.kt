@@ -4,8 +4,8 @@ import com.badlogic.gdx.graphics.g2d.Batch
 import com.badlogic.gdx.graphics.g2d.TextureRegion
 import com.badlogic.gdx.math.Rectangle
 import com.badlogic.gdx.math.Vector2
+import physics.drawScaled
 import ktx.math.vec2
-import eater.physics.drawScaled
 
 open class BoundTextureElement<T: Any>(
     textureFunc: (T)-> TextureRegion,

@@ -6,9 +6,9 @@ import com.badlogic.gdx.graphics.OrthographicCamera
 import com.badlogic.gdx.math.Rectangle
 import com.badlogic.gdx.scenes.scene2d.Stage
 import com.badlogic.gdx.utils.viewport.ExtendViewport
-import ecs.systems.graphics.GameConstants
-import extensions.normToWorld
-import extensions.worldToNorm
+import systems.graphics.GameConstants
+import core.normToWorld
+import core.worldToNorm
 import gamestate.GameEvent
 import gamestate.GameState
 import ktx.graphics.use
@@ -18,7 +18,7 @@ import map.snake.right
 import map.snake.top
 import space.earlygrey.shapedrawer.ShapeDrawer
 import statemachine.StateMachine
-import tru.Assets
+import animation.Assets
 import kotlin.math.absoluteValue
 
 class GraphicsNodeEditorScreen(gameState: StateMachine<GameState, GameEvent>) : BasicScreen(gameState) {

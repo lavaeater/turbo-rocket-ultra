@@ -2,8 +2,8 @@ package audio
 
 import com.badlogic.gdx.audio.Sound
 import com.badlogic.gdx.utils.Queue
-import ecs.components.AudioChannels
-import tru.Assets
+import components.AudioChannels
+import animation.Assets
 
 class SoundChannel(val name: String, var volume: Float) {
     var nowCoolDown = 0f
