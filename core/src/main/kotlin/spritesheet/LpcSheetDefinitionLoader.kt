@@ -169,28 +169,31 @@ object LpcSheetDefinitionLoader {
 
     /**
      * For each variant in [def], creates an [LpcSpriteSheetDefinition] pointing at the
-     * `walk.png` sprite (or the first available animation) and adds it to [category].
+     * preview PNG (walk or first available animation) and records the variant folder so
+     * [RenderableThing] can load any per-animation PNG at export time.
      */
     private fun addSpriteSheets(
         category: LpcSpriteSheetCategoryDefinition,
         def: LpcSheetDef,
         spriteSheetsPath: String
     ) {
-        val animName = when {
+        val previewAnim = when {
             "walk" in def.animations -> "walk"
             def.animations.isNotEmpty() -> def.animations.first()
             else -> "walk"
         }
 
-        for ((variantKey, variantFolder) in def.variants) {
-            val pngPath = "$spriteSheetsPath/${variantFolder.trimEnd('/')}/$animName.png"
+        for ((variantKey, variantRelPath) in def.variants) {
+            val folderPath = "$spriteSheetsPath/${variantRelPath.trimEnd('/')}"
+            val pngPath = "$folderPath/$previewAnim.png"
             val isMale = variantKey != "female"
             val isFemale = variantKey == "female"
             category.spriteSheets += LpcSpriteSheetDefinition(
                 path = pngPath,
                 displayName = def.name,
                 explicitIsMale = isMale,
-                explicitIsFemale = isFemale
+                explicitIsFemale = isFemale,
+                variantFolder = folderPath
             )
         }
     }

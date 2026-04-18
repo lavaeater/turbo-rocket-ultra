@@ -41,10 +41,10 @@ class CharacterEditorViewModel(spriteSheetCategories: List<LpcSpriteSheetCategor
 	private val sheetDef = SheetDef(
 			"JustWalkin'",
 			listOf(
-					TextureRegionDef("walknorth", 8, 9),
-					TextureRegionDef("walkwest", 9, 9),
-					TextureRegionDef("walksouth", 10, 9),
-					TextureRegionDef("walkeast", 11, 9)
+					TextureRegionDef("walknorth", 8, 9, animFileName = "walk"),
+					TextureRegionDef("walkwest", 9, 9, animFileName = "walk"),
+					TextureRegionDef("walksouth", 10, 9, animFileName = "walk"),
+					TextureRegionDef("walkeast", 11, 9, animFileName = "walk")
 			))
 
 	var currentCategoryName: String by notifyChanged(categories.keys.elementAt(currentCategoryIndex))
@@ -113,7 +113,7 @@ class CharacterEditorViewModel(spriteSheetCategories: List<LpcSpriteSheetCategor
 
 	private fun updateCurrentSpritesheet() {
 		currentSpriteSheet = currentSpriteSheets.elementAt(currentSpriteSheetIndex)
-		selectedSpriteSheets[currentCategoryName] = SpriteSheet.LoadableSpriteSheet(currentSpriteSheet.path, currentCategory.renderPriority)
+		selectedSpriteSheets[currentCategoryName] = SpriteSheet.LoadableSpriteSheet(currentSpriteSheet.path, currentCategory.renderPriority, currentSpriteSheet.variantFolder)
 		currentSpriteSheetName = currentSpriteSheet.name
 		currentTags = currentSpriteSheet.tags.joinToString("\n")
 		subName = currentSpriteSheet.subName

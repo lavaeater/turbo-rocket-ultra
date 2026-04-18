@@ -21,10 +21,10 @@ class CharacterEditorScreen(gameState: StateMachine<GameState, GameEvent>) : Bas
 	private val sheetDef = SheetDef(
 			"JustWalkin'",
 			listOf(
-					TextureRegionDef("walknorth", 8, 9),
-					TextureRegionDef("walkwest", 9, 9),
-					TextureRegionDef("walksouth", 10, 9),
-					TextureRegionDef("walkeast", 11, 9)
+					TextureRegionDef("walknorth", 8, 9, animFileName = "walk"),
+					TextureRegionDef("walkwest", 9, 9, animFileName = "walk"),
+					TextureRegionDef("walksouth", 10, 9, animFileName = "walk"),
+					TextureRegionDef("walkeast", 11, 9, animFileName = "walk")
 			))
 
 	private val genders = listOf("male", "female")
