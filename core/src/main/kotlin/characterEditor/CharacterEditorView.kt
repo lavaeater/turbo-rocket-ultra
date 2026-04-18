@@ -45,9 +45,8 @@ class CharacterEditorView(
                 left()
                 val variants = viewModel.availableVariants.ifEmpty { listOf("male", "female") }
                 for (variantKey in variants) {
-                    commandTextButton(viewModel.variantDisplayName(variantKey)) {
-                        viewModel.gender = variantKey
-                    }.cell(align = Align.left).pad(padding)
+                    commandTextButton(viewModel.variantDisplayName(variantKey), { viewModel.gender = variantKey })
+                        .cell(align = Align.left).pad(padding)
                     row()
                 }
             }.cell(width = uiWidth / 3f)
