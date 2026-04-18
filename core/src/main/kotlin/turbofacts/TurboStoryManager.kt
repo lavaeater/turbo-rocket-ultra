@@ -4,29 +4,27 @@ class TurboStoryManager {
     private var isActive = false
 
     val stories = mutableListOf<TurboStory>()
-    fun addStories(vararg stories: TurboStory) {
-        for (story in stories) {
-            addStory(story)
-        }
+
+    fun addStories(vararg stories: TurboStory) = stories.forEach { addStory(it) }
+
+    fun addStory(story: TurboStory) {
+        stories.add(story)
+        stories.sortByDescending { it.specificityScore }
     }
 
     fun activate() {
         isActive = true
-        for (story in stories)
-            story.initialize()
-    }
-
-    fun addStory(story: TurboStory) {
-        stories.add(story)
+        stories.forEach { it.initialize() }
     }
 
     var needsChecking = true
+
     fun checkIfNeeded() {
-        if (isActive && needsChecking) {
-            needsChecking = false
-            for (story in stories) {
-                story.checkAndApplyStory()
-            }
+        if (!isActive || !needsChecking) return
+        needsChecking = false
+        for (story in stories) {
+            val fired = story.checkAndApplyStory()
+            if (fired && story.exclusive) break
         }
     }
 }
