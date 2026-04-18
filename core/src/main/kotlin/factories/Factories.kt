@@ -1,7 +1,7 @@
 package factories
 
 import ai.behaviorTree.Tree
-import ai.behaviorTree.behaviors.EnemyBehaviors
+import ai.utility.behaviors.EnemyBehaviors
 import ai.behaviorTree.tasks.EntityComponentTask
 import ai.behaviorTree.tasks.EntityTask
 import box2dLight.LightData
