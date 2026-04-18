@@ -219,16 +219,19 @@ class RenderableThing(private val spriteSheetDef: SheetDef, spriteSheets: List<S
      * If no layers have a variantFolder (legacy combined sheets), the original behaviour
      * is preserved: layers are composited pixel-for-pixel.
      */
-    fun exportSpriteSheet() {
+    /** Exports the sheet and returns the UUID used for the filename. */
+    fun exportSpriteSheet(): String {
+        val uuid = UUID.randomUUID().toString()
         val perAnimSheets = currentSheets.filter { it.variantFolder != null }
         if (perAnimSheets.isNotEmpty()) {
-            exportPerAnimSpriteSheet(perAnimSheets)
+            exportPerAnimSpriteSheet(perAnimSheets, uuid)
         } else {
-            exportLegacySpriteSheet()
+            exportLegacySpriteSheet(uuid)
         }
+        return uuid
     }
 
-    private fun exportPerAnimSpriteSheet(sheets: List<SpriteSheet.TextureSpriteSheet>) {
+    private fun exportPerAnimSpriteSheet(sheets: List<SpriteSheet.TextureSpriteSheet>, uuid: String) {
         val targetPixmap = Pixmap(EXPORT_COLS * CELL, EXPORT_ROWS * CELL, Pixmap.Format.RGBA8888)
 
         for (entry in EXPORT_ANIMS) {
@@ -263,11 +266,11 @@ class RenderableThing(private val spriteSheetDef: SheetDef, spriteSheets: List<S
 
         val outDir = Gdx.files.local("localfiles/created")
         if (!outDir.exists()) outDir.mkdirs()
-        PixmapIO.writePNG(Gdx.files.local("localfiles/created/${UUID.randomUUID()}.png"), targetPixmap)
+        PixmapIO.writePNG(Gdx.files.local("localfiles/created/$uuid.png"), targetPixmap)
         targetPixmap.dispose()
     }
 
-    private fun exportLegacySpriteSheet() {
+    private fun exportLegacySpriteSheet(uuid: String) {
         val texture = currentSheets.firstOrNull()?.texture ?: return
         val targetPixmap = Pixmap(texture.width, texture.height, Pixmap.Format.RGBA8888)
         for (sheet in currentSheets.sortedBy { it.renderPriority }) {
@@ -277,7 +280,7 @@ class RenderableThing(private val spriteSheetDef: SheetDef, spriteSheets: List<S
         }
         val outDir = Gdx.files.local("localfiles/created")
         if (!outDir.exists()) outDir.mkdirs()
-        PixmapIO.writePNG(Gdx.files.local("localfiles/created/${UUID.randomUUID()}.png"), targetPixmap)
+        PixmapIO.writePNG(Gdx.files.local("localfiles/created/$uuid.png"), targetPixmap)
         targetPixmap.dispose()
     }
 }

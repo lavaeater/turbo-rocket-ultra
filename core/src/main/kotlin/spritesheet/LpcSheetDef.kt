@@ -5,6 +5,14 @@ data class LpcRecolor(
     val palettes: List<String>
 )
 
+data class LpcCredit(
+    val file: String,
+    val authors: List<String>,
+    val licenses: List<String>,
+    val urls: List<String>,
+    val notes: String = ""
+)
+
 /**
  * Parsed representation of a single `sheet_definitions/**/*.json` file.
  *
@@ -21,5 +29,6 @@ data class LpcSheetDef(
     val variants: Map<String, String>,
     val animations: List<String>,
     val recolors: List<LpcRecolor>,
+    val credits: List<LpcCredit>,
     val categoryPath: List<String>
 )

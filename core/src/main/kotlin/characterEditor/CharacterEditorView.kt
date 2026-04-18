@@ -1,6 +1,7 @@
 package characterEditor
 
 import com.badlogic.gdx.graphics.g2d.Batch
+import com.badlogic.gdx.scenes.scene2d.ui.ScrollPane
 import com.badlogic.gdx.scenes.scene2d.utils.UIUtils.middle
 import com.badlogic.gdx.utils.Align
 import ktx.scene2d.label
@@ -77,6 +78,15 @@ class CharacterEditorView(
 
             table {
                 commandTextButton("Export character", viewModel::exportCharacter)
+                row()
+                // Credits panel — scrollable, shows attribution for all selected layers
+                val creditsLabel = bindableLabel(viewModel::currentCredits.name) {
+                    wrap = true
+                    setAlignment(Align.topLeft)
+                }
+                val scrollPane = ScrollPane(creditsLabel)
+                scrollPane.setScrollingDisabled(true, false)
+                add(scrollPane).width(uiWidth / 3f).height(uiHeight / 4f).top()
                 bottom()
             }
 

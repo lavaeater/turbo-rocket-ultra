@@ -8,7 +8,9 @@ data class LpcSpriteSheetDefinition(
     /** Directory containing per-animation PNGs. Null for legacy combined-sheet layers. */
     val variantFolder: String? = null,
     /** The variant key this definition represents, e.g. "male", "female", "muscular". */
-    val variantKey: String? = null
+    val variantKey: String? = null,
+    /** Attribution data parsed from the sheet definition JSON. */
+    val credits: List<LpcCredit> = emptyList()
 ) {
     val tags: Set<String> get() = path.split("/", "_", ".").distinct().toSet()
     val isFemale: Boolean get() = explicitIsFemale ?: tags.any { it.contains("female") }

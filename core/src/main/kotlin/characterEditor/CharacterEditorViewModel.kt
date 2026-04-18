@@ -1,5 +1,6 @@
 package characterEditor
 
+import com.badlogic.gdx.Gdx
 import ui.mvvm.ViewModelBase
 import ui.mvvm.notifyChanged
 import spritesheet.*
@@ -78,6 +79,9 @@ class CharacterEditorViewModel(spriteSheetCategories: List<LpcSpriteSheetCategor
     var currentCategoryName: String by notifyChanged(categories.keys.elementAt(currentCategoryIndex))
     var currentSpriteSheetName: String by notifyChanged("")
 
+    /** Formatted attribution text for all currently selected layers. Bound to the credits panel. */
+    var currentCredits: String by notifyChanged("")
+
     fun getRenderableThing(): RenderableThing {
         if (!::renderableThing.isInitialized) {
             renderableThing = RenderableThing(
@@ -132,6 +136,31 @@ class CharacterEditorViewModel(spriteSheetCategories: List<LpcSpriteSheetCategor
 
     private fun updateRenderableThing() {
         renderableThing.updateSprites(selectedSpriteSheets.values.filter { it is SpriteSheet.LoadableSpriteSheet && it.visible })
+        currentCredits = buildCreditsText()
+    }
+
+    private fun buildCreditsText(): String {
+        val allCredits = selectedSpriteSheets.values
+            .filterIsInstance<SpriteSheet.LoadableSpriteSheet>()
+            .flatMap { sheet ->
+                categories.values
+                    .flatMap { it.spriteSheets }
+                    .filter { it.path == sheet.path }
+                    .flatMap { it.credits }
+            }
+            .distinctBy { it.file }
+
+        if (allCredits.isEmpty()) return ""
+
+        return allCredits.joinToString("\n\n") { credit ->
+            buildString {
+                append(credit.file)
+                if (credit.authors.isNotEmpty()) append("\n  Av: ${credit.authors.joinToString(", ")}")
+                if (credit.licenses.isNotEmpty()) append("\n  Licens: ${credit.licenses.joinToString(", ")}")
+                if (credit.urls.isNotEmpty()) credit.urls.forEach { append("\n  $it") }
+                if (credit.notes.isNotBlank()) append("\n  ${credit.notes}")
+            }
+        }
     }
 
     private fun fixCurrentSpriteSheetIndex() {
@@ -144,7 +173,15 @@ class CharacterEditorViewModel(spriteSheetCategories: List<LpcSpriteSheetCategor
     }
 
     fun exportCharacter() {
-        renderableThing.exportSpriteSheet()
+        val uuid = renderableThing.exportSpriteSheet()
+        val creditsText = buildCreditsText()
+        if (creditsText.isNotBlank()) {
+            val outDir = Gdx.files.local("localfiles/created")
+            if (!outDir.exists()) outDir.mkdirs()
+            Gdx.files.local("localfiles/created/$uuid-credits.txt").writeString(
+                "Credits for character $uuid\n\n$creditsText\n", false, "UTF-8"
+            )
+        }
     }
 
     private fun Int.clampIndex(size: Int): Int = if (size == 0) 0 else ((this % size) + size) % size

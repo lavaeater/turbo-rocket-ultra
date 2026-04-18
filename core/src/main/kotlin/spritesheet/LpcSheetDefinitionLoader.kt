@@ -100,7 +100,25 @@ object LpcSheetDefinitionLoader {
             val parts = relative.split("/").dropLast(1) // remove the filename
             val categoryPath = parts.filter { it.isNotEmpty() }
 
-            LpcSheetDef(name, priority, variants, animations, recolors, categoryPath)
+            // Credits array
+            val credits = mutableListOf<LpcCredit>()
+            root.get("credits")?.forEach { c ->
+                val authors = mutableListOf<String>()
+                c.get("authors")?.forEach { authors += it.asString() }
+                val licenses = mutableListOf<String>()
+                c.get("licenses")?.forEach { licenses += it.asString() }
+                val urls = mutableListOf<String>()
+                c.get("urls")?.forEach { urls += it.asString() }
+                credits += LpcCredit(
+                    file = c.getString("file", ""),
+                    authors = authors,
+                    licenses = licenses,
+                    urls = urls,
+                    notes = c.getString("notes", "")
+                )
+            }
+
+            LpcSheetDef(name, priority, variants, animations, recolors, credits, categoryPath)
         } catch (e: Exception) {
             null
         }
@@ -194,7 +212,8 @@ object LpcSheetDefinitionLoader {
                 explicitIsMale = isMale,
                 explicitIsFemale = isFemale,
                 variantFolder = folderPath,
-                variantKey = variantKey
+                variantKey = variantKey,
+                credits = def.credits
             )
         }
     }
