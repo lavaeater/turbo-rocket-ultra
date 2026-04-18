@@ -188,6 +188,7 @@ class CharacterEditorViewModel(spriteSheetCategories: List<LpcSpriteSheetCategor
     }
 
     private fun updateCurrentSpritesheet() {
+        if (currentSpriteSheets.isEmpty()) return
         currentSpriteSheet = currentSpriteSheets.elementAt(currentSpriteSheetIndex)
         selectedSpriteSheets[currentCategoryName] = SpriteSheet.LoadableSpriteSheet(
             currentSpriteSheet.path,
