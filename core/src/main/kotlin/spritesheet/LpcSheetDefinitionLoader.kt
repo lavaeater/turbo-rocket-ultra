@@ -89,6 +89,7 @@ object LpcSheetDefinitionLoader {
                 when {
                     rc.isObject -> parseRecolor(rc)?.let { recolors += it }
                     rc.isArray -> rc.forEach { item -> parseRecolor(item)?.let { recolors += it } }
+                    else -> Unit
                 }
             }
 
