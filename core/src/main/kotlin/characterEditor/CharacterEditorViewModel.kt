@@ -1,6 +1,7 @@
 package characterEditor
 
 import com.badlogic.gdx.Gdx
+import ui.mvvm.DelegateCommand
 import ui.mvvm.ViewModelBase
 import ui.mvvm.notifyChanged
 import spritesheet.*
@@ -90,6 +91,10 @@ class CharacterEditorViewModel(spriteSheetCategories: List<LpcSpriteSheetCategor
 
     /** Shown in the UI after an export completes. Empty when no export has happened yet. */
     var exportMessage: String by notifyChanged("")
+
+    val exportCommand = DelegateCommand("export", execute = ::exportCharacter).also {
+        it.canExecute = false
+    }
 
     fun getRenderableThing(): RenderableThing {
         if (!::renderableThing.isInitialized) {
@@ -187,8 +192,10 @@ class CharacterEditorViewModel(spriteSheetCategories: List<LpcSpriteSheetCategor
     }
 
     private fun updateRenderableThing() {
-        renderableThing.updateSprites(selectedSpriteSheets.values.filter { it is SpriteSheet.LoadableSpriteSheet && it.visible })
+        val loadedSheets = selectedSpriteSheets.values.filter { it is SpriteSheet.LoadableSpriteSheet && it.visible }
+        renderableThing.updateSprites(loadedSheets)
         currentCredits = buildCreditsText()
+        exportCommand.canExecute = loadedSheets.isNotEmpty()
     }
 
     private fun buildCreditsText(): String {

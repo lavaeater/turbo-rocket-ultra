@@ -130,7 +130,7 @@ class CharacterEditorView(
                     setAlignment(Align.center)
                 }.cell(width = uiWidth / 4f)
                 row()
-                commandTextButton("Export character", viewModel::exportCharacter)
+                commandTextButton("Export character", viewModel.exportCommand)
                     .cell().pad(padding)
                 row()
                 // Credits panel — scrollable, shows attribution for all selected layers
