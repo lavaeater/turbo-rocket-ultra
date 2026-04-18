@@ -77,8 +77,8 @@ class AnimationEditorElement(
             append("[\n")
             defs.forEachIndexed { i, def ->
                 append("  {")
-                append("\"state\":\"${def.state.name}\",")
-                append("\"direction\":\"${def.direction.name}\",")
+                append("\"state\":\"${def.state}\",")
+                append("\"direction\":\"${def.direction}\",")
                 append("\"row\":${def.row},")
                 append("\"startCol\":${def.startCol},")
                 append("\"endCol\":${def.endCol}")

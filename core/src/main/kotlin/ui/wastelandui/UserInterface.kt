@@ -125,35 +125,6 @@ class UserInterface(
     stage.addActor(rootTable)
   }
 
-  override fun showSplashScreen() {
-    /*
-    Set up timer. Show splash screen.
-    When timer fires, remove splash screen, send resume game event. Yay!
-     */
-
-//    val splashScreen = scene2table {
-//      image(Assets.splashScreen) {
-//        setScaling(Scaling.fit)
-//        scaleBy(4.0f)
-//      }.cell()
-//      setFillParent(true)
-//      isVisible = true
-//      bottom()
-//      left()
-//    }
-//    stage.addActor(splashScreen)
-//    Timer.instance().clear()
-//
-//    Timer.instance().scheduleTask(object : Timer.Task() {
-//      override fun run() {
-//        stage.actors.removeValue(splashScreen, true)
-//        gameState.handleEvent(GameEvents.GameResumed)
-//      }
-//    }, 3f)
-//  }
-  }
-
-
   override fun show() {}
   override fun hide() {}
   override fun reset() {}

@@ -63,10 +63,10 @@ class CharacterEditorView(
                 for (catName in viewModel.categoryNames) {
                     // Category name button — selects the category for browsing
                     commandTextButton(catName, { viewModel.selectCategoryByName(catName) })
-                        .cell(align = Align.left, width = uiWidth / 6f).pad(padding / 2f)
+                        .cell(align = Align.left, width = uiWidth / 6f, pad = padding / 2f)
                     // Live display of currently selected sheet name for this category
                     boundLabel({ viewModel.selectedSheetNameFor(catName) })
-                        .cell(align = Align.left, width = uiWidth / 6f).pad(padding / 2f)
+                        .cell(align = Align.left, width = uiWidth / 6f, pad = padding / 2f)
                     row()
                 }
                 left()
@@ -108,7 +108,7 @@ class CharacterEditorView(
                         viewModel.selectAnim(animBox.selected)
                     }
                 })
-                add(animBox).cell().pad(padding).colspan(2)
+                add(animBox).pad(padding).colspan(2)
             }.cell().top().padLeft(padding)
 
             // Export column
