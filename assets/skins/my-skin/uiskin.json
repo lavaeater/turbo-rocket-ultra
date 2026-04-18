@@ -222,6 +222,26 @@ com.badlogic.gdx.scenes.scene2d.ui.Tree$TreeStyle: {
 		selection: progress-bar
 	}
 }
+com.badlogic.gdx.scenes.scene2d.ui.List$ListStyle: {
+	default: {
+		font: commodore-64
+		fontColorSelected: foreground
+		fontColorUnselected: light_grey
+		selection: button-down
+		background: blue
+	}
+}
+com.badlogic.gdx.scenes.scene2d.ui.SelectBox$SelectBoxStyle: {
+	default: {
+		font: commodore-64
+		fontColor: foreground
+		background: button
+		backgroundOpen: button-down
+		backgroundDisabled: button
+		scrollStyle: default
+		listStyle: default
+	}
+}
 com.badlogic.gdx.scenes.scene2d.ui.Window$WindowStyle: {
 	default: {
 		background: window
