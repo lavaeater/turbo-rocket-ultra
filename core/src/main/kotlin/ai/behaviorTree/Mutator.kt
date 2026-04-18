@@ -80,8 +80,8 @@ object Mutator {
 
     private fun mutateLeaf(task: LeafTask<Entity>): LeafTask<Entity> {
         return when (task) {
-            is DelayTask -> DelayTask((0.2f..5f).random())
-            is RotateTask -> RotateTask((15f..360f).random(), listOf(true, false).random())
+            is DelayTask -> DelayTask((2..50).random() / 10f)
+            is RotateTask -> RotateTask((15..360).random().toFloat(), listOf(true, false).random())
             else -> task.cloneTask() as LeafTask<Entity>
         }
     }
