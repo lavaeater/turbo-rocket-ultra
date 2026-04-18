@@ -1175,6 +1175,29 @@ fun objective(
     return body
 }
 
+fun conversationNpc(
+    at: Vector2,
+    inkJsonPath: String,
+    triggerRadius: Float = 3f,
+    repeatable: Boolean = false,
+    afterConversation: () -> Unit = {}
+): Entity {
+    val inkStory = com.bladecoder.ink.runtime.Story(story.conversation.InkLoader().readStoryJson(inkJsonPath))
+    val agent = story.conversation.EmptyAgent()
+    val conversation = story.conversation.InkConversation(inkStory, agent, agent)
+
+    val entity = engine().entity {
+        with<TransformComponent> { position.set(at.x, at.y) }
+        with<components.ai.ConversationComponent> {
+            this.conversation = conversation
+            this.triggerRadius = triggerRadius
+            this.repeatable = repeatable
+            this.afterConversation = afterConversation
+        }
+    }
+    return entity
+}
+
 fun <T> Task<T>.prettyPrint(level: Int = 0): String {
     var aString = if (guard != null) "$level: if ${guard} then - " else "$level: "
     aString += if (this is EntityComponentTask<*> && this.status != Status.FRESH) {

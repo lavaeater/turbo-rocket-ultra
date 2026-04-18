@@ -27,7 +27,7 @@ class ConversationTriggerSystem : IteratingSystem(
 
         if (distance <= cc.triggerRadius) {
             cc.triggeredOnce = true
-            conversationManager.startConversation(cc.conversation)
+            conversationManager.startConversation(cc.conversation, cc.afterConversation)
         }
     }
 }

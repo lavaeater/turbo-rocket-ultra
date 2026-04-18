@@ -66,6 +66,8 @@ class GridMapGenerator {
 //            CounterObject.maxSpawnedEnemies = mapData.maxSpawnedEnemies
 
             storyManager.addStories(*StoryHelper.allStories.filterKeys { mapData.storyKeys.contains(it) }.values.toTypedArray())
+            if (mapData.storiesFile.isNotBlank())
+                storyManager.addStories(*turbofacts.StoryLoader.load(mapData.storiesFile).toTypedArray())
 
             return generateFromDefintion(mapData.mapDefinition)
         }

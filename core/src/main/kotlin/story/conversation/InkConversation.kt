@@ -63,6 +63,13 @@ class InkConversation(val story: Story, override val protagonist: IAgent, overri
     val PLAYER_NAME = "player_name"
     val REACTION_SCORE = "reaction_score"
     val STEP_OF_STORY = "step_of_story"
+
+    val defaultVarMapping = mapOf(
+        MET_BEFORE to "conversation.met_before",
+        PLAYER_NAME to "conversation.player_name",
+        REACTION_SCORE to "conversation.reaction_score",
+        STEP_OF_STORY to "conversation.step_of_story"
+    )
   }
 }
 
