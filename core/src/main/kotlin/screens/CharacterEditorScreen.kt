@@ -6,15 +6,14 @@ import com.badlogic.gdx.Gdx
 import com.badlogic.gdx.graphics.GL20
 import gamestate.GameEvent
 import gamestate.GameState
-import spritesheet.LpcSpriteSheetHelper
+import spritesheet.LpcSheetDefinitionLoader
 import spritesheet.SheetDef
 import spritesheet.TextureRegionDef
 import statemachine.StateMachine
 
 class CharacterEditorScreen(gameState: StateMachine<GameState, GameEvent>) : BasicScreen(gameState) {
 
-	private val basePath = "localfiles/lpc"
-	private val charEditor = CharacterEditorViewModel(LpcSpriteSheetHelper().categories)
+	private val charEditor = CharacterEditorViewModel(LpcSheetDefinitionLoader.load())
 	private val charEditorView = CharacterEditorView(batch, charEditor)
 
 	private var currentAnim = 2
