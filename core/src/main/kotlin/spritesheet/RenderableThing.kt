@@ -72,7 +72,8 @@ class RenderableThing(private val spriteSheetDef: SheetDef, spriteSheets: List<S
     private val currentSheets = mutableListOf<SpriteSheet.TextureSpriteSheet>()
     private var currentAnim = spriteSheetDef.textureRegionDef.first { it.name == "walksouth" }
     /** Texture cache keyed by file path. Shared between preview and export pixmap loading. */
-    private val textures = mutableMapOf<String, SpriteSheet.TextureSpriteSheet>()
+    private val textures = mutableMapOf<String, SpriteSheet.TextureSpriteSheet?>()
+    private val missingPaths = mutableSetOf<String>()
     private var currentRegionsInvalid = true
     private val currentRegions = mutableListOf<List<TextureRegion>>()
     private var localDelta: Float = 0f
@@ -86,14 +87,17 @@ class RenderableThing(private val spriteSheetDef: SheetDef, spriteSheets: List<S
     private fun loadSheets(spriteSheets: List<SpriteSheet>) {
         currentSheets.clear()
         for (spriteSheet in spriteSheets.filterIsInstance<SpriteSheet.LoadableSpriteSheet>()) {
+            if (spriteSheet.path in missingPaths) continue
             val tss = textures.getOrPut(spriteSheet.path) {
+                val file = Gdx.files.local(spriteSheet.path)
+                if (!file.exists()) { missingPaths.add(spriteSheet.path); return@getOrPut null }
                 SpriteSheet.TextureSpriteSheet(
                     spriteSheet.renderPriority,
                     spriteSheet.path,
-                    Texture(Gdx.files.local(spriteSheet.path)),
+                    Texture(file),
                     spriteSheet.variantFolder
                 )
-            }
+            } ?: continue
             currentSheets.add(tss)
         }
     }
@@ -158,7 +162,7 @@ class RenderableThing(private val spriteSheetDef: SheetDef, spriteSheets: List<S
                 Texture(file),
                 sheet.variantFolder
             )
-        }.texture
+        }?.texture ?: return emptyList()
 
         val directionRow = anim.row % 4
         val firstFrame = if (anim.firstFrameIdle) 1 else 0

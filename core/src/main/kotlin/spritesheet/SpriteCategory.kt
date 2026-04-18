@@ -36,7 +36,9 @@ class SpriteCategory(val name: String, val renderPriority: Int, var visible: Boo
 			null
 		else {
 			if (!textures.containsKey(currentTextureKey)) {
-				textures[currentTextureKey] = Texture(Gdx.files.local(currentTextureKey))
+				val file = Gdx.files.local(currentTextureKey)
+				if (!file.exists()) return null
+				textures[currentTextureKey] = Texture(file)
 			}
 			textures[currentTextureKey]
 		}

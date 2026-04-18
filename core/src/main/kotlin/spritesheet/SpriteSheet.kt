@@ -24,4 +24,7 @@ sealed class SpriteSheet(val visible: Boolean = true) {
     ) : SpriteSheet()
 
     class EmptySpriteSheet : SpriteSheet(false)
+
+    /** Sentinel for a file that was referenced but doesn't exist on disk. Cached to avoid repeated filesystem checks. */
+    object MissingSpriteSheet : SpriteSheet(false)
 }
