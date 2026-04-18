@@ -79,8 +79,17 @@ class CharacterEditorViewModel(spriteSheetCategories: List<LpcSpriteSheetCategor
     var currentCategoryName: String by notifyChanged(categories.keys.elementAt(currentCategoryIndex))
     var currentSpriteSheetName: String by notifyChanged("")
 
+    /**
+     * Variant folder for the currently highlighted (not yet confirmed) sprite sheet,
+     * used by the View to show a thumbnail preview. Empty string means no preview available.
+     */
+    var previewVarFolder: String by notifyChanged("")
+
     /** Formatted attribution text for all currently selected layers. Bound to the credits panel. */
     var currentCredits: String by notifyChanged("")
+
+    /** Shown in the UI after an export completes. Empty when no export has happened yet. */
+    var exportMessage: String by notifyChanged("")
 
     fun getRenderableThing(): RenderableThing {
         if (!::renderableThing.isInitialized) {
@@ -91,6 +100,25 @@ class CharacterEditorViewModel(spriteSheetCategories: List<LpcSpriteSheetCategor
         return renderableThing
     }
 
+    /** All category names in display order. Used to build the scrollable category list in the View. */
+    val categoryNames: List<String> get() = categories.keys.toList()
+
+    /** The name of the layer currently selected for [categoryName], or empty string if none. */
+    fun selectedSheetNameFor(categoryName: String): String {
+        val sheet = selectedSpriteSheets[categoryName]
+        return if (sheet is SpriteSheet.LoadableSpriteSheet) {
+            categories[categoryName]?.spriteSheets?.firstOrNull { it.path == sheet.path }?.name ?: ""
+        } else ""
+    }
+
+    fun selectCategoryByName(name: String) {
+        val idx = categories.keys.indexOf(name)
+        if (idx >= 0) {
+            currentCategoryIndex = idx
+            updateCurrentCategory()
+        }
+    }
+
     fun nextCategory() {
         currentCategoryIndex = (currentCategoryIndex + 1).clampIndex(categories.size)
         updateCurrentCategory()
@@ -99,6 +127,24 @@ class CharacterEditorViewModel(spriteSheetCategories: List<LpcSpriteSheetCategor
     fun previousCategory() {
         currentCategoryIndex = (currentCategoryIndex - 1).clampIndex(categories.size)
         updateCurrentCategory()
+    }
+
+    /** Clears the currently browsed category's selected layer (sets it to empty). */
+    fun clearCurrentLayer() {
+        selectedSpriteSheets[currentCategoryName] = SpriteSheet.EmptySpriteSheet()
+        currentSpriteSheetIndex = 0
+        currentSpriteSheetName = ""
+        currentTags = ""
+        subName = ""
+        updateRenderableThing()
+    }
+
+    /** All animation names available in the current sheet definition, for the anim selector. */
+    val availableAnims: List<String> get() = sheetDef.textureRegionDef.map { it.name }
+
+    fun selectAnim(name: String) {
+        currentAnim = name
+        if (::renderableThing.isInitialized) renderableThing.setAnim(name)
     }
 
     fun nextAnim() {
@@ -131,6 +177,7 @@ class CharacterEditorViewModel(spriteSheetCategories: List<LpcSpriteSheetCategor
         currentSpriteSheetName = currentSpriteSheet.name
         currentTags = currentSpriteSheet.tags.joinToString("\n")
         subName = currentSpriteSheet.subName
+        previewVarFolder = currentSpriteSheet.variantFolder ?: ""
         updateRenderableThing()
     }
 
@@ -182,6 +229,7 @@ class CharacterEditorViewModel(spriteSheetCategories: List<LpcSpriteSheetCategor
                 "Credits for character $uuid\n\n$creditsText\n", false, "UTF-8"
             )
         }
+        exportMessage = "Exported: localfiles/created/$uuid.png"
     }
 
     private fun Int.clampIndex(size: Int): Int = if (size == 0) 0 else ((this % size) + size) % size

@@ -2,11 +2,16 @@ package characterEditor
 
 import com.badlogic.gdx.graphics.g2d.Batch
 import com.badlogic.gdx.scenes.scene2d.ui.ScrollPane
-import com.badlogic.gdx.scenes.scene2d.utils.UIUtils.middle
+import com.badlogic.gdx.scenes.scene2d.ui.SelectBox
+import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener
+import com.badlogic.gdx.scenes.scene2d.Actor
 import com.badlogic.gdx.utils.Align
+import com.badlogic.gdx.utils.Array as GdxArray
+import ktx.scene2d.Scene2DSkin
 import ktx.scene2d.label
 import ktx.scene2d.scene2d
 import ktx.scene2d.table
+import ui.customactors.boundLabel
 import ui.mvvm.ViewBase
 import ui.mvvm.bindableLabel
 import ui.mvvm.commandTextButton
@@ -18,9 +23,11 @@ class CharacterEditorView(
 ) : ViewBase<CharacterEditorViewModel>(batch, viewModel) {
 
     private lateinit var renderableThing: RenderableThing
+    private val previewActor = LayerPreviewActor()
 
     override fun initLayout() {
         renderableThing = viewModel.getRenderableThing()
+        bind(viewModel::previewVarFolder) { previewActor.variantFolder = it }
         renderableThing.setFillParent(true)
 
         val characterTable = scene2d.table {
@@ -37,7 +44,6 @@ class CharacterEditorView(
 
         val commandTable = scene2d.table {
             bottom()
-            middle()
 
             // Variant selector — dynamic based on what the loaded sheets support
             table {
@@ -50,45 +56,80 @@ class CharacterEditorView(
                         .cell(align = Align.left).pad(padding)
                     row()
                 }
-            }.cell(width = uiWidth / 3f)
+            }.cell(width = uiWidth / 4f, fillY = true).top()
 
+            // Scrollable category list — click a row to navigate to that category
+            val categoryListTable = scene2d.table {
+                for (catName in viewModel.categoryNames) {
+                    // Category name button — selects the category for browsing
+                    commandTextButton(catName, { viewModel.selectCategoryByName(catName) })
+                        .cell(align = Align.left, width = uiWidth / 6f).pad(padding / 2f)
+                    // Live display of currently selected sheet name for this category
+                    boundLabel({ viewModel.selectedSheetNameFor(catName) })
+                        .cell(align = Align.left, width = uiWidth / 6f).pad(padding / 2f)
+                    row()
+                }
+                left()
+                top()
+            }
+            val categoryScrollPane = ScrollPane(categoryListTable)
+            categoryScrollPane.setScrollingDisabled(true, false)
+            add(categoryScrollPane).width(uiWidth / 3f).height(uiHeight * 0.6f).top()
+
+            // Sprite sheet browser for the selected category + animation selector
             table {
+                // Thumbnail preview of the currently highlighted layer
+                add(previewActor).size(64f).pad(padding).colspan(4)
+                row()
+                // Sprite sheet navigation
                 commandTextButton("<<", viewModel::previousSpriteSheet)
                     .cell().pad(padding).left()
                 bindableLabel(viewModel::currentSpriteSheetName.name) {
                     setAlignment(Align.center)
-                }.cell(width = uiWidth / 4f)
+                }.cell(width = uiWidth / 5f)
                 commandTextButton(">>", viewModel::nextSpriteSheet)
                     .cell().pad(padding).right()
+                commandTextButton("✕", viewModel::clearCurrentLayer)
+                    .cell().pad(padding)
                 row()
-                commandTextButton("<<", viewModel::previousCategory)
-                    .cell().pad(padding).left()
+                // Active category label (read-only — use the list on the left to change category)
                 bindableLabel(viewModel::currentCategoryName.name) {
                     setAlignment(Align.center)
-                }.cell(width = uiWidth / 5f)
-                commandTextButton(">>", viewModel::nextCategory)
-                    .cell().pad(padding).right()
+                }.cell(width = uiWidth / 4f, colspan = 4)
                 row()
-                commandTextButton("Next anim", viewModel::nextAnim)
-                    .cell().pad(padding).left()
-                bindableLabel(viewModel::currentAnim.name) {
-                    setAlignment(Align.center)
-                }.cell(width = uiWidth / 5f)
-            }
+                // Animation selector — SelectBox listing all available animations
+                val animBox = SelectBox<String>(Scene2DSkin.defaultSkin)
+                val animItems = GdxArray<String>()
+                viewModel.availableAnims.forEach { animItems.add(it) }
+                animBox.items = animItems
+                animBox.selected = viewModel.currentAnim
+                animBox.addListener(object : ChangeListener() {
+                    override fun changed(event: ChangeEvent, actor: Actor) {
+                        viewModel.selectAnim(animBox.selected)
+                    }
+                })
+                add(animBox).cell().pad(padding).colspan(2)
+            }.cell().top().padLeft(padding)
 
+            // Export column
             table {
+                bindableLabel(viewModel::exportMessage.name) {
+                    wrap = true
+                    setAlignment(Align.center)
+                }.cell(width = uiWidth / 4f)
+                row()
                 commandTextButton("Export character", viewModel::exportCharacter)
+                    .cell().pad(padding)
                 row()
                 // Credits panel — scrollable, shows attribution for all selected layers
                 val creditsLabel = bindableLabel(viewModel::currentCredits.name) {
                     wrap = true
                     setAlignment(Align.topLeft)
                 }
-                val scrollPane = ScrollPane(creditsLabel)
-                scrollPane.setScrollingDisabled(true, false)
-                add(scrollPane).width(uiWidth / 3f).height(uiHeight / 4f).top()
-                bottom()
-            }
+                val creditsScrollPane = ScrollPane(creditsLabel)
+                creditsScrollPane.setScrollingDisabled(true, false)
+                add(creditsScrollPane).width(uiWidth / 4f).height(uiHeight / 3f).top()
+            }.cell().top().padLeft(padding)
 
             setFillParent(true)
         }
@@ -98,5 +139,5 @@ class CharacterEditorView(
     }
 
     override fun hide() {}
-    override fun dispose() {}
+    override fun dispose() { previewActor.dispose() }
 }

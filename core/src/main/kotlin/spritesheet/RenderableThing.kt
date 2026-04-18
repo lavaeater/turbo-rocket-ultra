@@ -106,6 +106,12 @@ class RenderableThing(private val spriteSheetDef: SheetDef, spriteSheets: List<S
         return currentAnim.name
     }
 
+    fun setAnim(name: String) {
+        val def = spriteSheetDef.textureRegionDef.firstOrNull { it.name == name } ?: return
+        currentAnim = def
+        currentRegionsInvalid = true
+    }
+
     fun updateSprites(spriteSheets: List<SpriteSheet>) {
         currentRegionsInvalid = true
         loadSheets(spriteSheets)

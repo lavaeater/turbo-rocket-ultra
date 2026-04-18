@@ -1,7 +1,6 @@
 package ui.new
 
-//import kotlinx.serialization.encodeToString
-//import kotlinx.serialization.json.Json
+import com.badlogic.gdx.Gdx
 import com.badlogic.gdx.Input
 import com.badlogic.gdx.graphics.Color
 import com.badlogic.gdx.graphics.Texture
@@ -74,11 +73,25 @@ class AnimationEditorElement(
     private fun saveAnim() {
         defs.add(AnimDef(currentAnimState, currentDirection, row, startCol, endCol))
 
-//        val jsonString = Json.encodeToString(defs)
-//
-//        //Wutwut
-//        val file = Gdx.files.local("files/sheet.json")
-//        file.writeString(jsonString, false)
+        val jsonString = buildString {
+            append("[\n")
+            defs.forEachIndexed { i, def ->
+                append("  {")
+                append("\"state\":\"${def.state.name}\",")
+                append("\"direction\":\"${def.direction.name}\",")
+                append("\"row\":${def.row},")
+                append("\"startCol\":${def.startCol},")
+                append("\"endCol\":${def.endCol}")
+                append("}")
+                if (i < defs.lastIndex) append(",")
+                append("\n")
+            }
+            append("]")
+        }
+
+        val outDir = Gdx.files.local("localfiles/anims")
+        if (!outDir.exists()) outDir.mkdirs()
+        Gdx.files.local("localfiles/anims/sheet.json").writeString(jsonString, false)
     }
 
     var stateIndex = 0

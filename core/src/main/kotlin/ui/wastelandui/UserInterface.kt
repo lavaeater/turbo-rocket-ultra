@@ -4,6 +4,7 @@ import com.badlogic.gdx.InputMultiplexer
 import com.badlogic.gdx.graphics.Color
 import com.badlogic.gdx.graphics.OrthographicCamera
 import com.badlogic.gdx.graphics.g2d.Batch
+import com.badlogic.gdx.math.Vector2
 import com.badlogic.gdx.scenes.scene2d.Stage
 import com.badlogic.gdx.scenes.scene2d.ui.Label
 import com.badlogic.gdx.utils.Align
@@ -19,6 +20,7 @@ import story.conversation.IConversation
 import animation.Assets
 import turbofacts.Factoids
 import turbofacts.TurboFactsOfTheWorld
+import ui.IUserInterface
 
 class UserInterface(
     private val batch: Batch,
@@ -152,11 +154,10 @@ class UserInterface(
   }
 
 
-  override fun showInventory() {
-//    inventoryTable.isVisible = true
-  }
-
-  override fun hideInventory() {
-//    inventoryTable.isVisible = false
-  }
+  override fun show() {}
+  override fun hide() {}
+  override fun reset() {}
+  override fun pause() {}
+  override fun resume() {}
+  override fun worldToHudPosition(worldPosition: Vector2): Vector2 = worldPosition
 }
