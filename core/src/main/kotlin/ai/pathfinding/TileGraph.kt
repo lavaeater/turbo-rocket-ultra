@@ -39,6 +39,10 @@ class TileGraph : IndexedGraph<Coordinate> {
 
     private val pathsCache = mutableMapOf<Coordinate, MutableMap<Coordinate, GraphPath<Coordinate>>>()
 
+    fun clearCache() {
+        pathsCache.clear()
+    }
+
     fun findPath(start: Coordinate, goal: Coordinate): GraphPath<Coordinate> {
         var path = pathsCache[start]?.get(goal)
         if (path == null) {
