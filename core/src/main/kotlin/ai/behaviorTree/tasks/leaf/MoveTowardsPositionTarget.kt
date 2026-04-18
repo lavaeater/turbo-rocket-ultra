@@ -22,25 +22,29 @@ class MoveTowardsPositionTarget<T: PositionTarget>(private val run: Boolean = fa
     var coolDown = 0.5f
     var actualCoolDown = coolDown
     var needsPosition = true
-    val mapper by lazy { ComponentMapper.getFor(componentClass.java)  }
+    val mapper by lazy { ComponentMapper.getFor(componentClass.java) }
+
+    private var sliding = false
+    private val slideDir = Vector2.Zero.cpy()
 
     override fun start() {
         super.start()
         actualCoolDown = coolDown
         positionToMoveTowards = Vector2.Zero.cpy()
         needsPosition = true
+        sliding = false
+        slideDir.setZero()
     }
 
     override fun copyTo(task: Task<Entity>?): Task<Entity> {
         return MoveTowardsPositionTarget(run, componentClass)
     }
 
-
     override fun execute(): Status {
         if (!mapper.has(entity))
             return Status.FAILED
 
-        if(needsPosition) {
+        if (needsPosition) {
             positionToMoveTowards = mapper.get(entity).position
             previousDistance = positionToMoveTowards.dst(entity.transform().position)
             currentDistance = previousDistance
@@ -51,30 +55,66 @@ class MoveTowardsPositionTarget<T: PositionTarget>(private val run: Boolean = fa
         agentProps.speed = if (run) agentProps.rushSpeed else agentProps.baseProperties.speed
 
         val currentPosition = entity.transform().position
+        currentDistance = positionToMoveTowards.dst(currentPosition)
 
-        val direction = positionToMoveTowards.cpy().sub(currentPosition).nor()
+        if (currentDistance < GameConstants.TOUCHING_DISTANCE) {
+            debug { "MoveTowards reached destination" }
+            entity.remove(componentClass.java)
+            sliding = false
+            return Status.SUCCEEDED
+        }
 
-        agentProps.directionVector.set(direction)
+        if (sliding) {
+            agentProps.directionVector.set(slideDir)
+        } else {
+            val direction = positionToMoveTowards.cpy().sub(currentPosition).nor()
+            agentProps.directionVector.set(direction)
+        }
+
         actualCoolDown -= deltaTime()
         if (actualCoolDown < 0f) {
             actualCoolDown = coolDown
-            currentDistance = positionToMoveTowards.dst(entity.transform().position)
-            if(previousDistance - currentDistance <= GameConstants.STUCK_DISTANCE) {
-                debug { "MoveTowards got stuck" }
-                entity.addComponent<StuckComponent>()
-                entity.remove(componentClass.java)
-                return Status.FAILED
-            } else if(currentDistance < GameConstants.TOUCHING_DISTANCE){
-                debug { "MoveTowards reached destination with $currentDistance to spare " }
-                entity.remove(componentClass.java)
-                return Status.SUCCEEDED
+            val newDistance = positionToMoveTowards.dst(entity.transform().position)
+            val progress = previousDistance - newDistance
+
+            if (progress <= GameConstants.STUCK_DISTANCE) {
+                if (sliding) {
+                    // Still stuck while sliding — give up
+                    debug { "MoveTowards stuck while sliding, failing" }
+                    entity.addComponent<StuckComponent>()
+                    entity.remove(componentClass.java)
+                    sliding = false
+                    return Status.FAILED
+                }
+                // First stuck — pick the perpendicular that closes distance to target
+                val blockedDir = positionToMoveTowards.cpy().sub(currentPosition).nor()
+                val perp1 = Vector2(-blockedDir.y, blockedDir.x)
+                val perp2 = Vector2(blockedDir.y, -blockedDir.x)
+                val d1 = positionToMoveTowards.dst(currentPosition.cpy().add(perp1))
+                val d2 = positionToMoveTowards.dst(currentPosition.cpy().add(perp2))
+                slideDir.set(if (d1 < d2) perp1 else perp2)
+                sliding = true
+                debug { "MoveTowards stuck, sliding perpendicular" }
+            } else {
+                if (sliding && progress > GameConstants.STUCK_DISTANCE * 10f) {
+                    // Made meaningful progress while sliding — resume heading straight to target
+                    sliding = false
+                    debug { "MoveTowards slide successful, resuming direct approach" }
+                }
             }
-            previousDistance = currentDistance
+            previousDistance = newDistance
         }
         return Status.RUNNING
     }
 
+    override fun resetTask() {
+        super.resetTask()
+        sliding = false
+        slideDir.setZero()
+    }
+
     override fun toString(): String {
-        return "Move towards ${componentClass.simpleName} ${currentDistance.format(1)} | ${(previousDistance - currentDistance).format(2)}"
+        val mode = if (sliding) "sliding" else "→"
+        return "Move towards ${componentClass.simpleName} $mode ${currentDistance.format(1)} | ${(previousDistance - currentDistance).format(2)}"
     }
 }
