@@ -19,18 +19,23 @@ class LpcCharacterAnimDefinition(
 ) {
     companion object {
         val definitions = listOf(
-            LpcCharacterAnimDefinition(AnimState.Idle, 8, 0..0,),
-            LpcCharacterAnimDefinition(AnimState.Walk, 8, 1..8,),
-            LpcCharacterAnimDefinition(AnimState.StartAim, 16, 0..4,),
-            LpcCharacterAnimDefinition(AnimState.Aiming, 16, 12..12,),
-            LpcCharacterAnimDefinition(AnimState.Death, 20, 0..5, listOf(CardinalDirection.South), playMode =  Animation.PlayMode.NORMAL)
+            LpcCharacterAnimDefinition(AnimState.Idle, 8, 0..0),
+            LpcCharacterAnimDefinition(AnimState.Walk, 8, 1..8),
+            LpcCharacterAnimDefinition(AnimState.StartAim, 16, 0..4),
+            LpcCharacterAnimDefinition(AnimState.Aiming, 16, 12..12),
+            LpcCharacterAnimDefinition(AnimState.Death, 20, 0..5, listOf(CardinalDirection.South), playMode = Animation.PlayMode.NORMAL),
+            LpcCharacterAnimDefinition(AnimState.Hurt, 20, 0..5, listOf(CardinalDirection.South), playMode = Animation.PlayMode.NORMAL),
+            LpcCharacterAnimDefinition(AnimState.Run, 24, 0..7),
+            LpcCharacterAnimDefinition(AnimState.Climb, 28, 0..5, listOf(CardinalDirection.South), playMode = Animation.PlayMode.LOOP),
         )
         val enemyDefinitions = listOf(
-            LpcCharacterAnimDefinition(AnimState.Idle, 8, 0..0,),
-            LpcCharacterAnimDefinition(AnimState.Walk, 8, 1..8,),
-            LpcCharacterAnimDefinition(AnimState.StartAim, 16, 0..4,),
-            LpcCharacterAnimDefinition(AnimState.Slash, 4, 0..7,),
-            LpcCharacterAnimDefinition(AnimState.Death, 20, 0..5, listOf(CardinalDirection.South), playMode =  Animation.PlayMode.NORMAL)
+            LpcCharacterAnimDefinition(AnimState.Idle, 8, 0..0),
+            LpcCharacterAnimDefinition(AnimState.Walk, 8, 1..8),
+            LpcCharacterAnimDefinition(AnimState.StartAim, 16, 0..4),
+            LpcCharacterAnimDefinition(AnimState.Slash, 4, 0..5),
+            LpcCharacterAnimDefinition(AnimState.Death, 20, 0..5, listOf(CardinalDirection.South), playMode = Animation.PlayMode.NORMAL),
+            LpcCharacterAnimDefinition(AnimState.Hurt, 20, 0..5, listOf(CardinalDirection.South), playMode = Animation.PlayMode.NORMAL),
+            LpcCharacterAnimDefinition(AnimState.Run, 24, 0..7),
         )
     }
 }

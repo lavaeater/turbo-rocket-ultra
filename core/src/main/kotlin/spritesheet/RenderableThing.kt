@@ -46,22 +46,25 @@ private data class ExportAnimEntry(
  * match [animation.LpcCharacterAnimDefinition].
  *
  * Sheet layout (64px cells):
- *   rows  4-7  : slash     (6 frames,  4 dirs) — used by enemy slash anim
- *   rows  8-11 : walk+idle (9 frames,  4 dirs) — frame 0 = idle, 1-8 = walk
+ *   rows  4-7  : slash     (6 frames,  4 dirs) — Slash (enemy)
+ *   rows  8-11 : walk+idle (9 frames,  4 dirs) — frame 0 = Idle, 1-8 = Walk
  *   rows 16-19 : shoot     (13 frames, 4 dirs) — frames 0-4 StartAim, frame 12 Aiming
- *   row  20    : hurt      (6 frames,  1 dir)  — Death (south/universal)
+ *   row  20    : hurt      (6 frames,  1 dir)  — Death + Hurt (south/universal)
+ *   rows 24-27 : run       (8 frames,  4 dirs) — Run
+ *   row  28    : climb     (6 frames,  1 dir)  — Climb (south/universal)
  */
 private val EXPORT_ANIMS = listOf(
-    ExportAnimEntry("slash", 4, listOf(0, 1, 2, 3), listOf(0, 1, 2, 3), 0..5),
-    ExportAnimEntry("walk",  8, listOf(0, 1, 2, 3), listOf(0, 1, 2, 3), 0..8),
+    ExportAnimEntry("slash", 4,  listOf(0, 1, 2, 3), listOf(0, 1, 2, 3), 0..5),
+    ExportAnimEntry("walk",  8,  listOf(0, 1, 2, 3), listOf(0, 1, 2, 3), 0..8),
     ExportAnimEntry("shoot", 16, listOf(0, 1, 2, 3), listOf(0, 1, 2, 3), 0..12),
-    // hurt.png is a single direction row (universal); write it to row 20 (Death)
-    ExportAnimEntry("hurt",  20, listOf(0), listOf(0), 0..5)
+    ExportAnimEntry("hurt",  20, listOf(0), listOf(0), 0..5),
+    ExportAnimEntry("run",   24, listOf(0, 1, 2, 3), listOf(0, 1, 2, 3), 0..7),
+    ExportAnimEntry("climb", 28, listOf(0), listOf(0), 0..5),
 )
 
 /** Combined export sheet size in cells. */
 private const val EXPORT_COLS = 13   // widest animation (shoot: 13 frames)
-private const val EXPORT_ROWS = 21   // row 20 (hurt) + 1
+private const val EXPORT_ROWS = 29   // row 28 (climb) + 1
 private const val CELL = 64
 
 class RenderableThing(private val spriteSheetDef: SheetDef, spriteSheets: List<SpriteSheet>) : Widget() {
