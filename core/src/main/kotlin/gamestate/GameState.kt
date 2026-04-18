@@ -11,6 +11,7 @@ sealed class GameState(val name: String) {
     object Concept: GameState("Concept")
     object MapEditor: GameState("MapEditor")
     object AnimEditor : GameState("AnimEditor")
+    object Conversation : GameState("Conversation")
 
     override fun toString(): String {
         return name

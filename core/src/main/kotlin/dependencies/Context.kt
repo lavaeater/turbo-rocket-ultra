@@ -81,6 +81,7 @@ import systems.player.PlayerMoveSystem
 import systems.player.PlayerShootingSystem
 import systems.player.UpdatePlayerStatsSystem
 import systems.player.WeaponReloadSystem
+import systems.ai.ConversationTriggerSystem
 import ui.Hud
 import ui.IUserInterface
 
@@ -132,6 +133,7 @@ object Context : InjectionContext() {
                 }
             })
             bindSingleton(TurboFactsOfTheWorld { key -> inject<MessageHandler>().sendMessage(Message.FactUpdated(key)) })
+            bindSingleton(story.conversation.ConversationManager(inject()))
             bindSingleton(getEngine())
             bindSingleton(listOf(BloomEffect(), CrtEffect(), OldTvEffect()))
             bindSingleton(VfxManager(Pixmap.Format.RGBA8888))
@@ -192,6 +194,7 @@ object Context : InjectionContext() {
             //We add this here now to make sure it is run AFTER the rendercycle
 //            addSystem(BehaviorTreeSystem(4))
             addSystem(UtilityAiSystem())
+            addSystem(ConversationTriggerSystem())
             addSystem(UpdateActionsSystem())
             addSystem(UpdateMemorySystem())
             addSystem(PlayerFlashlightSystem())

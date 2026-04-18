@@ -66,6 +66,7 @@ class MainGame : KtxGame<KtxScreen>(), DisposableRegistry by DisposableContainer
                         gameScreen.resume()
                     }
                     edge(GameEvent.PausedGame, GameState.Paused) {}
+                    edge(GameEvent.StartedConversation, GameState.Conversation) {}
                     edge(GameEvent.GameOver, GameState.Setup) {
                         action {
                             /*
@@ -88,6 +89,14 @@ class MainGame : KtxGame<KtxScreen>(), DisposableRegistry by DisposableContainer
                     }
                     edge(GameEvent.ResumedGame, GameState.Running) {}
                     edge(GameEvent.ExitedGame, GameState.Setup) {}
+                }
+                state(GameState.Conversation) {
+                    action {
+                        gameScreen.pause()
+                    }
+                    edge(GameEvent.DialogEvent, GameState.Running) {
+                        action { gameScreen.resume() }
+                    }
                 }
                 state(GameState.AnimEditor) {
                     action { setScreen<AnimEditorScreen>() }

@@ -13,10 +13,11 @@ class ConversationManager(
     private val gameState by lazy { inject<StateMachine<GameState, GameEvent>>() }
     fun startConversation(
         conversation: IConversation,
-        endConversation: () -> Unit,
+        endConversation: () -> Unit = {},
         showProtagonistPortrait: Boolean = true,
         showAntagonistPortrait: Boolean = true
     ) {
+        gameState.acceptEvent(GameEvent.StartedConversation)
         ui.runConversation(
             conversation, {
                 endConversation()
@@ -25,7 +26,6 @@ class ConversationManager(
             showProtagonistPortrait,
             showAntagonistPortrait
         )
-
     }
 }
 
