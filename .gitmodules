@@ -2,3 +2,6 @@
 	path = box2dlights
 	url = git@github.com:lavaeater/box2dlights.git
 	branch = gdx1.13.1
+[submodule "lpc"]
+	path = lpc
+	url = git@github.com:LiberatedPixelCup/Universal-LPC-Spritesheet-Character-Generator.git
