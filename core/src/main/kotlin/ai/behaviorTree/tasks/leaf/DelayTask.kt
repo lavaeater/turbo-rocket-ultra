@@ -6,15 +6,19 @@ import ai.format
 import com.badlogic.ashley.core.Entity
 import com.badlogic.gdx.ai.btree.Task
 
-class DelayTask(private val delayFor: Float) : EntityTask() {
+class DelayTask(val delayFor: Float) : EntityTask() {
     var delayLeft = delayFor
     override fun resetTask() {
         super.resetTask()
         delayLeft = delayFor
     }
 
-    override fun copyTo(task: Task<Entity>?): Task<Entity> {
-        return DelayTask(delayFor)
+    override fun copyTo(task: Task<Entity>?): Task<Entity> = DelayTask(delayFor)
+
+    override fun cloneTask(): Task<Entity> {
+        val clone = DelayTask(delayFor)
+        if (guard != null) clone.guard = guard.cloneTask()
+        return clone
     }
 
     override fun execute(): Status {

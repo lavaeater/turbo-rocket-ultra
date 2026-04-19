@@ -15,7 +15,7 @@ import physics.agentProps
 import physics.transform
 import kotlin.reflect.KClass
 
-class AttackTarget<T : Component>(private val targetComponentClass: KClass<T>) : EntityTask() {
+class AttackTarget<T : Component>(val targetComponentClass: KClass<T>) : EntityTask() {
     private val coolDown = 1f
     private var actualCoolDown = coolDown
     private val attackableFamily =
@@ -29,6 +29,12 @@ class AttackTarget<T : Component>(private val targetComponentClass: KClass<T>) :
     override fun copyTo(task: Task<Entity>?): Task<Entity> {
         return AttackTarget(targetComponentClass)
     }
+    override fun cloneTask(): Task<Entity> {
+        val clone = AttackTarget(targetComponentClass)
+        if (guard != null) clone.guard = guard.cloneTask()
+        return clone
+    }
+
 
     override fun execute(): Status {
         if (entitiesInMeleeRange().isEmpty()) return Status.FAILED

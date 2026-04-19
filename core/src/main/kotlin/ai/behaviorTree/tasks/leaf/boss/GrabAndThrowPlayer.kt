@@ -16,10 +16,10 @@ import physics.transform
  * throws them in the direction away from the boss, and deals [damage].
  */
 class GrabAndThrowPlayer(
-    private val grabRange: Float = 2f,
-    private val stunDuration: Float = 1.5f,
-    private val throwForce: Float = 25f,
-    private val damage: Float = 30f
+    val grabRange: Float = 2f,
+    val stunDuration: Float = 1.5f,
+    val throwForce: Float = 25f,
+    val damage: Float = 30f
 ) : EntityTask() {
     private val playerFamily = allOf(
         PlayerComponent::class,
@@ -52,8 +52,13 @@ class GrabAndThrowPlayer(
         return Status.SUCCEEDED
     }
 
-    override fun copyTo(task: Task<Entity>?): Task<Entity> =
-        GrabAndThrowPlayer(grabRange, stunDuration, throwForce, damage)
+    override fun copyTo(task: Task<Entity>?): Task<Entity> = GrabAndThrowPlayer(grabRange, stunDuration, throwForce, damage)
+
+    override fun cloneTask(): Task<Entity> {
+        val clone = GrabAndThrowPlayer(grabRange, stunDuration, throwForce, damage)
+        if (guard != null) clone.guard = guard.cloneTask()
+        return clone
+    }
 
     override fun toString() = "Grab and Throw Player"
 }

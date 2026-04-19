@@ -28,13 +28,19 @@ import kotlin.reflect.KClass
  * Let's try that.
  */
 class LookForAndStore<ToLookFor : Component, ToStoreIn : PositionStorageComponent>(
-    private val componentClass: KClass<ToLookFor>,
-    private val storageComponentClass: KClass<ToStoreIn>,
-    private val stop: Boolean
+    val componentClass: KClass<ToLookFor>,
+    val storageComponentClass: KClass<ToStoreIn>,
+    val stop: Boolean
 ) : EntityTask() {
     override fun copyTo(task: Task<Entity>?): Task<Entity> {
         return LookForAndStore(componentClass, storageComponentClass, stop)
     }
+    override fun cloneTask(): Task<Entity> {
+        val clone = LookForAndStore(componentClass, storageComponentClass, stop)
+        if (guard != null) clone.guard = guard.cloneTask()
+        return clone
+    }
+
 
     private val entitiesToLookForFamily = allOf(componentClass, TransformComponent::class).get()
     private val mapper by lazy { ComponentMapper.getFor(storageComponentClass.java) }

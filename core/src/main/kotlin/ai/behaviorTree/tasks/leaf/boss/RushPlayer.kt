@@ -19,7 +19,7 @@ import systems.graphics.GameConstants
  * The player can dodge by moving after the rush begins.
  * If the player is still at the target point when the boss arrives, it deals damage.
  */
-class RushPlayer(private val damage: Float = 20f) : EntityTask() {
+class RushPlayer(val damage: Float = 20f) : EntityTask() {
     private val playerFamily = allOf(PlayerComponent::class, TransformComponent::class, AttackableProperties::class).get()
     private val rushTarget = vec2()
     private var previousDistance = Float.MAX_VALUE
@@ -81,6 +81,12 @@ class RushPlayer(private val damage: Float = 20f) : EntityTask() {
     }
 
     override fun copyTo(task: Task<Entity>?): Task<Entity> = RushPlayer(damage)
+
+    override fun cloneTask(): Task<Entity> {
+        val clone = RushPlayer(damage)
+        if (guard != null) clone.guard = guard.cloneTask()
+        return clone
+    }
 
     override fun toString() = "Rush Player"
 }

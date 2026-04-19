@@ -15,7 +15,7 @@ import ktx.log.debug
 import physics.*
 import kotlin.reflect.KClass
 
-class MoveTowardsPositionTarget<T: PositionTarget>(private val run: Boolean = false, private val componentClass: KClass<T>) : EntityTask() {
+class MoveTowardsPositionTarget<T: PositionTarget>(val run: Boolean = false, val componentClass: KClass<T>) : EntityTask() {
     var previousDistance = 0f
     var currentDistance = 0f
     var positionToMoveTowards = Vector2.Zero.cpy()
@@ -36,8 +36,12 @@ class MoveTowardsPositionTarget<T: PositionTarget>(private val run: Boolean = fa
         slideDir.setZero()
     }
 
-    override fun copyTo(task: Task<Entity>?): Task<Entity> {
-        return MoveTowardsPositionTarget(run, componentClass)
+    override fun copyTo(task: Task<Entity>?): Task<Entity> = MoveTowardsPositionTarget(run, componentClass)
+
+    override fun cloneTask(): Task<Entity> {
+        val clone = MoveTowardsPositionTarget(run, componentClass)
+        if (guard != null) clone.guard = guard.cloneTask()
+        return clone
     }
 
     override fun execute(): Status {

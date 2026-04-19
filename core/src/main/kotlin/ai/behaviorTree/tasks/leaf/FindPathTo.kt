@@ -10,14 +10,20 @@ import components.ai.Path
 import ktx.ashley.remove
 import kotlin.reflect.KClass
 
-class FindPathTo<T: CoordinateStorageComponent>(private val componentClass: KClass<T>) : EntityTask() {
+class FindPathTo<T: CoordinateStorageComponent>(val componentClass: KClass<T>) : EntityTask() {
     override fun copyTo(task: Task<Entity>?): Task<Entity> {
         return FindPathTo(componentClass)
     }
+    override fun cloneTask(): Task<Entity> {
+        val clone = FindPathTo(componentClass)
+        if (guard != null) clone.guard = guard.cloneTask()
+        return clone
+    }
+
 
     override fun execute(): Status {
         entity.remove<Path>()
-        val coordStorage = entity.getComponent(componentClass.java)
+        val coordStorage = entity.getComponent(componentClass.java) ?: return Status.FAILED
         if(coordStorage.storage.size != 2) return Status.FAILED
         entity.addComponent<Path> {
             val from = coordStorage.storage.removeFirst() //Remove starting section

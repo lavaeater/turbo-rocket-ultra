@@ -103,3 +103,11 @@ fun rushPlayer(damage: Float = 20f) = RushPlayer(damage)
 fun grabAndThrowPlayer(grabRange: Float = 2f, stunDuration: Float = 1.5f, throwForce: Float = 25f, damage: Float = 30f) =
     GrabAndThrowPlayer(grabRange, stunDuration, throwForce, damage)
 
+// Ranged / area attacks
+fun throwBottle(range: Float = 15f, damage: Float = 25f) = ai.behaviorTree.tasks.leaf.ThrowBottle(range, damage)
+fun throwSnowball(range: Float = 12f, slowDuration: Float = 2f) = ai.behaviorTree.tasks.leaf.ThrowSnowball(range, slowDuration)
+fun throwTarBall(range: Float = 10f, slowDuration: Float = 3f) = ai.behaviorTree.tasks.leaf.ThrowTarBall(range, slowDuration)
+fun spinAttack(damage: Float = 15f, radius: Float = 3f) = ai.behaviorTree.tasks.leaf.SpinAttack(damage, radius)
+fun dash(speed: Float = 30f, damage: Float = 10f) = ai.behaviorTree.tasks.leaf.Dash(speed, damage)
+fun chargeUpLaser(chargeTime: Float = 2f, damage: Float = 50f) = ai.behaviorTree.tasks.leaf.ChargeUpLaser(chargeTime, damage)
+

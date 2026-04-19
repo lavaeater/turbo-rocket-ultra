@@ -6,10 +6,14 @@ import com.badlogic.ashley.core.Entity
 import com.badlogic.gdx.ai.btree.Task
 import physics.agentProps
 
-class RotateTask(private val degrees: Float, private val counterClockwise: Boolean = true) : EntityTask() {
+class RotateTask(val degrees: Float, val counterClockwise: Boolean = true) : EntityTask() {
     private var rotatedSoFar = 0f
-    override fun copyTo(task: Task<Entity>?): Task<Entity> {
-        return RotateTask(degrees, counterClockwise)
+    override fun copyTo(task: Task<Entity>?): Task<Entity> = RotateTask(degrees, counterClockwise)
+
+    override fun cloneTask(): Task<Entity> {
+        val clone = RotateTask(degrees, counterClockwise)
+        if (guard != null) clone.guard = guard.cloneTask()
+        return clone
     }
 
     override fun execute(): Status {

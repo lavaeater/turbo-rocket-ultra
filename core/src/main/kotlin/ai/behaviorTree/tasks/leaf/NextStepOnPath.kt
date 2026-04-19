@@ -20,6 +20,12 @@ class NextStepOnPath : EntityTask() {
     override fun copyTo(task: Task<Entity>?): Task<Entity> {
         return NextStepOnPath()
     }
+    override fun cloneTask(): Task<Entity> {
+        val clone = NextStepOnPath()
+        if (guard != null) clone.guard = guard.cloneTask()
+        return clone
+    }
+
 
     override fun execute(): Status {
         if (!entity.has<Path>()) {
