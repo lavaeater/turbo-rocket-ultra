@@ -45,5 +45,11 @@ class SpinAttack(val damage: Float = 15f, val radius: Float = 3f) : EntityTask()
     }
 
     override fun copyTo(task: Task<Entity>?): Task<Entity> = SpinAttack(damage, radius)
+
+    override fun cloneTask(): Task<Entity> {
+        val clone = SpinAttack(damage, radius)
+        if (guard != null) clone.guard = guard.cloneTask()
+        return clone
+    }
     override fun toString() = "Spin Attack (dmg=$damage, r=$radius)"
 }

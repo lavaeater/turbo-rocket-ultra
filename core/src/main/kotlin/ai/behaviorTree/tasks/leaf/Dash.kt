@@ -60,5 +60,11 @@ class Dash(val speed: Float = 30f, val damage: Float = 10f) : EntityTask() {
     }
 
     override fun copyTo(task: Task<Entity>?): Task<Entity> = Dash(speed, damage)
+
+    override fun cloneTask(): Task<Entity> {
+        val clone = Dash(speed, damage)
+        if (guard != null) clone.guard = guard.cloneTask()
+        return clone
+    }
     override fun toString() = "Dash (spd=$speed, dmg=$damage)"
 }

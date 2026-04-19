@@ -64,5 +64,11 @@ class ChargeUpLaser(val chargeTime: Float = 2f, val damage: Float = 50f) : Entit
     }
 
     override fun copyTo(task: Task<Entity>?): Task<Entity> = ChargeUpLaser(chargeTime, damage)
+
+    override fun cloneTask(): Task<Entity> {
+        val clone = ChargeUpLaser(chargeTime, damage)
+        if (guard != null) clone.guard = guard.cloneTask()
+        return clone
+    }
     override fun toString() = "Charge Laser Eyes (charge=${chargeTime}s, dmg=$damage)"
 }

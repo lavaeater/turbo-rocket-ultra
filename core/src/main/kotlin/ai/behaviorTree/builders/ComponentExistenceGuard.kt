@@ -12,8 +12,12 @@ class ComponentExistenceGuard<T : Component>(val mustHave: Boolean, val componen
     EntityTask() {
     @delegate: Transient
     private val mapper by lazy { ComponentMapper.getFor(componentClass.java) }
-    override fun copyTo(task: Task<Entity>?): Task<Entity> {
-        TODO("Not yet implemented")
+    override fun copyTo(task: Task<Entity>?): Task<Entity> = ComponentExistenceGuard(mustHave, componentClass)
+
+    override fun cloneTask(): Task<Entity> {
+        val clone = ComponentExistenceGuard(mustHave, componentClass)
+        if (guard != null) clone.guard = guard.cloneTask()
+        return clone
     }
 
     override fun execute(): Status {

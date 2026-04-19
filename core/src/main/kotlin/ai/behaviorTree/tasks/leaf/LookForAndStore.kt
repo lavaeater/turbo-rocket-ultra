@@ -35,6 +35,12 @@ class LookForAndStore<ToLookFor : Component, ToStoreIn : PositionStorageComponen
     override fun copyTo(task: Task<Entity>?): Task<Entity> {
         return LookForAndStore(componentClass, storageComponentClass, stop)
     }
+    override fun cloneTask(): Task<Entity> {
+        val clone = LookForAndStore(componentClass, storageComponentClass, stop)
+        if (guard != null) clone.guard = guard.cloneTask()
+        return clone
+    }
+
 
     private val entitiesToLookForFamily = allOf(componentClass, TransformComponent::class).get()
     private val mapper by lazy { ComponentMapper.getFor(storageComponentClass.java) }

@@ -82,5 +82,11 @@ class RushPlayer(val damage: Float = 20f) : EntityTask() {
 
     override fun copyTo(task: Task<Entity>?): Task<Entity> = RushPlayer(damage)
 
+    override fun cloneTask(): Task<Entity> {
+        val clone = RushPlayer(damage)
+        if (guard != null) clone.guard = guard.cloneTask()
+        return clone
+    }
+
     override fun toString() = "Rush Player"
 }

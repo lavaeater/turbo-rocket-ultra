@@ -52,8 +52,13 @@ class GrabAndThrowPlayer(
         return Status.SUCCEEDED
     }
 
-    override fun copyTo(task: Task<Entity>?): Task<Entity> =
-        GrabAndThrowPlayer(grabRange, stunDuration, throwForce, damage)
+    override fun copyTo(task: Task<Entity>?): Task<Entity> = GrabAndThrowPlayer(grabRange, stunDuration, throwForce, damage)
+
+    override fun cloneTask(): Task<Entity> {
+        val clone = GrabAndThrowPlayer(grabRange, stunDuration, throwForce, damage)
+        if (guard != null) clone.guard = guard.cloneTask()
+        return clone
+    }
 
     override fun toString() = "Grab and Throw Player"
 }

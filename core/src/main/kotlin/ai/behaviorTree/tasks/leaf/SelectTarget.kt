@@ -15,8 +15,12 @@ class SelectTarget<Targets : PositionStorageComponent, TargetStorage : PositionT
     private val targetsMapper by lazy { ComponentMapper.getFor(targets.java) }
     private val targetMapper by lazy { ComponentMapper.getFor(targetStorage.java) }
 
-    override fun copyTo(task: Task<Entity>?): Task<Entity> {
-        return SelectTarget(targets, targetStorage)
+    override fun copyTo(task: Task<Entity>?): Task<Entity> = SelectTarget(targets, targetStorage)
+
+    override fun cloneTask(): Task<Entity> {
+        val clone = SelectTarget(targets, targetStorage)
+        if (guard != null) clone.guard = guard.cloneTask()
+        return clone
     }
 
     override fun execute(): Status {

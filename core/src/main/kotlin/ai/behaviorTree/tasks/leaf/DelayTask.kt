@@ -13,8 +13,12 @@ class DelayTask(val delayFor: Float) : EntityTask() {
         delayLeft = delayFor
     }
 
-    override fun copyTo(task: Task<Entity>?): Task<Entity> {
-        return DelayTask(delayFor)
+    override fun copyTo(task: Task<Entity>?): Task<Entity> = DelayTask(delayFor)
+
+    override fun cloneTask(): Task<Entity> {
+        val clone = DelayTask(delayFor)
+        if (guard != null) clone.guard = guard.cloneTask()
+        return clone
     }
 
     override fun execute(): Status {

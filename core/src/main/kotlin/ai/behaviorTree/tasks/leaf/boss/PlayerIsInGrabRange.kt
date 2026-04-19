@@ -20,5 +20,11 @@ class PlayerIsInGrabRange(val grabRange: Float) : EntityTask() {
 
     override fun copyTo(task: Task<Entity>?): Task<Entity> = PlayerIsInGrabRange(grabRange)
 
+    override fun cloneTask(): Task<Entity> {
+        val clone = PlayerIsInGrabRange(grabRange)
+        if (guard != null) clone.guard = guard.cloneTask()
+        return clone
+    }
+
     override fun toString() = "Player in grab range ($grabRange)"
 }

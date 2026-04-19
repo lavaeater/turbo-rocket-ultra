@@ -36,8 +36,12 @@ class MoveTowardsPositionTarget<T: PositionTarget>(val run: Boolean = false, val
         slideDir.setZero()
     }
 
-    override fun copyTo(task: Task<Entity>?): Task<Entity> {
-        return MoveTowardsPositionTarget(run, componentClass)
+    override fun copyTo(task: Task<Entity>?): Task<Entity> = MoveTowardsPositionTarget(run, componentClass)
+
+    override fun cloneTask(): Task<Entity> {
+        val clone = MoveTowardsPositionTarget(run, componentClass)
+        if (guard != null) clone.guard = guard.cloneTask()
+        return clone
     }
 
     override fun execute(): Status {

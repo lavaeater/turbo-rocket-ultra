@@ -14,6 +14,12 @@ class FindPathTo<T: CoordinateStorageComponent>(val componentClass: KClass<T>) :
     override fun copyTo(task: Task<Entity>?): Task<Entity> {
         return FindPathTo(componentClass)
     }
+    override fun cloneTask(): Task<Entity> {
+        val clone = FindPathTo(componentClass)
+        if (guard != null) clone.guard = guard.cloneTask()
+        return clone
+    }
+
 
     override fun execute(): Status {
         entity.remove<Path>()

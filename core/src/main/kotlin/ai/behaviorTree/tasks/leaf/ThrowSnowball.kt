@@ -36,5 +36,11 @@ class ThrowSnowball(val range: Float = 12f, val slowDuration: Float = 2f) : Enti
     }
 
     override fun copyTo(task: Task<Entity>?): Task<Entity> = ThrowSnowball(range, slowDuration)
+
+    override fun cloneTask(): Task<Entity> {
+        val clone = ThrowSnowball(range, slowDuration)
+        if (guard != null) clone.guard = guard.cloneTask()
+        return clone
+    }
     override fun toString() = "Throw Snowball (range=$range, slow=${slowDuration}s)"
 }

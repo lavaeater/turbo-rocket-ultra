@@ -34,5 +34,11 @@ class ThrowBottle(val range: Float = 15f, val damage: Float = 25f) : EntityTask(
     }
 
     override fun copyTo(task: Task<Entity>?): Task<Entity> = ThrowBottle(range, damage)
+
+    override fun cloneTask(): Task<Entity> {
+        val clone = ThrowBottle(range, damage)
+        if (guard != null) clone.guard = guard.cloneTask()
+        return clone
+    }
     override fun toString() = "Throw Bottle (range=$range, dmg=$damage)"
 }
