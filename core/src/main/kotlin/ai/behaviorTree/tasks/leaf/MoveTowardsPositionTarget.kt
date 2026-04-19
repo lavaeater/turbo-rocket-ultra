@@ -15,7 +15,7 @@ import ktx.log.debug
 import physics.*
 import kotlin.reflect.KClass
 
-class MoveTowardsPositionTarget<T: PositionTarget>(private val run: Boolean = false, private val componentClass: KClass<T>) : EntityTask() {
+class MoveTowardsPositionTarget<T: PositionTarget>(val run: Boolean = false, val componentClass: KClass<T>) : EntityTask() {
     var previousDistance = 0f
     var currentDistance = 0f
     var positionToMoveTowards = Vector2.Zero.cpy()

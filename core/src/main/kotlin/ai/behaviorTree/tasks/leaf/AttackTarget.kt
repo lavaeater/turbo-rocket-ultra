@@ -15,7 +15,7 @@ import physics.agentProps
 import physics.transform
 import kotlin.reflect.KClass
 
-class AttackTarget<T : Component>(private val targetComponentClass: KClass<T>) : EntityTask() {
+class AttackTarget<T : Component>(val targetComponentClass: KClass<T>) : EntityTask() {
     private val coolDown = 1f
     private var actualCoolDown = coolDown
     private val attackableFamily =

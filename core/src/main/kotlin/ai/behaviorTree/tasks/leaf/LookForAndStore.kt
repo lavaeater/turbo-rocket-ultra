@@ -28,9 +28,9 @@ import kotlin.reflect.KClass
  * Let's try that.
  */
 class LookForAndStore<ToLookFor : Component, ToStoreIn : PositionStorageComponent>(
-    private val componentClass: KClass<ToLookFor>,
-    private val storageComponentClass: KClass<ToStoreIn>,
-    private val stop: Boolean
+    val componentClass: KClass<ToLookFor>,
+    val storageComponentClass: KClass<ToStoreIn>,
+    val stop: Boolean
 ) : EntityTask() {
     override fun copyTo(task: Task<Entity>?): Task<Entity> {
         return LookForAndStore(componentClass, storageComponentClass, stop)

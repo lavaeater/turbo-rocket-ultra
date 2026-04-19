@@ -6,7 +6,7 @@ import ai.format
 import com.badlogic.ashley.core.Entity
 import com.badlogic.gdx.ai.btree.Task
 
-class DelayTask(private val delayFor: Float) : EntityTask() {
+class DelayTask(val delayFor: Float) : EntityTask() {
     var delayLeft = delayFor
     override fun resetTask() {
         super.resetTask()

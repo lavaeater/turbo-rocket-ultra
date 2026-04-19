@@ -64,6 +64,9 @@ class SetupScreen(gameState: StateMachine<GameState, GameEvent>) : BasicScreen(g
         setUp(Input.Keys.M, "Map Editor") {
             gameState.acceptEvent(GameEvent.StartMapEditor)
         }
+        setUp(Input.Keys.I, "Mutator Arena") {
+            gameState.acceptEvent(GameEvent.StartMutatorArena)
+        }
         setUp(Input.Keys.D, "Debug Mode Off") { toggleDebugMode() }
     }
 

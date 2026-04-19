@@ -19,7 +19,7 @@ import kotlin.reflect.KClass
  *
  * The most basic one is "pick a random section"
  */
-class SelectSection<T: CoordinateStorageComponent>(private val componentClass: KClass<T>, private val method: (Coordinate, Int, Int) -> Coordinate?) : EntityTask() {
+class SelectSection<T: CoordinateStorageComponent>(val componentClass: KClass<T>, val method: (Coordinate, Int, Int) -> Coordinate?) : EntityTask() {
     override fun copyTo(task: Task<Entity>?): Task<Entity> {
         return SelectSection(componentClass, method)
     }

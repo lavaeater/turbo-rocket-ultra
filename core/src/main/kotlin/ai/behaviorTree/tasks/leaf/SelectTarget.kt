@@ -9,8 +9,8 @@ import components.ai.PositionTarget
 import kotlin.reflect.KClass
 
 class SelectTarget<Targets : PositionStorageComponent, TargetStorage : PositionTarget>(
-    private val targets: KClass<Targets>,
-    private val targetStorage: KClass<TargetStorage>
+    val targets: KClass<Targets>,
+    val targetStorage: KClass<TargetStorage>
 ) : EntityTask() {
     private val targetsMapper by lazy { ComponentMapper.getFor(targets.java) }
     private val targetMapper by lazy { ComponentMapper.getFor(targetStorage.java) }

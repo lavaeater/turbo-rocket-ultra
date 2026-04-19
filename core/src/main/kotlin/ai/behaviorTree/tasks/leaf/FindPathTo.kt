@@ -10,7 +10,7 @@ import components.ai.Path
 import ktx.ashley.remove
 import kotlin.reflect.KClass
 
-class FindPathTo<T: CoordinateStorageComponent>(private val componentClass: KClass<T>) : EntityTask() {
+class FindPathTo<T: CoordinateStorageComponent>(val componentClass: KClass<T>) : EntityTask() {
     override fun copyTo(task: Task<Entity>?): Task<Entity> {
         return FindPathTo(componentClass)
     }

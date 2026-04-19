@@ -8,7 +8,7 @@ import com.badlogic.gdx.ai.btree.Task
 import ktx.log.debug
 import kotlin.reflect.KClass
 
-class ComponentExistenceGuard<T : Component>(private val mustHave: Boolean, private val componentClass: KClass<T>) :
+class ComponentExistenceGuard<T : Component>(val mustHave: Boolean, val componentClass: KClass<T>) :
     EntityTask() {
     @delegate: Transient
     private val mapper by lazy { ComponentMapper.getFor(componentClass.java) }

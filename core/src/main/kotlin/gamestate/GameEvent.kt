@@ -19,6 +19,8 @@ sealed class GameEvent(val name: String) {
     object LevelComplete : GameEvent("LevelComplete")
     object StartAnimEditor: GameEvent("StartAnimEditor")
     object StopAnimEditor: GameEvent("StopAnimEditor")
+    object StartMutatorArena : GameEvent("StartMutatorArena")
+    object ExitMutatorArena : GameEvent("ExitMutatorArena")
 
     override fun toString(): String {
         return name

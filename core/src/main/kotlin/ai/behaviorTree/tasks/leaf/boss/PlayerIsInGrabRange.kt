@@ -9,7 +9,7 @@ import ktx.ashley.allOf
 import physics.agentProps
 import physics.transform
 
-class PlayerIsInGrabRange(private val grabRange: Float) : EntityTask() {
+class PlayerIsInGrabRange(val grabRange: Float) : EntityTask() {
     private val playerFamily = allOf(PlayerComponent::class, TransformComponent::class).get()
 
     override fun execute(): Status {

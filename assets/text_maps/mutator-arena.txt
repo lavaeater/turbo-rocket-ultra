@@ -1,0 +1,28 @@
+ccccccccccc
+ccccccccccc
+ccscccccwcc
+ccccccccccc
+ccccccccccc
+-----
+name
+Mutator Arena
+
+start
+Evaluating trees...
+
+success
+Simulation complete.
+
+fail
+Simulation failed.
+
+facts
+MaxEnemies:1:i
+MaxSpawnedEnemies:1:i
+AcceleratingSpawns:false:b
+EnemyKillCount:0:i
+TargetEnemyKillCount:1:i
+ShowEnemyKillCount:false:b
+
+stories
+level-failed

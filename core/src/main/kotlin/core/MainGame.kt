@@ -60,6 +60,7 @@ class MainGame : KtxGame<KtxScreen>(), DisposableRegistry by DisposableContainer
                     edge(GameEvent.StartConcept, GameState.Concept) {}
                     edge(GameEvent.StartMapEditor, GameState.MapEditor) {}
                     edge(GameEvent.StartCharacterEditor, GameState.CharacterEditor) {}
+                    edge(GameEvent.StartMutatorArena, GameState.MutatorArena) {}
                 }
                 state(GameState.Running) {
                     action {
@@ -115,6 +116,10 @@ class MainGame : KtxGame<KtxScreen>(), DisposableRegistry by DisposableContainer
                     action { setScreen<MapEditorScreen>() }
                     edge(GameEvent.ExitMapEditor, GameState.Setup) {}
                 }
+                state(GameState.MutatorArena) {
+                    action { setScreen<MutatorArenaScreen>() }
+                    edge(GameEvent.ExitMutatorArena, GameState.Setup) {}
+                }
             })
         }
         val facts = factsOfTheWorld()
@@ -132,6 +137,7 @@ class MainGame : KtxGame<KtxScreen>(), DisposableRegistry by DisposableContainer
         addScreen(ConceptScreen(gameState))
         addScreen(MapEditorScreen(gameState))
         addScreen(CharacterEditorScreen(gameState))
+        addScreen(MutatorArenaScreen(gameState))
         gameState.initialize()
     }
 
