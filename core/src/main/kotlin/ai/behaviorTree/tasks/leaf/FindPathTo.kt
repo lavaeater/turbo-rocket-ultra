@@ -23,7 +23,7 @@ class FindPathTo<T: CoordinateStorageComponent>(val componentClass: KClass<T>) :
 
     override fun execute(): Status {
         entity.remove<Path>()
-        val coordStorage = entity.getComponent(componentClass.java)
+        val coordStorage = entity.getComponent(componentClass.java) ?: return Status.FAILED
         if(coordStorage.storage.size != 2) return Status.FAILED
         entity.addComponent<Path> {
             val from = coordStorage.storage.removeFirst() //Remove starting section

@@ -210,12 +210,14 @@ object ArenaSimulation {
 
     private fun swapInjected(newWorld: World): World {
         val old = InjectionContext.context.inject<World>()
+        InjectionContext.context.remove<World>()
         InjectionContext.context.register { bindSingleton(newWorld) }
         return old
     }
 
     private fun swapInjectedEngine(newEngine: com.badlogic.ashley.core.Engine): com.badlogic.ashley.core.Engine {
         val old = runCatching { InjectionContext.context.inject<com.badlogic.ashley.core.Engine>() }.getOrNull()
+        InjectionContext.context.remove<com.badlogic.ashley.core.Engine>()
         InjectionContext.context.register { bindSingleton(newEngine) }
         return old ?: newEngine
     }
