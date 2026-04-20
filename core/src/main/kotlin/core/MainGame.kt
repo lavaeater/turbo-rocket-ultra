@@ -9,7 +9,6 @@ import de.eskalon.commons.screen.ManagedScreen
 import de.eskalon.commons.screen.ScreenManager
 import de.eskalon.commons.screen.transition.ScreenTransition
 import de.eskalon.commons.screen.transition.impl.BlendingTransition
-import de.eskalon.commons.screen.transition.impl.PushTransition
 import de.eskalon.commons.screen.transition.impl.SlidingDirection
 import de.eskalon.commons.screen.transition.impl.SlidingInTransition
 import de.eskalon.commons.screen.transition.impl.SlidingOutTransition
@@ -93,7 +92,8 @@ class MainGame : ApplicationAdapter(), DisposableRegistry by DisposableContainer
                 }
                 state(GameState.Running) {
                     action {
-                        push(gameScreen, PushTransition(transitionBatch, SlidingDirection.LEFT, 0.4f, Interpolation.sine))
+                        // No transition: GameScreen uses VfxManager which conflicts with ScreenManager's NestableFrameBuffer
+                        push(gameScreen)
                         gameScreen.resume()
                     }
                     edge(GameEvent.PausedGame, GameState.Paused) {}

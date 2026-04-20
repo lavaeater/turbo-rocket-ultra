@@ -8,3 +8,6 @@
 [submodule "screenmanager"]
 	path = screenmanager
 	url = git@github.com:lavaeater/libgdx-screenmanager.git
+[submodule "gdx-vfx"]
+	path = gdx-vfx
+	url = git@github.com:lavaeater/gdx-vfx.git
