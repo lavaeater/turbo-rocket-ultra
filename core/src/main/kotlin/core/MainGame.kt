@@ -92,8 +92,7 @@ class MainGame : ApplicationAdapter(), DisposableRegistry by DisposableContainer
                 }
                 state(GameState.Running) {
                     action {
-                        // No transition: GameScreen uses VfxManager which conflicts with ScreenManager's NestableFrameBuffer
-                        push(gameScreen)
+                        push(gameScreen, SlidingInTransition(transitionBatch, SlidingDirection.LEFT, 0.4f))
                         gameScreen.resume()
                     }
                     edge(GameEvent.PausedGame, GameState.Paused) {}
