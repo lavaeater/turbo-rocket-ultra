@@ -98,13 +98,23 @@ class MainGame : ApplicationAdapter(), DisposableRegistry by DisposableContainer
                     }
                     edge(GameEvent.PausedGame, GameState.Paused) {}
                     edge(GameEvent.StartedConversation, GameState.Conversation) {}
-                    edge(GameEvent.GameOver, GameState.Setup) {
-                        action {}
-                    }
+                    edge(GameEvent.GameOver, GameState.Ended) {}
                 }
                 state(GameState.Paused) {
-                    action { gameScreen.pause() }
+                    action {
+                        gameScreen.pause()
+                        push(pauseScreen, BlendingTransition(transitionBatch, 0.25f))
+                    }
                     edge(GameEvent.ResumedGame, GameState.Running) {}
+                    edge(GameEvent.ExitedGame, GameState.Setup) {}
+                }
+                state(GameState.Ended) {
+                    action {
+                        push(gameOverScreen, BlendingTransition(transitionBatch, 0.5f))
+                    }
+                    edge(GameEvent.RestartGame, GameState.Running) {
+                        action { resetPlayers() }
+                    }
                     edge(GameEvent.ExitedGame, GameState.Setup) {}
                 }
                 state(GameState.Conversation) {
