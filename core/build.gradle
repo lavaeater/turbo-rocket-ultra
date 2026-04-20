@@ -20,8 +20,8 @@ dependencies {
     api libs.gdxBox2d
     api libs.gdxFreetype
     api libs.bladeInk
-    api libs.gdxVfxCore
-    api libs.gdxVfxEffects
+    api project(':gdx-vfx-core')
+    api project(':gdx-vfx-effects')
     api libs.kryo
     api libs.websocket
 

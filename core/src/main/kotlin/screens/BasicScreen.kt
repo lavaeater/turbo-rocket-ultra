@@ -66,4 +66,6 @@ abstract class BasicScreen(val gameState: StateMachine<GameState, GameEvent>) : 
     override fun axisMoved(controller: Controller, axisCode: Int, value: Float): Boolean {
         return true
     }
+
+    override fun touchCancelled(screenX: Int, screenY: Int, pointer: Int, button: Int): Boolean = false
 }
