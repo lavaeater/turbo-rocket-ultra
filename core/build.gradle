@@ -13,6 +13,7 @@ eclipse.project.name = appName + '-core'
 dependencies {
     api libs.ashley
     api project(':box2dlights')
+    api project(':screenmanager')
     api libs.gdxControllers
     api libs.ai
     api libs.gdx
