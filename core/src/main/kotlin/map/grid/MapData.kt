@@ -1,5 +1,7 @@
 package map.grid
 
+import turbofacts.TurboStory
+
 data class MapData(
     val name: String,
     val startMessage: String,
@@ -9,5 +11,6 @@ data class MapData(
     val facts: Map<String, Any>,
     val storyKeys: List<String>,
     val mapDefinition: TextGridMapDefinition,
-    val storiesFile: String = ""
+    val storiesFile: String = "",
+    val inlineStories: List<TurboStory> = emptyList()
 )

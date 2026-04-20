@@ -1,10 +1,11 @@
 package map.grid
 
 import com.badlogic.gdx.Gdx
+import turbofacts.StoryTextParser
 
 object MapLoader {
 
-    val keyWords = listOf("name", "start", "success", "fail", "stories", "facts")
+    val keyWords = listOf("name", "start", "success", "fail", "stories", "facts", "story")
 
     fun loadNewMap(fileName: String): MapData {
         var lines = Gdx.files.local(fileName).readString().lines()
@@ -13,22 +14,37 @@ object MapLoader {
         val mapDefinition = TextGridMapDefinition(mapDefLines)
         lines = lines.subList(mapDefLines.lastIndex + 2, lines.lastIndex + 1)
         val sections = mutableMapOf<String, MutableList<String>>()
+        val storyLines = mutableListOf<String>()  // accumulated across all "story" blocks
         var inSection = false
         var currentSection = "name"
         for (line in lines) {
+            val trimmed = line.trim()
+            val isKeyword = keyWords.contains(trimmed.split(" ")[0])
             if (inSection) {
-                if (!keyWords.contains(line.trim()))
-                    sections[currentSection]?.add(line.trim())
-                else {
-                    currentSection = line.trim()
-                    sections[currentSection] = mutableListOf()
+                if (!isKeyword) {
+                    if (currentSection == "story")
+                        storyLines.add(trimmed)
+                    else
+                        sections[currentSection]?.add(trimmed)
+                } else {
+                    val keyword = trimmed.split(" ")[0]
+                    currentSection = keyword
+                    if (keyword == "story") {
+                        storyLines.add(trimmed)  // "story <name>" line marks a new story block
+                    } else {
+                        sections[currentSection] = mutableListOf()
+                    }
                 }
-
             } else {
-                if (keyWords.contains(line.trim())) {
+                if (isKeyword) {
                     inSection = true
-                    currentSection = line.trim()
-                    sections[currentSection] = mutableListOf()
+                    val keyword = trimmed.split(" ")[0]
+                    currentSection = keyword
+                    if (keyword == "story") {
+                        storyLines.add(trimmed)
+                    } else {
+                        sections[currentSection] = mutableListOf()
+                    }
                 }
             }
         }
@@ -41,9 +57,9 @@ object MapLoader {
             "",
             sections["facts"]!!.toFacts(),
             sections["stories"]!!.map { it.trim() },
-            mapDefinition
+            mapDefinition,
+            inlineStories = StoryTextParser.parse(storyLines)
         )
-
     }
 }
 

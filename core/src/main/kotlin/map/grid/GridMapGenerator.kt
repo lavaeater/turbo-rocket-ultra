@@ -68,6 +68,8 @@ class GridMapGenerator {
             storyManager.addStories(*StoryHelper.allStories.filterKeys { mapData.storyKeys.contains(it) }.values.toTypedArray())
             if (mapData.storiesFile.isNotBlank())
                 storyManager.addStories(*turbofacts.StoryLoader.load(mapData.storiesFile).toTypedArray())
+            if (mapData.inlineStories.isNotEmpty())
+                storyManager.addStories(*mapData.inlineStories.toTypedArray())
 
             return generateFromDefintion(mapData.mapDefinition)
         }
