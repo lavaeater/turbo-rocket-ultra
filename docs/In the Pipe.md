@@ -1,0 +1,21 @@
+- [x] Create Concept Screen
+- [x] Draw Sprite of Character
+- [x] Add Anchor points, left and right shoulder
+- [x] Aim from A1 through aim vector
+- [x] Draw simple rectangle to represent rifle ✅ 2023-04-11
+- [x] Change length of rifle dependent upon the angle of the aiming vector ✅ 2023-04-11
+- [x] Change draworder of weapon and sprite ✅ 2023-04-11
+- [x] Draw simple arms and hands ✅ 2023-04-11
+- [x] Add a "Character" component for the game, to store cardinal directions and such
+- [x] Modify mouse aim and walk-direction systems to work with the character things
+- [x] Update rendering system to be able to use a Character render, which provides its own renderfunctions
+- [x] Change yDown to yUp, bitch
+- [ ] Ensure the character no longer aims - it simply walks
+- [ ] Remove arms from sprites
+- [ ] Make arms for every occasion
+- [ ] Make the character always look at the aim direction
+- [ ] Make the character walk slower when moving backwards
+- [ ] Make flashlight aim from the correct anchor point
+- [ ] Encapsulate arm and hand data in some kind of more generic structure? Maybe.
+- [ ] Extract profit
+
