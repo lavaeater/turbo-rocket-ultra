@@ -170,4 +170,6 @@ class KeyboardInputSystem :
     private fun updateMouseInput(position: Vector2) {
         keyboardControl.setAimVector(Gdx.input.x, Gdx.input.y, position)
     }
+
+    override fun touchCancelled(screenX: Int, screenY: Int, pointer: Int, button: Int): Boolean = false
 }

@@ -13,31 +13,36 @@ import com.badlogic.gdx.utils.viewport.Viewport
 import dependencies.InjectionContext.Companion.inject
 import gamestate.GameEvent
 import gamestate.GameState
+import de.eskalon.commons.screen.ManagedScreen
 import ktx.app.KtxInputAdapter
-import ktx.app.KtxScreen
 import statemachine.StateMachine
 import animation.Assets
 
-abstract class BasicScreen(val gameState: StateMachine<GameState, GameEvent>) : KtxScreen, KtxInputAdapter, ControllerListener {
+abstract class BasicScreen(val gameState: StateMachine<GameState, GameEvent>) : ManagedScreen(), KtxInputAdapter, ControllerListener {
 
     open val camera: OrthographicCamera by lazy { inject() }
     open val viewport: Viewport by lazy { inject<ExtendViewport>() }
     protected val batch: PolygonSpriteBatch by lazy { inject() }
     protected val audioPlayer: AudioPlayer by lazy { inject() }
 
+    init {
+        addInputProcessor(this)
+    }
+
     override fun show() {
-        Gdx.input.inputProcessor = this
         Controllers.addListener(this)
     }
 
     override fun hide() {
-        Gdx.input.inputProcessor = null
         Controllers.removeListener(this)
     }
 
-    val clearColor by lazy { Assets.backgroundColor }
+    override fun resize(width: Int, height: Int) {}
+    override fun dispose() {}
+
+    private val bgColor by lazy { Assets.backgroundColor }
     override fun render(delta: Float) {
-        Gdx.gl.glClearColor(clearColor.r, clearColor.g, clearColor.b, clearColor.a)
+        Gdx.gl.glClearColor(bgColor.r, bgColor.g, bgColor.b, bgColor.a)
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT)
         camera.update(true)
         batch.projectionMatrix = camera.combined
@@ -61,4 +66,6 @@ abstract class BasicScreen(val gameState: StateMachine<GameState, GameEvent>) : 
     override fun axisMoved(controller: Controller, axisCode: Int, value: Float): Boolean {
         return true
     }
+
+    override fun touchCancelled(screenX: Int, screenY: Int, pointer: Int, button: Int): Boolean = false
 }

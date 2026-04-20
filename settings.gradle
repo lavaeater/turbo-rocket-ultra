@@ -1,1 +1,7 @@
 include 'lwjgl3', 'core', 'box2dlights', 'screenmanager'
+
+include ':gdx-vfx-core'
+project(':gdx-vfx-core').projectDir = file('gdx-vfx/gdx-vfx/core')
+
+include ':gdx-vfx-effects'
+project(':gdx-vfx-effects').projectDir = file('gdx-vfx/gdx-vfx/effects')

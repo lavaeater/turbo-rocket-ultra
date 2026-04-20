@@ -31,7 +31,7 @@ import factories.player
 import gamestate.GameEvent
 import gamestate.GameState
 import input.KeyboardControl
-import ktx.app.KtxScreen
+import de.eskalon.commons.screen.ManagedScreen
 import ktx.ashley.allOf
 import ktx.ashley.getSystem
 import ktx.ashley.with
@@ -50,7 +50,7 @@ import kotlin.math.pow
 import kotlin.math.roundToInt
 
 
-class GameScreen(private val gameState: StateMachine<GameState, GameEvent>) : KtxScreen {
+class GameScreen(private val gameState: StateMachine<GameState, GameEvent>) : ManagedScreen() {
 
     private var firstRun = true
     private val camera: OrthographicCamera by lazy { inject() }
