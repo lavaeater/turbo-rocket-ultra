@@ -15,5 +15,10 @@ sealed class Factoid(val key: String) {
                 return "$key contains ${value.joinToString("\n")}"
             }
         }
+        class SetFact<V>(key: String, value: MutableSet<V>): Fact<MutableSet<V>>(key, value) {
+            override fun toString(): String {
+                return "$key contains ${value.joinToString("\n")}"
+            }
+        }
     }
 }

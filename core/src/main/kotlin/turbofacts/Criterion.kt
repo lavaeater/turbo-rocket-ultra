@@ -259,3 +259,21 @@ class StringListSize(override val factKey: String, private val expected: Int, pr
         fun equals(factKey: String, size: Int)   = StringListSize(factKey, size, { a, b -> a == b }, "listSizeEquals")
     }
 }
+
+sealed class SetCriteria<V> : Criterion()
+
+class SetContains<V>(override val factKey: String, private val value: V) : SetCriteria<V>() {
+    override fun checkRule(): Boolean = facts.getSetFact<V>(factKey).value.contains(value)
+    override fun toTextToken() = "setContains $factKey $value"
+}
+
+class SetSize<V>(override val factKey: String, private val expected: Int, private val checker: (Int, Int) -> Boolean, private val token: String = "") : SetCriteria<V>() {
+    override fun checkRule(): Boolean = checker(facts.getSetFact<V>(factKey).value.size, expected)
+    override fun toTextToken() = if (token.isNotEmpty()) "$token $factKey $expected" else null
+
+    companion object {
+        fun <V>moreThan(factKey: String, size: Int) = SetSize<V>(factKey, size, { a, b -> a > b }, "setSizeMoreThan")
+        fun <V>lessThan(factKey: String, size: Int) = SetSize<V>(factKey, size, { a, b -> a < b }, "setSizeLessThan")
+        fun <V>equals(factKey: String, size: Int)   = SetSize<V>(factKey, size, { a, b -> a == b }, "setSizeEquals")
+    }
+}

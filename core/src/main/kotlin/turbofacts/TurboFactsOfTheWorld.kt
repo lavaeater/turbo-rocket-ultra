@@ -246,6 +246,22 @@ class TurboFactsOfTheWorld(private val onFactUpdated: (key: String) -> Unit = {}
         return ensureStringList(*key)
     }
 
+    fun <V>addToSet(value: V, vararg key: String) {
+        val setFact = ensureSetFact<V>(*key)
+        setFact.value.add(value)
+        updated(multiKey(*key))
+    }
+
+    fun <V>removeFromSet(value: V, vararg key: String) {
+        val setFact = ensureSetFact<V>()
+        setFact.value.remove(value)
+        updated(multiKey(*key))
+    }
+
+    fun <V>getSetFact(vararg key: String): Factoid.Fact.SetFact<V> {
+        return ensureSetFact<V>(*key)
+    }
+
     private fun ensureStringList(vararg key: String): Factoid.Fact.StringListFact {
         val mk = multiKey(*key)
         if (!facts.containsKey(mk)) {
@@ -256,6 +272,18 @@ class TurboFactsOfTheWorld(private val onFactUpdated: (key: String) -> Unit = {}
             return facts[mk]!! as Factoid.Fact.StringListFact
         }
         throw Exception("Fact $mk exists and is not a stringlist")
+    }
+
+    private fun <V>ensureSetFact(vararg key: String): Factoid.Fact.SetFact<V> {
+        val mk = multiKey(*key)
+        if (!facts.containsKey(mk)) {
+            val newFact = Factoid.Fact.SetFact<V>(mk, mutableSetOf())
+            facts[mk] = newFact
+            return newFact
+        } else if (facts[mk]!! is Factoid.Fact.SetFact<*>) {
+            return facts[mk]!! as Factoid.Fact.SetFact<V>
+        }
+        throw Exception("Fact $mk exists and is not a set")
     }
 
     var silent = false
