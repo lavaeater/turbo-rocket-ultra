@@ -212,7 +212,7 @@ sealed class SingleInt : IntCriteria() {
     class SingleIntOperatorCriteria(override val factKey: String, val valueToCheck: Int, val checker: (Int, Int) -> Boolean, val token: String = "") :
         AnyInts() {
         override fun checkRule(): Boolean {
-            return checker(valueToCheck, facts.getIntFact(factKey).value)
+            return checker(facts.getIntFact(factKey).value, valueToCheck)
         }
         override fun toTextToken() = if (token.isNotEmpty()) "$token $factKey $valueToCheck" else null
     }
