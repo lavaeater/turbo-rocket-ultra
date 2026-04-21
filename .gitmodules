@@ -5,9 +5,12 @@
 [submodule "lpc"]
 	path = lpc
 	url = git@github.com:LiberatedPixelCup/Universal-LPC-Spritesheet-Character-Generator.git
+	branch = master
 [submodule "screenmanager"]
 	path = screenmanager
 	url = git@github.com:lavaeater/libgdx-screenmanager.git
+	branch = master
 [submodule "gdx-vfx"]
 	path = gdx-vfx
 	url = git@github.com:lavaeater/gdx-vfx.git
+	branch = master
