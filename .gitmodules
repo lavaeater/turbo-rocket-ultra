@@ -14,7 +14,3 @@
 	path = gdx-vfx
 	url = git@github.com:lavaeater/gdx-vfx.git
 	branch = master
-[submodule "gdx-lava"]
-	path = gdx-lava
-	url = git@github.com:lavaeater/gdx-lava.git
-	branch = main
