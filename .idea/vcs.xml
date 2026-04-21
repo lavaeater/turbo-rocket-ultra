@@ -3,6 +3,8 @@
   <component name="VcsDirectoryMappings">
     <mapping directory="" vcs="Git" />
     <mapping directory="$PROJECT_DIR$/box2dlights" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/gdx-vfx" vcs="Git" />
     <mapping directory="$PROJECT_DIR$/lpc" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/screenmanager" vcs="Git" />
   </component>
 </project>

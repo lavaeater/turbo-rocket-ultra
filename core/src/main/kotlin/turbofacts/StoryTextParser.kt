@@ -1,6 +1,6 @@
 package turbofacts
 
-import story.consequence.SimpleConsequence
+import story.consequence.SetFactConsequence
 
 /**
  * Parses inline story definitions from map file text lines.
@@ -81,7 +81,7 @@ object StoryTextParser {
                     inThen = true
                 }
                 inThen && builder != null -> {
-                    parseConsequence(parts)?.let { fn -> builder!!.consequence = fn }
+                    parseConsequence(parts)?.let { c -> builder!!.consequence(c) }
                 }
                 currentRuleBuilder != null -> {
                     parseCriterion(parts)?.let { currentRuleBuilder!!.criteria.add(it) }
@@ -114,16 +114,11 @@ object StoryTextParser {
         }
     }
 
-    private fun parseConsequence(parts: List<String>): ((TurboStory) -> Unit)? {
+    private fun parseConsequence(parts: List<String>): SetFactConsequence? {
         if (parts[0].lowercase() != "setfact") return null
         val key = parts.getOrNull(1) ?: return null
         val value = parts.getOrNull(2) ?: return null
         val typeCode = parts.getOrNull(3)?.lowercase() ?: "s"
-        return when (typeCode) {
-            "b" -> { _ -> factsOfTheWorld().setBooleanFact(value.toBoolean(), key) }
-            "i" -> { _ -> factsOfTheWorld().setIntFact(value.toInt(), key) }
-            "f" -> { _ -> factsOfTheWorld().setFloatFact(value.toFloat(), key) }
-            else -> { _ -> factsOfTheWorld().setStringFact(value, key) }
-        }
+        return SetFactConsequence(key, value, typeCode)
     }
 }
