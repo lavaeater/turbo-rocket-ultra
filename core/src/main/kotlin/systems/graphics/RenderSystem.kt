@@ -16,7 +16,6 @@ import components.AgentProperties
 import components.Memory
 import components.TransformComponent
 import dependencies.InjectionContext.Companion.inject
-import physics.addComponent
 import physics.getComponent
 import physics.has
 import components.ai.Path
@@ -30,6 +29,8 @@ import map.grid.GridMapManager
 import physics.*
 import screens.ui.ApplicationFlags
 import animation.Assets
+import ecs.components.graphics.RenderableType
+import twodee.ecs.ashley.components.character.CharacterComponent
 import kotlin.collections.iterator
 
 class RenderSystem(
@@ -160,7 +161,7 @@ class RenderSystem(
     }
 
     fun renderCharacterWithArms(entity: Entity, deltaTime: Float) {
-        val character = Character.get(entity)
+        val character = CharacterComponent.get(entity)
 
     }
 
