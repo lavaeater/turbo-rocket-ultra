@@ -340,7 +340,7 @@ sealed class RenderableType {
                 // calculate distance from shoulder to hand
             val leftDistance = leftHandGripPoint.dst(leftShoulder)
 
-            // calculate angle between shoulder and upper armval beta =
+            val beta =
                 MathUtils.acos((leftDistance.pow(2) + upperArmLength.pow(2) - lowerArmLength.pow(2)) / (2 * leftDistance * upperArmLength))
             val leftUpperArmVector = leftHandDirection.cpy().rotateRad(beta).scl(upperArmLength).scl(MathUtils.lerp(0.5f, 1f, character.aimVector.y.absoluteValue)
                         )

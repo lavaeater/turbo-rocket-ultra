@@ -166,9 +166,9 @@ class RenderSystem(
     }
 
     override fun processEntity(entity: Entity, deltaTime: Float) {
-        when (entity.renderable().renderableType) {
+        when (RenderableComponent.get(entity).renderableType) {
             RenderableType.Effect -> renderSpriteEntity(entity)
-            RenderableType.Sprite -> renderEffect(entity, deltaTime)
+            RenderableType.Sprite -> renderSpriteEntity(entity)
             RenderableType.CharacterWithArms -> renderCharacterWithArms(entity, deltaTime)
         }
 
