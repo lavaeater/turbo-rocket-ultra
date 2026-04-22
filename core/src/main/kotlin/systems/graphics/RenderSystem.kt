@@ -23,20 +23,7 @@ import components.ai.Path
 import components.ai.SeenPlayerPositions
 import components.ai.Waypoint
 import components.AmbleState
-import components.gameplay.DestroyComponent
 import components.graphics.RenderableComponent
-import components.graphics.RenderableType
-import eater.ecs.ashley.components.AgentProperties
-import eater.ecs.ashley.components.Memory
-import eater.ecs.ashley.components.TransformComponent
-import eater.injection.InjectionContext.Companion.inject
-import eater.physics.getComponent
-import eater.physics.has
-import ecs.components.ai.Path
-import ecs.components.ai.SeenPlayerPositions
-import ecs.components.ai.Waypoint
-import ecs.components.ai.behavior.AmbleState
-import ecs.components.graphics.RenderableComponent
 import ktx.ashley.allOf
 import ktx.graphics.use
 import map.grid.GridMapManager
@@ -45,7 +32,6 @@ import screens.ui.ApplicationFlags
 import animation.Assets
 import kotlin.collections.iterator
 
-import tru.Assets
 class RenderSystem(
     private val batch: Batch,
     private val debug: Boolean,

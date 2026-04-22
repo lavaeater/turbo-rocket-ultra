@@ -5,12 +5,12 @@ import com.badlogic.ashley.systems.IteratingSystem
 import components.TransformComponent
 import physics.addComponent
 import components.graphics.RenderableComponent
-import components.graphics.RenderableType
 import components.graphics.TextureRegionComponent
 import components.intent.CalculatedPositionComponent
 import components.intent.IntendsTo
 import components.intent.IntentComponent
 import components.player.BuildModeComponent
+import ecs.components.graphics.RenderableType
 import systems.graphics.CompassDirection
 import systems.tileWorldX
 import systems.tileWorldY

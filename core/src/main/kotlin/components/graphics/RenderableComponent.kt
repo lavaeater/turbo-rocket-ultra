@@ -3,6 +3,7 @@ package components.graphics
 import com.badlogic.ashley.core.Component
 import com.badlogic.ashley.core.Entity
 import com.badlogic.gdx.utils.Pool
+import ecs.components.graphics.RenderableType
 import ktx.ashley.mapperFor
 
 class RenderableComponent: Component, Pool.Poolable {

@@ -30,7 +30,7 @@ import screens.ui.PlayerModel
 import statemachine.StateMachine
 import animation.AnimState
 import animation.Assets
-import animation.CardinalDirection
+import twodee.input.CardinalDirection
 import ui.customactors.animatedSpriteImage
 import ui.customactors.boundLabel
 

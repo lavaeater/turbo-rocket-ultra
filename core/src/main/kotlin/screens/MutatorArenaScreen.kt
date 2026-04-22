@@ -18,6 +18,7 @@ import ktx.scene2d.*
 import statemachine.StateMachine
 import animation.Assets
 import ktx.scene2d.Scene2DSkin
+import screens.basic.BasicScreen
 import kotlin.concurrent.thread
 
 /**

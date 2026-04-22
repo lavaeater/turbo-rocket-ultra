@@ -1,7 +1,7 @@
 package screens.concept
 
 import ktx.math.vec2
-import tru.CardinalDirection
+import twodee.input.CardinalDirection
 
 object CardinalToAngles {
     val cardinals = mapOf(

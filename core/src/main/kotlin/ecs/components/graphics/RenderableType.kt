@@ -6,15 +6,15 @@ import com.badlogic.gdx.graphics.Color
 import com.badlogic.gdx.graphics.g2d.PolygonSpriteBatch
 import com.badlogic.gdx.math.MathUtils
 import com.badlogic.gdx.math.Polygon
-import eater.ecs.ashley.components.TransformComponent
-import eater.ecs.ashley.components.character.CharacterComponent
-import eater.injection.InjectionContext.Companion.inject
-import eater.input.CardinalDirection
-import eater.physics.addComponent
-import ecs.components.gameplay.DestroyComponent
+import components.TransformComponent
+import components.gameplay.DestroyComponent
+import components.graphics.TextureRegionComponent
+import dependencies.InjectionContext.Companion.inject
 import ktx.math.plus
 import physics.*
 import space.earlygrey.shapedrawer.ShapeDrawer
+import twodee.ecs.ashley.components.character.CharacterComponent
+import twodee.input.CardinalDirection
 import kotlin.math.absoluteValue
 import kotlin.math.pow
 

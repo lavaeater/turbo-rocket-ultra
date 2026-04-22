@@ -11,7 +11,6 @@ import de.eskalon.commons.screen.transition.ScreenTransition
 import de.eskalon.commons.screen.transition.impl.BlendingTransition
 import de.eskalon.commons.screen.transition.impl.SlidingDirection
 import de.eskalon.commons.screen.transition.impl.SlidingInTransition
-import de.eskalon.commons.screen.transition.impl.SlidingOutTransition
 import de.eskalon.commons.utils.BasicInputMultiplexer
 import dependencies.InjectionContext
 import dependencies.InjectionContext.Companion.inject
@@ -24,14 +23,10 @@ import ktx.inject.register
 import ktx.log.debug
 import screens.*
 import statemachine.StateMachine
-import tru.Assets
-import eater.turbofacts.Factoids
-import eater.turbofacts.factsOfTheWorld
 import screens.animeditor.AnimEditorScreen
 import screens.behavioreditor.BehaviorTreeViewScreen
 import screens.charactereditor.CharacterEditorScreen
 import screens.concept.HardPointConceptScreen
-import screens.concept.InterpolationConceptScreen
 import animation.Assets
 import turbofacts.FactPersistence
 import turbofacts.Factoids
@@ -157,7 +152,7 @@ class MainGame : ApplicationAdapter(), DisposableRegistry by DisposableContainer
         FactPersistence.load(facts)
         facts.setBooleanFact(FactPersistence.saveExists(), Factoids.SaveExists)
 
-        Assets.load().alsoRegister()
+        Assets.load()
 
         screenManager.initialize(inputMultiplexer, Gdx.graphics.width, Gdx.graphics.height, false)
         Gdx.input.inputProcessor = inputMultiplexer

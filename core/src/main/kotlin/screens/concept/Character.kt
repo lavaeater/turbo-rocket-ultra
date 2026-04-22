@@ -4,7 +4,7 @@ import com.badlogic.gdx.math.Vector2
 import ktx.math.plus
 import ktx.math.times
 import ktx.math.vec2
-import tru.CardinalDirection
+import twodee.input.CardinalDirection
 
 class Character {
     var worldPosition = vec2()
@@ -16,7 +16,7 @@ class Character {
     var width = 32f
     var height = 32f
     var scale = 1.0f
-    val center = Vector2.Zero.cpy()
+    val center: Vector2 = Vector2.Zero.cpy()
 
     private val anchors = mapOf(
         CardinalDirection.East to

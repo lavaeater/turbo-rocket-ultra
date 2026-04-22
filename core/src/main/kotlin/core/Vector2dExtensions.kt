@@ -3,8 +3,8 @@ package core
 import com.badlogic.gdx.math.MathUtils
 import com.badlogic.gdx.math.Vector2
 import ktx.math.vec2
-import animation.CardinalDirection
 import systems.graphics.GameConstants
+import twodee.input.CardinalDirection
 
 object MouseMarginConstants {
     const val margin = 2.5f

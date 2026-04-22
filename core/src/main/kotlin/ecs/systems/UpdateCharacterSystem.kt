@@ -2,11 +2,11 @@ package ecs.systems
 
 import com.badlogic.ashley.core.Entity
 import com.badlogic.ashley.systems.IteratingSystem
-import eater.ecs.ashley.components.TransformComponent
-import eater.ecs.ashley.components.character.CharacterComponent
-import ecs.components.graphics.TextureRegionComponent
-import ecs.components.player.PlayerControlComponent
+import components.graphics.TextureRegionComponent
+import components.player.PlayerControlComponent
 import ktx.ashley.allOf
+import twodee.ecs.ashley.components.TransformComponent
+import twodee.ecs.ashley.components.character.CharacterComponent
 
 class UpdateCharacterSystem: IteratingSystem(allOf(TransformComponent::class, CharacterComponent::class).get()) {
     override fun processEntity(entity: Entity, deltaTime: Float) {

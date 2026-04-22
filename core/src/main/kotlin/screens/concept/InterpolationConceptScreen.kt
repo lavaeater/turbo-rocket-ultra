@@ -1,5 +1,6 @@
 package screens.concept
 
+import animation.Assets
 import com.badlogic.gdx.Input
 import com.badlogic.gdx.graphics.OrthographicCamera
 import com.badlogic.gdx.math.Interpolation
@@ -14,7 +15,6 @@ import screens.basic.BasicScreen
 import screens.command.command
 import screens.ui.KeyPress
 import statemachine.StateMachine
-import tru.Assets
 import ui.CrawlDialog
 
 class InterpolationConceptScreen(gameState: StateMachine<GameState, GameEvent>) : BasicScreen(gameState) {

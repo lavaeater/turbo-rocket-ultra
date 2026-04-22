@@ -21,6 +21,7 @@ import ktx.assets.DisposableRegistry
 import ktx.scene2d.Scene2DSkin
 import map.snake.MapDirection
 import space.earlygrey.shapedrawer.ShapeDrawer
+import twodee.input.CardinalDirection
 
 
 /**

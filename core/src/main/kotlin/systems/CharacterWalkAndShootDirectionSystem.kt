@@ -2,13 +2,12 @@ package systems
 
 import com.badlogic.ashley.core.Entity
 import com.badlogic.ashley.systems.IteratingSystem
-import eater.ecs.ashley.components.character.CardinalToAngles
 import components.graphics.AnimatedCharacterComponent
 import components.player.PlayerControlComponent
-import core.spriteDirection
 import ktx.ashley.allOf
 import physics.AshleyMappers
-import animation.CardinalDirection
+import screens.concept.CardinalToAngles
+import twodee.input.CardinalDirection
 
 
 class CharacterWalkAndShootDirectionSystem :
