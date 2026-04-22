@@ -9,6 +9,7 @@ import com.badlogic.gdx.math.Polygon
 import components.TransformComponent
 import components.gameplay.DestroyComponent
 import components.graphics.TextureRegionComponent
+import components.player.PlayerControlComponent
 import dependencies.InjectionContext.Companion.inject
 import ktx.math.plus
 import physics.*
@@ -234,8 +235,8 @@ sealed class RenderableType {
             val leftDistance = leftHandGripPoint.dst(leftShoulder)
 
             val beta =
-                MathUtils.acos((leftDistance.pow(2) + upperArmLength.pow(2) - lowerArmLength.pow(2)) / (2 * leftDistance * upperArmLength)
-            )val leftUpperArmVector = leftHandDirection.cpy().rotateRad(beta).scl(upperArmLength).scl(MathUtils.lerp(0.5f, 1f, character.aimVector.x.absoluteValue)
+                MathUtils.acos((leftDistance.pow(2) + upperArmLength.pow(2) - lowerArmLength.pow(2)) / (2 * leftDistance * upperArmLength))
+            val leftUpperArmVector = leftHandDirection.cpy().rotateRad(beta).scl(upperArmLength).scl(MathUtils.lerp(0.5f, 1f, character.aimVector.x.absoluteValue)
                         )
             shapeDrawer.line(leftShoulder, leftShoulder + leftUpperArmVector, Color.BROWN, 6f)
             shapeDrawer.line(leftShoulder + leftUpperArmVector, leftHandGripPoint, Color.BROWN, 6f)
