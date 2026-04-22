@@ -12,6 +12,7 @@ sealed class GameState(val name: String) {
     object MapEditor: GameState("MapEditor")
     object AnimEditor : GameState("AnimEditor")
     object Conversation : GameState("Conversation")
+    object Cutscene : GameState("Cutscene")
     object MutatorArena : GameState("MutatorArena")
 
     override fun toString(): String {

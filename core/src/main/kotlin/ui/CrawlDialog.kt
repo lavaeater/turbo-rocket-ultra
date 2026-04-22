@@ -21,7 +21,8 @@ object CrawlDialog {
         return lines.mapIndexed { index, line ->
             scene2d.label(line) {
                 addAction(
-                    Actions.moveBy(0f, dialogHeight, duration, Interpolation.linear).then(Actions.removeActor())
+                    Actions.moveBy(0f, dialogHeight, duration, Interpolation.linear
+                    ).then(Actions.removeActor())
                 )
             }
         }.toMutableList().apply {

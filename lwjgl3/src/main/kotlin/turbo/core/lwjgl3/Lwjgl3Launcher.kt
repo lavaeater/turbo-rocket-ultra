@@ -14,5 +14,6 @@ fun main() {
 //        setFullscreenMode(Lwjgl3ApplicationConfiguration.getDisplayMode())//s().filter { it.width == 640 && it.height == 480 && it.refreshRate == 60 }.first())
 
         setWindowIcon(*(arrayOf(128, 64, 32, 16).map { "libgdx$it.png" }.toTypedArray()))
+        setPauseWhenLostFocus(false)
     })
 }

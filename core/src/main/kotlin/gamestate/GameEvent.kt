@@ -15,6 +15,8 @@ sealed class GameEvent(val name: String) {
     object ExitMapEditor : GameEvent("ExitMapEditor")
     object StartMapEditor : GameEvent("StartMapEditor")
     object StartedConversation : GameEvent("StartedConversation")
+    object StartCutscene : GameEvent("StartCutscene")
+    object EndCutscene : GameEvent("EndCutscene")
     object DialogEvent : GameEvent("DialogEvent")
     object LevelComplete : GameEvent("LevelComplete")
     object StartAnimEditor: GameEvent("StartAnimEditor")

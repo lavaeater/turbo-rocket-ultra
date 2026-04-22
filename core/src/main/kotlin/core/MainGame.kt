@@ -97,6 +97,7 @@ class MainGame : ApplicationAdapter(), DisposableRegistry by DisposableContainer
                     }
                     edge(GameEvent.PausedGame, GameState.Paused) {}
                     edge(GameEvent.StartedConversation, GameState.Conversation) {}
+                    edge(GameEvent.StartCutscene, GameState.Cutscene) {}
                     edge(GameEvent.GameOver, GameState.Ended) {}
                 }
                 state(GameState.Paused) {
@@ -119,6 +120,12 @@ class MainGame : ApplicationAdapter(), DisposableRegistry by DisposableContainer
                 state(GameState.Conversation) {
                     action { gameScreen.pause() }
                     edge(GameEvent.DialogEvent, GameState.Running) {
+                        action { gameScreen.resume() }
+                    }
+                }
+                state(GameState.Cutscene) {
+                    action { gameScreen.pause() }
+                    edge(GameEvent.EndCutscene, GameState.Running) {
                         action { gameScreen.resume() }
                     }
                 }
