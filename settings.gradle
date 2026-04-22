@@ -1,4 +1,4 @@
-include 'lwjgl3', 'core', 'box2dlights', 'screenmanager'
+include 'lwjgl3', 'core', 'box2dlights', 'screenmanager', "gdx-lava"
 
 include ':gdx-vfx-core'
 project(':gdx-vfx-core').projectDir = file('gdx-vfx/gdx-vfx/core')

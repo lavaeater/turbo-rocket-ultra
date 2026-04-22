@@ -16,6 +16,7 @@ dependencies {
     api(libs.ashley)
     api(project(":box2dlights"))
     api(project(":screenmanager"))
+    api(project(":gdx-lava"))
     api(libs.gdxControllers)
     api(libs.ai)
     api(libs.gdx)
