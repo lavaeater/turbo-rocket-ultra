@@ -13,7 +13,7 @@ import ktx.collections.toGdxArray
 import ktx.math.vec2
 import animation.AnimDef
 import animation.AnimState
-import twodee.input.CardinalDirection
+import lava.input.CardinalDirection
 
 
 class AnimationEditorElement(

@@ -5,8 +5,8 @@ import com.badlogic.ashley.systems.IteratingSystem
 import components.graphics.TextureRegionComponent
 import components.player.PlayerControlComponent
 import ktx.ashley.allOf
-import twodee.ecs.ashley.components.TransformComponent
-import twodee.ecs.ashley.components.character.CharacterComponent
+import lava.ecs.ashley.components.TransformComponent
+import lava.ecs.ashley.components.character.CharacterComponent
 
 class UpdateCharacterSystem: IteratingSystem(allOf(TransformComponent::class, CharacterComponent::class).get()) {
     override fun processEntity(entity: Entity, deltaTime: Float) {

@@ -16,8 +16,8 @@ import statemachine.StateMachine
 import animation.Assets
 import gamestate.GameEvent
 import gamestate.GameState
-import twodee.ecs.ashley.components.character.CharacterComponent
-import twodee.input.CardinalDirection
+import lava.ecs.ashley.components.character.CharacterComponent
+import lava.input.CardinalDirection
 import kotlin.collections.component1
 import kotlin.collections.component2
 import kotlin.math.absoluteValue

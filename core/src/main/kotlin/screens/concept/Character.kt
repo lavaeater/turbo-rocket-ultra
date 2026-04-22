@@ -4,7 +4,7 @@ import com.badlogic.gdx.math.Vector2
 import ktx.math.plus
 import ktx.math.times
 import ktx.math.vec2
-import twodee.input.CardinalDirection
+import lava.input.CardinalDirection
 
 class Character {
     var worldPosition = vec2()

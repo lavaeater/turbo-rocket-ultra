@@ -7,7 +7,7 @@ import components.player.PlayerControlComponent
 import ktx.ashley.allOf
 import physics.AshleyMappers
 import screens.concept.CardinalToAngles
-import twodee.input.CardinalDirection
+import lava.input.CardinalDirection
 
 
 class CharacterWalkAndShootDirectionSystem :

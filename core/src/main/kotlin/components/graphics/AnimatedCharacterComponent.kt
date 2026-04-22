@@ -8,7 +8,7 @@ import com.badlogic.gdx.utils.Pool
 import animation.AnimState
 import animation.LpcCharacterAnim
 import ktx.ashley.mapperFor
-import twodee.input.CardinalDirection
+import lava.input.CardinalDirection
 
 class AnimatedCharacterComponent : Component, Pool.Poolable {
 

@@ -15,9 +15,9 @@ import dependencies.InjectionContext.Companion.inject
 import ktx.math.plus
 import physics.*
 import space.earlygrey.shapedrawer.ShapeDrawer
-import twodee.ecs.ashley.components.character.CharacterComponent
-import twodee.input.CardinalDirection
-import twodee.input.mouse.MousePosition
+import lava.ecs.ashley.components.character.CharacterComponent
+import lava.input.CardinalDirection
+import ui.MousePosition
 import kotlin.math.absoluteValue
 import kotlin.math.pow
 

@@ -30,7 +30,7 @@ import physics.*
 import screens.ui.ApplicationFlags
 import animation.Assets
 import ecs.components.graphics.RenderableType
-import twodee.ecs.ashley.components.character.CharacterComponent
+import lava.ecs.ashley.components.character.CharacterComponent
 import kotlin.collections.iterator
 
 class RenderSystem(

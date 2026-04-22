@@ -99,8 +99,8 @@ import screens.concept.CounterObject
 import animation.*
 import components.graphics.RenderableComponent
 import ecs.components.graphics.RenderableType
-import twodee.ecs.ashley.components.character.CharacterComponent
-import twodee.input.CardinalDirection
+import lava.ecs.ashley.components.character.CharacterComponent
+import lava.input.CardinalDirection
 import ui.customactors.boundLabel
 import ui.getUiThing
 import kotlin.experimental.or

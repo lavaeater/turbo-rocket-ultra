@@ -1,4 +1,4 @@
-package screens.concept
+package lava.ecs.ashley.components.character
 
 import ktx.math.vec2
 import lava.input.CardinalDirection
