@@ -11,8 +11,7 @@ import physics.textureRegionComponent
 import physics.weapon
 import animation.AnimState
 import animation.Assets
-import animation.CardinalDirection
-
+import lava.input.CardinalDirection
 
 class WeaponUpdateSystem: IteratingSystem(
     allOf(

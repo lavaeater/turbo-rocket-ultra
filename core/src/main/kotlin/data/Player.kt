@@ -6,7 +6,7 @@ import components.gameplay.ObjectiveComponent
 import systems.graphics.GameConstants
 import animation.AnimState
 import animation.Assets
-import animation.CardinalDirection
+import lava.input.CardinalDirection
 
 class Player(val name: String, val isAiPlayer: Boolean = false) {
     init {

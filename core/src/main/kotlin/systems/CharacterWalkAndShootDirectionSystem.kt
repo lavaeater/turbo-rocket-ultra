@@ -4,10 +4,10 @@ import com.badlogic.ashley.core.Entity
 import com.badlogic.ashley.systems.IteratingSystem
 import components.graphics.AnimatedCharacterComponent
 import components.player.PlayerControlComponent
-import core.spriteDirection
 import ktx.ashley.allOf
 import physics.AshleyMappers
-import animation.CardinalDirection
+import screens.concept.CardinalToAngles
+import lava.input.CardinalDirection
 
 
 class CharacterWalkAndShootDirectionSystem :
@@ -15,7 +15,8 @@ class CharacterWalkAndShootDirectionSystem :
         allOf(
             AnimatedCharacterComponent::class,
             PlayerControlComponent::class
-        ).get()) {
+        ).get()
+    ) {
 
     override fun processEntity(entity: Entity, deltaTime: Float) {
         /**
@@ -30,10 +31,14 @@ class CharacterWalkAndShootDirectionSystem :
          */
         val characterComponent = AshleyMappers.animatedCharacter.get(entity)
         val controlComponet = AshleyMappers.playerControl.get(entity)
-        if(controlComponet.waitsForRespawn) {
+        if (controlComponet.waitsForRespawn) {
             characterComponent.currentDirection = CardinalDirection.South
         } else {
-            characterComponent.currentDirection = if(controlComponet.aiming) controlComponet.aimVector.spriteDirection() else controlComponet.walkVector.spriteDirection()
+            characterComponent.currentDirection =
+                if (controlComponet.aiming)
+                    CardinalToAngles.angleToCardinal(controlComponet.aimVector.angleDeg())
+                else
+                    CardinalToAngles.angleToCardinal(controlComponet.walkVector.angleDeg())
         }
     }
 }

@@ -16,17 +16,18 @@ import com.badlogic.gdx.utils.Disposable
 import dependencies.InjectionContext.Companion.inject
 import gamePlay.weapons.GunFrames
 import gamePlay.weapons.Weapon
+import ktx.assets.DisposableContainer
+import ktx.assets.DisposableRegistry
 import ktx.scene2d.Scene2DSkin
 import map.snake.MapDirection
 import space.earlygrey.shapedrawer.ShapeDrawer
+import lava.input.CardinalDirection
 
 
 /**
  * Actually load assets using the asset manager, maan
  */
-object Assets : Disposable {
-
-    lateinit var am: AssetManager
+object Assets : DisposableRegistry by DisposableContainer() {
 
     private val disposables = mutableListOf<Disposable>()
 
@@ -300,7 +301,7 @@ object Assets : Disposable {
     }
 
     val lootBox by lazy {
-        TextureRegion(Texture(Gdx.files.internal("sprites/loot/lootbox.png"))).apply { flip(false, true) }
+        TextureRegion(Texture(Gdx.files.internal("sprites/loot/lootbox.png")))
     }
     val arrowTexture by lazy {
         Texture(Gdx.files.internal("sprites/arrows.png"))
@@ -443,6 +444,10 @@ object Assets : Disposable {
         ShapeDrawer(inject<PolygonSpriteBatch>() as Batch, shapeDrawerRegion)
     }
 
+    val torsoSprite by lazy {
+        Sprite(Texture(Gdx.files.internal("sprites/boy/torso_front.png")))
+    }
+
 //    val objectSprites by lazy { SpriteLoader.initObjectSprites() }
 
     val soundEffects: Map<String, Sound> by lazy {
@@ -462,7 +467,6 @@ object Assets : Disposable {
         parameter.size = 12
         parameter.magFilter = Texture.TextureFilter.Linear
         parameter.minFilter = Texture.TextureFilter.Linear
-        parameter.flip = true
         val font32 = generator.generateFont(parameter) // font size 32 pixels
 
         font32.data.setScale(0.1f)
@@ -470,39 +474,42 @@ object Assets : Disposable {
         font32
     }
 
-    fun load(): AssetManager {
-        am = AssetManager()
+    fun load() {
+        val am = AssetManager()
         fixScene2dSkin()
         fixFlip()
-        return am
+        am.alsoRegister()
     }
 
     private fun fixFlip() {
-        for (t in towers.values)
-            t.flip(true, true)
+//        for (t in towers.values)
+//            t.flip(true, true)
+//
+//        newTower.flip(true, true)
+//
+//        for (t in aiDebugBadges.values)
+//            t.flip(true, false)
 
-        newTower.flip(true, true)
-
-        for (t in aiDebugBadges.values)
-            t.flip(true, false)
 
         for (c in playerCharacters.values)
             for (a in c.values)
                 for (b in a.animations.values)
                     for (d in b.keyFrames) {
                         d.flip(true, true)
-
+                        d.flip(true, true)
                     }
         for (c in enemies.values)
             for (a in c.values)
                 for (b in a.animations.values)
                     for (d in b.keyFrames) {
                         d.flip(true, true)
+                        d.flip(true, true)
                     }
         for (c in bosses.values) {
             for (a in c.values)
                 for (b in a.animations.values)
                     for (d in b.keyFrames) {
+                        d.flip(true, true)
                         d.flip(true, true)
                     }
         }
@@ -524,9 +531,6 @@ object Assets : Disposable {
 
     private fun fixScene2dSkin() {
         Scene2DSkin.defaultSkin = Skin(Gdx.files.internal("skins/my-skin/uiskin.json"))
-    }
-
-    override fun dispose() {
     }
 }
 

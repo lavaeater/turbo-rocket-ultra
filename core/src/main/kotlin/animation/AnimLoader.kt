@@ -5,6 +5,7 @@ import com.badlogic.gdx.graphics.Texture
 import com.badlogic.gdx.graphics.g2d.Animation
 import com.badlogic.gdx.graphics.g2d.TextureRegion
 import ktx.collections.toGdxArray
+import lava.input.CardinalDirection
 
 data class TurboCharacterAnim(val key: String, val name: String, val animations: Map<AnimState, LpcCharacterAnim<TextureRegion>>) {
     fun animationFor(animState: AnimState, direction: CardinalDirection) : Animation<TextureRegion> {

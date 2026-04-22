@@ -11,11 +11,10 @@ import components.AiComponent
 import components.ai.BehaviorComponent
 import ktx.ashley.allOf
 import com.badlogic.gdx.Input
-import com.badlogic.gdx.graphics.Camera
-import com.badlogic.gdx.graphics.OrthographicCamera
-import com.badlogic.gdx.graphics.Pixmap
+import com.badlogic.gdx.graphics.*
 import com.badlogic.gdx.graphics.g2d.Batch
 import com.badlogic.gdx.graphics.g2d.PolygonSpriteBatch
+import com.badlogic.gdx.graphics.g2d.TextureRegion
 import com.badlogic.gdx.utils.viewport.ExtendViewport
 import com.crashinvaders.vfx.VfxManager
 import com.crashinvaders.vfx.effects.BloomEffect
@@ -23,38 +22,23 @@ import com.crashinvaders.vfx.effects.CrtEffect
 import com.crashinvaders.vfx.effects.OldTvEffect
 import com.strongjoshua.console.CommandExecutor
 import com.strongjoshua.console.GUIConsole
-import systems.UpdateActionsSystem
-import systems.UpdateMemorySystem
-import systems.UtilityAiSystem
-import messaging.IMessage
-import messaging.IMessageReceiver
-import messaging.MessageHandler
-import turbofacts.TurboFactsOfTheWorld
-import turbofacts.TurboStoryManager
-import systems.AnchorPointTransformationSystem
-import systems.BodyDestroyerSystem
-import systems.CharacterWalkAndShootDirectionSystem
-import systems.PhysicsSystem
-import systems.ai.towers.TowerShootSystem
-import systems.ai.towers.TowerTargetFinderSystem
-import systems.facts.FactSystem
-import systems.facts.PerimeterObjectiveSystem
-import systems.fx.DelayedEntityCreationSystem
-import systems.graphics.GameConstants.GAME_HEIGHT
-import systems.graphics.GameConstants.GAME_WIDTH
-import systems.input.GamepadInputSystem
-import systems.input.InputActionHandler
-import systems.input.KeyboardInputSystem
-import systems.intent.CalculatePositionSystem
-import systems.intent.CalculateRotationSystem
-import systems.intent.IntentionSystem
-import systems.intent.RunFunctionsSystem
-import systems.pickups.LootDropSystem
 import ktx.box2d.createWorld
 import map.grid.GridMapManager
 import messaging.Message
 import physics.BodyEntityMapper
 import physics.ContactManager
+import ecs.systems.*
+import messaging.IMessage
+import messaging.IMessageReceiver
+import messaging.MessageHandler
+import space.earlygrey.shapedrawer.ShapeDrawer
+import systems.AnchorPointTransformationSystem
+import systems.BodyDestroyerSystem
+import systems.CharacterWalkAndShootDirectionSystem
+import systems.PhysicsSystem
+import systems.UpdateActionsSystem
+import systems.UpdateMemorySystem
+import systems.UtilityAiSystem
 import systems.ai.AudioSystem
 import systems.ai.BurningSystem
 import systems.ai.DestroyAfterCooldownSystem
@@ -82,14 +66,41 @@ import systems.player.PlayerShootingSystem
 import systems.player.UpdatePlayerStatsSystem
 import systems.player.WeaponReloadSystem
 import systems.ai.ConversationTriggerSystem
+import systems.ai.towers.TowerShootSystem
+import systems.ai.towers.TowerTargetFinderSystem
+import systems.facts.FactSystem
+import systems.facts.PerimeterObjectiveSystem
+import systems.fx.DelayedEntityCreationSystem
+import systems.graphics.GameConstants.GAME_HEIGHT
+import systems.graphics.GameConstants.GAME_WIDTH
+import systems.input.GamepadInputSystem
+import systems.input.InputActionHandler
+import systems.input.KeyboardInputSystem
+import systems.intent.CalculatePositionSystem
+import systems.intent.CalculateRotationSystem
+import systems.intent.IntentionSystem
+import systems.intent.RunFunctionsSystem
+import systems.pickups.LootDropSystem
+import turbofacts.TurboFactsOfTheWorld
+import turbofacts.TurboStoryManager
 import ui.Hud
 import ui.IUserInterface
 
 object Context : InjectionContext() {
+    private val shapeDrawerRegion: TextureRegion by lazy {
+        val pixmap = Pixmap(1, 1, Pixmap.Format.RGBA8888)
+        pixmap.setColor(Color.WHITE)
+        pixmap.drawPixel(0, 0)
+        val texture = Texture(pixmap) //remember to dispose of later
+        pixmap.dispose()
+        TextureRegion(texture, 0, 0, 1, 1)
+    }
+
     fun initializeContext() {
         buildContext {
             bindSingleton(BodyEntityMapper())
             bindSingleton(PolygonSpriteBatch())
+            bindSingleton(ShapeDrawer(inject<PolygonSpriteBatch>() as Batch, shapeDrawerRegion))
             bindSingleton(InputActionHandler())
             bindSingleton(OrthographicCamera())
             bindSingleton<IUserInterface> { Hud(inject<PolygonSpriteBatch>() as Batch, false) }
@@ -152,6 +163,7 @@ object Context : InjectionContext() {
             )
             addSystem(UpdateTimePieceSystem())
             addSystem(PhysicsSystem(0))
+            addSystem(UpdateCharacterSystem())
             addSystem(CameraUpdateSystem(inject(), inject()))
             addSystem(PlayerMoveSystem())
             addSystem(PlayerHasBeenHereSystem())

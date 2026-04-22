@@ -40,6 +40,8 @@ import map.grid.*
 import map.snake.randomPoint
 import physics.*
 import statemachine.StateMachine
+import screens.concept.CounterObject
+import screens.ui.MapList
 import animation.Assets
 import turbofacts.Factoids
 import turbofacts.TurboFactsOfTheWorld
@@ -71,6 +73,7 @@ class GameScreen(private val gameState: StateMachine<GameState, GameEvent>) : Ma
 
         initializeIfNeeded()
         if (running) {
+            //TODO: Change yDown to false
             camera.setToOrtho(true, viewPort.maxWorldWidth, viewPort.maxWorldHeight)
             Gdx.input.inputProcessor = engine.getSystem(KeyboardInputSystem::class.java)
             Controllers.addListener(engine.getSystem(GamepadInputSystem::class.java))

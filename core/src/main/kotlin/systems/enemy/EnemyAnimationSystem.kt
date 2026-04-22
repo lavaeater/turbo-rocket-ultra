@@ -9,7 +9,7 @@ import components.graphics.AnimatedCharacterComponent
 import ktx.ashley.allOf
 import physics.*
 import animation.AnimState
-import animation.CardinalDirection
+import lava.input.CardinalDirection
 
 class EnemyAnimationSystem : IteratingSystem(
     allOf(

@@ -51,7 +51,7 @@ import ktx.scene2d.image
 import ktx.scene2d.label
 import ktx.scene2d.table
 import messaging.Message
-import screens.CounterObject
+import screens.concept.CounterObject
 import animation.Assets
 import kotlin.math.pow
 import kotlin.math.roundToInt

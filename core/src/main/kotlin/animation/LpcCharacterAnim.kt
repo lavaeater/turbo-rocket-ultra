@@ -1,6 +1,7 @@
 package animation
 
 import com.badlogic.gdx.graphics.g2d.Animation
+import lava.input.CardinalDirection
 
 //@Serializable
 class AnimDef(val state: AnimState, val direction: CardinalDirection, val row: Int, val startCol: Int, val endCol: Int)

@@ -8,24 +8,6 @@ import com.badlogic.gdx.math.collision.Ray
 import com.badlogic.gdx.utils.Array
 import com.badlogic.gdx.utils.viewport.Viewport
 
-
-/*******************************************************************************
- * Copyright 2011 See AUTHORS file.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *   http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- ******************************************************************************/
-
-
 /** This viewport can be used to split up the screen into different regions which can be rendered each on their own. It actually
  * consists of several other viewports. It has one "root" viewport which is used to define the area that can be used by the "sub"
  * viewports. The "sub" viewports will split this area into several areas. <br></br>

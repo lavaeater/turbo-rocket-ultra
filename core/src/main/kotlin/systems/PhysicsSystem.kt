@@ -53,9 +53,6 @@ class PhysicsSystem(priority: Int) :
                     contactManager.handleMolotovHittingAnything(ContactType.MolotovHittingAnything(entity))
                 }
             }
-
-
-
         }
     }
 }

@@ -35,8 +35,8 @@ class KeyboardInputSystem :
         if (::keyboardControl.isInitialized) {
             if (!keyboardControl.requireSequencePress) {
                 when (keycode) {
-                    Input.Keys.W -> keyboardControl.thrust = 1f
-                    Input.Keys.S -> keyboardControl.thrust = -1f
+                    Input.Keys.W -> keyboardControl.thrust = -1f
+                    Input.Keys.S -> keyboardControl.thrust = 1f
                     Input.Keys.A -> keyboardControl.turning = -1f
                     Input.Keys.D -> keyboardControl.turning = 1f
                     Input.Keys.Z -> zoom = 1f
@@ -146,12 +146,17 @@ class KeyboardInputSystem :
         return true
     }
 
+    val aimgingCooldownBase = 3f
+    var aimingCooldown = aimgingCooldownBase
+    var aimingCooldownActive = false
+
     override fun touchUp(screenX: Int, screenY: Int, pointer: Int, button: Int): Boolean {
         return if (::keyboardControl.isInitialized) {
             when (button) {
                 Input.Buttons.LEFT -> {
                     keyboardControl.firing = false
-                    keyboardControl.aiming = false
+                    aimingCooldown = aimgingCooldownBase
+                    aimingCooldownActive = true
                     true
                 }
                 else -> false
@@ -163,6 +168,14 @@ class KeyboardInputSystem :
         keyboardEntity = entity
         keyboardControl = entity.getComponent()
         updateMouseInput(entity.getComponent<TransformComponent>().position)
+        if(aimingCooldownActive) {
+            aimingCooldown -= deltaTime
+            if(aimingCooldown <= 0f) {
+                keyboardControl.aiming = false
+                aimingCooldownActive = false
+            }
+        }
+
         camera.zoom += 0.1f * zoom
     }
     val camera by lazy { inject<OrthographicCamera>() }

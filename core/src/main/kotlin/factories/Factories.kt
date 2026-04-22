@@ -39,8 +39,6 @@ import components.gameplay.ObjectiveComponent
 import components.gameplay.PerimeterObjectiveComponent
 import components.gameplay.TargetComponent
 import components.graphics.AnimatedCharacterComponent
-import components.graphics.RenderableComponent
-import components.graphics.RenderableType
 import components.graphics.TextureRegionComponent
 import components.player.InventoryComponent
 import turbofacts.FactsLikeThatMan
@@ -96,9 +94,13 @@ import ktx.math.random
 import ktx.math.vec2
 import ktx.scene2d.*
 import physics.*
-import screens.ApplicationFlags
-import screens.CounterObject
+import screens.ui.ApplicationFlags
+import screens.concept.CounterObject
 import animation.*
+import components.graphics.RenderableComponent
+import ecs.components.graphics.RenderableType
+import lava.ecs.ashley.components.character.CharacterComponent
+import lava.input.CardinalDirection
 import ui.customactors.boundLabel
 import ui.getUiThing
 import kotlin.experimental.or
@@ -385,12 +387,13 @@ fun player(player: Player, mapper: ControlMapper, at: Vector2, debug: Boolean) {
             anims = Assets.characters[player.selectedCharacterSpriteName]!!
             currentAnim = anims.values.first().animations.values.first()
         }
+        with<CharacterComponent>()
         with<TextureRegionComponent> {
 //            offsetY = -1f
         }
         with<RenderableComponent> {
             layer = 1
-            renderableType = RenderableType.Sprite
+            renderableType = RenderableType.CharacterWithArms
         }
         with<MiniMapComponent> {
             color = Color.GREEN

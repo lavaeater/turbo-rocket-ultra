@@ -22,8 +22,8 @@ configure(subprojects) {
 	apply plugin: 'java-library'
 	// Root project does not need to apply the kotlin plugin via plugins block
 	java {
-		sourceCompatibility = JavaVersion.VERSION_1_8
-		targetCompatibility = JavaVersion.VERSION_1_8
+		sourceCompatibility = JavaVersion.VERSION_21
+		targetCompatibility = JavaVersion.VERSION_21
 	}
 	compileJava {
 		options.incremental = true

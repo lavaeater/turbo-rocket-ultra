@@ -1,6 +1,7 @@
 package screens
 
 import com.badlogic.gdx.controllers.Controllers
+import screens.ui.PlayerModel
 
 class SetupViewModel {
     val availableControllers: MutableList<PlayerModel> by lazy {

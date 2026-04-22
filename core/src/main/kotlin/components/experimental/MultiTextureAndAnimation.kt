@@ -6,7 +6,7 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion
 import com.badlogic.gdx.utils.Pool
 import animation.AnimState
 import animation.LpcCharacterAnim
-import animation.CardinalDirection
+import lava.input.CardinalDirection
 
 /**
  * DO not make it more complicated at this juncture. Exploring using

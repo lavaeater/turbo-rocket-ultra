@@ -16,22 +16,21 @@ import components.AgentProperties
 import components.Memory
 import components.TransformComponent
 import dependencies.InjectionContext.Companion.inject
-import physics.addComponent
 import physics.getComponent
 import physics.has
 import components.ai.Path
 import components.ai.SeenPlayerPositions
 import components.ai.Waypoint
 import components.AmbleState
-import components.gameplay.DestroyComponent
 import components.graphics.RenderableComponent
-import components.graphics.RenderableType
 import ktx.ashley.allOf
 import ktx.graphics.use
 import map.grid.GridMapManager
 import physics.*
-import screens.ApplicationFlags
+import screens.ui.ApplicationFlags
 import animation.Assets
+import ecs.components.graphics.RenderableType
+import lava.ecs.ashley.components.character.CharacterComponent
 import kotlin.collections.iterator
 
 class RenderSystem(
@@ -48,8 +47,8 @@ class RenderSystem(
     ).get(),
     object : Comparator<Entity> {
         override fun compare(p0: Entity, p1: Entity): Int {
-            val layer0 = p0.renderable().layer
-            val layer1 = p1.renderable().layer
+            val layer0 = RenderableComponent.get(p0).layer
+            val layer1 = RenderableComponent.get(p1).layer
             return if (layer0 == layer1) {
                 val y0 = p0.transform().position.y
                 val y1 = p1.transform().position.y
@@ -161,10 +160,16 @@ class RenderSystem(
         }
     }
 
+    fun renderCharacterWithArms(entity: Entity, deltaTime: Float) {
+        val character = CharacterComponent.get(entity)
+
+    }
+
     override fun processEntity(entity: Entity, deltaTime: Float) {
-        when (entity.renderable().renderableType) {
-            is RenderableType.Sprite -> renderSpriteEntity(entity)
-            is RenderableType.Effect -> renderEffect(entity, deltaTime)
+        when (RenderableComponent.get(entity).renderableType) {
+            RenderableType.Effect -> renderSpriteEntity(entity)
+            RenderableType.Sprite -> renderSpriteEntity(entity)
+            RenderableType.CharacterWithArms -> renderCharacterWithArms(entity, deltaTime)
         }
 
         if (entity.isEnemy()) {
@@ -203,7 +208,6 @@ class RenderSystem(
             }
         }
     }
-
 
     private fun renderCanSee(entity: Entity, ap: AgentProperties) {
         val position = entity.transform().position
@@ -273,55 +277,6 @@ class RenderSystem(
                     }
                 }
                 previous.set(node)
-            }
-        }
-    }
-
-    private fun renderEffect(entity: Entity, deltaTime: Float) {
-        if (entity.hasSplatter()) {
-            val component = entity.splatterEffect()
-            val effect = component.splatterEffect
-            if (effect.isComplete) {
-                engine.removeEntity(entity)
-            }
-            if (!component.started) {
-                component.started = true
-                val emitter = effect.emitters.first()
-                emitter.setPosition(component.at.x, component.at.y)
-                val amplitude: Float = (emitter.angle.highMax - emitter.angle.highMin) / 2f
-                emitter.angle.setHigh(component.rotation + amplitude, component.rotation - amplitude)
-                emitter.angle.setLow(component.rotation)
-                emitter.start()
-            }
-            effect.update(deltaTime)
-            effect.draw(batch)
-        }
-
-        if (entity.hasEffect()) {
-            val effectComponent = entity.effect()
-            if (effectComponent.ready) {
-                val transform = entity.transform()
-                val effect = effectComponent.effect
-                if (effect.isComplete) {
-                    entity.addComponent<DestroyComponent>()
-                }
-                for (emitter in effect.emitters) {
-                    emitter.setPosition(transform.position.x, transform.position.y)
-                    if (!effectComponent.started) {
-                        val amplitude: Float = (emitter.angle.highMax - emitter.angle.highMin) / 2f
-                        emitter.angle.setHigh(
-                            effectComponent.rotation + amplitude,
-                            effectComponent.rotation - amplitude
-                        )
-                        emitter.angle.setLow(effectComponent.rotation)
-                        emitter.start()
-                    }
-                }
-                if (!effectComponent.started) {
-                    effectComponent.started = true
-                }
-                effect.update(deltaTime)
-                effect.draw(batch)
             }
         }
     }
