@@ -19,6 +19,9 @@ object FactPersistence {
                 is Factoid.Fact.FloatFact   -> sb.append("\"$key\":{\"t\":\"f\",\"v\":${factoid.value}}")
                 is Factoid.Fact.StringFact  -> sb.append("\"$key\":{\"t\":\"s\",\"v\":\"${factoid.value.replace("\"", "\\\"")}\"}")
                 is Factoid.Fact.StringListFact -> { /* skip list facts — runtime-only */ }
+                is Factoid.Fact.SetFact<*> -> {
+                    /* skip set facts - runtime only */
+                }
             }
         }
         sb.append('}')

@@ -1,3 +1,5 @@
+import org.jetbrains.kotlin.gradle.dsl.JvmTarget
+
 plugins {
     alias(libs.plugins.kotlin.jvm)
     id 'application'
@@ -10,11 +12,11 @@ application {
 }
 eclipse.project.name = appName + '-lwjgl3'
 java {
-    sourceCompatibility = JavaVersion.VERSION_1_8
-    targetCompatibility = JavaVersion.VERSION_1_8
+    sourceCompatibility = JavaVersion.VERSION_21
+    targetCompatibility = JavaVersion.VERSION_21
 }
 compileKotlin {
-    kotlinOptions.jvmTarget = '1.8'
+   compilerOptions.jvmTarget = JvmTarget.JVM_21
 }
 
 dependencies {
