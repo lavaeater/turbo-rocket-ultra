@@ -54,7 +54,7 @@ class CameraUpdateSystem(
         if (!splitState.isSplit && spread > SPLIT_THRESHOLD && trackedPlayers.size > 1) {
             splitState.isSplit = true
             splitState.ensureViews(trackedPlayers.size)
-            trackedPlayers.forEachIndexed { i, (entity, tc) ->
+            trackedPlayers.sortedBy { it.second.position.x }.forEachIndexed { i, (entity, tc) ->
                 splitState.playerViews[i].entity = entity
                 splitState.playerViews[i].position.set(tc.position)
                 splitState.playerViews[i].targetPosition.set(tc.position)
@@ -82,13 +82,11 @@ class CameraUpdateSystem(
     }
 
     private fun updateSplitCameras() {
-        splitState.ensureViews(trackedPlayers.size)
         val slicePixelWidth = Gdx.graphics.width.toFloat() / trackedPlayers.size
         val slicePixelHeight = Gdx.graphics.height.toFloat()
         val worldHeight = GameConstants.GAME_WIDTH * (slicePixelHeight / slicePixelWidth)
-        trackedPlayers.forEachIndexed { i, (entity, tc) ->
-            val view = splitState.playerViews[i]
-            view.entity = entity
+        for ((entity, tc) in trackedPlayers) {
+            val view = splitState.playerViews.firstOrNull { it.entity == entity } ?: continue
             view.targetPosition.set(tc.position)
             view.position.lerp(view.targetPosition, 0.1f)
             view.camera.setToOrtho(true, GameConstants.GAME_WIDTH, worldHeight)

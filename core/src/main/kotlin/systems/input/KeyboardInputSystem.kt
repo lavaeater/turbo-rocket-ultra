@@ -17,9 +17,9 @@ import ktx.ashley.allOf
 import physics.getComponent
 import physics.intendTo
 import statemachine.StateMachine
-import systems.graphics.CameraUpdateSystem
+import systems.graphics.SplitScreenState
 
-class KeyboardInputSystem :
+class KeyboardInputSystem(private val splitState: SplitScreenState? = null) :
     KtxInputAdapter, IteratingSystem(
     allOf(
         KeyboardControl::class,
@@ -167,10 +167,9 @@ class KeyboardInputSystem :
         camera.zoom += 0.1f * zoom
     }
     val camera by lazy { inject<OrthographicCamera>() }
-    private val splitState by lazy { inject<CameraUpdateSystem>().splitState }
 
     private fun updateMouseInput(entity: Entity, position: Vector2) {
-        val activeCamera = splitState.cameraForEntity(entity, camera)
+        val activeCamera = splitState?.cameraForEntity(entity, camera) ?: camera
         keyboardControl.setAimVector(Gdx.input.x, Gdx.input.y, position, activeCamera)
     }
 

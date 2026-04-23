@@ -157,7 +157,7 @@ object Context : InjectionContext() {
             addSystem(cameraUpdateSystem)
             addSystem(PlayerMoveSystem())
             addSystem(PlayerHasBeenHereSystem())
-            addSystem(KeyboardInputSystem())
+            addSystem(KeyboardInputSystem(cameraUpdateSystem.splitState))
             addSystem(NumpadInputSystem())
             addSystem(GamepadInputSystem())
             addSystem(BodyDestroyerSystem(inject())) //world
