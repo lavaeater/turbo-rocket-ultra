@@ -7,7 +7,8 @@ class SetupViewModel {
         val controllers = Controllers.getControllers()
         mutableListOf(
             *Controllers.getControllers().map { PlayerModel.GamePad(it) }.toTypedArray(),
-            PlayerModel.Keyboard()
+            PlayerModel.Keyboard(),
+            PlayerModel.Numpad()
         )
     }
 }

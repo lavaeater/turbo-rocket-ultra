@@ -16,6 +16,14 @@ import statemachine.StateMachine
 
 object CrawlDialog {
     private val gameState by lazy { inject<StateMachine<GameState, GameEvent>>() }
+    private var activeDialog: Dialog? = null
+
+    fun skip() {
+        activeDialog?.hide()
+        activeDialog = null
+        if (gameState.currentState.state == GameState.Cutscene)
+            gameState.acceptEvent(GameEvent.EndCutscene)
+    }
     fun getLabelsFromString(text: String, dialogHeight: Float, duration: Float, autoQuit: Boolean): MutableList<Label> {
         val lines = text.lines()
         return lines.mapIndexed { index, line ->
@@ -32,8 +40,9 @@ object CrawlDialog {
                         Actions.moveBy(0f, dialogHeight, duration, Interpolation.linear).then(
                             object : Action() {
                                 override fun act(delta: Float): Boolean {
-                                    if (gameState.currentState.state == GameState.Paused)
-                                        gameState.acceptEvent(GameEvent.ResumedGame)
+                                    if (gameState.currentState.state == GameState.Cutscene)
+                                        gameState.acceptEvent(GameEvent.EndCutscene)
+                                    activeDialog = null
                                     return true
                                 }
                             }).then(Actions.removeActor())
@@ -53,6 +62,7 @@ object CrawlDialog {
         duration: Float = 10f,
         autoQuit: Boolean = true
     ) {
+        activeDialog = dialog
         val linesToScroll = getLabelsFromString(text, dialogHeight, duration, autoQuit)
         val stage = dialog.stage
         val textHeight = linesToScroll.maxOf { it.height }

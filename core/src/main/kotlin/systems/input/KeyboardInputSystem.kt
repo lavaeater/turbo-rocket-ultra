@@ -17,8 +17,9 @@ import ktx.ashley.allOf
 import physics.getComponent
 import physics.intendTo
 import statemachine.StateMachine
+import systems.graphics.SplitScreenState
 
-class KeyboardInputSystem :
+class KeyboardInputSystem(private val splitState: SplitScreenState? = null) :
     KtxInputAdapter, IteratingSystem(
     allOf(
         KeyboardControl::class,
@@ -47,9 +48,11 @@ class KeyboardInputSystem :
                     ) else gameState.acceptEvent(
                         GameEvent.ResumedGame
                     )
-                    else -> if (gameState.currentState.state == GameState.Paused) gameState.acceptEvent(GameEvent.ResumedGame)
-                            else
-                                return false
+                    else -> when (gameState.currentState.state) {
+                        GameState.Paused -> gameState.acceptEvent(GameEvent.ResumedGame)
+                        GameState.Cutscene -> ui.CrawlDialog.skip()
+                        else -> return false
+                    }
                 }
             }
         } else {
@@ -162,13 +165,22 @@ class KeyboardInputSystem :
     override fun processEntity(entity: Entity, deltaTime: Float) {
         keyboardEntity = entity
         keyboardControl = entity.getComponent()
-        updateMouseInput(entity.getComponent<TransformComponent>().position)
+        updateMouseInput(entity, entity.getComponent<TransformComponent>().position)
         camera.zoom += 0.1f * zoom
     }
     val camera by lazy { inject<OrthographicCamera>() }
+    private val mousePosition3D = ktx.math.vec3()
 
-    private fun updateMouseInput(position: Vector2) {
-        keyboardControl.setAimVector(Gdx.input.x, Gdx.input.y, position)
+    private fun updateMouseInput(entity: Entity, position: Vector2) {
+        val view = splitState?.viewForEntity(entity)
+        if (view != null) {
+            mousePosition3D.set(Gdx.input.x.toFloat(), Gdx.input.y.toFloat(), 0f)
+            view.camera.unproject(mousePosition3D, view.screenSliceX.toFloat(), 0f, view.screenSliceWidth.toFloat(), view.screenSliceHeight.toFloat())
+            keyboardControl.mousePosition.set(mousePosition3D.x, mousePosition3D.y)
+            keyboardControl.aimVector.set(mousePosition3D.x - position.x, mousePosition3D.y - position.y).nor()
+        } else {
+            keyboardControl.setAimVector(Gdx.input.x, Gdx.input.y, position, camera)
+        }
     }
 
     override fun touchCancelled(screenX: Int, screenY: Int, pointer: Int, button: Int): Boolean = false

@@ -20,6 +20,7 @@ import input.Button
 import input.ControlMapper
 import input.GamepadControl
 import input.KeyboardControl
+import input.NumpadControl
 import ktx.log.debug
 import ktx.scene2d.*
 import statemachine.StateMachine
@@ -46,6 +47,9 @@ class SetupScreen(gameState: StateMachine<GameState, GameEvent>) : BasicScreen(g
         setUp(Input.Keys.SPACE, "Toggle Player") { toggleKeyboardPlayer() }
         setUp(Input.Keys.LEFT, "Prev Character") { changeSpriteKeyboard(-1) }
         setUp(Input.Keys.RIGHT, "Next Character") { changeSpriteKeyboard(1) }
+        setUp(Input.Keys.NUMPAD_ENTER, "Toggle Numpad Player") { toggleNumpadPlayer() }
+        setUp(Input.Keys.NUMPAD_4, "Numpad Prev Char") { changeSpriteNumpad(-1) }
+        setUp(Input.Keys.NUMPAD_6, "Numpad Next Char") { changeSpriteNumpad(1) }
         setUp(Input.Keys.ENTER, "Start Game") { startGame() }
         setUp(Input.Keys.D, "Debug Mode On") { toggleDebugMode() }
     }
@@ -54,6 +58,9 @@ class SetupScreen(gameState: StateMachine<GameState, GameEvent>) : BasicScreen(g
         setUp(Input.Keys.SPACE, "Toggle Player") { toggleKeyboardPlayer() }
         setUp(Input.Keys.LEFT, "Prev Character") { changeSpriteKeyboard(-1) }
         setUp(Input.Keys.RIGHT, "Next Character") { changeSpriteKeyboard(1) }
+        setUp(Input.Keys.NUMPAD_ENTER, "Toggle Numpad Player") { toggleNumpadPlayer() }
+        setUp(Input.Keys.NUMPAD_4, "Numpad Prev Char") { changeSpriteNumpad(-1) }
+        setUp(Input.Keys.NUMPAD_6, "Numpad Next Char") { changeSpriteNumpad(1) }
         setUp(Input.Keys.ENTER, "Start Game") { startGame() }
         setUp(Input.Keys.T, "Start Game with AI") { startGameWithAi() }
         setUp(Input.Keys.C, "Concept Screen") { startConceptScreen() }
@@ -129,6 +136,7 @@ class SetupScreen(gameState: StateMachine<GameState, GameEvent>) : BasicScreen(g
                         label("Press ")
                         when (playerModel) {
                             is PlayerModel.Keyboard -> label("[Space]")
+                            is PlayerModel.Numpad -> label("[Numpad Enter]")
                             is PlayerModel.GamePad -> image(Button.Cross.image)
                         }
 
@@ -152,6 +160,7 @@ class SetupScreen(gameState: StateMachine<GameState, GameEvent>) : BasicScreen(g
                         label("Press ")
                         when (playerModel) {
                             is PlayerModel.Keyboard -> label("[Return]")
+                            is PlayerModel.Numpad -> label("[Numpad Enter]")
                             is PlayerModel.GamePad -> image(Assets.ps4Buttons["square"]!!)
                         }
 
@@ -166,6 +175,12 @@ class SetupScreen(gameState: StateMachine<GameState, GameEvent>) : BasicScreen(g
                             label("B - build")
                             label("LMB - shoot")
                             label("Wheel - change weapon")
+                        }
+                        is PlayerModel.Numpad -> {
+                            label("8/2/4/6 - move")
+                            label("7/9 - rotate aim")
+                            label("Numpad Enter - shoot")
+                            label("1/3 - change weapon")
                         }
                         is PlayerModel.GamePad -> {
                             label("Left Stick - move")
@@ -310,11 +325,13 @@ class SetupScreen(gameState: StateMachine<GameState, GameEvent>) : BasicScreen(g
                 is PlayerModel.Keyboard -> Players.players[KeyboardControl()] = Player(model.name).apply {
                     selectedCharacterSpriteName = model.selectedAbleSpriteAnims.selectedItem.key
                 }
+                is PlayerModel.Numpad -> Players.players[NumpadControl()] = Player(model.name).apply {
+                    selectedCharacterSpriteName = model.selectedAbleSpriteAnims.selectedItem.key
+                }
                 is PlayerModel.GamePad -> Players.players[GamepadControl(model.controller)] = Player(model.name).apply {
                     selectedCharacterSpriteName = model.selectedAbleSpriteAnims.selectedItem.key
                 }
             }
-
         }
         //
 
@@ -356,6 +373,18 @@ class SetupScreen(gameState: StateMachine<GameState, GameEvent>) : BasicScreen(g
 
     private fun toggleKeyboardPlayer(): Boolean {
         availableControllers.firstOrNull { it is PlayerModel.Keyboard }?.toggle()
+        return true
+    }
+
+    private fun toggleNumpadPlayer(): Boolean {
+        availableControllers.firstOrNull { it is PlayerModel.Numpad }?.toggle()
+        return true
+    }
+
+    private fun changeSpriteNumpad(indexChange: Int): Boolean {
+        availableControllers.firstOrNull { it is PlayerModel.Numpad }?.apply {
+            if (indexChange < 0) selectedAbleSpriteAnims.previousItem() else selectedAbleSpriteAnims.nextItem()
+        }
         return true
     }
 

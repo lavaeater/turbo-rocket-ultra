@@ -15,7 +15,8 @@ import ktx.math.vec3
 
 class CameraUpdateSystem(
     private val camera: OrthographicCamera,
-    private val viewport: ExtendViewport
+    private val viewport: ExtendViewport,
+    val splitState: SplitScreenState = SplitScreenState()
 ) :
     IteratingSystem(
         allOf(
@@ -23,40 +24,84 @@ class CameraUpdateSystem(
             TransformComponent::class
         ).get()) {
 
-    private val transformComponents = mutableSetOf<TransformComponent>()
+    private val trackedPlayers = mutableListOf<Pair<Entity, TransformComponent>>()
     private val cameraPosition = vec2()
 
+    companion object {
+        private const val SPLIT_THRESHOLD = GameConstants.GAME_WIDTH * 1.0f
+        private const val MERGE_THRESHOLD = GameConstants.GAME_WIDTH * 0.75f
+    }
+
     fun reset() {
-        transformComponents.clear()
+        trackedPlayers.clear()
         cameraPosition.set(Vector2.Zero)
+        splitState.isSplit = false
+        splitState.playerViews.clear()
     }
 
     override fun update(deltaTime: Float) {
+        trackedPlayers.clear()
         super.update(deltaTime)
-        cameraPosition.set(
-            transformComponents.map { it.position.x }.sum() / transformComponents.count().toFloat(),
-            transformComponents.map { it.position.y }.sum() / transformComponents.count().toFloat()
-        )
+        if (trackedPlayers.isEmpty()) return
 
-        camera.position.lerp(
-            vec3(cameraPosition, 0f), 0.5f
-        )
+        val positions = trackedPlayers.map { it.second.position }
+        val minX = positions.minOf { it.x }
+        val maxX = positions.maxOf { it.x }
+        val minY = positions.minOf { it.y }
+        val maxY = positions.maxOf { it.y }
+        val spread = maxOf(maxX - minX, maxY - minY)
 
-        viewport.minWorldWidth =
-            (transformComponents.maxOf { it.position.x } - transformComponents.minOf { it.position.x } + 30f).coerceIn(
-                GameConstants.GAME_WIDTH,
-                GameConstants.GAME_WIDTH * 5
-            )
-        viewport.minWorldHeight =
-            (transformComponents.maxOf { it.position.y } - transformComponents.minOf { it.position.y } + 30f).coerceIn(
-                GameConstants.GAME_HEIGHT,
-                GameConstants.GAME_HEIGHT * 5
-            )
+        if (!splitState.isSplit && spread > SPLIT_THRESHOLD && trackedPlayers.size > 1) {
+            splitState.isSplit = true
+            splitState.ensureViews(trackedPlayers.size)
+            trackedPlayers.sortedBy { it.second.position.x }.forEachIndexed { i, (entity, tc) ->
+                splitState.playerViews[i].entity = entity
+                splitState.playerViews[i].position.set(tc.position)
+                splitState.playerViews[i].targetPosition.set(tc.position)
+            }
+        } else if (splitState.isSplit && spread < MERGE_THRESHOLD) {
+            splitState.isSplit = false
+        }
+
+        if (splitState.isSplit) {
+            updateSplitCameras()
+        } else {
+            updateSingleCamera(minX, maxX, minY, maxY)
+        }
+    }
+
+    private fun updateSingleCamera(minX: Float, maxX: Float, minY: Float, maxY: Float) {
+        val positions = trackedPlayers.map { it.second.position }
+        cameraPosition.set(positions.map { it.x }.sum() / trackedPlayers.size, positions.map { it.y }.sum() / trackedPlayers.size)
+        camera.position.lerp(vec3(cameraPosition, 0f), 0.5f)
+
+        viewport.minWorldWidth = ((maxX - minX) + 30f).coerceIn(GameConstants.GAME_WIDTH, GameConstants.GAME_WIDTH * 5)
+        viewport.minWorldHeight = ((maxY - minY) + 30f).coerceIn(GameConstants.GAME_HEIGHT, GameConstants.GAME_HEIGHT * 5)
         viewport.update(Gdx.graphics.width, Gdx.graphics.height)
         camera.update()
     }
 
+    private fun updateSplitCameras() {
+        val screenWidth = Gdx.graphics.width
+        val screenHeight = Gdx.graphics.height
+        val slicePixelWidth = screenWidth / trackedPlayers.size
+        val worldHeight = GameConstants.GAME_WIDTH * (screenHeight.toFloat() / slicePixelWidth.toFloat())
+        splitState.playerViews.forEachIndexed { i, view ->
+            view.screenSliceX = i * slicePixelWidth
+            view.screenSliceWidth = slicePixelWidth
+            view.screenSliceHeight = screenHeight
+        }
+        for ((entity, tc) in trackedPlayers) {
+            val view = splitState.playerViews.firstOrNull { it.entity == entity } ?: continue
+            view.targetPosition.set(tc.position)
+            view.position.lerp(view.targetPosition, 0.1f)
+            view.camera.setToOrtho(true, GameConstants.GAME_WIDTH, worldHeight)
+            view.camera.position.set(view.position, 0f)
+            view.camera.update(false)
+        }
+    }
+
     override fun processEntity(entity: Entity, deltaTime: Float) {
-        transformComponents.add(entity.getComponent())
+        trackedPlayers.add(entity to entity.getComponent())
     }
 }

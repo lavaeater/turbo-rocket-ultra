@@ -28,9 +28,7 @@ class GamepadControl(val controller: Controller): ControlMapper, Component {
     override var isInBuildMode: Boolean = false
     override var buildIfPossible: Boolean = false
 
-    override fun setAimVector(screenX: Int, screenY: Int, position: Vector2) {
-        //no-op because this is a gamepad, mate.
-    }
+    override fun setAimVector(screenX: Int, screenY: Int, position: Vector2, activeCamera: com.badlogic.gdx.graphics.OrthographicCamera) {}
 
     override var uiControl: UserInterfaceControl = NoOpUserInterfaceControl.control
     override var requireSequencePress = false
