@@ -16,11 +16,16 @@ class SplitScreenState {
         val targetPosition = vec2()
         val position = vec2()
         var entity: Entity? = null
+        var screenSliceX: Int = 0
+        var screenSliceWidth: Int = 0
+        var screenSliceHeight: Int = 0
     }
 
+    fun viewForEntity(entity: Entity): PlayerView? =
+        if (isSplit) playerViews.firstOrNull { it.entity == entity } else null
+
     fun cameraForEntity(entity: Entity, fallback: OrthographicCamera): OrthographicCamera =
-        if (isSplit) playerViews.firstOrNull { it.entity == entity }?.camera ?: fallback
-        else fallback
+        viewForEntity(entity)?.camera ?: fallback
 
     val playerViews = mutableListOf<PlayerView>()
 

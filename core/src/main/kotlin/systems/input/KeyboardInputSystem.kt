@@ -167,10 +167,18 @@ class KeyboardInputSystem(private val splitState: SplitScreenState? = null) :
         camera.zoom += 0.1f * zoom
     }
     val camera by lazy { inject<OrthographicCamera>() }
+    private val mousePosition3D = ktx.math.vec3()
 
     private fun updateMouseInput(entity: Entity, position: Vector2) {
-        val activeCamera = splitState?.cameraForEntity(entity, camera) ?: camera
-        keyboardControl.setAimVector(Gdx.input.x, Gdx.input.y, position, activeCamera)
+        val view = splitState?.viewForEntity(entity)
+        if (view != null) {
+            mousePosition3D.set(Gdx.input.x.toFloat(), Gdx.input.y.toFloat(), 0f)
+            view.camera.unproject(mousePosition3D, view.screenSliceX.toFloat(), 0f, view.screenSliceWidth.toFloat(), view.screenSliceHeight.toFloat())
+            keyboardControl.mousePosition.set(mousePosition3D.x, mousePosition3D.y)
+            keyboardControl.aimVector.set(mousePosition3D.x - position.x, mousePosition3D.y - position.y).nor()
+        } else {
+            keyboardControl.setAimVector(Gdx.input.x, Gdx.input.y, position, camera)
+        }
     }
 
     override fun touchCancelled(screenX: Int, screenY: Int, pointer: Int, button: Int): Boolean = false

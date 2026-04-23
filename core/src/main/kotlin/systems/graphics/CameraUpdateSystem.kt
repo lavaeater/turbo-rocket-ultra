@@ -82,9 +82,15 @@ class CameraUpdateSystem(
     }
 
     private fun updateSplitCameras() {
-        val slicePixelWidth = Gdx.graphics.width.toFloat() / trackedPlayers.size
-        val slicePixelHeight = Gdx.graphics.height.toFloat()
-        val worldHeight = GameConstants.GAME_WIDTH * (slicePixelHeight / slicePixelWidth)
+        val screenWidth = Gdx.graphics.width
+        val screenHeight = Gdx.graphics.height
+        val slicePixelWidth = screenWidth / trackedPlayers.size
+        val worldHeight = GameConstants.GAME_WIDTH * (screenHeight.toFloat() / slicePixelWidth.toFloat())
+        splitState.playerViews.forEachIndexed { i, view ->
+            view.screenSliceX = i * slicePixelWidth
+            view.screenSliceWidth = slicePixelWidth
+            view.screenSliceHeight = screenHeight
+        }
         for ((entity, tc) in trackedPlayers) {
             val view = splitState.playerViews.firstOrNull { it.entity == entity } ?: continue
             view.targetPosition.set(tc.position)
