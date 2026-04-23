@@ -28,8 +28,8 @@ class CameraUpdateSystem(
     private val cameraPosition = vec2()
 
     companion object {
-        private const val SPLIT_THRESHOLD = GameConstants.GAME_WIDTH * 1.5f
-        private const val MERGE_THRESHOLD = GameConstants.GAME_WIDTH * 1.0f
+        private const val SPLIT_THRESHOLD = GameConstants.GAME_WIDTH * 1.0f
+        private const val MERGE_THRESHOLD = GameConstants.GAME_WIDTH * 0.75f
     }
 
     fun reset() {

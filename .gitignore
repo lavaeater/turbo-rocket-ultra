@@ -59,7 +59,7 @@ libraries/tools/kotlin-test-js-runner/lib/
 local.properties
 buildSrcTmp/
 distTmp/
-outTmp/
+outTmp/spli
 
 assets/localfiles/
 .claude/settings.local.json
