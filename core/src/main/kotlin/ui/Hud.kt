@@ -317,18 +317,18 @@ class Hud(private val batch: Batch, debugAll: Boolean) : IUserInterface, IMessag
             }
             is Message.FactUpdated -> TODO() //We don't subscribe to this type of messages so this won't happen
             is Message.LevelComplete -> {
-                showPauseCrawl(message.completeMessage)
+                showCutSceneCrawl(message.completeMessage)
             }
             is Message.LevelFailed -> {
-                showPauseCrawl(message.failMessage)
+                showCutSceneCrawl(message.failMessage)
             }
             is Message.LevelStarting -> {
-                showPauseCrawl(message.beforeStartMessage)
+                showCutSceneCrawl(message.beforeStartMessage)
             }
         }
     }
 
-    fun showPauseCrawl(text: String) {
+    fun showCutSceneCrawl(text: String) {
         if(::pauseDialog.isInitialized)
             CrawlDialog.showDialog(pauseDialog, text, duration = 5f)
     }

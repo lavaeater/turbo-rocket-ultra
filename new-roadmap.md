@@ -94,6 +94,8 @@ I have always intended this to be super complex. The intention is this: we start
 
 I am not sure if this is workable, perhaps one would have to create the viewports but not use them until we are zoomed out enough.
 
+OK; I just noticed that you, Claude, had noted this as well. Oh, well. Good. 
+
 ---
 
 ### 4. Dynamic split-screen (players diverge → screen splits)

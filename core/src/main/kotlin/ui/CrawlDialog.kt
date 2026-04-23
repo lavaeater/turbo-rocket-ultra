@@ -32,8 +32,8 @@ object CrawlDialog {
                         Actions.moveBy(0f, dialogHeight, duration, Interpolation.linear).then(
                             object : Action() {
                                 override fun act(delta: Float): Boolean {
-                                    if (gameState.currentState.state == GameState.Paused)
-                                        gameState.acceptEvent(GameEvent.ResumedGame)
+                                    if (gameState.currentState.state == GameState.Cutscene)
+                                        gameState.acceptEvent(GameEvent.EndCutscene)
                                     return true
                                 }
                             }).then(Actions.removeActor())
