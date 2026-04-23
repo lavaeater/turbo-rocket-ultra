@@ -45,6 +45,7 @@ import systems.graphics.GameConstants.GAME_WIDTH
 import systems.input.GamepadInputSystem
 import systems.input.InputActionHandler
 import systems.input.KeyboardInputSystem
+import systems.input.NumpadInputSystem
 import systems.intent.CalculatePositionSystem
 import systems.intent.CalculateRotationSystem
 import systems.intent.IntentionSystem
@@ -152,10 +153,12 @@ object Context : InjectionContext() {
             )
             addSystem(UpdateTimePieceSystem())
             addSystem(PhysicsSystem(0))
-            addSystem(CameraUpdateSystem(inject(), inject()))
+            val cameraUpdateSystem = CameraUpdateSystem(inject(), inject())
+            addSystem(cameraUpdateSystem)
             addSystem(PlayerMoveSystem())
             addSystem(PlayerHasBeenHereSystem())
             addSystem(KeyboardInputSystem())
+            addSystem(NumpadInputSystem())
             addSystem(GamepadInputSystem())
             addSystem(BodyDestroyerSystem(inject())) //world
             addSystem(CharacterWalkAndShootDirectionSystem())
@@ -186,7 +189,8 @@ object Context : InjectionContext() {
                     inject(),
                     inject(),
                     1,
-                    false
+                    false,
+                    cameraUpdateSystem.splitState
                 )
             )
 

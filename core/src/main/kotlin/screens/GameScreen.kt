@@ -84,11 +84,8 @@ class GameScreen(private val gameState: StateMachine<GameState, GameEvent>) : Ma
             }
             generateMap(CounterObject.currentLevel)
 
-            if (Players.players.keys.any { it.isKeyboard }) {
-                engine.getSystem<KeyboardInputSystem>().setProcessing(true)
-            } else {
-                engine.getSystem<KeyboardInputSystem>().setProcessing(false)
-            }
+            engine.getSystem<KeyboardInputSystem>().setProcessing(Players.players.keys.any { it is input.KeyboardControl })
+            engine.getSystem<systems.input.NumpadInputSystem>().setProcessing(Players.players.keys.any { it is input.NumpadControl })
 
             ui.reset()
             ui.show()
@@ -142,6 +139,7 @@ class GameScreen(private val gameState: StateMachine<GameState, GameEvent>) : Ma
         viewPort.update(width, height)
         batch.projectionMatrix = camera.combined
         vfxManager.resize(width, height)
+        engine.getSystem<systems.graphics.CameraUpdateSystem>().splitState.resize(width, height)
     }
 
     override fun pause() {

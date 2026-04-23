@@ -23,6 +23,11 @@ sealed class PlayerModel(
             debug { "Keyboard" }
         }
     }
+    class Numpad : PlayerModel("Numpad", Assets.characterTurboAnims.first().name) {
+        init {
+            debug { "Numpad" }
+        }
+    }
     class GamePad(val controller: Controller) :
         PlayerModel("GamePad ${controller.playerIndex + 1}", Assets.characterTurboAnims.first().name) {
         init {

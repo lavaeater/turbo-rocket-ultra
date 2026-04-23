@@ -40,7 +40,8 @@ class RenderSystem(
     private val rayHandler: RayHandler,
     private val camera: OrthographicCamera,
     priority: Int,
-    var playerDebug: Boolean
+    var playerDebug: Boolean,
+    private val splitState: SplitScreenState? = null
 ) : SortedIteratingSystem(
     allOf(
         RenderableComponent::class,
@@ -85,22 +86,44 @@ class RenderSystem(
     override fun update(deltaTime: Float) {
         Gdx.gl.glClearColor(0f, 0f, 0f, 1f)
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT)
-
-        camera.update(false) //True or false, what's the difference?
-        batch.projectionMatrix = camera.combined
         forceSort()
-        rayHandler.setCombinedMatrix(camera)
 
-        //vfxManager.cleanUpBuffers()
-        //vfxManager.beginInputCapture()
+        if (splitState != null && splitState.isSplit && splitState.playerViews.size > 1) {
+            renderSplit(deltaTime)
+        } else {
+            renderSingle(deltaTime)
+        }
+    }
+
+    private fun renderSingle(deltaTime: Float) {
+        camera.update(false)
+        batch.projectionMatrix = camera.combined
+        rayHandler.setCombinedMatrix(camera)
         batch.use {
             mapManager.render(batch, shapeDrawer, deltaTime)
             super.update(deltaTime)
         }
-        //vfxManager.endInputCapture()
-        //vfxManager.applyEffects()
-        //vfxManager.renderToScreen()
         rayHandler.updateAndRender()
+    }
+
+    private fun renderSplit(deltaTime: Float) {
+        val screenWidth = Gdx.graphics.width
+        val screenHeight = Gdx.graphics.height
+        val views = splitState!!.playerViews
+        val sliceWidth = screenWidth / views.size
+
+        views.forEachIndexed { i, view ->
+            Gdx.gl.glViewport(i * sliceWidth, 0, sliceWidth, screenHeight)
+            view.camera.update(false)
+            batch.projectionMatrix = view.camera.combined
+            rayHandler.setCombinedMatrix(view.camera)
+            batch.use {
+                mapManager.render(batch, shapeDrawer, deltaTime)
+                for (entity in entities) processEntity(entity, deltaTime)
+            }
+            rayHandler.updateAndRender()
+        }
+        Gdx.gl.glViewport(0, 0, screenWidth, screenHeight)
     }
 
     fun createAdvancedShadowAffine(

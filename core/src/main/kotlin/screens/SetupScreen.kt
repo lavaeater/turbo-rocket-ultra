@@ -20,6 +20,7 @@ import input.Button
 import input.ControlMapper
 import input.GamepadControl
 import input.KeyboardControl
+import input.NumpadControl
 import ktx.log.debug
 import ktx.scene2d.*
 import statemachine.StateMachine
@@ -46,6 +47,9 @@ class SetupScreen(gameState: StateMachine<GameState, GameEvent>) : BasicScreen(g
         setUp(Input.Keys.SPACE, "Toggle Player") { toggleKeyboardPlayer() }
         setUp(Input.Keys.LEFT, "Prev Character") { changeSpriteKeyboard(-1) }
         setUp(Input.Keys.RIGHT, "Next Character") { changeSpriteKeyboard(1) }
+        setUp(Input.Keys.NUMPAD_ENTER, "Toggle Numpad Player") { toggleNumpadPlayer() }
+        setUp(Input.Keys.NUMPAD_4, "Numpad Prev Char") { changeSpriteNumpad(-1) }
+        setUp(Input.Keys.NUMPAD_6, "Numpad Next Char") { changeSpriteNumpad(1) }
         setUp(Input.Keys.ENTER, "Start Game") { startGame() }
         setUp(Input.Keys.D, "Debug Mode On") { toggleDebugMode() }
     }
@@ -54,6 +58,9 @@ class SetupScreen(gameState: StateMachine<GameState, GameEvent>) : BasicScreen(g
         setUp(Input.Keys.SPACE, "Toggle Player") { toggleKeyboardPlayer() }
         setUp(Input.Keys.LEFT, "Prev Character") { changeSpriteKeyboard(-1) }
         setUp(Input.Keys.RIGHT, "Next Character") { changeSpriteKeyboard(1) }
+        setUp(Input.Keys.NUMPAD_ENTER, "Toggle Numpad Player") { toggleNumpadPlayer() }
+        setUp(Input.Keys.NUMPAD_4, "Numpad Prev Char") { changeSpriteNumpad(-1) }
+        setUp(Input.Keys.NUMPAD_6, "Numpad Next Char") { changeSpriteNumpad(1) }
         setUp(Input.Keys.ENTER, "Start Game") { startGame() }
         setUp(Input.Keys.T, "Start Game with AI") { startGameWithAi() }
         setUp(Input.Keys.C, "Concept Screen") { startConceptScreen() }
