@@ -28,8 +28,8 @@ class CameraUpdateSystem(
     private val cameraPosition = vec2()
 
     companion object {
-        private const val SPLIT_THRESHOLD = GameConstants.GAME_WIDTH * 3f
-        private const val MERGE_THRESHOLD = GameConstants.GAME_WIDTH * 2f
+        private const val SPLIT_THRESHOLD = GameConstants.GAME_WIDTH * 1.5f
+        private const val MERGE_THRESHOLD = GameConstants.GAME_WIDTH * 1.0f
     }
 
     fun reset() {
@@ -85,13 +85,15 @@ class CameraUpdateSystem(
 
     private fun updateSplitCameras(deltaTime: Float) {
         splitState.ensureViews(transformComponents.size)
+        val slicePixelWidth = Gdx.graphics.width.toFloat() / transformComponents.size
+        val slicePixelHeight = Gdx.graphics.height.toFloat()
+        val worldHeight = GameConstants.GAME_WIDTH * (slicePixelHeight / slicePixelWidth)
         transformComponents.forEachIndexed { i, tc ->
             val view = splitState.playerViews[i]
             view.targetPosition.set(tc.position)
             view.position.lerp(view.targetPosition, 0.1f)
+            view.camera.setToOrtho(true, GameConstants.GAME_WIDTH, worldHeight)
             view.camera.position.set(view.position, 0f)
-            view.camera.viewportWidth = GameConstants.GAME_WIDTH
-            view.camera.viewportHeight = GameConstants.GAME_HEIGHT
             view.camera.update(false)
         }
     }

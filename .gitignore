@@ -64,3 +64,5 @@ outTmp/
 assets/localfiles/
 .claude/settings.local.json
 CLAUDE.local.md
+
+.kotlin/
