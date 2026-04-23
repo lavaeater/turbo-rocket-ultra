@@ -48,9 +48,11 @@ class KeyboardInputSystem(private val splitState: SplitScreenState? = null) :
                     ) else gameState.acceptEvent(
                         GameEvent.ResumedGame
                     )
-                    else -> if (gameState.currentState.state == GameState.Paused) gameState.acceptEvent(GameEvent.ResumedGame)
-                            else
-                                return false
+                    else -> when (gameState.currentState.state) {
+                        GameState.Paused -> gameState.acceptEvent(GameEvent.ResumedGame)
+                        GameState.Cutscene -> ui.CrawlDialog.skip()
+                        else -> return false
+                    }
                 }
             }
         } else {

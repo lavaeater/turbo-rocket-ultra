@@ -50,9 +50,10 @@ class GamepadInputSystem : IteratingSystem(allOf(GamepadControl::class).get()), 
                             GameEvent.ResumedGame
                         )
                     }
-                    else -> {
-                        if (gameState.currentState.state == GameState.Paused)
-                            gameState.acceptEvent(GameEvent.ResumedGame)
+                    else -> when (gameState.currentState.state) {
+                        GameState.Paused -> gameState.acceptEvent(GameEvent.ResumedGame)
+                        GameState.Cutscene -> ui.CrawlDialog.skip()
+                        else -> {}
                     }
                 }
             }
