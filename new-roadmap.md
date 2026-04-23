@@ -96,6 +96,8 @@ I am not sure if this is workable, perhaps one would have to create the viewport
 
 OK; I just noticed that you, Claude, had noted this as well. Oh, well. Good. 
 
+**Status: Done**
+
 ---
 
 ### 4. Dynamic split-screen (players diverge → screen splits)
@@ -110,6 +112,8 @@ The devlog mentions this as "the coolest feature ever". The idea: when players a
 - Trigger condition stored as a fact: `ScreenIsSplit: Boolean` for any UI/story reactions
 
 Depends on item 3 above being done first.
+
+**Status: Done**
 
 ---
 
@@ -303,13 +307,13 @@ Add a "Watch Best" button in `MutatorArenaScreen`. When pressed, load the best t
 
 | # | Feature | Why now | Effort | Status         |
 |---|---------|---------|--------|----------------|
-| 1 | Wire SplitScreenViewport (static split) | Big payoff, code already written | 1 day | Todo           |
 | 2 | Towers — build mode + resource system | Fun feature, partial code exists | 3 days | Partially Done |
-| 3 | Vehicles | The original vision — do it when the rest feels solid | 2-3 weeks | Todo |
-| 4 | Hardpoint integration into GameScreen | Leads to much better character rendering | 2 days | Redesign |
+| 3 | Vehicles | The original vision — do it when the rest feels solid | 2-3 weeks | Todo           |
+| 4 | Hardpoint integration into GameScreen | Leads to much better character rendering | 2 days | Redesign       |
 | - | PauseScreen + GameOverScreen | Biggest gap for basic game feel | 1 day | Done           |
 | - | GameScreen transition (fix VFX/NestableFrameBuffer) | Polish, already partially solved | Half day | Done           |
 | - | Enemy stuck recovery (re-path on stuck) | Gameplay quality, embarrassing AI bug | Half day | Partially Done |
 | - | Boss behavior tree using existing tasks | New enemy type, zero new infrastructure | 1 day | Partially Done |
 | - | Wave spawning | Game feel, already designed | Half day | Todo           |
-| - | Ranged enemy (FireProjectile task) | Makes the game harder and more interesting | 1 day | Done? |
+| - | Ranged enemy (FireProjectile task) | Makes the game harder and more interesting | 1 day | Done?          |
+| - | Wire SplitScreenViewport (static split) | Big payoff, code already written | 1 day | Done           |
