@@ -232,11 +232,8 @@ class GameScreen(private val gameState: StateMachine<GameState, GameEvent>) : Ma
 
         CounterObject.currentLevel++
         generateMap(CounterObject.currentLevel)
-        if (Players.players.keys.any { it.isKeyboard }) {
-            engine.getSystem<KeyboardInputSystem>().setProcessing(true)
-        } else {
-            engine.getSystem<KeyboardInputSystem>().setProcessing(false)
-        }
+        engine.getSystem<KeyboardInputSystem>().setProcessing(Players.players.keys.any { it is input.KeyboardControl })
+        engine.getSystem<systems.input.NumpadInputSystem>().setProcessing(Players.players.keys.any { it is input.NumpadControl })
         storyManager.activate()
     }
 
