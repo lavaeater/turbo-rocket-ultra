@@ -28,7 +28,7 @@ class NumpadControl : ControlMapper, Component {
         aimVector.set(MathUtils.cosDeg(angle), MathUtils.sinDeg(angle))
     }
 
-    override fun setAimVector(screenX: Int, screenY: Int, position: Vector2) {}
+    override fun setAimVector(screenX: Int, screenY: Int, position: Vector2, activeCamera: com.badlogic.gdx.graphics.OrthographicCamera) {}
 
     override var uiControl: UserInterfaceControl = NoOpUserInterfaceControl.control
     override var requireSequencePress: Boolean = false

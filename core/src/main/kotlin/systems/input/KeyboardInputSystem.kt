@@ -17,6 +17,7 @@ import ktx.ashley.allOf
 import physics.getComponent
 import physics.intendTo
 import statemachine.StateMachine
+import systems.graphics.CameraUpdateSystem
 
 class KeyboardInputSystem :
     KtxInputAdapter, IteratingSystem(
@@ -162,13 +163,15 @@ class KeyboardInputSystem :
     override fun processEntity(entity: Entity, deltaTime: Float) {
         keyboardEntity = entity
         keyboardControl = entity.getComponent()
-        updateMouseInput(entity.getComponent<TransformComponent>().position)
+        updateMouseInput(entity, entity.getComponent<TransformComponent>().position)
         camera.zoom += 0.1f * zoom
     }
     val camera by lazy { inject<OrthographicCamera>() }
+    private val splitState by lazy { inject<CameraUpdateSystem>().splitState }
 
-    private fun updateMouseInput(position: Vector2) {
-        keyboardControl.setAimVector(Gdx.input.x, Gdx.input.y, position)
+    private fun updateMouseInput(entity: Entity, position: Vector2) {
+        val activeCamera = splitState.cameraForEntity(entity, camera)
+        keyboardControl.setAimVector(Gdx.input.x, Gdx.input.y, position, activeCamera)
     }
 
     override fun touchCancelled(screenX: Int, screenY: Int, pointer: Int, button: Int): Boolean = false

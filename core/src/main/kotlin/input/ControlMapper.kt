@@ -1,6 +1,7 @@
 package input
 
 import com.badlogic.ashley.core.Component
+import com.badlogic.gdx.graphics.OrthographicCamera
 import com.badlogic.gdx.math.Vector2
 
 interface ControlMapper: Component {
@@ -22,7 +23,7 @@ interface ControlMapper: Component {
     val walkVector: Vector2
     val controllerId: String
 
-    fun setAimVector(screenX: Int, screenY: Int, position: Vector2)
+    fun setAimVector(screenX: Int, screenY: Int, position: Vector2, activeCamera: OrthographicCamera = OrthographicCamera())
     var uiControl: UserInterfaceControl
     var requireSequencePress: Boolean
     var keyPressedCallback: (Int) -> Unit

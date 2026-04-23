@@ -1,5 +1,6 @@
 package systems.graphics
 
+import com.badlogic.ashley.core.Entity
 import com.badlogic.gdx.graphics.OrthographicCamera
 import com.badlogic.gdx.math.Vector2
 import com.badlogic.gdx.utils.viewport.ExtendViewport
@@ -14,7 +15,12 @@ class SplitScreenState {
         val viewport = ExtendViewport(GAME_WIDTH, GAME_HEIGHT, camera)
         val targetPosition = vec2()
         val position = vec2()
+        var entity: Entity? = null
     }
+
+    fun cameraForEntity(entity: Entity, fallback: OrthographicCamera): OrthographicCamera =
+        if (isSplit) playerViews.firstOrNull { it.entity == entity }?.camera ?: fallback
+        else fallback
 
     val playerViews = mutableListOf<PlayerView>()
 

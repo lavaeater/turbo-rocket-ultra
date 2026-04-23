@@ -24,7 +24,7 @@ class CameraUpdateSystem(
             TransformComponent::class
         ).get()) {
 
-    private val transformComponents = mutableListOf<TransformComponent>()
+    private val trackedPlayers = mutableListOf<Pair<Entity, TransformComponent>>()
     private val cameraPosition = vec2()
 
     companion object {
@@ -33,29 +33,29 @@ class CameraUpdateSystem(
     }
 
     fun reset() {
-        transformComponents.clear()
+        trackedPlayers.clear()
         cameraPosition.set(Vector2.Zero)
         splitState.isSplit = false
         splitState.playerViews.clear()
     }
 
     override fun update(deltaTime: Float) {
-        transformComponents.clear()
+        trackedPlayers.clear()
         super.update(deltaTime)
-        if (transformComponents.isEmpty()) return
+        if (trackedPlayers.isEmpty()) return
 
-        val minX = transformComponents.minOf { it.position.x }
-        val maxX = transformComponents.maxOf { it.position.x }
-        val minY = transformComponents.minOf { it.position.y }
-        val maxY = transformComponents.maxOf { it.position.y }
-        val spreadX = maxX - minX
-        val spreadY = maxY - minY
-        val spread = maxOf(spreadX, spreadY)
+        val positions = trackedPlayers.map { it.second.position }
+        val minX = positions.minOf { it.x }
+        val maxX = positions.maxOf { it.x }
+        val minY = positions.minOf { it.y }
+        val maxY = positions.maxOf { it.y }
+        val spread = maxOf(maxX - minX, maxY - minY)
 
-        if (!splitState.isSplit && spread > SPLIT_THRESHOLD && transformComponents.size > 1) {
+        if (!splitState.isSplit && spread > SPLIT_THRESHOLD && trackedPlayers.size > 1) {
             splitState.isSplit = true
-            splitState.ensureViews(transformComponents.size)
-            transformComponents.forEachIndexed { i, tc ->
+            splitState.ensureViews(trackedPlayers.size)
+            trackedPlayers.forEachIndexed { i, (entity, tc) ->
+                splitState.playerViews[i].entity = entity
                 splitState.playerViews[i].position.set(tc.position)
                 splitState.playerViews[i].targetPosition.set(tc.position)
             }
@@ -64,17 +64,15 @@ class CameraUpdateSystem(
         }
 
         if (splitState.isSplit) {
-            updateSplitCameras(deltaTime)
+            updateSplitCameras()
         } else {
             updateSingleCamera(minX, maxX, minY, maxY)
         }
     }
 
     private fun updateSingleCamera(minX: Float, maxX: Float, minY: Float, maxY: Float) {
-        cameraPosition.set(
-            transformComponents.map { it.position.x }.sum() / transformComponents.size,
-            transformComponents.map { it.position.y }.sum() / transformComponents.size
-        )
+        val positions = trackedPlayers.map { it.second.position }
+        cameraPosition.set(positions.map { it.x }.sum() / trackedPlayers.size, positions.map { it.y }.sum() / trackedPlayers.size)
         camera.position.lerp(vec3(cameraPosition, 0f), 0.5f)
 
         viewport.minWorldWidth = ((maxX - minX) + 30f).coerceIn(GameConstants.GAME_WIDTH, GameConstants.GAME_WIDTH * 5)
@@ -83,13 +81,14 @@ class CameraUpdateSystem(
         camera.update()
     }
 
-    private fun updateSplitCameras(deltaTime: Float) {
-        splitState.ensureViews(transformComponents.size)
-        val slicePixelWidth = Gdx.graphics.width.toFloat() / transformComponents.size
+    private fun updateSplitCameras() {
+        splitState.ensureViews(trackedPlayers.size)
+        val slicePixelWidth = Gdx.graphics.width.toFloat() / trackedPlayers.size
         val slicePixelHeight = Gdx.graphics.height.toFloat()
         val worldHeight = GameConstants.GAME_WIDTH * (slicePixelHeight / slicePixelWidth)
-        transformComponents.forEachIndexed { i, tc ->
+        trackedPlayers.forEachIndexed { i, (entity, tc) ->
             val view = splitState.playerViews[i]
+            view.entity = entity
             view.targetPosition.set(tc.position)
             view.position.lerp(view.targetPosition, 0.1f)
             view.camera.setToOrtho(true, GameConstants.GAME_WIDTH, worldHeight)
@@ -99,6 +98,6 @@ class CameraUpdateSystem(
     }
 
     override fun processEntity(entity: Entity, deltaTime: Float) {
-        transformComponents.add(entity.getComponent())
+        trackedPlayers.add(entity to entity.getComponent())
     }
 }
