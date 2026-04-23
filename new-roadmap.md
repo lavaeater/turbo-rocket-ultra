@@ -59,6 +59,8 @@ Both classes are one line. The game hangs silently when paused or when you die.
 - `PauseScreen`: Use `UserInterfaceScreen`'s existing Scene2D stage. Build a centered table with "Resume" (fires `ResumedGame`) and "Quit to Menu" (fires `ExitedGame`) buttons. Show current level and kills. Two hours of work.
 - `GameOverScreen`: Same pattern. Display: enemies killed, level reached, time survived (add a timer float to `CounterObject`). "Play Again" and "Main Menu" buttons. This is the biggest gap for game feel right now.
 
+**Status: Done**
+
 ---
 
 ### 2. No screen transition into/out of GameScreen
@@ -69,6 +71,8 @@ We skip the transition because `VfxManager` conflicts with `ScreenManager`'s `Ne
 Switch `VfxManager` to use `NestableFrameBuffer` from guacamole (which is already on the classpath via screenmanager). The VFX library is now a submodule — modify `VfxManager`'s FBO creation to use `NestableFrameBuffer` instead of `FrameBuffer`. Then re-enable the push transition for GameScreen.
 
 Alternatively: disable VFX only during the transition frame (check `screenManager.isTransitioning()` in GameScreen.render before applying VFX).
+
+**Status: Done**
 
 ---
 
@@ -83,6 +87,12 @@ Alternatively: disable VFX only during the transition frame (check `screenManage
 - The existing two-player setup path in `SetupScreen` already supports multi-player; just switch the viewport class conditionally
 
 This would be genuinely spectacular and is mostly already written.
+
+**Added, super-important notes**
+
+I have always intended this to be super complex. The intention is this: we start with one screen. As long as players are close enough to each other, we use one viewport / screen, which zooms out to some max level of zoom. When the players reach that magical distance, we activate the split-screen mode and zoom back in a bit on each player. And yes, if we have three players and two of them stay close to each other, the get half the screen and the other player gets the other half - and the same goes for four players. 
+
+I am not sure if this is workable, perhaps one would have to create the viewports but not use them until we are zoomed out enough.
 
 ---
 
