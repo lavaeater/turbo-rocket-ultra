@@ -1,0 +1,4 @@
+{"SaveExists":{"t":"b","v":true},"LivingPlayerCount":{"t":"i","v":1},"CurrentLevel":{"t":"i","v":1},"EnemyCount":{"t":"i","v":1},"MaxEnemies":{"t":"i","v":1},"MaxSpawnedEnemies":{"t":"i","v":0},"CurrentMapName":{"t":"s","v":"Mutator Arena"},"MapStartMessage":{"t":"s","v":"Evaluating trees...
+"},"MapSuccessMessage":{"t":"s","v":"Simulation complete.
+"},"MapFailMessage":{"t":"s","v":"Simulation failed.
+"},"AcceleratingSpawns":{"t":"b","v":false},"EnemyKillCount":{"t":"i","v":0},"TargetEnemyKillCount":{"t":"i","v":1},"ShowEnemyKillCount":{"t":"b","v":false},"WaveSize":{"t":"i","v":1},"NumberOfObjectives":{"t":"i","v":0},"GotoNextLevel":{"t":"b","v":false},"StartingEnemyCount":{"t":"i","v":0},"BossIsDead":{"t":"b","v":true},"AllObjectivesAreTouched":{"t":"b","v":true},"BulletCount":{"t":"i","v":0},"Player.P1.KillCount":{"t":"i","v":1}}

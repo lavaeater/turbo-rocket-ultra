@@ -61,7 +61,6 @@ buildSrcTmp/
 distTmp/
 outTmp/spli
 
-assets/localfiles/
 .claude/settings.local.json
 CLAUDE.local.md
 
