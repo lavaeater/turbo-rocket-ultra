@@ -6,6 +6,7 @@ import com.badlogic.gdx.math.Rectangle
 import com.badlogic.gdx.math.Vector2
 import ktx.math.vec2
 import animation.Assets
+import space.earlygrey.shapedrawer.ShapeDrawer
 
 abstract class AbstractElement(
     val position: Vector2 = vec2(),
@@ -41,7 +42,7 @@ abstract class AbstractElement(
     private val _bounds: Rectangle = Rectangle(actualPosition.x, actualPosition.y, width, height)
     open val bounds: Rectangle
         get() = _bounds
-    val shapeDrawer by lazy { Assets.shapeDrawer }
+    val shapeDrawer: ShapeDrawer by lazy { Assets.shapeDrawer }
 
     open fun renderBounds(scale: Float = 1f) {
         shapeDrawer.rectangle(bounds.x, bounds.y, bounds.width * scale, bounds.height * scale)

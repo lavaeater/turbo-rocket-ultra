@@ -55,7 +55,7 @@ class Graph<T> {
     }
 
     fun removeNodes(vararg node: Node<T>) {
-        nodes.removeAll(node)
+        nodes.removeAll(node.toSet())
     }
 
 //    fun thatHaveProperties(vararg propertiesToFind: String): Sequence<Node<T>> {
