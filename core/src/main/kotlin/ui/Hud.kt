@@ -199,7 +199,7 @@ class Hud(private val batch: Batch, debugAll: Boolean) : IUserInterface, IMessag
 
     override fun runConversation(
         conversation: story.conversation.IConversation,
-        function: () -> Unit,
+        conversationEnded: () -> Unit,
         showProtagonistPortrait: Boolean,
         showAntagonistPortrait: Boolean
     ) {
@@ -210,7 +210,7 @@ class Hud(private val batch: Batch, debugAll: Boolean) : IUserInterface, IMessag
             {
                 conversationPresenter?.dispose()
                 conversationPresenter = null
-                function()
+                conversationEnded()
             },
             showProtagonistPortrait,
             showAntagonistPortrait

@@ -234,12 +234,10 @@ fun Contact.thisIsAContactBetween(): ContactType {
 }
 
 object AshleyMapperStore {
-    inline fun <reified T : Component> getMapper(): ComponentMapper<T> {
-        val type = typeOf<T>()
-        if (!mappers.containsKey(type))
-            mappers[type] = mapperFor<T>()
-        return mappers[type] as ComponentMapper<T>
-    }
+    @Suppress("UNCHECKED_CAST") // the key is the type, so the stored mapper always matches T
+    inline fun <reified T : Component> getMapper(): ComponentMapper<T> =
+        mappers.getOrPut(typeOf<T>()) { mapperFor<T>() } as ComponentMapper<T>
+
     val mappers = mutableMapOf<KType, ComponentMapper<*>>()
 }
 

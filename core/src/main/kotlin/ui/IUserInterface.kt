@@ -19,7 +19,7 @@ interface IUserInterface : Disposable {
     fun resume()
     fun runConversation(
         conversation: IConversation,
-        function: () -> Unit,
+        conversationEnded: () -> Unit,
         showProtagonistPortrait: Boolean,
         showAntagonistPortrait: Boolean
     ) {

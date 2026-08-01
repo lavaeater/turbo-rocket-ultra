@@ -10,6 +10,7 @@ tasks.withType<JavaCompile>().configureEach {
 
 tasks.withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile>().configureEach {
     compilerOptions.jvmTarget = JvmTarget.JVM_21
+    compilerOptions.allWarningsAsErrors = true
 }
 
 eclipse.project.name = "${extra["appName"]}-core"

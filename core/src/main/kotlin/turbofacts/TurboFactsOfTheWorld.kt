@@ -274,6 +274,7 @@ class TurboFactsOfTheWorld(private val onFactUpdated: (key: String) -> Unit = {}
         throw Exception("Fact $mk exists and is not a stringlist")
     }
 
+    @Suppress("UNCHECKED_CAST") // V is erased; the SetFact check is as much as can be verified at runtime
     private fun <V>ensureSetFact(vararg key: String): Factoid.Fact.SetFact<V> {
         val mk = multiKey(*key)
         if (!facts.containsKey(mk)) {

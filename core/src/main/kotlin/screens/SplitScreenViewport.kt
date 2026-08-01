@@ -292,7 +292,6 @@ class SplitViewport(rootViewport: Viewport) : Viewport() {
                 val usedSize = calculateUsedSize(subViews, totalSize)
                 (totalSize - usedSize) / rests
             }
-            else -> throw IllegalArgumentException(subView.sizeInformation.sizeType.toString() + " could not be handled.")
         }
     }
 

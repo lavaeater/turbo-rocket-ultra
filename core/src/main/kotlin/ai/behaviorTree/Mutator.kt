@@ -20,9 +20,18 @@ import com.badlogic.gdx.ai.btree.decorator.Repeat
 import ai.behaviorTree.tasks.leaf.DelayTask
 import ai.behaviorTree.tasks.leaf.RotateTask
 import com.badlogic.gdx.ai.utils.random.ConstantIntegerDistribution
-import kotlin.reflect.full.createInstance
+import kotlin.reflect.KClass
 
 object Mutator {
+    private val branchFactories = listOf<Pair<KClass<*>, () -> BranchTask<Entity>>>(
+        Selector::class to { Selector() },
+        com.badlogic.gdx.ai.btree.branch.Sequence::class to { com.badlogic.gdx.ai.btree.branch.Sequence() },
+        RandomSelector::class to { RandomSelector() },
+        RandomSequence::class to { RandomSequence() },
+        Parallel::class to { Parallel() },
+        DynamicGuardSelector::class to { DynamicGuardSelector() },
+    )
+
     fun getMutatedTree(tree: BehaviorTree<Entity>): BehaviorTree<Entity> {
         val newTree = BehaviorTree<Entity>()
         if (tree.childCount > 0) {
@@ -32,9 +41,8 @@ object Mutator {
     }
 
     private fun mutateBrancher(task: BranchTask<Entity>) : BranchTask<Entity> {
-        val possibleClasses = listOf(Selector::class, com.badlogic.gdx.ai.btree.branch.Sequence::class, RandomSelector::class, RandomSequence::class, Parallel::class, DynamicGuardSelector::class).minus(task::class)
-        val c = possibleClasses.random()
-        val newBranchTask = c.createInstance() as BranchTask<Entity>
+        val possibleFactories = branchFactories.filterNot { it.first == task::class }
+        val newBranchTask = possibleFactories.random().second()
         if(task.guard != null) {
             newBranchTask.guard = task.guard.cloneTask()
         }
